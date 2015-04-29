@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>Pods-CeliTax-MBProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-CeliTax-MKNetworkKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-CeliTax-Reachability.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-CeliTax.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>1087E61B76EC8F2F8989A6BF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>506E16CA83FAE8BF6CCA2D78</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6F4956C2A7A1675FAD0EE8AC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8B82C3B2FACDE4B0CE3E7CC1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
