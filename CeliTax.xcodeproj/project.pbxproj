@@ -1,0 +1,431 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		85A8CAC41AF069EA0023504D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 85A8CAC31AF069EA0023504D /* main.m */; };
+		85A8CAC71AF069EA0023504D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 85A8CAC61AF069EA0023504D /* AppDelegate.m */; };
+		85A8CACA1AF069EA0023504D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85A8CAC91AF069EA0023504D /* ViewController.m */; };
+		85A8CACD1AF069EA0023504D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85A8CACB1AF069EA0023504D /* Main.storyboard */; };
+		85A8CACF1AF069EA0023504D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85A8CACE1AF069EA0023504D /* Images.xcassets */; };
+		85A8CAD21AF069EA0023504D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85A8CAD01AF069EA0023504D /* LaunchScreen.xib */; };
+		85A8CADE1AF069EA0023504D /* CeliTaxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 85A8CADD1AF069EA0023504D /* CeliTaxTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		85A8CAD81AF069EA0023504D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 85A8CAB61AF069EA0023504D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 85A8CABD1AF069EA0023504D;
+			remoteInfo = CeliTax;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		85A8CABE1AF069EA0023504D /* CeliTax.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CeliTax.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		85A8CAC21AF069EA0023504D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85A8CAC31AF069EA0023504D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		85A8CAC51AF069EA0023504D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		85A8CAC61AF069EA0023504D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		85A8CAC81AF069EA0023504D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		85A8CAC91AF069EA0023504D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		85A8CACC1AF069EA0023504D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		85A8CACE1AF069EA0023504D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		85A8CAD11AF069EA0023504D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		85A8CAD71AF069EA0023504D /* CeliTaxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CeliTaxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		85A8CADC1AF069EA0023504D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85A8CADD1AF069EA0023504D /* CeliTaxTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CeliTaxTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		85A8CABB1AF069EA0023504D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		85A8CAD41AF069EA0023504D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		85A8CAB51AF069EA0023504D = {
+			isa = PBXGroup;
+			children = (
+				85A8CAC01AF069EA0023504D /* CeliTax */,
+				85A8CADA1AF069EA0023504D /* CeliTaxTests */,
+				85A8CABF1AF069EA0023504D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		85A8CABF1AF069EA0023504D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				85A8CABE1AF069EA0023504D /* CeliTax.app */,
+				85A8CAD71AF069EA0023504D /* CeliTaxTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		85A8CAC01AF069EA0023504D /* CeliTax */ = {
+			isa = PBXGroup;
+			children = (
+				85A8CAC51AF069EA0023504D /* AppDelegate.h */,
+				85A8CAC61AF069EA0023504D /* AppDelegate.m */,
+				85A8CAC81AF069EA0023504D /* ViewController.h */,
+				85A8CAC91AF069EA0023504D /* ViewController.m */,
+				85A8CACB1AF069EA0023504D /* Main.storyboard */,
+				85A8CACE1AF069EA0023504D /* Images.xcassets */,
+				85A8CAD01AF069EA0023504D /* LaunchScreen.xib */,
+				85A8CAC11AF069EA0023504D /* Supporting Files */,
+			);
+			path = CeliTax;
+			sourceTree = "<group>";
+		};
+		85A8CAC11AF069EA0023504D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				85A8CAC21AF069EA0023504D /* Info.plist */,
+				85A8CAC31AF069EA0023504D /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		85A8CADA1AF069EA0023504D /* CeliTaxTests */ = {
+			isa = PBXGroup;
+			children = (
+				85A8CADD1AF069EA0023504D /* CeliTaxTests.m */,
+				85A8CADB1AF069EA0023504D /* Supporting Files */,
+			);
+			path = CeliTaxTests;
+			sourceTree = "<group>";
+		};
+		85A8CADB1AF069EA0023504D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				85A8CADC1AF069EA0023504D /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		85A8CABD1AF069EA0023504D /* CeliTax */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 85A8CAE11AF069EA0023504D /* Build configuration list for PBXNativeTarget "CeliTax" */;
+			buildPhases = (
+				85A8CABA1AF069EA0023504D /* Sources */,
+				85A8CABB1AF069EA0023504D /* Frameworks */,
+				85A8CABC1AF069EA0023504D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CeliTax;
+			productName = CeliTax;
+			productReference = 85A8CABE1AF069EA0023504D /* CeliTax.app */;
+			productType = "com.apple.product-type.application";
+		};
+		85A8CAD61AF069EA0023504D /* CeliTaxTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 85A8CAE41AF069EA0023504D /* Build configuration list for PBXNativeTarget "CeliTaxTests" */;
+			buildPhases = (
+				85A8CAD31AF069EA0023504D /* Sources */,
+				85A8CAD41AF069EA0023504D /* Frameworks */,
+				85A8CAD51AF069EA0023504D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				85A8CAD91AF069EA0023504D /* PBXTargetDependency */,
+			);
+			name = CeliTaxTests;
+			productName = CeliTaxTests;
+			productReference = 85A8CAD71AF069EA0023504D /* CeliTaxTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		85A8CAB61AF069EA0023504D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = CraveNSave;
+				TargetAttributes = {
+					85A8CABD1AF069EA0023504D = {
+						CreatedOnToolsVersion = 6.3.1;
+					};
+					85A8CAD61AF069EA0023504D = {
+						CreatedOnToolsVersion = 6.3.1;
+						TestTargetID = 85A8CABD1AF069EA0023504D;
+					};
+				};
+			};
+			buildConfigurationList = 85A8CAB91AF069EA0023504D /* Build configuration list for PBXProject "CeliTax" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 85A8CAB51AF069EA0023504D;
+			productRefGroup = 85A8CABF1AF069EA0023504D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				85A8CABD1AF069EA0023504D /* CeliTax */,
+				85A8CAD61AF069EA0023504D /* CeliTaxTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		85A8CABC1AF069EA0023504D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				85A8CACD1AF069EA0023504D /* Main.storyboard in Resources */,
+				85A8CAD21AF069EA0023504D /* LaunchScreen.xib in Resources */,
+				85A8CACF1AF069EA0023504D /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		85A8CAD51AF069EA0023504D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		85A8CABA1AF069EA0023504D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				85A8CACA1AF069EA0023504D /* ViewController.m in Sources */,
+				85A8CAC71AF069EA0023504D /* AppDelegate.m in Sources */,
+				85A8CAC41AF069EA0023504D /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		85A8CAD31AF069EA0023504D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				85A8CADE1AF069EA0023504D /* CeliTaxTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		85A8CAD91AF069EA0023504D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 85A8CABD1AF069EA0023504D /* CeliTax */;
+			targetProxy = 85A8CAD81AF069EA0023504D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		85A8CACB1AF069EA0023504D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				85A8CACC1AF069EA0023504D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		85A8CAD01AF069EA0023504D /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				85A8CAD11AF069EA0023504D /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		85A8CADF1AF069EA0023504D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		85A8CAE01AF069EA0023504D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		85A8CAE21AF069EA0023504D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = CeliTax/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		85A8CAE31AF069EA0023504D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = CeliTax/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		85A8CAE51AF069EA0023504D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = CeliTaxTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CeliTax.app/CeliTax";
+			};
+			name = Debug;
+		};
+		85A8CAE61AF069EA0023504D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = CeliTaxTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CeliTax.app/CeliTax";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		85A8CAB91AF069EA0023504D /* Build configuration list for PBXProject "CeliTax" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				85A8CADF1AF069EA0023504D /* Debug */,
+				85A8CAE01AF069EA0023504D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		85A8CAE11AF069EA0023504D /* Build configuration list for PBXNativeTarget "CeliTax" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				85A8CAE21AF069EA0023504D /* Debug */,
+				85A8CAE31AF069EA0023504D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		85A8CAE41AF069EA0023504D /* Build configuration list for PBXNativeTarget "CeliTaxTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				85A8CAE51AF069EA0023504D /* Debug */,
+				85A8CAE61AF069EA0023504D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 85A8CAB61AF069EA0023504D /* Project object */;
+}
