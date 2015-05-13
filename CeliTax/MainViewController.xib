@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
+            <connections>
+                <outlet property="cameraButton" destination="7Oe-J2-WxF" id="QC0-be-RV4"/>
+                <outlet property="recentUploadsTable" destination="fcU-BM-YHD" id="0bp-KU-Jpm"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="64" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Oe-J2-WxF">
+                    <rect key="frame" x="142" y="597" width="90" height="70"/>
+                    <color key="backgroundColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="70" id="2AM-Hk-6Mz"/>
+                        <constraint firstAttribute="width" constant="90" id="o13-fF-bXh"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal" title="CAMERA">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="cameraButtonPressed:" destination="-1" eventType="touchUpInside" id="Nau-6t-p43"/>
+                    </connections>
+                </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="fcU-BM-YHD">
+                    <rect key="frame" x="0.0" y="159" width="375" height="428"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="92N-Qx-duf">
+                    <rect key="frame" x="20" y="79" width="138" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="198" id="1as-RJ-xVw"/>
+                        <constraint firstAttribute="height" constant="30" id="wRY-na-fsV"/>
+                        <constraint firstAttribute="width" constant="138" id="x9S-7k-tT4"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <state key="normal" title="+ Add Catagory">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="1as-RJ-xVw"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="addCatagoryPressed:" destination="-1" eventType="touchUpInside" id="ORq-0P-jIO"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recent Uploads:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G7t-Pc-1oc">
+                    <rect key="frame" x="20" y="125" width="128" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="7Oe-J2-WxF" secondAttribute="centerX" id="9JI-rK-Gco"/>
+                <constraint firstItem="7Oe-J2-WxF" firstAttribute="top" secondItem="fcU-BM-YHD" secondAttribute="bottom" constant="10" id="ACW-pl-Jrx"/>
+                <constraint firstItem="92N-Qx-duf" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="79" id="E4m-J8-oaQ"/>
+                <constraint firstItem="G7t-Pc-1oc" firstAttribute="top" secondItem="92N-Qx-duf" secondAttribute="bottom" constant="16" id="OuC-fS-BMc"/>
+                <constraint firstItem="fcU-BM-YHD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="VSI-VB-U8s"/>
+                <constraint firstItem="fcU-BM-YHD" firstAttribute="top" secondItem="G7t-Pc-1oc" secondAttribute="bottom" constant="13" id="Vum-0g-ZxQ"/>
+                <constraint firstItem="92N-Qx-duf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="XdY-Xj-lUM"/>
+                <constraint firstAttribute="trailing" secondItem="fcU-BM-YHD" secondAttribute="trailing" id="b6v-fa-lBm"/>
+                <constraint firstAttribute="bottom" secondItem="7Oe-J2-WxF" secondAttribute="bottom" id="fJY-b3-pD2"/>
+                <constraint firstItem="G7t-Pc-1oc" firstAttribute="leading" secondItem="92N-Qx-duf" secondAttribute="leading" id="kSm-0z-smg"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+        </view>
+    </objects>
+</document>

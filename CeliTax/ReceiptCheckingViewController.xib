@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReceiptCheckingViewController">
+            <connections>
+                <outlet property="amountField" destination="1UZ-dT-3K1" id="E5i-Be-hFf"/>
+                <outlet property="buttonBarPlaceHolder" destination="wgS-bS-mwy" id="IMD-Gr-dpV"/>
+                <outlet property="catagoryRecordsTable" destination="2P5-oB-OYI" id="rAV-ac-xUh"/>
+                <outlet property="confirmButton" destination="wcK-fO-N33" id="XcZ-Gd-9l0"/>
+                <outlet property="quantityField" destination="KUx-xT-gtD" id="3Ea-br-354"/>
+                <outlet property="receiptScrollView" destination="FEe-A8-dyx" id="sQL-KB-Mhr"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="40" sectionHeaderHeight="25" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="2P5-oB-OYI">
+                    <rect key="frame" x="13" y="72" width="349" height="151"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="151" id="slA-jg-IdL"/>
+                    </constraints>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FEe-A8-dyx" customClass="ReceiptScrollBarView">
+                    <rect key="frame" x="40" y="233" width="295" height="336"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Quantity" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KUx-xT-gtD">
+                    <rect key="frame" x="33" y="579" width="97" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="97" id="6dX-e7-V53"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad"/>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Amount" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1UZ-dT-3K1">
+                    <rect key="frame" x="175" y="579" width="97" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="97" id="Mxb-Vz-6P7"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="decimalPad"/>
+                </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="X" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FLF-qJ-I9l">
+                    <rect key="frame" x="147" y="584" width="11" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wcK-fO-N33">
+                    <rect key="frame" x="288" y="579" width="55" height="30"/>
+                    <state key="normal" title="Confirm">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="confirmPressed:" destination="-1" eventType="touchUpInside" id="hf0-qR-1p3"/>
+                    </connections>
+                </button>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wgS-bS-mwy">
+                    <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                    <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="l6R-Fy-kbf"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="wgS-bS-mwy" firstAttribute="top" secondItem="wcK-fO-N33" secondAttribute="bottom" constant="8" id="1lJ-Nc-DYt"/>
+                <constraint firstItem="2P5-oB-OYI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="13" id="2vr-bb-DIs"/>
+                <constraint firstAttribute="trailing" secondItem="wgS-bS-mwy" secondAttribute="trailing" id="5NQ-70-Fkl"/>
+                <constraint firstAttribute="bottom" secondItem="wgS-bS-mwy" secondAttribute="bottom" id="CEx-Zd-Ngb"/>
+                <constraint firstItem="wcK-fO-N33" firstAttribute="leading" secondItem="1UZ-dT-3K1" secondAttribute="trailing" constant="16" id="CNI-fu-VkN"/>
+                <constraint firstItem="FLF-qJ-I9l" firstAttribute="leading" secondItem="KUx-xT-gtD" secondAttribute="trailing" constant="17" id="CS8-HI-y70"/>
+                <constraint firstItem="1UZ-dT-3K1" firstAttribute="leading" secondItem="FLF-qJ-I9l" secondAttribute="trailing" constant="17" id="D3n-gU-08n"/>
+                <constraint firstAttribute="centerX" secondItem="FLF-qJ-I9l" secondAttribute="centerX" constant="35" id="G4c-3B-nfM"/>
+                <constraint firstAttribute="trailing" secondItem="FEe-A8-dyx" secondAttribute="trailing" constant="40" id="Hbr-gG-kgx"/>
+                <constraint firstItem="wgS-bS-mwy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="JmH-qf-E5H"/>
+                <constraint firstItem="wgS-bS-mwy" firstAttribute="top" secondItem="KUx-xT-gtD" secondAttribute="bottom" constant="8" id="QSU-Bg-paJ"/>
+                <constraint firstItem="FEe-A8-dyx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="XZG-Nk-GLS"/>
+                <constraint firstItem="1UZ-dT-3K1" firstAttribute="top" secondItem="FEe-A8-dyx" secondAttribute="bottom" constant="10" id="Ztz-KP-Pfg"/>
+                <constraint firstItem="2P5-oB-OYI" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="72" id="bxF-0S-5W2"/>
+                <constraint firstAttribute="trailing" secondItem="2P5-oB-OYI" secondAttribute="trailing" constant="13" id="dCG-ZA-c3y"/>
+                <constraint firstItem="FEe-A8-dyx" firstAttribute="top" secondItem="2P5-oB-OYI" secondAttribute="bottom" constant="10" id="pko-Po-SOd"/>
+                <constraint firstItem="wgS-bS-mwy" firstAttribute="top" secondItem="1UZ-dT-3K1" secondAttribute="bottom" constant="8" id="sxi-Hj-h0o"/>
+                <constraint firstItem="wgS-bS-mwy" firstAttribute="top" secondItem="FLF-qJ-I9l" secondAttribute="bottom" constant="12" id="ua5-Uc-HxX"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <point key="canvasLocation" x="539.5" y="379.5"/>
+        </view>
+    </objects>
+</document>

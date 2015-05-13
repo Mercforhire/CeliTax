@@ -7,17 +7,93 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewControllerFactory.h"
+#import "ConfigurationManager.h"
+#import "UserManager.h"
+#import "SplashViewController.h"
+#import "LoginViewController.h"
+#import "ServiceFactory.h"
+#import "DAOFactory.h"
+
+@class SplashViewController,ConfigurationManager,ViewControllerFactory,UserManager;
 
 @interface AppDelegate ()
+
+@property (nonatomic, strong) ConfigurationManager *configurationManager;
+@property (nonatomic, strong) ViewControllerFactory *viewControllerFactory;
+@property (nonatomic, strong) UserManager *userManager;
+@property (nonatomic, strong) ServiceFactory *serviceFactory;
+@property (nonatomic, strong) DAOFactory *daoFactory;
+
+@property (nonatomic, strong) SplashViewController *splash;
+@property (nonatomic, strong) UINavigationController *navController;
 
 @end
 
 @implementation AppDelegate
 
+- (void) initializeConfigurationManager
+{
+    self.configurationManager = [[ConfigurationManager alloc] init];
+}
 
+- (void) initializeViewControllerFactory
+{
+    self.viewControllerFactory = [[ViewControllerFactory alloc] init];
+    
+    self.viewControllerFactory.configurationManager = self.configurationManager;
+    self.viewControllerFactory.userManager = self.userManager;
+    self.viewControllerFactory.authenticationService = [self.serviceFactory createAuthenticationService];
+    self.viewControllerFactory.dataService = [self.serviceFactory createDataService];
+    self.viewControllerFactory.manipulationService = [self.serviceFactory createManipulationService];
+}
+
+- (void) initializeUserManager
+{
+    self.userManager = [[UserManager alloc] init];
+}
+
+- (void) initializeServiceFactory
+{
+    self.serviceFactory = [[ServiceFactory alloc] init];
+    self.serviceFactory.configurationManager = self.configurationManager;
+    self.serviceFactory.daoFactory = self.daoFactory;
+}
+
+- (void) initializeDAOFactory
+{
+    self.daoFactory = [[DAOFactory alloc] init];
+}
+
+#pragma mark App lifecycle
+
+//do loading here
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    [self initializeConfigurationManager];
+    [self initializeDAOFactory];
+    [self initializeServiceFactory];
+    [self initializeUserManager];
+    [self initializeViewControllerFactory];
+    
+    self.window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
+    self.splash = [self.viewControllerFactory createSplashViewController];
+    
+    self.window.rootViewController = self.splash;
+    
+    [self.window makeKeyAndVisible];
+    
+    if (!self.navController)
+    {
+        self.navController = [[UINavigationController alloc] init];
+        self.window.rootViewController = self.navController;
+        
+        //if not logged in, push login screen. Else push main app screen
+        [self.navController pushViewController: [self.viewControllerFactory createLoginViewController] animated:YES];
+        
+        [self.window makeKeyAndVisible];
+    }
+    
     return YES;
 }
 

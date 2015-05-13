@@ -4,12 +4,22 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-CeliTax-HMSegmentedControl.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-CeliTax-MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>Pods-CeliTax-MKNetworkKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-CeliTax-NKOColorPickerView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -27,22 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1087E61B76EC8F2F8989A6BF</key>
+		<key>11349A0EE5595C9F7881FFE2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>506E16CA83FAE8BF6CCA2D78</key>
+		<key>1AAA17FBA50E3D9D6AEAD581</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6F4956C2A7A1675FAD0EE8AC</key>
+		<key>24528EC1AB5538859A89528C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8B82C3B2FACDE4B0CE3E7CC1</key>
+		<key>83343B401CBF556DA03C8FB2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AF63C35013EC7679ED47E59A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EB99115605CDFB6019301036</key>
 		<dict>
 			<key>primary</key>
 			<true/>

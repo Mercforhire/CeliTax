@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyAccountViewController">
+            <connections>
+                <outlet property="accountTableView" destination="J80-ck-6nT" id="xb8-PG-Isg"/>
+                <outlet property="addressLabel" destination="wkI-4C-w7v" id="bCa-ZD-GRd"/>
+                <outlet property="calculateButton" destination="rR6-6D-WTS" id="ScX-Z2-4Gw"/>
+                <outlet property="nameLabel" destination="La8-Vn-6GL" id="CMi-Gg-tLv"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rR6-6D-WTS">
+                    <rect key="frame" x="142" y="611" width="90" height="31"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="31" id="Y7g-gh-x86"/>
+                        <constraint firstAttribute="width" constant="90" id="eXb-qz-bOJ"/>
+                    </constraints>
+                    <state key="normal" title="Calculate">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="calculateButtonPressed:" destination="-1" eventType="touchUpInside" id="fcA-lr-qGS"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="John Buck" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="La8-Vn-6GL">
+                    <rect key="frame" x="13" y="76" width="308" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="308" id="NzM-sk-vhT"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Canada, M1T 2Z4" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wkI-4C-w7v">
+                    <rect key="frame" x="13" y="108" width="308" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="308" id="hxo-je-sXG"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="308" id="o6m-Yr-fdJ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="o6m-Yr-fdJ"/>
+                        </mask>
+                    </variation>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Catagory" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d2F-gY-ron">
+                    <rect key="frame" x="13" y="146" width="71" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="J80-ck-6nT">
+                    <rect key="frame" x="0.0" y="177" width="375" height="424"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="J80-ck-6nT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7ep-yZ-8av"/>
+                <constraint firstAttribute="trailing" secondItem="J80-ck-6nT" secondAttribute="trailing" id="8c8-Xm-6x8"/>
+                <constraint firstItem="La8-Vn-6GL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="13" id="9sO-RA-p9x"/>
+                <constraint firstAttribute="centerY" secondItem="d2F-gY-ron" secondAttribute="centerY" id="Drw-xn-i76"/>
+                <constraint firstItem="d2F-gY-ron" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="13" id="EhE-dt-rFc"/>
+                <constraint firstItem="J80-ck-6nT" firstAttribute="leading" secondItem="d2F-gY-ron" secondAttribute="trailing" id="GS2-aw-1eU"/>
+                <constraint firstItem="d2F-gY-ron" firstAttribute="top" secondItem="wkI-4C-w7v" secondAttribute="bottom" constant="20" id="Ojs-uK-cEi"/>
+                <constraint firstItem="La8-Vn-6GL" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="76" id="QED-WJ-YEI"/>
+                <constraint firstAttribute="bottom" secondItem="rR6-6D-WTS" secondAttribute="bottom" constant="25" id="VAN-qU-ZMA"/>
+                <constraint firstItem="wkI-4C-w7v" firstAttribute="top" secondItem="La8-Vn-6GL" secondAttribute="bottom" constant="8" id="ffl-Pu-C4D"/>
+                <constraint firstItem="wkI-4C-w7v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="13" id="gjv-11-AAr"/>
+                <constraint firstAttribute="centerX" secondItem="rR6-6D-WTS" secondAttribute="centerX" id="hpe-pE-zGN"/>
+                <constraint firstItem="rR6-6D-WTS" firstAttribute="top" secondItem="J80-ck-6nT" secondAttribute="bottom" constant="10" id="kMQ-JP-wuO"/>
+                <constraint firstItem="J80-ck-6nT" firstAttribute="top" secondItem="d2F-gY-ron" secondAttribute="bottom" constant="10" id="tLf-Ek-3MW"/>
+                <constraint firstAttribute="centerX" secondItem="d2F-gY-ron" secondAttribute="centerX" id="zwh-yb-Ngj"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="Drw-xn-i76"/>
+                    <exclude reference="zwh-yb-Ngj"/>
+                    <exclude reference="GS2-aw-1eU"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+</document>

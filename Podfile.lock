@@ -1,16 +1,22 @@
 PODS:
+  - HMSegmentedControl (1.5.1)
   - MBProgressHUD (0.9.1)
   - MKNetworkKit (HEAD based on 0.87):
     - Reachability (~> 3.1.0)
+  - NKOColorPickerView (0.2)
   - Reachability (3.1.1)
 
 DEPENDENCIES:
+  - HMSegmentedControl
   - MBProgressHUD (~> 0.9.1)
   - MKNetworkKit (HEAD)
+  - NKOColorPickerView
 
 SPEC CHECKSUMS:
+  HMSegmentedControl: 35460abdd15c3087368db2d3d956717f088b34d1
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   MKNetworkKit: 60ad3c83b62183e40ba75ce772c9427c25b520de
+  NKOColorPickerView: 3001ad15be1277dac3b80b300f530828e93b23ae
   Reachability: dd9aa4fb6667b9f787690a74f53cb7634ce99893
 
 COCOAPODS: 0.35.0

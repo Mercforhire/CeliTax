@@ -1,0 +1,26 @@
+//
+//  CeliTax-Prefix.pch
+//  CeliTax
+//
+//  Created by Leon Chen on 2015-05-01.
+//  Copyright (c) 2015 CraveNSave. All rights reserved.
+//
+
+#ifndef CeliTax_CeliTax_Prefix_pch
+#define CeliTax_CeliTax_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#endif
+
+#ifdef DEBUG
+#define DLog(fmt, ...) NSLog((@"%@: " fmt), NSStringFromClass([self class]), ##__VA_ARGS__);
+#else
+#define DLog(...)
+#endif
+
+#endif
