@@ -7,32 +7,40 @@
 //
 
 #import "ReceiptCheckingViewController.h"
-#import "HMSegmentedControl.h"
+#import "HorizonalScrollBarView.h"
 #import "ReceiptScrollBarView.h"
 #import "AddCatagoryViewController.h"
-#import "ItemCatagory.h"
+#import "Catagory.h"
 #import "User.h"
 #import "UserManager.h"
-#import "CatagoryRecord.h"
+#import "Record.h"
+#import "ImageCounterIconView.h"
+#import "AddCatagoryViewController.h"
+#import "ViewControllerFactory.h"
+#import "AlertDialogsProvider.h"
+#include <QuartzCore/QuartzCore.h>
 
-@interface ReceiptCheckingViewController () <UITableViewDelegate, UITableViewDataSource> 
-
-@property (weak, nonatomic) IBOutlet UITableView *catagoryRecordsTable;
-
+@interface ReceiptCheckingViewController () <ImageCounterIconViewProtocol, HorizonalScrollBarViewProtocol>
 
 @property (weak, nonatomic) IBOutlet ReceiptScrollBarView *receiptScrollView;
-@property (weak, nonatomic) IBOutlet UITextField *quantityField;
-@property (weak, nonatomic) IBOutlet UITextField *amountField;
-@property (weak, nonatomic) IBOutlet UIButton *confirmButton;
-@property (weak, nonatomic) IBOutlet UIView *buttonBarPlaceHolder;
-@property (strong, nonatomic) HMSegmentedControl *buttonBar;
+@property (weak, nonatomic) IBOutlet UIView *bottombarContainer;
+@property (strong, nonatomic) HorizonalScrollBarView *bottomBar;
+@property (weak, nonatomic) IBOutlet ImageCounterIconView *recordsCounter;
+@property (weak, nonatomic) IBOutlet UIButton *previousItemButton;
+@property (weak, nonatomic) IBOutlet UIButton *nextItemButton;
+@property (weak, nonatomic) IBOutlet UIButton *addItemButton;
+@property (weak, nonatomic) IBOutlet UIButton *deleteItemButton;
+@property (weak, nonatomic) IBOutlet UITextField *qtyField;
+@property (weak, nonatomic) IBOutlet UITextField *pricePerItemField;
+@property (weak, nonatomic) IBOutlet UITextField *totalField;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *animatedBar;
 
 @property (strong, nonatomic) NSMutableArray *receiptImages;
 @property (strong, nonatomic) NSArray *catagories;
 @property (strong, nonatomic) NSMutableArray *catagoryNames;
-@property (strong, nonatomic) NSMutableArray *catagoryRecordsForThisReceipt;
+@property (strong, nonatomic) NSMutableArray *RecordsForThisReceipt;
 
-@property (nonatomic, strong) ItemCatagory *currentlySelectedCatagory;
+@property (nonatomic, strong) Catagory *currentlySelectedCatagory;
 
 @end
 
@@ -43,10 +51,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.catagoryRecordsForThisReceipt = [NSMutableArray new];
+    self.bottomBar = [[HorizonalScrollBarView alloc] initWithFrame:self.bottombarContainer.frame];
+    self.bottomBar.delegate = self;
+    [self.view addSubview:self.bottomBar];
+    
+    self.RecordsForThisReceipt = [NSMutableArray new];
     
     //load the receiptImages array with some demo images
     self.receiptImages = [NSMutableArray new];
+    
+    UIImage *receiptImage = [UIImage imageNamed:@"receipt.png"];
+    [self.recordsCounter setImage:receiptImage];
+    [self.recordsCounter setDelegate:self];
     
     UIImage *image1 = [UIImage imageNamed:@"ReceiptPic-1.jpg"];
     UIImage *image2 = [UIImage imageNamed:@"ReceiptPic-2.jpg"];
@@ -54,16 +70,28 @@
     [self.receiptImages addObject:image1];
     [self.receiptImages addObject:image2];
     
-    self.receiptID = 0;
+    [self.receiptScrollView setImages:self.receiptImages];
+    
+    CALayer *maskLayer = [CALayer layer];
+    maskLayer.frame = self.receiptScrollView.bounds;
+    maskLayer.shadowRadius = 2.5f;
+    maskLayer.shadowPath = CGPathCreateWithRoundedRect(CGRectInset(self.receiptScrollView.bounds, 8, 8), 10, 10, nil);
+    maskLayer.shadowOpacity = 1;
+    maskLayer.shadowOffset = CGSizeZero;
+    maskLayer.shadowColor = [UIColor whiteColor].CGColor;
+    
+    self.receiptScrollView.layer.mask = maskLayer;
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
+    //load the receipt images for this receipt
+    
+    
     //load all the catagories
-    [self.dataService fetchCatagoriesForUserKey:self.userManager.user.userKey
-        success:^(NSArray *catagories) {
+    [self.dataService fetchCatagoriesSuccess:^(NSArray *catagories) {
             
             self.catagories = catagories;
             
@@ -73,113 +101,52 @@
     
     self.catagoryNames = [NSMutableArray new];
     
-    for (ItemCatagory *itemCatagory in self.catagories)
+    for (Catagory *itemCatagory in self.catagories)
     {
         [self.catagoryNames addObject:itemCatagory.name];
     }
     
-    [self refreshButtonBar];
-    
     //load catagory records for this receipt
-    [self.dataService fetchCatagoryRecordsForUserKey:self.userManager.user.userKey
-                                        forReceiptID:self.receiptID
-         success:^(NSArray *catagoryRecord) {
-        
-        [self.catagoryRecordsForThisReceipt addObjectsFromArray:catagoryRecord];
-        
-    } failure:^(NSString *reason) {
-        //failure
-    }];
+    [self.dataService fetchRecordsForReceiptID:self.receiptID
+                                       success:^(NSArray *Record) {
+                                           
+                                           [self.RecordsForThisReceipt addObjectsFromArray:Record];
+                                           
+                                           [self.recordsCounter setCounter:self.RecordsForThisReceipt.count];
+                                       } failure:^(NSString *reason) {
+                                           //failure
+                                       }];
+    
+    [self refreshButtonBar];
 }
 
 -(void)refreshButtonBar
 {
-    if (self.buttonBar)
-    {
-        [self.buttonBar removeFromSuperview];
-    }
-    
-    // Segmented control with scrolling
-    self.buttonBar = [[HMSegmentedControl alloc] initWithSectionTitles: self.catagoryNames];
-    self.buttonBar.frame = self.buttonBarPlaceHolder.frame;
-    self.buttonBar.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
-    self.buttonBar.segmentEdgeInset = UIEdgeInsetsMake(0, 10, 0, 10);
-    self.buttonBar.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
-    self.buttonBar.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-    self.buttonBar.verticalDividerEnabled = YES;
-    self.buttonBar.verticalDividerColor = [UIColor blackColor];
-    self.buttonBar.verticalDividerWidth = 1.0f;
-    [self.buttonBar setTitleFormatter:^NSAttributedString *(HMSegmentedControl *segmentedControl, NSString *title, NSUInteger index, BOOL selected) {
-        NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName : [UIColor blueColor]}];
-        return attString;
-    }];
-    [self.buttonBar addTarget:self action:@selector(catagoryBarChanged:) forControlEvents:UIControlEventValueChanged];
-    
-    [self.view addSubview:self.buttonBar];
+    [self.bottomBar setButtonNames:self.catagoryNames];
 }
 
--(void)catagoryBarChanged:(HMSegmentedControl *)sender
+- (IBAction)addCatagoryPressed:(UIButton *)sender
 {
-    self.currentlySelectedCatagory = self.catagories[sender.selectedSegmentIndex];
-    
-    DLog(@"Catagory %@ selected", self.currentlySelectedCatagory.name);
+    //open up the AddCatagoryViewController
+    [self.navigationController pushViewController:[self.viewControllerFactory createAddCatagoryViewController] animated:YES];
 }
 
-- (IBAction)confirmPressed:(UIButton *)sender
+#pragma mark - ImageCounterIconViewProtocol
+
+-(void)imageCounterIconClicked
 {
-    [self.manipulationService addRecordForUserKey:self.userManager.user.userKey
-                                    forCatagoryID:self.currentlySelectedCatagory.identifer
-                                     forReceiptID:self.receiptID
-                                      forQuantity:self.quantityField.text.integerValue
-                                        forAmount:self.amountField.text.floatValue
-                                          success:^{
-        
-        [self.navigationController popViewControllerAnimated:YES];
-        
-    } failure:^(NSString *reason) {
-        //should not happen
-    }];
+    DLog(@"Image counter icon clicked");
+    
+    [AlertDialogsProvider showWorkInProgressDialog];
 }
 
-#pragma mark - UITableview DataSource
+#pragma mark - HorizonalScrollBarViewProtocol
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+-(void)buttonClickedWithIndex:(NSInteger)index andName:(NSString *)name
 {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.catagoryRecordsForThisReceipt.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *cellId = @"CatagoryRecordCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    DLog(@"Bottom Bar button %ld:%@ pressed", (long)index, name);
     
-    if (cell == nil)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellId];
-    }
-    
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    
-    CatagoryRecord *thisCatagoryRecord = [self.catagoryRecordsForThisReceipt objectAtIndex:indexPath.row];
-    
-    [cell.textLabel setText:thisCatagoryRecord.itemCatagoryName];
-    [cell.detailTextLabel setText:[NSString stringWithFormat:@"%ld X $%.2f",thisCatagoryRecord.quantity, thisCatagoryRecord.amount]];
-    
-    return cell;
-}
-
-#pragma mark - UITableview Delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    CatagoryRecord *thisCatagoryRecord = [self.catagoryRecordsForThisReceipt objectAtIndex:indexPath.row];
-    
-    DLog(@"CatagoryRecord %ld pressed", (long)thisCatagoryRecord.identifer );
+    [AlertDialogsProvider showWorkInProgressDialog];
 }
 
 @end

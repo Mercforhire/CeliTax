@@ -9,49 +9,71 @@
 #import "TransferCatagoryViewController.h"
 #import "UserManager.h"
 #import "User.h"
-#import "ItemCatagory.h"
+#import "Catagory.h"
 
 @interface TransferCatagoryViewController () <UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIAlertViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *fromCatagoryName;
 @property (weak, nonatomic) IBOutlet UITextField *toCatagoryName;
 @property (weak, nonatomic) IBOutlet UIButton *transferButton;
 
-@property (strong, nonatomic) NSArray *catagories;
-@property (strong, nonatomic) ItemCatagory *fromCatagory;
-@property (strong, nonatomic) ItemCatagory *toCatagory;
+@property (strong, nonatomic) NSMutableArray *catagories;
 
-@property (strong, nonatomic) UIPickerView *fromPicker;
+@property (strong, nonatomic) Catagory *toCatagory;
+
 @property (strong, nonatomic) UIPickerView *toPicker;
 
 @end
 
 @implementation TransferCatagoryViewController
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
+    {
+        // Custom initialization
+        self.viewSize = CGSizeMake(300, 162);
+    }
+    return self;
+}
+
+-(void)setToCatagory:(Catagory *)toCatagory
+{
+    _toCatagory = toCatagory;
+    
+    if (_toCatagory)
+    {
+        self.toCatagoryName.text = _toCatagory.name;
+    }
+    else
+    {
+        self.toCatagoryName.text = @"";
+    }
+    
+    [self checkAndEnableOrDisableConfirmButton];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+
+    self.catagories = [NSMutableArray new];
     
-    [self.dataService fetchCatagoriesForUserKey:self.userManager.user.userKey success:^(NSArray *catagories) {
-        self.catagories = catagories;
+    [self.dataService fetchCatagoriesSuccess:^(NSArray *catagories) {
+        
+        for (Catagory *catagory in catagories)
+        {
+            if (catagory.identifer != self.fromCatagory.identifer)
+            {
+                [self.catagories addObject:catagory];
+            }
+        }
+        
     } failure:^(NSString *reason) {
         //should not happen
     }];
     
     NSAssert(self.catagories.count >= 2, @"Must have more than two catagories to attempt to transfer");
-    
-    self.fromCatagoryName.delegate = self;
-    [self.fromCatagoryName addTarget:self
-                        action:@selector(textFieldDidChange:)
-              forControlEvents:UIControlEventEditingChanged];
-    
-    self.fromPicker = [[UIPickerView alloc] init];
-    self.fromPicker.delegate = self;
-    self.fromPicker.dataSource = self;
-    self.fromPicker.showsSelectionIndicator = YES;
-    
-    self.fromCatagoryName.inputView = self.fromPicker;
     
     self.toCatagoryName.delegate = self;
     [self.toCatagoryName addTarget:self
@@ -68,7 +90,8 @@
 
 - (IBAction)transferPressed:(UIButton *)sender
 {
-    [self.manipulationService transferCatagoryForUserKey:self.userManager.user.userKey fromCatagoryID:self.fromCatagory.identifer toCatagoryID:self.toCatagory.identifer success:^{
+    [self.manipulationService transferCatagoryFromCatagoryID:self.fromCatagory.identifer toCatagoryID:self.toCatagory.identifer success:^{
+        
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Success"
                                                           message:@"Transfer complete"
                                                          delegate:self
@@ -76,9 +99,22 @@
                                                 otherButtonTitles:@"Ok",nil];
         
         [message show];
+        
     } failure:^(NSString *reason) {
         DLog(@"self.manipulationService transferCatagoryForUserKey FAILED!");
     }];
+}
+
+-(void)checkAndEnableOrDisableConfirmButton
+{
+    if ( self.toCatagoryName.text.length )
+    {
+        [self.transferButton setEnabled:YES];
+    }
+    else
+    {
+        [self.transferButton setEnabled:NO];
+    }
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -107,14 +143,7 @@
 
 -(void)textFieldDidChange:(UITextField *)textfield
 {
-    if (self.fromCatagoryName.text.length && self.toCatagoryName.text.length )
-    {
-        [self.transferButton setEnabled:YES];
-    }
-    else
-    {
-        [self.transferButton setEnabled:NO];
-    }
+    [self checkAndEnableOrDisableConfirmButton];
 }
 
 #pragma mark - UIPickerView delegate
@@ -126,13 +155,9 @@
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    if (pickerView == self.fromPicker)
+    if (pickerView == self.toPicker)
     {
         return self.catagories.count;
-    }
-    else if (pickerView == self.toPicker)
-    {
-        return self.catagories.count - 1;
     }
     
     return 0;
@@ -140,21 +165,11 @@
 
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    if (pickerView == self.fromPicker)
+    if (pickerView == self.toPicker)
     {
-        return self.catagories[row];
-    }
-    else if (pickerView == self.toPicker)
-    {
-        //skip to the next one
-        if (self.catagories[row] == self.toCatagory)
-        {
-            return self.catagories[row + 1];
-        }
-        else
-        {
-            return self.catagories[row];
-        }
+        Catagory *thisCatagory = self.catagories[row];
+        
+        return thisCatagory.name;
     }
     
     return nil;
@@ -162,29 +177,11 @@
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    if (pickerView == self.fromPicker)
-    {
-        self.fromCatagory = self.catagories[row];
-        
-        self.toCatagory = nil;
-        
-        [self.fromCatagoryName resignFirstResponder];
-        
-        DLog(@"From Catagory set to %@", self.fromCatagory.name);
-    }
-    else if (pickerView == self.toPicker)
+    if (pickerView == self.toPicker)
     {
         [self.toCatagoryName resignFirstResponder];
         
-        //skip to the next one
-        if (self.catagories[row] == self.toCatagory)
-        {
-            self.toCatagory = self.catagories[row + 1];
-        }
-        else
-        {
-            self.toCatagory = self.catagories[row];
-        }
+        self.toCatagory = self.catagories[row];
         
         DLog(@"To Catagory set to %@", self.toCatagory.name);
     }

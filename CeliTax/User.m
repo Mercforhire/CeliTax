@@ -18,6 +18,7 @@
         self.userKey = [aDecoder decodeObjectForKey: @"userKey"];
         self.firstname = [aDecoder decodeObjectForKey: @"firstname"];
         self.lastname = [aDecoder decodeObjectForKey: @"lastname"];
+        self.city = [aDecoder decodeObjectForKey: @"city"];
         self.postalCode = [aDecoder decodeObjectForKey: @"postalCode"];
         self.country = [aDecoder decodeObjectForKey: @"country"];
     }
@@ -31,6 +32,7 @@
     [aCoder encodeObject: self.userKey forKey: @"userKey"];
     [aCoder encodeObject: self.firstname forKey: @"firstname"];
     [aCoder encodeObject: self.lastname forKey: @"lastname"];
+    [aCoder encodeObject: self.city forKey: @"city"];
     [aCoder encodeObject: self.postalCode forKey: @"postalCode"];
     [aCoder encodeObject: self.country forKey: @"country"];
 }

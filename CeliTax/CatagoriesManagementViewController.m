@@ -8,28 +8,39 @@
 
 #import "CatagoriesManagementViewController.h"
 #import "AlertDialogsProvider.h"
-#import "AccountTableViewCell.h"
-#import "ItemCatagory.h"
-#import "CatagoryRecord.h"
+#import "Catagory.h"
+#import "Record.h"
 #import "User.h"
 #import "UserManager.h"
 #import "DeleteCatagoryViewController.h"
 #import "TransferCatagoryViewController.h"
 #import "ModifyCatagoryViewController.h"
 #import "ViewControllerFactory.h"
+#import "AddCatagoryViewController.h"
+#import "CatagoriesManagementTableViewCell.h"
+#import "WYPopoverController.h"
+#import "ModifyCatagoryPopUpViewController.h"
+#import "WYPopoverController.h"
 
 #define kCatagoryTableRowHeight     70
 
-@interface CatagoriesManagementViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface CatagoriesManagementViewController () <UITableViewDataSource, UITableViewDelegate, ModifyCatagoryPopUpDelegate, PopUpViewControllerProtocol>
 
 @property (nonatomic, strong) NSMutableArray *itemCatagories; //of ItemCatagory
-@property (strong, nonatomic) NSMutableDictionary *catagoryRecordsDictionary; //Key: ItemCatagoryID, Value: NSArray of CatagoryRecord
+@property (strong, nonatomic) NSMutableDictionary *RecordsDictionary; //Key: ItemCatagoryID, Value: NSArray of Record
 
-@property (weak, nonatomic) IBOutlet UITableView *accountTable;
+@property (weak, nonatomic) IBOutlet UITableView *catagoriesTable;
 @property (weak, nonatomic) IBOutlet UIButton *addCatagoryButton;
 
-@property (weak, nonatomic) ItemCatagory *currentlySelectedCatagory;
+@property (weak, nonatomic) Catagory *currentlySelectedCatagory;
+@property CGRect tinyRect; //the position the current currentlySelectedCatagory's table cell's center
 
+@property (nonatomic, strong) WYPopoverController *floatBarPickerPopover;
+
+@property (nonatomic, strong) ModifyCatagoryPopUpViewController *modifyCatagoryPopUpViewController;
+@property (nonatomic, strong) DeleteCatagoryViewController *deleteCatagoryViewController;
+@property (nonatomic, strong) TransferCatagoryViewController *transferCatagoryViewController;
+@property (nonatomic, strong) ModifyCatagoryViewController *modifyCatagoryViewController;
 
 @end
 
@@ -40,14 +51,22 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.accountTable.dataSource = self;
-    self.accountTable.delegate = self;
+    self.catagoriesTable.dataSource = self;
+    self.catagoriesTable.delegate = self;
     
-    UINib *accountTableCell = [UINib nibWithNibName:@"AccountTableViewCell" bundle:nil];
-    [self.accountTable registerNib:accountTableCell forCellReuseIdentifier:@"AccountTableCell"];
+    self.modifyCatagoryPopUpViewController = [self.viewControllerFactory createModifyCatagoryPopUpViewController];
+    self.floatBarPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.modifyCatagoryPopUpViewController];
+    [self.modifyCatagoryPopUpViewController setDelegate:self];
+    
+    UINib *catagoriesManagementTableViewCell = [UINib nibWithNibName:@"CatagoriesManagementTableViewCell" bundle:nil];
+    [self.catagoriesTable registerNib:catagoriesManagementTableViewCell forCellReuseIdentifier:@"CatagoriesManagementTableViewCell"];
     
     self.itemCatagories = [NSMutableArray new];
-    self.catagoryRecordsDictionary = [NSMutableDictionary new];
+    self.RecordsDictionary = [NSMutableDictionary new];
+    
+    //quickly show and dismiss to get rid of a visual bug
+    [self.floatBarPickerPopover presentPopoverFromRect:self.tinyRect inView:self.view permittedArrowDirections:WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown animated:NO];
+    [self.floatBarPickerPopover dismissPopoverAnimated:NO];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -64,8 +83,7 @@
     [self.itemCatagories removeAllObjects];
     
     //load itemCatagories
-    [self.dataService fetchCatagoriesForUserKey:self.userManager.user.userKey
-        success:^(NSArray *catagories) {
+    [self.dataService fetchCatagoriesSuccess:^(NSArray *catagories) {
             
             if (catagories && catagories.count)
             {
@@ -76,17 +94,17 @@
             //should not happen
         }];
     
-    [self.catagoryRecordsDictionary removeAllObjects];
+    [self.RecordsDictionary removeAllObjects];
     
     //load catagoryRe cordsDictionary
-    for (ItemCatagory *catagory in self.itemCatagories)
+    for (Catagory *catagory in self.itemCatagories)
     {
-        [self.dataService fetchCatagoryRecordsForUserKey:self.userManager.user.userKey forCatagoryID:catagory.identifer
-                 success:^(NSArray *catagoryRecord) {
+        [self.dataService fetchRecordsForCatagoryID:catagory.identifer
+                 success:^(NSArray *Record) {
                      
-                     if (catagoryRecord && catagoryRecord.count)
+                     if (Record && Record.count)
                      {
-                         [self.catagoryRecordsDictionary setObject:catagoryRecord forKey:[NSNumber numberWithInteger:catagory.identifer]];
+                         [self.RecordsDictionary setObject:Record forKey:[NSNumber numberWithInteger:catagory.identifer]];
                      }
                      
                  } failure:^(NSString *reason) {
@@ -94,12 +112,71 @@
                  }];
     }
     
-    [self.accountTable reloadData];
+    [self.catagoriesTable reloadData];
 }
 
 - (IBAction)addCatagoryPressed:(UIButton *)sender
 {
+    //open up the AddCatagoryViewController
+    [self.navigationController pushViewController:[self.viewControllerFactory createAddCatagoryViewController] animated:YES];
+}
+
+#pragma mark - PopUpViewControllerProtocol
+-(void)requestPopUpToDismiss
+{
+    [self refreshData];
     
+    [self.floatBarPickerPopover dismissPopoverAnimated:YES];
+}
+
+#pragma mark - UITableview ModifyCatagoryPopUpDelegate
+
+-(void)editButtonPressed
+{
+    DLog("Edit button pressed for catagory: %@", self.currentlySelectedCatagory.name);
+    
+    [self.floatBarPickerPopover dismissPopoverAnimated:NO];
+    
+    self.modifyCatagoryViewController = [self.viewControllerFactory createModifyCatagoryViewControllerWith:self.currentlySelectedCatagory];
+    self.modifyCatagoryViewController.delegate = self;
+    
+    self.floatBarPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.modifyCatagoryViewController];
+    
+    [self.floatBarPickerPopover setPopoverContentSize:self.modifyCatagoryViewController.viewSize];
+    
+    [self.floatBarPickerPopover presentPopoverFromRect:self.tinyRect inView:self.view permittedArrowDirections:WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown animated:YES];
+}
+
+-(void)transferButtonPressed
+{
+    DLog("Transfer button pressed for catagory: %@", self.currentlySelectedCatagory.name);
+    
+    [self.floatBarPickerPopover dismissPopoverAnimated:NO];
+    
+    self.transferCatagoryViewController = [self.viewControllerFactory createTransferCatagoryViewController:self.currentlySelectedCatagory];
+    self.transferCatagoryViewController.delegate = self;
+    
+    self.floatBarPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.transferCatagoryViewController];
+    
+    [self.floatBarPickerPopover setPopoverContentSize:self.transferCatagoryViewController.viewSize];
+    
+    [self.floatBarPickerPopover presentPopoverFromRect:self.tinyRect inView:self.view permittedArrowDirections:WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown animated:YES];
+}
+
+-(void)deleteButtonPressed
+{
+    DLog("Delete button pressed for catagory: %@", self.currentlySelectedCatagory.name);
+    
+    [self.floatBarPickerPopover dismissPopoverAnimated:NO];
+    
+    self.deleteCatagoryViewController = [self.viewControllerFactory createDeleteCatagoryViewController:self.currentlySelectedCatagory];
+    self.deleteCatagoryViewController.delegate = self;
+    
+    self.floatBarPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.deleteCatagoryViewController];
+    
+    [self.floatBarPickerPopover setPopoverContentSize:self.deleteCatagoryViewController.viewSize];
+    
+    [self.floatBarPickerPopover presentPopoverFromRect:self.tinyRect inView:self.view permittedArrowDirections:WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown animated:YES];
 }
 
 #pragma mark - UITableview DataSource
@@ -114,42 +191,33 @@
     return self.itemCatagories.count;
 }
 
-- (AccountTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CatagoriesManagementTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellId = @"AccountTableCell";
-    AccountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    static NSString *cellId = @"CatagoriesManagementTableViewCell";
+    CatagoriesManagementTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     
     if (cell == nil)
     {
-        cell = [[AccountTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell = [[CatagoriesManagementTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
     }
     
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
-    ItemCatagory *thisItemCatagory = [self.itemCatagories objectAtIndex:indexPath.row];
+    Catagory *thisItemCatagory = [self.itemCatagories objectAtIndex:indexPath.row];
     
-    if (self.currentlySelectedCatagory == thisItemCatagory)
-    {
-        cell.backgroundColor = [UIColor lightGrayColor];
-    }
-    else
-    {
-        cell.backgroundColor = [UIColor whiteColor];
-    }
-    
-    NSArray *recordsForThisCatagory = [self.catagoryRecordsDictionary objectForKey:[NSNumber numberWithInteger:thisItemCatagory.identifer]];
+    NSArray *recordsForThisCatagory = [self.RecordsDictionary objectForKey:[NSNumber numberWithInteger:thisItemCatagory.identifer]];
     
     NSInteger sumQuantity = 0;
     float sumAmount = 0.0;
     
-    for (CatagoryRecord *record in recordsForThisCatagory)
+    for (Record *record in recordsForThisCatagory)
     {
         sumQuantity = sumQuantity + record.quantity;
-        sumAmount = sumAmount + record.amount;
+        sumAmount = sumAmount + record.quantity * record.amount;
     }
     
-    [cell.colorBox setBackgroundColor:thisItemCatagory.color];
-    [cell.catagoryNameLabel setText:thisItemCatagory.name];
+    [cell.colorView setBackgroundColor:thisItemCatagory.color];
+    [cell.nameLabel setText:thisItemCatagory.name];
     [cell.quantityLabel setText:[NSString stringWithFormat:@"%ld", (long)sumQuantity]];
     [cell.totalAmountLabel setText:[NSString stringWithFormat:@"$%.2f",sumAmount]];
     
@@ -165,7 +233,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ItemCatagory *thisItemCatagory = [self.itemCatagories objectAtIndex:indexPath.row];
+    Catagory *thisItemCatagory = [self.itemCatagories objectAtIndex:indexPath.row];
     
     if (!self.currentlySelectedCatagory || self.currentlySelectedCatagory != thisItemCatagory)
     {
@@ -173,12 +241,28 @@
         
         DLog(@"Catagory %ld: %@ selected", (long)self.currentlySelectedCatagory.identifer, self.currentlySelectedCatagory.name );
     }
+    
+    CGRect rectOfCellInTableView = [tableView rectForRowAtIndexPath:indexPath];
+    CGRect rectOfCellInSuperview = [tableView convertRect:rectOfCellInTableView toView:[tableView superview]];
+    
+    self.tinyRect = CGRectMake(rectOfCellInSuperview.origin.x + rectOfCellInSuperview.size.width / 2,
+                               rectOfCellInSuperview.origin.y + rectOfCellInSuperview.size.height / 2, 1, 1);
+    
+    //check for modifyCatagoryPopUpViewController's buttons states
+    if (self.itemCatagories.count > 1 && [self.RecordsDictionary objectForKey:[NSNumber numberWithInteger:thisItemCatagory.identifer]] )
+    {
+        [self.modifyCatagoryPopUpViewController.transferButton setEnabled:YES];
+    }
     else
     {
-        self.currentlySelectedCatagory = nil;
-        
-        DLog(@"Catagory unselected");
+        [self.modifyCatagoryPopUpViewController.transferButton setEnabled:NO];
     }
+    
+    self.floatBarPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.modifyCatagoryPopUpViewController];
+    
+    [self.floatBarPickerPopover setPopoverContentSize:self.modifyCatagoryPopUpViewController.viewSize];
+    
+    [self.floatBarPickerPopover presentPopoverFromRect:self.tinyRect inView:self.view permittedArrowDirections:WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown animated:YES];
     
     [tableView reloadData];
 }

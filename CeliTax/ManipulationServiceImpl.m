@@ -8,24 +8,15 @@
 
 #import "ManipulationServiceImpl.h"
 #import "CatagoriesDAO.h"
-#import "ItemCatagory.h"
-#import "CatagoryRecord.h"
+#import "ReceiptsDAO.h"
+#import "RecordsDAO.h"
+#import "Catagory.h"
+#import "Record.h"
 
 @implementation ManipulationServiceImpl
 
-- (NSOperation *) addCatagoryForUserKey: (NSString *) userKey
-                                forName: (NSString *) catagoryName
-                               forColor: (UIColor *) catagoryColor
-                                success: (AddCatagorySuccessBlock) success
-                                failure: (AddCatagoryFailureBlock) failure
+- (NSOperation *) addCatagoryForName:(NSString *)catagoryName forColor:(UIColor *)catagoryColor success:(AddCatagorySuccessBlock)success failure:(AddCatagoryFailureBlock)failure
 {
-    if (!userKey)
-    {
-        failure ( @"missing userKey");
-        
-        return nil;
-    }
-    
     if (!catagoryName || !catagoryColor)
     {
         failure ( @"missing parameters");
@@ -33,7 +24,7 @@
         return nil;
     }
     
-    if (  [self.catagoriesDAO addCatagoryForUser:userKey forName:catagoryName andColor:catagoryColor] )
+    if (  [self.catagoriesDAO addCatagoryForName:catagoryName andColor:catagoryColor] )
     {
         success( );
     }
@@ -45,21 +36,9 @@
     return nil;
 }
 
-- (NSOperation *) modifyCatagoryForUserKey: (NSString *) userKey
-                                catagoryID: (NSInteger) catagoryID
-                                   newName: (NSString *) catagoryName
-                                  newColor: (UIColor *) catagoryColor
-                                   success: (ModifyCatagorySuccessBlock) success
-                                   failure: (ModifyCatagoryFailureBlock) failure
+- (NSOperation *) modifyCatagoryForCatagoryID:(NSInteger)catagoryID newName:(NSString *)catagoryName newColor:(UIColor *)catagoryColor success:(ModifyCatagorySuccessBlock)success failure:(ModifyCatagoryFailureBlock)failure
 {
-    if (!userKey)
-    {
-        failure ( @"missing userKey");
-        
-        return nil;
-    }
-    
-    if (  [self.catagoriesDAO modifyCatagoryForUser:userKey forCatagory:catagoryID forName:catagoryName andColor:catagoryColor] )
+    if (  [self.catagoriesDAO modifyCatagory:catagoryID forName:catagoryName andColor:catagoryColor] )
     {
         success( );
     }
@@ -71,19 +50,10 @@
     return nil;
 }
 
-- (NSOperation *) deleteCatagoryForUserKey: (NSString *) userKey
-                                catagoryID: (NSInteger) catagoryID
-                                   success: (DeleteCatagorySuccessBlock) success
-                                   failure: (DeleteCatagoryFailureBlock) failure
+- (NSOperation *) deleteCatagoryForCatagoryID:(NSInteger)catagoryID success:(DeleteCatagorySuccessBlock)success failure:(DeleteCatagoryFailureBlock)failure
 {
-    if (!userKey)
-    {
-        failure ( @"missing userKey");
-        
-        return nil;
-    }
     
-    if ( [self.catagoriesDAO deleteCatagoryForUser:userKey forCatagory:catagoryID] )
+    if ( [self.catagoriesDAO deleteCatagory:catagoryID] )
     {
         
         success( );
@@ -96,44 +66,34 @@
     return nil;
 }
 
-- (NSOperation *) transferCatagoryForUserKey: (NSString *) userKey
-                              fromCatagoryID: (NSInteger) fromCatagoryID
-                                toCatagoryID: (NSInteger) toCatagoryID
-                                     success: (ModifyCatagorySuccessBlock) success
-                                     failure: (ModifyCatagoryFailureBlock) failure
+- (NSOperation *) transferCatagoryFromCatagoryID:(NSInteger)fromCatagoryID toCatagoryID:(NSInteger)toCatagoryID success:(ModifyCatagorySuccessBlock)success failure:(ModifyCatagoryFailureBlock)failure
 {
-    if (!userKey)
-    {
-        failure ( @"missing userKey");
-        
-        return nil;
-    }
     
-    NSArray *fromCatagoryRecords = [self.catagoriesDAO loadCatagoryRecordsForUser:userKey forCatagory:fromCatagoryID];
+    NSArray *fromRecords = [self.recordsDAO loadRecordsforCatagory:fromCatagoryID];
     
-    if (!fromCatagoryRecords)
+    if (!fromRecords)
     {
         //nothing to transfer
         success ();
     }
     
-    ItemCatagory *toItemCatagory = [self.catagoriesDAO loadCatagoryForUser:userKey withCatagoryID:toCatagoryID];
+    Catagory *toItemCatagory = [self.catagoriesDAO loadCatagory:toCatagoryID];
     
     if (!toItemCatagory)
     {
         failure ( @"invalid toCatagoryID");
     }
     
-    NSMutableArray *modifiedCatagoryRecordsToAdd = [NSMutableArray new];
+    NSMutableArray *modifiedRecordsToAdd = [NSMutableArray new];
     
-    for (CatagoryRecord *record in fromCatagoryRecords)
+    for (Record *record in fromRecords)
     {
-        record.itemCatagoryID = toCatagoryID;
+        record.catagoryID = toCatagoryID;
         
-        [modifiedCatagoryRecordsToAdd addObject:record];
+        [modifiedRecordsToAdd addObject:record];
     }
     
-    if ( [self.catagoriesDAO addCatagoryRecordsForUser:userKey andRecords:modifiedCatagoryRecordsToAdd] )
+    if ( [self.recordsDAO addRecords:modifiedRecordsToAdd] )
     {
         success ();
     }
@@ -145,33 +105,20 @@
     return nil;
 }
 
-- (NSOperation *) addRecordForUserKey: (NSString *) userKey
-                        forCatagoryID: (NSInteger) catagoryID
-                         forReceiptID: (NSInteger) receiptID
-                          forQuantity: (NSInteger) quantity
-                            forAmount: (NSInteger) amount
-                              success: (AddRecordSuccessBlock) success
-                              failure: (AddRecordFailureBlock) failure
+- (NSOperation *) addRecordForCatagoryID:(NSInteger)catagoryID forReceiptID:(NSInteger)receiptID forQuantity:(NSInteger)quantity forAmount:(NSInteger)amount success:(AddRecordSuccessBlock)success failure:(AddRecordFailureBlock)failure
 {
-    if (!userKey)
-    {
-        failure ( @"missing userKey");
-        
-        return nil;
-    }
     
-    ItemCatagory *toItemCatagory = [self.catagoriesDAO loadCatagoryForUser:userKey withCatagoryID:catagoryID];
+    Catagory *toItemCatagory = [self.catagoriesDAO loadCatagory:catagoryID];
     
     if (!toItemCatagory)
     {
         failure ( @"invalid catagoryID");
     }
     
-    if ( [self.catagoriesDAO addCatagoryRecordForUser:userKey
-                                        forCatagoryID:catagoryID
-                                         forReceiptID:receiptID
-                                          forQuantity:quantity
-                                            forAmount:amount] )
+    if ( [self.recordsDAO addRecordForCatagoryID:catagoryID
+                                    forReceiptID:receiptID
+                                     forQuantity:quantity
+                                       forAmount:amount] )
     {
         success ( );
     }
@@ -183,17 +130,25 @@
     return nil;
 }
 
-- (NSOperation *) addReceiptForUserKey: (NSString *) userKey
-                          forFilenames: (NSArray *) filenames
-                               success: (AddReceiptSuccessBlock) success
-                               failure: (AddReceiptFailureBlock) failure
+- (NSOperation *) getNextReceiptIDWithSuccess:(GetNextReceiptIDSuccessBlock)success andFailure:(GetNextReceiptIDFailureBlock)failure
 {
-    if (!userKey)
+
+    NSInteger nextReceiptID = [self.receiptsDAO getNextReceiptID];
+    
+    if ( nextReceiptID > -1 )
     {
-        failure ( @"missing userKey");
-        
-        return nil;
+        success ( nextReceiptID );
     }
+    else
+    {
+        failure ( @"unable to get next receipt ID");
+    }
+    
+    return nil;
+}
+
+- (NSOperation *) addReceiptForFilenames:(NSArray *)filenames success:(AddReceiptSuccessBlock)success failure:(AddReceiptFailureBlock)failure
+{
     
     if (!filenames)
     {
@@ -202,7 +157,7 @@
         return nil;
     }
     
-    if ( [self.catagoriesDAO addReceiptForUser:userKey withFilenames:filenames] )
+    if ( [self.receiptsDAO addReceiptWithFilenames:filenames] )
     {
         success ( );
     }

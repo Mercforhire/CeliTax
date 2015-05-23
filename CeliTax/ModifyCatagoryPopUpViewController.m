@@ -14,10 +14,14 @@
 
 @implementation ModifyCatagoryPopUpViewController
 
-- (void)viewDidLoad
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
+    {
+        // Custom initialization
+        self.viewSize = CGSizeMake(250, 50);
+    }
+    return self;
 }
 
 - (IBAction)editPressed:(UIButton *)sender

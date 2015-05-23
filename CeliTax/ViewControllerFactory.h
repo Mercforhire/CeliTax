@@ -11,7 +11,8 @@
 typedef void (^RevealBlock)();
 
 @class ConfigurationManager, UserManager;
-@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, FeedbackViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MainScreenRootViewController, MyAccountViewController, MainViewController, DeleteCatagoryViewController, TransferCatagoryViewController, ModifyCatagoryViewController, CatagoriesManagementViewController, AddCatagoryViewController, SidebarViewController, GHRevealViewController, ItemCatagory, ReceiptCheckingViewController;
+@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, FeedbackViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MainScreenRootViewController, MyAccountViewController, MainViewController, DeleteCatagoryViewController, TransferCatagoryViewController, ModifyCatagoryViewController, CatagoriesManagementViewController, AddCatagoryViewController, SidebarViewController, GHRevealViewController, Catagory, ReceiptCheckingViewController,NamesPickerViewController,ColorPickerViewController, ModifyCatagoryPopUpViewController, AllColorsPickerViewController, CameraViewController;
+
 @protocol AuthenticationService, DataService, ManipulationService;
 
 @interface ViewControllerFactory : NSObject
@@ -45,16 +46,26 @@ typedef void (^RevealBlock)();
 
 - (MyAccountViewController *) createMyAccountViewControllerWith:(RevealBlock)revealBlock;
 
-- (DeleteCatagoryViewController *) createDeleteCatagoryViewController:(ItemCatagory *)catagoryToDelete;
+- (DeleteCatagoryViewController *) createDeleteCatagoryViewController:(Catagory *)catagoryToDelete;
 
-- (TransferCatagoryViewController *) createTransferCatagoryViewController;
+- (TransferCatagoryViewController *) createTransferCatagoryViewController:(Catagory *)fromCatagory;
 
-- (ModifyCatagoryViewController *) createModifyCatagoryViewControllerWith:(ItemCatagory *)catagoryToModify;
+- (ModifyCatagoryViewController *) createModifyCatagoryViewControllerWith:(Catagory *)catagoryToModify;
 
-- (CatagoriesManagementViewController *) createEditCatagoriesViewController;
+- (CatagoriesManagementViewController *) createCatagoriesManagementViewController;
 
 - (AddCatagoryViewController *) createAddCatagoryViewController;
 
-- (ReceiptCheckingViewController *) createReceiptCheckingViewController;
+- (ReceiptCheckingViewController *) createReceiptCheckingViewControllerForReceiptID:(NSInteger)receiptID;
+
+- (NamesPickerViewController *) createNamesPickerViewControllerWithNames:(NSArray *)names;
+
+- (ColorPickerViewController *) createColorPickerViewController;
+
+- (ModifyCatagoryPopUpViewController *) createModifyCatagoryPopUpViewController;
+
+- (AllColorsPickerViewController *) createAllColorsPickerViewController;
+
+- (CameraViewController *) createCameraOverlayViewController;
 
 @end

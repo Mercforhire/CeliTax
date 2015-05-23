@@ -14,5 +14,7 @@
 @interface DataServiceImpl : NSObject <DataService>
 
 @property (nonatomic, strong) CatagoriesDAO     *catagoriesDAO;
+@property (nonatomic, strong) RecordsDAO        *recordsDAO;
+@property (nonatomic, strong) ReceiptsDAO       *receiptsDAO;
 
 @end

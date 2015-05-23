@@ -92,7 +92,7 @@
                 <outlet property="quantityLabel" destination="ZvJ-Ov-GmV" id="tQT-Cv-ftz"/>
                 <outlet property="totalAmountLabel" destination="sJs-82-qba" id="DHN-lH-dxS"/>
             </connections>
-            <point key="canvasLocation" x="421" y="360"/>
+            <point key="canvasLocation" x="365" y="506"/>
         </tableViewCell>
     </objects>
 </document>

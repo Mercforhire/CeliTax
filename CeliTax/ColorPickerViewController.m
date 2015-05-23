@@ -15,11 +15,14 @@
 
 @implementation ColorPickerViewController
 
-- (void)viewDidLoad
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
+    {
+        // Custom initialization
+        self.viewSize = CGSizeMake(50, 330);
+    }
+    return self;
 }
 
 - (IBAction)colorBoxPressed:(UIButton *)sender

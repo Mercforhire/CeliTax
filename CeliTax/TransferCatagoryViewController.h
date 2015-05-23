@@ -11,7 +11,13 @@
 #import "DataService.h"
 #import "PopUpViewControllerProtocol.h"
 
+@class Catagory;
+
 @interface TransferCatagoryViewController : BaseViewController
+
+@property CGSize viewSize;
+
+@property (copy, nonatomic) Catagory *fromCatagory;
 
 @property (nonatomic, weak) id <DataService> dataService;
 @property (nonatomic, weak) id <ManipulationService> manipulationService;

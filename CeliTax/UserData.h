@@ -11,9 +11,9 @@
 //wrapper object containing all of an user's data
 @interface UserData : NSObject <NSCoding>
 
-@property (nonatomic, strong) NSMutableArray *itemCatagories;
+@property (nonatomic, strong) NSMutableArray *catagories;
 
-@property (nonatomic, strong) NSMutableArray *catagoryRecords;
+@property (nonatomic, strong) NSMutableArray *records;
 
 @property (nonatomic, strong) NSMutableArray *receipts;
 

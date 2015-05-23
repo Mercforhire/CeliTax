@@ -21,6 +21,16 @@
 
 @implementation NamesPickerViewController
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
+    {
+        // Custom initialization
+        self.viewSize = CGSizeMake(200, 300);
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -28,6 +38,7 @@
     
     self.namesTableView.dataSource = self;
     self.namesTableView.delegate = self;
+    
 }
 
 -(void)setNames:(NSMutableArray *)names

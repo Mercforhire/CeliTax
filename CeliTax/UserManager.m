@@ -15,6 +15,7 @@
              andKey:(NSString *)key
        andFirstname:(NSString *)firstname
         andLastname:(NSString *)lastname
+            andCity:(NSString *)city
       andPostalCode:(NSString *)postalCode
          andCountry:(NSString *)country
 {
@@ -23,6 +24,7 @@
     newUser.userKey = key;
     newUser.firstname = firstname;
     newUser.lastname = lastname;
+    newUser.city = city;
     newUser.postalCode = postalCode;
     newUser.country = country;
     

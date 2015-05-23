@@ -12,10 +12,9 @@
 
 #define kSecondsBeforeEnableConfirmButton       5
 
-@interface DeleteCatagoryViewController ()
+@interface DeleteCatagoryViewController () <UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
-@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
 @property (strong, nonatomic) NSTimer *startTimer;
 @property NSInteger currentSecond;
@@ -23,6 +22,16 @@
 @end
 
 @implementation DeleteCatagoryViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
+    {
+        // Custom initialization
+        self.viewSize = CGSizeMake(300, 215);
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -45,7 +54,7 @@
 {
     if (self.currentSecond < kSecondsBeforeEnableConfirmButton)
     {
-        [self.confirmButton setTitle:[NSString stringWithFormat:@"%ld", kSecondsBeforeEnableConfirmButton - self.currentSecond] forState:UIControlStateNormal];
+        [self.confirmButton setTitle:[NSString stringWithFormat:@"%d", (int)(kSecondsBeforeEnableConfirmButton - self.currentSecond)] forState:UIControlStateNormal];
         self.currentSecond++;
     }
     else
@@ -53,19 +62,41 @@
         [self.startTimer invalidate];
         self.startTimer = nil;
         
-        [self.confirmButton  setEnabled:YES];
+        [self.confirmButton setEnabled:YES];
         [self.confirmButton setTitle:@"Confirm" forState:UIControlStateNormal];
     }
 }
 
 - (IBAction)confirmPressed:(UIButton *)sender
 {
-
+    [self.manipulationService deleteCatagoryForCatagoryID:self.catagoryToDelete.identifer success:^{
+        
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Success"
+                                                          message:@"Catagory Deleted"
+                                                         delegate:self
+                                                cancelButtonTitle:nil
+                                                otherButtonTitles:@"Ok",nil];
+        
+        [message show];
+        
+    } failure:^(NSString *reason) {
+        DLog(@"self.manipulationService deleteCatagoryForUserKey FAILED!");
+    }];
 }
 
-- (IBAction)cancelPressed:(UIButton *)sender
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    
+    if( [title isEqualToString: @"Ok"] )
+    {
+        if (self.delegate)
+        {
+            [self.delegate requestPopUpToDismiss];
+        }
+    }
 }
 
 @end

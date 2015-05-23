@@ -9,11 +9,13 @@
 #import "AuthenticationServiceImpl.h"
 #import "AuthorizeResult.h"
 #import "RegisterResult.h"
+#import "UserDataDAO.h"
 
 #define testUserName    @"leonchn84@gmail.com"
 #define testPassword    @"123456"
 #define testFirstname   @"Leon"
 #define testLastname    @"Chen"
+#define testCity        @"Toronto"
 #define testPostal      @"M1T2Z4"
 #define testCountry     @"Canada"
 #define testKey         @"testKey"
@@ -60,8 +62,12 @@
             returnedResult.userAPIKey = testKey;
             returnedResult.firstname = testFirstname;
             returnedResult.lastname = testLastname;
+            returnedResult.city = testCity;
             returnedResult.postalCode = testPostal;
             returnedResult.country = testCountry;
+            
+            //IMPORTANT: set the userKey to userDataDAO
+            self.userDataDAO.userKey = testKey;
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 success ( returnedResult );
@@ -85,6 +91,7 @@
                      withPassword: (NSString *) password
                     withFirstname: (NSString *) firstname
                      withLastname: (NSString *) lastname
+                         withCity: (NSString *) city
                       withCountry: (NSString *) country
                        withPostal: (NSString *) postal
                           success: (RegisterNewUserSuccessBlock) success

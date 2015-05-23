@@ -10,6 +10,8 @@
 
 @protocol ColorPickerViewPopUpDelegate <NSObject>
 
+@required
+
 -(void)selectedColor:(UIColor *)color;
 
 -(void)customColorPressed;
@@ -17,6 +19,8 @@
 @end
 
 @interface ColorPickerViewController : UIViewController
+
+@property CGSize viewSize;
 
 @property (nonatomic, weak) id <ColorPickerViewPopUpDelegate> delegate;
 

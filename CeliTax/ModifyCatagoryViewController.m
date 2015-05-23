@@ -23,6 +23,16 @@
 
 @implementation ModifyCatagoryViewController
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
+    {
+        // Custom initialization
+        self.viewSize = CGSizeMake(300, 300);
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -52,7 +62,7 @@
 
 - (IBAction)confirmPressed:(UIButton *)sender
 {
-    [self.manipulationService modifyCatagoryForUserKey:self.userManager.user.userKey catagoryID:self.catagoryToModify.identifer newName:self.catagoryToModify.name newColor:self.catagoryToModify.color success:^{
+    [self.manipulationService modifyCatagoryForCatagoryID:self.catagoryToModify.identifer newName:self.catagoryToModify.name newColor:self.catagoryToModify.color success:^{
         
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Success"
                                                           message:@"Catagory Edited"

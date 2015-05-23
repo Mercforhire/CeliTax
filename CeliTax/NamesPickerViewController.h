@@ -10,13 +10,17 @@
 
 @protocol NamesPickerPopUpDelegate <NSObject>
 
+@required
+
 -(void)selectedName:(NSString *)name;
 
 @end
 
 @interface NamesPickerViewController : UIViewController
 
-@property (nonatomic, strong) NSMutableArray *names;
+@property CGSize viewSize;
+
+@property (nonatomic, strong) NSArray *names;
 
 @property (nonatomic, weak) id <NamesPickerPopUpDelegate> delegate;
 

@@ -7,7 +7,7 @@ target 'CeliTax' do
 pod 'MKNetworkKit', :head
 pod 'MBProgressHUD', '~> 0.9.1'
 pod 'NKOColorPickerView'
-pod 'HMSegmentedControl'
+pod 'WYPopoverController', '~> 0.3.7'
 
 end
 

@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "AuthenticationService.h"
 
+@class UserDataDAO;
+
 @interface AuthenticationServiceImpl : NSObject <AuthenticationService>
+
+@property (nonatomic, strong) UserDataDAO       *userDataDAO;
 
 @end

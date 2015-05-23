@@ -7,7 +7,7 @@
 //
 
 #import "MainViewController.h"
-#import "ItemCatagory.h"
+#import "Catagory.h"
 #import "MainViewTableViewCell.h"
 #import "UserManager.h"
 #import "User.h"
@@ -15,6 +15,8 @@
 #import "ViewControllerFactory.h"
 #import "AlertDialogsProvider.h"
 #import "PieView.h"
+#import "ReceiptCheckingViewController.h"
+#import "CameraViewController.h"
 
 #define kCatagoryTableRowHeight     70
 
@@ -56,6 +58,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    [self.dataService loadDemoData];
+    
     self.recentUploadsTable.dataSource = self;
     self.recentUploadsTable.delegate = self;
     
@@ -71,8 +75,7 @@
     [super viewWillAppear:animated];
     
     //load the newest 10 receipts for user, sorted by date, calculate
-    [self.dataService fetchNewestTenReceiptInfoForUserKey:self.userManager.user.userKey
-      success:^(NSArray *receiptInfos) {
+    [self.dataService fetchNewestTenReceiptInfoSuccess:^(NSArray *receiptInfos) {
           
           self.receiptInfos = receiptInfos;
           [self.recentUploadsTable reloadData];
@@ -96,7 +99,7 @@
 
 - (IBAction)cameraButtonPressed:(UIButton *)sender
 {
-    [AlertDialogsProvider showWorkInProgressDialog];
+    [self.navigationController pushViewController:[self.viewControllerFactory createCameraOverlayViewController] animated:YES];
 }
 
 #pragma mark - UITableview DataSource
@@ -150,6 +153,17 @@
     NSDictionary *uploadInfoDictionary = self.receiptInfos[indexPath.row];
     
     DLog(@"Receipt ID %@ clicked", [uploadInfoDictionary objectForKey:kReceiptIDKey]);
+    
+    NSInteger clickedReceiptID = [[uploadInfoDictionary objectForKey:kReceiptIDKey] integerValue];
+    
+    [self.navigationController pushViewController:[self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID:clickedReceiptID] animated:YES];
+}
+
+#pragma mark - CameraManager
+
+-(void)receivedImageFromCamera:(UIImage *)newImage
+{
+    DLog(@"Image received from camera");
 }
 
 @end

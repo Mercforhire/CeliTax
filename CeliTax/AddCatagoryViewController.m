@@ -7,25 +7,33 @@
 //
 
 #import "AddCatagoryViewController.h"
-#import "ItemCatagory.h"
-#import "NKOColorPickerView.h"
+#import "Catagory.h"
 #import "UserManager.h"
 #import "User.h"
-#import "UIView+Helper.h"
 #import "DataService.h"
+#import "NamesPickerViewController.h"
+#import "ColorPickerViewController.h"
+#import "AllColorsPickerViewController.h"
+#import "ViewControllerFactory.h"
+#import "WYPopoverController.h"
 
-@interface AddCatagoryViewController () <UITextFieldDelegate,UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface AddCatagoryViewController () <NamesPickerPopUpDelegate, ColorPickerViewPopUpDelegate, UIPopoverControllerDelegate, AllColorsPickerViewPopUpDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *colorView;
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
-@property (weak, nonatomic) IBOutlet NKOColorPickerView *colorPickerView;
-@property (strong, nonatomic) UIPickerView *namesPicker;
-@property (strong, nonatomic) UIToolbar *mypickerToolbar;
 
 @property (nonatomic, strong) NSMutableArray *catagoryNames;
 
-@property BOOL customNameEntryMode; //set to YES if user clicked customNameButton
+@property (nonatomic, strong) WYPopoverController *colorPickerPopover;
+@property (nonatomic, strong) WYPopoverController *namesPickerPopover;
+@property (nonatomic, strong) WYPopoverController *allColorsPickerPopover;
+
+@property (nonatomic, strong) NamesPickerViewController *namesPickerViewController;
+@property (nonatomic, strong) ColorPickerViewController *colorPickerViewController;
+@property (nonatomic, strong) AllColorsPickerViewController *allColorsPickerViewController;
+
+@property (nonatomic, strong) UIButton* nameFieldOverlayButton;
 
 @end
 
@@ -39,59 +47,63 @@
     self.catagoryNames = [NSMutableArray new];
     
     //sample names
-    [self.catagoryNames addObject:@"Rice"];
-    [self.catagoryNames addObject:@"Flour"];
     [self.catagoryNames addObject:@"Bread"];
-    [self.catagoryNames addObject:@"Cake"];
+    [self.catagoryNames addObject:@"Rice"];
+    [self.catagoryNames addObject:@"Fruit"];
+    [self.catagoryNames addObject:@"Flour"];
+    [self.catagoryNames addObject:@"Meat"];
+    [self.catagoryNames addObject:@"Chicken"];
+    [self.catagoryNames addObject:@"Custom"];
     
-    NKOColorPickerDidChangeColorBlock colorDidChangeBlock = ^(UIColor *color) {
-        //Your code handling a color change in the picker view.
-        [self colorSelected:color];
-    };
     
-    [self.colorPickerView setDidChangeColorBlock:colorDidChangeBlock];
-    [self.colorPickerView setColor:[UIColor lightGrayColor]];
+    self.colorPickerViewController = [self.viewControllerFactory createColorPickerViewController];
+    self.colorPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.colorPickerViewController];
+    [self.colorPickerViewController setDelegate:self];
+    [self.colorPickerPopover setPopoverContentSize:self.colorPickerViewController.viewSize];
     
-    // Set up the initial state of the catagory names picker.
-    self.namesPicker = [[UIPickerView alloc] init];
-    self.namesPicker.delegate = self;
-    self.namesPicker.dataSource = self;
-    self.namesPicker.showsSelectionIndicator = YES;
+    self.namesPickerViewController = [self.viewControllerFactory createNamesPickerViewControllerWithNames:self.catagoryNames];
+    self.namesPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.namesPickerViewController];
+    [self.namesPickerViewController setDelegate:self];
+    [self.namesPickerPopover setPopoverContentSize:self.namesPickerViewController.viewSize];
     
-    self.nameField.inputView = self.namesPicker;
+    self.allColorsPickerViewController = [self.viewControllerFactory createAllColorsPickerViewController];
+    self.allColorsPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.allColorsPickerViewController];
+    [self.allColorsPickerViewController setDelegate:self];
+    [self.allColorsPickerPopover setPopoverContentSize:self.allColorsPickerViewController.viewSize];
+    
+    // conditionally check for any version >= iOS 8 using 'isOperatingSystemAtLeastVersion'
+    if ([NSProcessInfo instancesRespondToSelector:@selector(isOperatingSystemAtLeastVersion:)])
+    {
+        //this is purely to fix the crashing problem
+        UIPopoverPresentationController *garbageController = self.popoverPresentationController;
+        [garbageController setSourceRect:self.namesPickerViewController.view.frame];
+        [garbageController setSourceView:self.namesPickerViewController.view];
+    }
+    
+    UITapGestureRecognizer *colorBoxPressedTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(colorBoxPressed)];
+    [self.colorView addGestureRecognizer:colorBoxPressedTap];
+    
     self.nameField.delegate = self;
+    [self.nameField addTarget:self
+                       action:@selector(textFieldDidChange:)
+             forControlEvents:UIControlEventEditingChanged];
     
-    // Create Custom Name button in UIPickerView
-    self.mypickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 56)];
-    [self.mypickerToolbar sizeToFit];
-    NSMutableArray *barItems = [[NSMutableArray alloc] init];
-    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    [barItems addObject:flexSpace];
-    UIBarButtonItem *customNameButton = [[UIBarButtonItem alloc] initWithTitle:@"Custom Name" style:UIBarButtonItemStylePlain target:self action:@selector(customNameButtonPressed)];
-    [barItems addObject:customNameButton];
-    [self.mypickerToolbar setItems:barItems animated:YES];
+    self.nameFieldOverlayButton = [[UIButton alloc] initWithFrame:self.nameField.frame];
+    [self.nameFieldOverlayButton addTarget:self action:@selector(textBoxPressed) forControlEvents:UIControlEventTouchUpInside];
     
-    self.nameField.inputAccessoryView = self.mypickerToolbar;
+    [self.view addSubview:self.nameFieldOverlayButton];
 }
 
--(void)customNameButtonPressed
+-(void)colorBoxPressed
 {
-    if (self.customNameEntryMode)
-    {
-        self.nameField.inputView = self.namesPicker;
-        
-        self.customNameEntryMode = NO;
-    }
-    else
-    {
-        self.nameField.inputView = nil;
-        
-        self.customNameEntryMode = YES;
-    }
-    
-    [self.nameField resignFirstResponder];
-    
-    [self.nameField becomeFirstResponder];
+    [self.colorPickerPopover presentPopoverFromRect:self.colorView.frame inView:self.view permittedArrowDirections:WYPopoverArrowDirectionUp animated: YES];
+}
+
+-(void)textBoxPressed
+{
+    [self.namesPickerPopover presentPopoverFromRect:self.nameField.frame inView:self.view permittedArrowDirections:WYPopoverArrowDirectionUp animated: YES];
 }
 
 -(void)colorSelected:(UIColor *)newColor
@@ -101,37 +113,18 @@
 
 - (IBAction)confirmPressed:(UIButton *)sender
 {
-    [self.manipulationService addCatagoryForUserKey:self.userManager.user.userKey forName:self.nameField.text forColor:self.colorPickerView.color success:^{
-        
-        [self.navigationController popViewControllerAnimated:YES];
-        
-    } failure:^(NSString *reason) {
-        //should out happen
-    }];
+    [self.manipulationService addCatagoryForName:self.nameField.text
+                                        forColor:self.colorView.backgroundColor
+                                         success:^{
+                                             
+                                             [self.navigationController popViewControllerAnimated:YES];
+                                             
+                                         } failure:^(NSString *reason) {
+                                             DLog(@"self.manipulationService addCatagoryForUserKey failed!");
+                                         }];
 }
 
 #pragma mark - UITextFieldDelegate
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    [self.view scrollToView:self.nameField];
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    [self.view scrollToY:0];
-    
-    if ( self.nameField.text.length )
-    {
-        [self.confirmButton setEnabled:YES];
-    }
-    else
-    {
-        [self.confirmButton setEnabled:NO];
-    }
-    
-    [textField resignFirstResponder];
-}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -140,29 +133,59 @@
     return NO;
 }
 
-#pragma mark - UIPickerView delegate
-
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+-(void)textFieldDidChange:(UITextField *)textfield
 {
-    return 1;
+    if ( self.nameField.text.length )
+    {
+        [self.confirmButton setEnabled:YES];
+    }
+    else
+    {
+        [self.confirmButton setEnabled:NO];
+    }
 }
 
+#pragma mark - NamesPickerPopUpDelegate
 
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+-(void)selectedName:(NSString *)name
 {
-    return self.catagoryNames.count;
-}
-
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    return self.catagoryNames[row];
-}
-
--(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    self.nameField.text = self.catagoryNames[row];
+    [self.namesPickerPopover dismissPopoverAnimated:YES];
     
-    [self.nameField resignFirstResponder];
+    if ( [name isEqualToString:@"Custom"] )
+    {
+        [self.nameField becomeFirstResponder];
+    }
+    else
+    {
+        self.nameField.text = name;
+        
+        [self.nameField resignFirstResponder];
+        
+        [self textFieldDidChange:self.nameField];
+    }
 }
- 
+
+#pragma mark - ColorPickerViewController
+
+#pragma mark - AllColorsPickerViewPopUpDelegate
+
+-(void)selectedColor:(UIColor *)color
+{
+    self.colorView.backgroundColor = color;
+    
+    [self.colorPickerPopover dismissPopoverAnimated:YES];
+}
+
+-(void)customColorPressed
+{
+    [self.colorPickerPopover dismissPopoverAnimated:NO];
+    
+    [self.allColorsPickerPopover presentPopoverFromRect:self.colorView.frame inView:self.view permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES];
+}
+
+-(void)doneButtonPressed
+{
+    [self.allColorsPickerPopover dismissPopoverAnimated:NO];
+}
+
 @end

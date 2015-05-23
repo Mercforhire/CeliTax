@@ -50,6 +50,10 @@
     self.emailField.text = @"leonchn84@gmail.com";
     self.passwordField.text = @"123456";
     [self.loginButton setEnabled:YES];
+    
+    
+    //DEBUG CODE
+    //[self loginPressed:nil];
 }
 
 -(void)createAndShowWaitViewForLogin
@@ -87,6 +91,7 @@
                                 andKey:authorizeResult.userAPIKey
                           andFirstname:authorizeResult.firstname
                            andLastname:authorizeResult.lastname
+                               andCity:authorizeResult.city
                          andPostalCode:authorizeResult.postalCode
                             andCountry:authorizeResult.country];
         

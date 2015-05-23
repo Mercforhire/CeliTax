@@ -8,15 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@class CatagoriesDAO;
+@class CatagoriesDAO,Receipt,RecordsDAO,ReceiptsDAO;
 
 @protocol DataService <NSObject>
 
 typedef void (^FetchCatagoriesSuccessBlock) (NSArray *catagories);
 typedef void (^FetchCatagoriesFailureBlock) (NSString *reason);
 
-typedef void (^FetchCatagoryRecordsSuccessBlock) (NSArray *catagoryRecords);
-typedef void (^FetchCatagoryRecordsFailureBlock) (NSString *reason);
+typedef void (^FetchRecordsSuccessBlock) (NSArray *Records);
+typedef void (^FetchRecordsFailureBlock) (NSString *reason);
 
 typedef void (^FetchReceiptsSuccessBlock) (NSArray *receipts);
 typedef void (^FetchReceiptsFailureBlock) (NSString *reason);
@@ -24,37 +24,43 @@ typedef void (^FetchReceiptsFailureBlock) (NSString *reason);
 typedef void (^FetchReceiptInfoSuccessBlock) (NSArray *receiptInfos);
 typedef void (^FetchReceiptInfoFailureBlock) (NSString *reason);
 
+typedef void (^FetchReceiptSuccessBlock) (Receipt *receipt);
+typedef void (^FetchReceiptFailureBlock) (NSString *reason);
+
 @property (nonatomic, strong) CatagoriesDAO     *catagoriesDAO;
+@property (nonatomic, strong) RecordsDAO        *recordsDAO;
+@property (nonatomic, strong) ReceiptsDAO       *receiptsDAO;
 
-- (NSOperation *) fetchCatagoriesForUserKey: (NSString *) userKey
-                                    success: (FetchCatagoriesSuccessBlock) success
-                                    failure: (FetchCatagoriesFailureBlock) failure;
+-(void)loadDemoData;
 
-- (NSOperation *) fetchAllCatagoryRecordsForUserKey: (NSString *) userKey
-                                            success: (FetchCatagoryRecordsSuccessBlock) success
-                                            failure: (FetchCatagoryRecordsFailureBlock) failure;
+- (NSOperation *) fetchCatagoriesSuccess: (FetchCatagoriesSuccessBlock) success
+                                 failure: (FetchCatagoriesFailureBlock) failure;
 
-- (NSOperation *) fetchCatagoryRecordsForUserKey: (NSString *) userKey
-                                   forCatagoryID: (NSInteger) catagoryID
-                                         success: (FetchCatagoryRecordsSuccessBlock) success
-                                         failure: (FetchCatagoryRecordsFailureBlock) failure;
+- (NSOperation *) fetchAllRecordsSuccess: (FetchRecordsSuccessBlock) success
+                                 failure: (FetchRecordsFailureBlock) failure;
 
-- (NSOperation *) fetchCatagoryRecordsForUserKey: (NSString *) userKey
-                                    forReceiptID: (NSInteger) receiptID
-                                         success: (FetchCatagoryRecordsSuccessBlock) success
-                                         failure: (FetchCatagoryRecordsFailureBlock) failure;
+- (NSOperation *) fetchRecordsForCatagoryID: (NSInteger) catagoryID
+                                    success: (FetchRecordsSuccessBlock) success
+                                    failure: (FetchRecordsFailureBlock) failure;
 
-- (NSOperation *) fetchReceiptsForUserKey: (NSString *) userKey
-                                  success: (FetchReceiptsSuccessBlock) success
-                                  failure: (FetchReceiptsFailureBlock) failure;
+- (NSOperation *) fetchRecordsForReceiptID: (NSInteger) receiptID
+                                   success: (FetchRecordsSuccessBlock) success
+                                   failure: (FetchRecordsFailureBlock) failure;
+
+- (NSOperation *) fetchReceiptsSuccess: (FetchReceiptsSuccessBlock) success
+                               failure: (FetchReceiptsFailureBlock) failure;
 
 #define kReceiptIDKey       @"ReceiptID"
 #define kColorsKey          @"Colors"
 #define kUploadTimeKey      @"UploadTime"
 #define kTotalAmountKey     @"TotalAmountKey"
 
-- (NSOperation *) fetchNewestTenReceiptInfoForUserKey: (NSString *) userKey
-                                              success: (FetchReceiptInfoSuccessBlock) success
-                                              failure: (FetchReceiptInfoFailureBlock) failure;
+- (NSOperation *) fetchNewestTenReceiptInfoSuccess: (FetchReceiptInfoSuccessBlock) success
+                                           failure: (FetchReceiptInfoFailureBlock) failure;
+
+- (NSOperation *) fetchReceiptForReceiptID: (NSInteger) receiptID
+                                   success: (FetchReceiptSuccessBlock) success
+                                   failure: (FetchReceiptFailureBlock) failure;
+
 
 @end

@@ -8,12 +8,17 @@
 
 #import "ManipulationService.h"
 #import "BaseViewController.h"
-#import "ItemCatagory.h"
+#import "Catagory.h"
+#import "PopUpViewControllerProtocol.h"
 
 @interface DeleteCatagoryViewController : BaseViewController
 
+@property CGSize viewSize;
+
 @property (nonatomic, weak) id <ManipulationService> manipulationService;
 
-@property (nonatomic, strong) ItemCatagory *catagoryToDelete;
+@property (nonatomic, copy) Catagory *catagoryToDelete;
+
+@property (nonatomic, weak) id <PopUpViewControllerProtocol> delegate;
 
 @end

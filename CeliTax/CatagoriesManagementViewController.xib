@@ -6,8 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CatagoriesManagementViewController">
             <connections>
-                <outlet property="accountTable" destination="L4K-k7-LsN" id="DLx-Wj-rVa"/>
                 <outlet property="addCatagoryButton" destination="EWz-Kt-3aH" id="7UF-8f-xS5"/>
+                <outlet property="catagoriesTable" destination="L4K-k7-LsN" id="jll-rI-ESO"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

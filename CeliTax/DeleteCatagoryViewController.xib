@@ -6,7 +6,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DeleteCatagoryViewController">
             <connections>
-                <outlet property="cancelButton" destination="KpR-uG-foZ" id="EGS-qu-YwH"/>
                 <outlet property="confirmButton" destination="NVd-Nj-ya5" id="5PC-24-sWu"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -17,12 +16,12 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you sure you want to delete this catagory?   All funds recorded under this catagory will be lost." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lt2-C8-Xr2">
-                    <rect key="frame" x="65" y="44" width="171" height="90"/>
+                    <rect key="frame" x="65" y="49" width="171" height="90"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="309" id="IrM-w3-tOm"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
                         <mask key="constraints">
@@ -30,30 +29,14 @@
                         </mask>
                     </variation>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KpR-uG-foZ">
-                    <rect key="frame" x="180" y="154" width="100" height="40"/>
-                    <color key="backgroundColor" red="0.81385847180000004" green="0.92005429959999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="0Rk-7U-iff"/>
-                        <constraint firstAttribute="width" constant="100" id="nHv-cu-fA3"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <state key="normal" title="Cancel">
-                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="cancelPressed:" destination="-1" eventType="touchUpInside" id="fa9-Hl-NwT"/>
-                    </connections>
-                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vG1-3f-EsC">
-                    <rect key="frame" x="122" y="10" width="57" height="24"/>
+                    <rect key="frame" x="122" y="15" width="57" height="24"/>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVd-Nj-ya5">
-                    <rect key="frame" x="20" y="154" width="100" height="40"/>
+                    <rect key="frame" x="100" y="159" width="100" height="40"/>
                     <color key="backgroundColor" red="0.97721179619999998" green="0.2202119978" blue="0.23100047369999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="Sdo-kl-s1j"/>
@@ -71,23 +54,18 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="KpR-uG-foZ" secondAttribute="trailing" constant="20" id="ArM-F6-2Cj"/>
                 <constraint firstAttribute="centerX" secondItem="Lt2-C8-Xr2" secondAttribute="centerX" id="Imr-0F-LBB"/>
                 <constraint firstItem="Lt2-C8-Xr2" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="90" id="KR3-ef-YEv"/>
                 <constraint firstItem="NVd-Nj-ya5" firstAttribute="top" secondItem="Lt2-C8-Xr2" secondAttribute="bottom" constant="28" id="Mr8-ow-YKp"/>
+                <constraint firstAttribute="centerX" secondItem="NVd-Nj-ya5" secondAttribute="centerX" id="OEP-c1-LSh"/>
                 <constraint firstAttribute="centerX" secondItem="vG1-3f-EsC" secondAttribute="centerX" id="Pas-q3-6qk"/>
                 <constraint firstItem="Lt2-C8-Xr2" firstAttribute="leading" secondItem="vG1-3f-EsC" secondAttribute="trailing" constant="10" id="SLK-pN-9WN"/>
                 <constraint firstAttribute="centerX" secondItem="NVd-Nj-ya5" secondAttribute="centerX" constant="-2.5" id="Tui-bv-8hw"/>
                 <constraint firstItem="NVd-Nj-ya5" firstAttribute="top" secondItem="Lt2-C8-Xr2" secondAttribute="bottom" constant="20" id="Uqm-wM-Xnv"/>
-                <constraint firstItem="KpR-uG-foZ" firstAttribute="top" secondItem="Lt2-C8-Xr2" secondAttribute="bottom" constant="20" id="Xf9-eE-ckv"/>
                 <constraint firstItem="Lt2-C8-Xr2" firstAttribute="top" secondItem="vG1-3f-EsC" secondAttribute="bottom" constant="10" id="ZMh-q3-wDI"/>
-                <constraint firstItem="NVd-Nj-ya5" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="bTe-mo-Ds8"/>
                 <constraint firstItem="Lt2-C8-Xr2" firstAttribute="leading" secondItem="vG1-3f-EsC" secondAttribute="trailing" constant="-179" id="cl9-sM-FI6"/>
-                <constraint firstItem="KpR-uG-foZ" firstAttribute="top" secondItem="NVd-Nj-ya5" secondAttribute="bottom" constant="13" id="e8B-75-a68"/>
-                <constraint firstItem="vG1-3f-EsC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="iTd-8y-qyV"/>
-                <constraint firstItem="KpR-uG-foZ" firstAttribute="leading" secondItem="Lt2-C8-Xr2" secondAttribute="trailing" constant="-143" id="qLI-4U-0po"/>
+                <constraint firstItem="vG1-3f-EsC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="15" id="iTd-8y-qyV"/>
                 <constraint firstAttribute="centerY" secondItem="Lt2-C8-Xr2" secondAttribute="centerY" constant="211" id="tEC-y6-2hh"/>
-                <constraint firstAttribute="centerX" secondItem="KpR-uG-foZ" secondAttribute="centerX" constant="-2.5" id="xjX-23-kPG"/>
                 <constraint firstAttribute="centerY" secondItem="Lt2-C8-Xr2" secondAttribute="centerY" id="zFe-v1-oBM"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
@@ -104,9 +82,6 @@
                     <exclude reference="zFe-v1-oBM"/>
                     <exclude reference="Mr8-ow-YKp"/>
                     <exclude reference="Tui-bv-8hw"/>
-                    <exclude reference="e8B-75-a68"/>
-                    <exclude reference="qLI-4U-0po"/>
-                    <exclude reference="xjX-23-kPG"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="394" y="154"/>

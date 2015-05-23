@@ -10,7 +10,8 @@
 
 @implementation AccountTableViewCell
 
-- (void)awakeFromNib {
+- (void)awakeFromNib
+{
     // Initialization code
 }
 

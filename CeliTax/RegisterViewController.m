@@ -13,7 +13,13 @@
 #import "RegisterResult.h"
 #import "UIView+Helper.h"
 
-@interface RegisterViewController () <UITextFieldDelegate,UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface RegisterViewController () <UITextFieldDelegate,UIScrollViewDelegate >
+{
+    UIImage *canadaFlag;
+    UIImage *canadaFlagInactive;
+    UIImage *usaFlag;
+    UIImage *usaFlagInactive;
+}
 
 @property (weak, nonatomic) IBOutlet UITextField *emailField;
 @property (weak, nonatomic) IBOutlet UITextField *emailRepeatField;
@@ -24,15 +30,18 @@
 @property (weak, nonatomic) IBOutlet UITextField *firstnameField;
 @property (weak, nonatomic) IBOutlet UITextField *lastnameField;
 
-@property (weak, nonatomic) IBOutlet UITextField *countryField;
-@property (strong, nonatomic) UIPickerView *countryPicker;
-@property (nonatomic, strong) NSMutableArray *countrySelections;
+@property (weak, nonatomic) IBOutlet UITextField *cityField;
 @property (weak, nonatomic) IBOutlet UITextField *postalField;
+
+@property (weak, nonatomic) IBOutlet UIButton *canadaButton;
+@property (weak, nonatomic) IBOutlet UIButton *usaButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) MBProgressHUD *waitView;
 
+@property (strong, nonatomic) NSString *country;
 @end
 
 @implementation RegisterViewController
@@ -41,6 +50,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, self.doneButton.frame.origin.y +self.doneButton.frame.size.height )];
     
     self.emailField.delegate = self;
     [self.emailField addTarget:self
@@ -77,8 +88,8 @@
                            action:@selector(textFieldDidChange:)
                  forControlEvents:UIControlEventEditingChanged];
     
-    self.countryField.delegate = self;
-    [self.countryField addTarget:self
+    self.cityField.delegate = self;
+    [self.cityField addTarget:self
                           action:@selector(textFieldDidChange:)
                 forControlEvents:UIControlEventEditingChanged];
     
@@ -86,20 +97,14 @@
     [self.postalField addTarget:self
                          action:@selector(textFieldDidChange:)
                forControlEvents:UIControlEventEditingChanged];
+
     
-    //sample names
-    self.countrySelections = [NSMutableArray new];
-    
-    [self.countrySelections addObject:@"Canada"];
-    [self.countrySelections addObject:@"USA"];
-    
-    // Set up the initial state of the catagory names picker.
-    self.countryPicker = [[UIPickerView alloc] init];
-    self.countryPicker.delegate = self;
-    self.countryPicker.dataSource = self;
-    self.countryPicker.showsSelectionIndicator = YES;
-    
-    self.countryField.inputView = self.countryPicker;
+    canadaFlag = [[UIImage imageNamed:@"Canada_flag.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    canadaFlagInactive = [[UIImage imageNamed:@"Canada_flag_gray.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    usaFlag = [[UIImage imageNamed:@"USA_flag.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    usaFlagInactive = [[UIImage imageNamed:@"USA_flag_gray.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+
+    [self canadaPressed:nil];
 }
 
 -(void)createAndShowWaitViewForRegister
@@ -166,7 +171,8 @@
                                    withPassword:self.passwordField.text
                                   withFirstname:self.firstnameField.text
                                    withLastname:self.lastnameField.text
-                                    withCountry:self.countryField.text
+                                       withCity:self.cityField.text
+                                    withCountry:self.country
                                      withPostal:self.postalField.text
                                         success:^(RegisterResult *registerResult) {
         
@@ -215,16 +221,42 @@
     [self checkRegister];
 }
 
+- (IBAction)canadaPressed:(UIButton *)sender
+{
+    self.country = @"Canada";
+}
+
+- (IBAction)usaPressed:(UIButton *)sender
+{
+    self.country = @"USA";
+}
+
+-(void)setCountry:(NSString *)country
+{
+    _country = country;
+    
+    if ([_country isEqualToString:@"Canada"])
+    {
+        [self.canadaButton setImage:canadaFlag forState:UIControlStateNormal];
+        [self.usaButton setImage:usaFlagInactive forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.canadaButton setImage:canadaFlagInactive forState:UIControlStateNormal];
+        [self.usaButton setImage:usaFlag forState:UIControlStateNormal];
+    }
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    [self.view scrollToView:textField];
+    [self.scrollView scrollToView:textField];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self.view scrollToY:0];
+    [self.scrollView scrollToY:0];
     
     [textField resignFirstResponder];
     
@@ -235,7 +267,7 @@
 {
     if (self.emailField.text.length && self.passwordField.text.length &&
         self.emailRepeatField.text.length && self.passwordRepeatField.text.length &&
-        self.firstnameField.text.length && self.lastnameField && self.countryField && self.postalField)
+        self.firstnameField.text.length && self.lastnameField && self.country && self.postalField)
     {
         [self.doneButton setEnabled:YES];
     }
@@ -243,31 +275,6 @@
     {
         [self.doneButton setEnabled:NO];
     }
-}
-
-#pragma mark - UIPickerView delegate
-
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    return self.countrySelections.count;
-}
-
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    return self.countrySelections[row];
-}
-
--(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    self.countryField.text = self.countrySelections[row];
-    
-    [self.countryField resignFirstResponder];
 }
 
 @end

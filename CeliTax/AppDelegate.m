@@ -87,6 +87,7 @@
     {
         self.navController = [[UINavigationController alloc] init];
         self.window.rootViewController = self.navController;
+        [self.navController.navigationBar setTranslucent:YES];
         
         //if not logged in, push login screen. Else push main app screen
         [self.navController pushViewController: [self.viewControllerFactory createLoginViewController] animated:YES];

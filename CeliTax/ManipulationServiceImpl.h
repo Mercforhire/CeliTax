@@ -10,10 +10,12 @@
 #import <UIKit/UIKit.h>
 #import "ManipulationService.h"
 
-@class CatagoriesDAO;
+@class CatagoriesDAO,RecordsDAO,ReceiptsDAO;
 
 @interface ManipulationServiceImpl : NSObject <ManipulationService>
 
 @property (nonatomic, strong) CatagoriesDAO     *catagoriesDAO;
+@property (nonatomic, strong) RecordsDAO        *recordsDAO;
+@property (nonatomic, strong) ReceiptsDAO       *receiptsDAO;
 
 @end

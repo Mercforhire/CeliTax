@@ -30,6 +30,7 @@
     if (!self.authenticationService)
     {
         self.authenticationService = [[AuthenticationServiceImpl alloc] init];
+        self.authenticationService.userDataDAO = [self.daoFactory createUserDataDAO];
     }
     
     return self.authenticationService;
@@ -41,6 +42,8 @@
     {
         self.dataService = [[DataServiceImpl alloc] init];
         self.dataService.catagoriesDAO = [self.daoFactory createCatagoriesDAO];
+        self.dataService.recordsDAO = [self.daoFactory createRecordsDAO];
+        self.dataService.receiptsDAO = [self.daoFactory createReceiptsDAO];
     }
     
     return self.dataService;
@@ -52,6 +55,8 @@
     {
         self.manipulationService = [[ManipulationServiceImpl alloc] init];
         self.manipulationService.catagoriesDAO = [self.daoFactory createCatagoriesDAO];
+        self.manipulationService.recordsDAO = [self.daoFactory createRecordsDAO];
+        self.manipulationService.receiptsDAO = [self.daoFactory createReceiptsDAO];
     }
     
     return self.manipulationService;

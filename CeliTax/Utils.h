@@ -16,4 +16,18 @@
 
 + (BOOL) archiveFile:(id) objectToArchive toFile: (NSString *) path;
 
++ (NSString *)getImageStorageFolderPathForUser:(NSString *)userKey;
+
++ (NSString *)saveImage:(UIImage *)image withFilename:(NSString *)filename forUser:(NSString *)userKey;
+
++ (UIImage *)readImageWithFileName:(NSString *)filename forUser:(NSString *)userKey;
+
++ (BOOL)deleteAllPhotosforUser:(NSString *)userKey;
+
++ (BOOL)imageWithFileNameExist:(NSString *)filename forUser:(NSString *)userKey;
+
++ (BOOL)deleteImageWithFileName:(NSString *)filename forUser:(NSString *)userKey;
+
++ (UIImage *) getCroppedImageUsingRect:(CGRect)cropRect forImage:(UIImage *)originalImage;
+
 @end

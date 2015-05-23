@@ -8,10 +8,16 @@
 
 #import "DAOFactory.h"
 #import "CatagoriesDAO.h"
+#import "UserDataDAO.h"
+#import "ReceiptsDAO.h"
+#import "RecordsDAO.h"
 
 @interface DAOFactory ()
 
 @property (nonatomic, strong) CatagoriesDAO *catagoriesDAO;
+@property (nonatomic, strong) UserDataDAO *userDataDAO;
+@property (nonatomic, strong) ReceiptsDAO *receiptsDAO;
+@property (nonatomic, strong) RecordsDAO *recordsDAO;
 
 @end
 
@@ -22,9 +28,43 @@
     if (!self.catagoriesDAO)
     {
         self.catagoriesDAO = [[CatagoriesDAO alloc] init];
+        self.catagoriesDAO.userDataDAO = [self createUserDataDAO];
     }
     
     return self.catagoriesDAO;
+}
+
+- (UserDataDAO *) createUserDataDAO
+{
+    if (!self.userDataDAO)
+    {
+        self.userDataDAO = [[UserDataDAO alloc] init];
+    }
+    
+    return self.userDataDAO;
+}
+
+- (ReceiptsDAO *) createReceiptsDAO
+{
+    if (!self.receiptsDAO)
+    {
+        self.receiptsDAO = [[ReceiptsDAO alloc] init];
+        self.receiptsDAO.userDataDAO = [self createUserDataDAO];
+    }
+    
+    return self.receiptsDAO;
+}
+
+- (RecordsDAO *) createRecordsDAO
+{
+    if (!self.recordsDAO)
+    {
+        self.recordsDAO = [[RecordsDAO alloc] init];
+        self.recordsDAO.userDataDAO = [self createUserDataDAO];
+        self.recordsDAO.catagoriesDAO = [self createCatagoriesDAO];
+    }
+    
+    return self.recordsDAO;
 }
 
 @end

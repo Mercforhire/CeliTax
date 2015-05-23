@@ -16,22 +16,20 @@
 @end
 
 #define PHOTO_CELL_HEIGHT_VS_WIDTH_RATIO    1.3333
-#define PHOTO_CELL_TOP_MARGIN               13
-#define PHOTO_CELL_BOTTOM_MARGIN            13
-#define PHOTO_CELL_SIDE_MARGIN              7
+#define PHOTO_CELL_TOP_MARGIN               0
+#define PHOTO_CELL_BOTTOM_MARGIN            0
+#define PHOTO_CELL_SIDE_MARGIN              0
 
 @implementation ReceiptScrollBarView
 
 - (void)baseInit
 {
-    UIColor *backgroundColor = [UIColor colorWithRed:203.0f/255 green:203.0f/255 blue:203.0f/255 alpha:1];
-    
     scollView = [[UIScrollView alloc] initWithFrame:
                  CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     
-    [scollView setBackgroundColor:backgroundColor];
     [scollView setShowsHorizontalScrollIndicator:NO];
     [scollView setShowsVerticalScrollIndicator:NO];
+    [scollView setBounces:NO];
     
     [self addSubview:scollView];
 }
@@ -48,6 +46,26 @@
     
     //self.frame will now return something
     [self baseInit];
+}
+
+- (id)initWithFrame:(CGRect)frame;
+{
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+        [self baseInit];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder;
+{
+    self = [super initWithCoder:aDecoder];
+    if (self)
+    {
+        [self baseInit];
+    }
+    return self;
 }
 
 -(void)setImages:(NSArray *)images
@@ -74,7 +92,7 @@
         {
             UIButton *imageButton = [[UIButton alloc] initWithFrame:
                                      CGRectMake(PHOTO_CELL_SIDE_MARGIN,
-                                                PHOTO_CELL_TOP_MARGIN,
+                                                PHOTO_CELL_TOP_MARGIN + heightOfOneImage * i,
                                                 widthOfOneImage,
                                                 heightOfOneImage)];
             [imageButton setBackgroundImage:images[i] forState:UIControlStateNormal];
@@ -105,7 +123,7 @@
 
 -(void)imageViewClicked:(UIButton *)sender
 {
-    DLog(@"Receipt %ld pressed", sender.tag);
+    DLog(@"Receipt %ld pressed", (long)sender.tag);
 }
 
 @end

@@ -13,7 +13,7 @@
 // Examples: if this is 1.0, then they are flush, if it's 0.5, then
 // the pie chart only goes halfway from the center point to the nearest
 // label or edge of the frame.
-#define kRadiusPortion 0.95
+#define kRadiusPortion 0.90
 
 @implementation PieView {
     CGFloat centerX;
@@ -45,12 +45,6 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    if (!self.colors || [self.colors count] == 0)
-    {
-        //colors
-        return;
-    }
-    
     // Draw a white background for the pie chart.
     // We need to do this since many of our color components have alpha < 1.
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -69,13 +63,24 @@
         [self drawSlice:i usingColor:self.colors[i] inContext:context];
     }
     
+    //if there are no colors, draw a white circle
+    if (!self.colors || !self.colors.count)
+    {
+        [self drawSlice:0 usingColor:[UIColor whiteColor] inContext:context];
+    }
+    
     CGContextEndTransparencyLayer(context);
     CGContextRestoreGState(context);
 }
 
 - (void)drawSlice:(int)index usingColor:(UIColor *)fillColor inContext:(CGContextRef)context
 {
-    float oneSlice = 1.0f / self.colors.count;
+    float oneSlice = 1.0f;
+    
+    if (self.colors.count)
+    {
+        oneSlice = 1.0f / self.colors.count;
+    }
     
     CGFloat startAngle = 2 * M_PI * oneSlice * index;
     CGFloat endAngle = 2 * M_PI * oneSlice * (index + 1);

@@ -20,6 +20,12 @@
 
 @interface ModifyCatagoryPopUpViewController : UIViewController
 
+@property CGSize viewSize;
+
 @property (nonatomic, weak) id <ModifyCatagoryPopUpDelegate> delegate;
+
+@property (weak, nonatomic) IBOutlet UIButton *editButton;
+@property (weak, nonatomic) IBOutlet UIButton *transferButton;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 
 @end

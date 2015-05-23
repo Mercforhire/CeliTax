@@ -26,7 +26,12 @@
 #import "HelpScreenViewController.h"
 #import "ModifyCatagoryViewController.h"
 #import "ReceiptCheckingViewController.h"
-#import "ItemCatagory.h"
+#import "Catagory.h"
+#import "NamesPickerViewController.h"
+#import "ColorPickerViewController.h"
+#import "ModifyCatagoryPopUpViewController.h"
+#import "AllColorsPickerViewController.h"
+#import "CameraViewController.h"
 
 @implementation ViewControllerFactory
 
@@ -144,7 +149,7 @@
     return myAccountViewController;
 }
 
-- (DeleteCatagoryViewController *) createDeleteCatagoryViewController:(ItemCatagory *)catagoryToDelete
+- (DeleteCatagoryViewController *) createDeleteCatagoryViewController:(Catagory *)catagoryToDelete
 {
     DeleteCatagoryViewController *deleteCatagoryViewController = [[DeleteCatagoryViewController alloc] initWithNibName:@"DeleteCatagoryViewController" bundle:nil];
     
@@ -156,18 +161,20 @@
     return deleteCatagoryViewController;
 }
 
-- (TransferCatagoryViewController *) createTransferCatagoryViewController
+- (TransferCatagoryViewController *) createTransferCatagoryViewController:(Catagory *)fromCatagory
 {
     TransferCatagoryViewController *transferCatagoryViewController = [[TransferCatagoryViewController alloc] initWithNibName:@"TransferCatagoryViewController" bundle:nil];
     
     [self initializeViewController: transferCatagoryViewController];
     
+    transferCatagoryViewController.fromCatagory = fromCatagory;
     transferCatagoryViewController.manipulationService = self.manipulationService;
+    transferCatagoryViewController.dataService = self.dataService;
     
     return transferCatagoryViewController;
 }
 
-- (ModifyCatagoryViewController *) createModifyCatagoryViewControllerWith:(ItemCatagory *)catagoryToModify
+- (ModifyCatagoryViewController *) createModifyCatagoryViewControllerWith:(Catagory *)catagoryToModify
 {
     ModifyCatagoryViewController *modifyCatagoryViewController = [[ModifyCatagoryViewController alloc] initWithNibName:@"ModifyCatagoryViewController"  bundle:nil];
     
@@ -179,15 +186,15 @@
     return modifyCatagoryViewController;
 }
 
-- (CatagoriesManagementViewController *) createEditCatagoriesViewController
+- (CatagoriesManagementViewController *) createCatagoriesManagementViewController
 {
-    CatagoriesManagementViewController *editCatagoriesViewController = [[CatagoriesManagementViewController alloc] initWithNibName:@"EditCatagoriesViewController" bundle:nil];
+    CatagoriesManagementViewController *catagoriesManagementViewController = [[CatagoriesManagementViewController alloc] initWithNibName:@"CatagoriesManagementViewController" bundle:nil];
     
-    [self initializeViewController: editCatagoriesViewController];
+    [self initializeViewController: catagoriesManagementViewController];
     
-    editCatagoriesViewController.dataService = self.dataService;
+    catagoriesManagementViewController.dataService = self.dataService;
     
-    return editCatagoriesViewController;
+    return catagoriesManagementViewController;
 }
 
 - (AddCatagoryViewController *) createAddCatagoryViewController
@@ -201,7 +208,7 @@
     return addCatagoryViewController;
 }
 
-- (ReceiptCheckingViewController *) createReceiptCheckingViewController
+- (ReceiptCheckingViewController *) createReceiptCheckingViewControllerForReceiptID:(NSInteger)receiptID
 {
     ReceiptCheckingViewController *receiptCheckingViewController = [[ReceiptCheckingViewController alloc] initWithNibName:@"ReceiptCheckingViewController" bundle:nil];
     
@@ -209,8 +216,49 @@
     
     receiptCheckingViewController.dataService = self.dataService;
     receiptCheckingViewController.manipulationService = self.manipulationService;
+    receiptCheckingViewController.receiptID = receiptID;
     
     return receiptCheckingViewController;
+}
+
+- (NamesPickerViewController *) createNamesPickerViewControllerWithNames:(NSArray *)names
+{
+    NamesPickerViewController *namesPickerViewController = [[NamesPickerViewController alloc] initWithNibName:@"NamesPickerViewController" bundle:nil];
+    
+    namesPickerViewController.names = names;
+    
+    return namesPickerViewController;
+}
+
+- (ColorPickerViewController *) createColorPickerViewController
+{
+    ColorPickerViewController *colorPickerViewController = [[ColorPickerViewController alloc] initWithNibName:@"ColorPickerViewController" bundle:nil];
+    
+    return colorPickerViewController;
+}
+
+- (ModifyCatagoryPopUpViewController *) createModifyCatagoryPopUpViewController
+{
+    ModifyCatagoryPopUpViewController *modifyCatagoryPopUpViewController = [[ModifyCatagoryPopUpViewController alloc] initWithNibName:@"ModifyCatagoryPopUpViewController" bundle:nil];
+    
+    return modifyCatagoryPopUpViewController;
+}
+
+- (AllColorsPickerViewController *) createAllColorsPickerViewController
+{
+    AllColorsPickerViewController *allColorsPickerViewController = [[AllColorsPickerViewController alloc] initWithNibName:@"AllColorsPickerViewController" bundle:nil];
+    
+    return allColorsPickerViewController;
+}
+
+- (CameraViewController *) createCameraOverlayViewController
+{
+    CameraViewController *cameraOverlayViewController = [[CameraViewController alloc] initWithNibName:@"CameraOverlayViewController" bundle:nil];
+    
+    [self initializeViewController: cameraOverlayViewController];
+    cameraOverlayViewController.manipulationService = self.manipulationService;
+    
+    return cameraOverlayViewController;
 }
 
 @end

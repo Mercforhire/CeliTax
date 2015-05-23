@@ -8,8 +8,8 @@
 
 #import "MyAccountViewController.h"
 #import "AccountTableViewCell.h"
-#import "ItemCatagory.h"
-#import "CatagoryRecord.h"
+#import "Catagory.h"
+#import "Record.h"
 #import "UserManager.h"
 #import "User.h"
 #import "AlertDialogsProvider.h"
@@ -29,7 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *calculateButton;
 
 @property (nonatomic, strong) NSMutableArray *itemCatagories; //of ItemCatagory
-@property (strong, nonatomic) NSMutableDictionary *catagoryRecordsDictionary; //Key: ItemCatagoryID, Value: NSArray of CatagoryRecord
+@property (strong, nonatomic) NSMutableDictionary *RecordsDictionary; //Key: ItemCatagoryID, Value: NSArray of Record
 
 @end
 
@@ -78,7 +78,7 @@
     self.accountTableView.delegate = self;
     
     self.itemCatagories = [NSMutableArray new];
-    self.catagoryRecordsDictionary = [NSMutableDictionary new];
+    self.RecordsDictionary = [NSMutableDictionary new];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -87,35 +87,34 @@
     
     [self.itemCatagories removeAllObjects];
     
-    [self.catagoryRecordsDictionary removeAllObjects];
+    [self.RecordsDictionary removeAllObjects];
     
     //load itemCatagories
-    [self.dataService fetchCatagoriesForUserKey:self.userManager.user.userKey
-                                        success:^(NSArray *catagories) {
-                                            
-                                            if (catagories && catagories.count)
-                                            {
-                                                [self.itemCatagories addObjectsFromArray:catagories];
-                                            }
-                                            
-                                        } failure:^(NSString *reason) {
-                                            //should not happen
-                                        }];
+    [self.dataService fetchCatagoriesSuccess:^(NSArray *catagories) {
+        
+        if (catagories && catagories.count)
+        {
+            [self.itemCatagories addObjectsFromArray:catagories];
+        }
+        
+    } failure:^(NSString *reason) {
+        //should not happen
+    }];
     
-    //load catagoryRecordsDictionary
-    for (ItemCatagory *catagory in self.itemCatagories)
+    //load RecordsDictionary
+    for (Catagory *catagory in self.itemCatagories)
     {
-        [self.dataService fetchCatagoryRecordsForUserKey:self.userManager.user.userKey forCatagoryID:catagory.identifer
-                                                 success:^(NSArray *catagoryRecord) {
-                                                     
-                                                     if (catagoryRecord && catagoryRecord.count)
-                                                     {
-                                                         [self.catagoryRecordsDictionary setObject:catagoryRecord forKey:[NSNumber numberWithInteger:catagory.identifer]];
-                                                     }
-                                                     
-                                                 } failure:^(NSString *reason) {
-                                                     //should not happen
-                                                 }];
+        [self.dataService fetchRecordsForCatagoryID:catagory.identifer
+                                            success:^(NSArray *Record) {
+                                                
+                                                if (Record && Record.count)
+                                                {
+                                                    [self.RecordsDictionary setObject:Record forKey:[NSNumber numberWithInteger:catagory.identifer]];
+                                                }
+                                                
+                                            } failure:^(NSString *reason) {
+                                                //should not happen
+                                            }];
     }
     
     [self.accountTableView reloadData];
@@ -128,7 +127,7 @@
 
 -(void)editCatagoriesPressed
 {
-    [self.navigationController pushViewController:[self.viewControllerFactory createEditCatagoriesViewController] animated:YES];
+    [self.navigationController pushViewController:[self.viewControllerFactory createCatagoriesManagementViewController] animated:YES];
 }
 
 #pragma mark - UITableview DataSource
@@ -155,17 +154,17 @@
     
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
-    ItemCatagory *thisItemCatagory = [self.itemCatagories objectAtIndex:indexPath.row];
+    Catagory *thisItemCatagory = [self.itemCatagories objectAtIndex:indexPath.row];
     
-    NSArray *recordsForThisCatagory = [self.catagoryRecordsDictionary objectForKey:[NSNumber numberWithInteger:thisItemCatagory.identifer]];
+    NSArray *recordsForThisCatagory = [self.RecordsDictionary objectForKey:[NSNumber numberWithInteger:thisItemCatagory.identifer]];
     
     NSInteger sumQuantity = 0;
     float sumAmount = 0.0;
     
-    for (CatagoryRecord *record in recordsForThisCatagory)
+    for (Record *record in recordsForThisCatagory)
     {
         sumQuantity = sumQuantity + record.quantity;
-        sumAmount = sumAmount + record.amount;
+        sumAmount = sumAmount + record.quantity * record.amount;
     }
     
     [cell.colorBox setBackgroundColor: thisItemCatagory.color];
@@ -194,7 +193,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ItemCatagory *thisItemCatagory = [self.itemCatagories objectAtIndex:indexPath.row];
+    Catagory *thisItemCatagory = [self.itemCatagories objectAtIndex:indexPath.row];
     
     DLog(@"Catagory %ld: %@ pressed", (long)thisItemCatagory.identifer, thisItemCatagory.name );
     
