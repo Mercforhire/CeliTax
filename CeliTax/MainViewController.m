@@ -75,7 +75,7 @@
     [super viewWillAppear:animated];
     
     //load the newest 10 receipts for user, sorted by date, calculate
-    [self.dataService fetchNewestTenReceiptInfoSuccess:^(NSArray *receiptInfos) {
+    [self.dataService fetchNewest5ReceiptInfoSuccess:^(NSArray *receiptInfos) {
           
           self.receiptInfos = receiptInfos;
           [self.recentUploadsTable reloadData];
@@ -154,7 +154,7 @@
     
     DLog(@"Receipt ID %@ clicked", [uploadInfoDictionary objectForKey:kReceiptIDKey]);
     
-    NSInteger clickedReceiptID = [[uploadInfoDictionary objectForKey:kReceiptIDKey] integerValue];
+    NSString *clickedReceiptID = [uploadInfoDictionary objectForKey:kReceiptIDKey];
     
     [self.navigationController pushViewController:[self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID:clickedReceiptID] animated:YES];
 }

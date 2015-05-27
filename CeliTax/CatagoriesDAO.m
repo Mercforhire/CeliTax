@@ -20,15 +20,15 @@
     return [self.userDataDAO getCatagories];
 }
 
--(Catagory *)loadCatagory:(NSInteger)catagoryID
+-(Catagory *)loadCatagory:(NSString *)catagoryID
 {
-    NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"identifer == %ld", (long)catagoryID];
+    NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"identifer == %@", catagoryID];
     NSArray *catagory = [[self.userDataDAO getCatagories] filteredArrayUsingPredicate: findCatagories];
     
     return [catagory firstObject];
 }
 
--(BOOL)addCatagoryForName:(NSString *)name andColor:(UIColor *)color
+-(BOOL)addCatagoryForName:(NSString *)name andColor:(UIColor *)color andNationalAverageCost:(float)cost
 {
     if ( !name || !color )
     {
@@ -37,30 +37,31 @@
     
     Catagory *catagoryToAdd = [Catagory new];
     
-    catagoryToAdd.identifer = [self.userDataDAO getCatagories].count;
+    catagoryToAdd.identifer = [[NSUUID UUID] UUIDString];
     catagoryToAdd.name = name;
     catagoryToAdd.color = color;
+    catagoryToAdd.nationalAverageCost = cost;
     
     [[self.userDataDAO getCatagories] addObject:catagoryToAdd];
     
     return [self.userDataDAO saveUserData];
 }
 
--(BOOL)addCatagory:(Catagory *)catagory
-{
-    if ( !catagory )
-    {
-        return NO;
-    }
-    
-    [[self.userDataDAO getCatagories] addObject:catagory];
-    
-    return [self.userDataDAO saveUserData];
-}
+//-(BOOL)addCatagory:(Catagory *)catagory
+//{
+//    if ( !catagory )
+//    {
+//        return NO;
+//    }
+//    
+//    [[self.userDataDAO getCatagories] addObject:catagory];
+//    
+//    return [self.userDataDAO saveUserData];
+//}
 
--(BOOL)modifyCatagory:(NSInteger)catagoryID forName:(NSString *)name andColor:(UIColor *)color
+-(BOOL)modifyCatagory:(NSString *)catagoryID forName:(NSString *)name andColor:(UIColor *)color
 {
-    NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"identifer == %ld", (long)catagoryID];
+    NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"identifer == %@", catagoryID];
     NSArray *catagory = [[self.userDataDAO getCatagories] filteredArrayUsingPredicate: findCatagories];
     
     if (catagory && catagory.count)
@@ -78,16 +79,16 @@
     }
 }
 
--(BOOL)deleteCatagory:(NSInteger)catagoryID
+-(BOOL)deleteCatagory:(NSString *)catagoryID
 {
     //delete the existing catagory with same ID as catagory's ID
-    NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"identifer == %ld", (long)catagoryID];
+    NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"identifer == %@", catagoryID];
     NSArray *catagoryToDelete = [[self.userDataDAO getCatagories] filteredArrayUsingPredicate: findCatagories];
     
     [[self.userDataDAO getCatagories] removeObjectsInArray:catagoryToDelete];
     
     //delete any catagory records belonging to the catagoryID
-    NSPredicate *findRecords = [NSPredicate predicateWithFormat: @"catagoryID == %ld", (long)catagoryID];
+    NSPredicate *findRecords = [NSPredicate predicateWithFormat: @"catagoryID == %@", catagoryID];
     NSArray *RecordsToDelete = [[self.userDataDAO getRecords] filteredArrayUsingPredicate: findRecords];
     
     [[self.userDataDAO getRecords] removeObjectsInArray:RecordsToDelete];

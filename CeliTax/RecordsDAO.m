@@ -9,6 +9,7 @@
 #import "RecordsDAO.h"
 #import "Catagory.h"
 #import "Record.h"
+#import "Receipt.h"
 
 @implementation RecordsDAO
 
@@ -17,24 +18,66 @@
     return [self.userDataDAO getRecords];
 }
 
--(NSArray *)loadRecordsforCatagory:(NSInteger)catagoryID
+-(NSArray *)loadRecordsforCatagory:(NSString *)catagoryID
 {
-    NSPredicate *findRecords = [NSPredicate predicateWithFormat: @"catagoryID == %ld", (long)catagoryID];
+    NSPredicate *findRecords = [NSPredicate predicateWithFormat: @"catagoryID == %@", catagoryID];
     NSArray *records = [[self.userDataDAO getRecords] filteredArrayUsingPredicate: findRecords];
     
     return records;
 }
 
--(NSArray *)loadRecordsforReceipt:(NSInteger)receiptID
+-(NSArray *)loadRecordsforReceipt:(NSString *)receiptID
 {
-    NSPredicate *findRecords = [NSPredicate predicateWithFormat: @"receiptID == %ld", (long)receiptID];
+    NSPredicate *findRecords = [NSPredicate predicateWithFormat: @"receiptID == %@", receiptID];
     NSArray *records = [[self.userDataDAO getRecords] filteredArrayUsingPredicate: findRecords];
     
     return records;
 }
 
--(BOOL)addRecordForCatagoryID:(NSInteger)catagoryID forReceiptID:(NSInteger)receiptID
-                  forQuantity:(NSInteger)quantity forAmount:(NSInteger)amount
+-(Record *)loadRecord:(NSString *)recordID
+{
+    NSPredicate *findRecord = [NSPredicate predicateWithFormat: @"identifer == %@", recordID];
+    NSArray *record = [[self.userDataDAO getRecords] filteredArrayUsingPredicate: findRecord];
+    
+    return [record firstObject];
+}
+
+-(NSString *)addRecordForCatagory: (Catagory *) catagory
+                 andReceipt: (Receipt *) receipt
+                forQuantity: (NSInteger) quantity
+                  forAmount: (float) amount
+{
+    if (catagory)
+    {
+        Record *newRecord = [Record new];
+        
+        newRecord.identifer = [[NSUUID UUID] UUIDString];
+        newRecord.dateCreated = [NSDate date];
+        newRecord.catagoryID = [catagory.identifer copy];
+        newRecord.catagoryName = [catagory.name copy];
+        newRecord.receiptID = [receipt.identifer copy];
+        newRecord.quantity = quantity;
+        newRecord.amount = amount;
+        
+        //set it back to userData and save it
+        [[self.userDataDAO getRecords] addObject:newRecord];
+        
+        NSString *newRecordID = newRecord.identifer;
+        
+        if ([self.userDataDAO saveUserData])
+        {
+            return newRecordID;
+        }
+    }
+    //else we should not be adding a record to a userData that doesn't have any set catagories
+    
+    return nil;
+}
+
+-(NSString *)addRecordForCatagoryID: (NSString *) catagoryID
+                 andReceiptID: (NSString *) receiptID
+                  forQuantity: (NSInteger) quantity
+                    forAmount: (float) amount
 {
     Catagory *catagory = [self.catagoriesDAO loadCatagory:catagoryID];
     
@@ -42,22 +85,27 @@
     {
         Record *newRecord = [Record new];
         
-        newRecord.identifer = [self.userDataDAO getRecords].count;
+        newRecord.identifer = [[NSUUID UUID] UUIDString];
         newRecord.dateCreated = [NSDate date];
-        newRecord.catagoryID = catagoryID;
-        newRecord.catagoryName = catagory.name;
-        newRecord.receiptID = receiptID;
+        newRecord.catagoryID = [catagoryID copy];
+        newRecord.catagoryName = [catagory.name copy];
+        newRecord.receiptID = [receiptID copy];
         newRecord.quantity = quantity;
         newRecord.amount = amount;
         
         //set it back to userData and save it
         [[self.userDataDAO getRecords] addObject:newRecord];
         
-        return [self.userDataDAO saveUserData];
+        NSString *newRecordID = newRecord.identifer;
+        
+        if ([self.userDataDAO saveUserData])
+        {
+            return newRecordID;
+        }
     }
     //else we should not be adding a record to a userData that doesn't have any set catagories
     
-    return NO;
+    return nil;
 }
 
 -(BOOL)addRecords:(NSArray *)records
@@ -67,15 +115,40 @@
     return [self.userDataDAO saveUserData];
 }
 
--(BOOL)deleteCatagoryAndRecordsForRecordIDs:(NSArray *)recordIDs
+-(BOOL)modifyRecord:(Record *)record
 {
-    if ( !recordIDs )
+    Record *recordToModify = [self loadRecord:record.identifer];
+    
+    if (recordToModify)
+    {
+        recordToModify.quantity = record.quantity;
+        recordToModify.amount = record.amount;
+        recordToModify.catagoryID = [record.catagoryID copy];
+        recordToModify.catagoryName = [record.catagoryName copy];
+        recordToModify.receiptID = [record.receiptID copy];
+        
+        return [self.userDataDAO saveUserData];
+    }
+    else
+    {
+        return NO;
+    }
+}
+
+-(BOOL)deleteRecordsForRecordIDs:(NSArray *)recordIDs
+{
+    if ( !recordIDs || !recordIDs.count )
     {
         return NO;
     }
     
     NSPredicate *findRecords = [NSPredicate predicateWithFormat: @"identifer in %@", recordIDs];
     NSArray *recordsToDelete = [[self.userDataDAO getRecords] filteredArrayUsingPredicate: findRecords];
+    
+    if ( !recordsToDelete || !recordsToDelete.count )
+    {
+        return NO;
+    }
     
     [[self.userDataDAO getRecords] removeObjectsInArray:recordsToDelete];
     

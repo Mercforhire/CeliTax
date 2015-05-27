@@ -11,7 +11,7 @@
 
 @interface Catagory : NSObject <NSCoding, NSCopying>
 
-@property NSInteger                     identifer;
+@property (nonatomic, copy) NSString    *identifer;
 
 @property (nonatomic, copy) NSString    *name;
 @property (nonatomic, strong) UIColor   *color;

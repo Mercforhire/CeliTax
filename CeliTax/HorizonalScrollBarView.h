@@ -10,6 +10,8 @@
 
 @protocol HorizonalScrollBarViewProtocol <NSObject>
 
+-(void)buttonUnselected;
+
 -(void)buttonClickedWithIndex:(NSInteger)index andName:(NSString *)name;
 
 @end

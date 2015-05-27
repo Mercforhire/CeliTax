@@ -109,7 +109,7 @@
                                                 
                                                 if (Record && Record.count)
                                                 {
-                                                    [self.RecordsDictionary setObject:Record forKey:[NSNumber numberWithInteger:catagory.identifer]];
+                                                    [self.RecordsDictionary setObject:Record forKey:catagory.identifer];
                                                 }
                                                 
                                             } failure:^(NSString *reason) {
@@ -156,7 +156,7 @@
     
     Catagory *thisItemCatagory = [self.itemCatagories objectAtIndex:indexPath.row];
     
-    NSArray *recordsForThisCatagory = [self.RecordsDictionary objectForKey:[NSNumber numberWithInteger:thisItemCatagory.identifer]];
+    NSArray *recordsForThisCatagory = [self.RecordsDictionary objectForKey:thisItemCatagory.identifer];
     
     NSInteger sumQuantity = 0;
     float sumAmount = 0.0;

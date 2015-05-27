@@ -208,7 +208,7 @@
     return addCatagoryViewController;
 }
 
-- (ReceiptCheckingViewController *) createReceiptCheckingViewControllerForReceiptID:(NSInteger)receiptID
+- (ReceiptCheckingViewController *) createReceiptCheckingViewControllerForReceiptID:(NSString *)receiptID
 {
     ReceiptCheckingViewController *receiptCheckingViewController = [[ReceiptCheckingViewController alloc] initWithNibName:@"ReceiptCheckingViewController" bundle:nil];
     

@@ -24,8 +24,7 @@
 
 - (void)baseInit
 {
-    scollView = [[UIScrollView alloc] initWithFrame:
-                 CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    scollView = [UIScrollView new];
     
     [scollView setShowsHorizontalScrollIndicator:NO];
     [scollView setShowsVerticalScrollIndicator:NO];
@@ -41,9 +40,6 @@
     [self setNeedsLayout];
     [self layoutIfNeeded];
     
-    //Prevent "Unable to simultaneously satisfy constraints" crash
-    [self setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
     //self.frame will now return something
     [self baseInit];
 }
@@ -56,6 +52,23 @@
         [self baseInit];
     }
     return self;
+}
+
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    [scollView setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    
+    CALayer *maskLayer = [CALayer layer];
+    maskLayer.frame = self.bounds;
+    maskLayer.shadowRadius = 2.5f;
+    maskLayer.shadowPath = CGPathCreateWithRoundedRect(CGRectInset(self.bounds, 8, 8), 10, 10, nil);
+    maskLayer.shadowOpacity = 1;
+    maskLayer.shadowOffset = CGSizeZero;
+    maskLayer.shadowColor = [UIColor whiteColor].CGColor;
+    
+    self.layer.mask = maskLayer;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder;

@@ -24,7 +24,7 @@
         return nil;
     }
     
-    if (  [self.catagoriesDAO addCatagoryForName:catagoryName andColor:catagoryColor] )
+    if (  [self.catagoriesDAO addCatagoryForName:catagoryName andColor:catagoryColor andNationalAverageCost:0] )
     {
         success( );
     }
@@ -36,7 +36,7 @@
     return nil;
 }
 
-- (NSOperation *) modifyCatagoryForCatagoryID:(NSInteger)catagoryID newName:(NSString *)catagoryName newColor:(UIColor *)catagoryColor success:(ModifyCatagorySuccessBlock)success failure:(ModifyCatagoryFailureBlock)failure
+- (NSOperation *) modifyCatagoryForCatagoryID:(NSString *)catagoryID newName:(NSString *)catagoryName newColor:(UIColor *)catagoryColor success:(ModifyCatagorySuccessBlock)success failure:(ModifyCatagoryFailureBlock)failure
 {
     if (  [self.catagoriesDAO modifyCatagory:catagoryID forName:catagoryName andColor:catagoryColor] )
     {
@@ -50,7 +50,7 @@
     return nil;
 }
 
-- (NSOperation *) deleteCatagoryForCatagoryID:(NSInteger)catagoryID success:(DeleteCatagorySuccessBlock)success failure:(DeleteCatagoryFailureBlock)failure
+- (NSOperation *) deleteCatagoryForCatagoryID:(NSString *)catagoryID success:(DeleteCatagorySuccessBlock)success failure:(DeleteCatagoryFailureBlock)failure
 {
     
     if ( [self.catagoriesDAO deleteCatagory:catagoryID] )
@@ -66,7 +66,7 @@
     return nil;
 }
 
-- (NSOperation *) transferCatagoryFromCatagoryID:(NSInteger)fromCatagoryID toCatagoryID:(NSInteger)toCatagoryID success:(ModifyCatagorySuccessBlock)success failure:(ModifyCatagoryFailureBlock)failure
+- (NSOperation *) transferCatagoryFromCatagoryID:(NSString *)fromCatagoryID toCatagoryID:(NSString *)toCatagoryID success:(ModifyCatagorySuccessBlock)success failure:(ModifyCatagoryFailureBlock)failure
 {
     
     NSArray *fromRecords = [self.recordsDAO loadRecordsforCatagory:fromCatagoryID];
@@ -88,7 +88,7 @@
     
     for (Record *record in fromRecords)
     {
-        record.catagoryID = toCatagoryID;
+        record.catagoryID = [toCatagoryID copy];
         
         [modifiedRecordsToAdd addObject:record];
     }
@@ -105,7 +105,7 @@
     return nil;
 }
 
-- (NSOperation *) addRecordForCatagoryID:(NSInteger)catagoryID forReceiptID:(NSInteger)receiptID forQuantity:(NSInteger)quantity forAmount:(NSInteger)amount success:(AddRecordSuccessBlock)success failure:(AddRecordFailureBlock)failure
+- (NSOperation *) addRecordForCatagoryID:(NSString *)catagoryID forReceiptID:(NSString *)receiptID forQuantity:(NSInteger)quantity forAmount:(float)amount success:(AddRecordSuccessBlock)success failure:(AddRecordFailureBlock)failure
 {
     
     Catagory *toItemCatagory = [self.catagoriesDAO loadCatagory:catagoryID];
@@ -115,12 +115,11 @@
         failure ( @"invalid catagoryID");
     }
     
-    if ( [self.recordsDAO addRecordForCatagoryID:catagoryID
-                                    forReceiptID:receiptID
-                                     forQuantity:quantity
-                                       forAmount:amount] )
+    NSString *newestRecordID = [self.recordsDAO addRecordForCatagoryID:catagoryID andReceiptID:receiptID forQuantity:quantity forAmount:amount];
+    
+    if ( newestRecordID )
     {
-        success ( );
+        success ( newestRecordID );
     }
     else
     {
@@ -130,18 +129,33 @@
     return nil;
 }
 
-- (NSOperation *) getNextReceiptIDWithSuccess:(GetNextReceiptIDSuccessBlock)success andFailure:(GetNextReceiptIDFailureBlock)failure
+- (NSOperation *) deleteRecord:(NSString *)recordID WithSuccess:(DeleteRecordSuccessBlock)success andFailure:(DeleteRecordFailureBlock)failure
 {
-
-    NSInteger nextReceiptID = [self.receiptsDAO getNextReceiptID];
+    NSArray *arrayWithSingleNumber = [NSArray arrayWithObject:recordID];
     
-    if ( nextReceiptID > -1 )
+    if ([self.recordsDAO deleteRecordsForRecordIDs:arrayWithSingleNumber])
     {
-        success ( nextReceiptID );
+        success ();
     }
     else
     {
-        failure ( @"unable to get next receipt ID");
+        failure ( @"failed to deleteRecordsForRecordIDs" );
+    }
+    
+    return nil;
+}
+
+- (NSOperation *) modifyRecord: (Record *) record
+                   WithSuccess: (ModifyRecordSuccessBlock) success
+                    andFailure: (ModifyRecordFailureBlock) failure
+{
+    if ( [self.recordsDAO modifyRecord:record] )
+    {
+        success ();
+    }
+    else
+    {
+        failure ( [NSString stringWithFormat:@"failed to modify Record: %ld", (long)record.identifer] );
     }
     
     return nil;

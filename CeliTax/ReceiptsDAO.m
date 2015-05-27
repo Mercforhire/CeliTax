@@ -11,11 +11,6 @@
 
 @implementation ReceiptsDAO
 
--(NSInteger)getNextReceiptID
-{
-    return [self.userDataDAO getReceipts].count;
-}
-
 -(BOOL)addReceiptWithFilenames:(NSArray *)filenames
 {
     if ( !filenames )
@@ -24,7 +19,7 @@
     }
     
     Receipt *newReceipt = [Receipt new];
-    newReceipt.identifer = [self getNextReceiptID];
+    newReceipt.identifer = [[NSUUID UUID] UUIDString];
     newReceipt.fileNames = [filenames mutableCopy];
     newReceipt.dateCreated = [NSDate date];
     
@@ -38,9 +33,28 @@
     return [self.userDataDAO getReceipts];
 }
 
--(Receipt *)loadReceipt:(NSInteger)receiptID
+-(NSArray *)loadLast5Receipts
 {
-    NSPredicate *findReceipt = [NSPredicate predicateWithFormat: @"identifer == %ld", (long)receiptID];
+    NSArray *allReceipts = [self.userDataDAO getReceipts];
+    NSArray *newest5Receipts;
+    
+    if (allReceipts.count >= 5)
+    {
+        NSRange range = NSMakeRange(allReceipts.count - 1 - 4, allReceipts.count - 1); //56789
+        
+        newest5Receipts = [allReceipts subarrayWithRange:range];
+    }
+    else
+    {
+        newest5Receipts = allReceipts;
+    }
+    
+    return newest5Receipts;
+}
+
+-(Receipt *)loadReceipt:(NSString *)receiptID
+{
+    NSPredicate *findReceipt = [NSPredicate predicateWithFormat: @"identifer == %@", receiptID];
     NSArray *receipt = [[self.userDataDAO getReceipts] filteredArrayUsingPredicate: findReceipt];
     
     return [receipt firstObject];

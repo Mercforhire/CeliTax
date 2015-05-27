@@ -16,7 +16,7 @@
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-    [coder encodeInteger:self.identifer     forKey:kKeyIdentiferKey];
+    [coder encodeObject:self.identifer     forKey:kKeyIdentiferKey];
     [coder encodeObject:self.fileNames    forKey:kKeyFileNamesKey];
     [coder encodeObject:self.dateCreated    forKey:kKeyDateCreatedKey];
 }
@@ -25,7 +25,7 @@
 {
     self = [self init];
     
-    self.identifer = [coder decodeIntegerForKey:kKeyIdentiferKey];
+    self.identifer = [coder decodeObjectForKey:kKeyIdentiferKey];
     
     NSArray *fileNames = [coder decodeObjectForKey:kKeyFileNamesKey];
     self.fileNames = [[NSMutableArray alloc] initWithArray:fileNames copyItems:NO];

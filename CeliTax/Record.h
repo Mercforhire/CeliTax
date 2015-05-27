@@ -10,13 +10,13 @@
 
 @interface Record : NSObject <NSCoding>
 
-@property NSInteger                     identifer;
+@property (nonatomic, copy) NSString    *identifer;
 @property (nonatomic, strong) NSDate    *dateCreated;
 
-@property NSInteger                     catagoryID; //must match an ItemCatagory
+@property (nonatomic, copy) NSString    *catagoryID; //must match an ItemCatagory
 @property (nonatomic, copy) NSString    *catagoryName;
 
-@property NSInteger                     receiptID; //must match an Receipt
+@property (nonatomic, copy) NSString    *receiptID; //must match an Receipt
 
 @property float                         amount;
 @property NSInteger                     quantity;

@@ -10,7 +10,7 @@
 
 @interface Receipt : NSObject <NSCoding>
 
-@property NSInteger                     identifer;
+@property (nonatomic, copy) NSString    *identifer;
 
 @property NSMutableArray                *fileNames;
 

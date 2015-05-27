@@ -13,6 +13,7 @@
 #import "ReceiptsDAO.h"
 #import "RecordsDAO.h"
 #import "Receipt.h"
+#import "Utils.h"
 
 @interface DataServiceImpl ()
 
@@ -25,85 +26,50 @@
     if (![self.catagoriesDAO loadCatagories].count)
     {
         //add some demo data
-        Catagory *itemCatagory1 = [Catagory new];
-        itemCatagory1.identifer = 0;
-        itemCatagory1.name = @"Rice";
-        itemCatagory1.color = [UIColor yellowColor];
-        itemCatagory1.nationalAverageCost = 10.5f;
+        [self.catagoriesDAO addCatagoryForName:@"Rice" andColor:[UIColor yellowColor] andNationalAverageCost:2.5f];
         
-        Catagory *itemCatagory2 = [Catagory new];
-        itemCatagory2.identifer = 1;
-        itemCatagory2.name = @"Bread";
-        itemCatagory2.color = [UIColor orangeColor];
+        [self.catagoriesDAO addCatagoryForName:@"Bread" andColor:[UIColor orangeColor] andNationalAverageCost:0];
         
-        Catagory *itemCatagory3 = [Catagory new];
-        itemCatagory3.identifer = 2;
-        itemCatagory3.name = @"Meat";
-        itemCatagory1.nationalAverageCost = 7.5f;
-        itemCatagory3.color = [UIColor redColor];
+        [self.catagoriesDAO addCatagoryForName:@"Meat" andColor:[UIColor redColor] andNationalAverageCost:7.5f];
         
-        Catagory *itemCatagory4 = [Catagory new];
-        itemCatagory4.identifer = 3;
-        itemCatagory4.name = @"Flour";
-        itemCatagory4.color = [UIColor lightGrayColor];
-        itemCatagory4.nationalAverageCost = 5.0f;
-        
-        [self.catagoriesDAO addCatagory:itemCatagory1];
-        [self.catagoriesDAO addCatagory:itemCatagory2];
-        [self.catagoriesDAO addCatagory:itemCatagory3];
-        [self.catagoriesDAO addCatagory:itemCatagory4];
-    }
-    
-    if (![self.recordsDAO loadRecords].count)
-    {
-        //add some demo data
-        NSMutableArray *records = [NSMutableArray new];
-        
-        Record *record1 = [Record new];
-        record1.identifer = records.count;
-        record1.catagoryID = 0;
-        record1.catagoryName = @"Rice";
-        record1.receiptID = 0;
-        record1.quantity = 2;
-        record1.amount = 2.5f;
-        [records addObject:record1];
-        
-        Record *record2 = [Record new];
-        record2.identifer = records.count;
-        record2.catagoryID = 0;
-        record2.catagoryName = @"Rice";
-        record2.receiptID = 1;
-        record2.quantity = 1;
-        record2.amount = 5.0f;
-        [records addObject:record2];
-        
-        Record *record3 = [Record new];
-        record3.identifer = records.count;
-        record3.catagoryID = 1;
-        record3.catagoryName = @"Bread";
-        record3.receiptID = 1;
-        record3.quantity = 3;
-        record3.amount = 6.0f;
-        [records addObject:record3];
-        
-        Record *record4 = [Record new];
-        record4.identifer = records.count;
-        record4.catagoryID = 2;
-        record4.catagoryName = @"Meat";
-        record4.receiptID = 1;
-        record4.quantity = 5;
-        record4.amount = 20.0f;
-        [records addObject:record4];
-        
-        [self.recordsDAO addRecords:records];
+        [self.catagoriesDAO addCatagoryForName:@"Flour" andColor:[UIColor lightGrayColor] andNationalAverageCost:5.0f];
     }
     
     if (![self.receiptsDAO loadReceipts].count)
     {
         //add some demo data
-        [self.receiptsDAO addReceiptWithFilenames:[NSArray arrayWithObjects:@"ReceiptPic-1.jpg", @"ReceiptPic-2.jpg", nil]];
+        [self.receiptsDAO addReceiptWithFilenames:[NSArray arrayWithObjects:@"ReceiptPic-1", @"ReceiptPic-2", nil]];
         
-        [self.receiptsDAO addReceiptWithFilenames:[NSArray arrayWithObjects:@"ReceiptPic-1.jpg", @"ReceiptPic-2.jpg", nil]];
+        [self.receiptsDAO addReceiptWithFilenames:[NSArray arrayWithObjects:@"ReceiptPic-1", @"ReceiptPic-2", nil]];
+        
+        UIImage *testImage1 = [UIImage imageNamed:@"ReceiptPic-1.jpg"];
+        UIImage *testImage2 = [UIImage imageNamed:@"ReceiptPic-2.jpg"];
+        
+        [Utils saveImage:testImage1 withFilename:@"ReceiptPic-1" forUser:@"testKey"];
+        [Utils saveImage:testImage2 withFilename:@"ReceiptPic-2" forUser:@"testKey"];
+    }
+    
+    if (![self.recordsDAO loadRecords].count)
+    {
+        [self.recordsDAO addRecordForCatagory:[[self.catagoriesDAO loadCatagories] firstObject]
+                                   andReceipt:[[self.receiptsDAO loadReceipts] firstObject]
+                                  forQuantity:2
+                                    forAmount:2.5f];
+        
+        [self.recordsDAO addRecordForCatagory:[[self.catagoriesDAO loadCatagories] objectAtIndex:1]
+                                   andReceipt:[[self.receiptsDAO loadReceipts] firstObject]
+                                  forQuantity:1
+                                    forAmount:5.0f];
+        
+        [self.recordsDAO addRecordForCatagory:[[self.catagoriesDAO loadCatagories] objectAtIndex:2]
+                                   andReceipt:[[self.receiptsDAO loadReceipts] firstObject]
+                                  forQuantity:3
+                                    forAmount:6.0f];
+        
+        [self.recordsDAO addRecordForCatagory:[[self.catagoriesDAO loadCatagories] lastObject]
+                                   andReceipt:[[self.receiptsDAO loadReceipts] lastObject]
+                                  forQuantity:5
+                                    forAmount:20.0f];
     }
 }
 
@@ -111,7 +77,14 @@
 {
     NSArray *catagories = [self.catagoriesDAO loadCatagories];
     
-    success ( catagories );
+    if (catagories && catagories.count)
+    {
+        success ( catagories );
+    }
+    else
+    {
+        failure ( @"catagories not found");
+    }
     
     return nil;
 }
@@ -120,25 +93,64 @@
 {
     NSArray *records = [self.recordsDAO loadRecords];
     
-    success ( records );
+    if (records && records.count)
+    {
+        success ( records );
+    }
+    else
+    {
+        failure ( @"records not found");
+    }
     
     return nil;
 }
 
-- (NSOperation *) fetchRecordsForCatagoryID:(NSInteger)catagoryID success:(FetchRecordsSuccessBlock)success failure:(FetchRecordsFailureBlock)failure
+- (NSOperation *) fetchRecordsForCatagoryID:(NSString *)catagoryID success:(FetchRecordsSuccessBlock)success failure:(FetchRecordsFailureBlock)failure
 {
     NSArray *records = [self.recordsDAO loadRecordsforCatagory:catagoryID];
     
-    success ( records );
+    if (records && records.count)
+    {
+        success ( records );
+    }
+    else
+    {
+        failure ( @"records not found");
+    }
     
     return nil;
 }
 
-- (NSOperation *) fetchRecordsForReceiptID:(NSInteger)receiptID success:(FetchRecordsSuccessBlock)success failure:(FetchRecordsFailureBlock)failure
+- (NSOperation *) fetchRecordsForReceiptID:(NSString *)receiptID success:(FetchRecordsSuccessBlock)success failure:(FetchRecordsFailureBlock)failure
 {
     NSArray *records = [self.recordsDAO loadRecordsforReceipt:receiptID];
     
-    success ( records );
+    if (records && records.count)
+    {
+        success ( records );
+    }
+    else
+    {
+        failure ( @"records not found");
+    }
+    
+    return nil;
+}
+
+- (NSOperation *) fetchRecordForID: (NSString *) recordID
+                           success: (FetchRecordSuccessBlock) success
+                           failure: (FetchRecordFailureBlock) failure
+{
+    Record *record = [self.recordsDAO loadRecord:recordID];
+    
+    if (record)
+    {
+        success ( record );
+    }
+    else
+    {
+        failure ( @"record not found" );
+    }
     
     return nil;
 }
@@ -147,22 +159,29 @@
 {
     NSArray *receipts = [self.receiptsDAO loadReceipts];
     
-    success ( receipts );
+    if (receipts && receipts.count)
+    {
+        success ( receipts );
+    }
+    else
+    {
+        failure ( @"receipts not found");
+    }
     
     return nil;
 }
 
-- (NSOperation *) fetchNewestTenReceiptInfoSuccess:(FetchReceiptInfoSuccessBlock)success failure:(FetchReceiptInfoFailureBlock)failure
+- (NSOperation *) fetchNewest5ReceiptInfoSuccess:(FetchReceiptInfoSuccessBlock)success failure:(FetchReceiptInfoFailureBlock)failure
 {
     NSMutableArray *receiptInfos = [NSMutableArray new];
     
-    NSArray *receipts = [self.receiptsDAO loadReceipts];
+    NSArray *receipts = [self.receiptsDAO loadLast5Receipts];
     
     for (Receipt *receipt in receipts)
     {
         NSMutableDictionary *receiptInfo = [NSMutableDictionary new];
         
-        [receiptInfo setObject:[NSNumber numberWithInteger:receipt.identifer] forKeyedSubscript:kReceiptIDKey];
+        [receiptInfo setObject:receipt.identifer forKeyedSubscript:kReceiptIDKey];
         [receiptInfo setObject:receipt.dateCreated forKeyedSubscript:kUploadTimeKey];
         
         NSMutableArray *receiptColors = [NSMutableArray new];
@@ -192,11 +211,18 @@
     return nil;
 }
 
-- (NSOperation *) fetchReceiptForReceiptID:(NSInteger)receiptID success:(FetchReceiptSuccessBlock)success failure:(FetchReceiptFailureBlock)failure
+- (NSOperation *) fetchReceiptForReceiptID:(NSString *)receiptID success:(FetchReceiptSuccessBlock)success failure:(FetchReceiptFailureBlock)failure
 {
-    Receipt *receipt;
+    Receipt *receipt = [self.receiptsDAO loadReceipt:receiptID];
     
-    success ( receipt );
+    if (receipt)
+    {
+        success ( receipt );
+    }
+    else
+    {
+        failure ( @"Receipt not found" );
+    }
     
     return nil;
 }

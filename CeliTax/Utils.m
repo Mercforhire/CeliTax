@@ -76,7 +76,7 @@
 {
     NSString *storagePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     
-    NSString *imageFolderName = [NSString stringWithFormat:@"Images-%ld", (unsigned long)[userKey hash]];
+    NSString *imageFolderName = [NSString stringWithFormat:@"/Images-%ld", (unsigned long)[userKey hash]];
     
     NSString *imageFolderPath = [storagePath stringByAppendingString:imageFolderName];
     
@@ -93,6 +93,11 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
     NSString *imageFolderPath = [self getImageStorageFolderPathForUser:userKey];
+    
+    if (![fileManager fileExistsAtPath: imageFolderPath])
+    {
+        [fileManager createDirectoryAtPath: imageFolderPath withIntermediateDirectories: YES attributes: nil error: nil];
+    }
     
     NSString *imageFilePath = [imageFolderPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.JPG", filename]];
     

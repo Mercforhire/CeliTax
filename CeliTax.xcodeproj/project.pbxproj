@@ -33,8 +33,6 @@
 		85552E951B029CE2005D9FB1 /* ModifyCatagoryPopUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85552E931B029CE2005D9FB1 /* ModifyCatagoryPopUpViewController.xib */; };
 		85552E9C1B02FA30005D9FB1 /* CatagoriesManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85552E9A1B02FA30005D9FB1 /* CatagoriesManagementViewController.m */; };
 		85552E9D1B02FA30005D9FB1 /* CatagoriesManagementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85552E9B1B02FA30005D9FB1 /* CatagoriesManagementViewController.xib */; };
-		8555E0C71B080A4A00B91138 /* AddReceiptItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8555E0C51B080A4A00B91138 /* AddReceiptItemViewController.m */; };
-		8555E0C81B080A4A00B91138 /* AddReceiptItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8555E0C61B080A4A00B91138 /* AddReceiptItemViewController.xib */; };
 		8555E0CA1B080C9B00B91138 /* receipt.png in Resources */ = {isa = PBXBuildFile; fileRef = 8555E0C91B080C9B00B91138 /* receipt.png */; };
 		8555E0CE1B080DAD00B91138 /* ImageCounterIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8555E0CD1B080DAD00B91138 /* ImageCounterIconView.m */; };
 		8555E0D61B091E0400B91138 /* HorizonalScrollBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8555E0D51B091E0400B91138 /* HorizonalScrollBarView.m */; };
@@ -180,9 +178,6 @@
 		85552E991B02FA30005D9FB1 /* CatagoriesManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatagoriesManagementViewController.h; sourceTree = "<group>"; };
 		85552E9A1B02FA30005D9FB1 /* CatagoriesManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CatagoriesManagementViewController.m; sourceTree = "<group>"; };
 		85552E9B1B02FA30005D9FB1 /* CatagoriesManagementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatagoriesManagementViewController.xib; sourceTree = "<group>"; };
-		8555E0C41B080A4A00B91138 /* AddReceiptItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReceiptItemViewController.h; sourceTree = "<group>"; };
-		8555E0C51B080A4A00B91138 /* AddReceiptItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReceiptItemViewController.m; sourceTree = "<group>"; };
-		8555E0C61B080A4A00B91138 /* AddReceiptItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddReceiptItemViewController.xib; sourceTree = "<group>"; };
 		8555E0C91B080C9B00B91138 /* receipt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = receipt.png; sourceTree = "<group>"; };
 		8555E0CC1B080DAD00B91138 /* ImageCounterIconView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCounterIconView.h; sourceTree = "<group>"; };
 		8555E0CD1B080DAD00B91138 /* ImageCounterIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCounterIconView.m; sourceTree = "<group>"; };
@@ -491,16 +486,6 @@
 				85552E9B1B02FA30005D9FB1 /* CatagoriesManagementViewController.xib */,
 			);
 			name = "Catagories Management";
-			sourceTree = "<group>";
-		};
-		8555E0C31B080A2E00B91138 /* Add Receipt Item */ = {
-			isa = PBXGroup;
-			children = (
-				8555E0C41B080A4A00B91138 /* AddReceiptItemViewController.h */,
-				8555E0C51B080A4A00B91138 /* AddReceiptItemViewController.m */,
-				8555E0C61B080A4A00B91138 /* AddReceiptItemViewController.xib */,
-			);
-			name = "Add Receipt Item";
 			sourceTree = "<group>";
 		};
 		8555E0CB1B080D4000B91138 /* Image Counter Icon */ = {
@@ -903,7 +888,6 @@
 				85A8CAF31AF07A850023504D /* Add Catagory */,
 				8556E3661AF545CE003CCDD2 /* Menu Root */,
 				856024B41AFA5DE5004C1254 /* Receipt Checking */,
-				8555E0C31B080A2E00B91138 /* Add Receipt Item */,
 				85A8CAF21AF07A720023504D /* My Account */,
 				85A8CAF11AF07A640023504D /* Main Screen */,
 			);
@@ -1230,7 +1214,6 @@
 				8582A4701AF176660048DCD6 /* SplashViewController.xib in Resources */,
 				85100D461AF6CE90005C24D2 /* account@2x.png in Resources */,
 				85100D4A1AF6CE9D005C24D2 /* arrow@2x.png in Resources */,
-				8555E0C81B080A4A00B91138 /* AddReceiptItemViewController.xib in Resources */,
 				856024CE1AFA9E6F004C1254 /* ReceiptPic-2.jpg in Resources */,
 				8556E3341AF47C0D003CCDD2 /* MyAccountViewController.xib in Resources */,
 				856024CD1AFA9E6F004C1254 /* ReceiptPic-1.jpg in Resources */,
@@ -1324,7 +1307,6 @@
 				8556E3381AF47C8C003CCDD2 /* AddCatagoryViewController.m in Sources */,
 				85560FDD1B0186CD004D2963 /* PieView.m in Sources */,
 				8556E3421AF48591003CCDD2 /* ModifyCatagoryViewController.m in Sources */,
-				8555E0C71B080A4A00B91138 /* AddReceiptItemViewController.m in Sources */,
 				85F977591B0AED1D002B3DF3 /* CameraDismissButton.m in Sources */,
 				85F9775A1B0AED1D002B3DF3 /* CameraFlashButton.m in Sources */,
 				85560FE81B01B82A004D2963 /* NamesPickerViewController.m in Sources */,

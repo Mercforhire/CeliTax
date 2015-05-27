@@ -13,11 +13,20 @@
 @implementation HorizonalScrollBarView
 {
     UIScrollView *scrollView;
+    NSMutableArray *buttons;
+    NSMutableArray *buttonColors;
+    NSInteger selectedButtonIndex;
+    UIColor *selectedButtonColor;
 }
 
 -(void)baseInit
 {
-    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    buttons = [NSMutableArray new];
+    buttonColors = [NSMutableArray new];
+    selectedButtonIndex = -1;
+    selectedButtonColor = self.tintColor;
+    
+    scrollView = [[UIScrollView alloc] initWithFrame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     [scrollView setShowsHorizontalScrollIndicator:NO];
     [scrollView setShowsVerticalScrollIndicator:NO];
     [scrollView setBounces:NO];
@@ -25,7 +34,7 @@
     [self addSubview:scrollView];
 }
 
-- (id)initWithFrame:(CGRect)frame;
+- (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self)
@@ -35,7 +44,7 @@
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder;
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self)
@@ -69,6 +78,8 @@
     {
         [v removeFromSuperview];
     }
+    [buttons removeAllObjects];
+    [buttonColors removeAllObjects];
     
     UIFont *defaultFont = [UIFont systemFontOfSize:15];
     
@@ -76,8 +87,8 @@
     int nThButton = 0;
     float colorDelta = (0.96 - 0.75) / buttonNames.count;
     
-    
     NSMutableArray *buttonLengthes = [NSMutableArray new];
+    
     float sumOfButtonLengthes = 0;
     //see if length of all buttons is longer than the view.frame
     //if yes, use the following formula for button sizes
@@ -90,21 +101,21 @@
         
         sumOfButtonLengthes = sumOfButtonLengthes + widthOfThisButton;
         
-        [buttonLengthes addObject:[NSNumber numberWithFloat:widthOfThisButton]];
+        [buttonLengthes addObject:[ NSNumber numberWithFloat:widthOfThisButton ]];
     }
     
-    if (sumOfButtonLengthes < self.frame.size.width)
+    if ( sumOfButtonLengthes < self.frame.size.width )
     {
         float leftoverSpace = self.frame.size.width - sumOfButtonLengthes;
         
         for (int i = 0; i < buttonLengthes.count; i++)
         {
-            buttonLengthes[i] = [NSNumber numberWithFloat:[buttonLengthes[i] floatValue] + leftoverSpace / buttonLengthes.count ];
+            buttonLengthes[i] = [ NSNumber numberWithFloat:[buttonLengthes[i] floatValue] + leftoverSpace / buttonLengthes.count ];
         }
     }
     
     //create buttons
-    for (NSNumber *buttonLength in buttonLengthes)
+    for ( NSNumber *buttonLength in buttonLengthes )
     {
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(widthOfAllButtons, 0, [buttonLength floatValue], self.frame.size.height)];
         
@@ -112,18 +123,22 @@
         [button setTitle:buttonNames[nThButton] forState:UIControlStateNormal];
         [button.titleLabel setFont:defaultFont];
         
-        //[UIColor colorWithWhite:0.75 alpha:1] to [UIColor colorWithWhite:0.96 alpha:1]
-        button.backgroundColor = [UIColor colorWithWhite:0.75 + colorDelta * nThButton alpha:1];
+        //Button color goes from [UIColor colorWithWhite:0.75 alpha:1] to [UIColor colorWithWhite:0.96 alpha:1]
+        UIColor *buttonColor = [UIColor colorWithWhite:0.75 + colorDelta * nThButton alpha:1];
+        [buttonColors addObject:buttonColor];
+        
+        button.backgroundColor = buttonColor;
         
         [button setTag:nThButton];
         [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
         
         [scrollView addSubview:button];
         
+        [buttons addObject:button];
+        
         widthOfAllButtons = widthOfAllButtons + button.frame.size.width;
         nThButton++;
     }
-    
     
     [scrollView setContentSize:CGSizeMake(widthOfAllButtons, self.frame.size.height)];
     [scrollView setContentOffset:CGPointMake(0, 0) animated:NO];
@@ -133,11 +148,51 @@
 
 -(void)buttonClicked:(UIButton *)sender
 {
-    NSString *clickedName = [self.buttonNames objectAtIndex:sender.tag];
-    
-    if (self.delegate)
+    //none is selected
+    if (selectedButtonIndex == -1)
     {
-        [self.delegate buttonClickedWithIndex:sender.tag andName:clickedName];
+        UIButton *selectedButton = [buttons objectAtIndex:sender.tag];
+        [selectedButton setBackgroundColor:selectedButtonColor];
+        
+        NSString *clickedName = [self.buttonNames objectAtIndex:sender.tag];
+        
+        if (self.delegate)
+        {
+            [self.delegate buttonClickedWithIndex:sender.tag andName:clickedName];
+        }
+        
+        selectedButtonIndex = sender.tag;
+    }
+    //deselect the previously selected
+    else if (sender.tag == selectedButtonIndex)
+    {
+        UIButton *deselectedButton = [buttons objectAtIndex:sender.tag];
+        [deselectedButton setBackgroundColor:[buttonColors objectAtIndex:sender.tag]];
+        
+        if (self.delegate)
+        {
+            [self.delegate buttonUnselected];
+        }
+        
+        selectedButtonIndex = -1;
+    }
+    //deselect the previously selected and select the new one
+    else
+    {
+        UIButton *deselectedButton = [buttons objectAtIndex:selectedButtonIndex];
+        [deselectedButton setBackgroundColor:[buttonColors objectAtIndex:selectedButtonIndex]];
+        
+        UIButton *selectedButton = [buttons objectAtIndex:sender.tag];
+        [selectedButton setBackgroundColor:selectedButtonColor];
+        
+        NSString *clickedName = [self.buttonNames objectAtIndex:sender.tag];
+        
+        if (self.delegate)
+        {
+            [self.delegate buttonClickedWithIndex:sender.tag andName:clickedName];
+        }
+        
+        selectedButtonIndex = sender.tag;
     }
 }
 

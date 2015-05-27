@@ -10,6 +10,8 @@
 #import "UserDataDAO.h"
 #import "CatagoriesDAO.h"
 
+@class Record, Receipt;
+
 @interface RecordsDAO : NSObject
 
 @property (strong, nonatomic) UserDataDAO *userDataDAO;
@@ -21,26 +23,42 @@
 -(NSArray *)loadRecords;
 
 /**
- @param catagoryID NSInteger ID of catagory's records to load
+ @param catagoryID NSString ID of catagory's records to load
  
  @return NSArray of Records, nil if user not found or catagory not found
  */
--(NSArray *)loadRecordsforCatagory:(NSInteger)catagoryID;
+-(NSArray *)loadRecordsforCatagory:(NSString *)catagoryID;
 
 /**
- @param receiptID NSInteger ID of receipt's records to load
+ @param receiptID NSString ID of receipt's records to load
  
  @return NSArray of Records, nil if user not found or catagory not found
  */
--(NSArray *)loadRecordsforReceipt:(NSInteger)receiptID;
+-(NSArray *)loadRecordsforReceipt:(NSString *)receiptID;
 
 /**
- @return YES if success
+ @param recordID NSString ID of record to load
+ 
+ @return Record, nil if not found
  */
--(BOOL)addRecordForCatagoryID: (NSInteger) catagoryID
-                 forReceiptID: (NSInteger) receiptID
+-(Record *)loadRecord:(NSString *)recordID;
+
+/**
+ @return NSString ID of the new record added, nil if error occurred
+ */
+-(NSString *)addRecordForCatagory: (Catagory *) catagory
+                 andReceipt: (Receipt *) receipt
+                forQuantity: (NSInteger) quantity
+                  forAmount: (float) amount;
+
+
+/**
+ @return NSString ID of the new record added, nil if error occurred
+ */
+-(NSString *)addRecordForCatagoryID: (NSString *) catagoryID
+                 andReceiptID: (NSString *) receiptID
                   forQuantity: (NSInteger) quantity
-                    forAmount: (NSInteger) amount;
+                    forAmount: (float) amount;
 
 /**
  @return YES if success, NO if user not found or records is nil
@@ -48,10 +66,13 @@
 -(BOOL)addRecords:(NSArray *)records;
 
 /**
- @param catagoryID NSInteger ID of catagory's records to delete
- 
+ @return YES if success, NO if record is not found in existing database
+ */
+-(BOOL)modifyRecord:(Record *)record;
+
+/**
  @return YES if success, NO if user not found or catagory not found
  */
--(BOOL)deleteCatagoryAndRecordsForRecordIDs:(NSArray *)recordIDs;
+-(BOOL)deleteRecordsForRecordIDs:(NSArray *)recordIDs;
 
 @end

@@ -35,7 +35,8 @@
 
 @property (nonatomic) BOOL weAreNotDoneYet; //user not done capturing the whole receipt yet
 
-@property NSMutableDictionary *takenImages; //key: image filename, value: image
+@property NSMutableArray *takenImageFilenames;
+@property NSMutableArray *takenImages;
 
 @property NSInteger nextReceiptID;
 
@@ -54,7 +55,8 @@
     self.navigationItem.hidesBackButton = YES;
     
     // Do any additional setup after loading the view from its nib.
-    self.takenImages = [NSMutableDictionary new];
+    self.takenImageFilenames = [NSMutableArray new];
+    self.takenImages = [NSMutableArray new];
     
     [self.previousImageView setHidden:YES];
     [self.previousImageView setAlpha:0.5f];
@@ -99,15 +101,6 @@
     self.leftCropEdgeRatio = self.topLeftCornerView.frame.origin.x / self.view.frame.size.width;
     self.rightCropEdgeRatio = (self.topRightCornerView.frame.origin.x + self.topRightCornerView.frame.size.width) / self.view.frame.size.width;
     [self refreshBottomCropEdgeRatio];
-    
-    //get the receiptID for this new receipt
-    [self.manipulationService getNextReceiptIDWithSuccess:^(NSInteger nextReceiptID) {
-        
-        self.nextReceiptID = nextReceiptID;
-        
-    } andFailure:^(NSString *reason) {
-        //should not happen
-    }];
 }
 
 -(void)refreshBottomCropEdgeRatio
@@ -119,7 +112,7 @@
 
 -(void)saveNewReceipt
 {
-    [self.manipulationService addReceiptForFilenames:self.takenImages.allKeys success:^{
+    [self.manipulationService addReceiptForFilenames:self.takenImageFilenames success:^{
         
         DLog(@"addReceiptForUserKey success");
         
@@ -212,9 +205,8 @@
     
     DLog(@"Image saved to %@", savedFilePath);
     
-    UIImageWriteToSavedPhotosAlbum(croppedImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-    
-    [self.takenImages setObject:croppedImage forKey:savedFilePath];
+    [self.takenImageFilenames addObject:fileName];
+    [self.takenImages addObject:croppedImage];
     
     if (self.weAreNotDoneYet)
     {

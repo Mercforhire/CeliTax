@@ -15,11 +15,6 @@
 @property (strong, nonatomic) UserDataDAO *userDataDAO;
 
 /**
- @return one plus the lastest receiptID or 0 if no receipts exist, -1 if user not found
- */
--(NSInteger)getNextReceiptID;
-
-/**
  @param filenames NSArray of NSString filenames for this receipt
  
  @return YES if success, NO if user not found or filenames is nil or empty
@@ -32,10 +27,15 @@
 -(NSArray *)loadReceipts;
 
 /**
- @param receiptID NSInteger receiptID
+ @return NSArray of newest 5 Receipts, nil if user not found or has no receipts
+ */
+-(NSArray *)loadLast5Receipts;
+
+/**
+ @param receiptID NSString receiptID
  
  @return Receipt object, nil if user not found or receipt not found
  */
--(Receipt *)loadReceipt:(NSInteger)receiptID;
+-(Receipt *)loadReceipt:(NSString *)receiptID;
 
 @end

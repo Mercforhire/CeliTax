@@ -22,7 +22,7 @@
 /**
  @return Catagory, nil if user not found or catagory not found
  */
--(Catagory *)loadCatagory:(NSInteger)catagoryID;
+-(Catagory *)loadCatagory:(NSString *)catagoryID;
 
 /**
  @param name NSString name
@@ -30,29 +30,29 @@
  
  @return YES if success, NO if user not found or name or color is nil
  */
--(BOOL)addCatagoryForName:(NSString *)name andColor:(UIColor *)color;
+-(BOOL)addCatagoryForName:(NSString *)name andColor:(UIColor *)color andNationalAverageCost:(float)cost;
 
 /**
  @param catagory ItemCatagory catagory to add
  
  @return YES if success, NO if user not found or catagory is nil
  */
--(BOOL)addCatagory:(Catagory *)catagory;
+//-(BOOL)addCatagory:(Catagory *)catagory;
 
 /**
- @param catagoryID NSInteger catagory to modify ID
+ @param catagoryID NSString catagory to modify ID
  @param name NSString name
  @param color UIColor color
  
  @return YES if success, NO if user not found or catagory is nil
  */
--(BOOL)modifyCatagory:(NSInteger)catagoryID forName:(NSString *)name andColor:(UIColor *)color;
+-(BOOL)modifyCatagory:(NSString *)catagoryID forName:(NSString *)name andColor:(UIColor *)color;
 
 /**
- @param catagoryID NSInteger ID of catagory to delete
+ @param catagoryID NSString ID of catagory to delete
  
  @return YES if success, NO if user not found or catagory is not found
  */
--(BOOL)deleteCatagory:(NSInteger)catagoryID;
+-(BOOL)deleteCatagory:(NSString *)catagoryID;
 
 @end

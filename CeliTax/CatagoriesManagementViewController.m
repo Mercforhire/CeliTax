@@ -104,7 +104,7 @@
                      
                      if (Record && Record.count)
                      {
-                         [self.RecordsDictionary setObject:Record forKey:[NSNumber numberWithInteger:catagory.identifer]];
+                         [self.RecordsDictionary setObject:Record forKey:catagory.identifer];
                      }
                      
                  } failure:^(NSString *reason) {
@@ -205,7 +205,7 @@
     
     Catagory *thisItemCatagory = [self.itemCatagories objectAtIndex:indexPath.row];
     
-    NSArray *recordsForThisCatagory = [self.RecordsDictionary objectForKey:[NSNumber numberWithInteger:thisItemCatagory.identifer]];
+    NSArray *recordsForThisCatagory = [self.RecordsDictionary objectForKey:thisItemCatagory.identifer];
     
     NSInteger sumQuantity = 0;
     float sumAmount = 0.0;
@@ -249,7 +249,7 @@
                                rectOfCellInSuperview.origin.y + rectOfCellInSuperview.size.height / 2, 1, 1);
     
     //check for modifyCatagoryPopUpViewController's buttons states
-    if (self.itemCatagories.count > 1 && [self.RecordsDictionary objectForKey:[NSNumber numberWithInteger:thisItemCatagory.identifer]] )
+    if (self.itemCatagories.count > 1 && [self.RecordsDictionary objectForKey:thisItemCatagory.identifer] )
     {
         [self.modifyCatagoryPopUpViewController.transferButton setEnabled:YES];
     }

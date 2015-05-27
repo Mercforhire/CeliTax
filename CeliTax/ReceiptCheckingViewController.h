@@ -15,6 +15,6 @@
 @property (nonatomic, weak) id <DataService> dataService;
 @property (nonatomic, weak) id <ManipulationService> manipulationService;
 
-@property NSInteger receiptID;
+@property NSString *receiptID;
 
 @end

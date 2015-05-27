@@ -56,7 +56,7 @@ typedef void (^RevealBlock)();
 
 - (AddCatagoryViewController *) createAddCatagoryViewController;
 
-- (ReceiptCheckingViewController *) createReceiptCheckingViewControllerForReceiptID:(NSInteger)receiptID;
+- (ReceiptCheckingViewController *) createReceiptCheckingViewControllerForReceiptID:(NSString *)receiptID;
 
 - (NamesPickerViewController *) createNamesPickerViewControllerWithNames:(NSArray *)names;
 

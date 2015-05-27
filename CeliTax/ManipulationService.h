@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class CatagoriesDAO, RecordsDAO, ReceiptsDAO;
+@class CatagoriesDAO, RecordsDAO, ReceiptsDAO, Record;
 
 @protocol ManipulationService <NSObject>
 
@@ -22,14 +22,17 @@ typedef void (^ModifyCatagoryFailureBlock) (NSString *reason);
 typedef void (^DeleteCatagorySuccessBlock) ();
 typedef void (^DeleteCatagoryFailureBlock) (NSString *reason);
 
-typedef void (^AddRecordSuccessBlock) ();
+typedef void (^AddRecordSuccessBlock) (NSString *newestRecordID);
 typedef void (^AddRecordFailureBlock) (NSString *reason);
+
+typedef void (^DeleteRecordSuccessBlock) ();
+typedef void (^DeleteRecordFailureBlock) (NSString *reason);
+
+typedef void (^ModifyRecordSuccessBlock) ();
+typedef void (^ModifyRecordFailureBlock) (NSString *reason);
 
 typedef void (^AddReceiptSuccessBlock) ();
 typedef void (^AddReceiptFailureBlock) (NSString *reason);
-
-typedef void (^GetNextReceiptIDSuccessBlock) (NSInteger nextReceiptID);
-typedef void (^GetNextReceiptIDFailureBlock) (NSString *reason);
 
 @property (nonatomic, strong) CatagoriesDAO     *catagoriesDAO;
 @property (nonatomic, strong) RecordsDAO        *recordsDAO;
@@ -42,35 +45,40 @@ typedef void (^GetNextReceiptIDFailureBlock) (NSString *reason);
 
 //change an existing catagory by catagoryID, to new name and/or new color.
 //if nil is provided for catagoryName or catagoryColor, no change will be made
-- (NSOperation *) modifyCatagoryForCatagoryID: (NSInteger) catagoryID
+- (NSOperation *) modifyCatagoryForCatagoryID: (NSString *) catagoryID
                                       newName: (NSString *) catagoryName
                                      newColor: (UIColor *) catagoryColor
                                       success: (ModifyCatagorySuccessBlock) success
                                       failure: (ModifyCatagoryFailureBlock) failure;
 
-- (NSOperation *) deleteCatagoryForCatagoryID: (NSInteger) catagoryID
+- (NSOperation *) deleteCatagoryForCatagoryID: (NSString *) catagoryID
                                       success: (DeleteCatagorySuccessBlock) success
                                       failure: (DeleteCatagoryFailureBlock) failure;
 
-- (NSOperation *) transferCatagoryFromCatagoryID: (NSInteger) fromCatagoryID
-                                    toCatagoryID: (NSInteger) toCatagoryID
+- (NSOperation *) transferCatagoryFromCatagoryID: (NSString *) fromCatagoryID
+                                    toCatagoryID: (NSString *) toCatagoryID
                                          success: (ModifyCatagorySuccessBlock) success
                                          failure: (ModifyCatagoryFailureBlock) failure;
 
 
 
 
-- (NSOperation *) addRecordForCatagoryID: (NSInteger) catagoryID
-                            forReceiptID: (NSInteger) receiptID
+- (NSOperation *) addRecordForCatagoryID: (NSString *) catagoryID
+                            forReceiptID: (NSString *) receiptID
                              forQuantity: (NSInteger) quantity
-                               forAmount: (NSInteger) amount
+                               forAmount: (float) amount
                                  success: (AddRecordSuccessBlock) success
                                  failure: (AddRecordFailureBlock) failure;
 
+- (NSOperation *) deleteRecord: (NSString *) recordID
+                   WithSuccess: (DeleteRecordSuccessBlock) success
+                    andFailure: (DeleteRecordFailureBlock) failure;
+
+- (NSOperation *) modifyRecord: (Record *) record
+                   WithSuccess: (ModifyRecordSuccessBlock) success
+                    andFailure: (ModifyRecordFailureBlock) failure;
 
 
-- (NSOperation *) getNextReceiptIDWithSuccess: (GetNextReceiptIDSuccessBlock) success
-                                   andFailure: (GetNextReceiptIDFailureBlock) failure;
 
 - (NSOperation *) addReceiptForFilenames: (NSArray *) filenames
                                  success: (AddReceiptSuccessBlock) success
