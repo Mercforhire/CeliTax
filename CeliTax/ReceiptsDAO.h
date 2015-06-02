@@ -15,27 +15,34 @@
 @property (strong, nonatomic) UserDataDAO *userDataDAO;
 
 /**
- @param filenames NSArray of NSString filenames for this receipt
- 
- @return YES if success, NO if user not found or filenames is nil or empty
+   @param filenames NSArray of NSString filenames for this receipt
+
+   @return YES if success, NO if user not found or filenames is nil or empty
  */
--(BOOL)addReceiptWithFilenames:(NSArray *)filenames;
+- (BOOL)addReceiptWithFilenames:(NSArray *)filenames;
 
 /**
- @return NSArray of Receipts, nil if user not found or has no receipts
+   @param filenames NSArray of NSString filenames for this receipt
+
+   @return YES if success, NO if user not found or receiptToAdd is nil
  */
--(NSArray *)loadReceipts;
+- (BOOL)addReceipt:(Receipt *)receiptToAdd;
 
 /**
- @return NSArray of newest 5 Receipts, nil if user not found or has no receipts
+   @return NSArray of Receipts, nil if user not found or has no receipts
  */
--(NSArray *)loadLast5Receipts;
+- (NSArray *)loadReceipts;
 
 /**
- @param receiptID NSString receiptID
- 
- @return Receipt object, nil if user not found or receipt not found
+   @return NSArray of newest n-th Receipts, nil if user not found or has no receipts
  */
--(Receipt *)loadReceipt:(NSString *)receiptID;
+- (NSArray *)loadNewestNthReceipts:(NSInteger)nTh inYear:(NSInteger)year;
+
+/**
+   @param receiptID NSString receiptID
+
+   @return Receipt object, nil if user not found or receipt not found
+ */
+- (Receipt *)loadReceipt:(NSString *)receiptID;
 
 @end

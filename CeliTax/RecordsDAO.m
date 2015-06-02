@@ -10,6 +10,7 @@
 #import "Catagory.h"
 #import "Record.h"
 #import "Receipt.h"
+#import "Utils.h"
 
 @implementation RecordsDAO
 
@@ -51,7 +52,7 @@
     {
         Record *newRecord = [Record new];
         
-        newRecord.identifer = [[NSUUID UUID] UUIDString];
+        newRecord.identifer = [Utils generateUniqueID];
         newRecord.dateCreated = [NSDate date];
         newRecord.catagoryID = [catagory.identifer copy];
         newRecord.catagoryName = [catagory.name copy];
@@ -85,7 +86,7 @@
     {
         Record *newRecord = [Record new];
         
-        newRecord.identifer = [[NSUUID UUID] UUIDString];
+        newRecord.identifer = [Utils generateUniqueID];
         newRecord.dateCreated = [NSDate date];
         newRecord.catagoryID = [catagoryID copy];
         newRecord.catagoryName = [catagory.name copy];

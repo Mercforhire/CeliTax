@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Receipt : NSObject <NSCoding>
+@interface Receipt : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, copy) NSString    *identifer;
 

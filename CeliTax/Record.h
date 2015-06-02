@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Record : NSObject <NSCoding>
+@interface Record : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, copy) NSString    *identifer;
 @property (nonatomic, strong) NSDate    *dateCreated;

@@ -7,14 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PieView.h"
-
-//table cell height: 70
 
 @interface MainViewTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet PieView *colorBox;
-@property (weak, nonatomic) IBOutlet UILabel *timeUploadedLabel;
-@property (weak, nonatomic) IBOutlet UILabel *totalRecordedLabel;
+@property (weak, nonatomic) IBOutlet UIView *colorBoxView;
+@property (weak, nonatomic) IBOutlet UILabel *calenderDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeOfDayLabel;
 
 @end

@@ -20,4 +20,6 @@
 @property (nonatomic, copy) NSString *postalCode;
 @property (nonatomic, copy) NSString *country;
 
+@property (nonatomic, strong) UIImage *avatarImage;
+
 @end

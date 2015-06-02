@@ -6,6 +6,18 @@
 // project.
 
 
+// CDRTranslucentSideBar
+#define COCOAPODS_POD_AVAILABLE_CDRTranslucentSideBar
+#define COCOAPODS_VERSION_MAJOR_CDRTranslucentSideBar 1
+#define COCOAPODS_VERSION_MINOR_CDRTranslucentSideBar 0
+#define COCOAPODS_VERSION_PATCH_CDRTranslucentSideBar 3
+
+// LLSimpleCamera
+#define COCOAPODS_POD_AVAILABLE_LLSimpleCamera
+#define COCOAPODS_VERSION_MAJOR_LLSimpleCamera 3
+#define COCOAPODS_VERSION_MINOR_LLSimpleCamera 0
+#define COCOAPODS_VERSION_PATCH_LLSimpleCamera 0
+
 // MBProgressHUD
 #define COCOAPODS_POD_AVAILABLE_MBProgressHUD
 #define COCOAPODS_VERSION_MAJOR_MBProgressHUD 0
@@ -29,6 +41,12 @@
 #define COCOAPODS_VERSION_MAJOR_Reachability 3
 #define COCOAPODS_VERSION_MINOR_Reachability 1
 #define COCOAPODS_VERSION_PATCH_Reachability 1
+
+// UIImage-ResizeMagick
+#define COCOAPODS_POD_AVAILABLE_UIImage_ResizeMagick
+#define COCOAPODS_VERSION_MAJOR_UIImage_ResizeMagick 0
+#define COCOAPODS_VERSION_MINOR_UIImage_ResizeMagick 0
+#define COCOAPODS_VERSION_PATCH_UIImage_ResizeMagick 1
 
 // WYPopoverController
 #define COCOAPODS_POD_AVAILABLE_WYPopoverController

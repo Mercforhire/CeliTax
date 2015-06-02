@@ -1,9 +1,9 @@
 //
-//  MainViewController.m
-//  CeliTax
+// MainViewController.m
+// CeliTax
 //
-//  Created by Leon Chen on 2015-05-01.
-//  Copyright (c) 2015 CraveNSave. All rights reserved.
+// Created by Leon Chen on 2015-05-01.
+// Copyright (c) 2015 CraveNSave. All rights reserved.
 //
 
 #import "MainViewController.h"
@@ -12,156 +12,236 @@
 #import "UserManager.h"
 #import "User.h"
 #import "AddCatagoryViewController.h"
-#import "ViewControllerFactory.h"
 #import "AlertDialogsProvider.h"
-#import "PieView.h"
 #import "ReceiptCheckingViewController.h"
 #import "CameraViewController.h"
+#import "ViewControllerFactory.h"
+#import "MyAccountViewController.h"
+#import "VaultViewController.h"
+#import "SelectionsPickerViewController.h"
+#import "WYPopoverController.h"
+#import "ReceiptBreakDownViewController.h"
 
-#define kCatagoryTableRowHeight     70
+#define kRecentUploadTableRowHeight         40
 
-@interface MainViewController () <UITableViewDelegate, UITableViewDataSource> {
-    RevealBlock _revealBlock;
+typedef enum : NSUInteger
+{
+    SectionReceiptsUploads,
+    SectionQuickLinks,
+    SectionCount,
+} SectionTitles;
+
+@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate> {
     NSDateFormatter *dateFormatter;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *recentUploadsTable;
 @property (weak, nonatomic) IBOutlet UIButton *cameraButton;
+@property (weak, nonatomic) IBOutlet UILabel *taxYearLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *greenTriangle;
+@property (nonatomic, strong) WYPopoverController *selectionPopover;
+@property (nonatomic, strong) SelectionsPickerViewController *taxYearPickerViewController;
 
+// Dictionaries of keys: kReceiptIDKey,kColorKey,kCatagoryNameKey,kCatagoryTotalAmountKey
 @property (nonatomic, strong) NSArray *receiptInfos;
-//of Dictionaries of keys: kReceiptIDKey,kColorKey,kCatagoryNameKey,kCatagoryTotalAmountKey
+
+// NSNumbers of the years of all receipts timestamps, sorted from most recent to oldest
+@property (nonatomic, strong) NSArray *yearsRange;
+
+@property (nonatomic, strong) NSNumber *currentlySelectedYear;
 
 @end
 
 @implementation MainViewController
 
--(id)initWithRevealBlock:(RevealBlock)revealBlock
+- (id) initWithNibName: (NSString *) nibNameOrNil bundle: (NSBundle *) nibBundleOrNil
 {
-    if (self = [super initWithNibName:@"MainViewController" bundle:nil])
+    if (self = [super initWithNibName: nibNameOrNil bundle: nibBundleOrNil])
     {
-        _revealBlock = [revealBlock copy];
-        
-        //initialize the slider bar menu button
-        UIButton* menuButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 28, 20)];
-        [menuButton setBackgroundImage:[UIImage imageNamed:@"menu.png"] forState:UIControlStateNormal];
-        menuButton.tintColor = [UIColor colorWithRed:7.0/255 green:61.0/255 blue:48.0/255 alpha:1.0f];
-        [menuButton addTarget:self action:@selector(revealSidebar) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIBarButtonItem* menuItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
+        // initialize the slider bar menu button
+        UIBarButtonItem *menuItem = [[UIBarButtonItem alloc] initWithTitle: @"+ Add Catagory" style: UIBarButtonItemStylePlain target: self action: @selector(addCatagoryPressed:)];
         self.navigationItem.leftBarButtonItem = menuItem;
+
+        [self.navigationItem setHidesBackButton: YES];
     }
+
     return self;
 }
 
-- (void)viewDidLoad
+- (void) viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+
     [self.dataService loadDemoData];
-    
+
     self.recentUploadsTable.dataSource = self;
     self.recentUploadsTable.delegate = self;
-    
-    dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"HH:mm 'on' MM-dd"];
-    
-    UINib *mainTableCell = [UINib nibWithNibName:@"MainViewTableViewCell" bundle:nil];
-    [self.recentUploadsTable registerNib:mainTableCell forCellReuseIdentifier:@"MainTableCell"];
-}
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    //load the newest 10 receipts for user, sorted by date, calculate
-    [self.dataService fetchNewest5ReceiptInfoSuccess:^(NSArray *receiptInfos) {
-          
-          self.receiptInfos = receiptInfos;
-          [self.recentUploadsTable reloadData];
-          
-    } failure:^(NSString *reason) {
-        //should not happen
+    dateFormatter = [[NSDateFormatter alloc] init];
+
+    UINib *mainTableCell = [UINib nibWithNibName: @"MainViewTableViewCell" bundle: nil];
+    [self.recentUploadsTable registerNib: mainTableCell forCellReuseIdentifier: @"MainTableCell"];
+
+    UITapGestureRecognizer *taxYearPressedTap =
+        [[UITapGestureRecognizer alloc] initWithTarget: self
+                                                action: @selector(taxYearPressed)];
+    [self.taxYearLabel addGestureRecognizer: taxYearPressedTap];
+
+    [self.dataService fetchReceiptsYearsRange:^(NSArray *yearsRange)
+    {
+        self.yearsRange = yearsRange;
+        self.currentlySelectedYear = [self.yearsRange firstObject];
+
+        NSMutableArray *yearSelections = [NSMutableArray new];
+
+        for (NSNumber *year in yearsRange)
+        {
+            [yearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", year.integerValue]];
+        }
+
+        self.taxYearPickerViewController = [self.viewControllerFactory createNamesPickerViewControllerWithNames: yearSelections];
+        self.selectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.taxYearPickerViewController];
+        [self.taxYearPickerViewController setDelegate: self];
+        [self.selectionPopover setPopoverContentSize: self.taxYearPickerViewController.viewSize];
+    }                                 failure:^(NSString *reason) {
+        // should not happen
     }];
 }
 
-- (IBAction)addCatagoryPressed:(UIButton *)sender
+- (void) setCurrentlySelectedYear: (NSNumber *) currentlySelectedYear
 {
-    //open up the AddCatagoryViewController
-    [self.navigationController pushViewController:[self.viewControllerFactory createAddCatagoryViewController] animated:YES];
+    _currentlySelectedYear = currentlySelectedYear;
+
+    [self setYearLabelToBe: self.currentlySelectedYear.integerValue];
+
+    [self.dataService fetchNewestReceiptInfo: 5
+                                      inYear: self.currentlySelectedYear.integerValue
+                                     success: ^(NSArray *receiptInfos)
+    {
+        self.receiptInfos = receiptInfos;
+        [self.recentUploadsTable reloadData];
+    }                                failure: ^(NSString *reason)
+    {
+        // should not happen
+    }];
 }
 
-//slide out the slider bar
-- (void)revealSidebar
+- (void) viewWillAppear: (BOOL) animated
 {
-    _revealBlock();
+    [super viewWillAppear: animated];
 }
 
-- (IBAction)cameraButtonPressed:(UIButton *)sender
+- (void) taxYearPressed
 {
-    [self.navigationController pushViewController:[self.viewControllerFactory createCameraOverlayViewController] animated:YES];
+    [self.selectionPopover presentPopoverFromRect: self.taxYearLabel.frame inView: self.view permittedArrowDirections: WYPopoverArrowDirectionUp animated: YES];
+}
+
+- (IBAction) addCatagoryPressed: (UIButton *) sender
+{
+    // open up the AddCatagoryViewController
+    [self.navigationController pushViewController: [self.viewControllerFactory createAddCatagoryViewController] animated: YES];
+}
+
+- (IBAction) cameraButtonPressed: (UIButton *) sender
+{
+    [self.navigationController pushViewController: [self.viewControllerFactory createCameraOverlayViewController] animated: YES];
+}
+
+- (void) setYearLabelToBe: (NSInteger) year
+{
+    [self.taxYearLabel setText: [NSString stringWithFormat: @"%ld Tax Year", year]];
+}
+
+- (void) setGreenArrowUp
+{
+    [self.greenTriangle setImage: [UIImage imageNamed: @"greenTrianglePointUp"]];
+}
+
+- (void) setGreenArrowDown
+{
+    [self.greenTriangle setImage: [UIImage imageNamed: @"greenTrianglePointDown"]];
+}
+
+- (IBAction) myAccountPressed: (UIButton *) sender
+{
+    [super selectedMenuIndex: RootViewControllerAccount];
+}
+
+- (IBAction) vaultPressed: (UIButton *) sender
+{
+    [super selectedMenuIndex: RootViewControllerVault];
+}
+
+#pragma mark - NamesPickerPopUpDelegate
+
+- (void) selectedSelectionAtIndex: (NSInteger) index
+{
+    [self.selectionPopover dismissPopoverAnimated: YES];
+
+    self.currentlySelectedYear = self.yearsRange [index];
 }
 
 #pragma mark - UITableview DataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (NSInteger) numberOfSectionsInTableView: (UITableView *) tableView
 {
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger) tableView: (UITableView *) tableView numberOfRowsInSection: (NSInteger) section
 {
     return self.receiptInfos.count;
 }
 
-- (MainViewTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (MainViewTableViewCell *) tableView: (UITableView *) tableView cellForRowAtIndexPath: (NSIndexPath *) indexPath
 {
     static NSString *cellId = @"MainTableCell";
-    MainViewTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    
+    MainViewTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: cellId];
+
     if (cell == nil)
     {
-        cell = [[MainViewTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell = [[MainViewTableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: cellId];
     }
-    
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    
-    NSDictionary *uploadInfoDictionary = self.receiptInfos[indexPath.row];
-    
-    cell.colorBox.colors = [uploadInfoDictionary objectForKey:kColorsKey];
-    
-    NSDate *uploadDate = [uploadInfoDictionary objectForKey:kUploadTimeKey];
-    
-    [cell.timeUploadedLabel setText:[dateFormatter stringFromDate: uploadDate]];
-    
-    float totalAmount = [[uploadInfoDictionary objectForKey:kTotalAmountKey] floatValue];
-    
-    [cell.totalRecordedLabel setText:[NSString stringWithFormat:@"Total: $%.2f", totalAmount]];
-    
+
+    [cell setSelectionStyle: UITableViewCellSelectionStyleNone];
+
+    NSDictionary *uploadInfoDictionary = self.receiptInfos [indexPath.row];
+
+    NSDate *uploadDate = [uploadInfoDictionary objectForKey: kUploadTimeKey];
+
+    [dateFormatter setDateFormat: @"dd/MM/yyyy"];
+
+    [cell.calenderDateLabel setText: [dateFormatter stringFromDate: uploadDate]];
+
+    [dateFormatter setDateFormat: @"hh:mm a"];
+
+    [cell.timeOfDayLabel setText: [[dateFormatter stringFromDate: uploadDate] lowercaseString]];
+
     return cell;
 }
 
 #pragma mark - UITableview Delegate
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat) tableView: (UITableView *) tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath
 {
-    return kCatagoryTableRowHeight;
+    return kRecentUploadTableRowHeight;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath
 {
-    NSDictionary *uploadInfoDictionary = self.receiptInfos[indexPath.row];
-    
-    DLog(@"Receipt ID %@ clicked", [uploadInfoDictionary objectForKey:kReceiptIDKey]);
-    
-    NSString *clickedReceiptID = [uploadInfoDictionary objectForKey:kReceiptIDKey];
-    
-    [self.navigationController pushViewController:[self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID:clickedReceiptID] animated:YES];
+    NSDictionary *uploadInfoDictionary = self.receiptInfos [indexPath.row];
+
+    DLog(@"Receipt ID %@ clicked", [uploadInfoDictionary objectForKey: kReceiptIDKey]);
+
+    NSString *clickedReceiptID = [uploadInfoDictionary objectForKey: kReceiptIDKey];
+
+    [self.navigationController pushViewController: [self.viewControllerFactory createReceiptBreakDownViewControllerForReceiptID: clickedReceiptID cameFromReceiptCheckingViewController: NO] animated: YES];
 }
 
 #pragma mark - CameraManager
 
--(void)receivedImageFromCamera:(UIImage *)newImage
+- (void) receivedImageFromCamera: (UIImage *) newImage
 {
     DLog(@"Image received from camera");
 }

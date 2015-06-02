@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+@class LeftSideMenuView;
+
 @interface Utils : NSObject
 
-+ (NSString *)getFilePathForFileName: (NSString *)fileName;
++ (NSString *)getFilePathForFileName:(NSString *)fileName;
 
-+ (id) unarchiveFile: (NSString *) path;
++ (id)unarchiveFile:(NSString *)path;
 
-+ (BOOL) archiveFile:(id) objectToArchive toFile: (NSString *) path;
++ (BOOL)archiveFile:(id)objectToArchive toFile:(NSString *)path;
 
 + (NSString *)getImageStorageFolderPathForUser:(NSString *)userKey;
 
@@ -28,6 +30,12 @@
 
 + (BOOL)deleteImageWithFileName:(NSString *)filename forUser:(NSString *)userKey;
 
-+ (UIImage *) getCroppedImageUsingRect:(CGRect)cropRect forImage:(UIImage *)originalImage;
++ (UIImage *)getCroppedImageUsingRect:(CGRect)cropRect forImage:(UIImage *)originalImage;
+
++ (LeftSideMenuView *)getLeftSideViewUsing:(UIImage *)profileImage andUsername:(NSString *)userName andMenuSelections:(NSArray *)menuSelections;
+
++ (NSString *)generateUniqueID;
+
++ (int)randomNumberBetween:(int)min maxNumber:(int)max;
 
 @end

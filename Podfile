@@ -8,6 +8,9 @@ pod 'MKNetworkKit', :head
 pod 'MBProgressHUD', '~> 0.9.1'
 pod 'NKOColorPickerView'
 pod 'WYPopoverController', '~> 0.3.7'
+pod 'LLSimpleCamera', '~> 3.0'
+pod 'CDRTranslucentSideBar'
+pod "UIImage-ResizeMagick"
 
 end
 

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="56" id="KGk-i7-Jjw" customClass="ReceiptBreakDownToolBarTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ybe-Vq-6hA">
+                        <rect key="frame" x="14" y="16" width="175" height="28"/>
+                        <color key="backgroundColor" red="0.037923411130000001" green="0.56069375259999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
+                        <state key="normal" title="Change Item Catagory">
+                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Mq-o1-ArU">
+                        <rect key="frame" x="248" y="16" width="64" height="28"/>
+                        <color key="backgroundColor" red="0.037923411130000001" green="0.56069375259999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
+                        <state key="normal" title="Delete">
+                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="centerY" secondItem="2Mq-o1-ArU" secondAttribute="centerY" id="7M2-nb-eBx"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="2Mq-o1-ArU" secondAttribute="trailing" id="Dfa-T1-1mz"/>
+                    <constraint firstItem="ybe-Vq-6hA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="chQ-Ea-L4I"/>
+                    <constraint firstAttribute="centerY" secondItem="ybe-Vq-6hA" secondAttribute="centerY" id="yXx-BR-zRU"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="deleteButton" destination="2Mq-o1-ArU" id="fZj-7l-mQP"/>
+                <outlet property="transferButton" destination="ybe-Vq-6hA" id="UfW-tf-DUU"/>
+            </connections>
+            <point key="canvasLocation" x="512" y="386"/>
+        </tableViewCell>
+    </objects>
+</document>

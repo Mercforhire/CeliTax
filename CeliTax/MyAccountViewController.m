@@ -18,9 +18,7 @@
 
 #define kCatagoryTableRowHeight     70
 
-@interface MyAccountViewController () <UITableViewDataSource, UITableViewDelegate> {
-    RevealBlock _revealBlock;
-}
+@interface MyAccountViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
@@ -34,33 +32,6 @@
 @end
 
 @implementation MyAccountViewController
-
--(id)initWithRevealBlock:(RevealBlock)revealBlock
-{
-    if (self = [super initWithNibName:@"MyAccountViewController" bundle:nil])
-    {
-        _revealBlock = [revealBlock copy];
-        
-        //initialize the slider bar menu button
-        UIButton* menuButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 28, 20)];
-        [menuButton setBackgroundImage:[UIImage imageNamed:@"menu.png"] forState:UIControlStateNormal];
-        menuButton.tintColor = [UIColor colorWithRed:7.0/255 green:61.0/255 blue:48.0/255 alpha:1.0f];
-        [menuButton addTarget:self action:@selector(revealSidebar) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem* menuItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
-        self.navigationItem.leftBarButtonItem = menuItem;
-        
-        //add an Edit button for the right side
-        UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editCatagoriesPressed)];
-        self.navigationItem.rightBarButtonItem = editButton;
-    }
-    return self;
-}
-
-//slide out the slider bar
-- (void)revealSidebar
-{
-    _revealBlock();
-}
 
 - (void)viewDidLoad
 {

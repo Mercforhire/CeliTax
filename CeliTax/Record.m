@@ -44,4 +44,21 @@
 	return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone
+{
+    Record *copy = [[[self class] alloc] init];
+    
+    if (copy) {
+        copy.identifer = [self.identifer copy];
+        copy.dateCreated = [self.dateCreated copy];
+        copy.catagoryID = [self.catagoryID copy];
+        copy.catagoryName = [self.catagoryName copy];
+        copy.receiptID = [self.receiptID copy];
+        copy.amount = self.amount;
+        copy.quantity = self.quantity;
+    }
+    
+    return copy;
+}
+
 @end

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "17D2D40AA4C6ED1FEA3256AD"
+               BlueprintIdentifier = "54981296FC16607E81DDB213"
                BuildableName = "libPods-CeliTax-NKOColorPickerView.a"
                BlueprintName = "Pods-CeliTax-NKOColorPickerView"
                ReferencedContainer = "container:Pods.xcodeproj">

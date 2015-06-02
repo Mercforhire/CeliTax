@@ -10,149 +10,10 @@
 	<string>46</string>
 	<key>objects</key>
 	<dict>
-		<key>0444AA1A3FC70FE8335A0D5B</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>NKOColorPickerView.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>0505D1966C8AB17EC8C2CD3B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>1A0F62D6E4EF76A9752947A8</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>COMPILER_FLAGS</key>
-				<string>-DOS_OBJECT_USE_OBJC=0</string>
-			</dict>
-		</dict>
-		<key>06C44B79BB00C21E6614DFFC</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>UIAlertView+MKNetworkKitAdditions.m</string>
-			<key>path</key>
-			<string>MKNetworkKit/Categories/UIAlertView+MKNetworkKitAdditions.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>07F3DFBB2523A026D85B1C6B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>EC938B57AC3E07FF4288461F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>0AD08102E6D3DDEF13659FC0</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>2C0C5BAA4D03BACA6F4710A4</string>
-				<string>4A00888FEA6CF7E3DE6FDCE6</string>
-				<string>7755B4198C2C01630345C82B</string>
-				<string>DBDF277CF749A4AE64A9986C</string>
-				<string>C009AACDD1240F20960185A2</string>
-				<string>5B4B9DC182BA839D007830BA</string>
-				<string>75C8279EF24D8BA14F27892D</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Pods-CeliTax</string>
-			<key>path</key>
-			<string>Target Support Files/Pods-CeliTax</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>0B63DCEF0DD7F528E305938D</key>
-		<dict>
-			<key>fileRef</key>
-			<string>EC938B57AC3E07FF4288461F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>0FFD293245ED826CC6618983</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>Pods-CeliTax-MBProgressHUD-dummy.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>1205FC35B76E6A136267D37E</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXTargetDependency</string>
-			<key>name</key>
-			<string>Pods-CeliTax-MKNetworkKit</string>
-			<key>target</key>
-			<string>D88FBCC1A59E7AAF86A84087</string>
-			<key>targetProxy</key>
-			<string>B12455FC670C6CD8F7B27132</string>
-		</dict>
-		<key>17B8EEAE8C0839DA0D08AA44</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>UIAlertView+MKNetworkKitAdditions.h</string>
-			<key>path</key>
-			<string>MKNetworkKit/Categories/UIAlertView+MKNetworkKitAdditions.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>17D2D40AA4C6ED1FEA3256AD</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>730A547D9787EF3BE450299F</string>
-			<key>buildPhases</key>
-			<array>
-				<string>98758F4137364A5B71FC6215</string>
-				<string>2F43D4F3F7BF681BC77BA0FA</string>
-				<string>5633AD9161FE44FCBB757B12</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>Pods-CeliTax-NKOColorPickerView</string>
-			<key>productName</key>
-			<string>Pods-CeliTax-NKOColorPickerView</string>
-			<key>productReference</key>
-			<string>5D72AF7393DD8E2B80AF1812</string>
-			<key>productType</key>
-			<string>com.apple.product-type.library.static</string>
-		</dict>
-		<key>187F9094F956D8FC5726D714</key>
+		<key>0007C9D33A78B3BB046AB536</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>5F8B1D4158AE194F6F9E5DEE</string>
+			<string>CF8263A9A3605A1F50243573</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ALWAYS_SEARCH_USER_PATHS</key>
@@ -164,7 +25,7 @@
 				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
 				<string>YES</string>
 				<key>GCC_PREFIX_HEADER</key>
-				<string>Target Support Files/Pods-CeliTax-Reachability/Pods-CeliTax-Reachability-prefix.pch</string>
+				<string>Target Support Files/Pods-CeliTax-UIImage-ResizeMagick/Pods-CeliTax-UIImage-ResizeMagick-prefix.pch</string>
 				<key>INSTALL_PATH</key>
 				<string>$(BUILT_PRODUCTS_DIR)</string>
 				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
@@ -199,7 +60,33 @@
 			<key>name</key>
 			<string>Release</string>
 		</dict>
-		<key>1A0F62D6E4EF76A9752947A8</key>
+		<key>0277ED677C39E6255002F554</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>SystemConfiguration.framework</string>
+			<key>path</key>
+			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/SystemConfiguration.framework</string>
+			<key>sourceTree</key>
+			<string>DEVELOPER_DIR</string>
+		</dict>
+		<key>0367D5A8A712A95B9920B34B</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-CeliTax-Reachability-Private.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>041D91E87E31F98AE531D9D4</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -208,16 +95,27 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.c.objc</string>
 			<key>name</key>
-			<string>NSDate+RFC1123.m</string>
+			<string>UIImage+FixOrientation.m</string>
 			<key>path</key>
-			<string>MKNetworkKit/Categories/NSDate+RFC1123.m</string>
+			<string>LLSimpleCamera/UIImage+FixOrientation.m</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>1AAD3BCA31548A5C42A69046</key>
+		<key>06539B4CC4C0981C44E7CEB7</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>Pods-CeliTax-MBProgressHUD</string>
+			<key>target</key>
+			<string>C1DB50C484C4DBA7C4826192</string>
+			<key>targetProxy</key>
+			<string>9EEC35AC12EB257C1DC8F58F</string>
+		</dict>
+		<key>080DECA2BB870AB72B2A0F1B</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>2FCE18DE93C303F38D514796</string>
+			<string>C55983F5E3DBE304DADBDEF5</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ALWAYS_SEARCH_USER_PATHS</key>
@@ -233,7 +131,7 @@
 				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
 				<string>YES</string>
 				<key>GCC_PREFIX_HEADER</key>
-				<string>Target Support Files/Pods-CeliTax-WYPopoverController/Pods-CeliTax-WYPopoverController-prefix.pch</string>
+				<string>Target Support Files/Pods-CeliTax-LLSimpleCamera/Pods-CeliTax-LLSimpleCamera-prefix.pch</string>
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
 				<array>
 					<string>DEBUG=1</string>
@@ -263,36 +161,7 @@
 			<key>name</key>
 			<string>Debug</string>
 		</dict>
-		<key>1D3BB79601F443E698AD96EC</key>
-		<dict>
-			<key>fileRef</key>
-			<string>2A6380711961199052D9983A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>COMPILER_FLAGS</key>
-				<string>-DOS_OBJECT_USE_OBJC=0</string>
-			</dict>
-		</dict>
-		<key>1DE8712C289D0BEBC6800AC9</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>DEED69FBDD48C713A20CC5B8</string>
-				<string>C658F0C044971567B2D78654</string>
-				<string>CC4B9F9D03EFF3A5980028E7</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>MBProgressHUD</string>
-			<key>path</key>
-			<string>MBProgressHUD</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>1F2EDF6D55CCE256CE047663</key>
+		<key>09C413E03EF4995D54BD6F3B</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -301,13 +170,20 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.c.objc</string>
 			<key>name</key>
-			<string>UIImageView+MKNetworkKitAdditions.m</string>
+			<string>NSString+MKNetworkKitAdditions.m</string>
 			<key>path</key>
-			<string>MKNetworkKit/Categories/UIImageView+MKNetworkKitAdditions.m</string>
+			<string>MKNetworkKit/Categories/NSString+MKNetworkKitAdditions.m</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>22F7104B8EA6721B31EBFC57</key>
+		<key>0A5A4A5CC5E290776C6F4CCA</key>
+		<dict>
+			<key>fileRef</key>
+			<string>CEB7AECE45AE9B92F1C74FA1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>0B03DE9AFB129A2F80063B94</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -316,66 +192,290 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.c.h</string>
 			<key>name</key>
-			<string>WYStoryboardPopoverSegue.h</string>
+			<string>UIImage+FixOrientation.h</string>
 			<key>path</key>
-			<string>WYPopoverController/WYStoryboardPopoverSegue.h</string>
+			<string>LLSimpleCamera/UIImage+FixOrientation.h</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>24DFDFDFA08ED85774198EB8</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>nko_colormap.png</string>
-			<key>path</key>
-			<string>Assets/nko_colormap.png</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>257B1CE1317B47A96FA218E2</key>
+		<key>0B22CC498C55457637989E90</key>
 		<dict>
 			<key>children</key>
 			<array>
-				<string>79116783EB820D5A14020290</string>
-				<string>EB7D0AD6CB2D48B0A604309E</string>
-				<string>24DFDFDFA08ED85774198EB8</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Resources</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>275E717DF03F0F9ACE45459A</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>C5693A1BE2CAA132CC708057</string>
-				<string>3E4DA9989E8BE826015381B6</string>
-				<string>29098526A1BB4DA26FA8A63D</string>
-				<string>DDB83A1DD25A7B4E24522641</string>
+				<string>B46FF52B5E1163AA8138723A</string>
+				<string>0BB09A68FE25776EB3E17D1F</string>
+				<string>C39ACEDB751966F4EE6DA672</string>
+				<string>4037C81A6AC0DF376D5096C3</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
 			<key>name</key>
 			<string>Support Files</string>
 			<key>path</key>
-			<string>../Target Support Files/Pods-CeliTax-NKOColorPickerView</string>
+			<string>../Target Support Files/Pods-CeliTax-MBProgressHUD</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>28A60BB3D6D8CC64F1A14087</key>
+		<key>0BB09A68FE25776EB3E17D1F</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-CeliTax-MBProgressHUD-Private.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>0C69243E94D1931110ABA03B</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>5A154E2DC78865A617395B98</string>
+			<key>buildPhases</key>
+			<array>
+				<string>AF1163C8B4C97CDF54FCB88F</string>
+				<string>974D850E0C080D3F78597666</string>
+				<string>326479F1AD5166082F2597F8</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-CeliTax-LLSimpleCamera</string>
+			<key>productName</key>
+			<string>Pods-CeliTax-LLSimpleCamera</string>
+			<key>productReference</key>
+			<string>6AE5BF0C87B5AC587A636D98</string>
+			<key>productType</key>
+			<string>com.apple.product-type.library.static</string>
+		</dict>
+		<key>0D4594A017490D89BB1CC367</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>NKOColorPickerView.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>0F530C069239ECA280AAC20D</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>2B2D585ADFED13DF637596B3</string>
+				<string>144E8C2B755706118ACDC8F7</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>0FFD2519B8BDEB1CDC379302</key>
 		<dict>
 			<key>fileRef</key>
-			<string>FB79B2D90F8833FA3744047C</string>
+			<string>CEB7AECE45AE9B92F1C74FA1</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>29098526A1BB4DA26FA8A63D</key>
+		<key>12384D2EF4F2B6993F24CB77</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>1AE898F589A1947465FF1FD8</string>
+				<string>C68FF259AE07F3C280C92996</string>
+				<string>AA84FB88367F9B12204DF65C</string>
+				<string>CEB7AECE45AE9B92F1C74FA1</string>
+				<string>53E3A250775ECADF184B2EA1</string>
+				<string>9B50011C1F9B4AF3CCD321C8</string>
+				<string>0277ED677C39E6255002F554</string>
+				<string>4A1681EA26002273DAD76BC0</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>iOS</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>12A238AF5CB664879E33CB7E</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>Pods-CeliTax-CDRTranslucentSideBar</string>
+			<key>target</key>
+			<string>E0216D5DFE78058F4F7A5FF9</string>
+			<key>targetProxy</key>
+			<string>6627CE289DA3DC0C75E249FF</string>
+		</dict>
+		<key>13153E9ED2D39079AB67E7BD</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Pods-CeliTax-WYPopoverController-prefix.pch</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>136D1F7F89C027CA4CD93507</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-CeliTax-WYPopoverController.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>144E8C2B755706118ACDC8F7</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>EED37DBF77919DE8126B1F0B</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>YES</string>
+				<key>DSTROOT</key>
+				<string>/tmp/xcodeproj.dst</string>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>Target Support Files/Pods-CeliTax-WYPopoverController/Pods-CeliTax-WYPopoverController-prefix.pch</string>
+				<key>INSTALL_PATH</key>
+				<string>$(BUILT_PRODUCTS_DIR)</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>7.0</string>
+				<key>OTHER_CFLAGS</key>
+				<array>
+					<string>-DNS_BLOCK_ASSERTIONS=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>OTHER_CPLUSPLUSFLAGS</key>
+				<array>
+					<string>-DNS_BLOCK_ASSERTIONS=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>PUBLIC_HEADERS_FOLDER_PATH</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>15204F51910E8776351D3A91</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>598ACE1DB870BCF7786F15E8</string>
+			<key>buildPhases</key>
+			<array>
+				<string>7ECAEC13B57487108ECE5B46</string>
+				<string>B55E73AA71FB89B369170A22</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>12A238AF5CB664879E33CB7E</string>
+				<string>2688E0CAF476446B56C6159A</string>
+				<string>06539B4CC4C0981C44E7CEB7</string>
+				<string>E1EAD5BB658D03DCC77B08F9</string>
+				<string>CEAD96E2E01C083CA07CA6D5</string>
+				<string>9A90C48B4FDCA835F1E5F88E</string>
+				<string>D1882480F40C8811DD8C0E7B</string>
+				<string>97E884CE46E085193B5E4D6D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-CeliTax</string>
+			<key>productName</key>
+			<string>Pods-CeliTax</string>
+			<key>productReference</key>
+			<string>D34586D28C23F7E361F65160</string>
+			<key>productType</key>
+			<string>com.apple.product-type.library.static</string>
+		</dict>
+		<key>158866836E7BED8CE077D0B7</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>AADA15AA4486B5DF4A4019F0</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>DSTROOT</key>
+				<string>/tmp/xcodeproj.dst</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
+				<string>NO</string>
+				<key>INSTALL_PATH</key>
+				<string>$(BUILT_PRODUCTS_DIR)</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>7.0</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>PUBLIC_HEADERS_FOLDER_PATH</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>17A37AA15DD29A7CD626FB4E</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -384,11 +484,24 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.c.objc</string>
 			<key>path</key>
-			<string>Pods-CeliTax-NKOColorPickerView-dummy.m</string>
+			<string>NKOColorPickerView.m</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>2A6380711961199052D9983A</key>
+		<key>17C40DC85FE601E1B3BF6388</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-CeliTax-CDRTranslucentSideBar-Private.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1849897A8DAAC368585E38B2</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -403,156 +516,7 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>2A7594792E4A054E2B8A7693</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>2FCE18DE93C303F38D514796</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>YES</string>
-				<key>DSTROOT</key>
-				<string>/tmp/xcodeproj.dst</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>Target Support Files/Pods-CeliTax-WYPopoverController/Pods-CeliTax-WYPopoverController-prefix.pch</string>
-				<key>INSTALL_PATH</key>
-				<string>$(BUILT_PRODUCTS_DIR)</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>7.0</string>
-				<key>OTHER_CFLAGS</key>
-				<array>
-					<string>-DNS_BLOCK_ASSERTIONS=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>OTHER_CPLUSPLUSFLAGS</key>
-				<array>
-					<string>-DNS_BLOCK_ASSERTIONS=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>OTHER_LDFLAGS</key>
-				<string></string>
-				<key>OTHER_LIBTOOLFLAGS</key>
-				<string></string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>PUBLIC_HEADERS_FOLDER_PATH</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>SKIP_INSTALL</key>
-				<string>YES</string>
-				<key>VALIDATE_PRODUCT</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>2C0C5BAA4D03BACA6F4710A4</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text</string>
-			<key>path</key>
-			<string>Pods-CeliTax-acknowledgements.markdown</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2C53841C78B949267E7ACE1B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>567D1D304C48B06413CB683D</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>2D51B3C41D2D025588354C7F</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>07F3DFBB2523A026D85B1C6B</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>2D97C2A484C1C4FCC2D97E38</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>MKNetworkEngine.h</string>
-			<key>path</key>
-			<string>MKNetworkKit/MKNetworkEngine.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2F43D4F3F7BF681BC77BA0FA</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>39D392E6266D8D0F8055B3AC</string>
-				<string>445B5B8003FA08CD99D816BA</string>
-				<string>E262EB11DB0E2DB23912F17A</string>
-				<string>D46B6D64AF560BC5C696EE49</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>2FCE18DE93C303F38D514796</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods-CeliTax-WYPopoverController-Private.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>320FEC1B5FC282BCB1FE40B0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>17B8EEAE8C0839DA0D08AA44</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>34562E46A3752EF56A19652F</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>733DA3DF109B95B8AB58A0CB</string>
-				<string>3AEC9F16DBD1F805F605D5AE</string>
-				<string>9BA68CB4183E1CA0EE1B0DA4</string>
-				<string>DC0A8A6F87D4B24F0A86896C</string>
-				<string>EED2B15C885AB61955976478</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>383E5F6C776044F14DDFE468</key>
+		<key>18EB5EE34D59E24726B36802</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -565,7 +529,20 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>39993D84A038F8592AD1FB37</key>
+		<key>1AE898F589A1947465FF1FD8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>AVFoundation.framework</string>
+			<key>path</key>
+			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/AVFoundation.framework</string>
+			<key>sourceTree</key>
+			<string>DEVELOPER_DIR</string>
+		</dict>
+		<key>1BE1AB2B074F207000038538</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -574,71 +551,26 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.c.h</string>
 			<key>path</key>
-			<string>NKOColorPickerView.h</string>
+			<string>Pods-CeliTax-UIImage-ResizeMagick-prefix.pch</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>39D392E6266D8D0F8055B3AC</key>
+		<key>1C1FDD4185AAB35A2C73CAA6</key>
 		<dict>
 			<key>fileRef</key>
-			<string>FB79B2D90F8833FA3744047C</string>
+			<string>CEB7AECE45AE9B92F1C74FA1</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>3AEC9F16DBD1F805F605D5AE</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>A878255DCF2D183090FDBED0</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3E4DA9989E8BE826015381B6</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods-CeliTax-NKOColorPickerView-Private.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>4027A06754C0BDD3BE5473C0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>2D97C2A484C1C4FCC2D97E38</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>41C977C7B679FD0247ED0663</key>
-		<dict>
-			<key>fileRef</key>
-			<string>C658F0C044971567B2D78654</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>COMPILER_FLAGS</key>
-				<string>-DOS_OBJECT_USE_OBJC=0</string>
-			</dict>
-		</dict>
-		<key>4227BA9571B5B47AC5644206</key>
+		<key>1C9958C75482636CCA827131</key>
 		<dict>
 			<key>buildConfigurationList</key>
-			<string>981E79E5A60017E630D3387C</string>
+			<string>0F530C069239ECA280AAC20D</string>
 			<key>buildPhases</key>
 			<array>
-				<string>ABD06F794392F7E25D14E0E0</string>
-				<string>CD83D6FFACB59D39E2B8FE01</string>
-				<string>6EF3EE8008C17C4ECCF01C4C</string>
+				<string>F9B206F842E4ACE33A629322</string>
+				<string>9CA1C86FBC8386204DA1B986</string>
+				<string>804EF2787E4E1B50EF842FDF</string>
 			</array>
 			<key>buildRules</key>
 			<array/>
@@ -647,148 +579,31 @@
 			<key>isa</key>
 			<string>PBXNativeTarget</string>
 			<key>name</key>
-			<string>Pods-CeliTax-MBProgressHUD</string>
+			<string>Pods-CeliTax-WYPopoverController</string>
 			<key>productName</key>
-			<string>Pods-CeliTax-MBProgressHUD</string>
+			<string>Pods-CeliTax-WYPopoverController</string>
 			<key>productReference</key>
-			<string>94D0366C6EE6F0B668DFD8BB</string>
+			<string>9DACFB1659649E05EA66C8E3</string>
 			<key>productType</key>
 			<string>com.apple.product-type.library.static</string>
 		</dict>
-		<key>445B5B8003FA08CD99D816BA</key>
-		<dict>
-			<key>fileRef</key>
-			<string>EC938B57AC3E07FF4288461F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>45790FF75790DE876307D5B5</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>71970E84ACB7C11EB9D51B22</string>
-				<string>AC62068B4F50C19CD3AC8B4A</string>
-				<string>22F7104B8EA6721B31EBFC57</string>
-				<string>7278C6ED941A93EE9305054B</string>
-				<string>98EBEBF2956C42891F4C159B</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>WYPopoverController</string>
-			<key>path</key>
-			<string>WYPopoverController</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>47084D2CB387941F0D660D68</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>5F1772437F1B9E3FE25245E6</string>
-				<string>187F9094F956D8FC5726D714</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>470A01B8808AA2872313B247</key>
-		<dict>
-			<key>fileRef</key>
-			<string>ECF3C02A7790243C3BB92FF3</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>COMPILER_FLAGS</key>
-				<string>-DOS_OBJECT_USE_OBJC=0</string>
-			</dict>
-		</dict>
-		<key>4A00888FEA6CF7E3DE6FDCE6</key>
+		<key>1EE5C29FBCC61AE426CE7A82</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
+			<string>sourcecode.c.h</string>
 			<key>path</key>
-			<string>Pods-CeliTax-acknowledgements.plist</string>
+			<string>Pods-CeliTax-environment.h</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>4D92B0D70F12297671F95CEF</key>
+		<key>21687B310F7F9A1F89BA0E61</key>
 		<dict>
 			<key>fileRef</key>
-			<string>AC62068B4F50C19CD3AC8B4A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5222A37A1AFBC74E45DDC775</key>
-		<dict>
-			<key>fileRef</key>
-			<string>666FFDDEC2DC8FD0E427A878</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>55611D9DAF0020819F115402</key>
-		<dict>
-			<key>fileRef</key>
-			<string>9C3B724C3E3632D632DAF277</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>56005E870504C31EB4ACBAC8</key>
-		<dict>
-			<key>fileRef</key>
-			<string>978C31CB2BBE5D624DE40451</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5628497FA07CF4531BD7810B</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXTargetDependency</string>
-			<key>name</key>
-			<string>Pods-CeliTax-WYPopoverController</string>
-			<key>target</key>
-			<string>73604F17C829F137BB3D0937</string>
-			<key>targetProxy</key>
-			<string>EE7498BD72C1F55CD766A211</string>
-		</dict>
-		<key>5633AD9161FE44FCBB757B12</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>D84A65A005849389079C919B</string>
-			</array>
-			<key>isa</key>
-			<string>PBXHeadersBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>567D1D304C48B06413CB683D</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>UIKit.framework</string>
-			<key>path</key>
-			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/UIKit.framework</string>
-			<key>sourceTree</key>
-			<string>DEVELOPER_DIR</string>
-		</dict>
-		<key>56DEEA83FCF064A0F9D5E702</key>
-		<dict>
-			<key>fileRef</key>
-			<string>E6D8EE8CA273A99ED7624CFF</string>
+			<string>C84849D20386E4C66CBA221B</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 			<key>settings</key>
@@ -797,26 +612,7 @@
 				<string>-DOS_OBJECT_USE_OBJC=0</string>
 			</dict>
 		</dict>
-		<key>588DAEB582E5BAA0629AD7ED</key>
-		<dict>
-			<key>fileRef</key>
-			<string>0444AA1A3FC70FE8335A0D5B</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>COMPILER_FLAGS</key>
-				<string>-DOS_OBJECT_USE_OBJC=0</string>
-			</dict>
-		</dict>
-		<key>5A0434989E5273CCFC825B93</key>
-		<dict>
-			<key>fileRef</key>
-			<string>29098526A1BB4DA26FA8A63D</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>5B4B9DC182BA839D007830BA</key>
+		<key>22506950B39FA3BE774AE057</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -825,11 +621,37 @@
 			<key>lastKnownFileType</key>
 			<string>text.xcconfig</string>
 			<key>path</key>
-			<string>Pods-CeliTax.debug.xcconfig</string>
+			<string>Pods-CeliTax-UIImage-ResizeMagick.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>5D72AF7393DD8E2B80AF1812</key>
+		<key>2275D246894E38972D428F79</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>CD38E778B1029C62ADAEC2A3</string>
+				<string>0FFD2519B8BDEB1CDC379302</string>
+				<string>90833041EE2A245D385D3EF0</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>2493337529CFEF122E2D572E</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>Pods-CeliTax-Reachability</string>
+			<key>target</key>
+			<string>4B9EC615184EB69D825B80E6</string>
+			<key>targetProxy</key>
+			<string>702F3CE66826865185D62F44</string>
+		</dict>
+		<key>25B798AAAA6494022F06E783</key>
 		<dict>
 			<key>explicitFileType</key>
 			<string>archive.ar</string>
@@ -838,14 +660,73 @@
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>path</key>
-			<string>libPods-CeliTax-NKOColorPickerView.a</string>
+			<string>libPods-CeliTax-CDRTranslucentSideBar.a</string>
 			<key>sourceTree</key>
 			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
-		<key>5F1772437F1B9E3FE25245E6</key>
+		<key>2688E0CAF476446B56C6159A</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>Pods-CeliTax-LLSimpleCamera</string>
+			<key>target</key>
+			<string>0C69243E94D1931110ABA03B</string>
+			<key>targetProxy</key>
+			<string>E2BA672245B86CA43CC39D58</string>
+		</dict>
+		<key>27D53B8E5FB7C40D816D92E6</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>CDRTranslucentSideBar.h</string>
+			<key>path</key>
+			<string>CDRTranslucentSideBar/CDRTranslucentSideBar/CDRTranslucentSideBar.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>27F64D3A76A0B8003AABA534</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-CeliTax-MBProgressHUD.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>286DDB6C1EA3BB441C30BA0B</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>12384D2EF4F2B6993F24CB77</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>29193B8B1BFA68CD51AE6A11</key>
+		<dict>
+			<key>fileRef</key>
+			<string>58A32C7761B3FC088351AE92</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>2B2D585ADFED13DF637596B3</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>5F8B1D4158AE194F6F9E5DEE</string>
+			<string>EED37DBF77919DE8126B1F0B</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ALWAYS_SEARCH_USER_PATHS</key>
@@ -861,7 +742,7 @@
 				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
 				<string>YES</string>
 				<key>GCC_PREFIX_HEADER</key>
-				<string>Target Support Files/Pods-CeliTax-Reachability/Pods-CeliTax-Reachability-prefix.pch</string>
+				<string>Target Support Files/Pods-CeliTax-WYPopoverController/Pods-CeliTax-WYPopoverController-prefix.pch</string>
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
 				<array>
 					<string>DEBUG=1</string>
@@ -891,7 +772,73 @@
 			<key>name</key>
 			<string>Debug</string>
 		</dict>
-		<key>5F8B1D4158AE194F6F9E5DEE</key>
+		<key>2B842AE39EBBA200BEF5F8E2</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>5E625C8F6BC609DB314756F2</string>
+			</array>
+			<key>isa</key>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>2C9301779F5E2C5776FB6743</key>
+		<dict>
+			<key>fileRef</key>
+			<string>77611DF6F9BDA79E452C29F4</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-DOS_OBJECT_USE_OBJC=0</string>
+			</dict>
+		</dict>
+		<key>2E1597EC2ED7C999E249E033</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>MBProgressHUD.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>2F2CF9BEBA23B72BCDA2A921</key>
+		<dict>
+			<key>fileRef</key>
+			<string>5620E69E5103A82BF90FD1F8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>2FA80DAF6418D59A52C2AD5C</key>
+		<dict>
+			<key>fileRef</key>
+			<string>CEB7AECE45AE9B92F1C74FA1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>302E19C5D93F6AA45FBE3020</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BA1C3B841BA86479DCE4B7B2</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>30769D895BBCCDB7819BBC63</key>
+		<dict>
+			<key>fileRef</key>
+			<string>DF9CE641B1CFCD95C8FC52BE</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>30878ADBC8D26A7E8A20B5D5</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -900,14 +847,84 @@
 			<key>lastKnownFileType</key>
 			<string>text.xcconfig</string>
 			<key>path</key>
-			<string>Pods-CeliTax-Reachability-Private.xcconfig</string>
+			<string>Pods-CeliTax-MKNetworkKit.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>6000BE86209BA7FCF41354F0</key>
+		<key>313ABE3738B8DC33F0A65E2B</key>
+		<dict>
+			<key>fileRef</key>
+			<string>AD256E08C6D8048F633BE706</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-DOS_OBJECT_USE_OBJC=0</string>
+			</dict>
+		</dict>
+		<key>3176B87F5163B7A8992661F1</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>0D4594A017490D89BB1CC367</string>
+				<string>17A37AA15DD29A7CD626FB4E</string>
+				<string>5F359980F22F58A838914EFD</string>
+				<string>4D40613D0A5EEAF2ABCD709D</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>NKOColorPickerView</string>
+			<key>path</key>
+			<string>NKOColorPickerView</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>319167810D7338C6FB8EBDA3</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-CeliTax-MKNetworkKit-Private.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>326479F1AD5166082F2597F8</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>614377B555EC05EF376802C8</string>
+				<string>EE7325AED9C6580B6EDB22E7</string>
+			</array>
+			<key>isa</key>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>347DB71DCC3AC755067FC655</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>B60CC066658019894A8EA24A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>34EB58998E3225A4E38BC1D3</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>3E4DA9989E8BE826015381B6</string>
+			<string>C55983F5E3DBE304DADBDEF5</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ALWAYS_SEARCH_USER_PATHS</key>
@@ -919,7 +936,7 @@
 				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
 				<string>YES</string>
 				<key>GCC_PREFIX_HEADER</key>
-				<string>Target Support Files/Pods-CeliTax-NKOColorPickerView/Pods-CeliTax-NKOColorPickerView-prefix.pch</string>
+				<string>Target Support Files/Pods-CeliTax-LLSimpleCamera/Pods-CeliTax-LLSimpleCamera-prefix.pch</string>
 				<key>INSTALL_PATH</key>
 				<string>$(BUILT_PRODUCTS_DIR)</string>
 				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
@@ -954,37 +971,138 @@
 			<key>name</key>
 			<string>Release</string>
 		</dict>
-		<key>6126BB9625D74B699961297A</key>
+		<key>35DF62CE2F771979079E5EA3</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>E7C006DDC0BE6377221A3A59</string>
+				<string>B7DE0CCEC4007E10C15FED5A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>3856020CEA505E7C57B0CC66</key>
+		<dict>
+			<key>fileRef</key>
+			<string>6797970D5B73133AF0664F82</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>38867D8F4C90D41D04627F7F</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>5FB15717D82CE04405D1AF55</string>
+				<string>2C9301779F5E2C5776FB6743</string>
+				<string>313ABE3738B8DC33F0A65E2B</string>
+				<string>63E88DC767BC17087FC6633F</string>
+				<string>942EFC730A0CF550BE5F791B</string>
+				<string>CACE61E3D4F8261AE0C4B4C9</string>
+				<string>B4B257A345F9751F47A683DD</string>
+				<string>6960B50CFF99E22FE36C2816</string>
+				<string>C60910E021B8E82AC3019332</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>39A4898CC2B8615D8FE6739B</key>
+		<dict>
+			<key>fileRef</key>
+			<string>AA84FB88367F9B12204DF65C</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>3C3DF1DE731700EA639EE915</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>WYPopoverController.m</string>
+			<key>path</key>
+			<string>WYPopoverController/WYPopoverController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3F2BF89302D6E1D9E9BC8242</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>C0A06E40FBEE2C34C4FAD81A</string>
+				<string>0367D5A8A712A95B9920B34B</string>
+				<string>495FE0B877E118E2AFA2026D</string>
+				<string>18EB5EE34D59E24726B36802</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Support Files</string>
+			<key>path</key>
+			<string>../Target Support Files/Pods-CeliTax-Reachability</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>3F4231AF74A4B4C4C2111568</key>
+		<dict>
+			<key>fileRef</key>
+			<string>947288E52ABBEE6F3E8DB08E</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>4037C81A6AC0DF376D5096C3</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Pods-CeliTax-MBProgressHUD-prefix.pch</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>40D9C6BF7FA40BB0BB83A8A2</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>E6BDF3F5CC08540F9FB1F845</string>
+			<string>0BB09A68FE25776EB3E17D1F</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ALWAYS_SEARCH_USER_PATHS</key>
 				<string>NO</string>
 				<key>COPY_PHASE_STRIP</key>
-				<string>NO</string>
+				<string>YES</string>
 				<key>DSTROOT</key>
 				<string>/tmp/xcodeproj.dst</string>
-				<key>GCC_DYNAMIC_NO_PIC</key>
-				<string>NO</string>
-				<key>GCC_OPTIMIZATION_LEVEL</key>
-				<string>0</string>
 				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
 				<string>YES</string>
 				<key>GCC_PREFIX_HEADER</key>
 				<string>Target Support Files/Pods-CeliTax-MBProgressHUD/Pods-CeliTax-MBProgressHUD-prefix.pch</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>DEBUG=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
-				<string>NO</string>
 				<key>INSTALL_PATH</key>
 				<string>$(BUILT_PRODUCTS_DIR)</string>
 				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
 				<string>7.0</string>
+				<key>OTHER_CFLAGS</key>
+				<array>
+					<string>-DNS_BLOCK_ASSERTIONS=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>OTHER_CPLUSPLUSFLAGS</key>
+				<array>
+					<string>-DNS_BLOCK_ASSERTIONS=1</string>
+					<string>$(inherited)</string>
+				</array>
 				<key>OTHER_LDFLAGS</key>
 				<string></string>
 				<key>OTHER_LIBTOOLFLAGS</key>
@@ -997,16 +1115,18 @@
 				<string>iphoneos</string>
 				<key>SKIP_INSTALL</key>
 				<string>YES</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
 			</dict>
 			<key>isa</key>
 			<string>XCBuildConfiguration</string>
 			<key>name</key>
-			<string>Debug</string>
+			<string>Release</string>
 		</dict>
-		<key>622CA96F864B9D23C5EC8E58</key>
+		<key>423F752A6C30FE10966A341A</key>
 		<dict>
 			<key>fileRef</key>
-			<string>1F2EDF6D55CCE256CE047663</string>
+			<string>2E1597EC2ED7C999E249E033</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 			<key>settings</key>
@@ -1015,33 +1135,48 @@
 				<string>-DOS_OBJECT_USE_OBJC=0</string>
 			</dict>
 		</dict>
-		<key>666352D1234932B4AB1DC532</key>
+		<key>448BACC5AC0645AC66089824</key>
 		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
+			<key>fileRef</key>
+			<string>DA74783C3923D427AB300E67</string>
 			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>libPods-CeliTax-Reachability.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
+			<string>PBXBuildFile</string>
 		</dict>
-		<key>666FFDDEC2DC8FD0E427A878</key>
+		<key>44B8430BA0DF9FEF79985F52</key>
+		<dict>
+			<key>fileRef</key>
+			<string>53E3A250775ECADF184B2EA1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>454928C95EF2F3B8120FD936</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>6225200FC3C72D4D8E2805BB</string>
+				<string>99B1B0663C15564986308FC3</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>49406E9657747F0F52F9A134</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
+			<string>text.xcconfig</string>
 			<key>path</key>
-			<string>Pods-CeliTax-WYPopoverController-dummy.m</string>
+			<string>Pods-CeliTax.release.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>688C0161653F157B378E861E</key>
+		<key>495FE0B877E118E2AFA2026D</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -1054,7 +1189,344 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>6AFE5240D5D0CF69EAAE2811</key>
+		<key>4983258E862764726CC83111</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>WYStoryboardPopoverSegue.m</string>
+			<key>path</key>
+			<string>WYPopoverController/WYStoryboardPopoverSegue.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4A1681EA26002273DAD76BC0</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>UIKit.framework</string>
+			<key>path</key>
+			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/UIKit.framework</string>
+			<key>sourceTree</key>
+			<string>DEVELOPER_DIR</string>
+		</dict>
+		<key>4A3D359E74C74E864A2F81FF</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>5C7F6A63D752291D59F77609</string>
+				<string>C55983F5E3DBE304DADBDEF5</string>
+				<string>529B00A9EB8FBF532E0BD7F8</string>
+				<string>E06D33B88BA79CF32C0A3D99</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Support Files</string>
+			<key>path</key>
+			<string>../Target Support Files/Pods-CeliTax-LLSimpleCamera</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>4B9EC615184EB69D825B80E6</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>454928C95EF2F3B8120FD936</string>
+			<key>buildPhases</key>
+			<array>
+				<string>B8210734437BAC22CDF9AEC8</string>
+				<string>8E00C6B9D79BFEB81EAF0FD8</string>
+				<string>D869708F45601DC4A5EFA1CD</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-CeliTax-Reachability</string>
+			<key>productName</key>
+			<string>Pods-CeliTax-Reachability</string>
+			<key>productReference</key>
+			<string>E04B5915043B2BEDB94596A7</string>
+			<key>productType</key>
+			<string>com.apple.product-type.library.static</string>
+		</dict>
+		<key>4D40613D0A5EEAF2ABCD709D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>ABE5E97FAD49C5123F748064</string>
+				<string>95F7D9092982CC5FE142C7D5</string>
+				<string>5620E69E5103A82BF90FD1F8</string>
+				<string>ACF2A6D97D3DC5AA3DCB8C14</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Support Files</string>
+			<key>path</key>
+			<string>../Target Support Files/Pods-CeliTax-NKOColorPickerView</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5012EACD788177AB1AA22F02</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Pods-CeliTax-acknowledgements.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>51C472F63E70A2666E0E3D64</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>MKNetworkOperation.h</string>
+			<key>path</key>
+			<string>MKNetworkKit/MKNetworkOperation.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>51C9D8F82285F6DEBCD2C13A</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>772E60556CD1AD3A48485841</string>
+				<string>0007C9D33A78B3BB046AB536</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>529B00A9EB8FBF532E0BD7F8</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-CeliTax-LLSimpleCamera-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>53E3A250775ECADF184B2EA1</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>QuartzCore.framework</string>
+			<key>path</key>
+			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/QuartzCore.framework</string>
+			<key>sourceTree</key>
+			<string>DEVELOPER_DIR</string>
+		</dict>
+		<key>5475883801EC73651E98E5D5</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>49406E9657747F0F52F9A134</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>YES</string>
+				<key>DSTROOT</key>
+				<string>/tmp/xcodeproj.dst</string>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>INSTALL_PATH</key>
+				<string>$(BUILT_PRODUCTS_DIR)</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>7.0</string>
+				<key>OTHER_CFLAGS</key>
+				<array>
+					<string>-DNS_BLOCK_ASSERTIONS=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>OTHER_CPLUSPLUSFLAGS</key>
+				<array>
+					<string>-DNS_BLOCK_ASSERTIONS=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>PUBLIC_HEADERS_FOLDER_PATH</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>54981296FC16607E81DDB213</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>58EC07DCCFE4EA863FECB189</string>
+			<key>buildPhases</key>
+			<array>
+				<string>FBB371E54230369765F787B0</string>
+				<string>D2DA1913CBB34565298D7BFD</string>
+				<string>347DB71DCC3AC755067FC655</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-CeliTax-NKOColorPickerView</string>
+			<key>productName</key>
+			<string>Pods-CeliTax-NKOColorPickerView</string>
+			<key>productReference</key>
+			<string>EABD301D853E0F9DCF163F6A</string>
+			<key>productType</key>
+			<string>com.apple.product-type.library.static</string>
+		</dict>
+		<key>5620E69E5103A82BF90FD1F8</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-CeliTax-NKOColorPickerView-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>566BCD80A1A7BCEDE607A68B</key>
+		<dict>
+			<key>fileRef</key>
+			<string>CEB7AECE45AE9B92F1C74FA1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>58A32C7761B3FC088351AE92</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>UIImageView+MKNetworkKitAdditions.h</string>
+			<key>path</key>
+			<string>MKNetworkKit/Categories/UIImageView+MKNetworkKitAdditions.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>58EC07DCCFE4EA863FECB189</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>F2E62106D2CF3BB54B372186</string>
+				<string>AFF9915B7C2179BEFEC2AE7B</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>598ACE1DB870BCF7786F15E8</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>158866836E7BED8CE077D0B7</string>
+				<string>5475883801EC73651E98E5D5</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>5A154E2DC78865A617395B98</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>080DECA2BB870AB72B2A0F1B</string>
+				<string>34EB58998E3225A4E38BC1D3</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>5B38E2418D362A9F4C4CC916</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>name</key>
+			<string>Podfile</string>
+			<key>path</key>
+			<string>../Podfile</string>
+			<key>sourceTree</key>
+			<string>SOURCE_ROOT</string>
+			<key>xcLanguageSpecificationIdentifier</key>
+			<string>xcode.lang.ruby</string>
+		</dict>
+		<key>5C7F6A63D752291D59F77609</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-CeliTax-LLSimpleCamera.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5C9F4B048DB09AA202C6A7AD</key>
 		<dict>
 			<key>buildSettings</key>
 			<dict>
@@ -1116,27 +1588,641 @@
 			<key>name</key>
 			<string>Release</string>
 		</dict>
-		<key>6BC240801915FA7D3C242CB8</key>
+		<key>5D9165F7100554E83656EC9A</key>
 		<dict>
 			<key>fileRef</key>
-			<string>DEED69FBDD48C713A20CC5B8</string>
+			<string>AA84FB88367F9B12204DF65C</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>6EF3EE8008C17C4ECCF01C4C</key>
+		<key>5E625C8F6BC609DB314756F2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>EDD6A31AB772EB55BA3610E3</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>5F0049F16C8CF4D66C43351D</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>A9777AB3D376EB74D93DB34C</string>
+				<string>5C9F4B048DB09AA202C6A7AD</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>5F359980F22F58A838914EFD</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>C27C6D384EDD1193F5E08BC9</string>
+				<string>D231B7925D9C62FE3FB90753</string>
+				<string>F3A794BBB7A6B7D08D33445E</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Resources</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5F43C64440AF714CC4BA74E2</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-CeliTax-CDRTranslucentSideBar.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5FB15717D82CE04405D1AF55</key>
+		<dict>
+			<key>fileRef</key>
+			<string>8873FF29EA526E7A905B9FFB</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-DOS_OBJECT_USE_OBJC=0</string>
+			</dict>
+		</dict>
+		<key>614377B555EC05EF376802C8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>F4A760BD623B28BD71766B9A</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>6158A9B11B726BAF9798A262</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-CeliTax-MKNetworkKit.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>6225200FC3C72D4D8E2805BB</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>0367D5A8A712A95B9920B34B</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>DSTROOT</key>
+				<string>/tmp/xcodeproj.dst</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>Target Support Files/Pods-CeliTax-Reachability/Pods-CeliTax-Reachability-prefix.pch</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
+				<string>NO</string>
+				<key>INSTALL_PATH</key>
+				<string>$(BUILT_PRODUCTS_DIR)</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>7.0</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>PUBLIC_HEADERS_FOLDER_PATH</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>63B4889ECDDE6099452BC00E</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>EDD6A31AB772EB55BA3610E3</string>
+				<string>C84849D20386E4C66CBA221B</string>
+				<string>ECF7C24CFBE9F561C8C74755</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>UIImage-ResizeMagick</string>
+			<key>path</key>
+			<string>UIImage-ResizeMagick</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>63E88DC767BC17087FC6633F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>6983A6289FCE608F2EA543BC</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-DOS_OBJECT_USE_OBJC=0</string>
+			</dict>
+		</dict>
+		<key>65B792526E3EC341722531DA</key>
 		<dict>
 			<key>buildActionMask</key>
 			<string>2147483647</string>
 			<key>files</key>
 			<array>
-				<string>6BC240801915FA7D3C242CB8</string>
+				<string>942ED3AFEDEA3566380D6597</string>
 			</array>
 			<key>isa</key>
 			<string>PBXHeadersBuildPhase</string>
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
 		</dict>
-		<key>71970E84ACB7C11EB9D51B22</key>
+		<key>6627CE289DA3DC0C75E249FF</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>A1005B2622743AD36604CF06</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>E0216D5DFE78058F4F7A5FF9</string>
+			<key>remoteInfo</key>
+			<string>Pods-CeliTax-CDRTranslucentSideBar</string>
+		</dict>
+		<key>674CD298881DDEA4BE91F5CA</key>
+		<dict>
+			<key>fileRef</key>
+			<string>7FC738C97C5A09E657E8051A</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>6797970D5B73133AF0664F82</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>NSData+MKBase64.h</string>
+			<key>path</key>
+			<string>MKNetworkKit/Categories/NSData+MKBase64.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>6892FB77D1FC856282865D3A</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>319167810D7338C6FB8EBDA3</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>DSTROOT</key>
+				<string>/tmp/xcodeproj.dst</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>Target Support Files/Pods-CeliTax-MKNetworkKit/Pods-CeliTax-MKNetworkKit-prefix.pch</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
+				<string>NO</string>
+				<key>INSTALL_PATH</key>
+				<string>$(BUILT_PRODUCTS_DIR)</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>7.0</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>PUBLIC_HEADERS_FOLDER_PATH</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>6960B50CFF99E22FE36C2816</key>
+		<dict>
+			<key>fileRef</key>
+			<string>D418510FF98F1B59D4A8B77E</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-DOS_OBJECT_USE_OBJC=0</string>
+			</dict>
+		</dict>
+		<key>6983A6289FCE608F2EA543BC</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>NSDate+RFC1123.m</string>
+			<key>path</key>
+			<string>MKNetworkKit/Categories/NSDate+RFC1123.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>6AE5BF0C87B5AC587A636D98</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-CeliTax-LLSimpleCamera.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>702F3CE66826865185D62F44</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>A1005B2622743AD36604CF06</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>4B9EC615184EB69D825B80E6</string>
+			<key>remoteInfo</key>
+			<string>Pods-CeliTax-Reachability</string>
+		</dict>
+		<key>70D2E4CC81D394B529227284</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>8B0F86774EDCAF55BFC26F1B</string>
+				<string>3C3DF1DE731700EA639EE915</string>
+				<string>DA74783C3923D427AB300E67</string>
+				<string>4983258E862764726CC83111</string>
+				<string>98DCCD0549906078AEC77927</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>WYPopoverController</string>
+			<key>path</key>
+			<string>WYPopoverController</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>71108B2387B6D5BE91E1ABD0</key>
+		<dict>
+			<key>fileRef</key>
+			<string>4A1681EA26002273DAD76BC0</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>7251C8E1C06C115DE911C0F0</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>51C9D8F82285F6DEBCD2C13A</string>
+			<key>buildPhases</key>
+			<array>
+				<string>C820E1911FB5E499606A371E</string>
+				<string>9E112E215B6C1078AE481F4C</string>
+				<string>2B842AE39EBBA200BEF5F8E2</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-CeliTax-UIImage-ResizeMagick</string>
+			<key>productName</key>
+			<string>Pods-CeliTax-UIImage-ResizeMagick</string>
+			<key>productReference</key>
+			<string>F75BFC51793CE013506A9EBD</string>
+			<key>productType</key>
+			<string>com.apple.product-type.library.static</string>
+		</dict>
+		<key>74C07A44C0EB816E759A9456</key>
+		<dict>
+			<key>fileRef</key>
+			<string>7FC5EDB61AB268075B72CE1D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>772E60556CD1AD3A48485841</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>CF8263A9A3605A1F50243573</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>DSTROOT</key>
+				<string>/tmp/xcodeproj.dst</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>Target Support Files/Pods-CeliTax-UIImage-ResizeMagick/Pods-CeliTax-UIImage-ResizeMagick-prefix.pch</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
+				<string>NO</string>
+				<key>INSTALL_PATH</key>
+				<string>$(BUILT_PRODUCTS_DIR)</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>7.0</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>PUBLIC_HEADERS_FOLDER_PATH</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>77611DF6F9BDA79E452C29F4</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>MKNetworkOperation.m</string>
+			<key>path</key>
+			<string>MKNetworkKit/MKNetworkOperation.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>7ECAEC13B57487108ECE5B46</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>3F4231AF74A4B4C4C2111568</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>7FC5EDB61AB268075B72CE1D</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>NSString+MKNetworkKitAdditions.h</string>
+			<key>path</key>
+			<string>MKNetworkKit/Categories/NSString+MKNetworkKitAdditions.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>7FC738C97C5A09E657E8051A</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>MKNetworkEngine.h</string>
+			<key>path</key>
+			<string>MKNetworkKit/MKNetworkEngine.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>804EF2787E4E1B50EF842FDF</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>ED407A6D258B9141CCDDCE11</string>
+				<string>448BACC5AC0645AC66089824</string>
+			</array>
+			<key>isa</key>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>806560821499C7BFF3AA9299</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>319167810D7338C6FB8EBDA3</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>YES</string>
+				<key>DSTROOT</key>
+				<string>/tmp/xcodeproj.dst</string>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>Target Support Files/Pods-CeliTax-MKNetworkKit/Pods-CeliTax-MKNetworkKit-prefix.pch</string>
+				<key>INSTALL_PATH</key>
+				<string>$(BUILT_PRODUCTS_DIR)</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>7.0</string>
+				<key>OTHER_CFLAGS</key>
+				<array>
+					<string>-DNS_BLOCK_ASSERTIONS=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>OTHER_CPLUSPLUSFLAGS</key>
+				<array>
+					<string>-DNS_BLOCK_ASSERTIONS=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>PUBLIC_HEADERS_FOLDER_PATH</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>81E0BB7C3B1708EF13C583F0</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>39A4898CC2B8615D8FE6739B</string>
+				<string>566BCD80A1A7BCEDE607A68B</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>833C0AE09946606CE491E301</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>0A5A4A5CC5E290776C6F4CCA</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>83C4E097E10F213A93C76A42</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3C3DF1DE731700EA639EE915</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>855FD547635054C820AFBFD4</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>6892FB77D1FC856282865D3A</string>
+				<string>806560821499C7BFF3AA9299</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>8873FF29EA526E7A905B9FFB</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>MKNetworkEngine.m</string>
+			<key>path</key>
+			<string>MKNetworkKit/MKNetworkEngine.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>898DCA8E1A55B00862D1C669</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Reachability.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8AD2ECD1EA92EF9F130A657E</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>A1005B2622743AD36604CF06</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>4B9EC615184EB69D825B80E6</string>
+			<key>remoteInfo</key>
+			<string>Pods-CeliTax-Reachability</string>
+		</dict>
+		<key>8B0F86774EDCAF55BFC26F1B</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -1151,7 +2237,126 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>7278C6ED941A93EE9305054B</key>
+		<key>8C939772D0CCF12C90900E61</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>D34586D28C23F7E361F65160</string>
+				<string>25B798AAAA6494022F06E783</string>
+				<string>6AE5BF0C87B5AC587A636D98</string>
+				<string>27F64D3A76A0B8003AABA534</string>
+				<string>6158A9B11B726BAF9798A262</string>
+				<string>EABD301D853E0F9DCF163F6A</string>
+				<string>E04B5915043B2BEDB94596A7</string>
+				<string>F75BFC51793CE013506A9EBD</string>
+				<string>9DACFB1659649E05EA66C8E3</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8E00C6B9D79BFEB81EAF0FD8</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>2FA80DAF6418D59A52C2AD5C</string>
+				<string>CB484BC534A94BE465BDB6D9</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>901BA6DDAE81031A5E651784</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>27D53B8E5FB7C40D816D92E6</string>
+				<string>AA0A32590049BBEFD5912FA3</string>
+				<string>CA0AAE4C20BCA5A3099A5E58</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>CDRTranslucentSideBar</string>
+			<key>path</key>
+			<string>CDRTranslucentSideBar</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>90833041EE2A245D385D3EF0</key>
+		<dict>
+			<key>fileRef</key>
+			<string>9B50011C1F9B4AF3CCD321C8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>918879EC0265B7FDDF347DFE</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>901BA6DDAE81031A5E651784</string>
+				<string>9F367136FD57D35514F077E4</string>
+				<string>9ABD8F279792037F3E270DBD</string>
+				<string>E7BEEA0D9D293DD35CC86B93</string>
+				<string>3176B87F5163B7A8992661F1</string>
+				<string>F3E9072DD1E9E0F3E183A95C</string>
+				<string>63B4889ECDDE6099452BC00E</string>
+				<string>70D2E4CC81D394B529227284</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>919EB0D3A62A414120416CB5</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>A27B2F10101BCF394A2842F0</string>
+				<string>5012EACD788177AB1AA22F02</string>
+				<string>947288E52ABBEE6F3E8DB08E</string>
+				<string>1EE5C29FBCC61AE426CE7A82</string>
+				<string>F0A99A32A0D4888CB2FC6471</string>
+				<string>AADA15AA4486B5DF4A4019F0</string>
+				<string>49406E9657747F0F52F9A134</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods-CeliTax</string>
+			<key>path</key>
+			<string>Target Support Files/Pods-CeliTax</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>942ED3AFEDEA3566380D6597</key>
+		<dict>
+			<key>fileRef</key>
+			<string>27D53B8E5FB7C40D816D92E6</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>942EFC730A0CF550BE5F791B</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1849897A8DAAC368585E38B2</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-DOS_OBJECT_USE_OBJC=0</string>
+			</dict>
+		</dict>
+		<key>947288E52ABBEE6F3E8DB08E</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -1159,91 +2364,12 @@
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
 			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>WYStoryboardPopoverSegue.m</string>
 			<key>path</key>
-			<string>WYPopoverController/WYStoryboardPopoverSegue.m</string>
+			<string>Pods-CeliTax-dummy.m</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>730A547D9787EF3BE450299F</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>D5938A3C6302FEC858E6EAC4</string>
-				<string>6000BE86209BA7FCF41354F0</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>733DA3DF109B95B8AB58A0CB</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text</string>
-			<key>name</key>
-			<string>Podfile</string>
-			<key>path</key>
-			<string>../Podfile</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-			<key>xcLanguageSpecificationIdentifier</key>
-			<string>xcode.lang.ruby</string>
-		</dict>
-		<key>73604F17C829F137BB3D0937</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>7399BAC6FC4C16279539182C</string>
-			<key>buildPhases</key>
-			<array>
-				<string>D09D113FBF813361B8FBE23F</string>
-				<string>84223AB63B6F544B2A785F20</string>
-				<string>F0FA6E4F090D52D4B13DB0CA</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>Pods-CeliTax-WYPopoverController</string>
-			<key>productName</key>
-			<string>Pods-CeliTax-WYPopoverController</string>
-			<key>productReference</key>
-			<string>B6ED84AE31C04FDB6F46BA22</string>
-			<key>productType</key>
-			<string>com.apple.product-type.library.static</string>
-		</dict>
-		<key>7399BAC6FC4C16279539182C</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>1AAD3BCA31548A5C42A69046</string>
-				<string>2A7594792E4A054E2B8A7693</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>7559636B0CB5BFDDF6443D81</key>
-		<dict>
-			<key>fileRef</key>
-			<string>EC938B57AC3E07FF4288461F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>75C8279EF24D8BA14F27892D</key>
+		<key>95F7D9092982CC5FE142C7D5</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -1252,11 +2378,219 @@
 			<key>lastKnownFileType</key>
 			<string>text.xcconfig</string>
 			<key>path</key>
-			<string>Pods-CeliTax.release.xcconfig</string>
+			<string>Pods-CeliTax-NKOColorPickerView-Private.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>75F2BBC127538A268ADE4537</key>
+		<key>974D850E0C080D3F78597666</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>B32FFA86EBB6B13B17A4342A</string>
+				<string>1C1FDD4185AAB35A2C73CAA6</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>97E884CE46E085193B5E4D6D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>Pods-CeliTax-WYPopoverController</string>
+			<key>target</key>
+			<string>1C9958C75482636CCA827131</string>
+			<key>targetProxy</key>
+			<string>DA11351DD7D5404E31AFA933</string>
+		</dict>
+		<key>98DCCD0549906078AEC77927</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>136D1F7F89C027CA4CD93507</string>
+				<string>EED37DBF77919DE8126B1F0B</string>
+				<string>E3287CD437B5BBE334E3756C</string>
+				<string>13153E9ED2D39079AB67E7BD</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Support Files</string>
+			<key>path</key>
+			<string>../Target Support Files/Pods-CeliTax-WYPopoverController</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>99B1B0663C15564986308FC3</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>0367D5A8A712A95B9920B34B</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>YES</string>
+				<key>DSTROOT</key>
+				<string>/tmp/xcodeproj.dst</string>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>Target Support Files/Pods-CeliTax-Reachability/Pods-CeliTax-Reachability-prefix.pch</string>
+				<key>INSTALL_PATH</key>
+				<string>$(BUILT_PRODUCTS_DIR)</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>7.0</string>
+				<key>OTHER_CFLAGS</key>
+				<array>
+					<string>-DNS_BLOCK_ASSERTIONS=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>OTHER_CPLUSPLUSFLAGS</key>
+				<array>
+					<string>-DNS_BLOCK_ASSERTIONS=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>PUBLIC_HEADERS_FOLDER_PATH</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>9A90C48B4FDCA835F1E5F88E</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>Pods-CeliTax-Reachability</string>
+			<key>target</key>
+			<string>4B9EC615184EB69D825B80E6</string>
+			<key>targetProxy</key>
+			<string>8AD2ECD1EA92EF9F130A657E</string>
+		</dict>
+		<key>9ABD8F279792037F3E270DBD</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BA1C3B841BA86479DCE4B7B2</string>
+				<string>2E1597EC2ED7C999E249E033</string>
+				<string>0B22CC498C55457637989E90</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>MBProgressHUD</string>
+			<key>path</key>
+			<string>MBProgressHUD</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>9B50011C1F9B4AF3CCD321C8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>Security.framework</string>
+			<key>path</key>
+			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Security.framework</string>
+			<key>sourceTree</key>
+			<string>DEVELOPER_DIR</string>
+		</dict>
+		<key>9CA1C86FBC8386204DA1B986</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>5D9165F7100554E83656EC9A</string>
+				<string>F1DE507D4C6AD161E5F84806</string>
+				<string>C9E2479AA572F72234279A75</string>
+				<string>CAEE57572BB8FF06C001F14F</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>9DACFB1659649E05EA66C8E3</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-CeliTax-WYPopoverController.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>9E112E215B6C1078AE481F4C</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>E222CFD064D90184EF4255BA</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>9EEC35AC12EB257C1DC8F58F</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>A1005B2622743AD36604CF06</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>C1DB50C484C4DBA7C4826192</string>
+			<key>remoteInfo</key>
+			<string>Pods-CeliTax-MBProgressHUD</string>
+		</dict>
+		<key>9F367136FD57D35514F077E4</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>F4A760BD623B28BD71766B9A</string>
+				<string>AC40D6FD370866B293261D2A</string>
+				<string>0B03DE9AFB129A2F80063B94</string>
+				<string>041D91E87E31F98AE531D9D4</string>
+				<string>4A3D359E74C74E864A2F81FF</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>LLSimpleCamera</string>
+			<key>path</key>
+			<string>LLSimpleCamera</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>A1005B2622743AD36604CF06</key>
 		<dict>
 			<key>attributes</key>
 			<dict>
@@ -1264,7 +2598,7 @@
 				<string>0510</string>
 			</dict>
 			<key>buildConfigurationList</key>
-			<string>E4D8D83D9C1313E24BCCCAA8</string>
+			<string>5F0049F16C8CF4D66C43351D</string>
 			<key>compatibilityVersion</key>
 			<string>Xcode 3.2</string>
 			<key>developmentRegion</key>
@@ -1278,9 +2612,9 @@
 				<string>en</string>
 			</array>
 			<key>mainGroup</key>
-			<string>34562E46A3752EF56A19652F</string>
+			<string>F5E5F124AF6AF45C6519A41F</string>
 			<key>productRefGroup</key>
-			<string>DC0A8A6F87D4B24F0A86896C</string>
+			<string>8C939772D0CCF12C90900E61</string>
 			<key>projectDirPath</key>
 			<string></string>
 			<key>projectReferences</key>
@@ -1289,30 +2623,38 @@
 			<string></string>
 			<key>targets</key>
 			<array>
-				<string>A5BB4F30D39E55220C366AFF</string>
-				<string>4227BA9571B5B47AC5644206</string>
-				<string>D88FBCC1A59E7AAF86A84087</string>
-				<string>17D2D40AA4C6ED1FEA3256AD</string>
-				<string>A0092F89DAB9451DF8190CD0</string>
-				<string>73604F17C829F137BB3D0937</string>
+				<string>15204F51910E8776351D3A91</string>
+				<string>E0216D5DFE78058F4F7A5FF9</string>
+				<string>0C69243E94D1931110ABA03B</string>
+				<string>C1DB50C484C4DBA7C4826192</string>
+				<string>A7415F63FBC22053D5B3F6C6</string>
+				<string>54981296FC16607E81DDB213</string>
+				<string>4B9EC615184EB69D825B80E6</string>
+				<string>7251C8E1C06C115DE911C0F0</string>
+				<string>1C9958C75482636CCA827131</string>
 			</array>
 		</dict>
-		<key>76E96188D7C875D76956EA05</key>
+		<key>A27B2F10101BCF394A2842F0</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>NSDate+RFC1123.h</string>
+			<string>text</string>
 			<key>path</key>
-			<string>MKNetworkKit/Categories/NSDate+RFC1123.h</string>
+			<string>Pods-CeliTax-acknowledgements.markdown</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>7755B4198C2C01630345C82B</key>
+		<key>A2908F2FE5FA04ECCCEABB54</key>
+		<dict>
+			<key>fileRef</key>
+			<string>51C472F63E70A2666E0E3D64</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>A497BAF49CC119EFD29C1B42</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -1321,371 +2663,45 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.c.objc</string>
 			<key>path</key>
-			<string>Pods-CeliTax-dummy.m</string>
+			<string>Reachability.m</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>79116783EB820D5A14020290</key>
+		<key>A7415F63FBC22053D5B3F6C6</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>nko_brightness_guide.png</string>
-			<key>path</key>
-			<string>Assets/nko_brightness_guide.png</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>7B50A82F865E72AF2AD03FAD</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
+			<key>buildConfigurationList</key>
+			<string>855FD547635054C820AFBFD4</string>
+			<key>buildPhases</key>
 			<array>
-				<string>7559636B0CB5BFDDF6443D81</string>
-				<string>56005E870504C31EB4ACBAC8</string>
+				<string>38867D8F4C90D41D04627F7F</string>
+				<string>2275D246894E38972D428F79</string>
+				<string>EEDBA0A3790DD54D12B00D91</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>2493337529CFEF122E2D572E</string>
 			</array>
 			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>7DEAE00AE9CEE5C285A6B260</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods-CeliTax-Reachability.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>7E88A19D7D4D16180DD672A2</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
+			<string>PBXNativeTarget</string>
 			<key>name</key>
-			<string>QuartzCore.framework</string>
-			<key>path</key>
-			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/QuartzCore.framework</string>
-			<key>sourceTree</key>
-			<string>DEVELOPER_DIR</string>
+			<string>Pods-CeliTax-MKNetworkKit</string>
+			<key>productName</key>
+			<string>Pods-CeliTax-MKNetworkKit</string>
+			<key>productReference</key>
+			<string>6158A9B11B726BAF9798A262</string>
+			<key>productType</key>
+			<string>com.apple.product-type.library.static</string>
 		</dict>
-		<key>80D37241365BF5EBB9EAADD6</key>
+		<key>A85BC8C1E1FB44E3C0A20ADC</key>
 		<dict>
 			<key>fileRef</key>
-			<string>A790B54C45FDDB8D226E266D</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>COMPILER_FLAGS</key>
-				<string>-DOS_OBJECT_USE_OBJC=0</string>
-			</dict>
-		</dict>
-		<key>83331D58FD2A1F7469CC915B</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>CD99E6680C71D779AD1A8F95</string>
-				<string>ECF3C02A7790243C3BB92FF3</string>
-				<string>EF9F34650DFEF73F5E894612</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Reachability</string>
-			<key>path</key>
-			<string>Reachability</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>8339CAA878FB7D4EE149426F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>Security.framework</string>
-			<key>path</key>
-			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Security.framework</string>
-			<key>sourceTree</key>
-			<string>DEVELOPER_DIR</string>
-		</dict>
-		<key>84223AB63B6F544B2A785F20</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>28A60BB3D6D8CC64F1A14087</string>
-				<string>0B63DCEF0DD7F528E305938D</string>
-				<string>E3AEAB822146FA3B55D8184F</string>
-				<string>2C53841C78B949267E7ACE1B</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>85E04D84A78EFD82071304F3</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>75C8279EF24D8BA14F27892D</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>YES</string>
-				<key>DSTROOT</key>
-				<string>/tmp/xcodeproj.dst</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>INSTALL_PATH</key>
-				<string>$(BUILT_PRODUCTS_DIR)</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>7.0</string>
-				<key>OTHER_CFLAGS</key>
-				<array>
-					<string>-DNS_BLOCK_ASSERTIONS=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>OTHER_CPLUSPLUSFLAGS</key>
-				<array>
-					<string>-DNS_BLOCK_ASSERTIONS=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>OTHER_LDFLAGS</key>
-				<string></string>
-				<key>OTHER_LIBTOOLFLAGS</key>
-				<string></string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>PUBLIC_HEADERS_FOLDER_PATH</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>SKIP_INSTALL</key>
-				<string>YES</string>
-				<key>VALIDATE_PRODUCT</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>8645ECE0C33175E1D63A3340</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>FC466FB590DA156A845BBD6E</string>
-			</array>
-			<key>isa</key>
-			<string>PBXHeadersBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>8811574C8186EBEE0FD9FC71</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>39993D84A038F8592AD1FB37</string>
-				<string>0444AA1A3FC70FE8335A0D5B</string>
-				<string>257B1CE1317B47A96FA218E2</string>
-				<string>275E717DF03F0F9ACE45459A</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>NKOColorPickerView</string>
-			<key>path</key>
-			<string>NKOColorPickerView</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>8A52494F38752399940F5019</key>
-		<dict>
-			<key>fileRef</key>
-			<string>B26225FB5BF419D936055BDF</string>
+			<string>529B00A9EB8FBF532E0BD7F8</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>8B0D0F9BFB3C73CC52E4F03C</key>
-		<dict>
-			<key>containerPortal</key>
-			<string>75F2BBC127538A268ADE4537</string>
-			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>1</string>
-			<key>remoteGlobalIDString</key>
-			<string>17D2D40AA4C6ED1FEA3256AD</string>
-			<key>remoteInfo</key>
-			<string>Pods-CeliTax-NKOColorPickerView</string>
-		</dict>
-		<key>90B1464AA5A484E12B58B01E</key>
-		<dict>
-			<key>fileRef</key>
-			<string>7278C6ED941A93EE9305054B</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>9367470A734775600EAE644B</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>B199CA0DD6F34732BEAF2A35</string>
-				<string>E690F8A57FD2285E1A5DFE5E</string>
-				<string>AD8DAE525FF7723A802F24F0</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>94762CA78EAD3CF3571A4DE2</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXTargetDependency</string>
-			<key>name</key>
-			<string>Pods-CeliTax-MBProgressHUD</string>
-			<key>target</key>
-			<string>4227BA9571B5B47AC5644206</string>
-			<key>targetProxy</key>
-			<string>B9BB593CCA979F06DE096431</string>
-		</dict>
-		<key>94D0366C6EE6F0B668DFD8BB</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>libPods-CeliTax-MBProgressHUD.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>94EBFE391720A7810B7160BE</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>E6BDF3F5CC08540F9FB1F845</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>YES</string>
-				<key>DSTROOT</key>
-				<string>/tmp/xcodeproj.dst</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>Target Support Files/Pods-CeliTax-MBProgressHUD/Pods-CeliTax-MBProgressHUD-prefix.pch</string>
-				<key>INSTALL_PATH</key>
-				<string>$(BUILT_PRODUCTS_DIR)</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>7.0</string>
-				<key>OTHER_CFLAGS</key>
-				<array>
-					<string>-DNS_BLOCK_ASSERTIONS=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>OTHER_CPLUSPLUSFLAGS</key>
-				<array>
-					<string>-DNS_BLOCK_ASSERTIONS=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>OTHER_LDFLAGS</key>
-				<string></string>
-				<key>OTHER_LIBTOOLFLAGS</key>
-				<string></string>
-				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
-				<key>PUBLIC_HEADERS_FOLDER_PATH</key>
-				<string>$(TARGET_NAME)</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>SKIP_INSTALL</key>
-				<string>YES</string>
-				<key>VALIDATE_PRODUCT</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>95E5D335F092A71ED9C3CC46</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods-CeliTax-MKNetworkKit-Private.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>978C31CB2BBE5D624DE40451</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>SystemConfiguration.framework</string>
-			<key>path</key>
-			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/SystemConfiguration.framework</string>
-			<key>sourceTree</key>
-			<string>DEVELOPER_DIR</string>
-		</dict>
-		<key>981E79E5A60017E630D3387C</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>6126BB9625D74B699961297A</string>
-				<string>94EBFE391720A7810B7160BE</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>98758F4137364A5B71FC6215</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>588DAEB582E5BAA0629AD7ED</string>
-				<string>5A0434989E5273CCFC825B93</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>987615D2CFE36FD431D6D97D</key>
+		<key>A9777AB3D376EB74D93DB34C</key>
 		<dict>
 			<key>buildSettings</key>
 			<dict>
@@ -1752,25 +2768,493 @@
 			<key>name</key>
 			<string>Debug</string>
 		</dict>
-		<key>98EBEBF2956C42891F4C159B</key>
+		<key>AA0A32590049BBEFD5912FA3</key>
 		<dict>
-			<key>children</key>
-			<array>
-				<string>B28D9654B670AE13286BED13</string>
-				<string>2FCE18DE93C303F38D514796</string>
-				<string>666FFDDEC2DC8FD0E427A878</string>
-				<string>D4A69EB0B180B624F0EE69D8</string>
-			</array>
+			<key>includeInIndex</key>
+			<string>1</string>
 			<key>isa</key>
-			<string>PBXGroup</string>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
-			<string>Support Files</string>
+			<string>CDRTranslucentSideBar.m</string>
 			<key>path</key>
-			<string>../Target Support Files/Pods-CeliTax-WYPopoverController</string>
+			<string>CDRTranslucentSideBar/CDRTranslucentSideBar/CDRTranslucentSideBar.m</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>98F621FB2AE521F4C4780AB8</key>
+		<key>AA84FB88367F9B12204DF65C</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>CoreGraphics.framework</string>
+			<key>path</key>
+			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CoreGraphics.framework</string>
+			<key>sourceTree</key>
+			<string>DEVELOPER_DIR</string>
+		</dict>
+		<key>AADA15AA4486B5DF4A4019F0</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-CeliTax.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>AB0AA03749220E45CE06BB76</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-CeliTax-CDRTranslucentSideBar-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>ABE5E97FAD49C5123F748064</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-CeliTax-NKOColorPickerView.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>AC40D6FD370866B293261D2A</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>LLSimpleCamera.m</string>
+			<key>path</key>
+			<string>LLSimpleCamera/LLSimpleCamera.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>AC8E4B79FF44F749277531F6</key>
+		<dict>
+			<key>fileRef</key>
+			<string>041D91E87E31F98AE531D9D4</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>ACF2A6D97D3DC5AA3DCB8C14</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Pods-CeliTax-NKOColorPickerView-prefix.pch</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>AD13106BEB079C53F2581A54</key>
+		<dict>
+			<key>fileRef</key>
+			<string>A497BAF49CC119EFD29C1B42</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-DOS_OBJECT_USE_OBJC=0</string>
+			</dict>
+		</dict>
+		<key>AD256E08C6D8048F633BE706</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>NSData+MKBase64.m</string>
+			<key>path</key>
+			<string>MKNetworkKit/Categories/NSData+MKBase64.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>AF1163C8B4C97CDF54FCB88F</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>DF01DEBDBBA2B2FAFFA62CD5</string>
+				<string>A85BC8C1E1FB44E3C0A20ADC</string>
+				<string>AC8E4B79FF44F749277531F6</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>AFF9915B7C2179BEFEC2AE7B</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>95F7D9092982CC5FE142C7D5</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>YES</string>
+				<key>DSTROOT</key>
+				<string>/tmp/xcodeproj.dst</string>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>Target Support Files/Pods-CeliTax-NKOColorPickerView/Pods-CeliTax-NKOColorPickerView-prefix.pch</string>
+				<key>INSTALL_PATH</key>
+				<string>$(BUILT_PRODUCTS_DIR)</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>7.0</string>
+				<key>OTHER_CFLAGS</key>
+				<array>
+					<string>-DNS_BLOCK_ASSERTIONS=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>OTHER_CPLUSPLUSFLAGS</key>
+				<array>
+					<string>-DNS_BLOCK_ASSERTIONS=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>PUBLIC_HEADERS_FOLDER_PATH</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>B053A998D3A3E94E711EA0CB</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>A1005B2622743AD36604CF06</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>7251C8E1C06C115DE911C0F0</string>
+			<key>remoteInfo</key>
+			<string>Pods-CeliTax-UIImage-ResizeMagick</string>
+		</dict>
+		<key>B1736D67F6225C8C08DC606A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>D7F92B74CF86142C357C8EAD</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B190884837C63B67A677A7D2</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C39ACEDB751966F4EE6DA672</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B32FFA86EBB6B13B17A4342A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1AE898F589A1947465FF1FD8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B46FF52B5E1163AA8138723A</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-CeliTax-MBProgressHUD.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B4B257A345F9751F47A683DD</key>
+		<dict>
+			<key>fileRef</key>
+			<string>D00F3C2C98CEE6977E953882</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B55E73AA71FB89B369170A22</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>B565CD045A12C9E8CB7A5E97</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>B565CD045A12C9E8CB7A5E97</key>
+		<dict>
+			<key>fileRef</key>
+			<string>CEB7AECE45AE9B92F1C74FA1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B60CC066658019894A8EA24A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>0D4594A017490D89BB1CC367</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B7DE0CCEC4007E10C15FED5A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>AB0AA03749220E45CE06BB76</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>B8210734437BAC22CDF9AEC8</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>E7C0CC0CD106DF0ADA2A61BB</string>
+				<string>AD13106BEB079C53F2581A54</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>BA1C3B841BA86479DCE4B7B2</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>MBProgressHUD.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BF4470705A816030EA0BCB68</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Pods-CeliTax-MKNetworkKit-prefix.pch</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C0A06E40FBEE2C34C4FAD81A</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-CeliTax-Reachability.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C0B3AD59B5A15B7B8B0A483E</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>302E19C5D93F6AA45FBE3020</string>
+			</array>
+			<key>isa</key>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>C1DB50C484C4DBA7C4826192</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>F8972210F8CA639CD8B75494</string>
+			<key>buildPhases</key>
+			<array>
+				<string>F1FBFDCC57970DD7101996D7</string>
+				<string>81E0BB7C3B1708EF13C583F0</string>
+				<string>C0B3AD59B5A15B7B8B0A483E</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-CeliTax-MBProgressHUD</string>
+			<key>productName</key>
+			<string>Pods-CeliTax-MBProgressHUD</string>
+			<key>productReference</key>
+			<string>27F64D3A76A0B8003AABA534</string>
+			<key>productType</key>
+			<string>com.apple.product-type.library.static</string>
+		</dict>
+		<key>C27C6D384EDD1193F5E08BC9</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>nko_brightness_guide.png</string>
+			<key>path</key>
+			<string>Assets/nko_brightness_guide.png</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C2C54D4DCC86469215FA4AF4</key>
+		<dict>
+			<key>fileRef</key>
+			<string>898DCA8E1A55B00862D1C669</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>C39ACEDB751966F4EE6DA672</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-CeliTax-MBProgressHUD-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C44B3C80150439C2CFB2B9F6</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>UIImageView+MKNetworkKitAdditions.m</string>
+			<key>path</key>
+			<string>MKNetworkKit/Categories/UIImageView+MKNetworkKitAdditions.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C55983F5E3DBE304DADBDEF5</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-CeliTax-LLSimpleCamera-Private.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C60910E021B8E82AC3019332</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C44B3C80150439C2CFB2B9F6</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-DOS_OBJECT_USE_OBJC=0</string>
+			</dict>
+		</dict>
+		<key>C68FF259AE07F3C280C92996</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>CFNetwork.framework</string>
+			<key>path</key>
+			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CFNetwork.framework</string>
+			<key>sourceTree</key>
+			<string>DEVELOPER_DIR</string>
+		</dict>
+		<key>C820E1911FB5E499606A371E</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>DF3D79784D76C08BA040E3F8</string>
+				<string>21687B310F7F9A1F89BA0E61</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>C84849D20386E4C66CBA221B</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>UIImage+ResizeMagick.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C8EADDBD8C6B30FA66C9B1C9</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -1779,16 +3263,162 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.c.h</string>
 			<key>name</key>
-			<string>MKNetworkKit.h</string>
+			<string>NSDate+RFC1123.h</string>
 			<key>path</key>
-			<string>MKNetworkKit/MKNetworkKit.h</string>
+			<string>MKNetworkKit/Categories/NSDate+RFC1123.h</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>9A75D40287CDE6A667A52F8F</key>
+		<key>C9E2479AA572F72234279A75</key>
+		<dict>
+			<key>fileRef</key>
+			<string>53E3A250775ECADF184B2EA1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>CA0AAE4C20BCA5A3099A5E58</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>5F43C64440AF714CC4BA74E2</string>
+				<string>17C40DC85FE601E1B3BF6388</string>
+				<string>AB0AA03749220E45CE06BB76</string>
+				<string>E5A110C2A5147B9074AFFEB2</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Support Files</string>
+			<key>path</key>
+			<string>../Target Support Files/Pods-CeliTax-CDRTranslucentSideBar</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>CACE61E3D4F8261AE0C4B4C9</key>
+		<dict>
+			<key>fileRef</key>
+			<string>09C413E03EF4995D54BD6F3B</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-DOS_OBJECT_USE_OBJC=0</string>
+			</dict>
+		</dict>
+		<key>CAEE57572BB8FF06C001F14F</key>
+		<dict>
+			<key>fileRef</key>
+			<string>4A1681EA26002273DAD76BC0</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>CB477CE7D920BA8098829271</key>
+		<dict>
+			<key>fileRef</key>
+			<string>4983258E862764726CC83111</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>CB484BC534A94BE465BDB6D9</key>
+		<dict>
+			<key>fileRef</key>
+			<string>0277ED677C39E6255002F554</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>CD38E778B1029C62ADAEC2A3</key>
+		<dict>
+			<key>fileRef</key>
+			<string>C68FF259AE07F3C280C92996</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>CEAD96E2E01C083CA07CA6D5</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>Pods-CeliTax-NKOColorPickerView</string>
+			<key>target</key>
+			<string>54981296FC16607E81DDB213</string>
+			<key>targetProxy</key>
+			<string>EE82E07EF3483056B19DBAAE</string>
+		</dict>
+		<key>CEB7AECE45AE9B92F1C74FA1</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>Foundation.framework</string>
+			<key>path</key>
+			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Foundation.framework</string>
+			<key>sourceTree</key>
+			<string>DEVELOPER_DIR</string>
+		</dict>
+		<key>CF8263A9A3605A1F50243573</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-CeliTax-UIImage-ResizeMagick-Private.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>D00F3C2C98CEE6977E953882</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-CeliTax-MKNetworkKit-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>D04032B00E06DBCBF0E9271A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>E99E664DE28A30A01C3D27FD</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>D1882480F40C8811DD8C0E7B</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>Pods-CeliTax-UIImage-ResizeMagick</string>
+			<key>target</key>
+			<string>7251C8E1C06C115DE911C0F0</string>
+			<key>targetProxy</key>
+			<string>B053A998D3A3E94E711EA0CB</string>
+		</dict>
+		<key>D231B7925D9C62FE3FB90753</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>nko_brightness_guide@2x.png</string>
+			<key>path</key>
+			<string>Assets/nko_brightness_guide@2x.png</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>D2BBC1E6D6A8DAE052EC89B2</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>95E5D335F092A71ED9C3CC46</string>
+			<string>17C40DC85FE601E1B3BF6388</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ALWAYS_SEARCH_USER_PATHS</key>
@@ -1804,7 +3434,7 @@
 				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
 				<string>YES</string>
 				<key>GCC_PREFIX_HEADER</key>
-				<string>Target Support Files/Pods-CeliTax-MKNetworkKit/Pods-CeliTax-MKNetworkKit-prefix.pch</string>
+				<string>Target Support Files/Pods-CeliTax-CDRTranslucentSideBar/Pods-CeliTax-CDRTranslucentSideBar-prefix.pch</string>
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
 				<array>
 					<string>DEBUG=1</string>
@@ -1834,31 +3464,70 @@
 			<key>name</key>
 			<string>Debug</string>
 		</dict>
-		<key>9BA68CB4183E1CA0EE1B0DA4</key>
+		<key>D2DA1913CBB34565298D7BFD</key>
 		<dict>
-			<key>children</key>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
 			<array>
-				<string>1DE8712C289D0BEBC6800AC9</string>
-				<string>A7C320771238B68548D9E461</string>
-				<string>8811574C8186EBEE0FD9FC71</string>
-				<string>83331D58FD2A1F7469CC915B</string>
-				<string>45790FF75790DE876307D5B5</string>
+				<string>D6803DF11F8C6695735AB13D</string>
+				<string>EE8164077242B215D9118E23</string>
+				<string>44B8430BA0DF9FEF79985F52</string>
+				<string>71108B2387B6D5BE91E1ABD0</string>
 			</array>
 			<key>isa</key>
-			<string>PBXGroup</string>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>D34586D28C23F7E361F65160</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-CeliTax.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>D418510FF98F1B59D4A8B77E</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
 			<key>name</key>
-			<string>Pods</string>
+			<string>UIAlertView+MKNetworkKitAdditions.m</string>
+			<key>path</key>
+			<string>MKNetworkKit/Categories/UIAlertView+MKNetworkKitAdditions.m</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>9BB20CC48639D3C581418432</key>
+		<key>D5004EE088F801E2B763F4CF</key>
 		<dict>
 			<key>fileRef</key>
-			<string>C979CC43232FAD831FB40693</string>
+			<string>17A37AA15DD29A7CD626FB4E</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>COMPILER_FLAGS</key>
+				<string>-DOS_OBJECT_USE_OBJC=0</string>
+			</dict>
+		</dict>
+		<key>D6803DF11F8C6695735AB13D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>AA84FB88367F9B12204DF65C</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>9C3B724C3E3632D632DAF277</key>
+		<key>D7F92B74CF86142C357C8EAD</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -1873,310 +3542,40 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>9C52E8BD17E85BC38716DD4F</key>
+		<key>D82A35CB08F8FD1BD8A341D8</key>
 		<dict>
 			<key>fileRef</key>
-			<string>F77363E70F09ABF865B5E692</string>
+			<string>E3287CD437B5BBE334E3756C</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>9F63301263E7DB1F04FB697B</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>Pods-CeliTax-MBProgressHUD-prefix.pch</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>A0092F89DAB9451DF8190CD0</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>47084D2CB387941F0D660D68</string>
-			<key>buildPhases</key>
-			<array>
-				<string>E2199AEC666920CC1849AF5E</string>
-				<string>7B50A82F865E72AF2AD03FAD</string>
-				<string>8645ECE0C33175E1D63A3340</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>Pods-CeliTax-Reachability</string>
-			<key>productName</key>
-			<string>Pods-CeliTax-Reachability</string>
-			<key>productReference</key>
-			<string>666352D1234932B4AB1DC532</string>
-			<key>productType</key>
-			<string>com.apple.product-type.library.static</string>
-		</dict>
-		<key>A3192EBEB7019BD54CE3649A</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>NSString+MKNetworkKitAdditions.m</string>
-			<key>path</key>
-			<string>MKNetworkKit/Categories/NSString+MKNetworkKitAdditions.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>A5BB4F30D39E55220C366AFF</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>E872CFB337CD1B612BA10D39</string>
-			<key>buildPhases</key>
-			<array>
-				<string>AA0168DA9A519C984A535340</string>
-				<string>2D51B3C41D2D025588354C7F</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array>
-				<string>94762CA78EAD3CF3571A4DE2</string>
-				<string>1205FC35B76E6A136267D37E</string>
-				<string>F0BBC37C1247012F92D1A18B</string>
-				<string>B143242F233A03F95A171897</string>
-				<string>5628497FA07CF4531BD7810B</string>
-			</array>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>Pods-CeliTax</string>
-			<key>productName</key>
-			<string>Pods-CeliTax</string>
-			<key>productReference</key>
-			<string>B0189003567872ECF34ADD4B</string>
-			<key>productType</key>
-			<string>com.apple.product-type.library.static</string>
-		</dict>
-		<key>A790B54C45FDDB8D226E266D</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>NSData+MKBase64.m</string>
-			<key>path</key>
-			<string>MKNetworkKit/Categories/NSData+MKBase64.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>A7C320771238B68548D9E461</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>2D97C2A484C1C4FCC2D97E38</string>
-				<string>E5430B0E9278AD29ED60DC11</string>
-				<string>98F621FB2AE521F4C4780AB8</string>
-				<string>B26225FB5BF419D936055BDF</string>
-				<string>E6D8EE8CA273A99ED7624CFF</string>
-				<string>F77363E70F09ABF865B5E692</string>
-				<string>A790B54C45FDDB8D226E266D</string>
-				<string>76E96188D7C875D76956EA05</string>
-				<string>1A0F62D6E4EF76A9752947A8</string>
-				<string>9C3B724C3E3632D632DAF277</string>
-				<string>2A6380711961199052D9983A</string>
-				<string>B5BDF8EB631B33ADD24183CF</string>
-				<string>A3192EBEB7019BD54CE3649A</string>
-				<string>17B8EEAE8C0839DA0D08AA44</string>
-				<string>06C44B79BB00C21E6614DFFC</string>
-				<string>C979CC43232FAD831FB40693</string>
-				<string>1F2EDF6D55CCE256CE047663</string>
-				<string>CB3BA6BCC00BEE30C62B6AAA</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>MKNetworkKit</string>
-			<key>path</key>
-			<string>MKNetworkKit</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>A86F8ABDB6421A001EF91E95</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>9A75D40287CDE6A667A52F8F</string>
-				<string>E7D3A2437E6BF6F63CB2C54E</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>A878255DCF2D183090FDBED0</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>EABFC87F592173A8EED13C91</string>
-				<string>FB79B2D90F8833FA3744047C</string>
-				<string>EC938B57AC3E07FF4288461F</string>
-				<string>7E88A19D7D4D16180DD672A2</string>
-				<string>8339CAA878FB7D4EE149426F</string>
-				<string>978C31CB2BBE5D624DE40451</string>
-				<string>567D1D304C48B06413CB683D</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>iOS</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AA0168DA9A519C984A535340</key>
+		<key>D869708F45601DC4A5EFA1CD</key>
 		<dict>
 			<key>buildActionMask</key>
 			<string>2147483647</string>
 			<key>files</key>
 			<array>
-				<string>C29D47C096FDE4D0F847059E</string>
+				<string>C2C54D4DCC86469215FA4AF4</string>
 			</array>
 			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
+			<string>PBXHeadersBuildPhase</string>
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
 		</dict>
-		<key>AA0D4F5DEEDA59D2E1DF8D11</key>
-		<dict>
-			<key>fileRef</key>
-			<string>0FFD293245ED826CC6618983</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>ABA57A82E0E2D98D3FDF42F7</key>
+		<key>DA11351DD7D5404E31AFA933</key>
 		<dict>
 			<key>containerPortal</key>
-			<string>75F2BBC127538A268ADE4537</string>
+			<string>A1005B2622743AD36604CF06</string>
 			<key>isa</key>
 			<string>PBXContainerItemProxy</string>
 			<key>proxyType</key>
 			<string>1</string>
 			<key>remoteGlobalIDString</key>
-			<string>A0092F89DAB9451DF8190CD0</string>
+			<string>1C9958C75482636CCA827131</string>
 			<key>remoteInfo</key>
-			<string>Pods-CeliTax-Reachability</string>
+			<string>Pods-CeliTax-WYPopoverController</string>
 		</dict>
-		<key>ABD06F794392F7E25D14E0E0</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>41C977C7B679FD0247ED0663</string>
-				<string>AA0D4F5DEEDA59D2E1DF8D11</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>AC62068B4F50C19CD3AC8B4A</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>WYPopoverController.m</string>
-			<key>path</key>
-			<string>WYPopoverController/WYPopoverController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>AD8DAE525FF7723A802F24F0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>8339CAA878FB7D4EE149426F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>B0189003567872ECF34ADD4B</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>libPods-CeliTax.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>B0FB839277F65552DC396185</key>
-		<dict>
-			<key>fileRef</key>
-			<string>76E96188D7C875D76956EA05</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>B12455FC670C6CD8F7B27132</key>
-		<dict>
-			<key>containerPortal</key>
-			<string>75F2BBC127538A268ADE4537</string>
-			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>1</string>
-			<key>remoteGlobalIDString</key>
-			<string>D88FBCC1A59E7AAF86A84087</string>
-			<key>remoteInfo</key>
-			<string>Pods-CeliTax-MKNetworkKit</string>
-		</dict>
-		<key>B143242F233A03F95A171897</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXTargetDependency</string>
-			<key>name</key>
-			<string>Pods-CeliTax-Reachability</string>
-			<key>target</key>
-			<string>A0092F89DAB9451DF8190CD0</string>
-			<key>targetProxy</key>
-			<string>CFE24E6A659B6D8AF111D607</string>
-		</dict>
-		<key>B16EA1F2BC390C21C1C02767</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods-CeliTax-MBProgressHUD.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B199CA0DD6F34732BEAF2A35</key>
-		<dict>
-			<key>fileRef</key>
-			<string>EABFC87F592173A8EED13C91</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>B26225FB5BF419D936055BDF</key>
+		<key>DA74783C3923D427AB300E67</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -2185,214 +3584,42 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.c.h</string>
 			<key>name</key>
-			<string>MKNetworkOperation.h</string>
+			<string>WYStoryboardPopoverSegue.h</string>
 			<key>path</key>
-			<string>MKNetworkKit/MKNetworkOperation.h</string>
+			<string>WYPopoverController/WYStoryboardPopoverSegue.h</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>B28D9654B670AE13286BED13</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods-CeliTax-WYPopoverController.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B3D90EADE285C92108D8CC3F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>688C0161653F157B378E861E</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>B4F72FF7AA1C1309D4216CA5</key>
-		<dict>
-			<key>fileRef</key>
-			<string>CCCDF6C4EECFE36A2B6FCA63</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>B5BDF8EB631B33ADD24183CF</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>NSString+MKNetworkKitAdditions.h</string>
-			<key>path</key>
-			<string>MKNetworkKit/Categories/NSString+MKNetworkKitAdditions.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B6ED84AE31C04FDB6F46BA22</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>libPods-CeliTax-WYPopoverController.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>B743A1389984296C3E5C3912</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXTargetDependency</string>
-			<key>name</key>
-			<string>Pods-CeliTax-Reachability</string>
-			<key>target</key>
-			<string>A0092F89DAB9451DF8190CD0</string>
-			<key>targetProxy</key>
-			<string>ABA57A82E0E2D98D3FDF42F7</string>
-		</dict>
-		<key>B8D12A54741784612B85B8C7</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods-CeliTax-MKNetworkKit.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>B9BB593CCA979F06DE096431</key>
-		<dict>
-			<key>containerPortal</key>
-			<string>75F2BBC127538A268ADE4537</string>
-			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>1</string>
-			<key>remoteGlobalIDString</key>
-			<string>4227BA9571B5B47AC5644206</string>
-			<key>remoteInfo</key>
-			<string>Pods-CeliTax-MBProgressHUD</string>
-		</dict>
-		<key>C009AACDD1240F20960185A2</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.script.sh</string>
-			<key>path</key>
-			<string>Pods-CeliTax-resources.sh</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>C29D47C096FDE4D0F847059E</key>
-		<dict>
-			<key>fileRef</key>
-			<string>7755B4198C2C01630345C82B</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>C5693A1BE2CAA132CC708057</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods-CeliTax-NKOColorPickerView.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>C658F0C044971567B2D78654</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>MBProgressHUD.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>C805A115502D87F79F93F17B</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>libPods-CeliTax-MKNetworkKit.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>C979CC43232FAD831FB40693</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>UIImageView+MKNetworkKitAdditions.h</string>
-			<key>path</key>
-			<string>MKNetworkKit/Categories/UIImageView+MKNetworkKitAdditions.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>CA76434D10F1A7D843F4B553</key>
-		<dict>
-			<key>fileRef</key>
-			<string>EC938B57AC3E07FF4288461F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>CB1F3BCB9491D5DF71EABF57</key>
+		<key>DCDF1C3107C891ECA0DD8883</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>5B4B9DC182BA839D007830BA</string>
+			<string>17C40DC85FE601E1B3BF6388</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ALWAYS_SEARCH_USER_PATHS</key>
 				<string>NO</string>
 				<key>COPY_PHASE_STRIP</key>
-				<string>NO</string>
+				<string>YES</string>
 				<key>DSTROOT</key>
 				<string>/tmp/xcodeproj.dst</string>
-				<key>GCC_DYNAMIC_NO_PIC</key>
-				<string>NO</string>
-				<key>GCC_OPTIMIZATION_LEVEL</key>
-				<string>0</string>
 				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
 				<string>YES</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>DEBUG=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
-				<string>NO</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>Target Support Files/Pods-CeliTax-CDRTranslucentSideBar/Pods-CeliTax-CDRTranslucentSideBar-prefix.pch</string>
 				<key>INSTALL_PATH</key>
 				<string>$(BUILT_PRODUCTS_DIR)</string>
 				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
 				<string>7.0</string>
+				<key>OTHER_CFLAGS</key>
+				<array>
+					<string>-DNS_BLOCK_ASSERTIONS=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>OTHER_CPLUSPLUSFLAGS</key>
+				<array>
+					<string>-DNS_BLOCK_ASSERTIONS=1</string>
+					<string>$(inherited)</string>
+				</array>
 				<key>OTHER_LDFLAGS</key>
 				<string></string>
 				<key>OTHER_LIBTOOLFLAGS</key>
@@ -2405,20 +3632,22 @@
 				<string>iphoneos</string>
 				<key>SKIP_INSTALL</key>
 				<string>YES</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
 			</dict>
 			<key>isa</key>
 			<string>XCBuildConfiguration</string>
 			<key>name</key>
-			<string>Debug</string>
+			<string>Release</string>
 		</dict>
-		<key>CB3BA6BCC00BEE30C62B6AAA</key>
+		<key>DE982EFE7D2CF98E21F56170</key>
 		<dict>
 			<key>children</key>
 			<array>
-				<string>B8D12A54741784612B85B8C7</string>
-				<string>95E5D335F092A71ED9C3CC46</string>
-				<string>CCCDF6C4EECFE36A2B6FCA63</string>
-				<string>E5F596D7001FAFF2A7B52BA5</string>
+				<string>30878ADBC8D26A7E8A20B5D5</string>
+				<string>319167810D7338C6FB8EBDA3</string>
+				<string>D00F3C2C98CEE6977E953882</string>
+				<string>BF4470705A816030EA0BCB68</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -2429,32 +3658,118 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>CC4B9F9D03EFF3A5980028E7</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>B16EA1F2BC390C21C1C02767</string>
-				<string>E6BDF3F5CC08540F9FB1F845</string>
-				<string>0FFD293245ED826CC6618983</string>
-				<string>9F63301263E7DB1F04FB697B</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Support Files</string>
-			<key>path</key>
-			<string>../Target Support Files/Pods-CeliTax-MBProgressHUD</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>CC93B9F6766B8F09BDDE7A6C</key>
+		<key>DF01DEBDBBA2B2FAFFA62CD5</key>
 		<dict>
 			<key>fileRef</key>
-			<string>B5BDF8EB631B33ADD24183CF</string>
+			<string>AC40D6FD370866B293261D2A</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>CCCDF6C4EECFE36A2B6FCA63</key>
+		<key>DF3D79784D76C08BA040E3F8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>FF4658B85AF7F60F10095A53</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>DF9CE641B1CFCD95C8FC52BE</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>MKNetworkKit.h</string>
+			<key>path</key>
+			<string>MKNetworkKit/MKNetworkKit.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>E0216D5DFE78058F4F7A5FF9</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>F6E1B6EF5D44F951D2644558</string>
+			<key>buildPhases</key>
+			<array>
+				<string>35DF62CE2F771979079E5EA3</string>
+				<string>833C0AE09946606CE491E301</string>
+				<string>65B792526E3EC341722531DA</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-CeliTax-CDRTranslucentSideBar</string>
+			<key>productName</key>
+			<string>Pods-CeliTax-CDRTranslucentSideBar</string>
+			<key>productReference</key>
+			<string>25B798AAAA6494022F06E783</string>
+			<key>productType</key>
+			<string>com.apple.product-type.library.static</string>
+		</dict>
+		<key>E04B5915043B2BEDB94596A7</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-CeliTax-Reachability.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>E06D33B88BA79CF32C0A3D99</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Pods-CeliTax-LLSimpleCamera-prefix.pch</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>E1EAD5BB658D03DCC77B08F9</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>Pods-CeliTax-MKNetworkKit</string>
+			<key>target</key>
+			<string>A7415F63FBC22053D5B3F6C6</string>
+			<key>targetProxy</key>
+			<string>ECC73C7125A78C9086EFEC68</string>
+		</dict>
+		<key>E222CFD064D90184EF4255BA</key>
+		<dict>
+			<key>fileRef</key>
+			<string>CEB7AECE45AE9B92F1C74FA1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>E2BA672245B86CA43CC39D58</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>A1005B2622743AD36604CF06</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>0C69243E94D1931110ABA03B</string>
+			<key>remoteInfo</key>
+			<string>Pods-CeliTax-LLSimpleCamera</string>
+		</dict>
+		<key>E3287CD437B5BBE334E3756C</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -2463,25 +3778,11 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.c.objc</string>
 			<key>path</key>
-			<string>Pods-CeliTax-MKNetworkKit-dummy.m</string>
+			<string>Pods-CeliTax-WYPopoverController-dummy.m</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>CD83D6FFACB59D39E2B8FE01</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>F9860E914A8F780279256053</string>
-				<string>CA76434D10F1A7D843F4B553</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>CD99E6680C71D779AD1A8F95</key>
+		<key>E5A110C2A5147B9074AFFEB2</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -2490,86 +3791,136 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.c.h</string>
 			<key>path</key>
-			<string>Reachability.h</string>
+			<string>Pods-CeliTax-CDRTranslucentSideBar-prefix.pch</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>CDD0498487E969E8E8B9B626</key>
+		<key>E7BEEA0D9D293DD35CC86B93</key>
 		<dict>
-			<key>fileRef</key>
-			<string>06C44B79BB00C21E6614DFFC</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>COMPILER_FLAGS</key>
-				<string>-DOS_OBJECT_USE_OBJC=0</string>
-			</dict>
-		</dict>
-		<key>CDF8DC6D6C3BD8DA9877E116</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
+			<key>children</key>
 			<array>
-				<string>E5118893D3B41BB507C6DD5F</string>
-				<string>56DEEA83FCF064A0F9D5E702</string>
-				<string>80D37241365BF5EBB9EAADD6</string>
-				<string>0505D1966C8AB17EC8C2CD3B</string>
-				<string>1D3BB79601F443E698AD96EC</string>
-				<string>F90D3E054D3AF0F6D13523C6</string>
-				<string>B4F72FF7AA1C1309D4216CA5</string>
-				<string>CDD0498487E969E8E8B9B626</string>
-				<string>622CA96F864B9D23C5EC8E58</string>
+				<string>7FC738C97C5A09E657E8051A</string>
+				<string>8873FF29EA526E7A905B9FFB</string>
+				<string>DF9CE641B1CFCD95C8FC52BE</string>
+				<string>51C472F63E70A2666E0E3D64</string>
+				<string>77611DF6F9BDA79E452C29F4</string>
+				<string>6797970D5B73133AF0664F82</string>
+				<string>AD256E08C6D8048F633BE706</string>
+				<string>C8EADDBD8C6B30FA66C9B1C9</string>
+				<string>6983A6289FCE608F2EA543BC</string>
+				<string>D7F92B74CF86142C357C8EAD</string>
+				<string>1849897A8DAAC368585E38B2</string>
+				<string>7FC5EDB61AB268075B72CE1D</string>
+				<string>09C413E03EF4995D54BD6F3B</string>
+				<string>E99E664DE28A30A01C3D27FD</string>
+				<string>D418510FF98F1B59D4A8B77E</string>
+				<string>58A32C7761B3FC088351AE92</string>
+				<string>C44B3C80150439C2CFB2B9F6</string>
+				<string>DE982EFE7D2CF98E21F56170</string>
 			</array>
 			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>MKNetworkKit</string>
+			<key>path</key>
+			<string>MKNetworkKit</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
-		<key>CFE24E6A659B6D8AF111D607</key>
+		<key>E7C006DDC0BE6377221A3A59</key>
+		<dict>
+			<key>fileRef</key>
+			<string>AA0A32590049BBEFD5912FA3</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>E7C0CC0CD106DF0ADA2A61BB</key>
+		<dict>
+			<key>fileRef</key>
+			<string>495FE0B877E118E2AFA2026D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>E99E664DE28A30A01C3D27FD</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>UIAlertView+MKNetworkKitAdditions.h</string>
+			<key>path</key>
+			<string>MKNetworkKit/Categories/UIAlertView+MKNetworkKitAdditions.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>EABD301D853E0F9DCF163F6A</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-CeliTax-NKOColorPickerView.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>ECC73C7125A78C9086EFEC68</key>
 		<dict>
 			<key>containerPortal</key>
-			<string>75F2BBC127538A268ADE4537</string>
+			<string>A1005B2622743AD36604CF06</string>
 			<key>isa</key>
 			<string>PBXContainerItemProxy</string>
 			<key>proxyType</key>
 			<string>1</string>
 			<key>remoteGlobalIDString</key>
-			<string>A0092F89DAB9451DF8190CD0</string>
+			<string>A7415F63FBC22053D5B3F6C6</string>
 			<key>remoteInfo</key>
-			<string>Pods-CeliTax-Reachability</string>
+			<string>Pods-CeliTax-MKNetworkKit</string>
 		</dict>
-		<key>D09D113FBF813361B8FBE23F</key>
+		<key>ECF7C24CFBE9F561C8C74755</key>
 		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
+			<key>children</key>
 			<array>
-				<string>5222A37A1AFBC74E45DDC775</string>
-				<string>4D92B0D70F12297671F95CEF</string>
-				<string>90B1464AA5A484E12B58B01E</string>
+				<string>22506950B39FA3BE774AE057</string>
+				<string>CF8263A9A3605A1F50243573</string>
+				<string>FF4658B85AF7F60F10095A53</string>
+				<string>1BE1AB2B074F207000038538</string>
 			</array>
 			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Support Files</string>
+			<key>path</key>
+			<string>../Target Support Files/Pods-CeliTax-UIImage-ResizeMagick</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
-		<key>D3192EDB284DB6DA632DF0CE</key>
+		<key>ED407A6D258B9141CCDDCE11</key>
 		<dict>
 			<key>fileRef</key>
-			<string>71970E84ACB7C11EB9D51B22</string>
+			<string>8B0F86774EDCAF55BFC26F1B</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>D46B6D64AF560BC5C696EE49</key>
+		<key>EDA1628B2078B7557E5EFC8C</key>
 		<dict>
-			<key>fileRef</key>
-			<string>567D1D304C48B06413CB683D</string>
+			<key>children</key>
+			<array>
+				<string>919EB0D3A62A414120416CB5</string>
+			</array>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Targets Support Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
-		<key>D4A69EB0B180B624F0EE69D8</key>
+		<key>EDD6A31AB772EB55BA3610E3</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -2578,14 +3929,109 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.c.h</string>
 			<key>path</key>
-			<string>Pods-CeliTax-WYPopoverController-prefix.pch</string>
+			<string>UIImage+ResizeMagick.h</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>D5938A3C6302FEC858E6EAC4</key>
+		<key>EE7325AED9C6580B6EDB22E7</key>
+		<dict>
+			<key>fileRef</key>
+			<string>0B03DE9AFB129A2F80063B94</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>EE8164077242B215D9118E23</key>
+		<dict>
+			<key>fileRef</key>
+			<string>CEB7AECE45AE9B92F1C74FA1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>EE82E07EF3483056B19DBAAE</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>A1005B2622743AD36604CF06</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>54981296FC16607E81DDB213</string>
+			<key>remoteInfo</key>
+			<string>Pods-CeliTax-NKOColorPickerView</string>
+		</dict>
+		<key>EED37DBF77919DE8126B1F0B</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-CeliTax-WYPopoverController-Private.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>EEDBA0A3790DD54D12B00D91</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>674CD298881DDEA4BE91F5CA</string>
+				<string>30769D895BBCCDB7819BBC63</string>
+				<string>A2908F2FE5FA04ECCCEABB54</string>
+				<string>3856020CEA505E7C57B0CC66</string>
+				<string>FA32793EF4A62D22B957C2F4</string>
+				<string>B1736D67F6225C8C08DC606A</string>
+				<string>74C07A44C0EB816E759A9456</string>
+				<string>D04032B00E06DBCBF0E9271A</string>
+				<string>29193B8B1BFA68CD51AE6A11</string>
+			</array>
+			<key>isa</key>
+			<string>PBXHeadersBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>F0A99A32A0D4888CB2FC6471</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-CeliTax-resources.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F1DE507D4C6AD161E5F84806</key>
+		<dict>
+			<key>fileRef</key>
+			<string>CEB7AECE45AE9B92F1C74FA1</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>F1FBFDCC57970DD7101996D7</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>423F752A6C30FE10966A341A</string>
+				<string>B190884837C63B67A677A7D2</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>F2E62106D2CF3BB54B372186</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>3E4DA9989E8BE826015381B6</string>
+			<string>95F7D9092982CC5FE142C7D5</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ALWAYS_SEARCH_USER_PATHS</key>
@@ -2631,265 +4077,50 @@
 			<key>name</key>
 			<string>Debug</string>
 		</dict>
-		<key>D84A65A005849389079C919B</key>
+		<key>F3A794BBB7A6B7D08D33445E</key>
 		<dict>
-			<key>fileRef</key>
-			<string>39993D84A038F8592AD1FB37</string>
+			<key>includeInIndex</key>
+			<string>1</string>
 			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D88FBCC1A59E7AAF86A84087</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>A86F8ABDB6421A001EF91E95</string>
-			<key>buildPhases</key>
-			<array>
-				<string>CDF8DC6D6C3BD8DA9877E116</string>
-				<string>9367470A734775600EAE644B</string>
-				<string>E2EF95A2C688FD4203507A63</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array>
-				<string>B743A1389984296C3E5C3912</string>
-			</array>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
+			<string>PBXFileReference</string>
 			<key>name</key>
-			<string>Pods-CeliTax-MKNetworkKit</string>
-			<key>productName</key>
-			<string>Pods-CeliTax-MKNetworkKit</string>
-			<key>productReference</key>
-			<string>C805A115502D87F79F93F17B</string>
-			<key>productType</key>
-			<string>com.apple.product-type.library.static</string>
-		</dict>
-		<key>DBDF277CF749A4AE64A9986C</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
+			<string>nko_colormap.png</string>
 			<key>path</key>
-			<string>Pods-CeliTax-environment.h</string>
+			<string>Assets/nko_colormap.png</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>DC0A8A6F87D4B24F0A86896C</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>B0189003567872ECF34ADD4B</string>
-				<string>94D0366C6EE6F0B668DFD8BB</string>
-				<string>C805A115502D87F79F93F17B</string>
-				<string>5D72AF7393DD8E2B80AF1812</string>
-				<string>666352D1234932B4AB1DC532</string>
-				<string>B6ED84AE31C04FDB6F46BA22</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Products</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DDB83A1DD25A7B4E24522641</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>Pods-CeliTax-NKOColorPickerView-prefix.pch</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>DEED69FBDD48C713A20CC5B8</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>MBProgressHUD.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>E2199AEC666920CC1849AF5E</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>B3D90EADE285C92108D8CC3F</string>
-				<string>470A01B8808AA2872313B247</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>E262EB11DB0E2DB23912F17A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>7E88A19D7D4D16180DD672A2</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>E2EF95A2C688FD4203507A63</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>4027A06754C0BDD3BE5473C0</string>
-				<string>FC0818899C6ADE31F1CA9B6F</string>
-				<string>8A52494F38752399940F5019</string>
-				<string>9C52E8BD17E85BC38716DD4F</string>
-				<string>B0FB839277F65552DC396185</string>
-				<string>55611D9DAF0020819F115402</string>
-				<string>CC93B9F6766B8F09BDDE7A6C</string>
-				<string>320FEC1B5FC282BCB1FE40B0</string>
-				<string>9BB20CC48639D3C581418432</string>
-			</array>
-			<key>isa</key>
-			<string>PBXHeadersBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>E3AEAB822146FA3B55D8184F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>7E88A19D7D4D16180DD672A2</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>E4D8D83D9C1313E24BCCCAA8</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>987615D2CFE36FD431D6D97D</string>
-				<string>6AFE5240D5D0CF69EAAE2811</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>E5118893D3B41BB507C6DD5F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>E5430B0E9278AD29ED60DC11</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>COMPILER_FLAGS</key>
-				<string>-DOS_OBJECT_USE_OBJC=0</string>
-			</dict>
-		</dict>
-		<key>E5430B0E9278AD29ED60DC11</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>MKNetworkEngine.m</string>
-			<key>path</key>
-			<string>MKNetworkKit/MKNetworkEngine.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>E5F596D7001FAFF2A7B52BA5</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>Pods-CeliTax-MKNetworkKit-prefix.pch</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>E690F8A57FD2285E1A5DFE5E</key>
-		<dict>
-			<key>fileRef</key>
-			<string>EC938B57AC3E07FF4288461F</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>E6BDF3F5CC08540F9FB1F845</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods-CeliTax-MBProgressHUD-Private.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>E6D8EE8CA273A99ED7624CFF</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>MKNetworkOperation.m</string>
-			<key>path</key>
-			<string>MKNetworkKit/MKNetworkOperation.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>E7D3A2437E6BF6F63CB2C54E</key>
+		<key>F3AECEC9DDF1C7A6C4244742</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>95E5D335F092A71ED9C3CC46</string>
+			<string>0BB09A68FE25776EB3E17D1F</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ALWAYS_SEARCH_USER_PATHS</key>
 				<string>NO</string>
 				<key>COPY_PHASE_STRIP</key>
-				<string>YES</string>
+				<string>NO</string>
 				<key>DSTROOT</key>
 				<string>/tmp/xcodeproj.dst</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
 				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
 				<string>YES</string>
 				<key>GCC_PREFIX_HEADER</key>
-				<string>Target Support Files/Pods-CeliTax-MKNetworkKit/Pods-CeliTax-MKNetworkKit-prefix.pch</string>
+				<string>Target Support Files/Pods-CeliTax-MBProgressHUD/Pods-CeliTax-MBProgressHUD-prefix.pch</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
+				<string>NO</string>
 				<key>INSTALL_PATH</key>
 				<string>$(BUILT_PRODUCTS_DIR)</string>
 				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
 				<string>7.0</string>
-				<key>OTHER_CFLAGS</key>
-				<array>
-					<string>-DNS_BLOCK_ASSERTIONS=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>OTHER_CPLUSPLUSFLAGS</key>
-				<array>
-					<string>-DNS_BLOCK_ASSERTIONS=1</string>
-					<string>$(inherited)</string>
-				</array>
 				<key>OTHER_LDFLAGS</key>
 				<string></string>
 				<key>OTHER_LIBTOOLFLAGS</key>
@@ -2902,157 +4133,30 @@
 				<string>iphoneos</string>
 				<key>SKIP_INSTALL</key>
 				<string>YES</string>
-				<key>VALIDATE_PRODUCT</key>
-				<string>YES</string>
 			</dict>
 			<key>isa</key>
 			<string>XCBuildConfiguration</string>
 			<key>name</key>
-			<string>Release</string>
+			<string>Debug</string>
 		</dict>
-		<key>E872CFB337CD1B612BA10D39</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>CB1F3BCB9491D5DF71EABF57</string>
-				<string>85E04D84A78EFD82071304F3</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>EABFC87F592173A8EED13C91</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>CFNetwork.framework</string>
-			<key>path</key>
-			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CFNetwork.framework</string>
-			<key>sourceTree</key>
-			<string>DEVELOPER_DIR</string>
-		</dict>
-		<key>EB7D0AD6CB2D48B0A604309E</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>nko_brightness_guide@2x.png</string>
-			<key>path</key>
-			<string>Assets/nko_brightness_guide@2x.png</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>EC938B57AC3E07FF4288461F</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>Foundation.framework</string>
-			<key>path</key>
-			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Foundation.framework</string>
-			<key>sourceTree</key>
-			<string>DEVELOPER_DIR</string>
-		</dict>
-		<key>ECF3C02A7790243C3BB92FF3</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>Reachability.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>EDD6E1AA8656B16E44B81DA4</key>
-		<dict>
-			<key>fileRef</key>
-			<string>22F7104B8EA6721B31EBFC57</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>EE7498BD72C1F55CD766A211</key>
-		<dict>
-			<key>containerPortal</key>
-			<string>75F2BBC127538A268ADE4537</string>
-			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>1</string>
-			<key>remoteGlobalIDString</key>
-			<string>73604F17C829F137BB3D0937</string>
-			<key>remoteInfo</key>
-			<string>Pods-CeliTax-WYPopoverController</string>
-		</dict>
-		<key>EED2B15C885AB61955976478</key>
+		<key>F3E9072DD1E9E0F3E183A95C</key>
 		<dict>
 			<key>children</key>
 			<array>
-				<string>0AD08102E6D3DDEF13659FC0</string>
+				<string>898DCA8E1A55B00862D1C669</string>
+				<string>A497BAF49CC119EFD29C1B42</string>
+				<string>3F2BF89302D6E1D9E9BC8242</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
 			<key>name</key>
-			<string>Targets Support Files</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>EF9F34650DFEF73F5E894612</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>7DEAE00AE9CEE5C285A6B260</string>
-				<string>5F8B1D4158AE194F6F9E5DEE</string>
-				<string>688C0161653F157B378E861E</string>
-				<string>383E5F6C776044F14DDFE468</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Support Files</string>
+			<string>Reachability</string>
 			<key>path</key>
-			<string>../Target Support Files/Pods-CeliTax-Reachability</string>
+			<string>Reachability</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>F0BBC37C1247012F92D1A18B</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXTargetDependency</string>
-			<key>name</key>
-			<string>Pods-CeliTax-NKOColorPickerView</string>
-			<key>target</key>
-			<string>17D2D40AA4C6ED1FEA3256AD</string>
-			<key>targetProxy</key>
-			<string>8B0D0F9BFB3C73CC52E4F03C</string>
-		</dict>
-		<key>F0FA6E4F090D52D4B13DB0CA</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>D3192EDB284DB6DA632DF0CE</string>
-				<string>EDD6E1AA8656B16E44B81DA4</string>
-			</array>
-			<key>isa</key>
-			<string>PBXHeadersBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>F77363E70F09ABF865B5E692</key>
+		<key>F4A760BD623B28BD71766B9A</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -3061,60 +4165,119 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.c.h</string>
 			<key>name</key>
-			<string>NSData+MKBase64.h</string>
+			<string>LLSimpleCamera.h</string>
 			<key>path</key>
-			<string>MKNetworkKit/Categories/NSData+MKBase64.h</string>
+			<string>LLSimpleCamera/LLSimpleCamera.h</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>F90D3E054D3AF0F6D13523C6</key>
+		<key>F5E5F124AF6AF45C6519A41F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>5B38E2418D362A9F4C4CC916</string>
+				<string>286DDB6C1EA3BB441C30BA0B</string>
+				<string>918879EC0265B7FDDF347DFE</string>
+				<string>8C939772D0CCF12C90900E61</string>
+				<string>EDA1628B2078B7557E5EFC8C</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F6E1B6EF5D44F951D2644558</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>D2BBC1E6D6A8DAE052EC89B2</string>
+				<string>DCDF1C3107C891ECA0DD8883</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>F75BFC51793CE013506A9EBD</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-CeliTax-UIImage-ResizeMagick.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>F8972210F8CA639CD8B75494</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>F3AECEC9DDF1C7A6C4244742</string>
+				<string>40D9C6BF7FA40BB0BB83A8A2</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>F9B206F842E4ACE33A629322</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>D82A35CB08F8FD1BD8A341D8</string>
+				<string>83C4E097E10F213A93C76A42</string>
+				<string>CB477CE7D920BA8098829271</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>FA32793EF4A62D22B957C2F4</key>
 		<dict>
 			<key>fileRef</key>
-			<string>A3192EBEB7019BD54CE3649A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-			<key>settings</key>
-			<dict>
-				<key>COMPILER_FLAGS</key>
-				<string>-DOS_OBJECT_USE_OBJC=0</string>
-			</dict>
-		</dict>
-		<key>F9860E914A8F780279256053</key>
-		<dict>
-			<key>fileRef</key>
-			<string>FB79B2D90F8833FA3744047C</string>
+			<string>C8EADDBD8C6B30FA66C9B1C9</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>FB79B2D90F8833FA3744047C</key>
+		<key>FBB371E54230369765F787B0</key>
 		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>D5004EE088F801E2B763F4CF</string>
+				<string>2F2CF9BEBA23B72BCDA2A921</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>FF4658B85AF7F60F10095A53</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>CoreGraphics.framework</string>
+			<string>sourcecode.c.objc</string>
 			<key>path</key>
-			<string>Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CoreGraphics.framework</string>
+			<string>Pods-CeliTax-UIImage-ResizeMagick-dummy.m</string>
 			<key>sourceTree</key>
-			<string>DEVELOPER_DIR</string>
-		</dict>
-		<key>FC0818899C6ADE31F1CA9B6F</key>
-		<dict>
-			<key>fileRef</key>
-			<string>98F621FB2AE521F4C4780AB8</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>FC466FB590DA156A845BBD6E</key>
-		<dict>
-			<key>fileRef</key>
-			<string>CD99E6680C71D779AD1A8F95</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
+			<string>&lt;group&gt;</string>
 		</dict>
 	</dict>
 	<key>rootObject</key>
-	<string>75F2BBC127538A268ADE4537</string>
+	<string>A1005B2622743AD36604CF06</string>
 </dict>
 </plist>

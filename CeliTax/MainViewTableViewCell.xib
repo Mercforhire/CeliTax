@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -14,59 +14,53 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MTB-KY-Q2F" customClass="PieView">
-                        <rect key="frame" x="21" y="10" width="50" height="50"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MTB-KY-Q2F">
+                        <rect key="frame" x="21" y="22.5" width="25" height="25"/>
+                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="50" id="0G6-2v-Wcs"/>
-                            <constraint firstAttribute="width" constant="50" id="z1Z-Gx-CdZ"/>
+                            <constraint firstAttribute="height" constant="25" id="0G6-2v-Wcs"/>
+                            <constraint firstAttribute="width" constant="25" id="z1Z-Gx-CdZ"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Receipt Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tqQ-UT-FOL">
-                        <rect key="frame" x="84" y="10" width="181" height="50"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11:11 pm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LIW-fX-ZCG">
+                        <rect key="frame" x="186" y="26" width="65" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total: $999.99" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kZ7-0D-yMS">
-                        <rect key="frame" x="257" y="26" width="110" height="18"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11/11/2015" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tqQ-UT-FOL">
+                        <rect key="frame" x="76" y="26" width="80" height="18"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="120" id="8N4-ld-GAv"/>
-                            <constraint firstAttribute="width" constant="110" id="w9t-ka-uju"/>
+                            <constraint firstAttribute="width" constant="80" id="a6g-Wo-HvL"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" red="0.81903485249999997" green="0.18456725739999999" blue="0.1936094505" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="8N4-ld-GAv"/>
-                            </mask>
-                        </variation>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="tqQ-UT-FOL" firstAttribute="leading" secondItem="MTB-KY-Q2F" secondAttribute="trailing" constant="13" id="8xU-vt-CBE"/>
+                    <constraint firstItem="LIW-fX-ZCG" firstAttribute="leading" secondItem="tqQ-UT-FOL" secondAttribute="trailing" constant="30" id="5fe-jS-22n"/>
+                    <constraint firstItem="tqQ-UT-FOL" firstAttribute="leading" secondItem="MTB-KY-Q2F" secondAttribute="trailing" constant="30" id="8xU-vt-CBE"/>
+                    <constraint firstItem="tqQ-UT-FOL" firstAttribute="centerY" secondItem="LIW-fX-ZCG" secondAttribute="centerY" id="J2s-ej-PyX"/>
                     <constraint firstItem="tqQ-UT-FOL" firstAttribute="top" secondItem="MTB-KY-Q2F" secondAttribute="top" id="J3c-1t-Pzj"/>
-                    <constraint firstItem="kZ7-0D-yMS" firstAttribute="leading" secondItem="tqQ-UT-FOL" secondAttribute="trailing" constant="8" id="JD2-Dv-FPJ"/>
                     <constraint firstItem="MTB-KY-Q2F" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="13" id="KK5-GG-Cx6"/>
-                    <constraint firstAttribute="centerY" secondItem="MTB-KY-Q2F" secondAttribute="centerY" constant="-0.5" id="bZG-gJ-uxW"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="kZ7-0D-yMS" secondAttribute="trailing" id="eGJ-jN-MvU"/>
-                    <constraint firstAttribute="centerY" secondItem="kZ7-0D-yMS" secondAttribute="centerY" id="gzp-nI-yVo"/>
-                    <constraint firstAttribute="centerX" secondItem="kZ7-0D-yMS" secondAttribute="centerX" constant="-160" id="t1o-q1-dj9"/>
+                    <constraint firstItem="tqQ-UT-FOL" firstAttribute="centerY" secondItem="MTB-KY-Q2F" secondAttribute="centerY" id="PLQ-Qe-9Ee"/>
+                    <constraint firstAttribute="centerY" secondItem="MTB-KY-Q2F" secondAttribute="centerY" id="bZG-gJ-uxW"/>
                     <constraint firstItem="tqQ-UT-FOL" firstAttribute="bottom" secondItem="MTB-KY-Q2F" secondAttribute="bottom" id="ze7-WI-PRz"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
-                        <exclude reference="t1o-q1-dj9"/>
+                        <exclude reference="J3c-1t-Pzj"/>
+                        <exclude reference="ze7-WI-PRz"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
             <connections>
-                <outlet property="colorBox" destination="MTB-KY-Q2F" id="eRS-Db-OoN"/>
-                <outlet property="timeUploadedLabel" destination="tqQ-UT-FOL" id="905-CD-mBk"/>
-                <outlet property="totalRecordedLabel" destination="kZ7-0D-yMS" id="2zN-c4-MVa"/>
+                <outlet property="calenderDateLabel" destination="tqQ-UT-FOL" id="wcB-cB-wA2"/>
+                <outlet property="colorBoxView" destination="MTB-KY-Q2F" id="7XZ-i2-mFm"/>
+                <outlet property="timeOfDayLabel" destination="LIW-fX-ZCG" id="ibo-E0-kJA"/>
             </connections>
-            <point key="canvasLocation" x="351" y="380"/>
+            <point key="canvasLocation" x="350.5" y="380"/>
         </tableViewCell>
     </objects>
 </document>

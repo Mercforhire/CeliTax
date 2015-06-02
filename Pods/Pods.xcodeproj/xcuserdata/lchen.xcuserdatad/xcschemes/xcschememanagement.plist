@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-CeliTax-CDRTranslucentSideBar.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-CeliTax-LLSimpleCamera.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-CeliTax-MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -24,6 +34,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-CeliTax-UIImage-ResizeMagick.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-CeliTax-WYPopoverController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,32 +52,47 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>17D2D40AA4C6ED1FEA3256AD</key>
+		<key>0C69243E94D1931110ABA03B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4227BA9571B5B47AC5644206</key>
+		<key>15204F51910E8776351D3A91</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>73604F17C829F137BB3D0937</key>
+		<key>1C9958C75482636CCA827131</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A0092F89DAB9451DF8190CD0</key>
+		<key>4B9EC615184EB69D825B80E6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A5BB4F30D39E55220C366AFF</key>
+		<key>54981296FC16607E81DDB213</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D88FBCC1A59E7AAF86A84087</key>
+		<key>7251C8E1C06C115DE911C0F0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A7415F63FBC22053D5B3F6C6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C1DB50C484C4DBA7C4826192</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E0216D5DFE78058F4F7A5FF9</key>
 		<dict>
 			<key>primary</key>
 			<true/>

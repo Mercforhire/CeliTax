@@ -8,6 +8,7 @@
 
 #import "CatagoriesDAO.h"
 #import "Catagory.h"
+#import "Utils.h"
 
 @interface CatagoriesDAO ()
 
@@ -37,7 +38,7 @@
     
     Catagory *catagoryToAdd = [Catagory new];
     
-    catagoryToAdd.identifer = [[NSUUID UUID] UUIDString];
+    catagoryToAdd.identifer = [Utils generateUniqueID];
     catagoryToAdd.name = name;
     catagoryToAdd.color = color;
     catagoryToAdd.nationalAverageCost = cost;
@@ -47,17 +48,17 @@
     return [self.userDataDAO saveUserData];
 }
 
-//-(BOOL)addCatagory:(Catagory *)catagory
-//{
-//    if ( !catagory )
-//    {
-//        return NO;
-//    }
-//    
-//    [[self.userDataDAO getCatagories] addObject:catagory];
-//    
-//    return [self.userDataDAO saveUserData];
-//}
+-(BOOL)addCatagory:(Catagory *)catagory
+{
+    if ( !catagory )
+    {
+        return NO;
+    }
+    
+    [[self.userDataDAO getCatagories] addObject:catagory];
+    
+    return [self.userDataDAO saveUserData];
+}
 
 -(BOOL)modifyCatagory:(NSString *)catagoryID forName:(NSString *)name andColor:(UIColor *)color
 {

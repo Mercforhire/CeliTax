@@ -8,10 +8,8 @@
 
 #import "BaseViewController.h"
 
-typedef void (^RevealBlock)();
 
 @interface FeedbackViewController : BaseViewController
 
-- (id)initWithRevealBlock:(RevealBlock)revealBlock;
 
 @end

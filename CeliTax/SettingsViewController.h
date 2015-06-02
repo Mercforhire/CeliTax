@@ -6,12 +6,9 @@
 //  Copyright (c) 2015 CraveNSave. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "BaseSideBarViewController.h"
 
-typedef void (^RevealBlock)();
+@interface SettingsViewController : BaseSideBarViewController
 
-@interface SettingsViewController : BaseViewController
-
-- (id)initWithRevealBlock:(RevealBlock)revealBlock;
 
 @end

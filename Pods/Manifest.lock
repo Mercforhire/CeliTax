@@ -1,22 +1,31 @@
 PODS:
+  - CDRTranslucentSideBar (1.0.3)
+  - LLSimpleCamera (3.0.0)
   - MBProgressHUD (0.9.1)
   - MKNetworkKit (HEAD based on 0.87):
     - Reachability (~> 3.1.0)
   - NKOColorPickerView (0.2)
   - Reachability (3.1.1)
+  - UIImage-ResizeMagick (0.0.1)
   - WYPopoverController (0.3.8)
 
 DEPENDENCIES:
+  - CDRTranslucentSideBar
+  - LLSimpleCamera (~> 3.0)
   - MBProgressHUD (~> 0.9.1)
   - MKNetworkKit (HEAD)
   - NKOColorPickerView
+  - UIImage-ResizeMagick
   - WYPopoverController (~> 0.3.7)
 
 SPEC CHECKSUMS:
+  CDRTranslucentSideBar: b13a1792a8c495ea8f2356846a95bf7119cec7b0
+  LLSimpleCamera: 3c41b46917f9ca53b91ef9c0cf24a75ce0ab4cd8
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   MKNetworkKit: 60ad3c83b62183e40ba75ce772c9427c25b520de
   NKOColorPickerView: 3001ad15be1277dac3b80b300f530828e93b23ae
   Reachability: dd9aa4fb6667b9f787690a74f53cb7634ce99893
+  UIImage-ResizeMagick: f08c2d14d1e8a5f0b402185408785540562f2fe7
   WYPopoverController: dda54780e1bef186464ae5a10ab9b4998c279e89
 
 COCOAPODS: 0.35.0

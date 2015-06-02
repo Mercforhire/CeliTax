@@ -9,7 +9,6 @@
             <connections>
                 <outlet property="bottomLeftCornerView" destination="Ucq-kJ-iqm" id="gS3-Hr-3zG"/>
                 <outlet property="bottomRightCornerView" destination="SDr-lX-BDw" id="1qG-Ba-TDS"/>
-                <outlet property="cameraViewFinderView" destination="GVn-ut-XBO" id="r13-Ca-oPE"/>
                 <outlet property="previousImageView" destination="YJ4-Fy-nhX" id="bcZ-z8-DqF"/>
                 <outlet property="topLeftCornerView" destination="FpK-an-NO9" id="sL4-5W-89C"/>
                 <outlet property="topRightCornerView" destination="yPT-fg-F09" id="L9x-Ue-OeO"/>
@@ -53,10 +52,6 @@
                         <constraint firstAttribute="width" constant="92" id="zrG-d9-hDy"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GVn-ut-XBO">
-                    <rect key="frame" x="1000" y="0.0" width="375" height="667"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
                 <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ucq-kJ-iqm" customClass="WhiteBorderView">
                     <rect key="frame" x="29" y="460" width="92" height="57"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -84,16 +79,12 @@
             <constraints>
                 <constraint firstItem="yPT-fg-F09" firstAttribute="leading" secondItem="YJ4-Fy-nhX" secondAttribute="trailing" constant="-92" id="1Ub-5f-2eu"/>
                 <constraint firstItem="YJ4-Fy-nhX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="-360" id="8yS-0Y-uwO"/>
-                <constraint firstItem="GVn-ut-XBO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="FYf-L7-O9I"/>
                 <constraint firstItem="yPT-fg-F09" firstAttribute="trailing" secondItem="YJ4-Fy-nhX" secondAttribute="trailing" id="HTK-fp-Xlh"/>
-                <constraint firstAttribute="trailing" secondItem="GVn-ut-XBO" secondAttribute="trailing" id="Ouh-0s-8bj"/>
                 <constraint firstAttribute="bottom" secondItem="Ucq-kJ-iqm" secondAttribute="bottom" constant="150" id="Q9n-32-g0a"/>
                 <constraint firstItem="FpK-an-NO9" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="101" id="Qdh-4w-24t"/>
                 <constraint firstItem="rOf-em-w90" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="SuJ-NA-9iy"/>
                 <constraint firstItem="yPT-fg-F09" firstAttribute="top" secondItem="YJ4-Fy-nhX" secondAttribute="bottom" id="Wkg-M9-LQq"/>
                 <constraint firstItem="FpK-an-NO9" firstAttribute="leading" secondItem="Ucq-kJ-iqm" secondAttribute="leading" id="aht-XR-n6U"/>
-                <constraint firstItem="GVn-ut-XBO" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="b7L-c1-U26"/>
-                <constraint firstAttribute="bottom" secondItem="GVn-ut-XBO" secondAttribute="bottom" id="erc-G4-dry"/>
                 <constraint firstAttribute="bottom" secondItem="rOf-em-w90" secondAttribute="bottom" constant="20" id="ggG-Ul-Rdr"/>
                 <constraint firstItem="FpK-an-NO9" firstAttribute="leading" secondItem="YJ4-Fy-nhX" secondAttribute="leading" id="jxk-Ir-L04"/>
                 <constraint firstAttribute="bottom" secondItem="SDr-lX-BDw" secondAttribute="bottom" constant="150" id="k5m-h5-ezx"/>

@@ -6,15 +6,12 @@
 //  Copyright (c) 2015 CraveNSave. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "BaseSideBarViewController.h"
 #import "DataService.h"
 
-typedef void (^RevealBlock)();
-
-@interface MyAccountViewController : BaseViewController
+@interface MyAccountViewController : BaseSideBarViewController
 
 @property (nonatomic, weak) id <DataService> dataService;
 
-- (id)initWithRevealBlock:(RevealBlock)revealBlock;
 
 @end

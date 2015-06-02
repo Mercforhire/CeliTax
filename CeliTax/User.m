@@ -1,12 +1,21 @@
 //
-//  User.m
-//  CeliTax
+// User.m
+// CeliTax
 //
-//  Created by Leon Chen on 2015-04-30.
-//  Copyright (c) 2015 CraveNSave. All rights reserved.
+// Created by Leon Chen on 2015-04-30.
+// Copyright (c) 2015 CraveNSave. All rights reserved.
 //
 
 #import "User.h"
+
+#define kKeyLoginName           @"loginName"
+#define kKeyUserKey             @"userKey"
+#define kKeyFirstname           @"firstname"
+#define kKeyLastname            @"lastname"
+#define kKeyCity                @"city"
+#define kKeyPostalCode          @"postalCode"
+#define kKeyCountry             @"country"
+#define kKeyAvatarImage         @"avatarImage"
 
 @implementation User
 
@@ -14,27 +23,29 @@
 {
     if (self = [super init])
     {
-        self.loginName = [aDecoder decodeObjectForKey: @"loginName"];
-        self.userKey = [aDecoder decodeObjectForKey: @"userKey"];
-        self.firstname = [aDecoder decodeObjectForKey: @"firstname"];
-        self.lastname = [aDecoder decodeObjectForKey: @"lastname"];
-        self.city = [aDecoder decodeObjectForKey: @"city"];
-        self.postalCode = [aDecoder decodeObjectForKey: @"postalCode"];
-        self.country = [aDecoder decodeObjectForKey: @"country"];
+        self.loginName = [aDecoder decodeObjectForKey: kKeyLoginName];
+        self.userKey = [aDecoder decodeObjectForKey: kKeyUserKey];
+        self.firstname = [aDecoder decodeObjectForKey: kKeyFirstname];
+        self.lastname = [aDecoder decodeObjectForKey: kKeyLastname];
+        self.city = [aDecoder decodeObjectForKey: kKeyCity];
+        self.postalCode = [aDecoder decodeObjectForKey: kKeyPostalCode];
+        self.country = [aDecoder decodeObjectForKey: kKeyCountry];
+        self.avatarImage = [UIImage imageWithData: [aDecoder decodeObjectForKey: kKeyAvatarImage]];
     }
-    
+
     return self;
 }
 
 - (void) encodeWithCoder: (NSCoder *) aCoder
 {
-    [aCoder encodeObject: self.loginName forKey: @"loginName"];
-    [aCoder encodeObject: self.userKey forKey: @"userKey"];
-    [aCoder encodeObject: self.firstname forKey: @"firstname"];
-    [aCoder encodeObject: self.lastname forKey: @"lastname"];
-    [aCoder encodeObject: self.city forKey: @"city"];
-    [aCoder encodeObject: self.postalCode forKey: @"postalCode"];
-    [aCoder encodeObject: self.country forKey: @"country"];
+    [aCoder encodeObject: self.loginName forKey: kKeyLoginName];
+    [aCoder encodeObject: self.userKey forKey: kKeyUserKey];
+    [aCoder encodeObject: self.firstname forKey: kKeyFirstname];
+    [aCoder encodeObject: self.lastname forKey: kKeyLastname];
+    [aCoder encodeObject: self.city forKey: kKeyCity];
+    [aCoder encodeObject: self.postalCode forKey: kKeyPostalCode];
+    [aCoder encodeObject: self.country forKey: kKeyCountry];
+    [aCoder encodeObject: UIImagePNGRepresentation(self.avatarImage) forKey: kKeyAvatarImage];
 }
 
 @end

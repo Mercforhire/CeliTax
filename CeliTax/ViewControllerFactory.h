@@ -1,17 +1,15 @@
 //
-//  ViewControllerFactory.h
-//  CeliTax
+// ViewControllerFactory.h
+// CeliTax
 //
-//  Created by Leon Chen on 2015-04-30.
-//  Copyright (c) 2015 CraveNSave. All rights reserved.
+// Created by Leon Chen on 2015-04-30.
+// Copyright (c) 2015 CraveNSave. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-typedef void (^RevealBlock)();
-
 @class ConfigurationManager, UserManager;
-@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, FeedbackViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MainScreenRootViewController, MyAccountViewController, MainViewController, DeleteCatagoryViewController, TransferCatagoryViewController, ModifyCatagoryViewController, CatagoriesManagementViewController, AddCatagoryViewController, SidebarViewController, GHRevealViewController, Catagory, ReceiptCheckingViewController,NamesPickerViewController,ColorPickerViewController, ModifyCatagoryPopUpViewController, AllColorsPickerViewController, CameraViewController;
+@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, FeedbackViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, DeleteCatagoryViewController, TransferCatagoryViewController, ModifyCatagoryViewController, CatagoriesManagementViewController, AddCatagoryViewController, SidebarViewController, Catagory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, ModifyCatagoryPopUpViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController;
 
 @protocol AuthenticationService, DataService, ManipulationService;
 
@@ -30,35 +28,33 @@ typedef void (^RevealBlock)();
 
 - (RegisterViewController *) createRegisterViewController;
 
-- (SidebarViewController *) createSidebarViewControllerWithGHRevealViewController:(GHRevealViewController *)viewController withControllers:(NSArray *)viewControllers withCellInfos:(NSArray *)cellInfos;
+- (MainViewController *) createMainViewController;
 
-- (MainScreenRootViewController *) createMainScreenRootViewController;
+- (FeedbackViewController *) createFeedbackViewController;
 
-- (MainViewController *) createMainViewControllerWith:(RevealBlock)revealBlock;
+- (SettingsViewController *) createSettingsViewController;
 
-- (FeedbackViewController *) createFeedbackViewControllerWith:(RevealBlock)revealBlock;
+- (VaultViewController *) createVaultViewController;
 
-- (SettingsViewController *) createSettingsViewControllerWith:(RevealBlock)revealBlock;
+- (HelpScreenViewController *) createHelpScreenViewController;
 
-- (VaultViewController *) createVaultViewControllerWith:(RevealBlock)revealBlock;
+- (MyAccountViewController *) createMyAccountViewController;
 
-- (HelpScreenViewController *) createHelpScreenViewControllerWith:(RevealBlock)revealBlock;
+- (DeleteCatagoryViewController *) createDeleteCatagoryViewController: (Catagory *) catagoryToDelete;
 
-- (MyAccountViewController *) createMyAccountViewControllerWith:(RevealBlock)revealBlock;
+- (TransferCatagoryViewController *) createTransferCatagoryViewController: (Catagory *) fromCatagory;
 
-- (DeleteCatagoryViewController *) createDeleteCatagoryViewController:(Catagory *)catagoryToDelete;
-
-- (TransferCatagoryViewController *) createTransferCatagoryViewController:(Catagory *)fromCatagory;
-
-- (ModifyCatagoryViewController *) createModifyCatagoryViewControllerWith:(Catagory *)catagoryToModify;
+- (ModifyCatagoryViewController *) createModifyCatagoryViewControllerWith: (Catagory *) catagoryToModify;
 
 - (CatagoriesManagementViewController *) createCatagoriesManagementViewController;
 
 - (AddCatagoryViewController *) createAddCatagoryViewController;
 
-- (ReceiptCheckingViewController *) createReceiptCheckingViewControllerForReceiptID:(NSString *)receiptID;
+- (ReceiptCheckingViewController *) createReceiptCheckingViewControllerForReceiptID: (NSString *) receiptID;
 
-- (NamesPickerViewController *) createNamesPickerViewControllerWithNames:(NSArray *)names;
+- (ReceiptBreakDownViewController *) createReceiptBreakDownViewControllerForReceiptID: (NSString *) receiptID cameFromReceiptCheckingViewController:(BOOL)cameFromReceiptCheckingViewController;
+
+- (SelectionsPickerViewController *) createNamesPickerViewControllerWithNames: (NSArray *) names;
 
 - (ColorPickerViewController *) createColorPickerViewController;
 
@@ -67,5 +63,7 @@ typedef void (^RevealBlock)();
 - (AllColorsPickerViewController *) createAllColorsPickerViewController;
 
 - (CameraViewController *) createCameraOverlayViewController;
+
+- (NSArray *) getMenuSelections;
 
 @end

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="47" id="KGk-i7-Jjw" customClass="MenuSelectionTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MENU SELECTION" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CsA-of-FDv">
+                        <rect key="frame" x="43" y="16.5" width="289" height="23"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wro-LL-xOE">
+                        <rect key="frame" x="-6" y="10.5" width="7" height="35"/>
+                        <color key="backgroundColor" red="0.037923411130000001" green="0.56069375259999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="7" id="YVs-3R-pny"/>
+                            <constraint firstAttribute="height" constant="35" id="qos-TG-Sgp"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="Wro-LL-xOE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-14" id="GCG-ZV-CUV"/>
+                    <constraint firstAttribute="centerY" secondItem="Wro-LL-xOE" secondAttribute="centerY" id="Kec-fe-aRy"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="CsA-of-FDv" secondAttribute="trailing" constant="35" id="Ulz-Ej-VLV"/>
+                    <constraint firstAttribute="centerY" secondItem="CsA-of-FDv" secondAttribute="centerY" id="Y2M-mD-fCW"/>
+                    <constraint firstItem="CsA-of-FDv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="35" id="mkS-7B-hxQ"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="selectionIndicator" destination="Wro-LL-xOE" id="LqX-NU-mTr"/>
+                <outlet property="selectionName" destination="CsA-of-FDv" id="uV9-Ye-l2X"/>
+            </connections>
+            <point key="canvasLocation" x="280.5" y="270"/>
+        </tableViewCell>
+    </objects>
+</document>

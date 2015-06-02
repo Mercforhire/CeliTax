@@ -37,7 +37,7 @@
  
  @return YES if success, NO if user not found or catagory is nil
  */
-//-(BOOL)addCatagory:(Catagory *)catagory;
+-(BOOL)addCatagory:(Catagory *)catagory;
 
 /**
  @param catagoryID NSString catagory to modify ID

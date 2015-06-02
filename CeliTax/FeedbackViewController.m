@@ -9,9 +9,7 @@
 #import "FeedbackViewController.h"
 #import "AlertDialogsProvider.h"
 
-@interface FeedbackViewController () {
-    RevealBlock _revealBlock;
-}
+@interface FeedbackViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextView *commentsField;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
@@ -20,11 +18,10 @@
 
 @implementation FeedbackViewController
 
--(id)initWithRevealBlock:(RevealBlock)revealBlock
+-(id)init
 {
     if (self = [super initWithNibName:@"FeedbackViewController" bundle:nil])
     {
-        _revealBlock = [revealBlock copy];
         
         //initialize the slider bar menu button
         UIButton* menuButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 28, 20)];
@@ -32,7 +29,7 @@
         menuButton.tintColor = [UIColor colorWithRed:7.0/255 green:61.0/255 blue:48.0/255 alpha:1.0f];
         [menuButton addTarget:self action:@selector(revealSidebar) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem* menuItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
-        self.navigationItem.leftBarButtonItem = menuItem;
+        self.navigationItem.rightBarButtonItem = menuItem;
     }
     return self;
 }
@@ -65,7 +62,7 @@
 //slide out the slider bar
 - (void)revealSidebar
 {
-    _revealBlock();
+
 }
 
 -(void)keyboardDoneClicked
