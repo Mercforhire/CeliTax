@@ -190,7 +190,7 @@
     return addCatagoryViewController;
 }
 
-- (ReceiptCheckingViewController *) createReceiptCheckingViewControllerForReceiptID: (NSString *) receiptID
+- (ReceiptCheckingViewController *) createReceiptCheckingViewControllerForReceiptID: (NSString *) receiptID cameFromReceiptBreakDownViewController: (BOOL) cameFromReceiptBreakDownViewController
 {
     ReceiptCheckingViewController *receiptCheckingViewController = [[ReceiptCheckingViewController alloc] initWithNibName: @"ReceiptCheckingViewController" bundle: nil];
 
@@ -199,6 +199,7 @@
     receiptCheckingViewController.dataService = self.dataService;
     receiptCheckingViewController.manipulationService = self.manipulationService;
     receiptCheckingViewController.receiptID = receiptID;
+    receiptCheckingViewController.cameFromReceiptBreakDownViewController = cameFromReceiptBreakDownViewController;
 
     return receiptCheckingViewController;
 }
@@ -217,11 +218,11 @@
     return receiptBreakDownViewController;
 }
 
-- (SelectionsPickerViewController *) createNamesPickerViewControllerWithNames: (NSArray *) names
+- (SelectionsPickerViewController *) createSelectionsPickerViewControllerWithSelections: (NSArray *) selections
 {
     SelectionsPickerViewController *namesPickerViewController = [[SelectionsPickerViewController alloc] initWithNibName: @"NamesPickerViewController" bundle: nil];
 
-    namesPickerViewController.names = names;
+    namesPickerViewController.selections = selections;
 
     return namesPickerViewController;
 }

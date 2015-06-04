@@ -14,7 +14,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ybe-Vq-6hA">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ybe-Vq-6hA">
                         <rect key="frame" x="14" y="16" width="175" height="28"/>
                         <color key="backgroundColor" red="0.037923411130000001" green="0.56069375259999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>

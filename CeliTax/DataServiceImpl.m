@@ -205,7 +205,7 @@
 {
     NSArray *records = [self.recordsDAO loadRecordsforReceipt: receiptID];
 
-    if (records && records.count)
+    if (records)
     {
         success(records);
     }

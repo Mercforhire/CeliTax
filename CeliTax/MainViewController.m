@@ -88,7 +88,7 @@ typedef enum : NSUInteger
                                                 action: @selector(taxYearPressed)];
     [self.taxYearLabel addGestureRecognizer: taxYearPressedTap];
 
-    [self.dataService fetchReceiptsYearsRange:^(NSArray *yearsRange)
+    [self.dataService fetchReceiptsYearsRange: ^(NSArray *yearsRange)
     {
         self.yearsRange = yearsRange;
         self.currentlySelectedYear = [self.yearsRange firstObject];
@@ -100,11 +100,10 @@ typedef enum : NSUInteger
             [yearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", year.integerValue]];
         }
 
-        self.taxYearPickerViewController = [self.viewControllerFactory createNamesPickerViewControllerWithNames: yearSelections];
+        self.taxYearPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: yearSelections];
         self.selectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.taxYearPickerViewController];
         [self.taxYearPickerViewController setDelegate: self];
-        [self.selectionPopover setPopoverContentSize: self.taxYearPickerViewController.viewSize];
-    }                                 failure:^(NSString *reason) {
+    }                                 failure: ^(NSString *reason) {
         // should not happen
     }];
 }
@@ -173,7 +172,7 @@ typedef enum : NSUInteger
     [super selectedMenuIndex: RootViewControllerVault];
 }
 
-#pragma mark - NamesPickerPopUpDelegate
+#pragma mark - SelectionsPickerPopUpDelegate
 
 - (void) selectedSelectionAtIndex: (NSInteger) index
 {

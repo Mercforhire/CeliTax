@@ -60,10 +60,10 @@
     [self.colorPickerViewController setDelegate: self];
     [self.colorPickerPopover setPopoverContentSize: self.colorPickerViewController.viewSize];
 
-    self.namesPickerViewController = [self.viewControllerFactory createNamesPickerViewControllerWithNames: self.catagoryNames];
+    self.namesPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: self.catagoryNames];
     self.namesPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.namesPickerViewController];
     [self.namesPickerViewController setDelegate: self];
-    [self.namesPickerPopover setPopoverContentSize: self.namesPickerViewController.viewSize];
+    // [self.namesPickerPopover setPopoverContentSize: self.namesPickerViewController.viewSize];
 
     self.allColorsPickerViewController = [self.viewControllerFactory createAllColorsPickerViewController];
     self.allColorsPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.allColorsPickerViewController];

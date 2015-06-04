@@ -17,10 +17,10 @@
 #import "ImageCounterIconView.h"
 #import "AddCatagoryViewController.h"
 #import "ViewControllerFactory.h"
-#import "AlertDialogsProvider.h"
 #import "Utils.h"
 #import "Receipt.h"
 #import "UIView+Helper.h"
+#import "ReceiptBreakDownViewController.h"
 
 @interface ReceiptCheckingViewController () <ImageCounterIconViewProtocol, HorizonalScrollBarViewProtocol, UITextFieldDelegate>
 
@@ -320,10 +320,10 @@
 
 - (void) hideAddRecordControls
 {
-    // animate the the animatedBar to -100 and animatorBar2 to 20
+    // animate the the animatedBar to -150 and animatorBar2 to 20
     if (self.animatedBar.constant != -10)
     {
-        self.animatedBar.constant = -100;
+        self.animatedBar.constant = -150;
         self.animatorBar2.constant = 20;
         [UIView animateWithDuration: 0.2
                          animations:^{
@@ -500,7 +500,15 @@
 {
     DLog(@"Image counter icon clicked");
 
-    [AlertDialogsProvider showWorkInProgressDialog];
+    if (self.cameFromReceiptBreakDownViewController)
+    {
+        [self.navigationController popViewControllerAnimated: YES];
+    }
+    else
+    {
+        // push ReceiptCheckingViewController
+        [self.navigationController pushViewController:[self.viewControllerFactory createReceiptBreakDownViewControllerForReceiptID:self.receiptID cameFromReceiptCheckingViewController:YES] animated:YES];
+    }
 }
 
 #pragma mark - HorizonalScrollBarViewProtocol

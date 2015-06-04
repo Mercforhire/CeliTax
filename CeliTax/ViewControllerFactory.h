@@ -50,11 +50,11 @@
 
 - (AddCatagoryViewController *) createAddCatagoryViewController;
 
-- (ReceiptCheckingViewController *) createReceiptCheckingViewControllerForReceiptID: (NSString *) receiptID;
+- (ReceiptCheckingViewController *) createReceiptCheckingViewControllerForReceiptID: (NSString *) receiptID cameFromReceiptBreakDownViewController: (BOOL) cameFromReceiptBreakDownViewController;
 
-- (ReceiptBreakDownViewController *) createReceiptBreakDownViewControllerForReceiptID: (NSString *) receiptID cameFromReceiptCheckingViewController:(BOOL)cameFromReceiptCheckingViewController;
+- (ReceiptBreakDownViewController *) createReceiptBreakDownViewControllerForReceiptID: (NSString *) receiptID cameFromReceiptCheckingViewController: (BOOL) cameFromReceiptCheckingViewController;
 
-- (SelectionsPickerViewController *) createNamesPickerViewControllerWithNames: (NSArray *) names;
+- (SelectionsPickerViewController *) createSelectionsPickerViewControllerWithSelections: (NSArray *) selections;
 
 - (ColorPickerViewController *) createColorPickerViewController;
 

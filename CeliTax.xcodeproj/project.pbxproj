@@ -480,7 +480,7 @@
 		85552E961B02F65E005D9FB1 /* Pop Up */ = {
 			isa = PBXGroup;
 			children = (
-				85560FE41B01B7FF004D2963 /* Names Picker Pop Up */,
+				85560FE41B01B7FF004D2963 /* Selections Picker Pop Up */,
 				857EC8C31B044CD800B6A5B2 /* All Colors Picker Pop Up */,
 				85560FDE1B019830004D2963 /* Color Picker Pop Up */,
 				85552E901B029C99005D9FB1 /* Modify Catagory Pop Up */,
@@ -539,14 +539,14 @@
 			name = "Color Picker Pop Up";
 			sourceTree = "<group>";
 		};
-		85560FE41B01B7FF004D2963 /* Names Picker Pop Up */ = {
+		85560FE41B01B7FF004D2963 /* Selections Picker Pop Up */ = {
 			isa = PBXGroup;
 			children = (
 				85560FE51B01B82A004D2963 /* SelectionsPickerViewController.h */,
 				85560FE61B01B82A004D2963 /* SelectionsPickerViewController.m */,
 				85560FE71B01B82A004D2963 /* SelectionsPickerViewController.xib */,
 			);
-			name = "Names Picker Pop Up";
+			name = "Selections Picker Pop Up";
 			sourceTree = "<group>";
 		};
 		8556E3081AF3E5A1003CCDD2 /* Categories */ = {

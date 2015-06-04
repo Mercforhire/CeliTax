@@ -17,4 +17,7 @@
 
 @property NSString *receiptID;
 
+//True if the previous viewController is ReceiptBreakDownViewController
+@property BOOL cameFromReceiptBreakDownViewController;
+
 @end

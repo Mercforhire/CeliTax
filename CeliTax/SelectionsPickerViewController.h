@@ -18,9 +18,7 @@
 
 @interface SelectionsPickerViewController : UIViewController
 
-@property CGSize viewSize;
-
-@property (nonatomic, strong) NSArray *names;
+@property (nonatomic, strong) NSArray *selections;
 
 @property (nonatomic, weak) id <SelectionsPickerPopUpDelegate> delegate;
 

@@ -8,7 +8,7 @@
 
 #import "SelectionsPickerViewController.h"
 
-#define POP_DEFAULT_FONT_SIZE     24
+#define POP_DEFAULT_FONT_SIZE     15
 #define POP_DEFAULT_ROW_HEIGHT    44
 #define POP_DEFAULT_MAX_HEIGHT    500
 #define POP_DEFAULT_MIN_WIDTH    50
@@ -21,17 +21,6 @@
 
 @implementation SelectionsPickerViewController
 
-- (id) initWithNibName: (NSString *) nibNameOrNil bundle: (NSBundle *) nibBundleOrNil
-{
-    if (self = [super initWithNibName: nibNameOrNil bundle: nibBundleOrNil])
-    {
-        // Custom initialization
-        self.viewSize = CGSizeMake(120, 300);
-    }
-
-    return self;
-}
-
 - (void) viewDidLoad
 {
     [super viewDidLoad];
@@ -42,13 +31,13 @@
     [self.namesTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 }
 
-- (void) setNames: (NSMutableArray *) names
+- (void) setSelections:(NSArray *)selections
 {
-    _names = names;
+    _selections = selections;
 
     // Calculate how tall the view should be by multiplying
     // the individual row height by the total number of rows.
-    NSInteger rowsCount = [self.names count];
+    NSInteger rowsCount = [self.selections count];
     NSInteger totalRowsHeight = rowsCount * POP_DEFAULT_ROW_HEIGHT + 10;
 
     if (totalRowsHeight > POP_DEFAULT_MAX_HEIGHT)
@@ -60,7 +49,7 @@
     // wide each string is expected to be
     CGFloat largestLabelWidth = 0;
 
-    for (NSString *valueName in self.names)
+    for (NSString *valueName in self.selections)
     {
         // Checks size of text using the default font for UITableViewCell's textLabel.
         CGSize labelSize = [valueName sizeWithAttributes: @{ NSFontAttributeName: [UIFont systemFontOfSize: POP_DEFAULT_FONT_SIZE] }];
@@ -81,7 +70,6 @@
 
     // Set the property to tell the popover container how big this view will be.
     self.preferredContentSize = CGSizeMake(popoverWidth, totalRowsHeight);
-    self.viewSize = CGSizeMake(popoverWidth, totalRowsHeight);
 
     [self.namesTableView reloadData];
 }
@@ -95,7 +83,7 @@
 
 - (NSInteger) tableView: (UITableView *) tableView numberOfRowsInSection: (NSInteger) section
 {
-    return self.names.count;
+    return self.selections.count;
 }
 
 - (UITableViewCell *) tableView: (UITableView *) tableView cellForRowAtIndexPath: (NSIndexPath *) indexPath
@@ -110,7 +98,8 @@
 
     [cell setSelectionStyle: UITableViewCellSelectionStyleNone];
 
-    [cell.textLabel setText: self.names [indexPath.row]];
+    [cell.textLabel setText: self.selections [indexPath.row]];
+    [cell.textLabel setFont:[UIFont systemFontOfSize:POP_DEFAULT_FONT_SIZE]];
 
     return cell;
 }
@@ -124,7 +113,7 @@
 
 - (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath
 {
-    DLog(@"Name %@ clicked", self.names [indexPath.row]);
+    DLog(@"Name %@ clicked", self.selections [indexPath.row]);
 
     // Notify the delegate if it exists.
     if (self.delegate != nil)

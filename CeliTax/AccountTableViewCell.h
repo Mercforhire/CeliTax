@@ -12,10 +12,25 @@
 
 @interface AccountTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftSideConstraint;
 @property (weak, nonatomic) IBOutlet UIView *colorBox;
 @property (weak, nonatomic) IBOutlet UILabel *catagoryNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *quantityLabel;
+@property (weak, nonatomic) IBOutlet UITextField *totalQuantityField;
+@property (weak, nonatomic) IBOutlet UITextField *totalAmountField;
+@property (weak, nonatomic) IBOutlet UITextField *averageNationalPriceField;
+
+@property (weak, nonatomic) IBOutlet UILabel *totalQtyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalAmountLabel;
-@property (weak, nonatomic) IBOutlet UILabel *averageCostLabel;
+@property (weak, nonatomic) IBOutlet UILabel *avgPriceLabel;
+
+@property UIColor *colorBoxColor;
+
+//shows everything
+-(void)setTableCellToSelectedMode;
+
+//hides everything except colorBox and catagoryNameLabel
+//pushes the leftSideConstraint to add a margin
+//sets colorBox and catagoryNameLabel to gray
+-(void)setTableCellToDeselectedMode;
 
 @end

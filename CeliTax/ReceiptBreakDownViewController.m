@@ -14,8 +14,12 @@
 #import "ReceiptBreakDownToolBarTableViewCell.h"
 #import "UIView+Helper.h"
 #import "Receipt.h"
+#import "ViewControllerFactory.h"
+#import "ReceiptCheckingViewController.h"
+#import "WYPopoverController.h"
+#import "SelectionsPickerViewController.h"
 
-@interface ReceiptBreakDownViewController () <XYPieChartDelegate, XYPieChartDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface ReceiptBreakDownViewController () <XYPieChartDelegate, XYPieChartDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, SelectionsPickerPopUpDelegate>
 
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
@@ -23,16 +27,20 @@
 @property (weak, nonatomic) IBOutlet XYPieChart *pieChart;
 @property (weak, nonatomic) IBOutlet UITableView *receiptItemsTable;
 @property (nonatomic, strong) UIToolbar *numberToolbar;
+@property (nonatomic, strong) WYPopoverController *selectionPopover;
+@property (nonatomic, strong) SelectionsPickerViewController *catagoryPickerViewController;
 
 // group records into it's catagory as KEY
 @property (nonatomic, strong) NSMutableDictionary *recordsDictionary;
 
-@property (nonatomic, strong) NSMutableArray *catagories;
+@property (nonatomic, strong) NSArray *allCatagories;
+@property (nonatomic, strong) NSMutableArray *catagoriesUsedByThisReceipt;
 @property (nonatomic, strong) NSMutableArray *slicePercentages;
 @property (nonatomic, strong) NSMutableArray *sliceColors;
 @property (nonatomic, strong) NSMutableArray *sliceNames;
 
 @property (nonatomic, strong) Record *currentlySelectedRecord;
+@property (weak, nonatomic) IBOutlet UILabel *noItemsShield;
 
 @end
 
@@ -87,33 +95,57 @@
     self.dateFormatter = [[NSDateFormatter alloc] init];
     [self.dateFormatter setDateFormat: @"dd/MM/yyyy"];
 
-    [self.dataService fetchReceiptForReceiptID: self.receiptID success:^(Receipt *receipt) {
+    [self.dataService fetchReceiptForReceiptID: self.receiptID success: ^(Receipt *receipt) {
         [self.dateLabel setText: [self.dateFormatter stringFromDate: receipt.dateCreated]];
-    } failure:^(NSString *reason) {
+    } failure: ^(NSString *reason) {
+        // should not happen
+    }];
+
+    [self.dataService fetchCatagoriesSuccess: ^(NSArray *catagories) {
+        self.allCatagories = catagories;
+
+        NSMutableArray *catagorySelections = [NSMutableArray new];
+
+        for (Catagory *catagory in self.allCatagories)
+        {
+            [catagorySelections addObject: catagory.name];
+        }
+
+        self.catagoryPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: catagorySelections];
+        self.selectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.catagoryPickerViewController];
+        [self.catagoryPickerViewController setDelegate: self];
+    } failure: ^(NSString *reason) {
         // should not happen
     }];
 }
 
-- (void) viewWillAppear: (BOOL) animated
+- (void) loadData
 {
-    [super viewWillAppear: animated];
-
+    self.currentlySelectedRecord = nil;
+    
     self.recordsDictionary = [NSMutableDictionary new];
-    self.catagories = [NSMutableArray new];
+    self.catagoriesUsedByThisReceipt = [NSMutableArray new];
 
     // get all the items in this receipt
     // load catagory records for this receipt
     [self.dataService fetchRecordsForReceiptID: self.receiptID
                                        success: ^(NSArray *records) {
+        if (!records || records.count == 0)
+        {
+            [self.noItemsShield setHidden: NO];
+
+            [self.view bringSubviewToFront: self.noItemsShield];
+        }
+
         // get all the catagories used in this receipt
         for (Record *record in records)
         {
             // get the catagory of this Record
             [self.dataService fetchCatagory: record.catagoryID
                                     Success: ^(Catagory *catagory) {
-                if (![self.catagories containsObject: catagory])
+                if (![self.catagoriesUsedByThisReceipt containsObject: catagory])
                 {
-                    [self.catagories addObject: catagory];
+                    [self.catagoriesUsedByThisReceipt addObject: catagory];
                 }
 
                 NSMutableArray *recordsOfThisCatagory = [self.recordsDictionary objectForKey: catagory.identifer];
@@ -137,6 +169,13 @@
     [self refreshPieChart];
 
     [self.receiptItemsTable reloadData];
+}
+
+- (void) viewWillAppear: (BOOL) animated
+{
+    [super viewWillAppear: animated];
+
+    [self loadData];
 
     // register for keyboard notifications
     [[NSNotificationCenter defaultCenter] addObserver: self
@@ -170,7 +209,7 @@
 
     // calculate the percentage of total of each catagory of items and
     // populate the self.slices, self.sliceColors, and self.sliceNames arrays
-    for (Catagory *catagory in self.catagories)
+    for (Catagory *catagory in self.catagoriesUsedByThisReceipt)
     {
         [self.sliceColors addObject: catagory.color];
         [self.sliceNames addObject: catagory.name];
@@ -215,6 +254,7 @@
     else
     {
         // push ReceiptCheckingViewController
+        [self.navigationController pushViewController: [self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID: self.receiptID cameFromReceiptBreakDownViewController: YES] animated: YES];
     }
 }
 
@@ -291,7 +331,7 @@
 - (Catagory *) getCatagoryFromCatagoryID: (NSString *) catagoryID
 {
     NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"identifer == %@", catagoryID];
-    NSArray *catagory = [self.catagories filteredArrayUsingPredicate: findCatagories];
+    NSArray *catagory = [self.catagoriesUsedByThisReceipt filteredArrayUsingPredicate: findCatagories];
 
     return [catagory firstObject];
 }
@@ -301,6 +341,19 @@
     Record *thisRecord = [self getNthRecordFromRecordsDictionary: sender.tag];
 
     DLog(@"Transfer button for record %@ pressed", thisRecord.identifer);
+
+    CGRect rectOfCellInTableView = [self.receiptItemsTable rectForRowAtIndexPath: [NSIndexPath indexPathForRow: sender.tag * 2 + 1 inSection: 0]];
+    CGRect rectOfCellInSuperview = [self.receiptItemsTable convertRect: rectOfCellInTableView toView: [self.receiptItemsTable superview]];
+
+    CGRect tinyRect = CGRectMake(rectOfCellInSuperview.origin.x + sender.frame.origin.x + sender.frame.size.width / 2,
+                                 rectOfCellInSuperview.origin.y +  sender.frame.origin.y + sender.frame.size.height / 2,
+                                 1,
+                                 1);
+
+    [self.selectionPopover presentPopoverFromRect: tinyRect
+                                           inView: self.view
+                         permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown)
+                                         animated: YES];
 }
 
 - (void) deleteButtonPressed: (UIButton *) sender
@@ -308,6 +361,12 @@
     Record *thisRecord = [self getNthRecordFromRecordsDictionary: sender.tag];
 
     DLog(@"Delete button for record %@ pressed", thisRecord.identifer);
+
+    [self.manipulationService deleteRecord: thisRecord.identifer WithSuccess: ^{
+        [self loadData];
+    } andFailure: ^(NSString *reason) {
+        // should not happen
+    }];
 }
 
 - (void) setCurrentlySelectedRecord: (Record *) currentlySelectedRecord
@@ -318,6 +377,30 @@
 
         [self.receiptItemsTable reloadData];
     }
+}
+
+#pragma mark - SelectionsPickerPopUpDelegate
+
+- (void) selectedSelectionAtIndex: (NSInteger) index
+{
+    [self.selectionPopover dismissPopoverAnimated: YES];
+
+    // change the current selected record to this new catagory
+    Catagory *chosenCatagory = [self.allCatagories objectAtIndex: index];
+
+    if ([self.currentlySelectedRecord.catagoryID isEqualToString: chosenCatagory.identifer])
+    {
+        return;
+    }
+
+    self.currentlySelectedRecord.catagoryID = chosenCatagory.identifer;
+    self.currentlySelectedRecord.catagoryName = chosenCatagory.name;
+
+    [self.manipulationService modifyRecord: self.currentlySelectedRecord WithSuccess:^{
+        [self loadData];
+    } andFailure:^(NSString *reason) {
+        DLog(@"self.manipulationService modifyRecord failed");
+    }];
 }
 
 #pragma mark - XYPieChart Data Source
@@ -372,11 +455,11 @@
         }
 
         self.currentlySelectedRecord.amount = [textField.text floatValue];
-        
-        [self.manipulationService modifyRecord:self.currentlySelectedRecord WithSuccess:^{
+
+        [self.manipulationService modifyRecord: self.currentlySelectedRecord WithSuccess: ^{
             DLog(@"Record %@ saved", self.currentlySelectedRecord.identifer);
-        } andFailure:^(NSString *reason) {
-            //should not happen
+        } andFailure: ^(NSString *reason) {
+            // should not happen
         }];
     }
     else
@@ -390,11 +473,11 @@
         }
 
         self.currentlySelectedRecord.quantity = [textField.text integerValue];
-        
-        [self.manipulationService modifyRecord:self.currentlySelectedRecord WithSuccess:^{
+
+        [self.manipulationService modifyRecord: self.currentlySelectedRecord WithSuccess: ^{
             DLog(@"Record %@ saved", self.currentlySelectedRecord.identifer);
-        } andFailure:^(NSString *reason) {
-            //should not happen
+        } andFailure: ^(NSString *reason) {
+            // should not happen
         }];
     }
 
@@ -428,7 +511,7 @@
 
 - (void) pieChart: (XYPieChart *) pieChart didSelectSliceAtIndex: (NSUInteger) index
 {
-    Catagory *thisCatagory = [self.catagories objectAtIndex: index];
+    Catagory *thisCatagory = [self.catagoriesUsedByThisReceipt objectAtIndex: index];
 
     DLog(@"Catagory %@ clicked", thisCatagory.name);
 
