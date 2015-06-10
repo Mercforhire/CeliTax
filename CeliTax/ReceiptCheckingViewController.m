@@ -61,6 +61,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
+    [self.receiptScrollView setBackgroundColor:[UIColor whiteColor]];
+    
     [self.qtyField setDelegate: self];
     [self.qtyField addTarget: self
                       action: @selector(textFieldDidChange:)

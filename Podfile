@@ -11,6 +11,7 @@ pod 'WYPopoverController', '~> 0.3.7'
 pod 'LLSimpleCamera', '~> 3.0'
 pod 'CDRTranslucentSideBar'
 pod "UIImage-ResizeMagick"
+pod 'LatoFont', '~> 1.0.0'
 
 end
 

@@ -201,8 +201,6 @@
         cell = [[CatagoriesManagementTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
     }
     
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    
     Catagory *thisItemCatagory = [self.itemCatagories objectAtIndex:indexPath.row];
     
     NSArray *recordsForThisCatagory = [self.RecordsDictionary objectForKey:thisItemCatagory.identifer];
@@ -213,7 +211,7 @@
     for (Record *record in recordsForThisCatagory)
     {
         sumQuantity = sumQuantity + record.quantity;
-        sumAmount = sumAmount + record.quantity * record.amount;
+        sumAmount = sumAmount + [record calculateTotal];
     }
     
     [cell.colorView setBackgroundColor:thisItemCatagory.color];

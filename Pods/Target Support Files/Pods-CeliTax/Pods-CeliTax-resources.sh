@@ -50,6 +50,7 @@ install_resource()
           install_resource "NKOColorPickerView/Assets/nko_brightness_guide.png"
                     install_resource "NKOColorPickerView/Assets/nko_brightness_guide@2x.png"
                     install_resource "NKOColorPickerView/Assets/nko_colormap.png"
+                    install_resource "${BUILT_PRODUCTS_DIR}/LatoFont.bundle"
           
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 if [[ "${ACTION}" == "install" ]]; then

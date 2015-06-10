@@ -1,5 +1,5 @@
 #include "Pods-CeliTax-LLSimpleCamera.xcconfig"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/LLSimpleCamera" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/CDRTranslucentSideBar" "${PODS_ROOT}/Headers/Public/LLSimpleCamera" "${PODS_ROOT}/Headers/Public/MBProgressHUD" "${PODS_ROOT}/Headers/Public/MKNetworkKit" "${PODS_ROOT}/Headers/Public/MKNetworkKit/Categories" "${PODS_ROOT}/Headers/Public/NKOColorPickerView" "${PODS_ROOT}/Headers/Public/Reachability" "${PODS_ROOT}/Headers/Public/UIImage-ResizeMagick" "${PODS_ROOT}/Headers/Public/WYPopoverController"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/LLSimpleCamera" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/CDRTranslucentSideBar" "${PODS_ROOT}/Headers/Public/LLSimpleCamera" "${PODS_ROOT}/Headers/Public/LatoFont" "${PODS_ROOT}/Headers/Public/MBProgressHUD" "${PODS_ROOT}/Headers/Public/MKNetworkKit" "${PODS_ROOT}/Headers/Public/MKNetworkKit/Categories" "${PODS_ROOT}/Headers/Public/NKOColorPickerView" "${PODS_ROOT}/Headers/Public/Reachability" "${PODS_ROOT}/Headers/Public/UIImage-ResizeMagick" "${PODS_ROOT}/Headers/Public/WYPopoverController"
 OTHER_LDFLAGS = ${PODS_CELITAX_LLSIMPLECAMERA_OTHER_LDFLAGS} -ObjC
 PODS_ROOT = ${SRCROOT}

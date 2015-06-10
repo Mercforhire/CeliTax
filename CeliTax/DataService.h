@@ -36,52 +36,75 @@ typedef void (^FetchReceiptFailureBlock)(NSString *reason);
 typedef void (^FetchReceiptsYearsRangeSuccessBlock)(NSArray *yearsRange);
 typedef void (^FetchReceiptsYearsRangeFailureBlock)(NSString *reason);
 
+typedef void (^FetchCatagoryInfoSuccessBlock)(NSArray *catagoryInfos);
+typedef void (^FetchCatagoryInfoFailureBlock)(NSString *reason);
+
 @property (nonatomic, strong) CatagoriesDAO *catagoriesDAO;
 @property (nonatomic, strong) RecordsDAO *recordsDAO;
 @property (nonatomic, strong) ReceiptsDAO *receiptsDAO;
 
 - (void) loadDemoData;
 
-- (NSOperation *) fetchCatagoriesSuccess: (FetchCatagoriesSuccessBlock) success
-                                 failure: (FetchCatagoriesFailureBlock) failure;
+- (void) fetchCatagoriesSuccess: (FetchCatagoriesSuccessBlock) success
+                        failure: (FetchCatagoriesFailureBlock) failure;
 
-- (NSOperation *) fetchCatagory: (NSString *) catagoryID
-                        Success: (FetchCatagorySuccessBlock) success
-                        failure: (FetchCatagoryFailureBlock) failure;
+- (void) fetchCatagory: (NSString *) catagoryID
+               Success: (FetchCatagorySuccessBlock) success
+               failure: (FetchCatagoryFailureBlock) failure;
 
-- (NSOperation *) fetchAllRecordsSuccess: (FetchRecordsSuccessBlock) success
-                                 failure: (FetchRecordsFailureBlock) failure;
+- (void) fetchAllRecordsSuccess: (FetchRecordsSuccessBlock) success
+                        failure: (FetchRecordsFailureBlock) failure;
 
-- (NSOperation *) fetchRecordsForCatagoryID: (NSString *) catagoryID
-                                    success: (FetchRecordsSuccessBlock) success
-                                    failure: (FetchRecordsFailureBlock) failure;
+- (void) fetchRecordsForCatagoryID: (NSString *) catagoryID
+                           success: (FetchRecordsSuccessBlock) success
+                           failure: (FetchRecordsFailureBlock) failure;
 
-- (NSOperation *) fetchRecordsForReceiptID: (NSString *) receiptID
-                                   success: (FetchRecordsSuccessBlock) success
-                                   failure: (FetchRecordsFailureBlock) failure;
+- (void) fetchRecordsForReceiptID: (NSString *) receiptID
+                          success: (FetchRecordsSuccessBlock) success
+                          failure: (FetchRecordsFailureBlock) failure;
 
-- (NSOperation *) fetchRecordForID: (NSString *) recordID
-                           success: (FetchRecordSuccessBlock) success
-                           failure: (FetchRecordFailureBlock) failure;
+- (void) fetchRecordForID: (NSString *) recordID
+                  success: (FetchRecordSuccessBlock) success
+                  failure: (FetchRecordFailureBlock) failure;
 
-- (NSOperation *) fetchReceiptsSuccess: (FetchReceiptsSuccessBlock) success
-                               failure: (FetchReceiptsFailureBlock) failure;
+- (void) fetchReceiptsSuccess: (FetchReceiptsSuccessBlock) success
+                      failure: (FetchReceiptsFailureBlock) failure;
 
 #define kReceiptIDKey       @"ReceiptID"
 #define kColorsKey          @"Colors"
 #define kUploadTimeKey      @"UploadTime"
-#define kTotalAmountKey     @"TotalAmountKey"
+#define kTotalAmountKey     @"TotalAmount"
 
-- (NSOperation *) fetchNewestReceiptInfo: (NSInteger) nThNewest
-                                  inYear: (NSInteger) year
-                                 success: (FetchReceiptInfoSuccessBlock) success
-                                 failure: (FetchReceiptInfoFailureBlock) failure;
+- (void) fetchNewestReceiptInfo: (NSInteger) nThNewest
+                         inYear: (NSInteger) year
+                        success: (FetchReceiptInfoSuccessBlock) success
+                        failure: (FetchReceiptInfoFailureBlock) failure;
 
-- (NSOperation *) fetchReceiptForReceiptID: (NSString *) receiptID
-                                   success: (FetchReceiptSuccessBlock) success
-                                   failure: (FetchReceiptFailureBlock) failure;
+- (void) fetchReceiptInfoFromDate: (NSDate *) fromDate
+                           toDate: (NSDate *) toDate
+                          success: (FetchReceiptInfoSuccessBlock) success
+                          failure: (FetchReceiptInfoFailureBlock) failure;
 
-- (NSOperation *) fetchReceiptsYearsRange: (FetchReceiptsYearsRangeSuccessBlock) success
-                                  failure: (FetchReceiptsYearsRangeFailureBlock) failure;
+- (void) fetchReceiptForReceiptID: (NSString *) receiptID
+                          success: (FetchReceiptSuccessBlock) success
+                          failure: (FetchReceiptFailureBlock) failure;
+
+- (void) fetchReceiptsYearsRange: (FetchReceiptsYearsRangeSuccessBlock) success
+                         failure: (FetchReceiptsYearsRangeFailureBlock) failure;
+
+
+#define kReceiptTimeKey          @"ReceiptTime"
+#define kTotalQtyKey             @"TotalQty"
+
+- (void) fetchCatagoryInfoFromDate: (NSDate *) fromDate
+                            toDate: (NSDate *) toDate
+                       forCatagory: (NSString *) catagoryID
+                           success: (FetchCatagoryInfoSuccessBlock) success
+                           failure: (FetchCatagoryInfoFailureBlock) failure;
+
+- (void) fetchLatestNthCatagoryInfosforCatagory: (NSString *) catagoryID
+                                         forNth: (NSInteger) nTh
+                                        success: (FetchCatagoryInfoSuccessBlock) success
+                                        failure: (FetchCatagoryInfoFailureBlock) failure;
 
 @end

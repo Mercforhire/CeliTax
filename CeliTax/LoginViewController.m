@@ -18,6 +18,7 @@
 #import "AlertDialogsProvider.h"
 #import "User.h"
 #import "MainViewController.h"
+#import "PasswordRecoveryViewController.h"
 
 @interface LoginViewController () <UITextFieldDelegate>
 
@@ -33,9 +34,22 @@
 
 @implementation LoginViewController
 
+- (void) setupUI
+{
+    [self.lookAndFeel applyGrayBorderTo: self.emailField];
+    [self.lookAndFeel addLeftInsetToTextField: self.emailField];
+
+    [self.lookAndFeel applyGrayBorderTo: self.passwordField];
+    [self.lookAndFeel addLeftInsetToTextField: self.passwordField];
+
+    [self.lookAndFeel applyHollowGreenButtonStyleTo: self.loginButton];
+}
+
 - (void) viewDidLoad
 {
     [super viewDidLoad];
+
+    [self setupUI];
 
     self.emailField.delegate = self;
     [self.emailField addTarget: self
@@ -47,7 +61,7 @@
                            action: @selector(textFieldDidChange:)
                  forControlEvents: UIControlEventEditingChanged];
 
-    // demo
+    // DEMO CODE:
     self.emailField.text = @"leonchn84@gmail.com";
     self.passwordField.text = @"123456";
     [self.loginButton setEnabled: YES];
@@ -56,13 +70,13 @@
 - (void) viewWillAppear: (BOOL) animated
 {
     [super viewWillAppear: animated];
-    
+
     // register for keyboard notifications
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(keyboardWillShow:)
                                                  name: UIKeyboardWillShowNotification
                                                object: nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(keyboardWillHide:)
                                                  name: UIKeyboardWillHideNotification
@@ -72,12 +86,12 @@
 - (void) viewWillDisappear: (BOOL) animated
 {
     [super viewWillDisappear: animated];
-    
+
     // unregister for keyboard notifications while not visible.
     [[NSNotificationCenter defaultCenter] removeObserver: self
                                                     name: UIKeyboardWillShowNotification
                                                   object: nil];
-    
+
     [[NSNotificationCenter defaultCenter] removeObserver: self
                                                     name: UIKeyboardWillHideNotification
                                                   object: nil];
@@ -148,7 +162,7 @@
 
 - (IBAction) forgotPressed: (UIButton *) sender
 {
-    [AlertDialogsProvider showWorkInProgressDialog];
+    [self.navigationController pushViewController: [self.viewControllerFactory createPasswordRecoveryViewController] animated: YES];
 }
 
 - (IBAction) signupPressed: (UIButton *) sender
@@ -161,7 +175,7 @@
 {
     NSDictionary *info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey: UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    
+
     [self.view scrollToY: 0 - kbSize.height];
 }
 
@@ -177,7 +191,7 @@
 {
     [textField resignFirstResponder];
 
-    if (textField == self.passwordField)
+    if (textField == self.passwordField && self.passwordField.text.length)
     {
         [self loginPressed: self.loginButton];
     }

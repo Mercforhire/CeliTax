@@ -94,6 +94,22 @@
     return newestNThReceipts;
 }
 
+- (NSArray *)loadReceiptsFrom:(NSDate *)fromDate toDate:(NSDate *)toDate
+{
+    NSArray *allReceipts = [self.userDataDAO getReceipts];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"((dateCreated >= %@) AND (dateCreated <= %@)) || (dateCreated = nil)", fromDate, toDate];
+    NSArray *allReceiptsInChosen = [allReceipts filteredArrayUsingPredicate: predicate];
+    
+    NSArray *sortedAllReceipts = [allReceiptsInChosen sortedArrayUsingComparator: ^NSComparisonResult (Receipt *a, Receipt *b) {
+        NSDate *first = a.dateCreated;
+        NSDate *second = b.dateCreated;
+        return [second compare: first];
+    }];
+    
+    return sortedAllReceipts;
+}
+
 - (Receipt *) loadReceipt: (NSString *) receiptID
 {
     NSPredicate *findReceipt = [NSPredicate predicateWithFormat: @"identifer == %@", receiptID];

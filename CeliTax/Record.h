@@ -21,4 +21,6 @@
 @property float                         amount;
 @property NSInteger                     quantity;
 
+-(float)calculateTotal;
+
 @end

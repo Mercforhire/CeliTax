@@ -7,8 +7,10 @@
 //
 
 #import "BaseSideBarViewController.h"
+#import "DataService.h"
 
 @interface VaultViewController : BaseSideBarViewController
 
+@property (nonatomic, weak) id <DataService> dataService;
 
 @end

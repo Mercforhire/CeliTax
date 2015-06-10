@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@class ConfigurationManager, UserManager;
-@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, FeedbackViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, DeleteCatagoryViewController, TransferCatagoryViewController, ModifyCatagoryViewController, CatagoriesManagementViewController, AddCatagoryViewController, SidebarViewController, Catagory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, ModifyCatagoryPopUpViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController;
+@class ConfigurationManager, UserManager, LookAndFeel;
+@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, FeedbackViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, DeleteCatagoryViewController, TransferCatagoryViewController, ModifyCatagoryViewController, CatagoriesManagementViewController, AddCatagoryViewController, SidebarViewController, Catagory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, ModifyCatagoryPopUpViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController;
 
 @protocol AuthenticationService, DataService, ManipulationService;
 
@@ -21,6 +21,7 @@
 @property (nonatomic, weak) id <AuthenticationService> authenticationService;
 @property (nonatomic, weak) id <DataService> dataService;
 @property (nonatomic, weak) id <ManipulationService> manipulationService;
+@property (nonatomic, weak) LookAndFeel *lookAndFeel;
 
 - (SplashViewController *) createSplashViewController;
 
@@ -63,6 +64,12 @@
 - (AllColorsPickerViewController *) createAllColorsPickerViewController;
 
 - (CameraViewController *) createCameraOverlayViewController;
+
+- (SendReceiptsToViewController *) createSendReceiptsToViewController;
+
+- (PasswordRecoveryViewController *) createPasswordRecoveryViewController;
+
+- (PasswordRecoverySentViewController *) createPasswordRecoverySentViewController;
 
 - (NSArray *) getMenuSelections;
 

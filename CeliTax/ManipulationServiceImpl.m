@@ -15,13 +15,13 @@
 
 @implementation ManipulationServiceImpl
 
-- (NSOperation *) addCatagoryForName:(NSString *)catagoryName forColor:(UIColor *)catagoryColor success:(AddCatagorySuccessBlock)success failure:(AddCatagoryFailureBlock)failure
+- (void) addCatagoryForName:(NSString *)catagoryName forColor:(UIColor *)catagoryColor success:(AddCatagorySuccessBlock)success failure:(AddCatagoryFailureBlock)failure
 {
     if (!catagoryName || !catagoryColor)
     {
         failure ( @"missing parameters");
         
-        return nil;
+        return;
     }
     
     if (  [self.catagoriesDAO addCatagoryForName:catagoryName andColor:catagoryColor andNationalAverageCost:0] )
@@ -33,10 +33,10 @@
         failure ( @"unable to add catagory");
     }
     
-    return nil;
+    return;
 }
 
-- (NSOperation *) modifyCatagoryForCatagoryID:(NSString *)catagoryID newName:(NSString *)catagoryName newColor:(UIColor *)catagoryColor success:(ModifyCatagorySuccessBlock)success failure:(ModifyCatagoryFailureBlock)failure
+- (void) modifyCatagoryForCatagoryID:(NSString *)catagoryID newName:(NSString *)catagoryName newColor:(UIColor *)catagoryColor success:(ModifyCatagorySuccessBlock)success failure:(ModifyCatagoryFailureBlock)failure
 {
     if (  [self.catagoriesDAO modifyCatagory:catagoryID forName:catagoryName andColor:catagoryColor] )
     {
@@ -47,10 +47,10 @@
         failure ( @"unable to modified catagory");
     }
     
-    return nil;
+    return;
 }
 
-- (NSOperation *) deleteCatagoryForCatagoryID:(NSString *)catagoryID success:(DeleteCatagorySuccessBlock)success failure:(DeleteCatagoryFailureBlock)failure
+- (void) deleteCatagoryForCatagoryID:(NSString *)catagoryID success:(DeleteCatagorySuccessBlock)success failure:(DeleteCatagoryFailureBlock)failure
 {
     
     if ( [self.catagoriesDAO deleteCatagory:catagoryID] )
@@ -63,10 +63,10 @@
         failure ( @"unable to delete catagory");
     }
     
-    return nil;
+    return;
 }
 
-- (NSOperation *) transferCatagoryFromCatagoryID:(NSString *)fromCatagoryID toCatagoryID:(NSString *)toCatagoryID success:(ModifyCatagorySuccessBlock)success failure:(ModifyCatagoryFailureBlock)failure
+- (void) transferCatagoryFromCatagoryID:(NSString *)fromCatagoryID toCatagoryID:(NSString *)toCatagoryID success:(ModifyCatagorySuccessBlock)success failure:(ModifyCatagoryFailureBlock)failure
 {
     
     NSArray *fromRecords = [self.recordsDAO loadRecordsforCatagory:fromCatagoryID];
@@ -102,10 +102,10 @@
         failure ( @"unable to add catagory records");
     }
     
-    return nil;
+    return;
 }
 
-- (NSOperation *) addRecordForCatagoryID:(NSString *)catagoryID forReceiptID:(NSString *)receiptID forQuantity:(NSInteger)quantity forAmount:(float)amount success:(AddRecordSuccessBlock)success failure:(AddRecordFailureBlock)failure
+- (void) addRecordForCatagoryID:(NSString *)catagoryID forReceiptID:(NSString *)receiptID forQuantity:(NSInteger)quantity forAmount:(float)amount success:(AddRecordSuccessBlock)success failure:(AddRecordFailureBlock)failure
 {
     
     Catagory *toItemCatagory = [self.catagoriesDAO loadCatagory:catagoryID];
@@ -126,10 +126,10 @@
         failure ( @"unable to add catagory record");
     }
     
-    return nil;
+    return;
 }
 
-- (NSOperation *) deleteRecord:(NSString *)recordID WithSuccess:(DeleteRecordSuccessBlock)success andFailure:(DeleteRecordFailureBlock)failure
+- (void) deleteRecord:(NSString *)recordID WithSuccess:(DeleteRecordSuccessBlock)success andFailure:(DeleteRecordFailureBlock)failure
 {
     NSArray *arrayWithSingleNumber = [NSArray arrayWithObject:recordID];
     
@@ -142,10 +142,10 @@
         failure ( @"failed to deleteRecordsForRecordIDs" );
     }
     
-    return nil;
+    return;
 }
 
-- (NSOperation *) modifyRecord: (Record *) record
+- (void) modifyRecord: (Record *) record
                    WithSuccess: (ModifyRecordSuccessBlock) success
                     andFailure: (ModifyRecordFailureBlock) failure
 {
@@ -158,17 +158,17 @@
         failure ( [NSString stringWithFormat:@"failed to modify Record: %ld", (long)record.identifer] );
     }
     
-    return nil;
+    return;
 }
 
-- (NSOperation *) addReceiptForFilenames:(NSArray *)filenames success:(AddReceiptSuccessBlock)success failure:(AddReceiptFailureBlock)failure
+- (void) addReceiptForFilenames:(NSArray *)filenames success:(AddReceiptSuccessBlock)success failure:(AddReceiptFailureBlock)failure
 {
     
     if (!filenames)
     {
         failure ( @"missing filenames");
         
-        return nil;
+        return;
     }
     
     if ( [self.receiptsDAO addReceiptWithFilenames:filenames] )
@@ -180,7 +180,7 @@
         failure ( @"unable to add receipt");
     }
     
-    return nil;
+    return;
 }
 
 @end

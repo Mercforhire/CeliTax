@@ -13,7 +13,7 @@
 #import "RegisterResult.h"
 #import "UIView+Helper.h"
 
-@interface RegisterViewController () <UITextFieldDelegate,UIScrollViewDelegate >
+@interface RegisterViewController () <UITextFieldDelegate,UIScrollViewDelegate>
 {
     UIImage *canadaFlag;
     UIImage *canadaFlagInactive;

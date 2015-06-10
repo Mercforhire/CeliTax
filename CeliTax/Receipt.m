@@ -7,6 +7,7 @@
 //
 
 #import "Receipt.h"
+#import "RecordsDAO.h"
 
 #define kKeyIdentiferKey        @"Identifer"
 #define kKeyFileNamesKey        @"FileNames"
@@ -47,6 +48,16 @@
     }
 
     return copy;
+}
+
+- (NSArray *) fetchRecordsOfCatagory: (NSString *) catagoryID usingRecordsDAO: (RecordsDAO *) recordsDAO
+{
+    NSArray *allRecordsForReceipt = [recordsDAO loadRecordsforReceipt: self.identifer];
+
+    NSPredicate *findRecordsWithGivenCatagoryID = [NSPredicate predicateWithFormat: @"catagoryID == %@", catagoryID];
+    NSArray *recordsWithGivenCatagoryID = [allRecordsForReceipt filteredArrayUsingPredicate: findRecordsWithGivenCatagoryID];
+
+    return recordsWithGivenCatagoryID;
 }
 
 @end

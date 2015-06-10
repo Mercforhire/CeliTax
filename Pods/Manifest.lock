@@ -1,5 +1,6 @@
 PODS:
   - CDRTranslucentSideBar (1.0.3)
+  - LatoFont (1.0.0)
   - LLSimpleCamera (3.0.0)
   - MBProgressHUD (0.9.1)
   - MKNetworkKit (HEAD based on 0.87):
@@ -11,6 +12,7 @@ PODS:
 
 DEPENDENCIES:
   - CDRTranslucentSideBar
+  - LatoFont (~> 1.0.0)
   - LLSimpleCamera (~> 3.0)
   - MBProgressHUD (~> 0.9.1)
   - MKNetworkKit (HEAD)
@@ -20,6 +22,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   CDRTranslucentSideBar: b13a1792a8c495ea8f2356846a95bf7119cec7b0
+  LatoFont: bcfb0239c339af9aacf4b3061d5268e53e080732
   LLSimpleCamera: 3c41b46917f9ca53b91ef9c0cf24a75ce0ab4cd8
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   MKNetworkKit: 60ad3c83b62183e40ba75ce772c9427c25b520de

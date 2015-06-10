@@ -237,4 +237,112 @@
     return min + arc4random_uniform(max - min + 1);
 }
 
++ (NSInteger) currentYear
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *calendarComponents = [calendar components: NSCalendarUnitYear fromDate: [NSDate date]];
+    
+    NSInteger currentYear = [calendarComponents year];
+    
+    return currentYear;
+}
+
++ (NSDate *) dateForMondayOfThisWeek
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *calendarComponents = [calendar components: (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay |  NSCalendarUnitWeekday) fromDate: [NSDate date]];
+    
+    NSInteger weekDayOfToday = [calendarComponents weekday]; // 1 = Sunday, 2 = Monday, etc.
+    
+    NSInteger numberOfDaysSinceMonday = 0;
+    
+    if (weekDayOfToday == 1)
+    {
+        numberOfDaysSinceMonday = 6;
+    }
+    else
+    {
+        numberOfDaysSinceMonday =  weekDayOfToday - 2;
+    }
+    
+    [calendarComponents setDay: (calendarComponents.day - numberOfDaysSinceMonday)];
+    
+    [calendarComponents setCalendar: calendar]; // Must do this before calling [NSDateComponents date]
+    
+    NSDate *mondayOfThisWeek = [calendarComponents date];
+    
+    return mondayOfThisWeek;
+}
+
++ (NSDate *) dateForMondayOfPreviousWeek
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *calendarComponents = [calendar components: (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay |  NSCalendarUnitWeekday) fromDate: [NSDate date]];
+    
+    NSInteger weekDayOfToday = [calendarComponents weekday]; // 1 = Sunday, 2 = Monday, etc.
+    
+    NSInteger numberOfDaysSinceMonday = 0;
+    
+    if (weekDayOfToday == 1)
+    {
+        numberOfDaysSinceMonday = 6;
+    }
+    else
+    {
+        numberOfDaysSinceMonday =  weekDayOfToday - 2;
+    }
+    
+    [calendarComponents setDay: (calendarComponents.day - numberOfDaysSinceMonday)];
+    
+    [calendarComponents setDay: (calendarComponents.day - 7)];
+    
+    [calendarComponents setCalendar: calendar]; // Must do this before calling [NSDateComponents date]
+    
+    NSDate *mondayOfPreviousWeek = [calendarComponents date];
+    
+    return mondayOfPreviousWeek;
+}
+
++ (NSDate *) dateForFirstDayOfThisMonth
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *calendarComponents = [calendar components: (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay |  NSCalendarUnitWeekday) fromDate: [NSDate date]];
+    
+    [calendarComponents setDay: 1];
+    
+    [calendarComponents setCalendar: calendar]; // Must do this before calling [NSDateComponents date]
+    
+    NSDate *firstDayOfThisMonth = [calendarComponents date];
+    
+    return firstDayOfThisMonth;
+}
+
++ (NSDate *) dateForFirstDayOfPreviousMonth
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *calendarComponents = [calendar components: (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay |  NSCalendarUnitWeekday) fromDate: [NSDate date]];
+    
+    [calendarComponents setDay: 1];
+    
+    NSInteger currentMonth = [calendarComponents month];
+    
+    // if current month is January, we want to set the month to December of last year
+    if (currentMonth == 1)
+    {
+        [calendarComponents setYear: calendarComponents.year - 1];
+        
+        [calendarComponents setMonth: 12];
+    }
+    else
+    {
+        [calendarComponents setMonth: calendarComponents.month - 1];
+    }
+    
+    [calendarComponents setCalendar: calendar]; // Must do this before calling [NSDateComponents date]
+    
+    NSDate *firstDayOfPreviousMonth = [calendarComponents date];
+    
+    return firstDayOfPreviousMonth;
+}
+
 @end

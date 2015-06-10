@@ -4,12 +4,22 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>LatoFont.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-CeliTax-CDRTranslucentSideBar.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>Pods-CeliTax-LLSimpleCamera.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-CeliTax-LatoFont.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -52,47 +62,57 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0C69243E94D1931110ABA03B</key>
+		<key>0BB20D0974F22CBB8D508CD1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>15204F51910E8776351D3A91</key>
+		<key>1D7DAE5777B8EB264B54BD6A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1C9958C75482636CCA827131</key>
+		<key>46F510A70C15A2CD43650B8C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4B9EC615184EB69D825B80E6</key>
+		<key>4F17B931841C8728927A16D4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>54981296FC16607E81DDB213</key>
+		<key>7F5024F3556F1CA7EC5C405A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7251C8E1C06C115DE911C0F0</key>
+		<key>90784975D5E5C3336C242CC4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A7415F63FBC22053D5B3F6C6</key>
+		<key>B73AE0CFD33644C53D0B84BF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C1DB50C484C4DBA7C4826192</key>
+		<key>E2B16DFE441F459DE70B719B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E0216D5DFE78058F4F7A5FF9</key>
+		<key>E83610981AEF435A7F17BFB3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EEC9FFCFBC3393AFE81BAA5A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F432CC7D6583008D8F767646</key>
 		<dict>
 			<key>primary</key>
 			<true/>

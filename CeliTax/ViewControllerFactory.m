@@ -30,6 +30,9 @@
 #import "AllColorsPickerViewController.h"
 #import "CameraViewController.h"
 #import "ReceiptBreakDownViewController.h"
+#import "SendReceiptsToViewController.h"
+#import "PasswordRecoveryViewController.h"
+#import "PasswordRecoverySentViewController.h"
 
 @implementation ViewControllerFactory {
     NSArray *menuSelections;
@@ -40,6 +43,7 @@
     viewController.configurationManager = self.configurationManager;
     viewController.viewControllerFactory = self;
     viewController.userManager = self.userManager;
+    viewController.lookAndFeel = self.lookAndFeel;
 }
 
 - (SplashViewController *) createSplashViewController
@@ -107,6 +111,8 @@
     VaultViewController *vaultViewController = [[VaultViewController alloc] initWithNibName: @"VaultViewController" bundle: nil];
 
     [self initializeViewController: vaultViewController];
+
+    vaultViewController.dataService = self.dataService;
 
     return vaultViewController;
 }
@@ -256,6 +262,31 @@
     cameraOverlayViewController.manipulationService = self.manipulationService;
 
     return cameraOverlayViewController;
+}
+
+- (SendReceiptsToViewController *) createSendReceiptsToViewController
+{
+    SendReceiptsToViewController *sendReceiptsToViewController = [[SendReceiptsToViewController alloc] initWithNibName: @"SendReceiptsToViewController" bundle: nil];
+
+    return sendReceiptsToViewController;
+}
+
+- (PasswordRecoveryViewController *) createPasswordRecoveryViewController
+{
+    PasswordRecoveryViewController *passwordRecoveryViewController = [[PasswordRecoveryViewController alloc] initWithNibName: @"PasswordRecoveryViewController" bundle: nil];
+    
+    [self initializeViewController: passwordRecoveryViewController];
+    
+    return passwordRecoveryViewController;
+}
+
+- (PasswordRecoverySentViewController *) createPasswordRecoverySentViewController
+{
+    PasswordRecoverySentViewController *passwordRecoverySentViewController = [[PasswordRecoverySentViewController alloc] initWithNibName: @"PasswordRecoverySentViewController" bundle: nil];
+    
+    [self initializeViewController: passwordRecoverySentViewController];
+    
+    return passwordRecoverySentViewController;
 }
 
 - (NSArray *) getMenuSelections

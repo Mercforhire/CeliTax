@@ -41,7 +41,7 @@
     return self;
 }
 
-- (NSOperation *) authenticateUser: (NSString *) userName
+- (void) authenticateUser: (NSString *) userName
                       withPassword: (NSString *) password
                            success: (AuthenticateUserSuccessBlock) success
                            failure: (AuthenticateUserFailureBlock) failure
@@ -84,10 +84,10 @@
         }
     });
     
-    return nil;
+    return;
 }
 
-- (NSOperation *) registerNewUser: (NSString *) userName
+- (void) registerNewUser: (NSString *) userName
                      withPassword: (NSString *) password
                     withFirstname: (NSString *) firstname
                      withLastname: (NSString *) lastname
@@ -125,7 +125,7 @@
         }
     });
     
-    return nil;
+    return;
 }
 
 @end

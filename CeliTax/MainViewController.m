@@ -31,9 +31,7 @@ typedef enum : NSUInteger
     SectionCount,
 } SectionTitles;
 
-@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate> {
-    NSDateFormatter *dateFormatter;
-}
+@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *recentUploadsTable;
 @property (weak, nonatomic) IBOutlet UIButton *cameraButton;
@@ -49,6 +47,8 @@ typedef enum : NSUInteger
 @property (nonatomic, strong) NSArray *yearsRange;
 
 @property (nonatomic, strong) NSNumber *currentlySelectedYear;
+
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
 @end
 
@@ -78,7 +78,7 @@ typedef enum : NSUInteger
     self.recentUploadsTable.dataSource = self;
     self.recentUploadsTable.delegate = self;
 
-    dateFormatter = [[NSDateFormatter alloc] init];
+    self.dateFormatter = [[NSDateFormatter alloc] init];
 
     UINib *mainTableCell = [UINib nibWithNibName: @"MainViewTableViewCell" bundle: nil];
     [self.recentUploadsTable registerNib: mainTableCell forCellReuseIdentifier: @"MainTableCell"];
@@ -108,27 +108,34 @@ typedef enum : NSUInteger
     }];
 }
 
+-(void)reloadReceiptInfo
+{
+    [self.dataService fetchNewestReceiptInfo: 5
+                                      inYear: self.currentlySelectedYear.integerValue
+                                     success: ^(NSArray *receiptInfos)
+     {
+         self.receiptInfos = receiptInfos;
+         [self.recentUploadsTable reloadData];
+     }                                failure: ^(NSString *reason)
+     {
+         // should not happen
+     }];
+}
+
 - (void) setCurrentlySelectedYear: (NSNumber *) currentlySelectedYear
 {
     _currentlySelectedYear = currentlySelectedYear;
 
     [self setYearLabelToBe: self.currentlySelectedYear.integerValue];
 
-    [self.dataService fetchNewestReceiptInfo: 5
-                                      inYear: self.currentlySelectedYear.integerValue
-                                     success: ^(NSArray *receiptInfos)
-    {
-        self.receiptInfos = receiptInfos;
-        [self.recentUploadsTable reloadData];
-    }                                failure: ^(NSString *reason)
-    {
-        // should not happen
-    }];
+    [self reloadReceiptInfo];
 }
 
 - (void) viewWillAppear: (BOOL) animated
 {
     [super viewWillAppear: animated];
+    
+    [self reloadReceiptInfo];
 }
 
 - (void) taxYearPressed
@@ -203,19 +210,17 @@ typedef enum : NSUInteger
         cell = [[MainViewTableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: cellId];
     }
 
-    [cell setSelectionStyle: UITableViewCellSelectionStyleNone];
-
     NSDictionary *uploadInfoDictionary = self.receiptInfos [indexPath.row];
 
     NSDate *uploadDate = [uploadInfoDictionary objectForKey: kUploadTimeKey];
 
-    [dateFormatter setDateFormat: @"dd/MM/yyyy"];
+    [self.dateFormatter setDateFormat: @"dd/MM/yyyy"];
 
-    [cell.calenderDateLabel setText: [dateFormatter stringFromDate: uploadDate]];
+    [cell.calenderDateLabel setText: [self.dateFormatter stringFromDate: uploadDate]];
 
-    [dateFormatter setDateFormat: @"hh:mm a"];
+    [self.dateFormatter setDateFormat: @"hh:mm a"];
 
-    [cell.timeOfDayLabel setText: [[dateFormatter stringFromDate: uploadDate] lowercaseString]];
+    [cell.timeOfDayLabel setText: [[self.dateFormatter stringFromDate: uploadDate] lowercaseString]];
 
     return cell;
 }

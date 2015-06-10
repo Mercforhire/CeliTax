@@ -38,4 +38,14 @@
 
 + (int)randomNumberBetween:(int)min maxNumber:(int)max;
 
++ (NSInteger) currentYear;
+
++ (NSDate *) dateForMondayOfThisWeek;
+
++ (NSDate *) dateForMondayOfPreviousWeek;
+
++ (NSDate *) dateForFirstDayOfThisMonth;
+
++ (NSDate *) dateForFirstDayOfPreviousMonth;
+
 @end

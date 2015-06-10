@@ -20,12 +20,12 @@ typedef void (^RegisterNewUserFailureBlock) (RegisterResult *registerResult);
 
 @property (nonatomic, strong) UserDataDAO       *userDataDAO;
 
-- (NSOperation *) authenticateUser: (NSString *) userName
+- (void) authenticateUser: (NSString *) userName
                       withPassword: (NSString *) password
                            success: (AuthenticateUserSuccessBlock) success
                            failure: (AuthenticateUserFailureBlock) failure;
 
-- (NSOperation *) registerNewUser: (NSString *) userName
+- (void) registerNewUser: (NSString *) userName
                      withPassword: (NSString *) password
                     withFirstname: (NSString *) firstname
                      withLastname: (NSString *) lastname

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8500FA881B20CAA300F04E98 /* UploadsHistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8500FA861B20CAA300F04E98 /* UploadsHistoryTableViewCell.m */; };
+		8500FA891B20CAA300F04E98 /* UploadsHistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8500FA871B20CAA300F04E98 /* UploadsHistoryTableViewCell.xib */; };
 		850212801B0A925D00170785 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8502127E1B0A925D00170785 /* CameraViewController.m */; };
 		850212811B0A925D00170785 /* CameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8502127F1B0A925D00170785 /* CameraViewController.xib */; };
 		85100D411AF6BFC9005C24D2 /* UIView+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 85100D401AF6BFC9005C24D2 /* UIView+Helper.m */; };
@@ -29,6 +31,10 @@
 		85547BFA1AF31CFA00D9E1CE /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 85547BF91AF31CFA00D9E1CE /* UserManager.m */; };
 		85547BFD1AF31DCE00D9E1CE /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 85547BFC1AF31DCE00D9E1CE /* User.m */; };
 		85547C001AF32F4500D9E1CE /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 85547BFF1AF32F4500D9E1CE /* Utils.m */; };
+		8554BCDF1B252372002333ED /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 8554BCDE1B252372002333ED /* Notifications.m */; };
+		8554BCE31B2537F1002333ED /* M13Checkbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8554BCE21B2537F1002333ED /* M13Checkbox.m */; };
+		8554BCE91B254F45002333ED /* TimePeriodSelectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8554BCE71B254F45002333ED /* TimePeriodSelectionTableViewCell.m */; };
+		8554BCEA1B254F45002333ED /* TimePeriodSelectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8554BCE81B254F45002333ED /* TimePeriodSelectionTableViewCell.xib */; };
 		85552E941B029CE2005D9FB1 /* ModifyCatagoryPopUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85552E921B029CE2005D9FB1 /* ModifyCatagoryPopUpViewController.m */; };
 		85552E951B029CE2005D9FB1 /* ModifyCatagoryPopUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85552E931B029CE2005D9FB1 /* ModifyCatagoryPopUpViewController.xib */; };
 		85552E9C1B02FA30005D9FB1 /* CatagoriesManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85552E9A1B02FA30005D9FB1 /* CatagoriesManagementViewController.m */; };
@@ -76,6 +82,13 @@
 		855A528A1B0D2D6F004C54ED /* USA_flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 855A52881B0D2D6F004C54ED /* USA_flag.png */; };
 		855A528D1B0D88CC004C54ED /* Canada_flag_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 855A528B1B0D88CC004C54ED /* Canada_flag_gray.png */; };
 		855A528E1B0D88CC004C54ED /* USA_flag_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 855A528C1B0D88CC004C54ED /* USA_flag_gray.png */; };
+		855B6FB51B279E4700864E0B /* LookAndFeel.m in Sources */ = {isa = PBXBuildFile; fileRef = 855B6FB41B279E4700864E0B /* LookAndFeel.m */; };
+		855B6FB71B279F3000864E0B /* celitaxlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 855B6FB61B279F3000864E0B /* celitaxlogo.png */; };
+		855B6FB91B27CE4F00864E0B /* celitaxlogo_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 855B6FB81B27CE4F00864E0B /* celitaxlogo_small.png */; };
+		855BD2C61B25E151001ACBB2 /* ReceiptTimeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 855BD2C41B25E151001ACBB2 /* ReceiptTimeTableViewCell.m */; };
+		855BD2C71B25E151001ACBB2 /* ReceiptTimeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 855BD2C51B25E151001ACBB2 /* ReceiptTimeTableViewCell.xib */; };
+		855BD2CB1B267029001ACBB2 /* SendReceiptsToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 855BD2C91B267029001ACBB2 /* SendReceiptsToViewController.m */; };
+		855BD2CC1B267029001ACBB2 /* SendReceiptsToViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 855BD2CA1B267029001ACBB2 /* SendReceiptsToViewController.xib */; };
 		855D0B7F1B177B4400BD5EB4 /* MenuSelectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 855D0B7D1B177B4400BD5EB4 /* MenuSelectionTableViewCell.m */; };
 		855D0B801B177B4400BD5EB4 /* MenuSelectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 855D0B7E1B177B4400BD5EB4 /* MenuSelectionTableViewCell.xib */; };
 		856024B81AFA5E2C004C1254 /* ReceiptCheckingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 856024B61AFA5E2C004C1254 /* ReceiptCheckingViewController.m */; };
@@ -96,6 +109,8 @@
 		856273A11B1B84D500EECA26 /* ReceiptBreakDownViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8562739F1B1B84D500EECA26 /* ReceiptBreakDownViewController.xib */; };
 		856273A61B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 856273A41B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.m */; };
 		856273A71B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856273A51B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.xib */; };
+		85665DD51B20EFD200848D36 /* ReceiptTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 85665DD31B20EFD200848D36 /* ReceiptTableViewCell.m */; };
+		85665DD61B20EFD200848D36 /* ReceiptTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85665DD41B20EFD200848D36 /* ReceiptTableViewCell.xib */; };
 		857EC8C71B044CF400B6A5B2 /* AllColorsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 857EC8C51B044CF400B6A5B2 /* AllColorsPickerViewController.m */; };
 		857EC8C81B044CF400B6A5B2 /* AllColorsPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 857EC8C61B044CF400B6A5B2 /* AllColorsPickerViewController.xib */; };
 		8582A4691AF15BC20048DCD6 /* ConfigurationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8582A4681AF15BC20048DCD6 /* ConfigurationManager.m */; };
@@ -116,6 +131,16 @@
 		85A8CACF1AF069EA0023504D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85A8CACE1AF069EA0023504D /* Images.xcassets */; };
 		85A8CAD21AF069EA0023504D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85A8CAD01AF069EA0023504D /* LaunchScreen.xib */; };
 		85A8CADE1AF069EA0023504D /* CeliTaxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 85A8CADD1AF069EA0023504D /* CeliTaxTests.m */; };
+		85ACE41B1B27F55A0041B7C5 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE40D1B27F55A0041B7C5 /* Lato-Black.ttf */; };
+		85ACE41C1B27F55A0041B7C5 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE40E1B27F55A0041B7C5 /* Lato-BlackItalic.ttf */; };
+		85ACE41D1B27F55A0041B7C5 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE40F1B27F55A0041B7C5 /* Lato-Bold.ttf */; };
+		85ACE41E1B27F55A0041B7C5 /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4101B27F55A0041B7C5 /* Lato-BoldItalic.ttf */; };
+		85ACE41F1B27F55A0041B7C5 /* Lato-Hairline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4111B27F55A0041B7C5 /* Lato-Hairline.ttf */; };
+		85ACE4201B27F55A0041B7C5 /* Lato-HairlineItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4121B27F55A0041B7C5 /* Lato-HairlineItalic.ttf */; };
+		85ACE4211B27F55A0041B7C5 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4131B27F55A0041B7C5 /* Lato-Italic.ttf */; };
+		85ACE4221B27F55A0041B7C5 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4141B27F55A0041B7C5 /* Lato-Light.ttf */; };
+		85ACE4231B27F55A0041B7C5 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4151B27F55A0041B7C5 /* Lato-LightItalic.ttf */; };
+		85ACE4241B27F55A0041B7C5 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4161B27F55A0041B7C5 /* Lato-Regular.ttf */; };
 		85D8D8521AF873AA00197D85 /* AccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8D8501AF873AA00197D85 /* AccountTableViewCell.m */; };
 		85D8D8531AF873AA00197D85 /* AccountTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85D8D8511AF873AA00197D85 /* AccountTableViewCell.xib */; };
 		85D8D8561AF914B500197D85 /* AlertDialogsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8D8551AF914B500197D85 /* AlertDialogsProvider.m */; };
@@ -141,6 +166,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8500FA851B20CAA300F04E98 /* UploadsHistoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadsHistoryTableViewCell.h; sourceTree = "<group>"; };
+		8500FA861B20CAA300F04E98 /* UploadsHistoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadsHistoryTableViewCell.m; sourceTree = "<group>"; };
+		8500FA871B20CAA300F04E98 /* UploadsHistoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UploadsHistoryTableViewCell.xib; sourceTree = "<group>"; };
 		8502127D1B0A925D00170785 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		8502127E1B0A925D00170785 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		8502127F1B0A925D00170785 /* CameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraViewController.xib; sourceTree = "<group>"; };
@@ -177,6 +205,13 @@
 		85547BFE1AF32F4500D9E1CE /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		85547BFF1AF32F4500D9E1CE /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		85547C011AF3328900D9E1CE /* CeliTax-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CeliTax-Prefix.pch"; sourceTree = "<group>"; };
+		8554BCDD1B252372002333ED /* Notifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notifications.h; sourceTree = "<group>"; };
+		8554BCDE1B252372002333ED /* Notifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notifications.m; sourceTree = "<group>"; };
+		8554BCE11B2537F1002333ED /* M13Checkbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M13Checkbox.h; sourceTree = "<group>"; };
+		8554BCE21B2537F1002333ED /* M13Checkbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M13Checkbox.m; sourceTree = "<group>"; };
+		8554BCE61B254F45002333ED /* TimePeriodSelectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePeriodSelectionTableViewCell.h; sourceTree = "<group>"; };
+		8554BCE71B254F45002333ED /* TimePeriodSelectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePeriodSelectionTableViewCell.m; sourceTree = "<group>"; };
+		8554BCE81B254F45002333ED /* TimePeriodSelectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimePeriodSelectionTableViewCell.xib; sourceTree = "<group>"; };
 		85552E911B029CE2005D9FB1 /* ModifyCatagoryPopUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyCatagoryPopUpViewController.h; sourceTree = "<group>"; };
 		85552E921B029CE2005D9FB1 /* ModifyCatagoryPopUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyCatagoryPopUpViewController.m; sourceTree = "<group>"; };
 		85552E931B029CE2005D9FB1 /* ModifyCatagoryPopUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModifyCatagoryPopUpViewController.xib; sourceTree = "<group>"; };
@@ -251,6 +286,16 @@
 		855A52881B0D2D6F004C54ED /* USA_flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = USA_flag.png; sourceTree = "<group>"; };
 		855A528B1B0D88CC004C54ED /* Canada_flag_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Canada_flag_gray.png; sourceTree = "<group>"; };
 		855A528C1B0D88CC004C54ED /* USA_flag_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = USA_flag_gray.png; sourceTree = "<group>"; };
+		855B6FB31B279E4700864E0B /* LookAndFeel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookAndFeel.h; sourceTree = "<group>"; };
+		855B6FB41B279E4700864E0B /* LookAndFeel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookAndFeel.m; sourceTree = "<group>"; };
+		855B6FB61B279F3000864E0B /* celitaxlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = celitaxlogo.png; sourceTree = "<group>"; };
+		855B6FB81B27CE4F00864E0B /* celitaxlogo_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = celitaxlogo_small.png; sourceTree = "<group>"; };
+		855BD2C31B25E151001ACBB2 /* ReceiptTimeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptTimeTableViewCell.h; sourceTree = "<group>"; };
+		855BD2C41B25E151001ACBB2 /* ReceiptTimeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptTimeTableViewCell.m; sourceTree = "<group>"; };
+		855BD2C51B25E151001ACBB2 /* ReceiptTimeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptTimeTableViewCell.xib; sourceTree = "<group>"; };
+		855BD2C81B267029001ACBB2 /* SendReceiptsToViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendReceiptsToViewController.h; sourceTree = "<group>"; };
+		855BD2C91B267029001ACBB2 /* SendReceiptsToViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendReceiptsToViewController.m; sourceTree = "<group>"; };
+		855BD2CA1B267029001ACBB2 /* SendReceiptsToViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SendReceiptsToViewController.xib; sourceTree = "<group>"; };
 		855D0B7C1B177B4400BD5EB4 /* MenuSelectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuSelectionTableViewCell.h; sourceTree = "<group>"; };
 		855D0B7D1B177B4400BD5EB4 /* MenuSelectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuSelectionTableViewCell.m; sourceTree = "<group>"; };
 		855D0B7E1B177B4400BD5EB4 /* MenuSelectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuSelectionTableViewCell.xib; sourceTree = "<group>"; };
@@ -281,6 +326,9 @@
 		856273A31B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptBreakDownItemTableViewCell.h; sourceTree = "<group>"; };
 		856273A41B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptBreakDownItemTableViewCell.m; sourceTree = "<group>"; };
 		856273A51B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptBreakDownItemTableViewCell.xib; sourceTree = "<group>"; };
+		85665DD21B20EFD200848D36 /* ReceiptTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptTableViewCell.h; sourceTree = "<group>"; };
+		85665DD31B20EFD200848D36 /* ReceiptTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptTableViewCell.m; sourceTree = "<group>"; };
+		85665DD41B20EFD200848D36 /* ReceiptTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptTableViewCell.xib; sourceTree = "<group>"; };
 		857EC8C41B044CF400B6A5B2 /* AllColorsPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllColorsPickerViewController.h; sourceTree = "<group>"; };
 		857EC8C51B044CF400B6A5B2 /* AllColorsPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllColorsPickerViewController.m; sourceTree = "<group>"; };
 		857EC8C61B044CF400B6A5B2 /* AllColorsPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AllColorsPickerViewController.xib; sourceTree = "<group>"; };
@@ -316,6 +364,16 @@
 		85A8CAD71AF069EA0023504D /* CeliTaxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CeliTaxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85A8CADC1AF069EA0023504D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85A8CADD1AF069EA0023504D /* CeliTaxTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CeliTaxTests.m; sourceTree = "<group>"; };
+		85ACE40D1B27F55A0041B7C5 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
+		85ACE40E1B27F55A0041B7C5 /* Lato-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BlackItalic.ttf"; sourceTree = "<group>"; };
+		85ACE40F1B27F55A0041B7C5 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
+		85ACE4101B27F55A0041B7C5 /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BoldItalic.ttf"; sourceTree = "<group>"; };
+		85ACE4111B27F55A0041B7C5 /* Lato-Hairline.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Hairline.ttf"; sourceTree = "<group>"; };
+		85ACE4121B27F55A0041B7C5 /* Lato-HairlineItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-HairlineItalic.ttf"; sourceTree = "<group>"; };
+		85ACE4131B27F55A0041B7C5 /* Lato-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Italic.ttf"; sourceTree = "<group>"; };
+		85ACE4141B27F55A0041B7C5 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
+		85ACE4151B27F55A0041B7C5 /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
+		85ACE4161B27F55A0041B7C5 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
 		85D8D84F1AF873AA00197D85 /* AccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountTableViewCell.h; sourceTree = "<group>"; };
 		85D8D8501AF873AA00197D85 /* AccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountTableViewCell.m; sourceTree = "<group>"; };
 		85D8D8511AF873AA00197D85 /* AccountTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountTableViewCell.xib; sourceTree = "<group>"; };
@@ -398,6 +456,8 @@
 		85100D421AF6CE76005C24D2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				855B6FB81B27CE4F00864E0B /* celitaxlogo_small.png */,
+				855B6FB61B279F3000864E0B /* celitaxlogo.png */,
 				85F4857D1B16BD15005E0EDE /* camera-flash-off.png */,
 				85F4857E1B16BD15005E0EDE /* camera-flash-off@2x.png */,
 				85F4857F1B16BD15005E0EDE /* camera-flash-on.png */,
@@ -467,6 +527,38 @@
 			name = Factory;
 			sourceTree = "<group>";
 		};
+		8554BCE01B2537E2002333ED /* M13 CheckBox */ = {
+			isa = PBXGroup;
+			children = (
+				8554BCE11B2537F1002333ED /* M13Checkbox.h */,
+				8554BCE21B2537F1002333ED /* M13Checkbox.m */,
+			);
+			name = "M13 CheckBox";
+			sourceTree = "<group>";
+		};
+		8554BCE41B254935002333ED /* Send Receipts To Pop Up */ = {
+			isa = PBXGroup;
+			children = (
+				855BD2C81B267029001ACBB2 /* SendReceiptsToViewController.h */,
+				855BD2C91B267029001ACBB2 /* SendReceiptsToViewController.m */,
+				855BD2CA1B267029001ACBB2 /* SendReceiptsToViewController.xib */,
+			);
+			name = "Send Receipts To Pop Up";
+			sourceTree = "<group>";
+		};
+		8554BCE51B254AFF002333ED /* Vault Table Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8554BCE61B254F45002333ED /* TimePeriodSelectionTableViewCell.h */,
+				8554BCE71B254F45002333ED /* TimePeriodSelectionTableViewCell.m */,
+				8554BCE81B254F45002333ED /* TimePeriodSelectionTableViewCell.xib */,
+				855BD2C31B25E151001ACBB2 /* ReceiptTimeTableViewCell.h */,
+				855BD2C41B25E151001ACBB2 /* ReceiptTimeTableViewCell.m */,
+				855BD2C51B25E151001ACBB2 /* ReceiptTimeTableViewCell.xib */,
+			);
+			name = "Vault Table Cells";
+			sourceTree = "<group>";
+		};
 		85552E901B029C99005D9FB1 /* Modify Catagory Pop Up */ = {
 			isa = PBXGroup;
 			children = (
@@ -480,6 +572,7 @@
 		85552E961B02F65E005D9FB1 /* Pop Up */ = {
 			isa = PBXGroup;
 			children = (
+				8554BCE41B254935002333ED /* Send Receipts To Pop Up */,
 				85560FE41B01B7FF004D2963 /* Selections Picker Pop Up */,
 				857EC8C31B044CD800B6A5B2 /* All Colors Picker Pop Up */,
 				85560FDE1B019830004D2963 /* Color Picker Pop Up */,
@@ -648,6 +741,15 @@
 			name = "Main View Table Cells";
 			sourceTree = "<group>";
 		};
+		855B6FB21B279E2E00864E0B /* LookAndFeel */ = {
+			isa = PBXGroup;
+			children = (
+				855B6FB31B279E4700864E0B /* LookAndFeel.h */,
+				855B6FB41B279E4700864E0B /* LookAndFeel.m */,
+			);
+			name = LookAndFeel;
+			sourceTree = "<group>";
+		};
 		856024B41AFA5DE5004C1254 /* Receipt Checking */ = {
 			isa = PBXGroup;
 			children = (
@@ -773,6 +875,7 @@
 		85A8CAC01AF069EA0023504D /* CeliTax */ = {
 			isa = PBXGroup;
 			children = (
+				855B6FB21B279E2E00864E0B /* LookAndFeel */,
 				8556E3081AF3E5A1003CCDD2 /* Categories */,
 				85A8CAE71AF071110023504D /* Session */,
 				85A8CAE81AF071410023504D /* DAO */,
@@ -794,6 +897,7 @@
 		85A8CAC11AF069EA0023504D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				85ACE40C1B27F55A0041B7C5 /* Fonts */,
 				856024C31AFA6F4B004C1254 /* Sample Receipt */,
 				85100D421AF6CE76005C24D2 /* Images */,
 				85A8CAC21AF069EA0023504D /* Info.plist */,
@@ -864,6 +968,8 @@
 		85A8CAEB1AF071FC0023504D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8554BCE51B254AFF002333ED /* Vault Table Cells */,
+				8554BCE01B2537E2002333ED /* M13 CheckBox */,
 				85F485851B16D1A4005E0EDE /* LeftSide Menu */,
 				850212821B0A9AE600170785 /* WhiteBorderView */,
 				8555E0D31B091DC800B91138 /* Horizonal Scroll Bar */,
@@ -873,7 +979,7 @@
 				856273A21B1BF60500EECA26 /* Receipt Break Down Table Cells */,
 				8559738D1AFD2BDD00DFC176 /* Main View Table Cells */,
 				856024BA1AFA6118004C1254 /* Receipt View */,
-				85D8D8491AF8737600197D85 /* Account Table Cell */,
+				85D8D8491AF8737600197D85 /* Account Table Cells */,
 				8556E32A1AF428A7003CCDD2 /* Catagory Table Cell */,
 			);
 			name = Views;
@@ -888,7 +994,6 @@
 				85552E981B02FA18005D9FB1 /* Catagories Management */,
 				8556E3511AF4942F003CCDD2 /* Feedback */,
 				8556E3501AF49420003CCDD2 /* Settings */,
-				8556E34F1AF49415003CCDD2 /* Vault */,
 				8502127C1B0A923300170785 /* Camera */,
 				8556E34E1AF4940A003CCDD2 /* Help */,
 				8582A46B1AF176460048DCD6 /* Splash */,
@@ -896,6 +1001,7 @@
 				85A8CAF01AF07A1F0023504D /* Register */,
 				85A8CAF31AF07A850023504D /* Add Catagory */,
 				856024B41AFA5DE5004C1254 /* Receipt Checking */,
+				8556E34F1AF49415003CCDD2 /* Vault */,
 				8562739C1B1B7FCC00EECA26 /* Receipt Break Down */,
 				85A8CAF21AF07A720023504D /* My Account */,
 				85A8CAF11AF07A640023504D /* Main Screen */,
@@ -920,6 +1026,8 @@
 				854497061AF736DE0068779A /* UserData.m */,
 				856024CF1AFAB9ED004C1254 /* Receipt.h */,
 				856024D01AFAB9ED004C1254 /* Receipt.m */,
+				8554BCDD1B252372002333ED /* Notifications.h */,
+				8554BCDE1B252372002333ED /* Notifications.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1023,14 +1131,38 @@
 			name = "Delete Catagory Pop Up";
 			sourceTree = "<group>";
 		};
-		85D8D8491AF8737600197D85 /* Account Table Cell */ = {
+		85ACE40C1B27F55A0041B7C5 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				85ACE40D1B27F55A0041B7C5 /* Lato-Black.ttf */,
+				85ACE40E1B27F55A0041B7C5 /* Lato-BlackItalic.ttf */,
+				85ACE40F1B27F55A0041B7C5 /* Lato-Bold.ttf */,
+				85ACE4101B27F55A0041B7C5 /* Lato-BoldItalic.ttf */,
+				85ACE4111B27F55A0041B7C5 /* Lato-Hairline.ttf */,
+				85ACE4121B27F55A0041B7C5 /* Lato-HairlineItalic.ttf */,
+				85ACE4131B27F55A0041B7C5 /* Lato-Italic.ttf */,
+				85ACE4141B27F55A0041B7C5 /* Lato-Light.ttf */,
+				85ACE4151B27F55A0041B7C5 /* Lato-LightItalic.ttf */,
+				85ACE4161B27F55A0041B7C5 /* Lato-Regular.ttf */,
+			);
+			name = Fonts;
+			path = LatoFont/Source/Fonts;
+			sourceTree = "<group>";
+		};
+		85D8D8491AF8737600197D85 /* Account Table Cells */ = {
 			isa = PBXGroup;
 			children = (
 				85D8D84F1AF873AA00197D85 /* AccountTableViewCell.h */,
 				85D8D8501AF873AA00197D85 /* AccountTableViewCell.m */,
 				85D8D8511AF873AA00197D85 /* AccountTableViewCell.xib */,
+				8500FA851B20CAA300F04E98 /* UploadsHistoryTableViewCell.h */,
+				8500FA861B20CAA300F04E98 /* UploadsHistoryTableViewCell.m */,
+				8500FA871B20CAA300F04E98 /* UploadsHistoryTableViewCell.xib */,
+				85665DD21B20EFD200848D36 /* ReceiptTableViewCell.h */,
+				85665DD31B20EFD200848D36 /* ReceiptTableViewCell.m */,
+				85665DD41B20EFD200848D36 /* ReceiptTableViewCell.xib */,
 			);
-			name = "Account Table Cell";
+			name = "Account Table Cells";
 			sourceTree = "<group>";
 		};
 		85D8D8581AF9210000197D85 /* Data Manipulation Service */ = {
@@ -1138,22 +1270,28 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85ACE41C1B27F55A0041B7C5 /* Lato-BlackItalic.ttf in Resources */,
 				8582A4791AF17DFD0048DCD6 /* LoginViewController.xib in Resources */,
 				856273911B1A8ECF00EECA26 /* greenTrianglePointUp.png in Resources */,
 				8586E5E61B17A04400C1014F /* userIcon.png in Resources */,
 				856273A11B1B84D500EECA26 /* ReceiptBreakDownViewController.xib in Resources */,
+				8500FA891B20CAA300F04E98 /* UploadsHistoryTableViewCell.xib in Resources */,
 				856024B91AFA5E2C004C1254 /* ReceiptCheckingViewController.xib in Resources */,
 				850212811B0A925D00170785 /* CameraViewController.xib in Resources */,
 				856273A71B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.xib in Resources */,
+				85665DD61B20EFD200848D36 /* ReceiptTableViewCell.xib in Resources */,
 				8556E3481AF485A2003CCDD2 /* TransferCatagoryViewController.xib in Resources */,
 				85100D521AF6CEC6005C24D2 /* menu@2x.png in Resources */,
 				8555E0CA1B080C9B00B91138 /* receipt.png in Resources */,
 				856273961B1B780900EECA26 /* PasswordRecoveryViewController.xib in Resources */,
 				8556E34D1AF493F4003CCDD2 /* DeleteCatagoryViewController.xib in Resources */,
+				85ACE41E1B27F55A0041B7C5 /* Lato-BoldItalic.ttf in Resources */,
 				85100D491AF6CE9D005C24D2 /* arrow.png in Resources */,
+				855BD2CC1B267029001ACBB2 /* SendReceiptsToViewController.xib in Resources */,
 				85552E951B029CE2005D9FB1 /* ModifyCatagoryPopUpViewController.xib in Resources */,
 				85F485821B16BD15005E0EDE /* camera-flash-off@2x.png in Resources */,
 				85F485841B16BD15005E0EDE /* camera-flash-on@2x.png in Resources */,
+				8554BCEA1B254F45002333ED /* TimePeriodSelectionTableViewCell.xib in Resources */,
 				8556E3601AF53250003CCDD2 /* VaultViewController.xib in Resources */,
 				856273901B1A8ECF00EECA26 /* greenTrianglePointDown.png in Resources */,
 				85100D4D1AF6CEBA005C24D2 /* envelope.png in Resources */,
@@ -1162,7 +1300,9 @@
 				85D8D8531AF873AA00197D85 /* AccountTableViewCell.xib in Resources */,
 				85100D511AF6CEC6005C24D2 /* menu.png in Resources */,
 				855973921AFD2BF800DFC176 /* MainViewTableViewCell.xib in Resources */,
+				85ACE41B1B27F55A0041B7C5 /* Lato-Black.ttf in Resources */,
 				8556E3391AF47C8C003CCDD2 /* AddCatagoryViewController.xib in Resources */,
+				85ACE41D1B27F55A0041B7C5 /* Lato-Bold.ttf in Resources */,
 				8556E3651AF53264003CCDD2 /* HelpScreenViewController.xib in Resources */,
 				8556E32F1AF428C4003CCDD2 /* CatagoryTableViewCell.xib in Resources */,
 				855D0B801B177B4400BD5EB4 /* MenuSelectionTableViewCell.xib in Resources */,
@@ -1173,6 +1313,7 @@
 				855A528A1B0D2D6F004C54ED /* USA_flag.png in Resources */,
 				857EC8C81B044CF400B6A5B2 /* AllColorsPickerViewController.xib in Resources */,
 				855A528D1B0D88CC004C54ED /* Canada_flag_gray.png in Resources */,
+				85ACE41F1B27F55A0041B7C5 /* Lato-Hairline.ttf in Resources */,
 				85A8CAD21AF069EA0023504D /* LaunchScreen.xib in Resources */,
 				85560FE31B019857004D2963 /* ColorPickerViewController.xib in Resources */,
 				8562739B1B1B782600EECA26 /* PasswordRecoverySentViewController.xib in Resources */,
@@ -1180,17 +1321,25 @@
 				85F485811B16BD15005E0EDE /* camera-flash-off.png in Resources */,
 				85100D4E1AF6CEBA005C24D2 /* envelope@2x.png in Resources */,
 				85100D451AF6CE90005C24D2 /* account.png in Resources */,
+				85ACE4211B27F55A0041B7C5 /* Lato-Italic.ttf in Resources */,
 				855894161B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.xib in Resources */,
 				8582A4701AF176660048DCD6 /* SplashViewController.xib in Resources */,
+				85ACE4221B27F55A0041B7C5 /* Lato-Light.ttf in Resources */,
 				85100D461AF6CE90005C24D2 /* account@2x.png in Resources */,
+				855B6FB71B279F3000864E0B /* celitaxlogo.png in Resources */,
 				85100D4A1AF6CE9D005C24D2 /* arrow@2x.png in Resources */,
 				856024CE1AFA9E6F004C1254 /* ReceiptPic-2.jpg in Resources */,
+				85ACE4231B27F55A0041B7C5 /* Lato-LightItalic.ttf in Resources */,
 				8556E3341AF47C0D003CCDD2 /* MyAccountViewController.xib in Resources */,
+				855BD2C71B25E151001ACBB2 /* ReceiptTimeTableViewCell.xib in Resources */,
 				856024CD1AFA9E6F004C1254 /* ReceiptPic-1.jpg in Resources */,
 				855A528E1B0D88CC004C54ED /* USA_flag_gray.png in Resources */,
 				85F485831B16BD15005E0EDE /* camera-flash-on.png in Resources */,
 				855A52891B0D2D6F004C54ED /* Canada_flag.png in Resources */,
+				85ACE4241B27F55A0041B7C5 /* Lato-Regular.ttf in Resources */,
+				855B6FB91B27CE4F00864E0B /* celitaxlogo_small.png in Resources */,
 				85A8CACF1AF069EA0023504D /* Images.xcassets in Resources */,
+				85ACE4201B27F55A0041B7C5 /* Lato-HairlineItalic.ttf in Resources */,
 				8556E3431AF48591003CCDD2 /* ModifyCatagoryViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1249,13 +1398,18 @@
 				85D8D8521AF873AA00197D85 /* AccountTableViewCell.m in Sources */,
 				8557E1881AF84218003E2880 /* DAOFactory.m in Sources */,
 				8556E3121AF40D43003CCDD2 /* Catagory.m in Sources */,
+				8554BCDF1B252372002333ED /* Notifications.m in Sources */,
 				855973911AFD2BF800DFC176 /* MainViewTableViewCell.m in Sources */,
 				85D8D85C1AF924BE00197D85 /* ManipulationServiceImpl.m in Sources */,
 				854497041AF734EB0068779A /* Record.m in Sources */,
 				85547BFD1AF31DCE00D9E1CE /* User.m in Sources */,
+				855B6FB51B279E4700864E0B /* LookAndFeel.m in Sources */,
 				856273851B17E30400EECA26 /* BaseSideBarViewController.m in Sources */,
+				85665DD51B20EFD200848D36 /* ReceiptTableViewCell.m in Sources */,
+				8500FA881B20CAA300F04E98 /* UploadsHistoryTableViewCell.m in Sources */,
 				857EC8C71B044CF400B6A5B2 /* AllColorsPickerViewController.m in Sources */,
 				85F977661B0AF696002B3DF3 /* WhiteBorderView.m in Sources */,
+				855BD2C61B25E151001ACBB2 /* ReceiptTimeTableViewCell.m in Sources */,
 				8556E3641AF53264003CCDD2 /* HelpScreenViewController.m in Sources */,
 				856273881B1A288800EECA26 /* MainViewTableDataModel.m in Sources */,
 				8556E36B1AF56CEF003CCDD2 /* DataServiceImpl.m in Sources */,
@@ -1280,9 +1434,12 @@
 				85560FE81B01B82A004D2963 /* SelectionsPickerViewController.m in Sources */,
 				8555E0CE1B080DAD00B91138 /* ImageCounterIconView.m in Sources */,
 				8556E3271AF41BFA003CCDD2 /* MainViewController.m in Sources */,
+				855BD2CB1B267029001ACBB2 /* SendReceiptsToViewController.m in Sources */,
 				856273951B1B780900EECA26 /* PasswordRecoveryViewController.m in Sources */,
 				85547C001AF32F4500D9E1CE /* Utils.m in Sources */,
 				8558940C1B1C1BD100D3F353 /* XYPieChart.m in Sources */,
+				8554BCE31B2537F1002333ED /* M13Checkbox.m in Sources */,
+				8554BCE91B254F45002333ED /* TimePeriodSelectionTableViewCell.m in Sources */,
 				8556E3551AF53225003CCDD2 /* FeedbackViewController.m in Sources */,
 				85547BF31AF2ED9300D9E1CE /* RegisterResult.m in Sources */,
 				8556E3331AF47C0D003CCDD2 /* MyAccountViewController.m in Sources */,

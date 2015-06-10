@@ -122,7 +122,7 @@
 - (void) loadData
 {
     self.currentlySelectedRecord = nil;
-    
+
     self.recordsDictionary = [NSMutableDictionary new];
     self.catagoriesUsedByThisReceipt = [NSMutableArray new];
 
@@ -201,7 +201,7 @@
     {
         for (Record *record in records)
         {
-            totalAmount = totalAmount + record.quantity * record.amount;
+            totalAmount = totalAmount + [record calculateTotal];
         }
     }
 
@@ -288,6 +288,36 @@
     }
 
     return total;
+}
+
+- (NSInteger) getRecordPosition: (Record *) recordToFind
+{
+    NSInteger position = 0;
+
+    BOOL foundAlready = NO;
+    
+    for (NSString *catagoryID in self.recordsDictionary.allKeys)
+    {
+        if (foundAlready)
+        {
+            break;
+        }
+        
+        NSMutableArray *records = [self.recordsDictionary objectForKey: catagoryID];
+
+        for (Record *record in records)
+        {
+            if ([recordToFind.identifer isEqualToString: record.identifer])
+            {
+                foundAlready = YES;
+                break;
+            }
+
+            position++;
+        }
+    }
+
+    return position;
 }
 
 - (Record *) getNthRecordFromRecordsDictionary: (NSInteger) nTh
@@ -520,6 +550,9 @@
     if (self.currentlySelectedRecord != [recordsOfThisCatagory firstObject])
     {
         self.currentlySelectedRecord = [recordsOfThisCatagory firstObject];
+
+        // scroll the table to the row that shows self.currentlySelectedRecord
+        [self.receiptItemsTable scrollToRowAtIndexPath: [NSIndexPath indexPathForRow: [self getRecordPosition:self.currentlySelectedRecord] * 2 inSection: 0] atScrollPosition: UITableViewScrollPositionTop animated: YES];
     }
 }
 
@@ -549,7 +582,6 @@
                                                             reuseIdentifier  : cellId];
         }
 
-        [cell setSelectionStyle: UITableViewCellSelectionStyleNone];
         cell.clipsToBounds = YES;
 
         Record *thisRecord = [self getNthRecordFromRecordsDictionary: indexPath.row / 2];
@@ -577,7 +609,7 @@
 
         return cell;
     }
-    // display a kReceiptBreakDownToolBarTableViewCell
+    // display a ReceiptBreakDownToolBarTableViewCell
     else
     {
         static NSString *cellId = kReceiptBreakDownToolBarTableViewCellIdentifier;
@@ -588,7 +620,6 @@
             cell = [[ReceiptBreakDownToolBarTableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: cellId];
         }
 
-        [cell setSelectionStyle: UITableViewCellSelectionStyleNone];
         cell.clipsToBounds = YES;
 
         cell.transferButton.tag = indexPath.row / 2;
@@ -615,7 +646,7 @@
     // display a kReceiptBreakDownToolBarTableViewCell
     else
     {
-        Record *thisRecord = [self getNthRecordFromRecordsDictionary: indexPath.row / 2];
+        Record *thisRecord = [self getNthRecordFromRecordsDictionary: (indexPath.row - 1) / 2];
 
         // only show the row if currentlySelectedRecord == thisRecord
 

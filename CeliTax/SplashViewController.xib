@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SplashViewController">
@@ -15,24 +16,40 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="KMR-GL-nrG">
-                    <rect key="frame" x="170" y="516" width="37" height="37"/>
-                    <color key="color" red="1" green="0.35536646100000002" blue="0.30897244080000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <rect key="frame" x="169" y="488" width="37" height="37"/>
+                    <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </activityIndicatorView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CeliTax" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WAt-yc-TpD">
-                    <rect key="frame" x="109" y="304" width="157" height="60"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="50"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="celitaxlogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="sNZ-EH-H2h">
+                    <rect key="frame" x="23" y="268" width="329" height="131.5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="sNZ-EH-H2h" secondAttribute="height" multiplier="329:279" id="5Br-Gq-Drc"/>
+                        <constraint firstAttribute="width" constant="328" id="baa-wv-Ffl"/>
+                        <constraint firstAttribute="height" constant="108" id="doY-vN-86y"/>
+                        <constraint firstAttribute="width" secondItem="sNZ-EH-H2h" secondAttribute="height" multiplier="4:2" id="srJ-bp-aCr"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="srJ-bp-aCr"/>
+                            <exclude reference="baa-wv-Ffl"/>
+                            <exclude reference="5Br-Gq-Drc"/>
+                            <exclude reference="doY-vN-86y"/>
+                        </mask>
+                    </variation>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="KMR-GL-nrG" firstAttribute="top" secondItem="WAt-yc-TpD" secondAttribute="bottom" constant="152" id="AUE-Pt-mNc"/>
-                <constraint firstAttribute="centerX" secondItem="WAt-yc-TpD" secondAttribute="centerX" id="Yjc-lB-RVv"/>
-                <constraint firstAttribute="centerX" secondItem="KMR-GL-nrG" secondAttribute="centerX" constant="-0.5" id="vFz-kH-xqC"/>
-                <constraint firstAttribute="centerY" secondItem="WAt-yc-TpD" secondAttribute="centerY" id="xDm-ZP-gKm"/>
+                <constraint firstItem="sNZ-EH-H2h" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="23" id="5EJ-kl-9eW"/>
+                <constraint firstItem="sNZ-EH-H2h" firstAttribute="width" secondItem="sNZ-EH-H2h" secondAttribute="height" multiplier="5:2" id="6sX-bJ-dwE"/>
+                <constraint firstAttribute="centerY" secondItem="sNZ-EH-H2h" secondAttribute="centerY" id="SCx-B8-7tH"/>
+                <constraint firstAttribute="trailing" secondItem="sNZ-EH-H2h" secondAttribute="trailing" constant="23" id="Y51-hr-810"/>
+                <constraint firstAttribute="centerX" secondItem="KMR-GL-nrG" secondAttribute="centerX" id="vFz-kH-xqC"/>
+                <constraint firstItem="KMR-GL-nrG" firstAttribute="top" secondItem="sNZ-EH-H2h" secondAttribute="bottom" constant="88.5" id="zzG-fv-KVt"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
         </view>
     </objects>
+    <resources>
+        <image name="celitaxlogo.png" width="843" height="279"/>
+    </resources>
 </document>
