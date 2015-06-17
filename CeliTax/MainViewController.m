@@ -21,6 +21,8 @@
 #import "SelectionsPickerViewController.h"
 #import "WYPopoverController.h"
 #import "ReceiptBreakDownViewController.h"
+#import "TriangleView.h"
+#import "LoginViewController.h"
 
 #define kRecentUploadTableRowHeight         40
 
@@ -31,12 +33,11 @@ typedef enum : NSUInteger
     SectionCount,
 } SectionTitles;
 
-@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate>
+@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate, CameraControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *recentUploadsTable;
 @property (weak, nonatomic) IBOutlet UIButton *cameraButton;
 @property (weak, nonatomic) IBOutlet UILabel *taxYearLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *greenTriangle;
 @property (nonatomic, strong) WYPopoverController *selectionPopover;
 @property (nonatomic, strong) SelectionsPickerViewController *taxYearPickerViewController;
 
@@ -50,22 +51,45 @@ typedef enum : NSUInteger
 
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
+// open up the ReceiptCheckingViewController for the most recent receipt
+@property (nonatomic) BOOL shouldJumpToMostRecentReceipt;
+
 @end
 
 @implementation MainViewController
 
-- (id) initWithNibName: (NSString *) nibNameOrNil bundle: (NSBundle *) nibBundleOrNil
+- (void) setupUI
 {
-    if (self = [super initWithNibName: nibNameOrNil bundle: nibBundleOrNil])
-    {
-        // initialize the slider bar menu button
-        UIBarButtonItem *menuItem = [[UIBarButtonItem alloc] initWithTitle: @"+ Add Catagory" style: UIBarButtonItemStylePlain target: self action: @selector(addCatagoryPressed:)];
-        self.navigationItem.leftBarButtonItem = menuItem;
+    // setup the navigation bar items
+    UIButton *addCatagoryButton = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, 80, 54)];
+    [addCatagoryButton setTitle: @"Catagories" forState: UIControlStateNormal];
+    [addCatagoryButton.titleLabel setFont: [UIFont latoBoldFontOfSize: 15]];
+    addCatagoryButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [addCatagoryButton setTitleColor: self.lookAndFeel.appGreenColor forState: UIControlStateNormal];
+    [addCatagoryButton addTarget: self action: @selector(addCatagoryPressed:) forControlEvents: UIControlEventTouchUpInside];
+    [addCatagoryButton sizeToFit];
 
-        [self.navigationItem setHidesBackButton: YES];
+    UIBarButtonItem *menuItem = [[UIBarButtonItem alloc] initWithCustomView: addCatagoryButton];
+    self.navigationItem.leftBarButtonItem = menuItem;
+
+    [self.navigationItem setHidesBackButton: YES];
+
+    UINib *mainTableCell = [UINib nibWithNibName: @"MainViewTableViewCell" bundle: nil];
+    [self.recentUploadsTable registerNib: mainTableCell forCellReuseIdentifier: @"MainTableCell"];
+
+    // remove loginViewController from stack
+    NSMutableArray *viewControllers = [[self.navigationController viewControllers] mutableCopy];
+
+    for (UIViewController *viewController in viewControllers)
+    {
+        if ([viewController isKindOfClass: [LoginViewController class]])
+        {
+            [viewControllers removeObject: viewController];
+            break;
+        }
     }
 
-    return self;
+    [self.navigationController setViewControllers: viewControllers];
 }
 
 - (void) viewDidLoad
@@ -73,15 +97,14 @@ typedef enum : NSUInteger
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
+    [self setupUI];
+
     [self.dataService loadDemoData];
 
     self.recentUploadsTable.dataSource = self;
     self.recentUploadsTable.delegate = self;
 
     self.dateFormatter = [[NSDateFormatter alloc] init];
-
-    UINib *mainTableCell = [UINib nibWithNibName: @"MainViewTableViewCell" bundle: nil];
-    [self.recentUploadsTable registerNib: mainTableCell forCellReuseIdentifier: @"MainTableCell"];
 
     UITapGestureRecognizer *taxYearPressedTap =
         [[UITapGestureRecognizer alloc] initWithTarget: self
@@ -97,7 +120,7 @@ typedef enum : NSUInteger
 
         for (NSNumber *year in yearsRange)
         {
-            [yearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", year.integerValue]];
+            [yearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", (long)year.integerValue]];
         }
 
         self.taxYearPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: yearSelections];
@@ -108,18 +131,18 @@ typedef enum : NSUInteger
     }];
 }
 
--(void)reloadReceiptInfo
+- (void) reloadReceiptInfo
 {
     [self.dataService fetchNewestReceiptInfo: 5
                                       inYear: self.currentlySelectedYear.integerValue
                                      success: ^(NSArray *receiptInfos)
-     {
-         self.receiptInfos = receiptInfos;
-         [self.recentUploadsTable reloadData];
-     }                                failure: ^(NSString *reason)
-     {
-         // should not happen
-     }];
+    {
+        self.receiptInfos = receiptInfos;
+        [self.recentUploadsTable reloadData];
+    }                                failure: ^(NSString *reason)
+    {
+        // should not happen
+    }];
 }
 
 - (void) setCurrentlySelectedYear: (NSNumber *) currentlySelectedYear
@@ -134,8 +157,19 @@ typedef enum : NSUInteger
 - (void) viewWillAppear: (BOOL) animated
 {
     [super viewWillAppear: animated];
-    
+
     [self reloadReceiptInfo];
+
+    if (self.shouldJumpToMostRecentReceipt)
+    {
+        self.shouldJumpToMostRecentReceipt = NO;
+
+        NSDictionary *uploadInfoDictionaryForMostRecentUpload = self.receiptInfos [0];
+
+        NSString *receiptIDForMostRecentUpload = [uploadInfoDictionaryForMostRecentUpload objectForKey: kReceiptIDKey];
+
+        [self.navigationController pushViewController: [self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID:receiptIDForMostRecentUpload cameFromReceiptBreakDownViewController:NO] animated: YES];
+    }
 }
 
 - (void) taxYearPressed
@@ -151,22 +185,15 @@ typedef enum : NSUInteger
 
 - (IBAction) cameraButtonPressed: (UIButton *) sender
 {
-    [self.navigationController pushViewController: [self.viewControllerFactory createCameraOverlayViewController] animated: YES];
+    CameraViewController *cameraVC = [self.viewControllerFactory createCameraOverlayViewController];
+    cameraVC.delegate = self;
+
+    [self.navigationController pushViewController: cameraVC animated: YES];
 }
 
 - (void) setYearLabelToBe: (NSInteger) year
 {
-    [self.taxYearLabel setText: [NSString stringWithFormat: @"%ld Tax Year", year]];
-}
-
-- (void) setGreenArrowUp
-{
-    [self.greenTriangle setImage: [UIImage imageNamed: @"greenTrianglePointUp"]];
-}
-
-- (void) setGreenArrowDown
-{
-    [self.greenTriangle setImage: [UIImage imageNamed: @"greenTrianglePointDown"]];
+    [self.taxYearLabel setText: [NSString stringWithFormat: @"%ld Tax Year", (long)year]];
 }
 
 - (IBAction) myAccountPressed: (UIButton *) sender
@@ -179,13 +206,21 @@ typedef enum : NSUInteger
     [super selectedMenuIndex: RootViewControllerVault];
 }
 
+#pragma mark - CameraControllerDelegate
+- (void) hasJustCreatedNewReceipt
+{
+    self.shouldJumpToMostRecentReceipt = YES;
+}
+
 #pragma mark - SelectionsPickerPopUpDelegate
 
-- (void) selectedSelectionAtIndex: (NSInteger) index
+- (void) selectedSelectionAtIndex: (NSInteger) index fromPopUp:(SelectionsPickerViewController *)popUpController
 {
     [self.selectionPopover dismissPopoverAnimated: YES];
 
     self.currentlySelectedYear = self.yearsRange [index];
+
+    self.taxYearPickerViewController.highlightedSelectionIndex = index;
 }
 
 #pragma mark - UITableview DataSource
@@ -211,6 +246,10 @@ typedef enum : NSUInteger
     }
 
     NSDictionary *uploadInfoDictionary = self.receiptInfos [indexPath.row];
+
+    cell.selectedColorBoxColor = self.lookAndFeel.appGreenColor;
+
+    [self.lookAndFeel applyGrayBorderTo: cell.colorBoxView];
 
     NSDate *uploadDate = [uploadInfoDictionary objectForKey: kUploadTimeKey];
 
@@ -241,13 +280,6 @@ typedef enum : NSUInteger
     NSString *clickedReceiptID = [uploadInfoDictionary objectForKey: kReceiptIDKey];
 
     [self.navigationController pushViewController: [self.viewControllerFactory createReceiptBreakDownViewControllerForReceiptID: clickedReceiptID cameFromReceiptCheckingViewController: NO] animated: YES];
-}
-
-#pragma mark - CameraManager
-
-- (void) receivedImageFromCamera: (UIImage *) newImage
-{
-    DLog(@"Image received from camera");
 }
 
 @end

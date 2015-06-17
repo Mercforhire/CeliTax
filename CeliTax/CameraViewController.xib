@@ -4,6 +4,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CameraViewController">
             <connections>
@@ -21,116 +26,11 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qsz-5v-5ng" userLabel="Top Mask View">
-                    <rect key="frame" x="29" y="0.0" width="317" height="63"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="57" id="2Oa-u8-6SS"/>
-                        <constraint firstAttribute="width" constant="92" id="73V-Pq-gNE"/>
-                    </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="2Oa-u8-6SS"/>
-                            <exclude reference="73V-Pq-gNE"/>
-                        </mask>
-                    </variation>
-                </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oug-09-lyc">
-                    <rect key="frame" x="8" y="8" width="36" height="44"/>
-                    <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="36" id="aTN-Ia-hy1"/>
-                        <constraint firstAttribute="height" constant="44" id="vOL-53-s2u"/>
-                    </constraints>
-                    <state key="normal">
-                        <color key="titleColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SDr-lX-BDw" customClass="WhiteBorderView">
-                    <rect key="frame" x="254" y="460" width="92" height="57"/>
-                    <color key="backgroundColor" white="1" alpha="0.35000000000000003" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="92" id="WnQ-eY-xLB"/>
-                        <constraint firstAttribute="height" constant="57" id="vJe-w7-mQI"/>
-                    </constraints>
-                    <connections>
-                        <outletCollection property="gestureRecognizers" destination="o8R-jr-Bjx" appends="YES" id="yqW-2C-cLU"/>
-                    </connections>
-                </view>
-                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ucq-kJ-iqm" customClass="WhiteBorderView">
-                    <rect key="frame" x="29" y="460" width="92" height="57"/>
-                    <color key="backgroundColor" white="1" alpha="0.34999999999999998" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="92" id="O61-Wz-ztO"/>
-                        <constraint firstAttribute="height" constant="57" id="Uij-dk-L08"/>
-                    </constraints>
-                    <connections>
-                        <outletCollection property="gestureRecognizers" destination="o8R-jr-Bjx" appends="YES" id="Xmd-V5-4iV"/>
-                    </connections>
-                </view>
-                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yPT-fg-F09" customClass="WhiteBorderView">
-                    <rect key="frame" x="254" y="63" width="92" height="57"/>
-                    <color key="backgroundColor" white="1" alpha="0.34999999999999998" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="57" id="14D-i9-3Qd"/>
-                        <constraint firstAttribute="width" constant="92" id="zrG-d9-hDy"/>
-                    </constraints>
-                </view>
-                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FpK-an-NO9" customClass="WhiteBorderView">
-                    <rect key="frame" x="29" y="63" width="92" height="57"/>
-                    <color key="backgroundColor" white="1" alpha="0.34999999999999998" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="57" id="EBA-Qq-RTn"/>
-                        <constraint firstAttribute="width" constant="92" id="hOz-Wf-fUS"/>
-                    </constraints>
-                </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rOf-em-w90">
-                    <rect key="frame" x="20" y="617" width="48" height="30"/>
-                    <state key="normal" title="Cancel">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="cancelPressed:" destination="-1" eventType="touchUpInside" id="oO1-3k-7r3"/>
-                    </connections>
-                </button>
-                <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YJ4-Fy-nhX">
-                    <rect key="frame" x="29" y="-360" width="317" height="423"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="YJ4-Fy-nhX" secondAttribute="height" multiplier="3:4" id="adB-Vm-q7e"/>
-                        <constraint firstAttribute="width" constant="317" id="sLB-c2-m6P"/>
-                    </constraints>
-                </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mn5-G9-Uqp">
-                    <rect key="frame" x="152" y="536" width="70" height="70"/>
-                    <color key="backgroundColor" red="0.037923411130000001" green="0.56069375259999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="70" id="687-mh-9lK"/>
-                        <constraint firstAttribute="height" constant="70" id="lg2-3G-NiI"/>
-                    </constraints>
-                    <state key="normal">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XmW-6X-7oa" userLabel="Bottom Mask View">
-                    <rect key="frame" x="29" y="517" width="317" height="150"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="57" id="4RA-lW-fbk"/>
-                        <constraint firstAttribute="width" constant="92" id="4tM-xj-NaG"/>
-                    </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="4RA-lW-fbk"/>
-                            <exclude reference="4tM-xj-NaG"/>
-                        </mask>
-                    </variation>
-                </view>
                 <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f57-Im-Um6" userLabel="Right Mask View">
-                    <rect key="frame" x="346" y="0.0" width="29" height="667"/>
+                    <rect key="frame" x="309.5" y="0.0" width="10" height="568"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="57" id="KZr-Nk-Izz"/>
@@ -143,8 +43,97 @@
                         </mask>
                     </variation>
                 </view>
+                <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XmW-6X-7oa" userLabel="Bottom Mask View">
+                    <rect key="frame" x="9.5" y="418" width="300" height="150"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="57" id="4RA-lW-fbk"/>
+                        <constraint firstAttribute="width" constant="92" id="4tM-xj-NaG"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="4RA-lW-fbk"/>
+                            <exclude reference="4tM-xj-NaG"/>
+                        </mask>
+                    </variation>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mn5-G9-Uqp">
+                    <rect key="frame" x="124" y="437" width="70" height="70"/>
+                    <color key="backgroundColor" red="0.037923411130000001" green="0.56069375259999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="70" id="687-mh-9lK"/>
+                        <constraint firstAttribute="height" constant="70" id="lg2-3G-NiI"/>
+                    </constraints>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FpK-an-NO9" customClass="WhiteBorderView">
+                    <rect key="frame" x="9.5" y="40.5" width="92" height="57"/>
+                    <color key="backgroundColor" white="1" alpha="0.34999999999999998" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="57" id="EBA-Qq-RTn"/>
+                        <constraint firstAttribute="width" constant="92" id="hOz-Wf-fUS"/>
+                    </constraints>
+                </view>
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yPT-fg-F09" customClass="WhiteBorderView">
+                    <rect key="frame" x="217.5" y="40.5" width="92" height="57"/>
+                    <color key="backgroundColor" white="1" alpha="0.34999999999999998" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="57" id="14D-i9-3Qd"/>
+                        <constraint firstAttribute="width" constant="92" id="zrG-d9-hDy"/>
+                    </constraints>
+                </view>
+                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ucq-kJ-iqm" customClass="WhiteBorderView">
+                    <rect key="frame" x="9.5" y="361" width="92" height="57"/>
+                    <color key="backgroundColor" white="1" alpha="0.34999999999999998" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="92" id="O61-Wz-ztO"/>
+                        <constraint firstAttribute="height" constant="57" id="Uij-dk-L08"/>
+                    </constraints>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="o8R-jr-Bjx" appends="YES" id="Xmd-V5-4iV"/>
+                    </connections>
+                </view>
+                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SDr-lX-BDw" customClass="WhiteBorderView">
+                    <rect key="frame" x="217.5" y="361" width="92" height="57"/>
+                    <color key="backgroundColor" white="1" alpha="0.35000000000000003" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="92" id="WnQ-eY-xLB"/>
+                        <constraint firstAttribute="height" constant="57" id="vJe-w7-mQI"/>
+                    </constraints>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="o8R-jr-Bjx" appends="YES" id="yqW-2C-cLU"/>
+                    </connections>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oug-09-lyc">
+                    <rect key="frame" x="8" y="0.0" width="31" height="37"/>
+                    <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="31" id="aTN-Ia-hy1"/>
+                        <constraint firstAttribute="height" constant="37" id="vOL-53-s2u"/>
+                    </constraints>
+                    <state key="normal">
+                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qsz-5v-5ng" userLabel="Top Mask View">
+                    <rect key="frame" x="9.5" y="0.0" width="300" height="40.5"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="57" id="2Oa-u8-6SS"/>
+                        <constraint firstAttribute="width" constant="92" id="73V-Pq-gNE"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="2Oa-u8-6SS"/>
+                            <exclude reference="73V-Pq-gNE"/>
+                        </mask>
+                    </variation>
+                </view>
                 <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3qx-vw-IH6" userLabel="Left Mask View">
-                    <rect key="frame" x="0.0" y="0.0" width="29" height="667"/>
+                    <rect key="frame" x="0.0" y="0.0" width="10" height="568"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="57" id="BlD-ro-UOG"/>
@@ -157,6 +146,26 @@
                         </mask>
                     </variation>
                 </view>
+                <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YJ4-Fy-nhX">
+                    <rect key="frame" x="9.5" y="-360" width="300" height="400.5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="YJ4-Fy-nhX" secondAttribute="height" multiplier="3:4" id="adB-Vm-q7e"/>
+                        <constraint firstAttribute="width" constant="300" id="sLB-c2-m6P"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rOf-em-w90">
+                    <rect key="frame" x="20" y="520" width="66" height="28"/>
+                    <color key="backgroundColor" red="0.55334633690000001" green="0.82171581770000002" blue="0.4125430142" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
+                    <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
+                    <state key="normal" title="Cancel">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="cancelPressed:" destination="-1" eventType="touchUpInside" id="oO1-3k-7r3"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
@@ -165,7 +174,7 @@
                 <constraint firstItem="qsz-5v-5ng" firstAttribute="trailing" secondItem="yPT-fg-F09" secondAttribute="trailing" id="7Ed-RO-5Pm"/>
                 <constraint firstItem="3qx-vw-IH6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="7fi-lz-HX0"/>
                 <constraint firstItem="YJ4-Fy-nhX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="-360" id="8yS-0Y-uwO"/>
-                <constraint firstItem="oug-09-lyc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="AME-Sg-EBH"/>
+                <constraint firstItem="oug-09-lyc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="AME-Sg-EBH"/>
                 <constraint firstItem="qsz-5v-5ng" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="BDT-Sg-sc2"/>
                 <constraint firstAttribute="bottom" secondItem="mn5-G9-Uqp" secondAttribute="bottom" constant="61" id="E37-YW-G18"/>
                 <constraint firstItem="SDr-lX-BDw" firstAttribute="bottom" secondItem="Ucq-kJ-iqm" secondAttribute="bottom" id="HPH-jT-tSb"/>
@@ -199,7 +208,7 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="Qdh-4w-24t"/>
@@ -208,7 +217,7 @@
                     <exclude reference="k5m-h5-ezx"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="424.5" y="379.5"/>
+            <point key="canvasLocation" x="424" y="379"/>
         </view>
         <panGestureRecognizer minimumNumberOfTouches="1" id="o8R-jr-Bjx">
             <connections>

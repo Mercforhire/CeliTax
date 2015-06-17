@@ -16,8 +16,9 @@
 #import "HelpScreenViewController.h"
 #import "MyAccountViewController.h"
 #import "MainViewController.h"
+#import "LoginViewController.h"
 
-@interface BaseSideBarViewController () <CDRTranslucentSideBarDelegate, LeftSideMenuViewProtocol>
+@interface BaseSideBarViewController () <CDRTranslucentSideBarDelegate, SideMenuViewProtocol>
 
 @end
 
@@ -46,38 +47,39 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.leftSideMenuView = [Utils getLeftSideViewUsing: self.userManager.user.avatarImage
-                                            andUsername: [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]
-                                      andMenuSelections: [self.viewControllerFactory getMenuSelections]];
-    self.leftSideMenuView.delegate = self;
+    self.sideMenuView = [Utils getLeftSideViewUsing: self.userManager.user.avatarImage
+                                        andUsername: [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]
+                                  andMenuSelections: [self.viewControllerFactory getMenuSelections]];
+    self.sideMenuView.delegate = self;
+    self.sideMenuView.lookAndFeel = self.lookAndFeel;
 
     self.rightSideBar = [[CDRTranslucentSideBar alloc] initWithDirectionFromRight: YES];
-    [self.rightSideBar setTranslucentAlpha: 0.8];
+    [self.rightSideBar setTranslucentAlpha: 0.9];
     self.rightSideBar.delegate = self;
 
     if ([self isKindOfClass: [MainViewController class]])
     {
-        [self.leftSideMenuView setCurrentlySelectedIndex: RootViewControllerHome];
+        [self.sideMenuView setCurrentlySelectedIndex: RootViewControllerHome];
     }
     else if ([self isKindOfClass: [MyAccountViewController class]])
     {
-        [self.leftSideMenuView setCurrentlySelectedIndex: RootViewControllerAccount];
+        [self.sideMenuView setCurrentlySelectedIndex: RootViewControllerAccount];
     }
     else if ([self isKindOfClass: [VaultViewController class]])
     {
-        [self.leftSideMenuView setCurrentlySelectedIndex: RootViewControllerVault];
+        [self.sideMenuView setCurrentlySelectedIndex: RootViewControllerVault];
     }
     else if ([self isKindOfClass: [HelpScreenViewController class]])
     {
-        [self.leftSideMenuView setCurrentlySelectedIndex: RootViewControllerHelp];
+        [self.sideMenuView setCurrentlySelectedIndex: RootViewControllerHelp];
     }
     else if ([self isKindOfClass: [SettingsViewController class]])
     {
-        [self.leftSideMenuView setCurrentlySelectedIndex: RootViewControllerSettings];
+        [self.sideMenuView setCurrentlySelectedIndex: RootViewControllerSettings];
     }
 
     // Set ContentView in SideBar
-    [self.rightSideBar setContentViewInSideBar: self.leftSideMenuView];
+    [self.rightSideBar setContentViewInSideBar: self.sideMenuView];
 }
 
 // slide out the slider bar
@@ -86,7 +88,7 @@
     [self.rightSideBar show];
 }
 
-- (void) pushAndReplaceTopViewControllerWith: (BaseSideBarViewController *) viewController
+- (void) pushAndReplaceTopViewControllerWith: (BaseViewController *) viewController
 {
     [self.rightSideBar dismissAnimated: NO];
 
@@ -109,10 +111,15 @@
     [self.navigationController setViewControllers: viewController2 animated: NO];
 }
 
+- (void) popToLoginView
+{
+    [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: 0] animated: YES];
+}
+
 #pragma mark - LeftSideMenuViewProtocol
 - (void) selectedMenuIndex: (NSInteger) index
 {
-    DLog(@"Sidebar selection %ld clicked", index);
+    DLog(@"Sidebar selection %ld clicked", (long)index);
 
     switch (index)
     {
@@ -125,7 +132,7 @@
             }
             else
             {
-                //dismiss itself
+                // dismiss itself
                 [self.rightSideBar dismiss];
             }
 
@@ -140,7 +147,7 @@
             }
             else
             {
-                //dismiss itself
+                // dismiss itself
                 [self.rightSideBar dismiss];
             }
 
@@ -155,7 +162,7 @@
             }
             else
             {
-                //dismiss itself
+                // dismiss itself
                 [self.rightSideBar dismiss];
             }
 
@@ -170,7 +177,7 @@
             }
             else
             {
-                //dismiss itself
+                // dismiss itself
                 [self.rightSideBar dismiss];
             }
 
@@ -185,9 +192,20 @@
             }
             else
             {
-                //dismiss itself
+                // dismiss itself
                 [self.rightSideBar dismiss];
             }
+
+            break;
+
+        case RootViewControllerLogOff:
+
+            [self.userManager logOutUser];
+
+            // dismiss itself
+            [self.rightSideBar dismiss];
+
+            [self pushAndReplaceTopViewControllerWith: [self.viewControllerFactory createLoginViewController]];
 
             break;
 

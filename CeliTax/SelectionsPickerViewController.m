@@ -7,11 +7,13 @@
 //
 
 #import "SelectionsPickerViewController.h"
+#import "SelectionsPickerTableViewCell.h"
 
-#define POP_DEFAULT_FONT_SIZE     15
-#define POP_DEFAULT_ROW_HEIGHT    44
+#define POP_DEFAULT_FONT_SIZE     14
+#define POP_DEFAULT_ROW_HEIGHT    40
 #define POP_DEFAULT_MAX_HEIGHT    500
 #define POP_DEFAULT_MIN_WIDTH    50
+#define kSelectionsPickerTableViewCellIdentifier     @"SelectionsPickerTableViewCell"
 
 @interface SelectionsPickerViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -26,12 +28,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
+    UINib *selectionsPickerTableViewCell = [UINib nibWithNibName: @"SelectionsPickerTableViewCell" bundle: nil];
+
+    [self.namesTableView registerNib: selectionsPickerTableViewCell forCellReuseIdentifier: kSelectionsPickerTableViewCellIdentifier];
+
+    [self.namesTableView setSeparatorStyle: UITableViewCellSeparatorStyleNone];
+
     self.namesTableView.dataSource = self;
     self.namesTableView.delegate = self;
-    [self.namesTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 }
 
-- (void) setSelections:(NSArray *)selections
+- (void) setSelections: (NSArray *) selections
 {
     _selections = selections;
 
@@ -52,7 +59,7 @@
     for (NSString *valueName in self.selections)
     {
         // Checks size of text using the default font for UITableViewCell's textLabel.
-        CGSize labelSize = [valueName sizeWithAttributes: @{ NSFontAttributeName: [UIFont systemFontOfSize: POP_DEFAULT_FONT_SIZE] }];
+        CGSize labelSize = [valueName sizeWithAttributes: @{ NSFontAttributeName: [UIFont latoFontOfSize: POP_DEFAULT_FONT_SIZE] }];
 
         if (labelSize.width > largestLabelWidth)
         {
@@ -74,6 +81,13 @@
     [self.namesTableView reloadData];
 }
 
+-(void)setHighlightedSelectionIndex:(NSInteger)highlightedSelectionIndex
+{
+    _highlightedSelectionIndex = highlightedSelectionIndex;
+    
+    [self.namesTableView reloadData];
+}
+
 #pragma mark - UITableview DataSource
 
 - (NSInteger) numberOfSectionsInTableView: (UITableView *) tableView
@@ -86,20 +100,30 @@
     return self.selections.count;
 }
 
-- (UITableViewCell *) tableView: (UITableView *) tableView cellForRowAtIndexPath: (NSIndexPath *) indexPath
+- (SelectionsPickerTableViewCell *) tableView: (UITableView *) tableView cellForRowAtIndexPath: (NSIndexPath *) indexPath
 {
-    static NSString *cellId = @"NameTableCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: cellId];
+    static NSString *cellId = kSelectionsPickerTableViewCellIdentifier;
+    SelectionsPickerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: cellId];
 
     if (cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: cellId];
+        cell = [[SelectionsPickerTableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: cellId];
     }
 
-    [cell setSelectionStyle: UITableViewCellSelectionStyleNone];
+    [cell.selectionLabel setText: self.selections [indexPath.row]];
 
-    [cell.textLabel setText: self.selections [indexPath.row]];
-    [cell.textLabel setFont:[UIFont systemFontOfSize:POP_DEFAULT_FONT_SIZE]];
+    if (self.highlightedSelectionIndex == indexPath.row)
+    {
+        [self.lookAndFeel applyGreenBorderTo: cell.selectionLabel];
+        [cell.selectionLabel setTextColor: [UIColor whiteColor]];
+        [cell.selectionLabel setBackgroundColor: self.lookAndFeel.appGreenColor];
+    }
+    else
+    {
+        [self.lookAndFeel applyGrayBorderTo: cell.selectionLabel];
+        [cell.selectionLabel setTextColor: [UIColor blackColor]];
+        [cell.selectionLabel setBackgroundColor: [UIColor whiteColor]];
+    }
 
     return cell;
 }
@@ -118,7 +142,7 @@
     // Notify the delegate if it exists.
     if (self.delegate != nil)
     {
-        [self.delegate selectedSelectionAtIndex: indexPath.row];
+        [self.delegate selectedSelectionAtIndex: indexPath.row fromPopUp: self];
     }
 }
 

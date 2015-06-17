@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="SelectionCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="87" height="60"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="87" height="60"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dQo-id-RKx">
+                        <rect key="frame" x="33" y="30" width="20" height="20"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="TpR-9A-sZn"/>
+                            <constraint firstAttribute="height" constant="20" id="YqH-sP-gxZ"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpf-RS-5Vp">
+                        <rect key="frame" x="8" y="0.0" width="71" height="30"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="11"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="dQo-id-RKx" firstAttribute="top" secondItem="hpf-RS-5Vp" secondAttribute="bottom" id="9mW-xL-ubE"/>
+                <constraint firstItem="hpf-RS-5Vp" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="BcH-a8-Log"/>
+                <constraint firstAttribute="trailing" secondItem="hpf-RS-5Vp" secondAttribute="trailing" constant="8" id="JSW-pc-NlD"/>
+                <constraint firstAttribute="centerX" secondItem="dQo-id-RKx" secondAttribute="centerX" id="hwI-fi-3W5"/>
+                <constraint firstItem="hpf-RS-5Vp" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="jNv-6Q-6do"/>
+                <constraint firstAttribute="bottom" secondItem="dQo-id-RKx" secondAttribute="bottom" constant="10" id="zdk-Hb-2ha"/>
+            </constraints>
+            <size key="customSize" width="87" height="60"/>
+            <connections>
+                <outlet property="selectionColorBox" destination="dQo-id-RKx" id="QP1-y9-WVt"/>
+                <outlet property="selectionLabel" destination="hpf-RS-5Vp" id="ZXw-R0-zN1"/>
+            </connections>
+            <point key="canvasLocation" x="200.5" y="339"/>
+        </collectionViewCell>
+    </objects>
+</document>

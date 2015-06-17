@@ -13,7 +13,7 @@
 - (void) awakeFromNib
 {
     // Initialization code
-    
+
     [self setSelectionStyle: UITableViewCellSelectionStyleNone];
 }
 
@@ -24,32 +24,35 @@
     // Configure the view for the selected state
 }
 
-- (void) setTableCellToSelectedMode
+-(void)makeCellAppearInactive
 {
-    self.leftSideConstraint.constant = 0;
-    [self.colorBox setBackgroundColor: self.colorBoxColor];
-    [self.catagoryNameLabel setTextColor: [UIColor blackColor]];
-
-    [self.totalQuantityField setHidden: NO];
-    [self.totalAmountField setHidden: NO];
-    [self.averageNationalPriceField setHidden: NO];
-    [self.totalQtyLabel setHidden: NO];
-    [self.totalAmountLabel setHidden: NO];
-    [self.avgPriceLabel setHidden: NO];
+    [self.colorBox setBackgroundColor:[UIColor lightGrayColor]];
+    [self.catagoryNameLabel setTextColor:[UIColor lightGrayColor]];
+    
+    [self.totalQuantityField setHidden:YES];
+    [self.totalAmountField setHidden:YES];
+    [self.averageNationalPriceField setHidden:YES];
+    [self.totalQtyLabel setHidden:YES];
+    [self.totalAmountLabel setHidden:YES];
+    [self.avgPriceLabel setHidden:YES];
+    [self.totalAmountDollarSign setHidden:YES];
+    [self.avgPriceDollarSign setHidden:YES];
 }
 
-- (void) setTableCellToDeselectedMode
+-(void)makeCellAppearActive
 {
-    self.leftSideConstraint.constant = 15;
-    [self.colorBox setBackgroundColor: [UIColor lightGrayColor]];
-    [self.catagoryNameLabel setTextColor: [UIColor lightGrayColor]];
-
-    [self.totalQuantityField setHidden: YES];
-    [self.totalAmountField setHidden: YES];
-    [self.averageNationalPriceField setHidden: YES];
-    [self.totalQtyLabel setHidden: YES];
-    [self.totalAmountLabel setHidden: YES];
-    [self.avgPriceLabel setHidden: YES];
+    [self.colorBox setBackgroundColor:self.colorBoxColor];
+    [self.catagoryNameLabel setTextColor:[UIColor blackColor]];
+    
+    [self.totalQuantityField setHidden:NO];
+    [self.totalAmountField setHidden:NO];
+    [self.averageNationalPriceField setHidden:NO];
+    [self.totalQtyLabel setHidden:NO];
+    [self.totalAmountLabel setHidden:NO];
+    [self.avgPriceLabel setHidden:NO];
+    [self.totalAmountDollarSign setHidden:NO];
+    [self.avgPriceDollarSign setHidden:NO];
 }
+
 
 @end

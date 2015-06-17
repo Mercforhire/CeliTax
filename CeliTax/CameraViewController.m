@@ -43,8 +43,6 @@
 @property NSMutableArray *takenImageFilenames;
 @property NSMutableArray *takenImages;
 
-@property NSInteger nextReceiptID;
-
 @end
 
 @implementation CameraViewController
@@ -52,6 +50,8 @@
 - (void) viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.navigationBarTitleImageContainer setHidden:YES];
 
     // Set white status bar
     [self setNeedsStatusBarAppearanceUpdate];
@@ -157,7 +157,7 @@
 
     [self.camera updateFlashMode: CameraFlashOff];
 
-    self.flashButton.selected = YES;
+    self.flashButton.selected = NO;
     self.flashButton.tintColor = [UIColor whiteColor];
 
     [self.view sendSubviewToBack: self.camera.view];
@@ -177,6 +177,8 @@
 
     // stop the camera
     [self.camera stop];
+    
+    [self.navigationBarTitleImageContainer setHidden:NO];
 }
 
 - (void) flashButtonPressed: (UIButton *) button
@@ -290,6 +292,12 @@
 {
     [self.camera stop];
 
+    if (self.takenImages.count)
+    {
+        NSAssert(self.delegate, @"self.delegate must not be unset");
+        [self.delegate hasJustCreatedNewReceipt];
+    }
+    
     [self.navigationController.navigationBar setHidden: NO];
     [self.navigationController popViewControllerAnimated: YES];
 }

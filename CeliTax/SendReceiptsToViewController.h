@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
 @protocol SendReceiptsViewPopUpDelegate <NSObject>
 
@@ -16,7 +17,7 @@
 
 @end
 
-@interface SendReceiptsToViewController : UIViewController
+@interface SendReceiptsToViewController : BaseViewController
 
 @property CGSize viewSize;
 

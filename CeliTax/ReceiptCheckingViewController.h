@@ -18,6 +18,7 @@
 @property NSString *receiptID;
 
 //True if the previous viewController is ReceiptBreakDownViewController
+//False if the previous viewController is MainViewController, right after taking a Photo
 @property BOOL cameFromReceiptBreakDownViewController;
 
 @end

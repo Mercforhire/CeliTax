@@ -249,7 +249,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
     for (SliceLayer *layer in _pieView.layer.sublayers)
     {
         CATextLayer *textLayer = [[layer sublayers] objectAtIndex: 0];
-        [textLayer setAlignmentMode:kCAAlignmentCenter];
+        [textLayer setAlignmentMode: kCAAlignmentCenter];
         [textLayer setHidden: !_showLabel];
 
         if (!_showLabel)
@@ -262,7 +262,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
         else
             label = (layer.text) ? layer.text :[NSString stringWithFormat: @"%0.0f", layer.value];
 
-        CGSize size = [label sizeWithAttributes:@{NSFontAttributeName: self.labelFont}];
+        CGSize size = [label sizeWithAttributes: @{NSFontAttributeName: self.labelFont}];
 
         if (M_PI*2*_labelRadius*layer.percentage < MAX(size.width, size.height))
         {
@@ -539,7 +539,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
         if (CGPathContainsPoint(path, &transform, point, 0))
         {
             [pieLayer setLineWidth: _selectedSliceStroke];
-            [pieLayer setStrokeColor: [UIColor whiteColor].CGColor];
+            [pieLayer setStrokeColor: [UIColor colorWithWhite: 187.0f/255.0f alpha: 1].CGColor];
             [pieLayer setLineJoin: kCALineJoinBevel];
             [pieLayer setZPosition: MAXFLOAT];
             selectedIndex = idx;
@@ -547,7 +547,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
         else
         {
             [pieLayer setZPosition: kDefaultSliceZOrder];
-            [pieLayer setLineWidth: 0.0];
+            [pieLayer setLineWidth: 1];
         }
     }];
     return selectedIndex;
@@ -582,7 +582,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
     for (SliceLayer *pieLayer in pieLayers)
     {
         [pieLayer setZPosition: kDefaultSliceZOrder];
-        [pieLayer setLineWidth: 0.0];
+        [pieLayer setLineWidth: 1];
     }
 }
 
@@ -690,7 +690,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
 {
     SliceLayer *pieLayer = [SliceLayer layer];
     [pieLayer setZPosition: 0];
-    [pieLayer setStrokeColor: NULL];
+    [pieLayer setStrokeColor: [UIColor colorWithWhite: 187.0f/255.0f alpha: 1].CGColor];
     CATextLayer *textLayer = [CATextLayer layer];
     textLayer.contentsScale = [[UIScreen mainScreen] scale];
     CGFontRef font = nil;
@@ -731,6 +731,8 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
     [textLayer setPosition: CGPointMake(_pieCenter.x + (_labelRadius * cos(0)), _pieCenter.y + (_labelRadius * sin(0)))];
     [CATransaction setDisableActions: NO];
     [pieLayer addSublayer: textLayer];
+    
+
     return pieLayer;
 }
 
@@ -738,7 +740,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
 {
     CATextLayer *textLayer = [[pieLayer sublayers] objectAtIndex: 0];
     [textLayer setHidden: !_showLabel];
-    [textLayer setAlignmentMode:kCAAlignmentCenter];
+    [textLayer setAlignmentMode: kCAAlignmentCenter];
 
     if (!_showLabel)
         return;

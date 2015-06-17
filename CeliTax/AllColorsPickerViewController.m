@@ -12,6 +12,7 @@
 @interface AllColorsPickerViewController ()
 
 @property (weak, nonatomic) IBOutlet NKOColorPickerView *colorPicker;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
 @end
 
@@ -31,6 +32,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self.lookAndFeel applySolidGreenButtonStyleTo:self.doneButton];
     
     NKOColorPickerDidChangeColorBlock colorDidChangeBlock = ^(UIColor *color) {
         //Your code handling a color change in the picker view.

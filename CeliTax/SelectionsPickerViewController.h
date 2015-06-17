@@ -7,18 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
+
+@class SelectionsPickerViewController;
 
 @protocol SelectionsPickerPopUpDelegate <NSObject>
 
 @required
 
-- (void) selectedSelectionAtIndex: (NSInteger) index;
+- (void) selectedSelectionAtIndex: (NSInteger) index fromPopUp:(SelectionsPickerViewController *)popUpController;
 
 @end
 
-@interface SelectionsPickerViewController : UIViewController
+@interface SelectionsPickerViewController : BaseViewController
 
 @property (nonatomic, strong) NSArray *selections;
+
+@property (nonatomic) NSInteger highlightedSelectionIndex;
 
 @property (nonatomic, weak) id <SelectionsPickerPopUpDelegate> delegate;
 

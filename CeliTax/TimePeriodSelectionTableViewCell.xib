@@ -4,6 +4,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -14,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="greenTrianglePointDown.png" translatesAutoresizingMaskIntoConstraints="NO" id="nH8-4x-O4l">
+                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="greenTrianglePointDown.png" translatesAutoresizingMaskIntoConstraints="NO" id="nH8-4x-O4l" customClass="TriangleView">
                         <rect key="frame" x="186" y="18" width="15" height="10"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="10" id="1Cb-Yp-fKs"/>
@@ -22,11 +27,11 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LABEL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rvv-GK-cCk">
-                        <rect key="frame" x="26" y="12" width="150" height="19.5"/>
+                        <rect key="frame" x="26" y="13" width="150" height="18"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="150" id="jAS-73-cG6"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -40,6 +45,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="periodLabel" destination="rvv-GK-cCk" id="seR-Ic-5qy"/>
+                <outlet property="triangle" destination="nH8-4x-O4l" id="YXz-39-32K"/>
             </connections>
         </tableViewCell>
     </objects>

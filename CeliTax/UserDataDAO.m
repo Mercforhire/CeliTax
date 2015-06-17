@@ -1,9 +1,9 @@
 //
-//  UserDataDAO.m
-//  CeliTax
+// UserDataDAO.m
+// CeliTax
 //
-//  Created by Leon Chen on 2015-05-22.
-//  Copyright (c) 2015 CraveNSave. All rights reserved.
+// Created by Leon Chen on 2015-05-22.
+// Copyright (c) 2015 CraveNSave. All rights reserved.
 //
 
 #import "UserDataDAO.h"
@@ -18,57 +18,57 @@
 
 @implementation UserDataDAO
 
--(void)setUserKey:(NSString *)userKey
+- (void) setUserKey: (NSString *) userKey
 {
     _userKey = userKey;
-    
+
     [self loadUserData];
 }
 
--(NSMutableArray *)getCatagories
+- (NSMutableArray *) getCatagories
 {
     return self.userData.catagories;
 }
 
--(NSMutableArray *)getRecords
+- (NSMutableArray *) getRecords
 {
     return self.userData.records;
 }
 
--(NSMutableArray *)getReceipts
+- (NSMutableArray *) getReceipts
 {
     return self.userData.receipts;
 }
 
--(NSString *)generateUserDataFileName
+- (NSString *) generateUserDataFileName
 {
-    if ( !self.userKey )
+    if (!self.userKey)
     {
         return nil;
     }
-    
+
     NSString *storagePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-    
-    NSString *filePath = [storagePath stringByAppendingPathComponent:[NSString stringWithFormat:@"/USER_DATA-%@.dat", self.userKey]];
-    
+
+    NSString *filePath = [storagePath stringByAppendingPathComponent: [NSString stringWithFormat: @"/USER_DATA-%@.dat", self.userKey]];
+
     return filePath;
 }
 
--(BOOL)loadUserData
+- (BOOL) loadUserData
 {
-    if ( !self.userKey )
+    if (!self.userKey)
     {
         return NO;
     }
-    
+
     if (self.userData)
     {
         return YES;
     }
     else
     {
-        self.userData = [Utils unarchiveFile:[self generateUserDataFileName]];
-        
+        self.userData = [Utils unarchiveFile: [self generateUserDataFileName]];
+
         if (self.userData)
         {
             return YES;
@@ -76,22 +76,22 @@
         else
         {
             self.userData = [UserData new];
-            
+
             return [self saveUserData];
         }
     }
-    
+
     return NO;
 }
 
--(BOOL)saveUserData
+- (BOOL) saveUserData
 {
-    if ( !self.userKey || !self.userData )
+    if (!self.userKey || !self.userData)
     {
         return NO;
     }
-    
-    if ( [Utils archiveFile:self.userData toFile:[self generateUserDataFileName]] )
+
+    if ([Utils archiveFile: self.userData toFile: [self generateUserDataFileName]])
     {
         return YES;
     }

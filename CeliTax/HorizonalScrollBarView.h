@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LookAndFeel.h"
 
 @protocol HorizonalScrollBarViewProtocol <NSObject>
 
@@ -18,7 +19,9 @@
 
 @interface HorizonalScrollBarView : UIView
 
-@property (nonatomic, strong) NSArray *buttonNames;
+-(void)setButtonNames:(NSArray *)buttonNames andColors:(NSArray *)buttonColors;
+
+@property (nonatomic, strong) LookAndFeel *lookAndFeel;
 
 @property (nonatomic, weak) id <HorizonalScrollBarViewProtocol> delegate;
 

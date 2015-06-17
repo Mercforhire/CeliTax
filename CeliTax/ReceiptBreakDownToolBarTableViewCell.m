@@ -1,23 +1,25 @@
 //
-//  ReceiptBreakDownToolBarTableViewCell.m
-//  CeliTax
+// ReceiptBreakDownToolBarTableViewCell.m
+// CeliTax
 //
-//  Created by Leon Chen on 2015-06-01.
-//  Copyright (c) 2015 CraveNSave. All rights reserved.
+// Created by Leon Chen on 2015-06-01.
+// Copyright (c) 2015 CraveNSave. All rights reserved.
 //
 
 #import "ReceiptBreakDownToolBarTableViewCell.h"
 
 @implementation ReceiptBreakDownToolBarTableViewCell
 
-- (void)awakeFromNib {
+- (void) awakeFromNib
+{
     // Initialization code
-    
+
     [self setSelectionStyle: UITableViewCellSelectionStyleNone];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+- (void) setSelected: (BOOL) selected animated: (BOOL) animated
+{
+    [super setSelected: selected animated: animated];
 
     // Configure the view for the selected state
 }

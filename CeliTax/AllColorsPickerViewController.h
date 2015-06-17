@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
 @protocol AllColorsPickerViewPopUpDelegate <NSObject>
 
@@ -18,7 +19,7 @@
 
 @end
 
-@interface AllColorsPickerViewController : UIViewController
+@interface AllColorsPickerViewController : BaseViewController
 
 @property CGSize viewSize;
 

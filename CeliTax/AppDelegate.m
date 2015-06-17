@@ -10,7 +10,6 @@
 #import "ViewControllerFactory.h"
 #import "ConfigurationManager.h"
 #import "UserManager.h"
-#import "SplashViewController.h"
 #import "LoginViewController.h"
 #import "ServiceFactory.h"
 #import "DAOFactory.h"
@@ -27,8 +26,8 @@
 @property (nonatomic, strong) DAOFactory *daoFactory;
 @property (nonatomic, strong) LookAndFeel *lookAndFeel;
 
-@property (nonatomic, strong) SplashViewController *splash;
-@property (nonatomic, strong) UINavigationController *navController;
+@property (nonatomic, strong) UINavigationController *navigationController;
+@property (nonatomic, strong) UIView *navigationBarTitleImageContainer;
 
 @end
 
@@ -54,6 +53,7 @@
     self.viewControllerFactory.dataService = [self.serviceFactory createDataService];
     self.viewControllerFactory.manipulationService = [self.serviceFactory createManipulationService];
     self.viewControllerFactory.lookAndFeel = self.lookAndFeel;
+    self.viewControllerFactory.navigationBarTitleImageContainer = self.navigationBarTitleImageContainer;
 }
 
 - (void) initializeUserManager
@@ -86,52 +86,66 @@
     [self initializeViewControllerFactory];
 
     self.window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
-    self.splash = [self.viewControllerFactory createSplashViewController];
-
-    self.window.rootViewController = self.splash;
 
     [self.window makeKeyAndVisible];
 
-    if (!self.navController)
+    if (!self.navigationController)
     {
-        self.navController = [[UINavigationController alloc] init];
-        self.window.rootViewController = self.navController;
-        [self.navController.navigationBar setTranslucent: YES];
+        self.navigationController = [[UINavigationController alloc] init];
+        self.window.rootViewController = self.navigationController;
+        [self.navigationController.navigationBar setTranslucent: YES];
+        self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+
+        self.navigationBarTitleImageContainer = [[UIView alloc] initWithFrame: self.navigationController.navigationBar.frame];
+        [self.navigationBarTitleImageContainer setUserInteractionEnabled: NO];
+
+        UIImageView *titleImage = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"celitaxlogo_small.png"]];
+        [titleImage setFrame: CGRectMake(0, 10, self.navigationController.navigationBar.frame.size.width, 30)];
+        [titleImage setContentMode: UIViewContentModeScaleAspectFit];
+        [titleImage setUserInteractionEnabled: NO];
+
+        [self.navigationBarTitleImageContainer addSubview: titleImage];
+
+        [self.navigationController.view addSubview: self.navigationBarTitleImageContainer];
+
+        self.viewControllerFactory.navigationBarTitleImageContainer = self.navigationBarTitleImageContainer;
 
         // if not logged in, push login screen. Else push main app screen
-        [self.navController pushViewController: [self.viewControllerFactory createLoginViewController] animated: YES];
-
-        [self.window makeKeyAndVisible];
+        [self.navigationController pushViewController: [self.viewControllerFactory createLoginViewController] animated: YES];
     }
+    
+    [self.window makeKeyAndVisible];
 
     return YES;
 }
 
-- (void) applicationWillResignActive: (UIApplication *) application
-{
+/*
+   - (void) applicationWillResignActive: (UIApplication *) application
+   {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-}
+   }
 
-- (void) applicationDidEnterBackground: (UIApplication *) application
-{
+   - (void) applicationDidEnterBackground: (UIApplication *) application
+   {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
+   }
 
-- (void) applicationWillEnterForeground: (UIApplication *) application
-{
+   - (void) applicationWillEnterForeground: (UIApplication *) application
+   {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
+   }
 
-- (void) applicationDidBecomeActive: (UIApplication *) application
-{
+   - (void) applicationDidBecomeActive: (UIApplication *) application
+   {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
+   }
 
-- (void) applicationWillTerminate: (UIApplication *) application
-{
+   - (void) applicationWillTerminate: (UIApplication *) application
+   {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
+   }
+ */
 
 @end

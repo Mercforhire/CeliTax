@@ -34,6 +34,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
+    [self.lookAndFeel applyHollowGreenButtonStyleTo: self.sendButton];
+
     // Set the property to tell the popover container how big this view will be.
     self.preferredContentSize = self.viewSize;
 

@@ -10,6 +10,7 @@
 
 @interface MainViewTableViewCell : UITableViewCell
 
+@property (strong, nonatomic) UIColor *selectedColorBoxColor;
 @property (weak, nonatomic) IBOutlet UIView *colorBoxView;
 @property (weak, nonatomic) IBOutlet UILabel *calenderDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeOfDayLabel;

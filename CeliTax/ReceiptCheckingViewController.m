@@ -8,7 +8,6 @@
 
 #import "ReceiptCheckingViewController.h"
 #import "HorizonalScrollBarView.h"
-#import "ReceiptScrollBarView.h"
 #import "AddCatagoryViewController.h"
 #import "Catagory.h"
 #import "User.h"
@@ -21,12 +20,11 @@
 #import "Receipt.h"
 #import "UIView+Helper.h"
 #import "ReceiptBreakDownViewController.h"
+#import "ReceiptScrollView.h"
 
-@interface ReceiptCheckingViewController () <ImageCounterIconViewProtocol, HorizonalScrollBarViewProtocol, UITextFieldDelegate>
+@interface ReceiptCheckingViewController () <ImageCounterIconViewProtocol, HorizonalScrollBarViewProtocol, UITextFieldDelegate, ReceiptScrollViewProtocol,UIAlertViewDelegate>
 
-@property (weak, nonatomic) IBOutlet ReceiptScrollBarView *receiptScrollView;
-@property (weak, nonatomic) IBOutlet UIView *bottombarContainer;
-@property (strong, nonatomic) HorizonalScrollBarView *bottomBar;
+@property (weak, nonatomic) IBOutlet HorizonalScrollBarView *catagoriesBar;
 @property (weak, nonatomic) IBOutlet ImageCounterIconView *recordsCounter;
 @property (weak, nonatomic) IBOutlet UIButton *previousItemButton;
 @property (weak, nonatomic) IBOutlet UIButton *nextItemButton;
@@ -35,43 +33,31 @@
 @property (weak, nonatomic) IBOutlet UITextField *qtyField;
 @property (weak, nonatomic) IBOutlet UITextField *pricePerItemField;
 @property (weak, nonatomic) IBOutlet UITextField *totalField;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *animatedBar; // space from optional toolbar to bottom bar
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *animatorBar2; // space from receiptScrollView to bottom bar
+@property (weak, nonatomic) IBOutlet UILabel *currentItemStatusLabel;
+@property (weak, nonatomic) IBOutlet UIView *itemControlsContainer;
+@property (weak, nonatomic) IBOutlet ReceiptScrollView *receiptScrollView;
+
+@property (nonatomic, strong) UIButton *cancelButton;
+@property (nonatomic, strong) UIButton *completeButton;
+@property (nonatomic, strong) UIBarButtonItem *leftMenuItem;
+@property (nonatomic, strong) UIBarButtonItem *rightMenuItem;
 
 @property (strong, nonatomic) NSMutableArray *receiptImages;
 @property (strong, nonatomic) NSArray *catagories;
-@property (strong, nonatomic) NSMutableArray *catagoryNames;
-
 @property (nonatomic, strong) Receipt *receipt;
-
 @property (strong, nonatomic) NSMutableDictionary *records; // all Records for this receipt
-
 @property (nonatomic, strong) Catagory *currentlySelectedCatagory;
-
-@property (strong, nonatomic) NSMutableArray *recordsOfCurrentlySelectedCatagory; // Records from self.records belonging to currentlySelectedCatagory
+@property (strong, nonatomic) NSMutableArray *recordsOfCurrentlySelectedCatagory; // Records belonging to currentlySelectedCatagory
 @property (nonatomic, strong) Record *currentlySelectedRecord;
-@property NSInteger currentlySelectedRecordIndex;  // index of the currentlySelectedRecord's position in recordsOfCurrentlySelectedCatagory
+@property (nonatomic) NSInteger currentlySelectedRecordIndex;  // index of the currentlySelectedRecord's position in recordsOfCurrentlySelectedCatagory
 
 @end
 
 @implementation ReceiptCheckingViewController
 
-- (void) viewDidLoad
+- (void) setupUI
 {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-
-    [self.receiptScrollView setBackgroundColor:[UIColor whiteColor]];
-    
-    [self.qtyField setDelegate: self];
-    [self.qtyField addTarget: self
-                      action: @selector(textFieldDidChange:)
-            forControlEvents: UIControlEventEditingChanged];
-
-    [self.pricePerItemField setDelegate: self];
-    [self.pricePerItemField addTarget: self
-                               action: @selector(textFieldDidChange:)
-                     forControlEvents: UIControlEventEditingChanged];
+    self.catagoriesBar.lookAndFeel = self.lookAndFeel;
 
     UIToolbar *numberToolbar = [[UIToolbar alloc]initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 50)];
     numberToolbar.barStyle = UIBarStyleDefault;
@@ -83,29 +69,121 @@
     self.qtyField.inputAccessoryView = numberToolbar;
     self.pricePerItemField.inputAccessoryView = numberToolbar;
 
-    self.animatedBar.constant = -100;
-    self.animatorBar2.constant = 20;
+    UIImage *receiptImage = [UIImage imageNamed: @"receipt_icon.png"];
+    [self.recordsCounter setImage: receiptImage];
 
-    self.bottomBar = [[HorizonalScrollBarView alloc] initWithFrame: self.bottombarContainer.frame];
-    self.bottomBar.delegate = self;
-    [self.view addSubview: self.bottomBar];
+    self.receiptScrollView.lookAndFeel = self.lookAndFeel;
+    self.receiptScrollView.delegate = self;
+    [self.receiptScrollView setBackgroundColor: [UIColor whiteColor]];
+    
+    [self.lookAndFeel applyGrayBorderTo:self.qtyField];
+    [self.lookAndFeel applyGrayBorderTo:self.pricePerItemField];
+    [self.lookAndFeel applyGrayBorderTo:self.totalField];
+    [self.lookAndFeel applySolidGreenButtonStyleTo:self.addItemButton];
+    [self.lookAndFeel applySolidGreenButtonStyleTo:self.deleteItemButton];
+
+
+    // if we are straight from the camera, we show the X, and Complete button while hiding the Back button
+    if (!self.cameFromReceiptBreakDownViewController)
+    {
+        // initialize the left side Cancel menu button button
+        self.cancelButton = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, 25, 25)];
+        [self.cancelButton setTitle: @"X" forState: UIControlStateNormal];
+        [self.cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.cancelButton.titleLabel setFont: [UIFont latoBoldFontOfSize: 14]];
+        [self.cancelButton addTarget: self action: @selector(cancelPressed) forControlEvents: UIControlEventTouchUpInside];
+
+        self.leftMenuItem = [[UIBarButtonItem alloc] initWithCustomView: self.cancelButton];
+        self.navigationItem.leftBarButtonItem = self.leftMenuItem;
+
+        // initialize the right side Complete menu button button
+        self.completeButton = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, 80, 25)];
+        [self.completeButton setTitle: @"Complete" forState: UIControlStateNormal];
+        [self.completeButton setTitleColor: [UIColor blackColor] forState: UIControlStateNormal];
+        [self.completeButton setTitleEdgeInsets: UIEdgeInsetsMake(5, 5, 5, 5)];
+        [self.completeButton.titleLabel setFont: [UIFont latoFontOfSize: 12]];
+        [self.lookAndFeel applySolidGreenButtonStyleTo: self.completeButton];
+        [self.completeButton addTarget: self action: @selector(completePressed) forControlEvents: UIControlEventTouchUpInside];
+
+        self.rightMenuItem = [[UIBarButtonItem alloc] initWithCustomView: self.completeButton];
+        self.navigationItem.rightBarButtonItem = self.rightMenuItem;
+    }
+
+    self.automaticallyAdjustsScrollViewInsets = YES;
+}
+
+- (void) cancelPressed
+{
+    // if the user has added at least one item, show a confirmation dialog,
+    // upon confirmation, delete this Receipt and all of its Records
+    // otherwise, just delete the current receipt and pop the view
+    
+    if ([self calculateNumberOfRecords] > 0)
+    {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Delete this receipt"
+                                                          message: @"Are you sure you want delete this receipt along with all its items?"
+                                                         delegate: self
+                                                cancelButtonTitle: @"No"
+                                                otherButtonTitles: @"Yes", nil];
+        
+        [message show];
+    }
+    else
+    {
+        [self deleteCurrentReceiptAndQuit];
+    }
+}
+
+- (void) completePressed
+{
+    [self.navigationController popViewControllerAnimated: YES];
+}
+
+- (void) viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+
+    [self setupUI];
+
+    [self.qtyField setDelegate: self];
+    [self.qtyField addTarget: self
+                      action: @selector(textFieldDidChange:)
+            forControlEvents: UIControlEventEditingChanged];
+
+    [self.pricePerItemField setDelegate: self];
+    [self.pricePerItemField addTarget: self
+                               action: @selector(textFieldDidChange:)
+                     forControlEvents: UIControlEventEditingChanged];
+
+    self.catagoriesBar.delegate = self;
 
     self.records = [NSMutableDictionary new];
 
-    // load the receiptImages array with some demo images
     self.receiptImages = [NSMutableArray new];
 
-    UIImage *receiptImage = [UIImage imageNamed: @"receipt.png"];
-    [self.recordsCounter setImage: receiptImage];
     [self.recordsCounter setDelegate: self];
+
+    [self hideAddRecordControls];
 }
 
 - (void) viewWillAppear: (BOOL) animated
 {
     [super viewWillAppear: animated];
+    
+    // register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(keyboardWillShow:)
+                                                 name: UIKeyboardWillShowNotification
+                                               object: nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(keyboardWillHide:)
+                                                 name: UIKeyboardWillHideNotification
+                                               object: nil];
 
     // load the receipt images for this receipt
-    [self.dataService fetchReceiptForReceiptID: self.receiptID success:^(Receipt *receipt) {
+    [self.dataService fetchReceiptForReceiptID: self.receiptID success: ^(Receipt *receipt) {
         self.receipt = receipt;
 
         // load images from this receipt
@@ -117,50 +195,62 @@
             {
                 [self.receiptImages addObject: image];
             }
-
-            [self.receiptScrollView setImages: self.receiptImages];
         }
-    } failure:^(NSString *reason) {
+
+        [self.receiptScrollView setImages: self.receiptImages];
+    } failure: ^(NSString *reason) {
         // should not happen
     }];
 
     // load all the catagories
-    [self.dataService fetchCatagoriesSuccess:^(NSArray *catagories) {
+    [self.dataService fetchCatagoriesSuccess: ^(NSArray *catagories) {
         self.catagories = catagories;
-    } failure:^(NSString *reason) {
+
+        [self refreshButtonBar];
+    } failure: ^(NSString *reason) {
         // if no catagories
     }];
 
-    self.catagoryNames = [NSMutableArray new];
-
-    for (Catagory *itemCatagory in self.catagories)
-    {
-        [self.catagoryNames addObject: itemCatagory.name];
-    }
-
     // load catagory records for this receipt
     [self.dataService fetchRecordsForReceiptID: self.receiptID
-                                       success:^(NSArray *records) {
+                                       success: ^(NSArray *records) {
         [self populateRecordsDictionaryUsing: records];
 
         [self refreshRecordsCounter];
-    } failure:^(NSString *reason) {
+    } failure: ^(NSString *reason) {
         // failure
     }];
-
-    [self refreshButtonBar];
 }
 
-- (void) refreshRecordsCounter
+- (void) viewWillDisappear: (BOOL) animated
+{
+    [super viewWillDisappear: animated];
+    
+    // unregister for keyboard notifications while not visible.
+    [[NSNotificationCenter defaultCenter] removeObserver: self
+                                                    name: UIKeyboardWillShowNotification
+                                                  object: nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver: self
+                                                    name: UIKeyboardWillHideNotification
+                                                  object: nil];
+}
+
+-(NSInteger) calculateNumberOfRecords
 {
     NSInteger counter = 0;
-
+    
     for (NSMutableArray *recordsOfThisCatagory in self.records.allValues)
     {
         counter = counter + recordsOfThisCatagory.count;
     }
+    
+    return counter;
+}
 
-    [self.recordsCounter setCounter: counter];
+- (void) refreshRecordsCounter
+{
+    [self.recordsCounter setCounter: [self calculateNumberOfRecords]];
 }
 
 - (void) populateRecordsDictionaryUsing: (NSArray *) records
@@ -182,7 +272,40 @@
 
 - (void) refreshButtonBar
 {
-    [self.bottomBar setButtonNames: self.catagoryNames];
+    NSMutableArray *catagoryNames = [NSMutableArray new];
+    NSMutableArray *catagoryColors = [NSMutableArray new];
+
+    for (Catagory *catagory in self.catagories)
+    {
+        [catagoryNames addObject: catagory.name];
+        [catagoryColors addObject: catagory.color];
+    }
+
+    [self.catagoriesBar setButtonNames: catagoryNames andColors: catagoryColors];
+}
+
+- (void) disablePreviousItemButton
+{
+    [self.previousItemButton setEnabled: NO];
+    [self.previousItemButton setTitleColor: [UIColor lightGrayColor] forState: UIControlStateNormal];
+}
+
+- (void) enablePreviousItemButton
+{
+    [self.previousItemButton setEnabled: YES];
+    [self.previousItemButton setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
+}
+
+- (void) disableNextItemButton
+{
+    [self.nextItemButton setEnabled: NO];
+    [self.nextItemButton setTitleColor: [UIColor lightGrayColor] forState: UIControlStateNormal];
+}
+
+- (void) enableNextItemButton
+{
+    [self.nextItemButton setEnabled: YES];
+    [self.nextItemButton setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
 }
 
 - (IBAction) addCatagoryPressed: (UIButton *) sender
@@ -195,13 +318,9 @@
 {
     if (self.currentlySelectedRecordIndex != -1)
     {
-        if (self.currentlySelectedRecordIndex - 1 >= 0)
+        if (self.currentlySelectedRecordIndex > 0)
         {
             self.currentlySelectedRecordIndex--;
-        }
-        else
-        {
-            self.currentlySelectedRecordIndex = self.recordsOfCurrentlySelectedCatagory.count - 1;
         }
 
         self.currentlySelectedRecord = [self.recordsOfCurrentlySelectedCatagory objectAtIndex: self.currentlySelectedRecordIndex];
@@ -211,6 +330,16 @@
         // should not happen
         NSAssert(NO, @"self.currentlySelectedRecordIndex must not be -1");
     }
+}
+
+-(void)deleteCurrentReceiptAndQuit
+{
+    //delete the receipt
+    [self.manipulationService deleteReceiptAndAllItsRecords:self.receiptID success:^{
+        [self.navigationController popViewControllerAnimated: YES];
+    } failure:^(NSString *reason) {
+        DLog(@"%@",reason);
+    }];
 }
 
 - (IBAction) nextRecordPressed: (UIButton *) sender
@@ -221,24 +350,15 @@
         {
             self.currentlySelectedRecordIndex++;
         }
-        else
-        {
-            self.currentlySelectedRecordIndex = 0;
-        }
 
         self.currentlySelectedRecord = [self.recordsOfCurrentlySelectedCatagory objectAtIndex: self.currentlySelectedRecordIndex];
-    }
-    else
-    {
-        // should not happen
-        NSAssert(NO, @"self.currentlySelectedRecordIndex must not be -1");
     }
 }
 
 - (IBAction) addRecordPressed: (UIButton *) sender
 {
-    [self.manipulationService addRecordForCatagoryID: self.currentlySelectedCatagory.identifer forReceiptID: self.receipt.identifer forQuantity: 0 forAmount: 0 success:^(NSString *newestRecordID) {
-        [self.dataService fetchRecordForID: newestRecordID success:^(Record *record) {
+    [self.manipulationService addRecordForCatagoryID: self.currentlySelectedCatagory.identifer forReceiptID: self.receipt.identifer forQuantity: 0 forAmount: 0 success: ^(NSString *newestRecordID) {
+        [self.dataService fetchRecordForID: newestRecordID success: ^(Record *record) {
             // add that to self.records
             NSMutableArray *recordsOfThisCatagory = [self.records objectForKey: record.catagoryID];
 
@@ -258,17 +378,17 @@
             self.currentlySelectedRecord = record;
 
             [self refreshRecordsCounter];
-        } failure:^(NSString *reason) {
+        } failure: ^(NSString *reason) {
             DLog(@"self.dataService fetchRecordForID failed");
         }];
-    } failure:^(NSString *reason) {
+    } failure: ^(NSString *reason) {
         DLog(@"self.manipulationService addRecordForCatagoryID failed");
     }];
 }
 
 - (IBAction) deleteRecordPressed: (UIButton *) sender
 {
-    [self.manipulationService deleteRecord: self.currentlySelectedRecord.identifer WithSuccess:^{
+    [self.manipulationService deleteRecord: self.currentlySelectedRecord.identifer WithSuccess: ^{
         // delete the record from self.records
         NSMutableArray *recordsOfThisCatagory = [self.records objectForKey: self.currentlySelectedRecord.catagoryID];
 
@@ -283,7 +403,7 @@
         self.currentlySelectedRecord = [self.recordsOfCurrentlySelectedCatagory lastObject];
 
         [self refreshRecordsCounter];
-    } andFailure:^(NSString *reason) {
+    } andFailure: ^(NSString *reason) {
         DLog(@"self.manipulationService deleteRecord failed");
     }];
 }
@@ -308,30 +428,12 @@
 
 - (void) showAddRecordControls
 {
-    // animate the the animatedBar to 40 and animatorBar2 to 113
-    if (self.animatedBar.constant != 40)
-    {
-        self.animatedBar.constant = 40;
-        self.animatorBar2.constant = 113;
-        [UIView animateWithDuration: 0.2
-                         animations:^{
-            [self.view layoutIfNeeded];                  // Called on parent view
-        }];
-    }
+    [self.itemControlsContainer setHidden: NO];
 }
 
 - (void) hideAddRecordControls
 {
-    // animate the the animatedBar to -150 and animatorBar2 to 20
-    if (self.animatedBar.constant != -10)
-    {
-        self.animatedBar.constant = -150;
-        self.animatorBar2.constant = 20;
-        [UIView animateWithDuration: 0.2
-                         animations:^{
-            [self.view layoutIfNeeded];                  // Called on parent view
-        }];
-    }
+    [self.itemControlsContainer setHidden: YES];
 }
 
 - (void) calculateTotalField
@@ -341,9 +443,9 @@
 
 - (void) saveCurrentlySelectedRecord
 {
-    [self.manipulationService modifyRecord: self.currentlySelectedRecord WithSuccess:^{
+    [self.manipulationService modifyRecord: self.currentlySelectedRecord WithSuccess: ^{
         DLog(@"Record %ld saved", (long)self.currentlySelectedRecord.identifer);
-    } andFailure:^(NSString *reason) {
+    } andFailure: ^(NSString *reason) {
         DLog(@"modifyRecord failed");
     }];
 }
@@ -359,9 +461,6 @@
         self.qtyField.text = [NSString stringWithFormat: @"%ld", (long)_currentlySelectedRecord.quantity];
         self.pricePerItemField.text = [NSString stringWithFormat: @"%.f", _currentlySelectedRecord.amount];
 
-        [self.qtyField setEnabled: YES];
-        [self.pricePerItemField setEnabled: YES];
-
         [self calculateTotalField];
 
         [self.deleteItemButton setEnabled: YES];
@@ -374,13 +473,44 @@
         self.qtyField.text = @"";
         self.pricePerItemField.text = @"";
         self.totalField.text = @"";
-
-        [self.qtyField setEnabled: NO];
-        [self.pricePerItemField setEnabled: NO];
+        [self.currentItemStatusLabel setText: [NSString stringWithFormat: @"%d/%ld", 0, (unsigned long)self.recordsOfCurrentlySelectedCatagory.count]];
 
         [self.deleteItemButton setEnabled: NO];
 
         self.currentlySelectedRecordIndex = -1;
+    }
+}
+
+- (void) setCurrentlySelectedRecordIndex: (NSInteger) currentlySelectedRecordIndex
+{
+    _currentlySelectedRecordIndex = currentlySelectedRecordIndex;
+
+    if (_currentlySelectedRecordIndex != -1)
+    {
+        [self.currentItemStatusLabel setText: [NSString stringWithFormat: @"%ld/%ld", (long)(currentlySelectedRecordIndex + 1), (unsigned long)self.recordsOfCurrentlySelectedCatagory.count]];
+
+        if (currentlySelectedRecordIndex == 0)
+        {
+            [self disablePreviousItemButton];
+        }
+        else
+        {
+            [self enablePreviousItemButton];
+        }
+
+        if (currentlySelectedRecordIndex == self.recordsOfCurrentlySelectedCatagory.count - 1)
+        {
+            [self disableNextItemButton];
+        }
+        else
+        {
+            [self enableNextItemButton];
+        }
+    }
+    else
+    {
+        [self disableNextItemButton];
+        [self disablePreviousItemButton];
     }
 }
 
@@ -426,24 +556,6 @@
 - (void) setRecordsOfCurrentlySelectedCatagory: (NSMutableArray *) recordsOfCurrentlySelectedCatagory
 {
     _recordsOfCurrentlySelectedCatagory = recordsOfCurrentlySelectedCatagory;
-
-    // enable the Left and Right buttons only if there are more than 1 records to browse from
-    if (_recordsOfCurrentlySelectedCatagory.count > 1)
-    {
-        [self.previousItemButton setEnabled: YES];
-        [self.nextItemButton setEnabled: YES];
-
-        [self.previousItemButton setBackgroundColor: self.previousItemButton.tintColor];
-        [self.nextItemButton setBackgroundColor: self.nextItemButton.tintColor];
-    }
-    else
-    {
-        [self.previousItemButton setEnabled: NO];
-        [self.nextItemButton setEnabled: NO];
-
-        [self.previousItemButton setBackgroundColor: [UIColor lightGrayColor]];
-        [self.nextItemButton setBackgroundColor: [UIColor lightGrayColor]];
-    }
 }
 
 - (void) doneWithNumberPad
@@ -457,6 +569,40 @@
     {
         [self.pricePerItemField resignFirstResponder];
     }
+}
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void) keyboardWillShow: (NSNotification *) aNotification
+{
+    NSDictionary *info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey: UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    [self.view scrollToY: 0 - kbSize.height];
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void) keyboardWillHide: (NSNotification *) aNotification
+{
+    [self.view scrollToY: 0];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void) alertView: (UIAlertView *) alertView clickedButtonAtIndex: (NSInteger) buttonIndex
+{
+    NSString *title = [alertView buttonTitleAtIndex: buttonIndex];
+    
+    if ( [title isEqualToString: @"Yes"] )
+    {
+        [self deleteCurrentReceiptAndQuit];
+    }
+}
+
+#pragma mark - ReceiptScrollViewProtocol
+
+- (void) selectedChanged
+{
+    // should I care?
 }
 
 #pragma mark - UITextFieldDelegate
@@ -509,7 +655,7 @@
     else
     {
         // push ReceiptCheckingViewController
-        [self.navigationController pushViewController:[self.viewControllerFactory createReceiptBreakDownViewControllerForReceiptID:self.receiptID cameFromReceiptCheckingViewController:YES] animated:YES];
+        [self.navigationController pushViewController: [self.viewControllerFactory createReceiptBreakDownViewControllerForReceiptID: self.receiptID cameFromReceiptCheckingViewController: YES] animated: YES];
     }
 }
 

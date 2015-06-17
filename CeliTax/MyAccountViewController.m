@@ -14,41 +14,38 @@
 #import "User.h"
 #import "AlertDialogsProvider.h"
 #import "ViewControllerFactory.h"
-#import "CatagoriesManagementViewController.h"
 #import "XYPieChart.h"
 #import "UploadsHistoryTableViewCell.h"
 #import "Notifications.h"
 #import "ReceiptBreakDownViewController.h"
 #import "Utils.h"
 
-#define kCatagoryTableRowHeight                 70
+#define kCatagoryTableRowHeight                 65
 
 #define kCatagoryDetailsKeyTotalQty             @"CatagoryDetailsKeyTotalQty"
 #define kCatagoryDetailsKeyTotalAmount          @"CatagoryDetailsKeyTotalAmount"
+
+#define kAccountTableViewCellIdentifier             @"AccountTableViewCell"
+#define kUploadsHistoryTableViewCellIdentifier      @"UploadsHistoryTableViewCell"
 
 @interface MyAccountViewController () <UITableViewDataSource, UITableViewDelegate, XYPieChartDelegate, XYPieChartDataSource>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) XYPieChart *pieChart;
-
 @property (weak, nonatomic) IBOutlet UITableView *accountTableView;
 @property (weak, nonatomic) IBOutlet UIButton *calculateButton;
 
 @property (nonatomic, strong) NSArray *catagories; // of Catagory
-
 // Key: Catagory ID, Value: NSMutableDictionary of :
 // KEY: kCatagoryDetailsKeyTotalQty, VALUE: total quantity for this catagory
 // KEY: kCatagoryDetailsKeyTotalAmount, VALUE: total amount spent for this catagory
 @property (strong, nonatomic) NSMutableDictionary *catagoryDetails;
-
 @property (nonatomic, strong) NSMutableArray *slicePercentages;
 @property (nonatomic, strong) NSMutableArray *sliceColors;
 @property (nonatomic, strong) NSMutableArray *sliceNames;
-
 @property (nonatomic, strong) Catagory *currentlySelectedCatagory;
 @property (nonatomic, strong) NSArray *catagoryInfosToShow;
-
 @property (nonatomic) BOOL recentUploadsSelected;
 @property (nonatomic) BOOL previousWeekSelected;
 @property (nonatomic) BOOL previousMonthSelected;
@@ -56,18 +53,18 @@
 
 @end
 
-#define kAccountTableViewCellIdentifier             @"AccountTableViewCell"
-#define kUploadsHistoryTableViewCellIdentifier      @"UploadsHistoryTableViewCell"
-
 @implementation MyAccountViewController
 
-- (void) viewDidLoad
+- (void) setupUI
 {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-
     // load user info
     [self.nameLabel setText: [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]];
+
+    self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.width / 2;
+    self.avatarImageView.layer.borderColor = [UIColor colorWithWhite: 187.0f/255.0f alpha: 1].CGColor;
+    self.avatarImageView.layer.borderWidth = 1.0f;
+    [self.avatarImageView setClipsToBounds: YES];
+    [self.avatarImageView setImage: self.userManager.user.avatarImage];
 
     // set up tableview
     UINib *accountTableCell = [UINib nibWithNibName: @"AccountTableViewCell" bundle: nil];
@@ -76,13 +73,8 @@
     UINib *uploadsHistoryTableViewCell = [UINib nibWithNibName: @"UploadsHistoryTableViewCell" bundle: nil];
     [self.accountTableView registerNib: uploadsHistoryTableViewCell forCellReuseIdentifier: kUploadsHistoryTableViewCellIdentifier];
 
-    self.accountTableView.dataSource = self;
-    self.accountTableView.delegate = self;
-
-    [self.avatarImageView setImage: self.userManager.user.avatarImage];
-
     // set up pieChart
-    UIView *pieChartContainer = [[UIView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 200)];
+    UIView *pieChartContainer = [[UIView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 190)];
 
     self.pieChart = [[XYPieChart alloc] initWithFrame: CGRectMake(0, 0, 180, 180)];
     [self.pieChart setCenter: pieChartContainer.center];
@@ -94,7 +86,7 @@
     [self.pieChart setDelegate: self];
     [self.pieChart setStartPieAngle: M_PI_2];
     [self.pieChart setAnimationSpeed: 1.0];
-    [self.pieChart setLabelFont: [UIFont systemFontOfSize: 14]];
+    [self.pieChart setLabelFont: [UIFont latoFontOfSize: 12]];
     [self.pieChart setLabelRadius: self.pieChart.frame.size.width / 4];
     [self.pieChart setShowPercentage: NO];
     [self.pieChart setPieBackgroundColor: [UIColor clearColor]];
@@ -103,6 +95,19 @@
     [self.pieChart setSelectedSliceOffsetRadius: 0];
 
     [self.accountTableView setTableHeaderView: pieChartContainer];
+
+    // other set up
+    [self.lookAndFeel applyHollowGreenButtonStyleTo: self.calculateButton];
+}
+
+- (void) viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    [self setupUI];
+
+    self.accountTableView.dataSource = self;
+    self.accountTableView.delegate = self;
 }
 
 - (void) viewWillAppear: (BOOL) animated
@@ -195,11 +200,6 @@
     [AlertDialogsProvider showWorkInProgressDialog];
 }
 
-- (void) editCatagoriesPressed
-{
-    [self.navigationController pushViewController: [self.viewControllerFactory createCatagoriesManagementViewController] animated: YES];
-}
-
 - (void) openReceiptBreakDownView: (NSNotification *) notification
 {
     NSDictionary *notificationDictionary = [notification userInfo];
@@ -247,6 +247,19 @@
     Catagory *thisCatagory = [self.catagories objectAtIndex: index];
 
     DLog(@"Catagory %@: %@ pressed", thisCatagory.identifer, thisCatagory.name);
+
+    self.currentlySelectedCatagory = thisCatagory;
+
+    self.catagoryInfosToShow = nil;
+
+    [self.accountTableView reloadData];
+
+    [self.accountTableView scrollToRowAtIndexPath: [NSIndexPath indexPathForRow: index * 2 inSection: 0] atScrollPosition: UITableViewScrollPositionTop animated: YES];
+
+    self.recentUploadsSelected = NO;
+    self.previousWeekSelected = NO;
+    self.previousMonthSelected = NO;
+    self.viewAllSelected = NO;
 }
 
 #pragma mark - UploadsHistoryTableViewCell function
@@ -429,9 +442,15 @@
         float sumAmount = [[catagoryDetailForThisCatagory objectForKey: kCatagoryDetailsKeyTotalAmount] floatValue];
 
         cell.colorBoxColor = thisCatagory.color;
+        cell.colorBox.backgroundColor = thisCatagory.color;
+
+        [self.lookAndFeel applyGrayBorderTo: cell.colorBox];
+
         [cell.catagoryNameLabel setText: thisCatagory.name];
         [cell.totalQuantityField setText: [NSString stringWithFormat: @"%ld", (long)sumQuantity]];
         [cell.totalAmountField setText: [NSString stringWithFormat: @"%.2f", sumAmount]];
+        [self.lookAndFeel applyGrayBorderTo: cell.totalQuantityField];
+        [self.lookAndFeel applyGrayBorderTo: cell.totalAmountField];
 
         if (thisCatagory.nationalAverageCost > 0)
         {
@@ -442,7 +461,23 @@
             [cell.averageNationalPriceField setText: @"--"];
         }
 
-        [cell setTableCellToSelectedMode];
+        [self.lookAndFeel applyGreenBorderTo: cell.averageNationalPriceField];
+        
+        if (self.currentlySelectedCatagory)
+        {
+            if (thisCatagory == self.currentlySelectedCatagory)
+            {
+                [cell makeCellAppearActive];
+            }
+            else
+            {
+                [cell makeCellAppearInactive];
+            }
+        }
+        else
+        {
+            [cell makeCellAppearActive];
+        }
 
         return cell;
     }
@@ -456,6 +491,8 @@
         {
             cell = [[UploadsHistoryTableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: cellId];
         }
+
+        cell.lookAndFeel = self.lookAndFeel;
 
         [cell setSelectionStyle: UITableViewCellSelectionStyleNone];
         cell.clipsToBounds = YES;

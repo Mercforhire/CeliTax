@@ -68,20 +68,45 @@ typedef enum : NSUInteger
 
 @implementation VaultViewController
 
+- (void) setupUI
+{
+    [self.lookAndFeel applyHollowGreenButtonStyleTo: self.downloadReceiptButton];
+
+    [self.selectAllCheckBox.titleLabel setFont: [UIFont latoFontOfSize: 13]];
+    [self.selectAllCheckBox.titleLabel setTextColor: [UIColor blackColor]];
+    [self.selectAllCheckBox setStrokeColor: [UIColor grayColor]];
+    [self.selectAllCheckBox setCheckColor: self.lookAndFeel.appGreenColor];
+    [self.selectAllCheckBox setCheckAlignment: M13CheckboxAlignmentLeft];
+    [self.selectAllCheckBox.titleLabel setText: @"Select All"];
+
+    UINib *timePeriodSelectionTableViewCell = [UINib nibWithNibName: @"TimePeriodSelectionTableViewCell" bundle: nil];
+    UINib *receiptTimeTableViewCellTableViewCell = [UINib nibWithNibName: @"ReceiptTimeTableViewCell" bundle: nil];
+
+    [self.uploadHistoryTable registerNib: timePeriodSelectionTableViewCell forCellReuseIdentifier: kTimePeriodSelectionTableViewCellIdentifier];
+    [self.uploadHistoryTable registerNib: receiptTimeTableViewCellTableViewCell forCellReuseIdentifier: kReceiptTimeTableViewCellIdentifier];
+
+    self.sendReceiptsToViewController = [self.viewControllerFactory createSendReceiptsToViewController];
+    self.sendReceiptsPopover = [[WYPopoverController alloc] initWithContentViewController: self.sendReceiptsToViewController];
+    [self.sendReceiptsPopover setTheme: [WYPopoverTheme theme]];
+
+    WYPopoverTheme *popUpTheme = self.sendReceiptsPopover.theme;
+    popUpTheme.fillTopColor = self.lookAndFeel.appGreenColor;
+    popUpTheme.fillBottomColor = self.lookAndFeel.appGreenColor;
+
+    [self.sendReceiptsPopover setTheme: popUpTheme];
+}
+
 - (void) viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
-    self.selectedReceipts = [NSMutableDictionary new];
+    [self setupUI];
 
-    UINib *timePeriodSelectionTableViewCell = [UINib nibWithNibName: @"TimePeriodSelectionTableViewCell" bundle: nil];
-    UINib *receiptTimeTableViewCellTableViewCell = [UINib nibWithNibName: @"ReceiptTimeTableViewCell" bundle: nil];
+    self.selectedReceipts = [NSMutableDictionary new];
 
     self.uploadHistoryTable.dataSource = self;
     self.uploadHistoryTable.delegate = self;
-    [self.uploadHistoryTable registerNib: timePeriodSelectionTableViewCell forCellReuseIdentifier: kTimePeriodSelectionTableViewCellIdentifier];
-    [self.uploadHistoryTable registerNib: receiptTimeTableViewCellTableViewCell forCellReuseIdentifier: kReceiptTimeTableViewCellIdentifier];
 
     self.dateFormatter = [[NSDateFormatter alloc] init];
 
@@ -90,13 +115,9 @@ typedef enum : NSUInteger
                                                 action: @selector(taxYearPressed)];
     [self.taxYearLabel addGestureRecognizer: taxYearPressedTap];
 
-    [self.selectAllCheckBox setCheckAlignment: M13CheckboxAlignmentLeft];
-    [self.selectAllCheckBox.titleLabel setText: @"Select All"];
     [self.selectAllCheckBox addTarget: self action: @selector(selectAllCheckChangedValue:) forControlEvents: UIControlEventValueChanged];
 
-    self.sendReceiptsToViewController = [self.viewControllerFactory createSendReceiptsToViewController];
     [self.sendReceiptsToViewController setDelegate: self];
-    self.sendReceiptsPopover = [[WYPopoverController alloc] initWithContentViewController: self.sendReceiptsToViewController];
 
     [self.dataService fetchReceiptsYearsRange: ^(NSArray *yearsRange)
     {
@@ -107,10 +128,11 @@ typedef enum : NSUInteger
 
         for (NSNumber *year in yearsRange)
         {
-            [yearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", year.integerValue]];
+            [yearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", (long)year.integerValue]];
         }
 
         self.taxYearPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: yearSelections];
+        self.taxYearPickerViewController.highlightedSelectionIndex = -1;
         self.selectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.taxYearPickerViewController];
         [self.taxYearPickerViewController setDelegate: self];
     }                                 failure: ^(NSString *reason) {
@@ -121,7 +143,7 @@ typedef enum : NSUInteger
 - (IBAction) downloadReceiptsPressed: (UIButton *) sender
 {
     // open up 'Send Receipts To' pop up
-    
+
     [self.sendReceiptsPopover presentPopoverFromRect: self.downloadReceiptButton.frame inView: self.view permittedArrowDirections: WYPopoverArrowDirectionDown animated: YES];
 }
 
@@ -132,20 +154,20 @@ typedef enum : NSUInteger
     if (checkBox.checkState == M13CheckboxStateChecked)
     {
         self.selectAllReceipts = YES;
-        
-        [self.downloadReceiptButton setEnabled:YES];
+
+        [self.downloadReceiptButton setEnabled: YES];
     }
     else
     {
         self.selectAllReceipts = NO;
-        
+
         if (self.selectedReceipts.count)
         {
-            [self.downloadReceiptButton setEnabled:YES];
+            [self.downloadReceiptButton setEnabled: YES];
         }
         else
         {
-            [self.downloadReceiptButton setEnabled:NO];
+            [self.downloadReceiptButton setEnabled: NO];
         }
     }
 
@@ -154,7 +176,7 @@ typedef enum : NSUInteger
 
 - (void) singleReceiptCheckChangedValue: (M13Checkbox *) checkBox
 {
-    DLog(@"Checkbox of tag %ld Value changed to %ld", checkBox.tag, (long)checkBox.checkState);
+    DLog(@"Checkbox of tag %ld Value changed to %ld", (long)checkBox.tag, (long)checkBox.checkState);
 
     // get the Receipt object refered to by the checkBox's tag
 
@@ -196,14 +218,14 @@ typedef enum : NSUInteger
     {
         [self.selectedReceipts removeObjectForKey: receiptID];
     }
-    
+
     if (self.selectedReceipts.count)
     {
-        [self.downloadReceiptButton setEnabled:YES];
+        [self.downloadReceiptButton setEnabled: YES];
     }
     else
     {
-        [self.downloadReceiptButton setEnabled:NO];
+        [self.downloadReceiptButton setEnabled: NO];
     }
 
     [self.uploadHistoryTable reloadData];
@@ -216,7 +238,7 @@ typedef enum : NSUInteger
 
 - (void) setYearLabelToBe: (NSInteger) year
 {
-    [self.taxYearLabel setText: [NSString stringWithFormat: @"%ld Tax Year", year]];
+    [self.taxYearLabel setText: [NSString stringWithFormat: @"%ld Tax Year", (long)year]];
 }
 
 - (void) setCurrentlySelectedYear: (NSNumber *) currentlySelectedYear
@@ -225,21 +247,21 @@ typedef enum : NSUInteger
 
     [self setYearLabelToBe: self.currentlySelectedYear.integerValue];
 
-    //TODO: do some receipt loading operation here
+    // TODO: do some receipt loading operation here
 }
 
 #pragma mark - SelectionsPickerPopUpDelegate
 
-- (void) sendReceiptsToEmailRequested:(NSString *)emailAddress
+- (void) sendReceiptsToEmailRequested: (NSString *) emailAddress
 {
     [self.sendReceiptsPopover dismissPopoverAnimated: YES];
-    
+
     [AlertDialogsProvider showWorkInProgressDialog];
 }
 
 #pragma mark - SelectionsPickerPopUpDelegate
 
-- (void) selectedSelectionAtIndex: (NSInteger) index
+- (void) selectedSelectionAtIndex: (NSInteger) index fromPopUp:(SelectionsPickerViewController *)popUpController
 {
     [self.selectionPopover dismissPopoverAnimated: YES];
 
@@ -374,6 +396,10 @@ typedef enum : NSUInteger
             cell = [[ReceiptTimeTableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: cellId2];
         }
 
+        [cell.checkBoxView.titleLabel setFont: [UIFont latoFontOfSize: 13]];
+        [cell.checkBoxView.titleLabel setTextColor: [UIColor blackColor]];
+        [cell.checkBoxView setStrokeColor: [UIColor grayColor]];
+        [cell.checkBoxView setCheckColor: self.lookAndFeel.appGreenColor];
         [cell.checkBoxView setCheckAlignment: M13CheckboxAlignmentLeft];
         [cell.checkBoxView setTag: (checkBoxTagOffset + indexPath.row - 1)];
         [cell.checkBoxView addTarget: self action: @selector(singleReceiptCheckChangedValue:) forControlEvents: UIControlEventValueChanged];
@@ -501,6 +527,8 @@ typedef enum : NSUInteger
         DLog(@"Receipt Time period %@ clicked", period);
 
         [tableView reloadData];
+        
+        [tableView scrollToRowAtIndexPath: indexPath atScrollPosition: UITableViewScrollPositionTop animated: YES];
     }
 }
 

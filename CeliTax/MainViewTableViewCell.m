@@ -13,7 +13,7 @@
 - (void) awakeFromNib
 {
     // Initialization code
-    
+
     [self setSelectionStyle: UITableViewCellSelectionStyleNone];
 }
 
@@ -22,6 +22,15 @@
     [super setSelected: selected animated: animated];
 
     // Configure the view for the selected state
+
+    if (selected)
+    {
+        [self.colorBoxView setBackgroundColor: self.selectedColorBoxColor];
+    }
+    else
+    {
+        [self.colorBoxView setBackgroundColor: [UIColor clearColor]];
+    }
 }
 
 @end

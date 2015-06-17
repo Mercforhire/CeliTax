@@ -1,39 +1,51 @@
 //
-//  ColorPickerViewController.m
-//  CeliTax
+// ColorPickerViewController.m
+// CeliTax
 //
-//  Created by Leon Chen on 2015-05-11.
-//  Copyright (c) 2015 CraveNSave. All rights reserved.
+// Created by Leon Chen on 2015-05-11.
+// Copyright (c) 2015 CraveNSave. All rights reserved.
 //
 
 #import "ColorPickerViewController.h"
 
 @interface ColorPickerViewController ()
 
-
 @end
 
 @implementation ColorPickerViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id) initWithNibName: (NSString *) nibNameOrNil bundle: (NSBundle *) nibBundleOrNil
 {
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
+    if (self = [super initWithNibName: nibNameOrNil bundle: nibBundleOrNil])
     {
         // Custom initialization
-        self.viewSize = CGSizeMake(50, 330);
+        self.viewSize = CGSizeMake(46, 274);
     }
+
     return self;
 }
 
-- (IBAction)colorBoxPressed:(UIButton *)sender
+-(void)viewDidLoad
 {
-    if (self.delegate)
+    [super viewDidLoad];
+    
+    // apply gray border to all subviews
+    
+    for (UIView *subview in [self.view subviews])
     {
-        [self.delegate selectedColor:sender.backgroundColor];
+        [self.lookAndFeel applyGrayBorderTo: subview];
     }
 }
 
-- (IBAction)customerColorButtonPressed:(UIButton *)sender
+- (IBAction) colorBoxPressed: (UIButton *) sender
+{
+    if (self.delegate)
+    {
+        [self.delegate selectedColor: sender.backgroundColor];
+    }
+}
+
+- (IBAction) customerColorButtonPressed: (UIButton *) sender
 {
     if (self.delegate)
     {

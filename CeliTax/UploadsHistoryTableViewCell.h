@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LookAndFeel.h"
 
 @interface UploadsHistoryTableViewCell : UITableViewCell
+
+@property (nonatomic, weak) LookAndFeel *lookAndFeel;
 
 @property (strong, nonatomic) UIColor *catagoryColor;
 

@@ -19,17 +19,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view
 
-    UIView *titleImageContainer = [[UIView alloc] initWithFrame: self.navigationController.navigationBar.frame];
-    [titleImageContainer setUserInteractionEnabled: NO];
-
-    UIImageView *titleImage = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"celitaxlogo_small.png"]];
-    [titleImage setFrame: CGRectMake(0, 10, self.navigationController.navigationBar.frame.size.width, 30)];
-    [titleImage setContentMode: UIViewContentModeScaleAspectFit];
-    [titleImage setUserInteractionEnabled: NO];
-    
-    [titleImageContainer addSubview:titleImage];
-
-    [self.navigationController.view addSubview: titleImageContainer];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] init];
+    item.title = @"";
+    self.navigationItem.backBarButtonItem = item;
 }
 
 @end

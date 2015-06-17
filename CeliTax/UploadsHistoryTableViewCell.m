@@ -10,6 +10,7 @@
 #import "ReceiptTableViewCell.h"
 #import "DataService.h"
 #import "Notifications.h"
+#import "TriangleView.h"
 
 #define kTableCellHeight            35
 
@@ -18,6 +19,7 @@
 @property (nonatomic) BOOL recentUploadsSelected;
 
 @property (weak, nonatomic) IBOutlet UILabel *recentUploadsQtyLabel;
+@property (weak, nonatomic) IBOutlet TriangleView *recentUploadsTriangle;
 @property (weak, nonatomic) IBOutlet UILabel *recentUploadsTotalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *recentUploadsTable;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *recentUploadsHeightBar;
@@ -25,12 +27,14 @@
 @property (nonatomic) BOOL previousWeekSelected;
 
 @property (weak, nonatomic) IBOutlet UILabel *previousWeekQtyLabel;
+@property (weak, nonatomic) IBOutlet TriangleView *previousWeekTriangle;
 @property (weak, nonatomic) IBOutlet UILabel *previousWeekTotalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *previousWeekTable;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *previousWeekHeightBar;
 
 @property (nonatomic) BOOL previousMonthSelected;
 @property (weak, nonatomic) IBOutlet UILabel *previousMonthQtyLabel;
+@property (weak, nonatomic) IBOutlet TriangleView *previousMonthTriangle;
 @property (weak, nonatomic) IBOutlet UILabel *previousMonthTotalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *previousMonthTable;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *previousMonthHeightBar;
@@ -38,6 +42,7 @@
 @property (nonatomic) BOOL viewAllSelected;
 
 @property (weak, nonatomic) IBOutlet UILabel *viewAllLabelQtyLabel;
+@property (weak, nonatomic) IBOutlet TriangleView *viewAllTriangle;
 @property (weak, nonatomic) IBOutlet UILabel *viewAllTotalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *viewAllTable;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewAllHeightBar;
@@ -92,6 +97,7 @@
     if (_recentUploadsSelected)
     {
         [self.recentUploadsQtyLabel setHidden: NO];
+        [self.recentUploadsTriangle setGreenArrowUp];
         [self.recentUploadsTotalLabel setHidden: NO];
         [self.recentUploadsTable setHidden: NO];
         [self.recentUploadsHeightBar setConstant: kTableCellHeight * self.recentUploadReceipts.count];
@@ -101,6 +107,7 @@
     else
     {
         [self.recentUploadsQtyLabel setHidden: YES];
+        [self.recentUploadsTriangle setGreenArrowDown];
         [self.recentUploadsTotalLabel setHidden: YES];
         [self.recentUploadsTable setHidden: YES];
         [self.recentUploadsHeightBar setConstant: 0];
@@ -116,6 +123,7 @@
     if (_previousWeekSelected)
     {
         [self.previousWeekQtyLabel setHidden: NO];
+        [self.previousWeekTriangle setGreenArrowUp];
         [self.previousWeekTotalLabel setHidden: NO];
         [self.previousWeekTable setHidden: NO];
         [self.previousWeekHeightBar setConstant: kTableCellHeight * self.previousWeekReceipts.count];
@@ -125,6 +133,7 @@
     else
     {
         [self.previousWeekQtyLabel setHidden: YES];
+        [self.previousWeekTriangle setGreenArrowDown];
         [self.previousWeekTotalLabel setHidden: YES];
         [self.previousWeekTable setHidden: YES];
         [self.previousWeekHeightBar setConstant: 0];
@@ -140,6 +149,7 @@
     if (_previousMonthSelected)
     {
         [self.previousMonthQtyLabel setHidden: NO];
+        [self.previousMonthTriangle setGreenArrowUp];
         [self.previousMonthTotalLabel setHidden: NO];
         [self.previousMonthTable setHidden: NO];
         [self.previousMonthHeightBar setConstant: kTableCellHeight * self.previousMonthReceipts.count];
@@ -149,6 +159,7 @@
     else
     {
         [self.previousMonthQtyLabel setHidden: YES];
+        [self.previousMonthTriangle setGreenArrowDown];
         [self.previousMonthTotalLabel setHidden: YES];
         [self.previousMonthTable setHidden: YES];
         [self.previousMonthHeightBar setConstant: 0];
@@ -164,6 +175,7 @@
     if (_viewAllSelected)
     {
         [self.viewAllLabelQtyLabel setHidden: NO];
+        [self.viewAllTriangle setGreenArrowUp];
         [self.viewAllTotalLabel setHidden: NO];
         [self.viewAllTable setHidden: NO];
         [self.viewAllHeightBar setConstant: kTableCellHeight * self.viewAllReceipts.count];
@@ -173,6 +185,7 @@
     else
     {
         [self.viewAllLabelQtyLabel setHidden: YES];
+        [self.viewAllTriangle setGreenArrowDown];
         [self.viewAllTotalLabel setHidden: YES];
         [self.viewAllTable setHidden: YES];
         [self.viewAllHeightBar setConstant: 0];
@@ -288,9 +301,11 @@
 
     [cell.colorBox setBackgroundColor: self.catagoryColor];
 
+    [self.lookAndFeel applyGrayBorderTo: cell.colorBox];
+
     [cell.dateLabel setText: [self.dateFormatter stringFromDate: receiptDate]];
 
-    [cell.qtyLabel setText: [NSString stringWithFormat: @"%ld", totalQty]];
+    [cell.qtyLabel setText: [NSString stringWithFormat: @"%ld", (long)totalQty]];
 
     [cell.totalLabel setText: [NSString stringWithFormat: @"$%.2f", totalAmount]];
 
@@ -324,10 +339,6 @@
     {
         thisCatagoryInfo = [self.viewAllReceipts objectAtIndex: indexPath.row];
     }
-
-    NSString *receiptID = [thisCatagoryInfo objectForKey: kReceiptIDKey];
-
-    DLog(@"Receipt %@ pressed", receiptID);
 
     [[NSNotificationCenter defaultCenter] postNotification: [NSNotification notificationWithName: kReceiptItemsTableReceiptPressedNotification object: nil userInfo: thisCatagoryInfo]];
 }

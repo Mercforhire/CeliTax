@@ -111,14 +111,7 @@
 {
     NSArray *catagories = [self.catagoriesDAO loadCatagories];
 
-    if (catagories && catagories.count)
-    {
-        success(catagories);
-    }
-    else
-    {
-        failure(@"catagories not found");
-    }
+    success(catagories);
 
     return;
 }
@@ -338,11 +331,6 @@
                          failure: (FetchReceiptsYearsRangeFailureBlock) failure
 {
     NSArray *receipts = [self.receiptsDAO loadReceipts];
-
-    if (!receipts)
-    {
-        failure(@"receipts is nil");
-    }
 
     NSMutableDictionary *years = [NSMutableDictionary new];
 

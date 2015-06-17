@@ -8,9 +8,11 @@
 
 #import "BaseViewController.h"
 #import "ManipulationService.h"
+#import "DataService.h"
 
 @interface AddCatagoryViewController : BaseViewController
 
 @property (nonatomic, weak) id <ManipulationService> manipulationService;
+@property (nonatomic, weak) id <DataService> dataService;
 
 @end

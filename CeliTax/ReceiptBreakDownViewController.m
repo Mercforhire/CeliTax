@@ -21,7 +21,7 @@
 
 @interface ReceiptBreakDownViewController () <XYPieChartDelegate, XYPieChartDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, SelectionsPickerPopUpDelegate>
 
-@property (strong, nonatomic) NSDateFormatter *dateFormatter;
+@property (weak, nonatomic) IBOutlet UILabel *noItemsShield;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UIButton *viewReceiptButton;
 @property (weak, nonatomic) IBOutlet XYPieChart *pieChart;
@@ -32,7 +32,7 @@
 
 // group records into it's catagory as KEY
 @property (nonatomic, strong) NSMutableDictionary *recordsDictionary;
-
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
 @property (nonatomic, strong) NSArray *allCatagories;
 @property (nonatomic, strong) NSMutableArray *catagoriesUsedByThisReceipt;
 @property (nonatomic, strong) NSMutableArray *slicePercentages;
@@ -40,24 +40,20 @@
 @property (nonatomic, strong) NSMutableArray *sliceNames;
 
 @property (nonatomic, strong) Record *currentlySelectedRecord;
-@property (weak, nonatomic) IBOutlet UILabel *noItemsShield;
 
 @end
 
 #define kReceiptBreakDownItemTableViewCellIdentifier        @"ReceiptBreakDownItemTableViewCell"
 #define kReceiptBreakDownToolBarTableViewCellIdentifier     @"ReceiptBreakDownToolBarTableViewCell"
 
-#define kReceiptBreakDownItemTableViewCellHeight            44
-#define kReceiptBreakDownToolBarTableViewCellHeight         60
+#define kReceiptBreakDownItemTableViewCellHeight            65
+#define kReceiptBreakDownToolBarTableViewCellHeight         62
 #define kPricePerItemFieldTagOffset                         1000
 
 @implementation ReceiptBreakDownViewController
 
-- (void) viewDidLoad
+- (void) setupUI
 {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-
     // set up pieChart
     // get rid of the visual aid backgrounds
     [self.pieChart setBackgroundColor: [UIColor clearColor]];
@@ -74,23 +70,35 @@
     [self.pieChart setSelectedSliceOffsetRadius: 0];
 
     // set up receiptItemsTable
-
     UINib *receiptBreakDownItemTableViewCell = [UINib nibWithNibName: @"ReceiptBreakDownItemTableViewCell" bundle: nil];
     [self.receiptItemsTable registerNib: receiptBreakDownItemTableViewCell forCellReuseIdentifier: kReceiptBreakDownItemTableViewCellIdentifier];
 
     UINib *receiptBreakDownToolBarTableViewCell = [UINib nibWithNibName: @"ReceiptBreakDownToolBarTableViewCell" bundle: nil];
     [self.receiptItemsTable registerNib: receiptBreakDownToolBarTableViewCell forCellReuseIdentifier: kReceiptBreakDownToolBarTableViewCellIdentifier];
 
-    [self.receiptItemsTable setDelegate: self];
-    [self.receiptItemsTable setDataSource: self];
-
+    // toolbar for entering price and qty
     self.numberToolbar = [[UIToolbar alloc]initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 50)];
     self.numberToolbar.barStyle = UIBarStyleDefault;
+
+    UIBarButtonItem *doneToolbarButton = [[UIBarButtonItem alloc]initWithTitle: @"Done" style: UIBarButtonItemStyleDone target: self action: @selector(doneWithKeyboard)];
+    [doneToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoFontOfSize: 13], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
+
     self.numberToolbar.items = [NSArray arrayWithObjects:
-                                [[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil],
-                                [[UIBarButtonItem alloc]initWithTitle: @"Done" style: UIBarButtonItemStyleDone target: self action: @selector(doneWithKeyboard)],
-                                nil];
+                                [[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil], doneToolbarButton, nil];
     [self.numberToolbar sizeToFit];
+
+    [self.lookAndFeel applyHollowGreenButtonStyleTo: self.viewReceiptButton];
+}
+
+- (void) viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+
+    [self setupUI];
+
+    [self.receiptItemsTable setDelegate: self];
+    [self.receiptItemsTable setDataSource: self];
 
     self.dateFormatter = [[NSDateFormatter alloc] init];
     [self.dateFormatter setDateFormat: @"dd/MM/yyyy"];
@@ -100,7 +108,10 @@
     } failure: ^(NSString *reason) {
         // should not happen
     }];
+}
 
+- (void) loadData
+{
     [self.dataService fetchCatagoriesSuccess: ^(NSArray *catagories) {
         self.allCatagories = catagories;
 
@@ -112,15 +123,13 @@
         }
 
         self.catagoryPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: catagorySelections];
+        self.catagoryPickerViewController.highlightedSelectionIndex = -1;
         self.selectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.catagoryPickerViewController];
         [self.catagoryPickerViewController setDelegate: self];
     } failure: ^(NSString *reason) {
         // should not happen
     }];
-}
 
-- (void) loadData
-{
     self.currentlySelectedRecord = nil;
 
     self.recordsDictionary = [NSMutableDictionary new];
@@ -135,6 +144,10 @@
             [self.noItemsShield setHidden: NO];
 
             [self.view bringSubviewToFront: self.noItemsShield];
+        }
+        else
+        {
+            [self.noItemsShield setHidden: YES];
         }
 
         // get all the catagories used in this receipt
@@ -295,14 +308,14 @@
     NSInteger position = 0;
 
     BOOL foundAlready = NO;
-    
+
     for (NSString *catagoryID in self.recordsDictionary.allKeys)
     {
         if (foundAlready)
         {
             break;
         }
-        
+
         NSMutableArray *records = [self.recordsDictionary objectForKey: catagoryID];
 
         for (Record *record in records)
@@ -368,10 +381,6 @@
 
 - (void) transferButtonPressed: (UIButton *) sender
 {
-    Record *thisRecord = [self getNthRecordFromRecordsDictionary: sender.tag];
-
-    DLog(@"Transfer button for record %@ pressed", thisRecord.identifer);
-
     CGRect rectOfCellInTableView = [self.receiptItemsTable rectForRowAtIndexPath: [NSIndexPath indexPathForRow: sender.tag * 2 + 1 inSection: 0]];
     CGRect rectOfCellInSuperview = [self.receiptItemsTable convertRect: rectOfCellInTableView toView: [self.receiptItemsTable superview]];
 
@@ -411,7 +420,7 @@
 
 #pragma mark - SelectionsPickerPopUpDelegate
 
-- (void) selectedSelectionAtIndex: (NSInteger) index
+- (void) selectedSelectionAtIndex: (NSInteger) index fromPopUp:(SelectionsPickerViewController *)popUpController
 {
     [self.selectionPopover dismissPopoverAnimated: YES];
 
@@ -476,6 +485,8 @@
 
     if (textField.tag >= kPricePerItemFieldTagOffset)
     {
+        Record *thisRecord = [self getNthRecordFromRecordsDictionary: (textField.tag - kPricePerItemFieldTagOffset) / 2];
+
         // this is a pricePerItemField
         DLog(@"pricePerItemField edited");
 
@@ -484,16 +495,18 @@
             textField.text = @"0.00";
         }
 
-        self.currentlySelectedRecord.amount = [textField.text floatValue];
+        thisRecord.amount = [textField.text floatValue];
 
-        [self.manipulationService modifyRecord: self.currentlySelectedRecord WithSuccess: ^{
-            DLog(@"Record %@ saved", self.currentlySelectedRecord.identifer);
+        [self.manipulationService modifyRecord: thisRecord WithSuccess: ^{
+            DLog(@"Record %@ saved", thisRecord.identifer);
         } andFailure: ^(NSString *reason) {
             // should not happen
         }];
     }
     else
     {
+        Record *thisRecord = [self getNthRecordFromRecordsDictionary: textField.tag / 2];
+
         // this is a quantityField
         DLog(@"quantityField edited");
 
@@ -502,10 +515,10 @@
             textField.text = @"0";
         }
 
-        self.currentlySelectedRecord.quantity = [textField.text integerValue];
+        thisRecord.quantity = [textField.text integerValue];
 
-        [self.manipulationService modifyRecord: self.currentlySelectedRecord WithSuccess: ^{
-            DLog(@"Record %@ saved", self.currentlySelectedRecord.identifer);
+        [self.manipulationService modifyRecord: thisRecord WithSuccess: ^{
+            DLog(@"Record %@ saved", thisRecord.identifer);
         } andFailure: ^(NSString *reason) {
             // should not happen
         }];
@@ -552,7 +565,7 @@
         self.currentlySelectedRecord = [recordsOfThisCatagory firstObject];
 
         // scroll the table to the row that shows self.currentlySelectedRecord
-        [self.receiptItemsTable scrollToRowAtIndexPath: [NSIndexPath indexPathForRow: [self getRecordPosition:self.currentlySelectedRecord] * 2 inSection: 0] atScrollPosition: UITableViewScrollPositionTop animated: YES];
+        [self.receiptItemsTable scrollToRowAtIndexPath: [NSIndexPath indexPathForRow: [self getRecordPosition: self.currentlySelectedRecord] * 2 inSection: 0] atScrollPosition: UITableViewScrollPositionTop animated: YES];
     }
 }
 
@@ -587,13 +600,15 @@
         Record *thisRecord = [self getNthRecordFromRecordsDictionary: indexPath.row / 2];
         Catagory *thisCatagory = [self getCatagoryOfNthRecordFromRecordsDictionary: indexPath.row / 2];
 
-        [cell.colorBoxView setBackgroundColor: thisCatagory.color];
-
+        cell.catagoryColor = thisCatagory.color;
+        [self.lookAndFeel applyGrayBorderTo: cell.colorBoxView];
+        
         cell.catagoryName.text = thisCatagory.name;
 
         cell.quantityField.tag = indexPath.row / 2;
         [cell.quantityField setDelegate: self];
-        [cell.quantityField setText: [NSString stringWithFormat: @"%ld", thisRecord.quantity]];
+        [cell.quantityField setText: [NSString stringWithFormat: @"%ld", (long)thisRecord.quantity]];
+        [self.lookAndFeel applyGrayBorderTo: cell.quantityField];
         cell.quantityField.inputAccessoryView = self.numberToolbar;
         [cell.quantityField addTarget: self
                                action: @selector(textFieldDidChange:)
@@ -602,10 +617,27 @@
         cell.pricePerItemField.tag = kPricePerItemFieldTagOffset + indexPath.row / 2;
         [cell.pricePerItemField setDelegate: self];
         [cell.pricePerItemField setText: [NSString stringWithFormat: @"%.2f", thisRecord.amount]];
+        [self.lookAndFeel applyGreenBorderTo: cell.pricePerItemField];
         cell.pricePerItemField.inputAccessoryView = self.numberToolbar;
         [cell.pricePerItemField addTarget: self
                                    action: @selector(textFieldDidChange:)
                          forControlEvents: UIControlEventEditingChanged];
+
+        if (self.currentlySelectedRecord)
+        {
+            if (thisRecord == self.currentlySelectedRecord)
+            {
+                [cell makeCellAppearActive];
+            }
+            else
+            {
+                [cell makeCellAppearInactive];
+            }
+        }
+        else
+        {
+            [cell makeCellAppearActive];
+        }
 
         return cell;
     }
@@ -622,11 +654,17 @@
 
         cell.clipsToBounds = YES;
 
-        cell.transferButton.tag = indexPath.row / 2;
-        cell.deleteButton.tag = indexPath.row / 2;
+        cell.transferButton.tag = (indexPath.row - 1) / 2;
+        cell.deleteButton.tag = (indexPath.row - 1) / 2;
+        [self.lookAndFeel applySolidGreenButtonStyleTo: cell.transferButton];
+        [self.lookAndFeel applySolidGreenButtonStyleTo: cell.deleteButton];
 
-        [cell.transferButton addTarget: self action: @selector(transferButtonPressed:) forControlEvents: UIControlEventTouchUpInside];
-        [cell.deleteButton addTarget: self action: @selector(deleteButtonPressed:) forControlEvents: UIControlEventTouchUpInside];
+        [cell.transferButton addTarget: self
+                                action: @selector(transferButtonPressed:)
+                      forControlEvents: UIControlEventTouchUpInside];
+        [cell.deleteButton addTarget: self
+                              action: @selector(deleteButtonPressed:)
+                    forControlEvents: UIControlEventTouchUpInside];
 
         return cell;
     }
@@ -662,13 +700,10 @@
 - (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath
 {
     Record *thisRecord = [self getNthRecordFromRecordsDictionary: indexPath.row / 2];
-    Catagory *thisCatagory = [self getCatagoryOfNthRecordFromRecordsDictionary: indexPath.row / 2];
 
     // clicked a ReceiptBreakDownItemTableViewCell
     if (indexPath.row % 2 == 0)
     {
-        DLog(@"Catagory %@'s record %@ clicked", thisCatagory.name, thisRecord.identifer);
-
         if (self.currentlySelectedRecord == thisRecord)
         {
             // deselect
@@ -677,12 +712,9 @@
         else
         {
             self.currentlySelectedRecord = thisRecord;
+
+            [tableView scrollToRowAtIndexPath: indexPath atScrollPosition: UITableViewScrollPositionTop animated: YES];
         }
-    }
-    // clicked a kReceiptBreakDownToolBarTableViewCell
-    else
-    {
-        DLog(@"Catagory %@'s record %@ Tool Bar clicked", thisCatagory.name, thisRecord.identifer);
     }
 }
 

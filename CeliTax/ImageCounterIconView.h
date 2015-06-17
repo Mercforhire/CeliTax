@@ -1,16 +1,16 @@
 //
-//  ImageCounterIconView.h
-//  CeliTax
+// ImageCounterIconView.h
+// CeliTax
 //
-//  Created by Leon Chen on 2015-05-16.
-//  Copyright (c) 2015 CraveNSave. All rights reserved.
+// Created by Leon Chen on 2015-05-16.
+// Copyright (c) 2015 CraveNSave. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 @protocol ImageCounterIconViewProtocol <NSObject>
 
--(void)imageCounterIconClicked;
+- (void) imageCounterIconClicked;
 
 @end
 
@@ -18,7 +18,7 @@
 
 @property (nonatomic, strong) UIImage *image;
 
-@property (nonatomic)  NSInteger counter;
+@property (nonatomic) NSInteger counter;
 
 @property (nonatomic, weak) id <ImageCounterIconViewProtocol> delegate;
 

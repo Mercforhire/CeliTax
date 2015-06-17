@@ -1,9 +1,9 @@
 //
-//  LookAndFeel.h
-//  CeliTax
+// LookAndFeel.h
+// CeliTax
 //
-//  Created by Leon Chen on 2015-06-09.
-//  Copyright (c) 2015 CraveNSave. All rights reserved.
+// Created by Leon Chen on 2015-06-09.
+// Copyright (c) 2015 CraveNSave. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,10 +11,16 @@
 
 @interface LookAndFeel : NSObject
 
--(void)addLeftInsetToTextField:(UITextField *)textField;
+- (UIColor *) appGreenColor;
 
--(void)applyGrayBorderTo:(UIView *)view;
+- (void) addLeftInsetToTextField: (UITextField *) textField;
 
--(void)applyHollowGreenButtonStyleTo:(UIButton *)button;
+- (void) applyGrayBorderTo: (UIView *) view;
+
+- (void) applyGreenBorderTo: (UIView *) view;
+
+- (void) applyHollowGreenButtonStyleTo: (UIButton *) button;
+
+- (void) applySolidGreenButtonStyleTo: (UIButton *) button;
 
 @end

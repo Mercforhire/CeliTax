@@ -16,9 +16,6 @@
 #import "SettingsViewController.h"
 #import "MyAccountViewController.h"
 #import "AddCatagoryViewController.h"
-#import "DeleteCatagoryViewController.h"
-#import "TransferCatagoryViewController.h"
-#import "CatagoriesManagementViewController.h"
 #import "VaultViewController.h"
 #import "HelpScreenViewController.h"
 #import "ModifyCatagoryViewController.h"
@@ -26,7 +23,6 @@
 #import "Catagory.h"
 #import "SelectionsPickerViewController.h"
 #import "ColorPickerViewController.h"
-#import "ModifyCatagoryPopUpViewController.h"
 #import "AllColorsPickerViewController.h"
 #import "CameraViewController.h"
 #import "ReceiptBreakDownViewController.h"
@@ -44,6 +40,7 @@
     viewController.viewControllerFactory = self;
     viewController.userManager = self.userManager;
     viewController.lookAndFeel = self.lookAndFeel;
+    viewController.navigationBarTitleImageContainer = self.navigationBarTitleImageContainer;
 }
 
 - (SplashViewController *) createSplashViewController
@@ -137,31 +134,6 @@
     return myAccountViewController;
 }
 
-- (DeleteCatagoryViewController *) createDeleteCatagoryViewController: (Catagory *) catagoryToDelete
-{
-    DeleteCatagoryViewController *deleteCatagoryViewController = [[DeleteCatagoryViewController alloc] initWithNibName: @"DeleteCatagoryViewController" bundle: nil];
-
-    [self initializeViewController: deleteCatagoryViewController];
-
-    deleteCatagoryViewController.manipulationService = self.manipulationService;
-    deleteCatagoryViewController.catagoryToDelete = catagoryToDelete;
-
-    return deleteCatagoryViewController;
-}
-
-- (TransferCatagoryViewController *) createTransferCatagoryViewController: (Catagory *) fromCatagory
-{
-    TransferCatagoryViewController *transferCatagoryViewController = [[TransferCatagoryViewController alloc] initWithNibName: @"TransferCatagoryViewController" bundle: nil];
-
-    [self initializeViewController: transferCatagoryViewController];
-
-    transferCatagoryViewController.fromCatagory = fromCatagory;
-    transferCatagoryViewController.manipulationService = self.manipulationService;
-    transferCatagoryViewController.dataService = self.dataService;
-
-    return transferCatagoryViewController;
-}
-
 - (ModifyCatagoryViewController *) createModifyCatagoryViewControllerWith: (Catagory *) catagoryToModify
 {
     ModifyCatagoryViewController *modifyCatagoryViewController = [[ModifyCatagoryViewController alloc] initWithNibName: @"ModifyCatagoryViewController"  bundle: nil];
@@ -174,17 +146,6 @@
     return modifyCatagoryViewController;
 }
 
-- (CatagoriesManagementViewController *) createCatagoriesManagementViewController
-{
-    CatagoriesManagementViewController *catagoriesManagementViewController = [[CatagoriesManagementViewController alloc] initWithNibName: @"CatagoriesManagementViewController" bundle: nil];
-
-    [self initializeViewController: catagoriesManagementViewController];
-
-    catagoriesManagementViewController.dataService = self.dataService;
-
-    return catagoriesManagementViewController;
-}
-
 - (AddCatagoryViewController *) createAddCatagoryViewController
 {
     AddCatagoryViewController *addCatagoryViewController = [[AddCatagoryViewController alloc] initWithNibName: @"AddCatagoryViewController" bundle: nil];
@@ -192,6 +153,7 @@
     [self initializeViewController: addCatagoryViewController];
 
     addCatagoryViewController.manipulationService = self.manipulationService;
+    addCatagoryViewController.dataService = self.dataService;
 
     return addCatagoryViewController;
 }
@@ -226,8 +188,10 @@
 
 - (SelectionsPickerViewController *) createSelectionsPickerViewControllerWithSelections: (NSArray *) selections
 {
-    SelectionsPickerViewController *namesPickerViewController = [[SelectionsPickerViewController alloc] initWithNibName: @"NamesPickerViewController" bundle: nil];
+    SelectionsPickerViewController *namesPickerViewController = [[SelectionsPickerViewController alloc] initWithNibName: @"SelectionsPickerViewController" bundle: nil];
 
+    [self initializeViewController: namesPickerViewController];
+    
     namesPickerViewController.selections = selections;
 
     return namesPickerViewController;
@@ -237,19 +201,16 @@
 {
     ColorPickerViewController *colorPickerViewController = [[ColorPickerViewController alloc] initWithNibName: @"ColorPickerViewController" bundle: nil];
 
+    [self initializeViewController: colorPickerViewController];
+
     return colorPickerViewController;
-}
-
-- (ModifyCatagoryPopUpViewController *) createModifyCatagoryPopUpViewController
-{
-    ModifyCatagoryPopUpViewController *modifyCatagoryPopUpViewController = [[ModifyCatagoryPopUpViewController alloc] initWithNibName: @"ModifyCatagoryPopUpViewController" bundle: nil];
-
-    return modifyCatagoryPopUpViewController;
 }
 
 - (AllColorsPickerViewController *) createAllColorsPickerViewController
 {
     AllColorsPickerViewController *allColorsPickerViewController = [[AllColorsPickerViewController alloc] initWithNibName: @"AllColorsPickerViewController" bundle: nil];
+
+    [self initializeViewController: allColorsPickerViewController];
 
     return allColorsPickerViewController;
 }
@@ -268,24 +229,26 @@
 {
     SendReceiptsToViewController *sendReceiptsToViewController = [[SendReceiptsToViewController alloc] initWithNibName: @"SendReceiptsToViewController" bundle: nil];
 
+    [self initializeViewController: sendReceiptsToViewController];
+
     return sendReceiptsToViewController;
 }
 
 - (PasswordRecoveryViewController *) createPasswordRecoveryViewController
 {
     PasswordRecoveryViewController *passwordRecoveryViewController = [[PasswordRecoveryViewController alloc] initWithNibName: @"PasswordRecoveryViewController" bundle: nil];
-    
+
     [self initializeViewController: passwordRecoveryViewController];
-    
+
     return passwordRecoveryViewController;
 }
 
 - (PasswordRecoverySentViewController *) createPasswordRecoverySentViewController
 {
     PasswordRecoverySentViewController *passwordRecoverySentViewController = [[PasswordRecoverySentViewController alloc] initWithNibName: @"PasswordRecoverySentViewController" bundle: nil];
-    
+
     [self initializeViewController: passwordRecoverySentViewController];
-    
+
     return passwordRecoverySentViewController;
 }
 

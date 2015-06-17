@@ -71,6 +71,9 @@
 {
     [super viewWillAppear: animated];
 
+    [self.navigationController setNavigationBarHidden: NO];
+    [self.navigationItem setHidesBackButton: YES];
+
     // register for keyboard notifications
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(keyboardWillShow:)
@@ -138,6 +141,8 @@
 
         [self.navigationController pushViewController: [self.viewControllerFactory createMainViewController] animated: YES];
 
+        [self.loginButton setEnabled: YES];
+
         return;
     } failure: ^(AuthorizeResult *authorizeResult) {
         [self.waitView hide: YES];
@@ -145,6 +150,8 @@
         UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Error" message: authorizeResult.message delegate: nil cancelButtonTitle: nil otherButtonTitles: @"Ok", nil];
 
         [message show];
+
+        [self.loginButton setEnabled: YES];
 
         return;
     }];
@@ -163,11 +170,15 @@
 - (IBAction) forgotPressed: (UIButton *) sender
 {
     [self.navigationController pushViewController: [self.viewControllerFactory createPasswordRecoveryViewController] animated: YES];
+    
+    [self.navigationItem setHidesBackButton: NO];
 }
 
 - (IBAction) signupPressed: (UIButton *) sender
 {
     [self.navigationController pushViewController: [self.viewControllerFactory createRegisterViewController] animated: YES];
+    
+    [self.navigationItem setHidesBackButton: NO];
 }
 
 // Called when the UIKeyboardDidShowNotification is sent.
@@ -176,7 +187,7 @@
     NSDictionary *info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey: UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
 
-    [self.view scrollToY: 0 - kbSize.height];
+    [self.view scrollToY: 0 - kbSize.height / 2];
 }
 
 // Called when the UIKeyboardWillHideNotification is sent

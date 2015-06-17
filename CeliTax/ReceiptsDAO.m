@@ -118,4 +118,19 @@
     return [receipt firstObject];
 }
 
+- (BOOL) deleteReceipt: (NSString *) receiptID
+{
+    Receipt *receiptToDelete = [self loadReceipt:receiptID];
+    
+    if (receiptToDelete)
+    {
+        [[self.userDataDAO getReceipts] removeObject: receiptToDelete];
+        
+        return [self.userDataDAO saveUserData];
+    }
+    else
+    {
+        return NO;
+    }
+}
 @end

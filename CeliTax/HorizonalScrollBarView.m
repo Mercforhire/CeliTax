@@ -1,199 +1,156 @@
 //
-//  HorizonalScrollBarView.m
-//  CeliTax
+// HorizonalScrollBarView.m
+// CeliTax
 //
-//  Created by Leon Chen on 2015-05-17.
-//  Copyright (c) 2015 CraveNSave. All rights reserved.
+// Created by Leon Chen on 2015-05-17.
+// Copyright (c) 2015 CraveNSave. All rights reserved.
 //
 
 #import "HorizonalScrollBarView.h"
+#import "SelectionCollectionViewCell.h"
 
-#define kButtonMargin       15
+NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionViewCell";
+
+@interface HorizonalScrollBarView () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+
+@property (nonatomic, strong) NSArray *buttonNames;
+@property (nonatomic, strong) NSArray *buttonColors;
+
+@property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic) NSInteger selectedButtonIndex;
+@end
 
 @implementation HorizonalScrollBarView
+
+- (void) baseInit
 {
-    UIScrollView *scrollView;
-    NSMutableArray *buttons;
-    NSMutableArray *buttonColors;
-    NSInteger selectedButtonIndex;
-    UIColor *selectedButtonColor;
+    self.selectedButtonIndex = -1;
+
+    UICollectionViewFlowLayout *collectionLayout = [[UICollectionViewFlowLayout alloc] init];
+    [collectionLayout setItemSize: CGSizeMake(87, 60)];
+    [collectionLayout setScrollDirection: UICollectionViewScrollDirectionHorizontal];
+
+    CGRect frame = self.frame;
+
+    self.collectionView = [[UICollectionView alloc] initWithFrame: CGRectMake(0, 0, frame.size.width, frame.size.height) collectionViewLayout: collectionLayout];
+    [self.collectionView setBackgroundColor: [UIColor clearColor]];
+
+    UINib *selectionCollectionViewCell = [UINib nibWithNibName: @"SelectionCollectionViewCell" bundle: nil];
+    [self.collectionView registerNib: selectionCollectionViewCell forCellWithReuseIdentifier: SelectionCollectionViewCellReuseIdentifier];
+
+    [self.collectionView setDataSource: self];
+    [self.collectionView setDelegate: self];
+    [self.collectionView setBounces: NO];
+    [self addSubview: self.collectionView];
 }
 
--(void)baseInit
+- (id) initWithFrame: (CGRect) frame;
 {
-    buttons = [NSMutableArray new];
-    buttonColors = [NSMutableArray new];
-    selectedButtonIndex = -1;
-    selectedButtonColor = self.tintColor;
-    
-    scrollView = [[UIScrollView alloc] initWithFrame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-    [scrollView setShowsHorizontalScrollIndicator:NO];
-    [scrollView setShowsVerticalScrollIndicator:NO];
-    [scrollView setBounces:NO];
-    
-    [self addSubview:scrollView];
-}
+    self = [super initWithFrame: frame];
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
     if (self)
     {
         [self baseInit];
     }
+
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (id) initWithCoder: (NSCoder *) aDecoder;
 {
-    self = [super initWithCoder:aDecoder];
+    self = [super initWithCoder: aDecoder];
+
     if (self)
     {
         [self baseInit];
     }
+
     return self;
 }
 
--(void)awakeFromNib
+- (void) setButtonNames: (NSArray *) buttonNames andColors: (NSArray *) buttonColors
 {
-    [super awakeFromNib];
-    
-    [self setNeedsLayout];
-    [self layoutIfNeeded];
-    
-    //Prevent "Unable to simultaneously satisfy constraints" crash
-    [self setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
-    //self.frame will now return something
-    [self baseInit];
+    self.buttonNames = buttonNames;
+    self.buttonColors = buttonColors;
+
+    [self.collectionView setContentSize: CGSizeMake(self.collectionView.contentSize.width + 10, self.collectionView.contentSize.height)];
+
+    [self.collectionView reloadData];
 }
 
--(void)setButtonNames:(NSArray *)buttonNames
+#pragma mark - From UICollectionView Delegate/Datasource
+
+- (NSInteger) collectionView: (UICollectionView *) collectionView numberOfItemsInSection: (NSInteger) section
 {
-    _buttonNames = buttonNames;
-    
-    //remove all subviews
-    NSArray *viewsToRemove = [scrollView subviews];
-    for (UIView *v in viewsToRemove)
-    {
-        [v removeFromSuperview];
-    }
-    [buttons removeAllObjects];
-    [buttonColors removeAllObjects];
-    
-    UIFont *defaultFont = [UIFont systemFontOfSize:15];
-    
-    long widthOfAllButtons = 0;
-    int nThButton = 0;
-    float colorDelta = (0.96 - 0.75) / buttonNames.count;
-    
-    NSMutableArray *buttonLengthes = [NSMutableArray new];
-    
-    float sumOfButtonLengthes = 0;
-    //see if length of all buttons is longer than the view.frame
-    //if yes, use the following formula for button sizes
-    //if no, find out how much space is left, split that space equally among the buttons
-    for (NSString *buttonName in buttonNames)
-    {
-        float widthOfThisButtonText = [buttonName sizeWithAttributes:@{NSFontAttributeName: defaultFont}].width;
-        
-        float widthOfThisButton = widthOfThisButtonText + kButtonMargin * 2;
-        
-        sumOfButtonLengthes = sumOfButtonLengthes + widthOfThisButton;
-        
-        [buttonLengthes addObject:[ NSNumber numberWithFloat:widthOfThisButton ]];
-    }
-    
-    if ( sumOfButtonLengthes < self.frame.size.width )
-    {
-        float leftoverSpace = self.frame.size.width - sumOfButtonLengthes;
-        
-        for (int i = 0; i < buttonLengthes.count; i++)
-        {
-            buttonLengthes[i] = [ NSNumber numberWithFloat:[buttonLengthes[i] floatValue] + leftoverSpace / buttonLengthes.count ];
-        }
-    }
-    
-    //create buttons
-    for ( NSNumber *buttonLength in buttonLengthes )
-    {
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(widthOfAllButtons, 0, [buttonLength floatValue], self.frame.size.height)];
-        
-        [button setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
-        [button setTitle:buttonNames[nThButton] forState:UIControlStateNormal];
-        [button.titleLabel setFont:defaultFont];
-        
-        //Button color goes from [UIColor colorWithWhite:0.75 alpha:1] to [UIColor colorWithWhite:0.96 alpha:1]
-        UIColor *buttonColor = [UIColor colorWithWhite:0.75 + colorDelta * nThButton alpha:1];
-        [buttonColors addObject:buttonColor];
-        
-        button.backgroundColor = buttonColor;
-        
-        [button setTag:nThButton];
-        [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [scrollView addSubview:button];
-        
-        [buttons addObject:button];
-        
-        widthOfAllButtons = widthOfAllButtons + button.frame.size.width;
-        nThButton++;
-    }
-    
-    [scrollView setContentSize:CGSizeMake(widthOfAllButtons, self.frame.size.height)];
-    [scrollView setContentOffset:CGPointMake(0, 0) animated:NO];
-    
-    [self setNeedsDisplay];
+    return self.buttonNames.count;
 }
 
--(void)buttonClicked:(UIButton *)sender
+- (UICollectionViewCell *) collectionView: (UICollectionView *) collectionView cellForItemAtIndexPath: (NSIndexPath *) indexPath
 {
-    //none is selected
-    if (selectedButtonIndex == -1)
+    SelectionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier: SelectionCollectionViewCellReuseIdentifier forIndexPath: indexPath];
+
+    if (!cell)
     {
-        UIButton *selectedButton = [buttons objectAtIndex:sender.tag];
-        [selectedButton setBackgroundColor:selectedButtonColor];
-        
-        NSString *clickedName = [self.buttonNames objectAtIndex:sender.tag];
-        
+        cell = [[SelectionCollectionViewCell alloc] initWithFrame: CGRectMake(0, 0, 87, 60)];
+    }
+
+    UIColor *cellColor = [self.buttonColors objectAtIndex: indexPath.row];
+
+    [cell.selectionColorBox setBackgroundColor: cellColor];
+    [self.lookAndFeel applyGrayBorderTo: cell.selectionColorBox];
+
+    [cell.selectionLabel setText: [self.buttonNames objectAtIndex: indexPath.row]];
+
+    if (indexPath.row == self.selectedButtonIndex)
+    {
+        [self.lookAndFeel applyGreenBorderTo: cell.contentView];
+    }
+    else
+    {
+        cell.contentView.layer.borderWidth = 0;
+    }
+
+    return cell;
+}
+
+- (void) collectionView: (UICollectionView *) collectionView didSelectItemAtIndexPath: (NSIndexPath *) indexPath
+{
+    // none is selected
+    if (self.selectedButtonIndex == -1)
+    {
+        NSString *clickedName = [self.buttonNames objectAtIndex: indexPath.row];
+
         if (self.delegate)
         {
-            [self.delegate buttonClickedWithIndex:sender.tag andName:clickedName];
+            [self.delegate buttonClickedWithIndex: indexPath.row andName: clickedName];
         }
-        
-        selectedButtonIndex = sender.tag;
+
+        self.selectedButtonIndex = indexPath.row;
     }
-    //deselect the previously selected
-    else if (sender.tag == selectedButtonIndex)
+    // deselect the previously selected
+    else if (indexPath.row == self.selectedButtonIndex)
     {
-        UIButton *deselectedButton = [buttons objectAtIndex:sender.tag];
-        [deselectedButton setBackgroundColor:[buttonColors objectAtIndex:sender.tag]];
-        
         if (self.delegate)
         {
             [self.delegate buttonUnselected];
         }
-        
-        selectedButtonIndex = -1;
+
+        self.selectedButtonIndex = -1;
     }
-    //deselect the previously selected and select the new one
+    // deselect the previously selected and select the new one
     else
     {
-        UIButton *deselectedButton = [buttons objectAtIndex:selectedButtonIndex];
-        [deselectedButton setBackgroundColor:[buttonColors objectAtIndex:selectedButtonIndex]];
-        
-        UIButton *selectedButton = [buttons objectAtIndex:sender.tag];
-        [selectedButton setBackgroundColor:selectedButtonColor];
-        
-        NSString *clickedName = [self.buttonNames objectAtIndex:sender.tag];
-        
+        NSString *clickedName = [self.buttonNames objectAtIndex: indexPath.row];
+
         if (self.delegate)
         {
-            [self.delegate buttonClickedWithIndex:sender.tag andName:clickedName];
+            [self.delegate buttonClickedWithIndex: indexPath.row andName: clickedName];
         }
-        
-        selectedButtonIndex = sender.tag;
+
+        self.selectedButtonIndex = indexPath.row;
     }
+    
+    [collectionView reloadData];
 }
 
 @end

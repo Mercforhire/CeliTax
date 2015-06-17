@@ -140,7 +140,7 @@
 {
     if ( !recordIDs || !recordIDs.count )
     {
-        return NO;
+        return YES;
     }
     
     NSPredicate *findRecords = [NSPredicate predicateWithFormat: @"identifer in %@", recordIDs];

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class ConfigurationManager, UserManager, LookAndFeel;
-@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, FeedbackViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, DeleteCatagoryViewController, TransferCatagoryViewController, ModifyCatagoryViewController, CatagoriesManagementViewController, AddCatagoryViewController, SidebarViewController, Catagory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, ModifyCatagoryPopUpViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController;
+@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, FeedbackViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCatagoryViewController, SidebarViewController, Catagory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController;
 
 @protocol AuthenticationService, DataService, ManipulationService;
 
@@ -22,6 +22,8 @@
 @property (nonatomic, weak) id <DataService> dataService;
 @property (nonatomic, weak) id <ManipulationService> manipulationService;
 @property (nonatomic, weak) LookAndFeel *lookAndFeel;
+
+@property (nonatomic, weak) UIView *navigationBarTitleImageContainer;
 
 - (SplashViewController *) createSplashViewController;
 
@@ -41,13 +43,7 @@
 
 - (MyAccountViewController *) createMyAccountViewController;
 
-- (DeleteCatagoryViewController *) createDeleteCatagoryViewController: (Catagory *) catagoryToDelete;
-
-- (TransferCatagoryViewController *) createTransferCatagoryViewController: (Catagory *) fromCatagory;
-
 - (ModifyCatagoryViewController *) createModifyCatagoryViewControllerWith: (Catagory *) catagoryToModify;
-
-- (CatagoriesManagementViewController *) createCatagoriesManagementViewController;
 
 - (AddCatagoryViewController *) createAddCatagoryViewController;
 
@@ -58,8 +54,6 @@
 - (SelectionsPickerViewController *) createSelectionsPickerViewControllerWithSelections: (NSArray *) selections;
 
 - (ColorPickerViewController *) createColorPickerViewController;
-
-- (ModifyCatagoryPopUpViewController *) createModifyCatagoryPopUpViewController;
 
 - (AllColorsPickerViewController *) createAllColorsPickerViewController;
 
