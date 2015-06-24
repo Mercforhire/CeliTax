@@ -12,6 +12,7 @@
 #import "RecordsDAO.h"
 #import "Catagory.h"
 #import "Record.h"
+#import "TaxYearsDAO.h"
 
 @implementation ManipulationServiceImpl
 
@@ -157,18 +158,22 @@
     return;
 }
 
-- (void) addReceiptForFilenames: (NSArray *) filenames success: (AddReceiptSuccessBlock) success failure: (AddReceiptFailureBlock) failure
+- (void) addReceiptForFilenames: (NSArray *) filenames
+                     andTaxYear: (NSInteger) taxYear
+                        success: (AddReceiptSuccessBlock) success
+                        failure: (AddReceiptFailureBlock) failure;
 {
-    if (!filenames)
+    if ( !filenames )
     {
         failure (@"missing filenames");
 
         return;
     }
-
-    if ([self.receiptsDAO addReceiptWithFilenames: filenames])
+    
+    NSString *newReceiptID = [self.receiptsDAO addReceiptWithFilenames: filenames inTaxYear:taxYear];
+    if ( newReceiptID )
     {
-        success ( );
+        success ( newReceiptID );
     }
     else
     {
@@ -176,6 +181,16 @@
     }
 
     return;
+}
+
+- (BOOL) modifyReceipt:(Receipt *)receipt
+{
+    if (!receipt)
+    {
+        return NO;
+    }
+    
+    return [self.receiptsDAO modifyReceipt:receipt];
 }
 
 - (void) deleteReceiptAndAllItsRecords: (NSString *) receiptID
@@ -209,6 +224,16 @@
             failure (@"self.receiptsDAO deleteReceipt failed");
         }
     }
+}
+
+- (BOOL) addTaxYear: (NSInteger) taxYear
+{
+    return [self.taxYearsDAO addTaxYear:taxYear];
+}
+
+- (BOOL) removeTaxYear: (NSInteger) taxYear
+{
+    return [self.taxYearsDAO removeTaxYear:taxYear];
 }
 
 @end

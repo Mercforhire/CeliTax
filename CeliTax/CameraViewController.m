@@ -12,23 +12,44 @@
 #import "User.h"
 #import "UserManager.h"
 #import "MBProgressHUD.h"
+#import "ConfigurationManager.h"
 #import "LLSimpleCamera.h"
 #import "UIImage+ResizeMagick.h"
+#import "ViewControllerFactory.h"
+#import "ReceiptCheckingViewController.h"
+#import "FlashButtonView.h"
+#import "Receipt.h"
 
 @interface CameraViewController ()
-
-@property NSString *receiptFilenameID;
+{
+    NSString *newlyAddedReceiptID;
+}
 
 @property (strong, nonatomic) LLSimpleCamera *camera;
 @property (weak, nonatomic) IBOutlet UIImageView *previousImageView;
+@property (weak, nonatomic) IBOutlet UIView *greenBar;
+
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIButton *continueButton;
 @property (weak, nonatomic) IBOutlet UIButton *snapButton;
-@property (weak, nonatomic) IBOutlet UIButton *flashButton;
+@property (weak, nonatomic) IBOutlet FlashButtonView *flashButtonView;
 @property (weak, nonatomic) IBOutlet WhiteBorderView *topLeftCornerView;
 @property (weak, nonatomic) IBOutlet WhiteBorderView *topRightCornerView;
 @property (weak, nonatomic) IBOutlet WhiteBorderView *bottomLeftCornerView;
 @property (weak, nonatomic) IBOutlet WhiteBorderView *bottomRightCornerView;
 @property (weak, nonatomic) IBOutlet UIView *maskViewUnderButtonCornerViews;
 @property (weak, nonatomic) IBOutlet UIView *maskViewAboveTopCornerViews;
+@property (weak, nonatomic) IBOutlet UIView *dragBarContainer;
+@property (weak, nonatomic) IBOutlet UIView *dragBarView;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *distanceFromTopToGreenBar;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomMaskHeight;
+@property (nonatomic) float distanceFromTopToGreenBarDefaultConstant;
+@property (nonatomic) float bottomMaskHeightDefaultConstant;
+
+@property (nonatomic) float distanceFromTopToGreenBarStartingConstant;
+@property (nonatomic) float bottomMaskHeightStartingConstant;
 
 // these ratios means (coordinate value) / (total available length)
 @property float topCropEdgeRatio;
@@ -38,8 +59,6 @@
 
 @property float buttomCornersOriginalYCoordinate;
 
-@property (nonatomic) BOOL weAreNotDoneYet; // user not done capturing the whole receipt yet
-
 @property NSMutableArray *takenImageFilenames;
 @property NSMutableArray *takenImages;
 
@@ -47,97 +66,60 @@
 
 @implementation CameraViewController
 
-- (void) viewDidLoad
+- (void) refreshCropEdgeRatio
 {
-    [super viewDidLoad];
-    
-    [self.navigationBarTitleImageContainer setHidden:YES];
-
-    // Set white status bar
-    [self setNeedsStatusBarAppearanceUpdate];
-
-    [self.navigationController.navigationBar setHidden: YES];
-    self.navigationItem.hidesBackButton = YES;
-
-    self.receiptFilenameID = [Utils generateUniqueID];
-
-    // Do any additional setup after loading the view from its nib.
-    self.takenImageFilenames = [NSMutableArray new];
-    self.takenImages = [NSMutableArray new];
-
-    [self.previousImageView setHidden: YES];
-    [self.previousImageView setAlpha: 0.8f];
-
-    [self.topLeftCornerView setRightBorder: NO];
-    [self.topLeftCornerView setBottomBorder: NO];
-    [self.topLeftCornerView setBorderThickness: 2];
-    [self.topLeftCornerView setBackgroundColor: [UIColor clearColor]];
-
-    [self.topRightCornerView setLeftBorder: NO];
-    [self.topRightCornerView setBottomBorder: NO];
-    [self.topRightCornerView setBorderThickness: 2];
-    [self.topRightCornerView setBackgroundColor: [UIColor clearColor]];
-
-    [self.bottomLeftCornerView setTopBorder: NO];
-    [self.bottomLeftCornerView setRightBorder: NO];
-    [self.bottomLeftCornerView setBorderThickness: 2];
-    [self.bottomLeftCornerView setBackgroundColor: [UIColor clearColor]];
-    self.buttomCornersOriginalYCoordinate = self.bottomLeftCornerView.frame.origin.y;
-
-    [self.bottomRightCornerView setTopBorder: NO];
-    [self.bottomRightCornerView setLeftBorder: NO];
-    [self.bottomRightCornerView setBorderThickness: 2];
-    [self.bottomRightCornerView setBackgroundColor: [UIColor clearColor]];
-
     self.topCropEdgeRatio = self.topLeftCornerView.frame.origin.y / self.view.frame.size.height;
     self.leftCropEdgeRatio = self.topLeftCornerView.frame.origin.x / self.view.frame.size.width;
     self.rightCropEdgeRatio = (self.topRightCornerView.frame.origin.x + self.topRightCornerView.frame.size.width) / self.view.frame.size.width;
-    [self refreshBottomCropEdgeRatio];
+    self.bottomCropEdgeRatio = (self.bottomLeftCornerView.frame.origin.y + self.bottomLeftCornerView.frame.size.height) / self.view.frame.size.height;
+}
 
-    // Instantiate the camera view & assign its frame
-    self.camera = [[LLSimpleCamera alloc] initWithQuality: AVCaptureSessionPresetHigh
-                                                 position: CameraPositionBack
-                                             videoEnabled: NO];
-    // attach to the view
-    [self.camera attachToViewController: self withFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+-(void)setupUI
+{
+    [self.navigationBarTitleImageContainer setHidden:YES];
+    
+    // Set white status bar
+    [self setNeedsStatusBarAppearanceUpdate];
+    
+    [self.navigationController.navigationBar setHidden: YES];
+    self.navigationItem.hidesBackButton = YES;
+    
+    [self.previousImageView setHidden: YES];
+    
+    [self.dragBarContainer setBackgroundColor:[UIColor clearColor]];
+    
+    [self.topLeftCornerView setRightBorder: NO];
+    [self.topLeftCornerView setBottomBorder: NO];
+    [self.topLeftCornerView setBorderThickness: 2];
+    [self.topLeftCornerView setMargin:7.5f];
+    [self.topLeftCornerView setBackgroundColor: [UIColor clearColor]];
+    
+    [self.topRightCornerView setLeftBorder: NO];
+    [self.topRightCornerView setBottomBorder: NO];
+    [self.topRightCornerView setBorderThickness: 2];
+    [self.topRightCornerView setMargin:7.5f];
+    [self.topRightCornerView setBackgroundColor: [UIColor clearColor]];
+    
+    [self.bottomLeftCornerView setTopBorder: NO];
+    [self.bottomLeftCornerView setRightBorder: NO];
+    [self.bottomLeftCornerView setBorderThickness: 2];
+    [self.bottomLeftCornerView setMargin:7.5f];
+    [self.bottomLeftCornerView setBackgroundColor: [UIColor clearColor]];
+    self.buttomCornersOriginalYCoordinate = self.bottomLeftCornerView.frame.origin.y;
+    
+    [self.bottomRightCornerView setTopBorder: NO];
+    [self.bottomRightCornerView setLeftBorder: NO];
+    [self.bottomRightCornerView setBorderThickness: 2];
+    [self.bottomRightCornerView setMargin:7.5f];
+    [self.bottomRightCornerView setBackgroundColor: [UIColor clearColor]];
+    
+    self.dragBarView.layer.cornerRadius = 4.0f;
 
-    // take the required actions on a device change
-    __weak typeof(self) weakSelf = self;
-
-    [self.camera setOnDeviceChange: ^(LLSimpleCamera *camera, AVCaptureDevice *device) {
-        // device changed, check if flash is available
-        if ([camera isFlashAvailable])
-        {
-            weakSelf.flashButton.hidden = NO;
-
-            if (camera.flash == CameraFlashOff)
-            {
-                weakSelf.flashButton.selected = NO;
-            }
-            else
-            {
-                weakSelf.flashButton.selected = YES;
-            }
-        }
-        else
-        {
-            weakSelf.flashButton.hidden = YES;
-        }
-    }];
-
-    [self.camera setOnError: ^(LLSimpleCamera *camera, NSError *error) {
-        NSLog(@"Camera error: %@", error);
-
-        if ([error.domain isEqualToString: LLSimpleCameraErrorDomain])
-        {
-            if (error.code == LLSimpleCameraErrorCodeCameraPermission ||
-                error.code == LLSimpleCameraErrorCodeMicrophonePermission)
-            {
-                NSLog(@"We need permission for the camera.\nPlease go to your settings.");
-            }
-        }
-    }];
-
+    [self refreshCropEdgeRatio];
+    
+    [self.lookAndFeel applyGreenBorderTo:self.cancelButton];
+    [self.lookAndFeel applyGreenBorderTo:self.continueButton];
+    
     // snap button to capture image
     self.snapButton.clipsToBounds = YES;
     self.snapButton.layer.cornerRadius = self.snapButton.frame.size.width / 2.0f;
@@ -147,28 +129,86 @@
     self.snapButton.layer.rasterizationScale = [UIScreen mainScreen].scale;
     self.snapButton.layer.shouldRasterize = YES;
     [self.snapButton addTarget: self action: @selector(snapButtonPressed:) forControlEvents: UIControlEventTouchUpInside];
-
+    
     // button to toggle flash
-    [self.flashButton setBackgroundColor: [UIColor clearColor]];
-    [self.flashButton setImage: [UIImage imageNamed: @"camera-flash-off.png"] forState: UIControlStateNormal];
-    [self.flashButton setImage: [UIImage imageNamed: @"camera-flash-on.png"] forState: UIControlStateSelected];
-    self.flashButton.imageEdgeInsets = UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f);
-    [self.flashButton addTarget: self action: @selector(flashButtonPressed:) forControlEvents: UIControlEventTouchUpInside];
+    [self.flashButtonView.flashButton addTarget: self action: @selector(flashButtonPressed:) forControlEvents: UIControlEventTouchUpInside];
+    
+    // Instantiate the camera view & assign its frame
+    self.camera = [[LLSimpleCamera alloc] initWithQuality: AVCaptureSessionPresetHigh
+                                                 position: CameraPositionBack
+                                             videoEnabled: NO];
+    // attach to the view
+    [self.camera attachToViewController: self withFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    
+    // take the required actions on a device change
+    __weak typeof(self) weakSelf = self;
+    
+    [self.camera setOnDeviceChange: ^(LLSimpleCamera *camera, AVCaptureDevice *device)
+    {
+        // device changed, check if flash is available
+        if ([camera isFlashAvailable])
+        {
+            weakSelf.flashButtonView.hidden = NO;
+            
+            if (camera.flash == CameraFlashOff)
+            {
+                weakSelf.flashButtonView.on = NO;
+            }
+            else
+            {
+                weakSelf.flashButtonView.on = YES;
+            }
+        }
+        else
+        {
+            weakSelf.flashButtonView.hidden = YES;
+        }
+    }];
+    
+    [self.camera setOnError: ^(LLSimpleCamera *camera, NSError *error)
+    {
+        NSLog(@"Camera error: %@", error);
+        
+        if ([error.domain isEqualToString: LLSimpleCameraErrorDomain])
+        {
+            if (error.code == LLSimpleCameraErrorCodeCameraPermission ||
+                error.code == LLSimpleCameraErrorCodeMicrophonePermission)
+            {
+                NSLog(@"We need permission for the camera.\nPlease go to your settings.");
+            }
+        }
+    }];
+}
 
-    [self.camera updateFlashMode: CameraFlashOff];
-
-    self.flashButton.selected = NO;
-    self.flashButton.tintColor = [UIColor whiteColor];
-
+-(void)initAndSetupCamera
+{
     [self.view sendSubviewToBack: self.camera.view];
+}
+
+- (void) viewDidLoad
+{
+    [super viewDidLoad];
+    
+    // Do any additional setup after loading the view from its nib.
+    
+    [self setupUI];
+    
+    [self initAndSetupCamera];
+    
+    self.takenImageFilenames = [NSMutableArray new];
+    self.takenImages = [NSMutableArray new];
 }
 
 - (void) viewWillAppear: (BOOL) animated
 {
     [super viewWillAppear: animated];
-
+    
     // start the camera
     [self.camera start];
+    
+    self.distanceFromTopToGreenBarDefaultConstant = self.distanceFromTopToGreenBar.constant;
+    
+    self.bottomMaskHeightDefaultConstant = self.bottomMaskHeight.constant;
 }
 
 - (void) viewWillDisappear: (BOOL) animated
@@ -189,8 +229,7 @@
 
         if (done)
         {
-            self.flashButton.selected = YES;
-            self.flashButton.tintColor = [UIColor yellowColor];
+            self.flashButtonView.on = YES;
         }
     }
     else
@@ -199,8 +238,7 @@
 
         if (done)
         {
-            self.flashButton.selected = NO;
-            self.flashButton.tintColor = [UIColor whiteColor];
+            self.flashButtonView.on = NO;
         }
     }
 }
@@ -220,8 +258,8 @@
             UIImage *croppedImage = [Utils getCroppedImageUsingRect: cropRectangle forImage: image];
 
             UIImage *resizedImage = [croppedImage resizedImageByMagick: @"400"];
-
-            NSString *fileName = [NSString stringWithFormat: @"Receipt-%@-%ld", self.receiptFilenameID, (long)self.takenImages.count];
+            
+            NSString *fileName = [NSString stringWithFormat: @"Receipt-%@-%ld", [Utils generateUniqueID], (long)self.takenImages.count];
 
             NSString *savedFilePath = [Utils saveImage: resizedImage withFilename: fileName forUser: self.userManager.user.userKey];
 
@@ -230,39 +268,37 @@
             [self.takenImageFilenames addObject: fileName];
             [self.takenImages addObject: resizedImage];
 
-            if (self.weAreNotDoneYet)
-            {
-                [self.previousImageView setImage: resizedImage];
-                [self.previousImageView setHidden: NO];
-                [self.maskViewAboveTopCornerViews setHidden:YES];
-
-                [self.bottomLeftCornerView setBottomBorder: YES];
-                [self.bottomRightCornerView setBottomBorder: YES];
-
-                [self.bottomLeftCornerView setFrame: CGRectMake(self.bottomLeftCornerView.frame.origin.x,
-                                                                self.buttomCornersOriginalYCoordinate,
-                                                                self.bottomLeftCornerView.frame.size.width,
-                                                                self.bottomLeftCornerView.frame.size.height)];
-
-                [self.bottomRightCornerView setFrame: CGRectMake(self.bottomRightCornerView.frame.origin.x,
-                                                                 self.buttomCornersOriginalYCoordinate,
-                                                                 self.bottomRightCornerView.frame.size.width,
-                                                                 self.bottomRightCornerView.frame.size.height)];
-                self.weAreNotDoneYet = NO;
-
-                [self.camera start];
-            }
-            else
-            {
-                // we are done with camera
-
-                if (self.takenImages.count)
-                {
-                    [self saveNewReceipt];
-                }
-
-                [self exitCamera];
-            }
+            float ratio = resizedImage.size.height / resizedImage.size.width;
+            
+            self.imageViewHeight.constant = self.previousImageView.frame.size.width * ratio;
+            
+            //reset Constrains
+            self.bottomMaskHeight.constant = self.bottomMaskHeightDefaultConstant;
+            self.distanceFromTopToGreenBar.constant = self.distanceFromTopToGreenBarDefaultConstant;
+            
+            [self.previousImageView setImage: resizedImage];
+            [self.previousImageView setHidden: NO];
+            [self.greenBar setHidden: NO];
+            [self.maskViewAboveTopCornerViews setHidden:YES];
+            
+            [self.bottomLeftCornerView setBottomBorder: YES];
+            [self.bottomRightCornerView setBottomBorder: YES];
+            
+            [self.bottomLeftCornerView setFrame: CGRectMake(self.bottomLeftCornerView.frame.origin.x,
+                                                            self.buttomCornersOriginalYCoordinate,
+                                                            self.bottomLeftCornerView.frame.size.width,
+                                                            self.bottomLeftCornerView.frame.size.height)];
+            
+            [self.bottomRightCornerView setFrame: CGRectMake(self.bottomRightCornerView.frame.origin.x,
+                                                             self.buttomCornersOriginalYCoordinate,
+                                                             self.bottomRightCornerView.frame.size.width,
+                                                             self.bottomRightCornerView.frame.size.height)];
+            
+            [self.continueButton setEnabled:YES];
+            
+            [self.view setNeedsUpdateConstraints];
+            
+            [self.camera start];
         }
         else
         {
@@ -271,95 +307,151 @@
     } exactSeenImage: YES];
 }
 
-- (void) refreshBottomCropEdgeRatio
+- (IBAction) cancelPressed: (UIButton *) sender
 {
-    self.bottomCropEdgeRatio = (self.bottomLeftCornerView.frame.origin.y + self.bottomLeftCornerView.frame.size.height) / self.view.frame.size.height;
-
-    // DLog(@"Bottom Y coordinate: %f", self.bottomRightCornerPoint.y);
-}
-
-- (void) saveNewReceipt
-{
-    [self.manipulationService addReceiptForFilenames: self.takenImageFilenames success: ^{
-        DLog(@"addReceiptForUserKey success");
-    } failure: ^(NSString *reason) {
-        // should not happen
-        DLog(@"saveNewReceipt ERROR");
-    }];
-}
-
-- (void) exitCamera
-{
+    [self.camera updateFlashMode: CameraFlashOff];
+    
     [self.camera stop];
-
-    if (self.takenImages.count)
+    
+    for (NSString *filename in self.takenImageFilenames)
     {
-        NSAssert(self.delegate, @"self.delegate must not be unset");
-        [self.delegate hasJustCreatedNewReceipt];
+        [Utils deleteImageWithFileName:filename forUser:self.userManager.user.userKey];
     }
     
     [self.navigationController.navigationBar setHidden: NO];
+    
     [self.navigationController popViewControllerAnimated: YES];
 }
 
-- (IBAction) cancelPressed: (UIButton *) sender
+- (IBAction)continuePressed:(UIButton *)sender
 {
-    if (self.takenImages.count)
+    [self.camera updateFlashMode: CameraFlashOff];
+    
+    [self.camera stop];
+    
+    [self.navigationController.navigationBar setHidden: NO];
+    
+    //saving a new receipt
+    if (!self.existingReceiptID)
     {
-        [self saveNewReceipt];
+        NSInteger taxYear = [self.configurationManager getCurrentTaxYear];
+        
+        [self.manipulationService addReceiptForFilenames: self.takenImageFilenames
+                                              andTaxYear: taxYear
+                                                 success: ^(NSString *newestReceiptID)
+         {
+             
+             DLog(@"addReceiptForUserKey success");
+             newlyAddedReceiptID = newestReceiptID;
+             
+         } failure: ^(NSString *reason) {
+             // should not happen
+             DLog(@"saveNewReceipt ERROR");
+         }];
+        
+        ReceiptCheckingViewController *receiptCheckingViewController = [self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID:newlyAddedReceiptID cameFromReceiptBreakDownViewController:NO];
+        
+        // push the new viewController
+        [self.navigationController pushViewController: receiptCheckingViewController animated: YES];
+        
+        // remove self viewController
+        NSMutableArray *viewControllers = [NSMutableArray arrayWithArray: self.navigationController.viewControllers];
+        
+        [viewControllers removeObject: self];
+        
+        // Assign the updated stack with animation
+        [self.navigationController setViewControllers: viewControllers animated: NO];
     }
-
-    [self exitCamera];
+    
+    //adding the photos taken to an existing receipt
+    else
+    {
+        [self.dataService fetchReceiptForReceiptID:self.existingReceiptID
+                                           success:^(Receipt *receipt)
+        {
+            [receipt.fileNames addObjectsFromArray:self.takenImageFilenames];
+            
+            [self.manipulationService modifyReceipt:receipt];
+            
+        } failure:^(NSString *reason) {
+            DLog(@"self.dataService fetchReceiptForReceiptID failed");
+        }];
+        
+        [self.navigationController popViewControllerAnimated: YES];
+    }
 }
 
-- (IBAction) handlePan: (UIPanGestureRecognizer *) recognizer
+
+- (IBAction) dragBarPan: (UIPanGestureRecognizer *)recognizer
 {
     CGPoint translation = [recognizer translationInView: self.view];
 
-    if (recognizer.view.frame.origin.y + translation.y >= self.topLeftCornerView.frame.origin.y + self.topLeftCornerView.frame.size.height - 20
-        &&
-        recognizer.view.frame.origin.y + translation.y <= self.view.frame.size.height - recognizer.view.frame.size.height)
+    switch ([recognizer state])
     {
-        self.bottomLeftCornerView.center = CGPointMake(self.bottomLeftCornerView.center.x,
-                                                       self.bottomLeftCornerView.center.y + translation.y);
-        self.bottomRightCornerView.center = CGPointMake(self.bottomRightCornerView.center.x,
-                                                        self.bottomRightCornerView.center.y + translation.y);
-        [self.maskViewUnderButtonCornerViews
-         setFrame: CGRectMake(self.bottomLeftCornerView.frame.origin.x,
-                              self.bottomLeftCornerView.frame.origin.y + self.bottomLeftCornerView.frame.size.height,
-                              self.bottomRightCornerView.frame.origin.x + self.bottomRightCornerView.frame.size.width - self.bottomLeftCornerView.frame.origin.x,
-                              self.view.frame.size.height - (self.bottomLeftCornerView.frame.origin.y + self.bottomLeftCornerView.frame.size.height))];
-
-        [recognizer setTranslation: CGPointMake(0, 0) inView: self.view];
+        case UIGestureRecognizerStateBegan:
+            DLog(@"Dragging started with translation of X: %.1f, YL %.1f", translation.x, translation.y);
+            self.bottomMaskHeightStartingConstant = self.bottomMaskHeight.constant;
+            [self.dragBarView setBackgroundColor:self.lookAndFeel.appGreenColor];
+            break;
+            
+        case UIGestureRecognizerStateChanged:
+            DLog(@"Dragging with translation of X: %.1f, YL %.1f", translation.x, translation.y);
+            
+            //don't let self.bottomMaskHeight.constant drop below self.bottomMaskHeightDefaultConstant
+            //nor let it grow larger than (self.view.frame.size.height - self.distanceFromTopToGreenBar.constant -self.topLeftCornerView.frame.size.height - self.dragBarContainer.frame.size.height)
+            if ( self.bottomMaskHeightDefaultConstant <= (self.bottomMaskHeightStartingConstant - translation.y) &&
+                (self.bottomMaskHeightStartingConstant - translation.y) < (self.view.frame.size.height - self.distanceFromTopToGreenBar.constant - self.topLeftCornerView.frame.size.height - self.dragBarContainer.frame.size.height/2) )
+            {
+                self.bottomMaskHeight.constant = self.bottomMaskHeightStartingConstant - translation.y;
+                [self.view setNeedsUpdateConstraints];
+            }
+            
+            break;
+            
+        case UIGestureRecognizerStateEnded:
+            DLog(@"Dragging completed with translation of X: %.1f, YL %.1f", translation.x, translation.y);
+            [self refreshCropEdgeRatio];
+            [self.dragBarView setBackgroundColor:[UIColor whiteColor]];
+            break;
+            
+        default:
+            break;
     }
 
-    // when touch is finished
-    if (UIGestureRecognizerStateEnded == [recognizer state])
+}
+
+- (IBAction)imageViewPan: (UIPanGestureRecognizer *)recognizer
+{
+    CGPoint translation = [recognizer translationInView: self.view];
+    
+    switch ([recognizer state])
     {
-        // if buttomReceiptView is dragged near the button, change remove its bottom border
-        if (recognizer.view.frame.origin.y >= self.view.frame.size.height - recognizer.view.frame.size.height - 20)
-        {
-            [self.bottomLeftCornerView setBottomBorder: NO];
-            [self.bottomRightCornerView setBottomBorder: NO];
-
-            if (!self.weAreNotDoneYet)
+        case UIGestureRecognizerStateBegan:
+            DLog(@"Dragging started with translation of X: %.1f, YL %.1f", translation.x, translation.y);
+            self.distanceFromTopToGreenBarStartingConstant = self.distanceFromTopToGreenBar.constant;
+            break;
+            
+        case UIGestureRecognizerStateChanged:
+            DLog(@"Dragging with translation of X: %.1f, YL %.1f", translation.x, translation.y);
+            
+            if ( self.distanceFromTopToGreenBarDefaultConstant <= (self.distanceFromTopToGreenBarStartingConstant + translation.y) &&
+                (self.distanceFromTopToGreenBarStartingConstant + translation.y) < (self.view.frame.size.height - self.bottomMaskHeight.constant - self.distanceFromTopToGreenBarDefaultConstant) &&
+                (self.distanceFromTopToGreenBarStartingConstant + translation.y) < (self.imageViewHeight.constant - self.distanceFromTopToGreenBarDefaultConstant) )
             {
-                self.weAreNotDoneYet = YES;
+                self.distanceFromTopToGreenBar.constant = self.distanceFromTopToGreenBarStartingConstant + translation.y;
+                [self.view setNeedsUpdateConstraints];
             }
-        }
-        else
-        {
-            [self.bottomLeftCornerView setBottomBorder: YES];
-            [self.bottomRightCornerView setBottomBorder: YES];
-
-            if (self.weAreNotDoneYet)
-            {
-                self.weAreNotDoneYet = NO;
-            }
-        }
+            
+            break;
+            
+        case UIGestureRecognizerStateEnded:
+            DLog(@"Dragging completed with translation of X: %.1f, YL %.1f", translation.x, translation.y);
+            [self refreshCropEdgeRatio];
+            break;
+            
+        default:
+            break;
     }
-
-    [self refreshBottomCropEdgeRatio];
 }
 
 - (BOOL) prefersStatusBarHidden

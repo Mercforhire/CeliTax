@@ -11,6 +11,8 @@
 @interface WhiteBorderView : UIView
 
 @property (nonatomic) float borderThickness;
+@property (nonatomic) float margin;
+
 @property (nonatomic) BOOL topBorder;
 @property (nonatomic) BOOL bottomBorder;
 @property (nonatomic) BOOL leftBorder;

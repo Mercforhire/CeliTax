@@ -20,6 +20,7 @@
                 <outlet property="cameraButton" destination="7Oe-J2-WxF" id="QC0-be-RV4"/>
                 <outlet property="recentUploadsTable" destination="fcU-BM-YHD" id="0bp-KU-Jpm"/>
                 <outlet property="taxYearLabel" destination="CIl-yA-Aq2" id="DnD-BV-d7d"/>
+                <outlet property="taxYearTriangle" destination="PUX-L9-4Oq" id="fzb-5i-8O9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

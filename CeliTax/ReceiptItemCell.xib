@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+            <string>Lato-Regular</string>
+            <string>Lato-Regular</string>
+            <string>Lato-Regular</string>
+            <string>Lato-Regular</string>
+            <string>Lato-Regular</string>
+            <string>Lato-Regular</string>
+            <string>Lato-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="ReceiptItemCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Qty" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HXB-ye-ugy">
+                        <rect key="frame" x="28" y="0.0" width="25.5" height="18"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="00.00" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="USg-Qm-X7u">
+                        <rect key="frame" x="236" y="23" width="69" height="30"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="UDK-9L-cac"/>
+                            <constraint firstAttribute="width" constant="69" id="eqA-gN-buA"/>
+                        </constraints>
+                        <color key="textColor" red="0.4549019608" green="0.74901960779999999" blue="0.31764705879999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gYj-1z-yOt">
+                        <rect key="frame" x="15" y="23" width="50" height="30"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="TAk-cd-aDR"/>
+                            <constraint firstAttribute="height" constant="30" id="hcO-ub-SRm"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
+                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad"/>
+                    </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GS3-9d-o46">
+                        <rect key="frame" x="254" y="0.0" width="33" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="Zbr-KF-oMv"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price/Item" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eUb-u9-96I">
+                        <rect key="frame" x="124" y="0.0" width="70" height="18"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jfK-7Y-2qp">
+                        <rect key="frame" x="221" y="27.5" width="10" height="20.5"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rsq-h4-GX5">
+                        <rect key="frame" x="110" y="27.5" width="10" height="20.5"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0.00" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="atZ-2y-QQd">
+                        <rect key="frame" x="125" y="23" width="69" height="30"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="69" id="0Q4-3n-9FW"/>
+                            <constraint firstAttribute="height" constant="30" id="kg4-wa-Daj"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
+                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad"/>
+                    </textField>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="atZ-2y-QQd" firstAttribute="centerY" secondItem="Rsq-h4-GX5" secondAttribute="centerY" id="8MY-6X-4pX"/>
+                <constraint firstItem="USg-Qm-X7u" firstAttribute="leading" secondItem="jfK-7Y-2qp" secondAttribute="trailing" constant="5" id="8O4-Uh-Q8Y"/>
+                <constraint firstItem="GS3-9d-o46" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="9ct-ZV-xpU"/>
+                <constraint firstItem="atZ-2y-QQd" firstAttribute="leading" secondItem="Rsq-h4-GX5" secondAttribute="trailing" constant="5" id="A4z-4t-ORs"/>
+                <constraint firstItem="gYj-1z-yOt" firstAttribute="top" secondItem="HXB-ye-ugy" secondAttribute="bottom" constant="5" id="Kf2-Vf-79X"/>
+                <constraint firstItem="USg-Qm-X7u" firstAttribute="centerX" secondItem="GS3-9d-o46" secondAttribute="centerX" id="LzT-KT-nGM"/>
+                <constraint firstItem="atZ-2y-QQd" firstAttribute="top" secondItem="eUb-u9-96I" secondAttribute="bottom" constant="5" id="Nyv-oZ-R0G"/>
+                <constraint firstItem="eUb-u9-96I" firstAttribute="centerX" secondItem="atZ-2y-QQd" secondAttribute="centerX" id="Rae-wa-cJZ"/>
+                <constraint firstAttribute="centerX" secondItem="atZ-2y-QQd" secondAttribute="centerX" id="V25-hh-eee"/>
+                <constraint firstItem="HXB-ye-ugy" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="bTq-gN-8Yu"/>
+                <constraint firstAttribute="trailing" secondItem="USg-Qm-X7u" secondAttribute="trailing" constant="15" id="eNj-hl-HrZ"/>
+                <constraint firstItem="USg-Qm-X7u" firstAttribute="centerY" secondItem="jfK-7Y-2qp" secondAttribute="centerY" id="gHL-YI-jWw"/>
+                <constraint firstItem="eUb-u9-96I" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="h5D-KF-44a"/>
+                <constraint firstItem="gYj-1z-yOt" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="15" id="j3N-Ie-w7a"/>
+                <constraint firstItem="gYj-1z-yOt" firstAttribute="centerX" secondItem="HXB-ye-ugy" secondAttribute="centerX" id="pK3-EH-uJ1"/>
+                <constraint firstItem="USg-Qm-X7u" firstAttribute="top" secondItem="GS3-9d-o46" secondAttribute="bottom" constant="5" id="qMR-4o-4dF"/>
+            </constraints>
+            <size key="customSize" width="524" height="106"/>
+            <connections>
+                <outlet property="priceField" destination="atZ-2y-QQd" id="CFX-ex-HBl"/>
+                <outlet property="qtyField" destination="gYj-1z-yOt" id="Wd6-d5-lqV"/>
+                <outlet property="totalField" destination="USg-Qm-X7u" id="hat-0o-NnN"/>
+            </connections>
+            <point key="canvasLocation" x="572" y="203.5"/>
+        </collectionViewCell>
+    </objects>
+</document>

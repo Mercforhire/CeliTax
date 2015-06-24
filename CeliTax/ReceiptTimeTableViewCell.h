@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet M13Checkbox *checkBoxView;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *detailsButton;
 
 @end

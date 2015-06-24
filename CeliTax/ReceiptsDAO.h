@@ -17,9 +17,9 @@
 /*
    @param filenames NSArray of NSString filenames for this receipt
 
-   @return YES if success, NO if user not found or filenames is nil or empty
+   @return ID of newest receipt added, nil if failed
  */
-- (BOOL) addReceiptWithFilenames: (NSArray *) filenames;
+- (NSString *) addReceiptWithFilenames: (NSArray *) filenames inTaxYear:(NSInteger)taxYear;
 
 /*
    @param filenames NSArray of NSString filenames for this receipt
@@ -29,19 +29,24 @@
 - (BOOL) addReceipt: (Receipt *) receiptToAdd;
 
 /*
+ @return NSArray of Receipts, nil if user not found or has no receipts
+ */
+- (NSArray *) loadAllReceipts;
+
+/*
    @return NSArray of Receipts, nil if user not found or has no receipts
  */
-- (NSArray *) loadReceipts;
+- (NSArray *) loadReceiptsFromTaxYear:(NSInteger)taxYear;
 
 /*
    @return NSArray of newest n-th Receipts, nil if user not found or has no receipts
  */
-- (NSArray *) loadNewestNthReceipts: (NSInteger) nTh inYear: (NSInteger) year;
+- (NSArray *) loadNewestNthReceipts: (NSInteger) nTh inTaxYear: (NSInteger) taxYear;
 
 /*
    @return NSArray of Receipts from fromDate to toDate
  */
-- (NSArray *) loadReceiptsFrom: (NSDate *) fromDate toDate: (NSDate *) toDate;
+- (NSArray *) loadReceiptsFrom: (NSDate *) fromDate toDate: (NSDate *) toDate inTaxYear:(NSInteger)taxYear;
 
 /*
    @param receiptID NSString receiptID
@@ -49,6 +54,11 @@
    @return Receipt object, nil if user not found or receipt not found
  */
 - (Receipt *) loadReceipt: (NSString *) receiptID;
+
+/**
+ @return YES if success, NO if record is not found in existing database
+ */
+- (BOOL)modifyReceipt: (Receipt *)Receipt;
 
 /*
    @param receiptID NSString receiptID

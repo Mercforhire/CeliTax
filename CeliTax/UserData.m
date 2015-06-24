@@ -11,6 +11,7 @@
 #define kKeyCatagoriesKey       @"Catagories"
 #define kKeyRecordsKey          @"Records"
 #define kKeyReceiptsKey         @"Receipts"
+#define kKeyTaxYearsKey         @"TaxYears"
 
 @implementation UserData
 
@@ -21,6 +22,7 @@
     self.catagories = [[NSMutableArray alloc] init];
     self.records = [[NSMutableArray alloc] init];
     self.receipts = [[NSMutableArray alloc] init];
+    self.taxYears = [[NSMutableArray alloc] init];
     
     return self;
 }
@@ -30,6 +32,7 @@
     [coder encodeObject:self.catagories     forKey:kKeyCatagoriesKey];
     [coder encodeObject:self.records        forKey:kKeyRecordsKey];
     [coder encodeObject:self.receipts       forKey:kKeyReceiptsKey];
+    [coder encodeObject:self.taxYears       forKey:kKeyTaxYearsKey];
 }
 
 - (id)initWithCoder:(NSCoder *)coder
@@ -44,6 +47,9 @@
     
     NSArray *receipts = [coder decodeObjectForKey:kKeyReceiptsKey];
     self.receipts = [[NSMutableArray alloc] initWithArray:receipts copyItems:NO];
+    
+    NSArray *taxYears = [coder decodeObjectForKey:kKeyTaxYearsKey];
+    self.taxYears = [[NSMutableArray alloc] initWithArray:taxYears copyItems:NO];
     
     return self;
 }

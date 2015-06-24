@@ -8,18 +8,13 @@
             <string>Lato-Bold</string>
             <string>Lato-Bold</string>
         </mutableArray>
-        <mutableArray key="Lato-Regular.ttf">
-            <string>Lato-Regular</string>
-            <string>Lato-Regular</string>
-        </mutableArray>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyAccountViewController">
             <connections>
                 <outlet property="accountTableView" destination="J80-ck-6nT" id="xb8-PG-Isg"/>
-                <outlet property="avatarImageView" destination="Q5i-dz-zOv" id="bY1-2Y-tl1"/>
                 <outlet property="calculateButton" destination="rR6-6D-WTS" id="ScX-Z2-4Gw"/>
-                <outlet property="nameLabel" destination="La8-Vn-6GL" id="CMi-Gg-tLv"/>
+                <outlet property="titleLabel" destination="ABk-hm-JW1" id="AUk-PA-CLj"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -43,88 +38,30 @@
                         <action selector="calculateButtonPressed:" destination="-1" eventType="touchUpInside" id="fcA-lr-qGS"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="John Buck" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="La8-Vn-6GL">
-                    <rect key="frame" x="91" y="125" width="152" height="19.5"/>
-                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q5i-dz-zOv">
-                    <rect key="frame" x="16" y="110" width="50" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="50" id="Pl2-O9-2T8"/>
-                        <constraint firstAttribute="height" constant="50" id="nRr-GJ-alI"/>
-                    </constraints>
-                </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uAO-Iv-rdN">
-                    <rect key="frame" x="253" y="122" width="30" height="27"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="30" id="oAe-1u-Tyj"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                    <state key="normal" title="Edit">
-                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="editProfilePressed:" destination="-1" eventType="touchUpInside" id="2wB-IO-Kmx"/>
-                    </connections>
-                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Account" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ABk-hm-JW1">
                     <rect key="frame" x="108" y="79" width="103" height="23"/>
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="19"/>
                     <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AXs-ea-PcQ">
-                    <rect key="frame" x="283" y="127" width="19" height="17"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="17" id="9RX-ms-ojZ"/>
-                        <constraint firstAttribute="width" constant="19" id="VCm-L8-Ntp"/>
-                    </constraints>
-                    <state key="normal" image="pencil.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="editProfilePressed:" destination="-1" eventType="touchUpInside" id="NF7-1c-Pck"/>
-                    </connections>
-                </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="J80-ck-6nT">
-                    <rect key="frame" x="0.0" y="160" width="320" height="348"/>
+                    <rect key="frame" x="0.0" y="110" width="320" height="398"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="La8-Vn-6GL" firstAttribute="leading" secondItem="Q5i-dz-zOv" secondAttribute="trailing" constant="25" id="9cz-aa-f9f"/>
                 <constraint firstItem="J80-ck-6nT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="LER-fk-pnA"/>
-                <constraint firstItem="Q5i-dz-zOv" firstAttribute="centerY" secondItem="La8-Vn-6GL" secondAttribute="centerY" id="LYF-Gl-oh4"/>
-                <constraint firstItem="uAO-Iv-rdN" firstAttribute="leading" secondItem="La8-Vn-6GL" secondAttribute="trailing" constant="15" id="Qff-wn-pkL"/>
-                <constraint firstItem="AXs-ea-PcQ" firstAttribute="leading" secondItem="uAO-Iv-rdN" secondAttribute="trailing" id="Qyg-UG-fQi"/>
-                <constraint firstItem="J80-ck-6nT" firstAttribute="top" secondItem="Q5i-dz-zOv" secondAttribute="bottom" id="TgV-N4-8bv"/>
+                <constraint firstItem="J80-ck-6nT" firstAttribute="top" secondItem="ABk-hm-JW1" secondAttribute="bottom" constant="8" id="RGI-k4-ZZk"/>
                 <constraint firstAttribute="bottom" secondItem="rR6-6D-WTS" secondAttribute="bottom" constant="20" id="VZE-Fy-g99"/>
                 <constraint firstItem="rR6-6D-WTS" firstAttribute="top" secondItem="J80-ck-6nT" secondAttribute="bottom" constant="10" id="bkv-he-ov2"/>
-                <constraint firstItem="Q5i-dz-zOv" firstAttribute="centerY" secondItem="uAO-Iv-rdN" secondAttribute="centerY" id="cvv-Ko-bZn"/>
-                <constraint firstItem="uAO-Iv-rdN" firstAttribute="leading" secondItem="La8-Vn-6GL" secondAttribute="trailing" constant="10" id="ezM-Eb-dCR"/>
-                <constraint firstItem="Q5i-dz-zOv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="110" id="igV-X8-vdS"/>
                 <constraint firstAttribute="trailing" secondItem="J80-ck-6nT" secondAttribute="trailing" id="q1F-HX-cMu"/>
-                <constraint firstItem="Q5i-dz-zOv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="rIS-ea-IBP"/>
-                <constraint firstItem="AXs-ea-PcQ" firstAttribute="centerY" secondItem="uAO-Iv-rdN" secondAttribute="centerY" id="rst-sa-SLG"/>
-                <constraint firstAttribute="trailing" secondItem="AXs-ea-PcQ" secondAttribute="trailing" constant="18" id="t0F-h3-RpB"/>
                 <constraint firstItem="ABk-hm-JW1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="79" id="vva-AU-Vd2"/>
                 <constraint firstAttribute="centerX" secondItem="ABk-hm-JW1" secondAttribute="centerX" id="xhO-4C-7f9"/>
                 <constraint firstAttribute="centerX" secondItem="rR6-6D-WTS" secondAttribute="centerX" id="yYf-GN-lTm"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="Qff-wn-pkL"/>
-                </mask>
-            </variation>
         </view>
     </objects>
-    <resources>
-        <image name="pencil.png" width="42" height="39"/>
-    </resources>
 </document>

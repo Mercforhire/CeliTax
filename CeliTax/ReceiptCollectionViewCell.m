@@ -10,7 +10,8 @@
 
 @implementation ReceiptCollectionViewCell
 
-- (void)awakeFromNib {
+- (void)awakeFromNib
+{
     // Initialization code
 }
 

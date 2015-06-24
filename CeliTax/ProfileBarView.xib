@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+            <string>Lato-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileBarView">
+            <connections>
+                <outlet property="editButton1" destination="EPr-op-zbf" id="jaZ-as-QWw"/>
+                <outlet property="editButton2" destination="myT-Tw-vcp" id="npl-q9-aTW"/>
+                <outlet property="nameLabel" destination="ILw-dm-H99" id="PmK-Ly-gGH"/>
+                <outlet property="profileImageView" destination="x2n-ay-fv1" id="fJx-gb-db9"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="63"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="John Buck" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ILw-dm-H99">
+                    <rect key="frame" x="86" y="22" width="159" height="19.5"/>
+                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="x2n-ay-fv1">
+                    <rect key="frame" x="16" y="6.5" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="9ed-r7-UFH"/>
+                        <constraint firstAttribute="width" constant="50" id="UQG-Yp-tmy"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EPr-op-zbf">
+                    <rect key="frame" x="255" y="18" width="30" height="27"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="vVT-tR-8Gf"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                    <state key="normal" title="Edit">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="myT-Tw-vcp">
+                    <rect key="frame" x="285" y="23" width="19" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="M3U-rp-V4Y"/>
+                        <constraint firstAttribute="width" constant="19" id="pq0-2L-Fau"/>
+                    </constraints>
+                    <state key="normal" image="pencil.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="myT-Tw-vcp" firstAttribute="centerY" secondItem="EPr-op-zbf" secondAttribute="centerY" id="1hd-C2-U4e"/>
+                <constraint firstItem="x2n-ay-fv1" firstAttribute="centerY" secondItem="ILw-dm-H99" secondAttribute="centerY" id="DwW-3L-ejK"/>
+                <constraint firstItem="x2n-ay-fv1" firstAttribute="centerY" secondItem="EPr-op-zbf" secondAttribute="centerY" id="F6N-ch-Dml"/>
+                <constraint firstItem="ILw-dm-H99" firstAttribute="leading" secondItem="x2n-ay-fv1" secondAttribute="trailing" constant="20" id="G76-Vt-AlF"/>
+                <constraint firstItem="x2n-ay-fv1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="NYw-pt-3SZ"/>
+                <constraint firstItem="EPr-op-zbf" firstAttribute="leading" secondItem="ILw-dm-H99" secondAttribute="trailing" constant="10" id="ScI-8G-PgZ"/>
+                <constraint firstItem="myT-Tw-vcp" firstAttribute="leading" secondItem="EPr-op-zbf" secondAttribute="trailing" id="W77-eo-2KI"/>
+                <constraint firstAttribute="centerY" secondItem="x2n-ay-fv1" secondAttribute="centerY" id="g2c-nd-7An"/>
+                <constraint firstAttribute="trailing" secondItem="myT-Tw-vcp" secondAttribute="trailing" constant="16" id="wZy-IN-auj"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="350" y="3.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="pencil.png" width="42" height="39"/>
+    </resources>
+</document>

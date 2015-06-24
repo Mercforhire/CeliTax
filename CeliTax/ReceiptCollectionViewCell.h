@@ -11,7 +11,6 @@
 
 @interface ReceiptCollectionViewCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet M13Checkbox *checkBox;
 @property (weak, nonatomic) IBOutlet UIImageView *image;
 
 @end

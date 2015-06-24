@@ -21,7 +21,7 @@
 #import "ModifyCatagoryViewController.h"
 #import "UIView+Helper.h"
 
-@interface AddCatagoryViewController () <SelectionsPickerPopUpDelegate, ColorPickerViewPopUpDelegate, UIPopoverControllerDelegate, AllColorsPickerViewPopUpDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface AddCatagoryViewController () <SelectionsPickerPopUpDelegate, ColorPickerViewPopUpDelegate, UIPopoverControllerDelegate, AllColorsPickerViewPopUpDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, PopUpViewControllerProtocol>
 
 @property (weak, nonatomic) IBOutlet UIView *colorView;
 @property (weak, nonatomic) IBOutlet UITextField *catagoryNameField;
@@ -88,6 +88,7 @@
     self.saveButton = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, 50, 25)];
     [self.saveButton setTitle: @"Save" forState: UIControlStateNormal];
     [self.saveButton.titleLabel setFont: [UIFont latoFontOfSize: 14]];
+    [self.saveButton setEnabled: NO];
     [self.saveButton setTitleEdgeInsets: UIEdgeInsetsMake(5, 10, 5, 10)];
     [self.saveButton addTarget: self action: @selector(saveCatagoryPressed:) forControlEvents: UIControlEventTouchUpInside];
     [self.lookAndFeel applySolidGreenButtonStyleTo: self.saveButton];
@@ -192,10 +193,7 @@
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void) keyboardWillShow: (NSNotification *) aNotification
 {
-    NSDictionary *info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey: UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    
-    [self.view scrollToY: 0 - kbSize.height];
+    [self.view scrollToView:self.catagoryNameField];
 }
 
 // Called when the UIKeyboardWillHideNotification is sent
@@ -208,7 +206,7 @@
 {
     self.currentlySelectedCatagory = nil;
 
-    [self.dataService fetchCatagoriesSuccess: ^(NSArray *catagories) {
+    [self.dataService fetchCatagories: ^(NSArray *catagories) {
         self.catagories =  [[NSMutableArray alloc] initWithArray: catagories copyItems: YES];
 
         [self.catagoriesTable reloadData];
@@ -277,11 +275,16 @@
 - (void) cancelEditing
 {
     self.addingCatagoryMode = NO;
+    
+    self.catagoryNameField.text = @"";
+    [self.catagoryNameField resignFirstResponder];
 }
 
 - (IBAction) addCatagoryPressed: (UIButton *) sender
 {
     self.addingCatagoryMode = YES;
+    
+    [self colorBoxPressed];
 }
 
 - (void) colorBoxPressed
@@ -331,7 +334,7 @@
     popUpTheme.outerShadowOffset = CGSizeMake(0, 2);
     [self.pickerPopover setTheme: popUpTheme];
 
-    [self.pickerPopover presentPopoverFromRect: self.colorView.frame inView: self.view permittedArrowDirections: WYPopoverArrowDirectionUp animated: YES];
+    [self.pickerPopover presentPopoverFromRect: self.colorView.frame inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
 }
 
 - (void) showNamesPickerViewController
@@ -346,7 +349,7 @@
     popUpTheme.outerShadowOffset = CGSizeMake(0, 2);
     [self.pickerPopover setTheme: popUpTheme];
 
-    [self.pickerPopover presentPopoverFromRect: self.catagoryNameField.frame inView: self.view permittedArrowDirections: WYPopoverArrowDirectionUp animated: YES];
+    [self.pickerPopover presentPopoverFromRect: self.catagoryNameField.frame inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
 }
 
 - (void) showAllColorsPickerViewController
@@ -363,13 +366,14 @@
 
     [self.pickerPopover setTheme: popUpTheme];
 
-    [self.pickerPopover presentPopoverFromRect: self.colorView.frame inView: self.view permittedArrowDirections: WYPopoverArrowDirectionUp animated: YES];
+    [self.pickerPopover presentPopoverFromRect: self.colorView.frame inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
 }
 
 -(void)editPressed:(UIButton *)button
 {
     //set up the modifyCatagoryViewController
     self.modifyCatagoryViewController = [self.viewControllerFactory createModifyCatagoryViewControllerWith:self.currentlySelectedCatagory];
+    self.modifyCatagoryViewController.delegate = self;
     
     self.pickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.modifyCatagoryViewController];
     
@@ -390,7 +394,7 @@
                                  1,
                                  1);
     
-    [self.pickerPopover presentPopoverFromRect: tinyRect inView: self.view permittedArrowDirections: WYPopoverArrowDirectionUp animated: YES];
+    [self.pickerPopover presentPopoverFromRect: tinyRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
 }
 
 -(void)transferPressed:(UIButton *)button
@@ -414,7 +418,7 @@
     
     [self.pickerPopover setTheme: popUpTheme];
     
-    [self.pickerPopover presentPopoverFromRect: tinyRect inView: self.view permittedArrowDirections: WYPopoverArrowDirectionUp animated: YES];
+    [self.pickerPopover presentPopoverFromRect: tinyRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
 }
 
 -(void)deletePressed:(UIButton *)button
@@ -427,6 +431,15 @@
                                             otherButtonTitles: @"Delete", nil];
     
     [message show];
+}
+
+#pragma mark - PopUpViewControllerProtocol
+
+-(void)requestPopUpToDismiss
+{
+    [self.pickerPopover dismissPopoverAnimated:YES];
+    
+    [self refreshCatagories];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -543,6 +556,11 @@
 - (void) selectedColor: (UIColor *) color
 {
     self.colorView.backgroundColor = color;
+    
+    if (!self.catagoryNameField.text.length)
+    {
+        [self textBoxPressed];
+    }
 }
 
 - (void) customColorPressed

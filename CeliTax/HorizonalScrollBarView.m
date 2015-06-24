@@ -78,6 +78,13 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
     [self.collectionView reloadData];
 }
 
+-(void)deselectAnyCategory
+{
+    self.selectedButtonIndex = -1;
+    
+    [self.collectionView reloadData];
+}
+
 #pragma mark - From UICollectionView Delegate/Datasource
 
 - (NSInteger) collectionView: (UICollectionView *) collectionView numberOfItemsInSection: (NSInteger) section
@@ -115,20 +122,7 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
 
 - (void) collectionView: (UICollectionView *) collectionView didSelectItemAtIndexPath: (NSIndexPath *) indexPath
 {
-    // none is selected
-    if (self.selectedButtonIndex == -1)
-    {
-        NSString *clickedName = [self.buttonNames objectAtIndex: indexPath.row];
-
-        if (self.delegate)
-        {
-            [self.delegate buttonClickedWithIndex: indexPath.row andName: clickedName];
-        }
-
-        self.selectedButtonIndex = indexPath.row;
-    }
-    // deselect the previously selected
-    else if (indexPath.row == self.selectedButtonIndex)
+    if (indexPath.row == self.selectedButtonIndex)
     {
         if (self.delegate)
         {
@@ -151,6 +145,8 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
     }
     
     [collectionView reloadData];
+    
+    [collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
 }
 
 @end

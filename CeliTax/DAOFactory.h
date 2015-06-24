@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class CatagoriesDAO,UserDataDAO,ReceiptsDAO,RecordsDAO;
+@class CatagoriesDAO,UserDataDAO,ReceiptsDAO,RecordsDAO,TaxYearsDAO;
 
 @interface DAOFactory : NSObject
 
@@ -20,5 +20,6 @@
 
 - (RecordsDAO *) createRecordsDAO;
 
+- (TaxYearsDAO *) createTaxYearsDAO;
 
 @end

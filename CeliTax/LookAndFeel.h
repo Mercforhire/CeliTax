@@ -23,4 +23,6 @@
 
 - (void) applySolidGreenButtonStyleTo: (UIButton *) button;
 
+- (void) applyDisabledButtonStyleTo: (UIButton *) button;
+
 @end

@@ -21,6 +21,8 @@
 
 -(void)setButtonNames:(NSArray *)buttonNames andColors:(NSArray *)buttonColors;
 
+-(void)deselectAnyCategory;
+
 @property (nonatomic, strong) LookAndFeel *lookAndFeel;
 
 @property (nonatomic, weak) id <HorizonalScrollBarViewProtocol> delegate;

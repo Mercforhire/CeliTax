@@ -9,21 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 #import "ManipulationService.h"
-/*
- Tell its delegate that an image has been captured
- */
-@protocol CameraControllerDelegate <NSObject>
+#import "DataService.h"
 
-@required
-
-- (void) hasJustCreatedNewReceipt;
-
-@end
+@class Receipt;
 
 @interface CameraViewController : BaseViewController
 
-@property (nonatomic, weak) id <ManipulationService> manipulationService;
+@property (nonatomic, strong) NSString *existingReceiptID; //nil if adding a new receipt
 
-@property (nonatomic, weak) id <CameraControllerDelegate> delegate;
+@property (nonatomic, weak) id <DataService> dataService;
+
+@property (nonatomic, weak) id <ManipulationService> manipulationService;
 
 @end

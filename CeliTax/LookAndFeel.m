@@ -64,4 +64,12 @@
     [button setClipsToBounds: YES];
 }
 
+- (void) applyDisabledButtonStyleTo: (UIButton *) button
+{
+    [button setBackgroundColor: [UIColor lightGrayColor]];
+    button.layer.cornerRadius = 3.0f;
+    [button setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
+    [button setClipsToBounds: YES];
+}
+
 @end

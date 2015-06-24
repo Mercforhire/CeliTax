@@ -19,23 +19,23 @@
 #import "Notifications.h"
 #import "ReceiptBreakDownViewController.h"
 #import "Utils.h"
+#import "ConfigurationManager.h"
+#import "ProfileBarView.h"
 
-#define kCatagoryTableRowHeight                 65
+#define kCatagoryTableRowHeight                     65
 
-#define kCatagoryDetailsKeyTotalQty             @"CatagoryDetailsKeyTotalQty"
-#define kCatagoryDetailsKeyTotalAmount          @"CatagoryDetailsKeyTotalAmount"
+#define kCatagoryDetailsKeyTotalQty                 @"CatagoryDetailsKeyTotalQty"
+#define kCatagoryDetailsKeyTotalAmount              @"CatagoryDetailsKeyTotalAmount"
 
 #define kAccountTableViewCellIdentifier             @"AccountTableViewCell"
 #define kUploadsHistoryTableViewCellIdentifier      @"UploadsHistoryTableViewCell"
 
 @interface MyAccountViewController () <UITableViewDataSource, UITableViewDelegate, XYPieChartDelegate, XYPieChartDataSource>
 
-@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) XYPieChart *pieChart;
 @property (weak, nonatomic) IBOutlet UITableView *accountTableView;
 @property (weak, nonatomic) IBOutlet UIButton *calculateButton;
-
 @property (nonatomic, strong) NSArray *catagories; // of Catagory
 // Key: Catagory ID, Value: NSMutableDictionary of :
 // KEY: kCatagoryDetailsKeyTotalQty, VALUE: total quantity for this catagory
@@ -57,15 +57,20 @@
 
 - (void) setupUI
 {
+    ProfileBarView *profileBarView = [[ProfileBarView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
+    
     // load user info
-    [self.nameLabel setText: [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]];
+    [profileBarView.nameLabel setText: [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]];
 
-    self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.width / 2;
-    self.avatarImageView.layer.borderColor = [UIColor colorWithWhite: 187.0f/255.0f alpha: 1].CGColor;
-    self.avatarImageView.layer.borderWidth = 1.0f;
-    [self.avatarImageView setClipsToBounds: YES];
-    [self.avatarImageView setImage: self.userManager.user.avatarImage];
-
+    profileBarView.profileImageView.layer.cornerRadius = profileBarView.profileImageView.frame.size.width / 2;
+    profileBarView.profileImageView.layer.borderColor = [UIColor colorWithWhite: 187.0f/255.0f alpha: 1].CGColor;
+    profileBarView.profileImageView.layer.borderWidth = 1.0f;
+    [profileBarView.profileImageView setClipsToBounds: YES];
+    [profileBarView.profileImageView setImage: self.userManager.user.avatarImage];
+    
+    [profileBarView.editButton1 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
+    [profileBarView.editButton2 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
+    
     // set up tableview
     UINib *accountTableCell = [UINib nibWithNibName: @"AccountTableViewCell" bundle: nil];
     [self.accountTableView registerNib: accountTableCell forCellReuseIdentifier: kAccountTableViewCellIdentifier];
@@ -74,10 +79,15 @@
     [self.accountTableView registerNib: uploadsHistoryTableViewCell forCellReuseIdentifier: kUploadsHistoryTableViewCellIdentifier];
 
     // set up pieChart
-    UIView *pieChartContainer = [[UIView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 190)];
+    UIView *pieChartContainer = [[UIView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 250)];
+    
+    [pieChartContainer addSubview: profileBarView];
 
-    self.pieChart = [[XYPieChart alloc] initWithFrame: CGRectMake(0, 0, 180, 180)];
-    [self.pieChart setCenter: pieChartContainer.center];
+    self.pieChart = [[XYPieChart alloc] initWithFrame: CGRectMake(0, 60, 180, 180)];
+    CGPoint pieChartCenter = pieChartContainer.center;
+    pieChartCenter.y = pieChartCenter.y + 30;
+    
+    [self.pieChart setCenter: pieChartCenter];
 
     [pieChartContainer addSubview: self.pieChart];
 
@@ -98,6 +108,8 @@
 
     // other set up
     [self.lookAndFeel applyHollowGreenButtonStyleTo: self.calculateButton];
+    
+    [self.titleLabel setText:[NSString stringWithFormat:@"Tax Year for %ld", (long)self.configurationManager.getCurrentTaxYear]];
 }
 
 - (void) viewDidLoad
@@ -126,14 +138,18 @@
     self.sliceNames = [NSMutableArray new];
 
     // load all Catagory
-    [self.dataService fetchCatagoriesSuccess: ^(NSArray *catagories) {
+    [self.dataService fetchCatagories: ^(NSArray *catagories) {
         self.catagories = catagories;
 
         __block float totalAmount = 0;
 
         for (Catagory *catagory in self.catagories)
         {
-            [self.dataService fetchRecordsForCatagoryID: catagory.identifer success: ^(NSArray *records) {
+            [self.dataService fetchRecordsForCatagoryID: catagory.identifer
+                                              inTaxYear:self.configurationManager.getCurrentTaxYear
+                                                success: ^(NSArray *records)
+            {
+                
                 NSArray *recordsForThisCatagory = records;
 
                 // calculate the totals for each catagory from recordsForThisCatagory
@@ -153,6 +169,7 @@
                 [catagoryDetail setObject: [NSNumber numberWithFloat: totalAmountSpentOnThisCatagory] forKey: kCatagoryDetailsKeyTotalAmount];
 
                 [self.catagoryDetails setObject: catagoryDetail forKey: catagory.identifer];
+                
             } failure: ^(NSString *reason) {
                 // shouldn't happen
             }];
@@ -195,7 +212,7 @@
     [AlertDialogsProvider showWorkInProgressDialog];
 }
 
-- (IBAction) editProfilePressed: (UIButton *) sender
+- (void) editProfilePressed: (UIButton *) sender
 {
     [AlertDialogsProvider showWorkInProgressDialog];
 }
@@ -286,7 +303,11 @@
     // get the last 5 recent uploads
     if (self.currentlySelectedCatagory)
     {
-        [self.dataService fetchLatestNthCatagoryInfosforCatagory: self.currentlySelectedCatagory.identifer forNth: 5 success:^(NSArray *catagoryInfos) {
+        [self.dataService fetchLatestNthCatagoryInfosforCatagory: self.currentlySelectedCatagory.identifer
+                                                          forNth: 5
+                                                       inTaxYear: self.configurationManager.getCurrentTaxYear
+                                                         success:^(NSArray *catagoryInfos)
+        {
             DLog(@"%@", catagoryInfos);
             self.catagoryInfosToShow = catagoryInfos;
 
@@ -321,7 +342,12 @@
     NSDate *mondayOfPreviousWeek = [Utils dateForMondayOfPreviousWeek];
     DLog(@"Monday of previous week is %@", mondayOfPreviousWeek.description);
 
-    [self.dataService fetchCatagoryInfoFromDate: mondayOfPreviousWeek toDate: mondayOfThisWeek forCatagory: self.currentlySelectedCatagory.identifer success:^(NSArray *catagoryInfos) {
+    [self.dataService fetchCatagoryInfoFromDate: mondayOfPreviousWeek
+                                         toDate: mondayOfThisWeek
+                                      inTaxYear: self.configurationManager.getCurrentTaxYear
+                                    forCatagory: self.currentlySelectedCatagory.identifer
+                                        success: ^(NSArray *catagoryInfos)
+    {
         DLog(@"%@", catagoryInfos);
         self.catagoryInfosToShow = catagoryInfos;
 
@@ -356,7 +382,12 @@
     NSDate *firstDayOfPreviousMonth = [Utils dateForFirstDayOfPreviousMonth];
     DLog(@"First Day Of Previous Month is %@", firstDayOfPreviousMonth.description);
 
-    [self.dataService fetchCatagoryInfoFromDate: firstDayOfPreviousMonth toDate: firstDayOfThisMonth forCatagory: self.currentlySelectedCatagory.identifer success:^(NSArray *catagoryInfos) {
+    [self.dataService fetchCatagoryInfoFromDate: firstDayOfPreviousMonth
+                                         toDate: firstDayOfThisMonth
+                                      inTaxYear: self.configurationManager.getCurrentTaxYear
+                                    forCatagory: self.currentlySelectedCatagory.identifer
+                                        success:^(NSArray *catagoryInfos)
+    {
         DLog(@"%@", catagoryInfos);
         self.catagoryInfosToShow = catagoryInfos;
 
@@ -386,11 +417,17 @@
     self.viewAllSelected = YES;
 
     // all receipts from this catagory
-    [self.dataService fetchLatestNthCatagoryInfosforCatagory: self.currentlySelectedCatagory.identifer forNth: -1 success:^(NSArray *catagoryInfos) {
+    [self.dataService fetchLatestNthCatagoryInfosforCatagory: self.currentlySelectedCatagory.identifer
+                                                      forNth: -1
+                                                   inTaxYear: self.configurationManager.getCurrentTaxYear
+                                                     success:^(NSArray *catagoryInfos)
+    {
+        
         DLog(@"%@", catagoryInfos);
         self.catagoryInfosToShow = catagoryInfos;
 
         [self.accountTableView reloadData];
+        
     } failure:^(NSString *reason) {
         // should not happen
     }];

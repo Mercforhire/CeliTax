@@ -17,4 +17,6 @@
 
 @property (nonatomic, strong) NSMutableArray *receipts;
 
+@property (nonatomic, strong) NSMutableArray *taxYears;
+
 @end

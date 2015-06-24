@@ -57,7 +57,7 @@
 
 - (AllColorsPickerViewController *) createAllColorsPickerViewController;
 
-- (CameraViewController *) createCameraOverlayViewController;
+- (CameraViewController *) createCameraOverlayViewControllerWithExistingReceiptID:(NSString *) receiptID;
 
 - (SendReceiptsToViewController *) createSendReceiptsToViewController;
 

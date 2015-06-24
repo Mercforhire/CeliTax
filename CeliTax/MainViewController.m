@@ -23,6 +23,7 @@
 #import "ReceiptBreakDownViewController.h"
 #import "TriangleView.h"
 #import "LoginViewController.h"
+#import "ConfigurationManager.h"
 
 #define kRecentUploadTableRowHeight         40
 
@@ -33,26 +34,25 @@ typedef enum : NSUInteger
     SectionCount,
 } SectionTitles;
 
-@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate, CameraControllerDelegate>
+@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *recentUploadsTable;
 @property (weak, nonatomic) IBOutlet UIButton *cameraButton;
 @property (weak, nonatomic) IBOutlet UILabel *taxYearLabel;
+@property (weak, nonatomic) IBOutlet TriangleView *taxYearTriangle;
+
 @property (nonatomic, strong) WYPopoverController *selectionPopover;
 @property (nonatomic, strong) SelectionsPickerViewController *taxYearPickerViewController;
 
 // Dictionaries of keys: kReceiptIDKey,kColorKey,kCatagoryNameKey,kCatagoryTotalAmountKey
 @property (nonatomic, strong) NSArray *receiptInfos;
 
-// NSNumbers of the years of all receipts timestamps, sorted from most recent to oldest
-@property (nonatomic, strong) NSArray *yearsRange;
+// sorted from most recent to oldest
+@property (nonatomic, strong) NSArray *taxYears;
 
 @property (nonatomic, strong) NSNumber *currentlySelectedYear;
 
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
-
-// open up the ReceiptCheckingViewController for the most recent receipt
-@property (nonatomic) BOOL shouldJumpToMostRecentReceipt;
 
 @end
 
@@ -109,26 +109,24 @@ typedef enum : NSUInteger
     UITapGestureRecognizer *taxYearPressedTap =
         [[UITapGestureRecognizer alloc] initWithTarget: self
                                                 action: @selector(taxYearPressed)];
+    UITapGestureRecognizer *taxYearPressedTap2 =
+    [[UITapGestureRecognizer alloc] initWithTarget: self
+                                            action: @selector(taxYearPressed)];
     [self.taxYearLabel addGestureRecognizer: taxYearPressedTap];
+    [self.taxYearTriangle addGestureRecognizer: taxYearPressedTap2];
 
-    [self.dataService fetchReceiptsYearsRange: ^(NSArray *yearsRange)
+    self.taxYears = [self.dataService fetchTaxYears];
+    
+    NSMutableArray *yearSelections = [NSMutableArray new];
+    
+    for (NSNumber *year in self.taxYears )
     {
-        self.yearsRange = yearsRange;
-        self.currentlySelectedYear = [self.yearsRange firstObject];
-
-        NSMutableArray *yearSelections = [NSMutableArray new];
-
-        for (NSNumber *year in yearsRange)
-        {
-            [yearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", (long)year.integerValue]];
-        }
-
-        self.taxYearPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: yearSelections];
-        self.selectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.taxYearPickerViewController];
-        [self.taxYearPickerViewController setDelegate: self];
-    }                                 failure: ^(NSString *reason) {
-        // should not happen
-    }];
+        [yearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", (long)year.integerValue]];
+    }
+    
+    self.taxYearPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: yearSelections];
+    self.selectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.taxYearPickerViewController];
+    [self.taxYearPickerViewController setDelegate: self];
 }
 
 - (void) reloadReceiptInfo
@@ -150,6 +148,10 @@ typedef enum : NSUInteger
     _currentlySelectedYear = currentlySelectedYear;
 
     [self setYearLabelToBe: self.currentlySelectedYear.integerValue];
+    
+    [self.configurationManager setCurrentTaxYear:_currentlySelectedYear.integerValue];
+    
+    self.taxYearPickerViewController.highlightedSelectionIndex = [self.taxYears indexOfObject:self.currentlySelectedYear];
 
     [self reloadReceiptInfo];
 }
@@ -158,18 +160,17 @@ typedef enum : NSUInteger
 {
     [super viewWillAppear: animated];
 
-    [self reloadReceiptInfo];
-
-    if (self.shouldJumpToMostRecentReceipt)
+    //if there is no selected tax year saved, select the newest year by default
+    if (![self.configurationManager getCurrentTaxYear])
     {
-        self.shouldJumpToMostRecentReceipt = NO;
-
-        NSDictionary *uploadInfoDictionaryForMostRecentUpload = self.receiptInfos [0];
-
-        NSString *receiptIDForMostRecentUpload = [uploadInfoDictionaryForMostRecentUpload objectForKey: kReceiptIDKey];
-
-        [self.navigationController pushViewController: [self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID:receiptIDForMostRecentUpload cameFromReceiptBreakDownViewController:NO] animated: YES];
+        self.currentlySelectedYear = [self.taxYears firstObject];
     }
+    else
+    {
+        self.currentlySelectedYear = [NSNumber numberWithInteger:[self.configurationManager getCurrentTaxYear]];
+    }
+    
+    [self reloadReceiptInfo];
 }
 
 - (void) taxYearPressed
@@ -185,8 +186,7 @@ typedef enum : NSUInteger
 
 - (IBAction) cameraButtonPressed: (UIButton *) sender
 {
-    CameraViewController *cameraVC = [self.viewControllerFactory createCameraOverlayViewController];
-    cameraVC.delegate = self;
+    CameraViewController *cameraVC = [self.viewControllerFactory createCameraOverlayViewControllerWithExistingReceiptID:nil];
 
     [self.navigationController pushViewController: cameraVC animated: YES];
 }
@@ -206,19 +206,13 @@ typedef enum : NSUInteger
     [super selectedMenuIndex: RootViewControllerVault];
 }
 
-#pragma mark - CameraControllerDelegate
-- (void) hasJustCreatedNewReceipt
-{
-    self.shouldJumpToMostRecentReceipt = YES;
-}
-
 #pragma mark - SelectionsPickerPopUpDelegate
 
 - (void) selectedSelectionAtIndex: (NSInteger) index fromPopUp:(SelectionsPickerViewController *)popUpController
 {
     [self.selectionPopover dismissPopoverAnimated: YES];
 
-    self.currentlySelectedYear = self.yearsRange [index];
+    self.currentlySelectedYear = self.taxYears[index];
 
     self.taxYearPickerViewController.highlightedSelectionIndex = index;
 }
@@ -275,11 +269,26 @@ typedef enum : NSUInteger
 {
     NSDictionary *uploadInfoDictionary = self.receiptInfos [indexPath.row];
 
-    DLog(@"Receipt ID %@ clicked", [uploadInfoDictionary objectForKey: kReceiptIDKey]);
-
     NSString *clickedReceiptID = [uploadInfoDictionary objectForKey: kReceiptIDKey];
+    
+    //push to Receipt Checking view directly if this receipt has no items
+    [self.dataService fetchRecordsForReceiptID: clickedReceiptID
+                                       success: ^(NSArray *records)
+     {
+         if (!records || records.count == 0)
+         {
+             // push ReceiptCheckingViewController
+             [self.navigationController pushViewController: [self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID: clickedReceiptID cameFromReceiptBreakDownViewController: YES] animated: YES];
+         }
+         else
+         {
+             [self.navigationController pushViewController: [self.viewControllerFactory createReceiptBreakDownViewControllerForReceiptID: clickedReceiptID cameFromReceiptCheckingViewController: NO] animated: YES];
+         }
+         
+     } failure: ^(NSString *reason) {
+         // failure
+     }];
 
-    [self.navigationController pushViewController: [self.viewControllerFactory createReceiptBreakDownViewControllerForReceiptID: clickedReceiptID cameFromReceiptCheckingViewController: NO] animated: YES];
 }
 
 @end

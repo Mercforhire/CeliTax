@@ -215,12 +215,14 @@
     return allColorsPickerViewController;
 }
 
-- (CameraViewController *) createCameraOverlayViewController
+- (CameraViewController *) createCameraOverlayViewControllerWithExistingReceiptID:(NSString *) receiptID
 {
     CameraViewController *cameraOverlayViewController = [[CameraViewController alloc] initWithNibName: @"CameraViewController" bundle: nil];
 
     [self initializeViewController: cameraOverlayViewController];
+    cameraOverlayViewController.dataService = self.dataService;
     cameraOverlayViewController.manipulationService = self.manipulationService;
+    cameraOverlayViewController.existingReceiptID = receiptID;
 
     return cameraOverlayViewController;
 }

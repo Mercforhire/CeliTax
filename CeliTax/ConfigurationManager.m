@@ -8,6 +8,8 @@
 
 #import "ConfigurationManager.h"
 
+#define kKeyTaxYear                 @"TaxYear"
+
 @interface ConfigurationManager ()
 
 @property (nonatomic, strong) NSMutableDictionary *settings;
@@ -33,6 +35,25 @@
 -(void)setNewSettings:(NSDictionary *)settings
 {
     
+}
+
+-(NSInteger)getCurrentTaxYear
+{
+    NSNumber *taxYear = [self.settings objectForKey:kKeyTaxYear];
+    
+    if (taxYear)
+    {
+        return [taxYear integerValue];
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+-(void)setCurrentTaxYear:(NSInteger)taxYear
+{
+    [self.settings setObject:[NSNumber numberWithInteger:taxYear] forKey:kKeyTaxYear];
 }
 
 @end

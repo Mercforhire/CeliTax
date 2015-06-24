@@ -22,4 +22,6 @@
 
 -(NSMutableArray *)getReceipts;
 
+-(NSMutableArray *)getTaxYears;
+
 @end

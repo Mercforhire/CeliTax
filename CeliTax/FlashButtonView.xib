@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FlashButtonView">
+            <connections>
+                <outlet property="flashButton" destination="WGH-gu-Xlb" id="2cR-KF-KTp"/>
+                <outlet property="lightningImageView" destination="l9B-dV-pdz" id="TaV-ZZ-J3T"/>
+                <outlet property="onOrOffLabel" destination="WTG-iu-Kgs" id="1zh-2c-UAo"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view opaque="NO" contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="34" height="46"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WGH-gu-Xlb">
+                    <rect key="frame" x="0.0" y="0.0" width="34" height="48"/>
+                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lightning.png" translatesAutoresizingMaskIntoConstraints="NO" id="l9B-dV-pdz">
+                    <rect key="frame" x="9.5" y="3" width="15" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="15" id="W9e-ZH-RaB"/>
+                        <constraint firstAttribute="height" constant="25" id="hMp-5E-VQE"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Off" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WTG-iu-Kgs">
+                    <rect key="frame" x="9.5" y="30" width="15" height="12"/>
+                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="WGH-gu-Xlb" secondAttribute="trailing" id="6Nh-Jf-V6O"/>
+                <constraint firstItem="WTG-iu-Kgs" firstAttribute="top" secondItem="l9B-dV-pdz" secondAttribute="bottom" constant="2" id="CCJ-ek-qA9"/>
+                <constraint firstAttribute="bottom" secondItem="WGH-gu-Xlb" secondAttribute="bottom" id="PEh-tT-Cm1"/>
+                <constraint firstItem="WGH-gu-Xlb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="S3B-XC-wju"/>
+                <constraint firstItem="l9B-dV-pdz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="3" id="VXA-Rm-EJK"/>
+                <constraint firstItem="WTG-iu-Kgs" firstAttribute="centerX" secondItem="l9B-dV-pdz" secondAttribute="centerX" id="WlR-Hu-cRe"/>
+                <constraint firstItem="WGH-gu-Xlb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="o38-JF-Il1"/>
+                <constraint firstAttribute="centerX" secondItem="l9B-dV-pdz" secondAttribute="centerX" id="rFu-YJ-6tR"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="377" y="90"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="lightning.png" width="110" height="280"/>
+    </resources>
+</document>

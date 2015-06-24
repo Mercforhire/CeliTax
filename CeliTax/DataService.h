@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class CatagoriesDAO, Receipt, RecordsDAO, ReceiptsDAO, Record, Catagory;
+@class CatagoriesDAO, Receipt, RecordsDAO, ReceiptsDAO, TaxYearsDAO, Record, Catagory;
 
 @protocol DataService <NSObject>
 
@@ -42,20 +42,22 @@ typedef void (^FetchCatagoryInfoFailureBlock)(NSString *reason);
 @property (nonatomic, strong) CatagoriesDAO *catagoriesDAO;
 @property (nonatomic, strong) RecordsDAO *recordsDAO;
 @property (nonatomic, strong) ReceiptsDAO *receiptsDAO;
+@property (nonatomic, strong) TaxYearsDAO *taxYearsDAO;
 
 - (void) loadDemoData;
 
-- (void) fetchCatagoriesSuccess: (FetchCatagoriesSuccessBlock) success
-                        failure: (FetchCatagoriesFailureBlock) failure;
+- (void) fetchCatagories: (FetchCatagoriesSuccessBlock) success
+                 failure: (FetchCatagoriesFailureBlock) failure;
 
 - (void) fetchCatagory: (NSString *) catagoryID
-               Success: (FetchCatagorySuccessBlock) success
+               success: (FetchCatagorySuccessBlock) success
                failure: (FetchCatagoryFailureBlock) failure;
 
 - (void) fetchAllRecordsSuccess: (FetchRecordsSuccessBlock) success
                         failure: (FetchRecordsFailureBlock) failure;
 
 - (void) fetchRecordsForCatagoryID: (NSString *) catagoryID
+                         inTaxYear: (NSInteger) taxYear
                            success: (FetchRecordsSuccessBlock) success
                            failure: (FetchRecordsFailureBlock) failure;
 
@@ -67,8 +69,9 @@ typedef void (^FetchCatagoryInfoFailureBlock)(NSString *reason);
                   success: (FetchRecordSuccessBlock) success
                   failure: (FetchRecordFailureBlock) failure;
 
-- (void) fetchReceiptsSuccess: (FetchReceiptsSuccessBlock) success
-                      failure: (FetchReceiptsFailureBlock) failure;
+- (void) fetchReceiptsInTaxYear: (NSInteger) taxYear
+                        success: (FetchReceiptsSuccessBlock) success
+                        failure: (FetchReceiptsFailureBlock) failure;
 
 #define kReceiptIDKey       @"ReceiptID"
 #define kColorsKey          @"Colors"
@@ -82,6 +85,7 @@ typedef void (^FetchCatagoryInfoFailureBlock)(NSString *reason);
 
 - (void) fetchReceiptInfoFromDate: (NSDate *) fromDate
                            toDate: (NSDate *) toDate
+                        inTaxYear: (NSInteger) taxYear
                           success: (FetchReceiptInfoSuccessBlock) success
                           failure: (FetchReceiptInfoFailureBlock) failure;
 
@@ -89,8 +93,8 @@ typedef void (^FetchCatagoryInfoFailureBlock)(NSString *reason);
                           success: (FetchReceiptSuccessBlock) success
                           failure: (FetchReceiptFailureBlock) failure;
 
-- (void) fetchReceiptsYearsRange: (FetchReceiptsYearsRangeSuccessBlock) success
-                         failure: (FetchReceiptsYearsRangeFailureBlock) failure;
+//- (void) fetchReceiptsYearsRange: (FetchReceiptsYearsRangeSuccessBlock) success
+//                         failure: (FetchReceiptsYearsRangeFailureBlock) failure;
 
 
 #define kReceiptTimeKey          @"ReceiptTime"
@@ -98,13 +102,18 @@ typedef void (^FetchCatagoryInfoFailureBlock)(NSString *reason);
 
 - (void) fetchCatagoryInfoFromDate: (NSDate *) fromDate
                             toDate: (NSDate *) toDate
+                         inTaxYear: (NSInteger) taxYear
                        forCatagory: (NSString *) catagoryID
                            success: (FetchCatagoryInfoSuccessBlock) success
                            failure: (FetchCatagoryInfoFailureBlock) failure;
 
 - (void) fetchLatestNthCatagoryInfosforCatagory: (NSString *) catagoryID
                                          forNth: (NSInteger) nTh
+                                      inTaxYear: (NSInteger) taxYear
                                         success: (FetchCatagoryInfoSuccessBlock) success
                                         failure: (FetchCatagoryInfoFailureBlock) failure;
+
+
+- (NSArray *) fetchTaxYears;
 
 @end

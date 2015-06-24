@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class CatagoriesDAO, RecordsDAO, ReceiptsDAO, Record;
+@class CatagoriesDAO, RecordsDAO, ReceiptsDAO, Record, TaxYearsDAO, Receipt;
 
 @protocol ManipulationService <NSObject>
 
@@ -31,7 +31,7 @@ typedef void (^DeleteRecordFailureBlock)(NSString *reason);
 typedef void (^ModifyRecordSuccessBlock)();
 typedef void (^ModifyRecordFailureBlock)(NSString *reason);
 
-typedef void (^AddReceiptSuccessBlock)();
+typedef void (^AddReceiptSuccessBlock)(NSString *newestReceiptID);
 typedef void (^AddReceiptFailureBlock)(NSString *reason);
 
 typedef void (^DeleteReceiptSuccessBlock)();
@@ -40,6 +40,7 @@ typedef void (^DeleteReceiptFailureBlock)(NSString *reason);
 @property (nonatomic, strong) CatagoriesDAO *catagoriesDAO;
 @property (nonatomic, strong) RecordsDAO *recordsDAO;
 @property (nonatomic, strong) ReceiptsDAO *receiptsDAO;
+@property (nonatomic, strong) TaxYearsDAO *taxYearsDAO;
 
 - (void) addCatagoryForName: (NSString *) catagoryName
                    forColor: (UIColor *) catagoryColor
@@ -63,6 +64,10 @@ typedef void (^DeleteReceiptFailureBlock)(NSString *reason);
                                 success: (ModifyCatagorySuccessBlock) success
                                 failure: (ModifyCatagoryFailureBlock) failure;
 
+
+
+
+
 - (void) addRecordForCatagoryID: (NSString *) catagoryID
                    forReceiptID: (NSString *) receiptID
                     forQuantity: (NSInteger) quantity
@@ -78,12 +83,29 @@ typedef void (^DeleteReceiptFailureBlock)(NSString *reason);
           WithSuccess: (ModifyRecordSuccessBlock) success
            andFailure: (ModifyRecordFailureBlock) failure;
 
+
+
+
+
+
 - (void) addReceiptForFilenames: (NSArray *) filenames
+                     andTaxYear: (NSInteger) taxYear
                         success: (AddReceiptSuccessBlock) success
                         failure: (AddReceiptFailureBlock) failure;
+
+- (BOOL) modifyReceipt:(Receipt *)receipt;
 
 - (void) deleteReceiptAndAllItsRecords: (NSString *) receiptID
                                success: (DeleteReceiptSuccessBlock) success
                                failure: (DeleteReceiptFailureBlock) failure;
+
+
+
+
+
+
+- (BOOL) addTaxYear: (NSInteger) taxYear;
+
+- (BOOL) removeTaxYear: (NSInteger) taxYear;
 
 @end

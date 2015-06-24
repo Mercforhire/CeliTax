@@ -9,29 +9,33 @@
 #import "Receipt.h"
 #import "RecordsDAO.h"
 
-#define kKeyIdentiferKey        @"Identifer"
-#define kKeyFileNamesKey        @"FileNames"
-#define kKeyDateCreatedKey      @"DateCreated"
+#define kKeyIdentifer       @"Identifer"
+#define kKeyFileNames       @"FileNames"
+#define kKeyDateCreated     @"DateCreated"
+#define kKeyTaxYear         @"TaxYear"
 
 @implementation Receipt
 
 - (void) encodeWithCoder: (NSCoder *) coder
 {
-    [coder encodeObject: self.identifer forKey: kKeyIdentiferKey];
-    [coder encodeObject: self.fileNames forKey: kKeyFileNamesKey];
-    [coder encodeObject: self.dateCreated forKey: kKeyDateCreatedKey];
+    [coder encodeObject: self.identifer forKey: kKeyIdentifer];
+    [coder encodeObject: self.fileNames forKey: kKeyFileNames];
+    [coder encodeObject: self.dateCreated forKey: kKeyDateCreated];
+    [coder encodeInteger: self.taxYear forKey: kKeyTaxYear];
 }
 
 - (id) initWithCoder: (NSCoder *) coder
 {
     self = [self init];
 
-    self.identifer = [coder decodeObjectForKey: kKeyIdentiferKey];
+    self.identifer = [coder decodeObjectForKey: kKeyIdentifer];
 
-    NSArray *fileNames = [coder decodeObjectForKey: kKeyFileNamesKey];
+    NSArray *fileNames = [coder decodeObjectForKey: kKeyFileNames];
     self.fileNames = [[NSMutableArray alloc] initWithArray: fileNames copyItems: NO];
 
-    self.dateCreated = [coder decodeObjectForKey: kKeyDateCreatedKey];
+    self.dateCreated = [coder decodeObjectForKey: kKeyDateCreated];
+    
+    self.taxYear = [coder decodeIntegerForKey: kKeyTaxYear];
 
     return self;
 }
@@ -45,6 +49,7 @@
         copy.identifer = [self.identifer copy];
         copy.dateCreated = [self.dateCreated copy];
         copy.fileNames = [self.fileNames copy];
+        copy.taxYear = self.taxYear;
     }
 
     return copy;

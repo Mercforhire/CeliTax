@@ -18,7 +18,7 @@
     self.leftBorder = YES;
     self.rightBorder = YES;
     
-    self.borderThickness = 1.0f;
+    self.borderThickness = 3.0f;
 }
 
 - (id)initWithFrame:(CGRect)frame;
@@ -77,6 +77,13 @@
     [self setNeedsDisplay];
 }
 
+-(void)setMargin:(float)margin
+{
+    _margin = margin;
+    
+    [self setNeedsDisplay];
+}
+
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -88,9 +95,9 @@
     // Drawing code
     if (self.leftBorder)
     {
-        CGContextMoveToPoint(context, 0.0f, 0.0f); //start at this point
+        CGContextMoveToPoint(context, self.margin, self.margin); //start at this point
         
-        CGContextAddLineToPoint(context, 0, self.frame.size.height); //draw to this point
+        CGContextAddLineToPoint(context, self.margin, self.frame.size.height - self.margin); //draw to this point
         
         // and now draw the Path!
         CGContextStrokePath(context);
@@ -98,9 +105,9 @@
     
     if (self.rightBorder)
     {
-        CGContextMoveToPoint(context, self.frame.size.width, 0.0f); //start at this point
+        CGContextMoveToPoint(context, self.frame.size.width - self.margin, self.margin); //start at this point
         
-        CGContextAddLineToPoint(context, self.frame.size.width, self.frame.size.height); //draw to this point
+        CGContextAddLineToPoint(context, self.frame.size.width - self.margin, self.frame.size.height - self.margin); //draw to this point
         
         // and now draw the Path!
         CGContextStrokePath(context);
@@ -108,9 +115,9 @@
     
     if (self.topBorder)
     {
-        CGContextMoveToPoint(context, 0.0f, 0.0f); //start at this point
+        CGContextMoveToPoint(context, self.margin, self.margin); //start at this point
         
-        CGContextAddLineToPoint(context, self.frame.size.width, 0); //draw to this point
+        CGContextAddLineToPoint(context, self.frame.size.width - self.margin, self.margin); //draw to this point
         
         // and now draw the Path!
         CGContextStrokePath(context);
@@ -118,9 +125,9 @@
     
     if (self.bottomBorder)
     {
-        CGContextMoveToPoint(context, 0.0f, self.frame.size.height); //start at this point
+        CGContextMoveToPoint(context, self.margin, self.frame.size.height - self.margin); //start at this point
         
-        CGContextAddLineToPoint(context, self.frame.size.width, self.frame.size.height); //draw to this point
+        CGContextAddLineToPoint(context, self.frame.size.width - self.margin, self.frame.size.height - self.margin); //draw to this point
         
         // and now draw the Path!
         CGContextStrokePath(context);

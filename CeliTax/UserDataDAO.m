@@ -40,6 +40,11 @@
     return self.userData.receipts;
 }
 
+-(NSMutableArray *)getTaxYears
+{
+    return self.userData.taxYears;
+}
+
 - (NSString *) generateUserDataFileName
 {
     if (!self.userKey)

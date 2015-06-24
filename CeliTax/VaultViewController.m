@@ -17,6 +17,10 @@
 #import "M13Checkbox.h"
 #import "SendReceiptsToViewController.h"
 #import "AlertDialogsProvider.h"
+#import "ConfigurationManager.h"
+#import "NoItemsTableViewCell.h"
+#import "ReceiptBreakDownViewController.h"
+#import "ReceiptCheckingViewController.h"
 
 typedef enum : NSUInteger
 {
@@ -32,6 +36,9 @@ typedef enum : NSUInteger
 
 #define kReceiptTimeTableViewCellHeight                 40
 #define kReceiptTimeTableViewCellIdentifier             @"ReceiptTimeTableViewCell"
+
+#define kNoItemsTableViewCellHeight                     40
+#define kNoItemsTableViewCellIdentifier                 @"NoItemsTableViewCell"
 
 @interface VaultViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate, SendReceiptsViewPopUpDelegate>
 
@@ -54,8 +61,8 @@ typedef enum : NSUInteger
 @property (nonatomic) BOOL previousMonthSelected;
 @property (nonatomic) BOOL viewAllSelected;
 
-// NSNumbers of the years of all receipts timestamps, sorted from most recent to oldest
-@property (nonatomic, strong) NSArray *yearsRange;
+// sorted from most recent to oldest
+@property (nonatomic, strong) NSArray *taxYears;
 
 @property (nonatomic, strong) NSNumber *currentlySelectedYear;
 
@@ -81,9 +88,11 @@ typedef enum : NSUInteger
 
     UINib *timePeriodSelectionTableViewCell = [UINib nibWithNibName: @"TimePeriodSelectionTableViewCell" bundle: nil];
     UINib *receiptTimeTableViewCellTableViewCell = [UINib nibWithNibName: @"ReceiptTimeTableViewCell" bundle: nil];
+    UINib *noItemsTableViewCell = [UINib nibWithNibName: @"NoItemsTableViewCell" bundle: nil];
 
     [self.uploadHistoryTable registerNib: timePeriodSelectionTableViewCell forCellReuseIdentifier: kTimePeriodSelectionTableViewCellIdentifier];
     [self.uploadHistoryTable registerNib: receiptTimeTableViewCellTableViewCell forCellReuseIdentifier: kReceiptTimeTableViewCellIdentifier];
+    [self.uploadHistoryTable registerNib: noItemsTableViewCell forCellReuseIdentifier: kNoItemsTableViewCellIdentifier];
 
     self.sendReceiptsToViewController = [self.viewControllerFactory createSendReceiptsToViewController];
     self.sendReceiptsPopover = [[WYPopoverController alloc] initWithContentViewController: self.sendReceiptsToViewController];
@@ -118,26 +127,30 @@ typedef enum : NSUInteger
     [self.selectAllCheckBox addTarget: self action: @selector(selectAllCheckChangedValue:) forControlEvents: UIControlEventValueChanged];
 
     [self.sendReceiptsToViewController setDelegate: self];
-
-    [self.dataService fetchReceiptsYearsRange: ^(NSArray *yearsRange)
+    
+    self.taxYears = [self.dataService fetchTaxYears];
+    
+    NSMutableArray *yearSelections = [NSMutableArray new];
+    
+    for (NSNumber *year in self.taxYears)
     {
-        self.yearsRange = yearsRange;
-        self.currentlySelectedYear = [self.yearsRange firstObject];
+        [yearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", (long)year.integerValue]];
+    }
 
-        NSMutableArray *yearSelections = [NSMutableArray new];
-
-        for (NSNumber *year in yearsRange)
-        {
-            [yearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", (long)year.integerValue]];
-        }
-
-        self.taxYearPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: yearSelections];
-        self.taxYearPickerViewController.highlightedSelectionIndex = -1;
-        self.selectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.taxYearPickerViewController];
-        [self.taxYearPickerViewController setDelegate: self];
-    }                                 failure: ^(NSString *reason) {
-        // should not happen
-    }];
+    self.taxYearPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: yearSelections];
+    self.taxYearPickerViewController.highlightedSelectionIndex = -1;
+    self.selectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.taxYearPickerViewController];
+    [self.taxYearPickerViewController setDelegate: self];
+    
+    //if there is no selected tax year saved, select the newest year by default
+    if (![self.configurationManager getCurrentTaxYear])
+    {
+        self.currentlySelectedYear = [self.taxYears firstObject];
+    }
+    else
+    {
+        self.currentlySelectedYear = [NSNumber numberWithInteger:[self.configurationManager getCurrentTaxYear]];
+    }
 }
 
 - (IBAction) downloadReceiptsPressed: (UIButton *) sender
@@ -174,39 +187,46 @@ typedef enum : NSUInteger
     [self.uploadHistoryTable reloadData];
 }
 
+-(NSDictionary *)getReceiptInfoFromTag:(NSInteger)tag
+{
+    // get the Receipt object refered to by the checkBox's tag
+    
+    NSInteger timePeriodSelection = tag / 10000;
+    
+    NSInteger receiptIndex = tag % 10000;
+    
+    NSDictionary *receiptInfo;
+    
+    switch (timePeriodSelection)
+    {
+        case TimePeriodRecent:
+            receiptInfo = [self.recentUploadReceipts objectAtIndex: receiptIndex];
+            break;
+            
+        case TimePeriodPreviousWeek:
+            receiptInfo = [self.previousWeekReceipts objectAtIndex: receiptIndex];
+            break;
+            
+        case TimePeriodPreviousMonth:
+            receiptInfo = [self.previousMonthReceipts objectAtIndex: receiptIndex];
+            break;
+            
+        case TimePeriodViewAll:
+            receiptInfo = [self.viewAllReceipts objectAtIndex: receiptIndex];
+            break;
+            
+        default:
+            break;
+    }
+    
+    return receiptInfo;
+}
+
 - (void) singleReceiptCheckChangedValue: (M13Checkbox *) checkBox
 {
     DLog(@"Checkbox of tag %ld Value changed to %ld", (long)checkBox.tag, (long)checkBox.checkState);
 
-    // get the Receipt object refered to by the checkBox's tag
-
-    NSInteger timePeriodSelection = checkBox.tag / 10000;
-
-    NSInteger receiptIndex = checkBox.tag % 10000;
-
-    NSDictionary *thisReceiptInfo;
-
-    switch (timePeriodSelection)
-    {
-        case TimePeriodRecent:
-            thisReceiptInfo = [self.recentUploadReceipts objectAtIndex: receiptIndex];
-            break;
-
-        case TimePeriodPreviousWeek:
-            thisReceiptInfo = [self.previousWeekReceipts objectAtIndex: receiptIndex];
-            break;
-
-        case TimePeriodPreviousMonth:
-            thisReceiptInfo = [self.previousMonthReceipts objectAtIndex: receiptIndex];
-            break;
-
-        case TimePeriodViewAll:
-            thisReceiptInfo = [self.viewAllReceipts objectAtIndex: receiptIndex];
-            break;
-
-        default:
-            break;
-    }
+    NSDictionary *thisReceiptInfo = [self getReceiptInfoFromTag:checkBox.tag];
 
     NSString *receiptID = [thisReceiptInfo objectForKeyedSubscript: kReceiptIDKey];
 
@@ -236,6 +256,31 @@ typedef enum : NSUInteger
     [self.selectionPopover presentPopoverFromRect: self.taxYearLabel.frame inView: self.view permittedArrowDirections: WYPopoverArrowDirectionUp animated: YES];
 }
 
+-(void)receiptDetailsPressed:(UIButton *)sender
+{
+    NSDictionary *thisReceiptInfo = [self getReceiptInfoFromTag:sender.tag];
+    
+    NSString *receiptID = [thisReceiptInfo objectForKeyedSubscript: kReceiptIDKey];
+    
+    //push to Receipt Checking view directly if this receipt has no items
+    [self.dataService fetchRecordsForReceiptID: receiptID
+                                       success: ^(NSArray *records)
+     {
+         if (!records || records.count == 0)
+         {
+             // push ReceiptCheckingViewController
+             [self.navigationController pushViewController: [self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID: receiptID cameFromReceiptBreakDownViewController: YES] animated: YES];
+         }
+         else
+         {
+             [self.navigationController pushViewController: [self.viewControllerFactory createReceiptBreakDownViewControllerForReceiptID: receiptID cameFromReceiptCheckingViewController: NO] animated: YES];
+         }
+         
+     } failure: ^(NSString *reason) {
+         // failure
+     }];
+}
+
 - (void) setYearLabelToBe: (NSInteger) year
 {
     [self.taxYearLabel setText: [NSString stringWithFormat: @"%ld Tax Year", (long)year]];
@@ -247,7 +292,25 @@ typedef enum : NSUInteger
 
     [self setYearLabelToBe: self.currentlySelectedYear.integerValue];
 
-    // TODO: do some receipt loading operation here
+     [self.configurationManager setCurrentTaxYear:_currentlySelectedYear.integerValue];
+    
+    self.taxYearPickerViewController.highlightedSelectionIndex = [self.taxYears indexOfObject:self.currentlySelectedYear];
+    
+    //reset the self.uploadHistoryTable table
+    [self.selectedReceipts removeAllObjects];
+    
+    self.recentUploadReceipts = nil;
+    self.previousWeekReceipts = nil;
+    self.previousMonthReceipts = nil;
+    self.viewAllReceipts = nil;
+    
+    self.recentUploadSelected = NO;
+    self.previousWeekSelected = NO;
+    self.previousMonthSelected = NO;
+    self.viewAllSelected = NO;
+    
+    [self.selectAllCheckBox setCheckState:M13CheckboxStateUnchecked];
+    [self selectAllCheckChangedValue:self.selectAllCheckBox];
 }
 
 #pragma mark - SelectionsPickerPopUpDelegate
@@ -265,7 +328,7 @@ typedef enum : NSUInteger
 {
     [self.selectionPopover dismissPopoverAnimated: YES];
 
-    self.currentlySelectedYear = self.yearsRange [index];
+    self.currentlySelectedYear = self.taxYears[index];
 }
 
 #pragma mark - UITableview DataSource
@@ -283,7 +346,15 @@ typedef enum : NSUInteger
 
             if (self.recentUploadSelected)
             {
-                return (1 + self.recentUploadReceipts.count);
+                if (self.recentUploadReceipts.count)
+                {
+                    return (1 + self.recentUploadReceipts.count);
+                }
+                else
+                {
+                    return 2;
+                }
+                
             }
 
             break;
@@ -292,7 +363,14 @@ typedef enum : NSUInteger
 
             if (self.previousWeekSelected)
             {
-                return (1 + self.previousWeekReceipts.count);
+                if (self.previousWeekReceipts.count)
+                {
+                    return (1 + self.previousWeekReceipts.count);
+                }
+                else
+                {
+                    return 2;
+                }
             }
 
             break;
@@ -301,7 +379,14 @@ typedef enum : NSUInteger
 
             if (self.previousMonthSelected)
             {
-                return (1 + self.previousMonthReceipts.count);
+                if (self.previousMonthReceipts.count)
+                {
+                    return (1 + self.previousMonthReceipts.count);
+                }
+                else
+                {
+                    return 2;
+                }
             }
 
             break;
@@ -310,7 +395,14 @@ typedef enum : NSUInteger
 
             if (self.viewAllSelected)
             {
-                return (1 + self.viewAllReceipts.count);
+                if (self.viewAllReceipts.count)
+                {
+                    return (1 + self.viewAllReceipts.count);
+                }
+                else
+                {
+                    return 2;
+                }
             }
 
             break;
@@ -339,18 +431,58 @@ typedef enum : NSUInteger
         {
             case TimePeriodRecent:
                 [cell.periodLabel setText: @"Recent Uploads"];
+                
+                if (self.recentUploadSelected)
+                {
+                    [cell.triangle setGreenArrowUp];
+                }
+                else
+                {
+                    [cell.triangle setGreenArrowDown];
+                }
+                
                 break;
 
             case TimePeriodPreviousWeek:
                 [cell.periodLabel setText: @"Previous Week"];
+                
+                if (self.previousWeekSelected)
+                {
+                    [cell.triangle setGreenArrowUp];
+                }
+                else
+                {
+                    [cell.triangle setGreenArrowDown];
+                }
+                
                 break;
 
             case TimePeriodPreviousMonth:
                 [cell.periodLabel setText: @"Previous Month"];
+                
+                if (self.previousMonthSelected)
+                {
+                    [cell.triangle setGreenArrowUp];
+                }
+                else
+                {
+                    [cell.triangle setGreenArrowDown];
+                }
+                
                 break;
 
             case TimePeriodViewAll:
                 [cell.periodLabel setText: @"View All"];
+                
+                if (self.viewAllSelected)
+                {
+                    [cell.triangle setGreenArrowUp];
+                }
+                else
+                {
+                    [cell.triangle setGreenArrowDown];
+                }
+                
                 break;
 
             default:
@@ -359,7 +491,7 @@ typedef enum : NSUInteger
 
         return cell;
     }
-    // display a kReceiptTimeTableViewCellIdentifier
+    // display a ReceiptTimeTableViewCell or NoItemsTableViewCell
     else
     {
         NSDictionary *thisReceiptInfo;
@@ -369,63 +501,97 @@ typedef enum : NSUInteger
         switch (indexPath.section)
         {
             case TimePeriodRecent:
-                thisReceiptInfo = [self.recentUploadReceipts objectAtIndex: indexPath.row - 1];
+                if (self.recentUploadReceipts.count)
+                {
+                    thisReceiptInfo = [self.recentUploadReceipts objectAtIndex: indexPath.row - 1];
+                }
                 break;
 
             case TimePeriodPreviousWeek:
-                thisReceiptInfo = [self.previousWeekReceipts objectAtIndex: indexPath.row - 1];
+                if (self.previousWeekReceipts.count)
+                {
+                    thisReceiptInfo = [self.previousWeekReceipts objectAtIndex: indexPath.row - 1];
+                }
                 break;
 
             case TimePeriodPreviousMonth:
-                thisReceiptInfo = [self.previousMonthReceipts objectAtIndex: indexPath.row - 1];
+                if (self.previousMonthReceipts.count)
+                {
+                    thisReceiptInfo = [self.previousMonthReceipts objectAtIndex: indexPath.row - 1];
+
+                }
                 break;
 
             case TimePeriodViewAll:
-                thisReceiptInfo = [self.viewAllReceipts objectAtIndex: indexPath.row - 1];
+                if (self.viewAllReceipts.count)
+                {
+                    thisReceiptInfo = [self.viewAllReceipts objectAtIndex: indexPath.row - 1];
+                }
                 break;
 
             default:
                 break;
         }
-
-        static NSString *cellId2 = kReceiptTimeTableViewCellIdentifier;
-        ReceiptTimeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: cellId2];
-
-        if (cell == nil)
+        
+        if (!thisReceiptInfo)
         {
-            cell = [[ReceiptTimeTableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: cellId2];
-        }
-
-        [cell.checkBoxView.titleLabel setFont: [UIFont latoFontOfSize: 13]];
-        [cell.checkBoxView.titleLabel setTextColor: [UIColor blackColor]];
-        [cell.checkBoxView setStrokeColor: [UIColor grayColor]];
-        [cell.checkBoxView setCheckColor: self.lookAndFeel.appGreenColor];
-        [cell.checkBoxView setCheckAlignment: M13CheckboxAlignmentLeft];
-        [cell.checkBoxView setTag: (checkBoxTagOffset + indexPath.row - 1)];
-        [cell.checkBoxView addTarget: self action: @selector(singleReceiptCheckChangedValue:) forControlEvents: UIControlEventValueChanged];
-
-        NSString *receiptID = [thisReceiptInfo objectForKeyedSubscript: kReceiptIDKey];
-
-        if (self.selectAllReceipts || [self.selectedReceipts objectForKey: receiptID])
-        {
-            [cell.checkBoxView setCheckState: M13CheckboxStateChecked];
+            //show a NoItemsTableViewCell
+            static NSString *cellId3 = kNoItemsTableViewCellIdentifier;
+            
+            NoItemsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: cellId3];
+            
+            if (cell == nil)
+            {
+                cell = [[NoItemsTableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: cellId3];
+            }
+            
+            return cell;
         }
         else
         {
-            [cell.checkBoxView setCheckState: M13CheckboxStateUnchecked];
+            static NSString *cellId2 = kReceiptTimeTableViewCellIdentifier;
+            ReceiptTimeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: cellId2];
+            
+            if (cell == nil)
+            {
+                cell = [[ReceiptTimeTableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: cellId2];
+            }
+            
+            [cell.checkBoxView.titleLabel setFont: [UIFont latoFontOfSize: 13]];
+            [cell.checkBoxView.titleLabel setTextColor: [UIColor blackColor]];
+            [cell.checkBoxView setStrokeColor: [UIColor grayColor]];
+            [cell.checkBoxView setCheckColor: self.lookAndFeel.appGreenColor];
+            [cell.checkBoxView setCheckAlignment: M13CheckboxAlignmentLeft];
+            [cell.checkBoxView setTag: (checkBoxTagOffset + indexPath.row - 1)];
+            [cell.checkBoxView addTarget: self action: @selector(singleReceiptCheckChangedValue:) forControlEvents: UIControlEventValueChanged];
+            
+            NSString *receiptID = [thisReceiptInfo objectForKeyedSubscript: kReceiptIDKey];
+            
+            if (self.selectAllReceipts || [self.selectedReceipts objectForKey: receiptID])
+            {
+                [cell.checkBoxView setCheckState: M13CheckboxStateChecked];
+            }
+            else
+            {
+                [cell.checkBoxView setCheckState: M13CheckboxStateUnchecked];
+            }
+            
+            NSDate *receiptDate = [thisReceiptInfo objectForKey: kUploadTimeKey];
+            
+            [self.dateFormatter setDateFormat: @"dd/MM/yyyy"];
+            
+            [cell.dateLabel setText: [self.dateFormatter stringFromDate: receiptDate]];
+            
+            [self.dateFormatter setDateFormat: @"hh:mm a"];
+            
+            [cell.timeLabel setText: [[self.dateFormatter stringFromDate: receiptDate] lowercaseString]];
+            
+            cell.detailsButton.tag = (checkBoxTagOffset + indexPath.row - 1);
+            [cell.detailsButton addTarget:self action:@selector(receiptDetailsPressed:) forControlEvents:UIControlEventTouchUpInside];
+            [self.lookAndFeel applySolidGreenButtonStyleTo:cell.detailsButton];
+            
+            return cell;
         }
-
-        NSDate *receiptDate = [thisReceiptInfo objectForKey: kUploadTimeKey];
-
-        [self.dateFormatter setDateFormat: @"dd/MM/yyyy"];
-
-        [cell.dateLabel setText: [self.dateFormatter stringFromDate: receiptDate]];
-
-        [self.dateFormatter setDateFormat: @"hh:mm a"];
-
-        [cell.timeLabel setText: [[self.dateFormatter stringFromDate: receiptDate] lowercaseString]];
-
-        return cell;
     }
 
     return nil;
@@ -455,14 +621,17 @@ typedef enum : NSUInteger
             case TimePeriodRecent:
                 period = @"Recent Uploads";
                 self.recentUploadSelected = !self.recentUploadSelected;
-
+                
                 if (!self.recentUploadReceipts)
                 {
-                    [self.dataService fetchNewestReceiptInfo : 5 inYear: [Utils currentYear] success:^(NSArray *receiptInfos) {
-                    self.recentUploadReceipts = receiptInfos;
-                } failure:^(NSString *reason) {
-                    // should not happen
-                }];
+                    [self.dataService fetchNewestReceiptInfo : 5
+                                                       inYear: self.currentlySelectedYear.integerValue
+                                                      success:^(NSArray *receiptInfos)
+                     {
+                         self.recentUploadReceipts = receiptInfos;
+                     } failure:^(NSString *reason) {
+                         // should not happen
+                     }];
                 }
 
                 break;
@@ -474,14 +643,18 @@ typedef enum : NSUInteger
                 if (!self.previousWeekReceipts)
                 {
                     NSDate *mondayOfThisWeek = [Utils dateForMondayOfThisWeek];
-
+                    
                     NSDate *mondayOfPreviousWeek = [Utils dateForMondayOfPreviousWeek];
-
-                    [self.dataService fetchReceiptInfoFromDate: mondayOfPreviousWeek toDate: mondayOfThisWeek success:^(NSArray *receiptInfos) {
-                    self.previousWeekReceipts = receiptInfos;
-                } failure:^(NSString *reason) {
-                    // should not happen
-                }];
+                    
+                    [self.dataService fetchReceiptInfoFromDate: mondayOfPreviousWeek
+                                                        toDate: mondayOfThisWeek
+                                                     inTaxYear: self.currentlySelectedYear.integerValue
+                                                       success:^(NSArray *receiptInfos)
+                     {
+                         self.previousWeekReceipts = receiptInfos;
+                     } failure:^(NSString *reason) {
+                         // should not happen
+                     }];
                 }
 
                 break;
@@ -490,34 +663,45 @@ typedef enum : NSUInteger
                 period = @"Previous Month";
                 self.previousMonthSelected = !self.previousMonthSelected;
 
-                if (!self.previousMonthReceipts)
+                if ( !self.previousMonthReceipts )
                 {
                     NSDate *firstDayOfThisMonth = [Utils dateForFirstDayOfThisMonth];
-
+                    
                     NSDate *firstDayOfPreviousMonth = [Utils dateForFirstDayOfPreviousMonth];
-
-                    [self.dataService fetchReceiptInfoFromDate: firstDayOfPreviousMonth toDate: firstDayOfThisMonth success:^(NSArray *receiptInfos) {
-                    self.previousMonthReceipts = receiptInfos;
-                } failure:^(NSString *reason) {
-                    // should not happen
-                }];
+                    
+                    [self.dataService fetchReceiptInfoFromDate: firstDayOfPreviousMonth
+                                                        toDate: firstDayOfThisMonth
+                                                     inTaxYear: self.currentlySelectedYear.integerValue
+                                                       success:^(NSArray *receiptInfos)
+                     {
+                         
+                         self.previousMonthReceipts = receiptInfos;
+                         
+                     } failure:^(NSString *reason) {
+                         // should not happen
+                     }];
                 }
-
+                
                 break;
 
             case TimePeriodViewAll:
                 period = @"View All";
                 self.viewAllSelected = !self.viewAllSelected;
-
+                
                 if (!self.viewAllReceipts)
                 {
-                    [self.dataService fetchNewestReceiptInfo: 999 inYear: [Utils currentYear] success:^(NSArray *receiptInfos) {
-                    self.viewAllReceipts = receiptInfos;
-                } failure:^(NSString *reason) {
-                    // should not happen
-                }];
+                    [self.dataService fetchNewestReceiptInfo: 999
+                                                      inYear: self.currentlySelectedYear.integerValue
+                                                     success:^(NSArray *receiptInfos)
+                     {
+                         
+                         self.viewAllReceipts = receiptInfos;
+                         
+                     } failure:^(NSString *reason) {
+                         // should not happen
+                     }];
                 }
-
+                
                 break;
 
             default:

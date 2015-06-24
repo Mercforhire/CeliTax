@@ -17,6 +17,8 @@
 
 @property (nonatomic, strong) NSDate *dateCreated;
 
+@property (nonatomic) NSInteger taxYear;
+
 - (NSArray *) fetchRecordsOfCatagory: (NSString *) catagoryID usingRecordsDAO: (RecordsDAO *) recordsDAO;
 
 @end

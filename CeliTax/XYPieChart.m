@@ -539,7 +539,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
         if (CGPathContainsPoint(path, &transform, point, 0))
         {
             [pieLayer setLineWidth: _selectedSliceStroke];
-            [pieLayer setStrokeColor: [UIColor colorWithWhite: 187.0f/255.0f alpha: 1].CGColor];
+            [pieLayer setStrokeColor: [UIColor whiteColor].CGColor];
             [pieLayer setLineJoin: kCALineJoinBevel];
             [pieLayer setZPosition: MAXFLOAT];
             selectedIndex = idx;
@@ -690,7 +690,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
 {
     SliceLayer *pieLayer = [SliceLayer layer];
     [pieLayer setZPosition: 0];
-    [pieLayer setStrokeColor: [UIColor colorWithWhite: 187.0f/255.0f alpha: 1].CGColor];
+    [pieLayer setStrokeColor: [UIColor whiteColor].CGColor];
     CATextLayer *textLayer = [CATextLayer layer];
     textLayer.contentsScale = [[UIScreen mainScreen] scale];
     CGFontRef font = nil;

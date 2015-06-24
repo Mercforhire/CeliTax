@@ -8,8 +8,12 @@
 
 #import "ReceiptScrollView.h"
 #import "ReceiptCollectionViewCell.h"
+#import "ReceiptCollectionFooterViewCell.h"
 
 NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
+NSString *ReceiptCollectionFooterViewCellIdentifier = @"ReceiptCollectionFooterViewCell";
+
+#define kReceiptCollectionFooterViewCellHeight           30
 
 @interface ReceiptScrollView () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -25,18 +29,25 @@ NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
     [collectionLayout setScrollDirection: UICollectionViewScrollDirectionVertical];
 
     CGRect frame = self.frame;
-
+    
     self.collectionView = [[UICollectionView alloc] initWithFrame: CGRectMake(0, 0, frame.size.width, frame.size.height) collectionViewLayout: collectionLayout];
     [self.collectionView setBackgroundColor: [UIColor clearColor]];
 
-    UINib *receiptCollectionViewCell = [UINib nibWithNibName: @"ReceiptCollectionViewCell" bundle: nil];
-    [self.collectionView registerNib: receiptCollectionViewCell forCellWithReuseIdentifier: ReceiptCollectionViewCellIdentifier];
-
+    UINib *receiptCollectionViewCell = [UINib nibWithNibName: @"ReceiptCollectionViewCell"
+                                                      bundle: nil];
+    [self.collectionView registerNib: receiptCollectionViewCell
+          forCellWithReuseIdentifier: ReceiptCollectionViewCellIdentifier];
+    
+    UINib *receiptCollectionFooterViewCell = [UINib nibWithNibName: @"ReceiptCollectionFooterViewCell"
+                                                      bundle: nil];
+    [self.collectionView registerNib: receiptCollectionFooterViewCell
+          forCellWithReuseIdentifier: ReceiptCollectionFooterViewCellIdentifier];
+    
     [self.collectionView setDataSource: self];
     [self.collectionView setDelegate: self];
     [self.collectionView setBounces: YES];
     [self addSubview: self.collectionView];
-
+    
     self.selectedImageIndices = [NSMutableDictionary new];
 }
 
@@ -71,64 +82,48 @@ NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
     [self.collectionView reloadData];
 }
 
-- (void) receiptChecked: (M13Checkbox *) checkBox
+-(void)setInsets:(UIEdgeInsets)insets
 {
-    DLog(@"Select All checkbox Value changed to %ld", (long)checkBox.checkState);
-
-    NSNumber *thisIndex = [NSNumber numberWithInteger: checkBox.tag];
-
-    if (checkBox.checkState == M13CheckboxStateChecked)
-    {
-        [self.selectedImageIndices setObject: @"GARBAGE" forKey: thisIndex];
-    }
-    else
-    {
-        [self.selectedImageIndices removeObjectForKey: thisIndex];
-    }
-
-    if (self.delegate)
-    {
-        [self.delegate selectedChanged];
-    }
+    _insets = insets;
+    
+    [self.collectionView setContentInset:_insets];
 }
 
 #pragma mark - From UICollectionView Delegate/Datasource
 
 - (NSInteger) collectionView: (UICollectionView *) collectionView numberOfItemsInSection: (NSInteger) section
 {
-    return self.images.count;
+    return self.images.count + 1;
 }
 
 - (UICollectionViewCell *) collectionView: (UICollectionView *) collectionView cellForItemAtIndexPath: (NSIndexPath *) indexPath
 {
-    ReceiptCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier: ReceiptCollectionViewCellIdentifier forIndexPath: indexPath];
-
-    if (!cell)
+    if (indexPath.row < self.images.count)
     {
-        cell = [[ReceiptCollectionViewCell alloc] initWithFrame: CGRectMake(0, 0, 87, 60)];
-    }
-
-    [cell.image setImage: [self.images objectAtIndex: indexPath.row]];
-
-    NSNumber *thisIndex = [NSNumber numberWithInteger: indexPath.row];
-
-    [cell.checkBox setStrokeColor: [UIColor grayColor]];
-    [cell.checkBox setTintColor:[UIColor whiteColor]];
-    [cell.checkBox setUncheckedColor:[UIColor whiteColor]];
-    [cell.checkBox setCheckColor: self.lookAndFeel.appGreenColor];
-    [cell.checkBox setTag: indexPath.row];
-    [cell.checkBox addTarget: self action: @selector(receiptChecked:) forControlEvents: UIControlEventValueChanged];
-
-    if ([self.selectedImageIndices objectForKey: thisIndex])
-    {
-        [cell.checkBox setCheckState: M13CheckboxStateChecked];
+        ReceiptCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier: ReceiptCollectionViewCellIdentifier forIndexPath: indexPath];
+        
+        if (!cell)
+        {
+            cell = [[ReceiptCollectionViewCell alloc] init];
+        }
+        
+        [cell.image setImage: [self.images objectAtIndex: indexPath.row]];
+        
+        return cell;
     }
     else
     {
-        [cell.checkBox setCheckState: M13CheckboxStateUnchecked];
+        ReceiptCollectionFooterViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier: ReceiptCollectionFooterViewCellIdentifier forIndexPath: indexPath];
+        
+        if (!cell)
+        {
+            cell = [[ReceiptCollectionFooterViewCell alloc] init];
+        }
+        
+        return cell;
     }
-
-    return cell;
+    
+    return nil;
 }
 
 - (UIEdgeInsets) collectionView: (UICollectionView *) collectionView layout: (UICollectionViewLayout *) collectionViewLayout insetForSectionAtIndex: (NSInteger) section
@@ -138,13 +133,32 @@ NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
 
 - (CGSize) collectionView: (UICollectionView *) collectionView layout: (UICollectionViewLayout *) collectionViewLayout sizeForItemAtIndexPath: (NSIndexPath *) indexPath
 {
-    UIImage *imageForThisImage  = self.images [indexPath.row];
+    if (indexPath.row < self.images.count)
+    {
+        UIImage *imageForThisImage  = self.images [indexPath.row];
+        
+        float ratioHeightVsWidth = imageForThisImage.size.height / imageForThisImage.size.width;
+        
+        float heightForThisImage = collectionView.frame.size.width * ratioHeightVsWidth;
+        
+        return CGSizeMake(collectionView.frame.size.width, heightForThisImage);
+    }
+    else
+    {
+        return CGSizeMake(collectionView.frame.size.width, kReceiptCollectionFooterViewCellHeight);
+    }
+}
 
-    float ratioHeightVsWidth = imageForThisImage.size.height / imageForThisImage.size.width;
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == self.images.count)
+    {
+        if (self.delegate)
+        {
+            [self.delegate addImagePressed];
+        }
 
-    float heightForThisImage = collectionView.frame.size.width * ratioHeightVsWidth;
-
-    return CGSizeMake(collectionView.frame.size.width, heightForThisImage);
+    }
 }
 
 - (CGFloat) collectionView: (UICollectionView *) collectionView layout: (UICollectionViewLayout *) collectionViewLayout minimumInteritemSpacingForSectionAtIndex: (NSInteger) section

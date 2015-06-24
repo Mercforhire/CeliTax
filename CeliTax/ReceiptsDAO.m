@@ -12,21 +12,27 @@
 
 @implementation ReceiptsDAO
 
-- (BOOL) addReceiptWithFilenames: (NSArray *) filenames
+- (NSString *) addReceiptWithFilenames: (NSArray *) filenames inTaxYear:(NSInteger)taxYear
 {
     if (!filenames)
     {
-        return NO;
+        return nil;
     }
 
     Receipt *newReceipt = [Receipt new];
     newReceipt.identifer = [Utils generateUniqueID];
     newReceipt.fileNames = [filenames mutableCopy];
     newReceipt.dateCreated = [NSDate date];
+    newReceipt.taxYear = taxYear;
 
     [[self.userDataDAO getReceipts] addObject: newReceipt];
 
-    return [self.userDataDAO saveUserData];
+    if ( [self.userDataDAO saveUserData] )
+    {
+        return newReceipt.identifer;
+    }
+    
+    return nil;
 }
 
 - (BOOL) addReceipt: (Receipt *) receiptToAdd
@@ -41,37 +47,27 @@
     return [self.userDataDAO saveUserData];
 }
 
-- (NSArray *) loadReceipts
+/*
+ @return NSArray of Receipts, nil if user not found or has no receipts
+ */
+- (NSArray *) loadAllReceipts
 {
     return [self.userDataDAO getReceipts];
 }
 
-- (NSArray *) loadNewestNthReceipts: (NSInteger) nTh inYear: (NSInteger) year
+- (NSArray *) loadReceiptsFromTaxYear:(NSInteger)taxYear;
 {
-    NSArray *allReceipts = [self.userDataDAO getReceipts];
-
-    // filter only receipts from the chosen year
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components: (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay ) fromDate: [NSDate date]];
-
-    // create a start date with these components
-    [components setMonth: 1];
-    [components setDay: 1]; // reset the other components
-    [components setYear: year]; // reset the other components
-
-    NSDate *startDate = [calendar dateFromComponents: components];
-
-    // create a end date with these components
-    [components setMonth: 1];
-    [components setDay: 1]; // reset the other components
-    [components setYear: year + 1]; // reset the other components
-
-    NSDate *endDate = [calendar dateFromComponents: components];
+    NSPredicate *filterReceipts = [NSPredicate predicateWithFormat: @"taxYear == %ld", taxYear];
+    NSArray *receipts = [[self.userDataDAO getReceipts] filteredArrayUsingPredicate: filterReceipts];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"((dateCreated >= %@) AND (dateCreated < %@)) || (dateCreated = nil)", startDate, endDate];
-    NSArray *allReceiptsInChosen = [allReceipts filteredArrayUsingPredicate: predicate];
+    return receipts;
+}
 
-    NSArray *sortedAllReceipts = [allReceiptsInChosen sortedArrayUsingComparator: ^NSComparisonResult (Receipt *a, Receipt *b) {
+- (NSArray *) loadNewestNthReceipts: (NSInteger) nTh inTaxYear: (NSInteger) taxYear
+{
+    NSArray *allReceipts = [self loadReceiptsFromTaxYear:taxYear];
+
+    NSArray *sortedAllReceipts = [allReceipts sortedArrayUsingComparator: ^NSComparisonResult (Receipt *a, Receipt *b) {
         NSDate *first = a.dateCreated;
         NSDate *second = b.dateCreated;
         return [second compare: first];
@@ -94,9 +90,9 @@
     return newestNThReceipts;
 }
 
-- (NSArray *)loadReceiptsFrom:(NSDate *)fromDate toDate:(NSDate *)toDate
+- (NSArray *)loadReceiptsFrom:(NSDate *)fromDate toDate:(NSDate *)toDate inTaxYear:(NSInteger)taxYear
 {
-    NSArray *allReceipts = [self.userDataDAO getReceipts];
+    NSArray *allReceipts = [self loadReceiptsFromTaxYear:taxYear];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat: @"((dateCreated >= %@) AND (dateCreated <= %@)) || (dateCreated = nil)", fromDate, toDate];
     NSArray *allReceiptsInChosen = [allReceipts filteredArrayUsingPredicate: predicate];
@@ -116,6 +112,23 @@
     NSArray *receipt = [[self.userDataDAO getReceipts] filteredArrayUsingPredicate: findReceipt];
 
     return [receipt firstObject];
+}
+
+- (BOOL)modifyReceipt: (Receipt *)receipt
+{
+    Receipt *receiptToModify = [self loadReceipt:receipt.identifer];
+    
+    if (receiptToModify)
+    {
+        receiptToModify.fileNames = [receipt.fileNames mutableCopy];
+        receiptToModify.taxYear = receipt.taxYear;
+        
+        return [self.userDataDAO saveUserData];
+    }
+    else
+    {
+        return NO;
+    }
 }
 
 - (BOOL) deleteReceipt: (NSString *) receiptID

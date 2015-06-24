@@ -11,6 +11,7 @@
 #import "UserDataDAO.h"
 #import "ReceiptsDAO.h"
 #import "RecordsDAO.h"
+#import "TaxYearsDAO.h"
 
 @interface DAOFactory ()
 
@@ -18,6 +19,7 @@
 @property (nonatomic, strong) UserDataDAO *userDataDAO;
 @property (nonatomic, strong) ReceiptsDAO *receiptsDAO;
 @property (nonatomic, strong) RecordsDAO *recordsDAO;
+@property (nonatomic, strong) TaxYearsDAO *taxYearsDAO;
 
 @end
 
@@ -65,6 +67,17 @@
     }
     
     return self.recordsDAO;
+}
+
+- (TaxYearsDAO *) createTaxYearsDAO
+{
+    if (!self.taxYearsDAO)
+    {
+        self.taxYearsDAO = [[TaxYearsDAO alloc] init];
+        self.taxYearsDAO.userDataDAO = [self createUserDataDAO];
+    }
+    
+    return self.taxYearsDAO;
 }
 
 @end

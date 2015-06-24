@@ -11,7 +11,7 @@
 
 @protocol ReceiptScrollViewProtocol <NSObject>
 
--(void)selectedChanged;
+- (void) addImagePressed;
 
 @end
 
@@ -22,6 +22,8 @@
 @property (nonatomic, strong) NSMutableDictionary *selectedImageIndices;
 
 @property (nonatomic, strong) LookAndFeel *lookAndFeel;
+
+@property (nonatomic) UIEdgeInsets insets;
 
 @property (nonatomic, weak) id <ReceiptScrollViewProtocol> delegate;
 

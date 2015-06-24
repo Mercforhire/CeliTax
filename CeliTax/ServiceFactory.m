@@ -44,6 +44,7 @@
         self.dataService.catagoriesDAO = [self.daoFactory createCatagoriesDAO];
         self.dataService.recordsDAO = [self.daoFactory createRecordsDAO];
         self.dataService.receiptsDAO = [self.daoFactory createReceiptsDAO];
+        self.dataService.taxYearsDAO = [self.daoFactory createTaxYearsDAO];
     }
     
     return self.dataService;
@@ -57,6 +58,7 @@
         self.manipulationService.catagoriesDAO = [self.daoFactory createCatagoriesDAO];
         self.manipulationService.recordsDAO = [self.daoFactory createRecordsDAO];
         self.manipulationService.receiptsDAO = [self.daoFactory createReceiptsDAO];
+        self.manipulationService.taxYearsDAO = [self.daoFactory createTaxYearsDAO];
     }
     
     return self.manipulationService;

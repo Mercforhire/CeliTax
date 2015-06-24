@@ -102,17 +102,17 @@
 
     self.dateFormatter = [[NSDateFormatter alloc] init];
     [self.dateFormatter setDateFormat: @"dd/MM/yyyy"];
-
-    [self.dataService fetchReceiptForReceiptID: self.receiptID success: ^(Receipt *receipt) {
-        [self.dateLabel setText: [self.dateFormatter stringFromDate: receipt.dateCreated]];
-    } failure: ^(NSString *reason) {
-        // should not happen
-    }];
 }
 
 - (void) loadData
 {
-    [self.dataService fetchCatagoriesSuccess: ^(NSArray *catagories) {
+    [self.dataService fetchReceiptForReceiptID: self.receiptID success: ^(Receipt *receipt) {
+        [self.dateLabel setText: [self.dateFormatter stringFromDate: receipt.dateCreated]];
+    } failure: ^(NSString *reason) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+    
+    [self.dataService fetchCatagories: ^(NSArray *catagories) {
         self.allCatagories = catagories;
 
         NSMutableArray *catagorySelections = [NSMutableArray new];
@@ -155,7 +155,7 @@
         {
             // get the catagory of this Record
             [self.dataService fetchCatagory: record.catagoryID
-                                    Success: ^(Catagory *catagory) {
+                                    success: ^(Catagory *catagory) {
                 if (![self.catagoriesUsedByThisReceipt containsObject: catagory])
                 {
                     [self.catagoriesUsedByThisReceipt addObject: catagory];
