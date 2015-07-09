@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) UIImage *image;
 
+@property (nonatomic, strong) UIButton *imageButton;
+
 @property (nonatomic) NSInteger counter;
 
 @property (nonatomic, weak) id <ImageCounterIconViewProtocol> delegate;

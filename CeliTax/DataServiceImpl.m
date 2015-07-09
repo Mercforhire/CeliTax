@@ -239,23 +239,18 @@
         [receiptInfo setObject: receipt.identifer forKeyedSubscript: kReceiptIDKey];
         [receiptInfo setObject: receipt.dateCreated forKeyedSubscript: kUploadTimeKey];
 
-        NSMutableArray *receiptColors = [NSMutableArray new];
-
         float totalAmountForReceipt = 0.0f;
 
         // get all catagories for this receipt
         NSArray *records = [self.recordsDAO loadRecordsforReceipt: receipt.identifer];
+        
+        [receiptInfo setObject:[NSNumber numberWithInteger:records.count] forKey:kNumberOfRecordsKey];
 
         for (Record *record in records)
         {
-            Catagory *catagory = [self.catagoriesDAO loadCatagory: record.catagoryID];
-
-            [receiptColors addObject: catagory.color];
-
             totalAmountForReceipt = totalAmountForReceipt + [record calculateTotal];
         }
 
-        [receiptInfo setObject: receiptColors forKey: kColorsKey];
         [receiptInfo setObject: [NSNumber numberWithFloat: totalAmountForReceipt] forKey: kTotalAmountKey];
 
         [receiptInfos addObject: receiptInfo];
@@ -292,23 +287,18 @@
         [receiptInfo setObject: receipt.identifer forKeyedSubscript: kReceiptIDKey];
         [receiptInfo setObject: receipt.dateCreated forKeyedSubscript: kUploadTimeKey];
         
-        NSMutableArray *receiptColors = [NSMutableArray new];
-        
         float totalAmountForReceipt = 0.0f;
         
         // get all catagories for this receipt
         NSArray *records = [self.recordsDAO loadRecordsforReceipt: receipt.identifer];
         
+        [receiptInfo setObject:[NSNumber numberWithInteger:records.count] forKey:kNumberOfRecordsKey];
+        
         for (Record *record in records)
         {
-            Catagory *catagory = [self.catagoriesDAO loadCatagory: record.catagoryID];
-            
-            [receiptColors addObject: catagory.color];
-            
             totalAmountForReceipt = totalAmountForReceipt + [record calculateTotal];
         }
         
-        [receiptInfo setObject: receiptColors forKey: kColorsKey];
         [receiptInfo setObject: [NSNumber numberWithFloat: totalAmountForReceipt] forKey: kTotalAmountKey];
         
         [receiptInfos addObject: receiptInfo];

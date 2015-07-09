@@ -38,7 +38,7 @@
         //Your code handling a color change in the picker view.
         if (self.delegate)
         {
-            [self.delegate selectedColor:color];
+            [self.delegate pickedColor:color];
         }
     };
     

@@ -12,7 +12,6 @@
 #import "LoginViewController.h"
 #import "RegisterViewController.h"
 #import "MainViewController.h"
-#import "FeedbackViewController.h"
 #import "SettingsViewController.h"
 #import "MyAccountViewController.h"
 #import "AddCatagoryViewController.h"
@@ -29,9 +28,13 @@
 #import "SendReceiptsToViewController.h"
 #import "PasswordRecoveryViewController.h"
 #import "PasswordRecoverySentViewController.h"
+#import "TransferSelectionsViewController.h"
+#import "TutorialManager.h"
 
-@implementation ViewControllerFactory {
+@implementation ViewControllerFactory
+{
     NSArray *menuSelections;
+    TutorialManager *tutorialManager;      /** Used to get global configuration values */
 }
 
 - (void) initializeViewController: (BaseViewController *) viewController
@@ -41,6 +44,13 @@
     viewController.userManager = self.userManager;
     viewController.lookAndFeel = self.lookAndFeel;
     viewController.navigationBarTitleImageContainer = self.navigationBarTitleImageContainer;
+    
+    if (!tutorialManager)
+    {
+        tutorialManager = [[TutorialManager alloc] initWithViewControllerFactory:self andLookAndFeel:self.lookAndFeel];
+    }
+    
+    viewController.tutorialManager = tutorialManager;
 }
 
 - (SplashViewController *) createSplashViewController
@@ -80,18 +90,10 @@
 
     [self initializeViewController: mainViewController];
 
+    mainViewController.manipulationService = self.manipulationService;
     mainViewController.dataService = self.dataService;
 
     return mainViewController;
-}
-
-- (FeedbackViewController *) createFeedbackViewController
-{
-    FeedbackViewController *feedbackViewController = [[FeedbackViewController alloc] initWithNibName: @"FeedbackViewController" bundle: nil];
-
-    [self initializeViewController: feedbackViewController];
-
-    return feedbackViewController;
 }
 
 - (SettingsViewController *) createSettingsViewController
@@ -110,6 +112,7 @@
     [self initializeViewController: vaultViewController];
 
     vaultViewController.dataService = self.dataService;
+    vaultViewController.manipulationService = self.manipulationService;
 
     return vaultViewController;
 }
@@ -119,6 +122,8 @@
     HelpScreenViewController *helpScreenViewController = [[HelpScreenViewController alloc] initWithNibName: @"HelpScreenViewController" bundle: nil];
 
     [self initializeViewController: helpScreenViewController];
+    
+    helpScreenViewController.authenticationService = self.authenticationService;
 
     return helpScreenViewController;
 }
@@ -195,6 +200,17 @@
     namesPickerViewController.selections = selections;
 
     return namesPickerViewController;
+}
+
+- (TransferSelectionsViewController *) createTransferSelectionsViewController: (NSArray *) selections
+{
+    TransferSelectionsViewController *transferSelectionsViewController = [[TransferSelectionsViewController alloc] initWithNibName: @"TransferSelectionsViewController" bundle: nil];
+    
+    [self initializeViewController: transferSelectionsViewController];
+    
+    transferSelectionsViewController.selections = selections;
+    
+    return transferSelectionsViewController;
 }
 
 - (ColorPickerViewController *) createColorPickerViewController

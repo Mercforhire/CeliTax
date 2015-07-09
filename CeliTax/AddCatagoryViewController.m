@@ -20,6 +20,9 @@
 #import "ModifyCatagoryTableViewCell.h"
 #import "ModifyCatagoryViewController.h"
 #import "UIView+Helper.h"
+#import "TutorialManager.h"
+#import "TutorialStep.h"
+#import "ConfigurationManager.h"
 
 @interface AddCatagoryViewController () <SelectionsPickerPopUpDelegate, ColorPickerViewPopUpDelegate, UIPopoverControllerDelegate, AllColorsPickerViewPopUpDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, PopUpViewControllerProtocol>
 
@@ -106,7 +109,7 @@
     [self.catagoriesTable registerNib: modifyCatagoryTableViewCell forCellReuseIdentifier: kModifyCatagoryTableViewCellIdentifier];
 
     [self.colorView setBackgroundColor: [UIColor whiteColor]];
-    [self.lookAndFeel applyGrayBorderTo: self.colorView];
+    [self.lookAndFeel applySlightlyDarkerBorderTo: self.colorView];
 
     // initialize the Cancel menu button button
     self.cancelButton = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, 25, 25)];
@@ -174,6 +177,44 @@
                                              selector: @selector(keyboardWillHide:)
                                                  name: UIKeyboardWillHideNotification
                                                object: nil];
+}
+
+-(void)displayTutorials
+{
+    NSMutableArray *tutorials = [NSMutableArray new];
+    
+    //Each Stage represents a different group of Tutorial pop ups
+    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewControllerNamed: NSStringFromClass([self class])];
+    
+    if ( currentTutorialStage == 1 )
+        
+    {
+        //add Tutorials specific for this View
+        TutorialStep *tutorialStep1 = [TutorialStep new];
+        
+        tutorialStep1.text = @"Choose from any of the pre-made food categories or customize your own. Once you save, you can manage your categories here or in My Account.";
+        tutorialStep1.size = CGSizeMake(250, 120);
+        tutorialStep1.pointsUp = YES;
+        
+        [tutorials addObject:tutorialStep1];
+        
+        currentTutorialStage++;
+        
+        [self.tutorialManager setCurrentTutorialStageForViewControllerNamed:NSStringFromClass([self class]) forStage:currentTutorialStage];
+    }
+    
+    [self.tutorialManager startTutorialInViewController:self andTutorials:tutorials];
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    //Create tutorial items if it's ON
+    if ([self.configurationManager isTutorialOn])
+    {
+        [self displayTutorials];
+    }
 }
 
 - (void) viewWillDisappear: (BOOL) animated
@@ -300,11 +341,6 @@
     }
 
     [self showNamesPickerViewController];
-}
-
-- (void) colorSelected: (UIColor *) newColor
-{
-    [self.colorView setBackgroundColor: newColor];
 }
 
 - (void) saveCatagoryPressed: (UIButton *) sender
@@ -553,9 +589,16 @@
 
 #pragma mark - AllColorsPickerViewPopUpDelegate
 
+-(void)pickedColor:(UIColor *)color
+{
+    self.colorView.backgroundColor = color;
+    [self.lookAndFeel applySlightlyDarkerBorderTo: self.colorView];
+}
+
 - (void) selectedColor: (UIColor *) color
 {
     self.colorView.backgroundColor = color;
+    [self.lookAndFeel applySlightlyDarkerBorderTo: self.colorView];
     
     if (!self.catagoryNameField.text.length)
     {
@@ -606,7 +649,6 @@
 
         cell.catagoryColor = thisCatagory.color;
         [cell.colorBox setBackgroundColor: thisCatagory.color];
-        [self.lookAndFeel applyGrayBorderTo: cell.colorBox];
 
         [cell.catagoryName setText: thisCatagory.name];
         
@@ -632,6 +674,8 @@
                 [cell makeCellAppearActive];
             }
         }
+        
+        [self.lookAndFeel applySlightlyDarkerBorderTo: cell.colorBox];
 
         return cell;
     }

@@ -21,6 +21,10 @@
 #import "NoItemsTableViewCell.h"
 #import "ReceiptBreakDownViewController.h"
 #import "ReceiptCheckingViewController.h"
+#import "ImageCounterIconView.h"
+#import "TransferSelectionsViewController.h"
+#import "TutorialManager.h"
+#import "TutorialStep.h"
 
 typedef enum : NSUInteger
 {
@@ -40,16 +44,36 @@ typedef enum : NSUInteger
 #define kNoItemsTableViewCellHeight                     40
 #define kNoItemsTableViewCellIdentifier                 @"NoItemsTableViewCell"
 
-@interface VaultViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate, SendReceiptsViewPopUpDelegate>
+@interface VaultViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate, SendReceiptsViewPopUpDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIAlertViewDelegate, TransferSelectionsViewProtocol>
 
+@property (weak, nonatomic) IBOutlet UIImageView *triangleView;
 @property (weak, nonatomic) IBOutlet UILabel *taxYearLabel;
 @property (weak, nonatomic) IBOutlet M13Checkbox *selectAllCheckBox;
 @property (weak, nonatomic) IBOutlet UITableView *uploadHistoryTable;
 @property (weak, nonatomic) IBOutlet UIButton *downloadReceiptButton;
-@property (nonatomic, strong) WYPopoverController *selectionPopover;
+
+@property (nonatomic, strong) WYPopoverController *taxYearSelectionPopover;
 @property (nonatomic, strong) SelectionsPickerViewController *taxYearPickerViewController;
+
 @property (nonatomic, strong) WYPopoverController *sendReceiptsPopover;
 @property (nonatomic, strong) SendReceiptsToViewController *sendReceiptsToViewController;
+
+@property (nonatomic, strong) WYPopoverController *transferSelectionsPopover;
+@property (nonatomic, strong) TransferSelectionsViewController *transferSelectionsViewController;
+
+@property (weak, nonatomic) IBOutlet UIButton *transferButton;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *transferButtonHeightBar;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *deleteButtonHeightBar;
+@property (strong, nonatomic) UIPickerView *taxYearPicker;
+@property (weak, nonatomic) IBOutlet UITextField *invisibleNewTaxYearField;
+@property (strong, nonatomic) UIImage *receiptIconImage;
+
+// sorted from most recent to oldest
+@property (nonatomic, strong) NSArray *existingTaxYears;
+@property (nonatomic, strong) NSMutableArray *possibleTaxYears;
+@property (nonatomic, strong) NSMutableArray *transferYearSelections;
+@property (nonatomic, copy) NSString *taxYearToAdd;
 
 @property (nonatomic, strong) NSArray *recentUploadReceipts;
 @property (nonatomic, strong) NSArray *previousWeekReceipts;
@@ -77,6 +101,8 @@ typedef enum : NSUInteger
 
 - (void) setupUI
 {
+    self.receiptIconImage = [UIImage imageNamed: @"receipt_icon.png"];
+    
     [self.lookAndFeel applyHollowGreenButtonStyleTo: self.downloadReceiptButton];
 
     [self.selectAllCheckBox.titleLabel setFont: [UIFont latoFontOfSize: 13]];
@@ -103,6 +129,87 @@ typedef enum : NSUInteger
     popUpTheme.fillBottomColor = self.lookAndFeel.appGreenColor;
 
     [self.sendReceiptsPopover setTheme: popUpTheme];
+    
+    [self.lookAndFeel applyDisabledButtonStyleTo:self.transferButton];
+    [self.lookAndFeel applyDisabledButtonStyleTo:self.deleteButton];
+    
+    self.possibleTaxYears = [NSMutableArray new];
+    for (int year = 2010; year < 2016; year++)
+    {
+        [self.possibleTaxYears addObject:[NSNumber numberWithInteger:year]];
+    }
+    
+    self.taxYearPicker = [[UIPickerView alloc] init];
+    self.taxYearPicker.delegate = self;
+    self.taxYearPicker.dataSource = self;
+    self.taxYearPicker.showsSelectionIndicator = YES;
+    
+    self.invisibleNewTaxYearField.inputView = self.taxYearPicker;
+    
+    // Create Cancel and Add button in UIPickerView toolbar
+    UIToolbar *pickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
+    pickerToolbar.barStyle = UIBarStyleDefault;
+    
+    UIBarButtonItem *cancelToolbarButton = [[UIBarButtonItem alloc]initWithTitle: @"Cancel" style: UIBarButtonItemStylePlain target: self action: @selector(cancelAddTaxYear)];
+    [cancelToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
+    
+    UIBarButtonItem *addToolbarButton = [[UIBarButtonItem alloc]initWithTitle: @"Done" style: UIBarButtonItemStylePlain target: self action: @selector(addTaxYear)];
+    [addToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
+    
+    
+    pickerToolbar.items = [NSArray arrayWithObjects:
+                           cancelToolbarButton,
+                           [[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil],
+                           addToolbarButton, nil];
+    [pickerToolbar sizeToFit];
+    
+    
+    self.invisibleNewTaxYearField.inputAccessoryView = pickerToolbar;
+}
+
+-(void)cancelAddTaxYear
+{
+    [self.invisibleNewTaxYearField resignFirstResponder];
+}
+
+-(void)addTaxYear
+{
+    if ([self.existingTaxYears containsObject:self.taxYearToAdd])
+    {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@""
+                                                          message:@"You can not add a duplicate tax year."
+                                                         delegate:nil
+                                                cancelButtonTitle:nil
+                                                otherButtonTitles:@"Dimiss",nil];
+        
+        [message show];
+        
+        return;
+    }
+    
+    [self.invisibleNewTaxYearField resignFirstResponder];
+    
+    [self.manipulationService addTaxYear:self.taxYearToAdd.integerValue];
+    
+    [self refreshTaxYears];
+}
+
+-(void)refreshTaxYears
+{
+    self.existingTaxYears = [self.dataService fetchTaxYears];
+    
+    NSMutableArray *yearSelections = [NSMutableArray new];
+    
+    for (NSNumber *year in self.existingTaxYears )
+    {
+        [yearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", (long)year.integerValue]];
+    }
+    
+    [yearSelections addObject:@"Add Tax Year"];
+    
+    self.taxYearPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: yearSelections];
+    self.taxYearSelectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.taxYearPickerViewController];
+    [self.taxYearPickerViewController setDelegate: self];
 }
 
 - (void) viewDidLoad
@@ -123,29 +230,29 @@ typedef enum : NSUInteger
         [[UITapGestureRecognizer alloc] initWithTarget: self
                                                 action: @selector(taxYearPressed)];
     [self.taxYearLabel addGestureRecognizer: taxYearPressedTap];
+    
+    UITapGestureRecognizer *taxYearPressedTap2 =
+    [[UITapGestureRecognizer alloc] initWithTarget: self
+                                            action: @selector(taxYearPressed)];
+    [self.triangleView addGestureRecognizer: taxYearPressedTap2];
 
-    [self.selectAllCheckBox addTarget: self action: @selector(selectAllCheckChangedValue:) forControlEvents: UIControlEventValueChanged];
+    [self.selectAllCheckBox addTarget: self
+                               action: @selector(selectAllCheckChangedValue:)
+                     forControlEvents: UIControlEventValueChanged];
 
     [self.sendReceiptsToViewController setDelegate: self];
     
-    self.taxYears = [self.dataService fetchTaxYears];
-    
-    NSMutableArray *yearSelections = [NSMutableArray new];
-    
-    for (NSNumber *year in self.taxYears)
-    {
-        [yearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", (long)year.integerValue]];
-    }
+    [self refreshTaxYears];
+}
 
-    self.taxYearPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: yearSelections];
-    self.taxYearPickerViewController.highlightedSelectionIndex = -1;
-    self.selectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.taxYearPickerViewController];
-    [self.taxYearPickerViewController setDelegate: self];
+- (void) viewWillAppear: (BOOL) animated
+{
+    [super viewWillAppear: animated];
     
     //if there is no selected tax year saved, select the newest year by default
     if (![self.configurationManager getCurrentTaxYear])
     {
-        self.currentlySelectedYear = [self.taxYears firstObject];
+        self.currentlySelectedYear = [self.existingTaxYears firstObject];
     }
     else
     {
@@ -153,22 +260,111 @@ typedef enum : NSUInteger
     }
 }
 
+-(void)displayTutorials
+{
+    NSMutableArray *tutorials = [NSMutableArray new];
+    
+    //Each Stage represents a different group of Tutorial pop ups
+    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewControllerNamed: NSStringFromClass([self class])];
+    
+    if ( currentTutorialStage == 1 )
+    {
+        TutorialStep *tutorialStep1 = [TutorialStep new];
+        
+        tutorialStep1.text = @"Quickly access every receipt image captured.\n\nClick on a receipt to easily review and edit the receipt!";
+        tutorialStep1.size = CGSizeMake(290, 120);
+        tutorialStep1.pointsUp = YES;
+        
+        [tutorials addObject:tutorialStep1];
+        
+        TutorialStep *tutorialStep2 = [TutorialStep new];
+        
+        tutorialStep2.origin = self.downloadReceiptButton.center;
+        
+        tutorialStep2.text = @"Use the download button to receive a ZIP file of all uploaded images for the current tax year directly to your email!";
+        tutorialStep2.size = CGSizeMake(290, 80);
+        tutorialStep2.pointsUp = NO;
+        
+        [tutorials addObject:tutorialStep2];
+        
+        currentTutorialStage++;
+        
+        [self.tutorialManager setCurrentTutorialStageForViewControllerNamed:NSStringFromClass([self class]) forStage:currentTutorialStage];
+    }
+    else
+    {
+        //don't show any tutorial
+        return;
+    }
+    
+    [self.tutorialManager startTutorialInViewController:self andTutorials:tutorials];
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    //Create tutorial items if it's ON
+    if ([self.configurationManager isTutorialOn])
+    {
+        [self displayTutorials];
+    }
+}
+
 - (IBAction) downloadReceiptsPressed: (UIButton *) sender
 {
     // open up 'Send Receipts To' pop up
-
     [self.sendReceiptsPopover presentPopoverFromRect: self.downloadReceiptButton.frame inView: self.view permittedArrowDirections: WYPopoverArrowDirectionDown animated: YES];
+}
+
+-(void)enableTransferButton:(BOOL)enableTransferButton andEnableDeleteButton:(BOOL)enableDeleteButton
+{
+    if (enableTransferButton || enableDeleteButton)
+    {
+        //show the buttons
+        self.transferButtonHeightBar.constant = 25;
+        self.deleteButtonHeightBar.constant = 25;
+    }
+    else
+    {
+        //hide the buttons
+        self.transferButtonHeightBar.constant = 0;
+        self.deleteButtonHeightBar.constant = 0;
+    }
+    
+    [self.view setNeedsUpdateConstraints];
+    
+    if (enableTransferButton && [self.dataService fetchTaxYears].count > 1)
+    {
+        [self.transferButton setEnabled:YES];
+        [self.lookAndFeel applySolidGreenButtonStyleTo:self.transferButton];
+    }
+    else
+    {
+        [self.transferButton setEnabled:NO];
+        [self.lookAndFeel applyDisabledButtonStyleTo:self.transferButton];
+    }
+    
+    if (enableDeleteButton)
+    {
+        [self.deleteButton setEnabled:YES];
+        [self.lookAndFeel applySolidGreenButtonStyleTo:self.deleteButton];
+    }
+    else
+    {
+        [self.deleteButton setEnabled:NO];
+        [self.lookAndFeel applyDisabledButtonStyleTo:self.deleteButton];
+    }
 }
 
 - (void) selectAllCheckChangedValue: (M13Checkbox *) checkBox
 {
-    DLog(@"Select All checkbox Value changed to %ld", (long)checkBox.checkState);
-
     if (checkBox.checkState == M13CheckboxStateChecked)
     {
         self.selectAllReceipts = YES;
 
         [self.downloadReceiptButton setEnabled: YES];
+        [self enableTransferButton:YES andEnableDeleteButton:YES];
     }
     else
     {
@@ -177,10 +373,12 @@ typedef enum : NSUInteger
         if (self.selectedReceipts.count)
         {
             [self.downloadReceiptButton setEnabled: YES];
+            [self enableTransferButton:YES andEnableDeleteButton:YES];
         }
         else
         {
             [self.downloadReceiptButton setEnabled: NO];
+            [self enableTransferButton:NO andEnableDeleteButton:NO];
         }
     }
 
@@ -224,11 +422,9 @@ typedef enum : NSUInteger
 
 - (void) singleReceiptCheckChangedValue: (M13Checkbox *) checkBox
 {
-    DLog(@"Checkbox of tag %ld Value changed to %ld", (long)checkBox.tag, (long)checkBox.checkState);
-
     NSDictionary *thisReceiptInfo = [self getReceiptInfoFromTag:checkBox.tag];
 
-    NSString *receiptID = [thisReceiptInfo objectForKeyedSubscript: kReceiptIDKey];
+    NSString *receiptID = [thisReceiptInfo objectForKey: kReceiptIDKey];
 
     if (checkBox.checkState == M13CheckboxStateChecked)
     {
@@ -247,20 +443,29 @@ typedef enum : NSUInteger
     {
         [self.downloadReceiptButton setEnabled: NO];
     }
+    
+    if (self.selectedReceipts.count)
+    {
+        [self enableTransferButton:YES andEnableDeleteButton:YES];
+    }
+    else
+    {
+        [self enableTransferButton:NO andEnableDeleteButton:NO];
+    }
 
     [self.uploadHistoryTable reloadData];
 }
 
 - (void) taxYearPressed
 {
-    [self.selectionPopover presentPopoverFromRect: self.taxYearLabel.frame inView: self.view permittedArrowDirections: WYPopoverArrowDirectionUp animated: YES];
+    [self.taxYearSelectionPopover presentPopoverFromRect: self.taxYearLabel.frame inView: self.view permittedArrowDirections: WYPopoverArrowDirectionUp animated: YES];
 }
 
 -(void)receiptDetailsPressed:(UIButton *)sender
 {
     NSDictionary *thisReceiptInfo = [self getReceiptInfoFromTag:sender.tag];
     
-    NSString *receiptID = [thisReceiptInfo objectForKeyedSubscript: kReceiptIDKey];
+    NSString *receiptID = [thisReceiptInfo objectForKey: kReceiptIDKey];
     
     //push to Receipt Checking view directly if this receipt has no items
     [self.dataService fetchRecordsForReceiptID: receiptID
@@ -313,6 +518,290 @@ typedef enum : NSUInteger
     [self selectAllCheckChangedValue:self.selectAllCheckBox];
 }
 
+- (IBAction)transferButtonPressed:(UIButton *)sender
+{
+    self.transferYearSelections = [NSMutableArray new];
+    
+    for (NSNumber *year in self.existingTaxYears)
+    {
+        if ( year.integerValue != self.currentlySelectedYear.integerValue )
+        {
+            [self.transferYearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", (long)year.integerValue]];
+        }
+    }
+    
+    self.transferSelectionsViewController = [self.viewControllerFactory createTransferSelectionsViewController: self.transferYearSelections];
+    
+    self.transferSelectionsPopover = [[WYPopoverController alloc] initWithContentViewController: self.transferSelectionsViewController];
+    
+    [self.transferSelectionsViewController setDelegate: self];
+    
+    [self.transferSelectionsViewController setHighlightedSelectionIndex: -1];
+    
+    [self.transferSelectionsPopover presentPopoverFromRect: self.transferButton.frame inView: self.view permittedArrowDirections: WYPopoverArrowDirectionDown animated: YES];
+}
+
+- (IBAction)deleteButtonPressed:(UIButton *)sender
+{
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Delete selected receipts"
+                                                      message: @"Are you sure you want delete the selected receipts along with all their items?"
+                                                     delegate: self
+                                            cancelButtonTitle: @"No"
+                                            otherButtonTitles: @"Delete", nil];
+    
+    [message show];
+}
+
+-(void)fetchRecentUploadReceipts
+{
+    [self.dataService fetchNewestReceiptInfo : 5
+                                       inYear: self.currentlySelectedYear.integerValue
+                                      success:^(NSArray *receiptInfos)
+     {
+         self.recentUploadReceipts = receiptInfos;
+         
+     } failure:^(NSString *reason) {
+         // should not happen
+     }];
+}
+
+-(void)fetchPreviousWeekReceipts
+{
+    NSDate *mondayOfThisWeek = [Utils dateForMondayOfThisWeek];
+    
+    NSDate *mondayOfPreviousWeek = [Utils dateForMondayOfPreviousWeek];
+    
+    [self.dataService fetchReceiptInfoFromDate: mondayOfPreviousWeek
+                                        toDate: mondayOfThisWeek
+                                     inTaxYear: self.currentlySelectedYear.integerValue
+                                       success:^(NSArray *receiptInfos)
+     {
+         self.previousWeekReceipts = receiptInfos;
+         
+     } failure:^(NSString *reason) {
+         // should not happen
+     }];
+}
+
+-(void)fetchPreviousMonthReceipts
+{
+    NSDate *firstDayOfThisMonth = [Utils dateForFirstDayOfThisMonth];
+    
+    NSDate *firstDayOfPreviousMonth = [Utils dateForFirstDayOfPreviousMonth];
+    
+    [self.dataService fetchReceiptInfoFromDate: firstDayOfPreviousMonth
+                                        toDate: firstDayOfThisMonth
+                                     inTaxYear: self.currentlySelectedYear.integerValue
+                                       success:^(NSArray *receiptInfos)
+     {
+         
+         self.previousMonthReceipts = receiptInfos;
+         
+     } failure:^(NSString *reason) {
+         // should not happen
+     }];
+}
+
+-(void)fetchViewAllReceipts
+{
+    [self.dataService fetchNewestReceiptInfo: 999
+                                      inYear: self.currentlySelectedYear.integerValue
+                                     success:^(NSArray *receiptInfos)
+     {
+         
+         self.viewAllReceipts = receiptInfos;
+         
+     } failure:^(NSString *reason) {
+         // should not happen
+     }];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void) alertView: (UIAlertView *) alertView clickedButtonAtIndex: (NSInteger) buttonIndex
+{
+    NSString *title = [alertView buttonTitleAtIndex: buttonIndex];
+    
+    if ([title isEqualToString: @"Delete"])
+    {
+        NSMutableArray *receiptIDsToDelete = [[NSMutableArray alloc] init];
+        
+        if (self.selectAllReceipts)
+        {
+            if (!self.recentUploadReceipts)
+            {
+                [self fetchRecentUploadReceipts];
+            }
+            
+            if (!self.previousWeekReceipts)
+            {
+                [self fetchPreviousWeekReceipts];
+            }
+            
+            if (!self.previousMonthReceipts)
+            {
+                [self fetchPreviousMonthReceipts];
+            }
+            
+            if (!self.viewAllReceipts)
+            {
+                [self fetchViewAllReceipts];
+            }
+            
+            for (NSDictionary *receiptInfo in self.recentUploadReceipts)
+            {
+                NSString *receiptID = [receiptInfo objectForKey: kReceiptIDKey];
+                
+                [receiptIDsToDelete addObject:receiptID];
+            }
+            
+            for (NSDictionary *receiptInfo in self.previousWeekReceipts)
+            {
+                NSString *receiptID = [receiptInfo objectForKey: kReceiptIDKey];
+                
+                [receiptIDsToDelete addObject:receiptID];
+            }
+            
+            for (NSDictionary *receiptInfo in self.previousMonthReceipts)
+            {
+                NSString *receiptID = [receiptInfo objectForKey: kReceiptIDKey];
+                
+                [receiptIDsToDelete addObject:receiptID];
+            }
+            
+            for (NSDictionary *receiptInfo in self.viewAllReceipts)
+            {
+                NSString *receiptID = [receiptInfo objectForKey: kReceiptIDKey];
+                
+                [receiptIDsToDelete addObject:receiptID];
+            }
+        }
+        else
+        {
+            receiptIDsToDelete = [self.selectedReceipts.allKeys mutableCopy];
+        }
+        
+        for (NSString *receiptID in receiptIDsToDelete)
+        {
+            DLog(@"Delete receipt: %@", receiptID);
+            
+            [self.manipulationService deleteReceiptAndAllItsRecords:receiptID success:^{
+                DLog(@"Deleted receipt: %@", receiptID);
+                
+            } failure:^(NSString *reason) {
+                DLog(@"self.manipulationService deleteReceiptAndAllItsRecords failed");
+            }];
+        }
+        
+        //refresh UI
+        self.currentlySelectedYear = self.currentlySelectedYear;
+    }
+}
+
+#pragma mark - TransferSelectionsViewProtocol delegate
+
+-(void)selectedTransferSelectionAtIndex:(NSInteger)index
+{
+    [self.transferSelectionsPopover dismissPopoverAnimated: YES];
+    
+    NSNumber *yearToTransferTo = self.transferYearSelections[index];
+    
+    NSMutableArray *receiptIDsToTransfer = [[NSMutableArray alloc] init];
+    
+    if (self.selectAllReceipts)
+    {
+        if (!self.recentUploadReceipts)
+        {
+            [self fetchRecentUploadReceipts];
+        }
+        
+        if (!self.previousWeekReceipts)
+        {
+            [self fetchPreviousWeekReceipts];
+        }
+        
+        if (!self.previousMonthReceipts)
+        {
+            [self fetchPreviousMonthReceipts];
+        }
+        
+        if (!self.viewAllReceipts)
+        {
+            [self fetchViewAllReceipts];
+        }
+        
+        for (NSDictionary *receiptInfo in self.recentUploadReceipts)
+        {
+            NSString *receiptID = [receiptInfo objectForKey: kReceiptIDKey];
+            
+            [receiptIDsToTransfer addObject:receiptID];
+        }
+        
+        for (NSDictionary *receiptInfo in self.previousWeekReceipts)
+        {
+            NSString *receiptID = [receiptInfo objectForKey: kReceiptIDKey];
+            
+            [receiptIDsToTransfer addObject:receiptID];
+        }
+        
+        for (NSDictionary *receiptInfo in self.previousMonthReceipts)
+        {
+            NSString *receiptID = [receiptInfo objectForKey: kReceiptIDKey];
+            
+            [receiptIDsToTransfer addObject:receiptID];
+        }
+        
+        for (NSDictionary *receiptInfo in self.viewAllReceipts)
+        {
+            NSString *receiptID = [receiptInfo objectForKey: kReceiptIDKey];
+            
+            [receiptIDsToTransfer addObject:receiptID];
+        }
+    }
+    else
+    {
+        receiptIDsToTransfer = [self.selectedReceipts.allKeys mutableCopy];
+    }
+    
+    for (NSString *receiptID in receiptIDsToTransfer)
+    {
+        [self.dataService fetchReceiptForReceiptID:receiptID success:^(Receipt *receipt) {
+            receipt.taxYear = yearToTransferTo.integerValue;
+            
+            [self.manipulationService modifyReceipt:receipt];
+            
+        } failure:^(NSString *reason) {
+            //not possible
+        }];
+    }
+    
+    //refresh UI
+    self.currentlySelectedYear = self.currentlySelectedYear;
+}
+
+#pragma mark - UIPickerView delegate
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return self.possibleTaxYears.count;
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return [NSString stringWithFormat:@"%@", self.possibleTaxYears[row]];
+}
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    self.taxYearToAdd = self.possibleTaxYears[row];
+}
+
 #pragma mark - SelectionsPickerPopUpDelegate
 
 - (void) sendReceiptsToEmailRequested: (NSString *) emailAddress
@@ -326,9 +815,23 @@ typedef enum : NSUInteger
 
 - (void) selectedSelectionAtIndex: (NSInteger) index fromPopUp:(SelectionsPickerViewController *)popUpController
 {
-    [self.selectionPopover dismissPopoverAnimated: YES];
-
-    self.currentlySelectedYear = self.taxYears[index];
+    if (popUpController == self.taxYearPickerViewController)
+    {
+        [self.taxYearSelectionPopover dismissPopoverAnimated: YES];
+        
+        if (index < self.existingTaxYears.count)
+        {
+            self.currentlySelectedYear = self.existingTaxYears[index];
+            
+            self.taxYearPickerViewController.highlightedSelectionIndex = index;
+        }
+        else
+        {
+            self.taxYearToAdd = [self.possibleTaxYears firstObject];
+            
+            [self.invisibleNewTaxYearField becomeFirstResponder];
+        }
+    }
 }
 
 #pragma mark - UITableview DataSource
@@ -565,7 +1068,7 @@ typedef enum : NSUInteger
             [cell.checkBoxView setTag: (checkBoxTagOffset + indexPath.row - 1)];
             [cell.checkBoxView addTarget: self action: @selector(singleReceiptCheckChangedValue:) forControlEvents: UIControlEventValueChanged];
             
-            NSString *receiptID = [thisReceiptInfo objectForKeyedSubscript: kReceiptIDKey];
+            NSString *receiptID = [thisReceiptInfo objectForKey: kReceiptIDKey];
             
             if (self.selectAllReceipts || [self.selectedReceipts objectForKey: receiptID])
             {
@@ -584,11 +1087,22 @@ typedef enum : NSUInteger
             
             [self.dateFormatter setDateFormat: @"hh:mm a"];
             
-            [cell.timeLabel setText: [[self.dateFormatter stringFromDate: receiptDate] lowercaseString]];
+            [cell.receiptCounterView setImage: self.receiptIconImage];
+            cell.receiptCounterView.imageButton.tag = (checkBoxTagOffset + indexPath.row - 1);
+            [cell.receiptCounterView.imageButton addTarget:self action:@selector(receiptDetailsPressed:) forControlEvents:UIControlEventTouchUpInside];
             
-            cell.detailsButton.tag = (checkBoxTagOffset + indexPath.row - 1);
-            [cell.detailsButton addTarget:self action:@selector(receiptDetailsPressed:) forControlEvents:UIControlEventTouchUpInside];
-            [self.lookAndFeel applySolidGreenButtonStyleTo:cell.detailsButton];
+            NSInteger numberOfRecords = [[thisReceiptInfo objectForKey:kNumberOfRecordsKey] integerValue];
+            
+            [cell.receiptCounterView setCounter:numberOfRecords];
+            
+            if (cell.checkBoxView.checkState == M13CheckboxStateChecked)
+            {
+                [cell.receiptCounterView setHidden:NO];
+            }
+            else
+            {
+                [cell.receiptCounterView setHidden:YES];
+            }
             
             return cell;
         }
@@ -624,14 +1138,7 @@ typedef enum : NSUInteger
                 
                 if (!self.recentUploadReceipts)
                 {
-                    [self.dataService fetchNewestReceiptInfo : 5
-                                                       inYear: self.currentlySelectedYear.integerValue
-                                                      success:^(NSArray *receiptInfos)
-                     {
-                         self.recentUploadReceipts = receiptInfos;
-                     } failure:^(NSString *reason) {
-                         // should not happen
-                     }];
+                    [self fetchRecentUploadReceipts];
                 }
 
                 break;
@@ -642,19 +1149,7 @@ typedef enum : NSUInteger
 
                 if (!self.previousWeekReceipts)
                 {
-                    NSDate *mondayOfThisWeek = [Utils dateForMondayOfThisWeek];
-                    
-                    NSDate *mondayOfPreviousWeek = [Utils dateForMondayOfPreviousWeek];
-                    
-                    [self.dataService fetchReceiptInfoFromDate: mondayOfPreviousWeek
-                                                        toDate: mondayOfThisWeek
-                                                     inTaxYear: self.currentlySelectedYear.integerValue
-                                                       success:^(NSArray *receiptInfos)
-                     {
-                         self.previousWeekReceipts = receiptInfos;
-                     } failure:^(NSString *reason) {
-                         // should not happen
-                     }];
+                    [self fetchPreviousWeekReceipts];
                 }
 
                 break;
@@ -665,21 +1160,7 @@ typedef enum : NSUInteger
 
                 if ( !self.previousMonthReceipts )
                 {
-                    NSDate *firstDayOfThisMonth = [Utils dateForFirstDayOfThisMonth];
-                    
-                    NSDate *firstDayOfPreviousMonth = [Utils dateForFirstDayOfPreviousMonth];
-                    
-                    [self.dataService fetchReceiptInfoFromDate: firstDayOfPreviousMonth
-                                                        toDate: firstDayOfThisMonth
-                                                     inTaxYear: self.currentlySelectedYear.integerValue
-                                                       success:^(NSArray *receiptInfos)
-                     {
-                         
-                         self.previousMonthReceipts = receiptInfos;
-                         
-                     } failure:^(NSString *reason) {
-                         // should not happen
-                     }];
+                    [self fetchPreviousMonthReceipts];
                 }
                 
                 break;
@@ -690,16 +1171,7 @@ typedef enum : NSUInteger
                 
                 if (!self.viewAllReceipts)
                 {
-                    [self.dataService fetchNewestReceiptInfo: 999
-                                                      inYear: self.currentlySelectedYear.integerValue
-                                                     success:^(NSArray *receiptInfos)
-                     {
-                         
-                         self.viewAllReceipts = receiptInfos;
-                         
-                     } failure:^(NSString *reason) {
-                         // should not happen
-                     }];
+                    [self fetchViewAllReceipts];
                 }
                 
                 break;
@@ -708,11 +1180,11 @@ typedef enum : NSUInteger
                 break;
         }
 
-        DLog(@"Receipt Time period %@ clicked", period);
-
         [tableView reloadData];
         
-        [tableView scrollToRowAtIndexPath: indexPath atScrollPosition: UITableViewScrollPositionTop animated: YES];
+        [tableView scrollToRowAtIndexPath: indexPath
+                         atScrollPosition: UITableViewScrollPositionTop
+                                 animated: YES];
     }
 }
 

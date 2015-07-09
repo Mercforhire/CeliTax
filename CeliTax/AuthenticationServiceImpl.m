@@ -10,6 +10,7 @@
 #import "AuthorizeResult.h"
 #import "RegisterResult.h"
 #import "UserDataDAO.h"
+#import "ConfigurationManager.h"
 
 #define testUserName    @"leonchn84@gmail.com"
 #define testPassword    @"123456"
@@ -69,6 +70,9 @@
             //IMPORTANT: set the userKey to userDataDAO
             self.userDataDAO.userKey = testKey;
             
+            //TODO: default to on, will change this later
+            [self.configManager setTutorialON:YES];
+            
             dispatch_async(dispatch_get_main_queue(), ^{
                 success ( returnedResult );
             });
@@ -121,6 +125,31 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 failure ( registerResult );
+            });
+        }
+    });
+    
+    return;
+}
+
+- (void) sendComment: (NSString *)comment
+             success: (SendCommentSuccessBlock) success
+             failure: (SendCommentFailureBlock) failure
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        //simulate 1 seconds wait
+        [NSThread sleepForTimeInterval:1.0f];
+
+        if (self.userDataDAO.userKey)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                success ( );
+            });
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                failure ( @"No user logged in" );
             });
         }
     });

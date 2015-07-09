@@ -13,7 +13,7 @@
 
 @required
 
--(void)selectedColor:(UIColor *)color;
+-(void)pickedColor:(UIColor *)color;
 
 -(void)doneButtonPressed;
 

@@ -11,8 +11,13 @@
 #import "DataService.h"
 #import "Notifications.h"
 #import "TriangleView.h"
+#import "NoItemsTableViewCell.h"
 
-#define kTableCellHeight            35
+#define kReceiptTableTableCellHeight                    35
+#define kReceiptTableViewCellIdentifier                 @"ReceiptTableViewCell"
+
+#define kNoItemsTableViewCellHeight                     40
+#define kNoItemsTableViewCellIdentifier                 @"NoItemsTableViewCell"
 
 @interface UploadsHistoryTableViewCell () <UITableViewDataSource, UITableViewDelegate>
 
@@ -53,32 +58,36 @@
 
 @implementation UploadsHistoryTableViewCell
 
-#define kReceiptTableViewCellIdentifier      @"ReceiptTableViewCell"
-
 - (void) awakeFromNib
 {
     // Initialization code
 
     [self setSelectionStyle: UITableViewCellSelectionStyleNone];
 
+    UINib *noItemTableCell = [UINib nibWithNibName: @"NoItemsTableViewCell" bundle: nil];
+    
     UINib *receiptTableViewCell = [UINib nibWithNibName: @"ReceiptTableViewCell" bundle: nil];
 
     self.recentUploadsTable.dataSource = self;
     self.recentUploadsTable.delegate = self;
     [self.recentUploadsTable registerNib: receiptTableViewCell forCellReuseIdentifier: kReceiptTableViewCellIdentifier];
-
+    [self.recentUploadsTable registerNib: noItemTableCell forCellReuseIdentifier: kNoItemsTableViewCellIdentifier];
+    
     self.previousWeekTable.dataSource = self;
     self.previousWeekTable.delegate = self;
     [self.previousWeekTable registerNib: receiptTableViewCell forCellReuseIdentifier: kReceiptTableViewCellIdentifier];
-
+    [self.previousWeekTable registerNib: noItemTableCell forCellReuseIdentifier: kNoItemsTableViewCellIdentifier];
+    
     self.previousMonthTable.dataSource = self;
     self.previousMonthTable.delegate = self;
     [self.previousMonthTable registerNib: receiptTableViewCell forCellReuseIdentifier: kReceiptTableViewCellIdentifier];
-
+    [self.previousMonthTable registerNib: noItemTableCell forCellReuseIdentifier: kNoItemsTableViewCellIdentifier];
+    
     self.viewAllTable.dataSource = self;
     self.viewAllTable.delegate = self;
     [self.viewAllTable registerNib: receiptTableViewCell forCellReuseIdentifier: kReceiptTableViewCellIdentifier];
-
+    [self.viewAllTable registerNib: noItemTableCell forCellReuseIdentifier: kNoItemsTableViewCellIdentifier];
+    
     self.dateFormatter = [[NSDateFormatter alloc] init];
     [self.dateFormatter setDateFormat: @"dd/MM/yyyy"];
 }
@@ -100,8 +109,16 @@
         [self.recentUploadsTriangle setGreenArrowUp];
         [self.recentUploadsTotalLabel setHidden: NO];
         [self.recentUploadsTable setHidden: NO];
-        [self.recentUploadsHeightBar setConstant: kTableCellHeight * self.recentUploadReceipts.count];
-
+        
+        if (self.recentUploadReceipts.count)
+        {
+            [self.recentUploadsHeightBar setConstant: kReceiptTableTableCellHeight * self.recentUploadReceipts.count];
+        }
+        else
+        {
+            [self.recentUploadsHeightBar setConstant: kNoItemsTableViewCellHeight];
+        }
+        
         [self.recentUploadsTable reloadData];
     }
     else
@@ -126,7 +143,15 @@
         [self.previousWeekTriangle setGreenArrowUp];
         [self.previousWeekTotalLabel setHidden: NO];
         [self.previousWeekTable setHidden: NO];
-        [self.previousWeekHeightBar setConstant: kTableCellHeight * self.previousWeekReceipts.count];
+        
+        if (self.previousWeekReceipts.count)
+        {
+            [self.previousWeekHeightBar setConstant: kReceiptTableTableCellHeight * self.previousWeekReceipts.count];
+        }
+        else
+        {
+            [self.previousWeekHeightBar setConstant: kNoItemsTableViewCellHeight];
+        }
 
         [self.previousWeekTable reloadData];
     }
@@ -152,7 +177,15 @@
         [self.previousMonthTriangle setGreenArrowUp];
         [self.previousMonthTotalLabel setHidden: NO];
         [self.previousMonthTable setHidden: NO];
-        [self.previousMonthHeightBar setConstant: kTableCellHeight * self.previousMonthReceipts.count];
+        
+        if (self.previousMonthReceipts.count)
+        {
+            [self.previousMonthHeightBar setConstant: kReceiptTableTableCellHeight * self.previousMonthReceipts.count];
+        }
+        else
+        {
+            [self.previousMonthHeightBar setConstant: kNoItemsTableViewCellHeight];
+        }
 
         [self.previousMonthTable reloadData];
     }
@@ -178,7 +211,15 @@
         [self.viewAllTriangle setGreenArrowUp];
         [self.viewAllTotalLabel setHidden: NO];
         [self.viewAllTable setHidden: NO];
-        [self.viewAllHeightBar setConstant: kTableCellHeight * self.viewAllReceipts.count];
+
+        if (self.viewAllReceipts.count)
+        {
+            [self.viewAllHeightBar setConstant: kReceiptTableTableCellHeight * self.viewAllReceipts.count];
+        }
+        else
+        {
+            [self.viewAllHeightBar setConstant: kNoItemsTableViewCellHeight + 5];
+        }
 
         [self.viewAllTable reloadData];
     }
@@ -245,19 +286,19 @@
 {
     if (tableView == self.recentUploadsTable)
     {
-        return self.recentUploadReceipts.count;
+        return self.recentUploadReceipts.count > 0 ? self.recentUploadReceipts.count : 1;
     }
     else if (tableView == self.previousWeekTable)
     {
-        return self.previousWeekReceipts.count;
+        return self.previousWeekReceipts.count > 0 ? self.previousWeekReceipts.count : 1;
     }
     else if (tableView == self.previousMonthTable)
     {
-        return self.previousMonthReceipts.count;
+        return self.previousMonthReceipts.count > 0 ? self.previousMonthReceipts.count : 1;
     }
     else if (tableView == self.viewAllTable)
     {
-        return self.viewAllReceipts.count;
+        return self.viewAllReceipts.count > 0 ? self.viewAllReceipts.count : 1;
     }
 
     return 0;
@@ -277,21 +318,34 @@
 
     NSDictionary *thisCatagoryInfo;
 
-    if (tableView == self.recentUploadsTable)
+    if (tableView == self.recentUploadsTable && self.recentUploadReceipts.count)
     {
         thisCatagoryInfo = [self.recentUploadReceipts objectAtIndex: indexPath.row];
     }
-    else if (tableView == self.previousWeekTable)
+    else if (tableView == self.previousWeekTable && self.previousWeekReceipts.count)
     {
         thisCatagoryInfo = [self.previousWeekReceipts objectAtIndex: indexPath.row];
     }
-    else if (tableView == self.previousMonthTable)
+    else if (tableView == self.previousMonthTable && self.previousMonthReceipts.count)
     {
         thisCatagoryInfo = [self.previousMonthReceipts objectAtIndex: indexPath.row];
     }
-    else if (tableView == self.viewAllTable)
+    else if (tableView == self.viewAllTable && self.viewAllReceipts.count)
     {
         thisCatagoryInfo = [self.viewAllReceipts objectAtIndex: indexPath.row];
+    }
+    
+    if (!thisCatagoryInfo)
+    {
+        //show a NoItemsTableViewCell
+        NoItemsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: kNoItemsTableViewCellIdentifier];
+        
+        if (cell == nil)
+        {
+            cell = [[NoItemsTableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: kNoItemsTableViewCellIdentifier];
+        }
+        
+        return cell;
     }
 
     // Keys: kReceiptTimeKey, kTotalQtyKey, kTotalAmountKey
@@ -301,7 +355,7 @@
 
     [cell.colorBox setBackgroundColor: self.catagoryColor];
 
-    [self.lookAndFeel applyGrayBorderTo: cell.colorBox];
+    [self.lookAndFeel applySlightlyDarkerBorderTo: cell.colorBox];
 
     [cell.dateLabel setText: [self.dateFormatter stringFromDate: receiptDate]];
 
@@ -316,7 +370,36 @@
 
 - (CGFloat) tableView: (UITableView *) tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath
 {
-    return kTableCellHeight;
+   if (tableView == self.recentUploadsTable)
+    {
+        if (!self.recentUploadReceipts.count)
+        {
+            return kNoItemsTableViewCellHeight;
+        }
+    }
+    else if (tableView == self.previousWeekTable)
+    {
+        if (!self.previousWeekReceipts.count)
+        {
+            return kNoItemsTableViewCellHeight;
+        }
+    }
+    else if (tableView == self.previousMonthTable)
+    {
+        if (!self.previousMonthReceipts.count)
+        {
+            return kNoItemsTableViewCellHeight;
+        }
+    }
+    else if (tableView == self.viewAllTable)
+    {
+        if (!self.viewAllReceipts.count)
+        {
+            return kNoItemsTableViewCellHeight + 5;
+        }
+    }
+    
+    return kReceiptTableTableCellHeight;
 }
 
 - (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath
@@ -325,22 +408,29 @@
 
     if (tableView == self.recentUploadsTable)
     {
-        thisCatagoryInfo = [self.recentUploadReceipts objectAtIndex: indexPath.row];
+        if (self.recentUploadReceipts.count)
+            thisCatagoryInfo = [self.recentUploadReceipts objectAtIndex: indexPath.row];
     }
     else if (tableView == self.previousWeekTable)
     {
-        thisCatagoryInfo = [self.previousWeekReceipts objectAtIndex: indexPath.row];
+        if (self.previousWeekReceipts.count)
+            thisCatagoryInfo = [self.previousWeekReceipts objectAtIndex: indexPath.row];
     }
     else if (tableView == self.previousMonthTable)
     {
-        thisCatagoryInfo = [self.previousMonthReceipts objectAtIndex: indexPath.row];
+        if (self.previousMonthReceipts.count)
+            thisCatagoryInfo = [self.previousMonthReceipts objectAtIndex: indexPath.row];
     }
     else if (tableView == self.viewAllTable)
     {
-        thisCatagoryInfo = [self.viewAllReceipts objectAtIndex: indexPath.row];
+        if (self.viewAllReceipts.count)
+            thisCatagoryInfo = [self.viewAllReceipts objectAtIndex: indexPath.row];
     }
-
-    [[NSNotificationCenter defaultCenter] postNotification: [NSNotification notificationWithName: kReceiptItemsTableReceiptPressedNotification object: nil userInfo: thisCatagoryInfo]];
+    
+    if (thisCatagoryInfo)
+    {
+        [[NSNotificationCenter defaultCenter] postNotification: [NSNotification notificationWithName: kReceiptItemsTableReceiptPressedNotification object: nil userInfo: thisCatagoryInfo]];
+    }
 }
 
 @end

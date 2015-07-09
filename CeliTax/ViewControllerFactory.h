@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class ConfigurationManager, UserManager, LookAndFeel;
-@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, FeedbackViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCatagoryViewController, SidebarViewController, Catagory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController;
+@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCatagoryViewController, SidebarViewController, Catagory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager;
 
 @protocol AuthenticationService, DataService, ManipulationService;
 
@@ -33,8 +33,6 @@
 
 - (MainViewController *) createMainViewController;
 
-- (FeedbackViewController *) createFeedbackViewController;
-
 - (SettingsViewController *) createSettingsViewController;
 
 - (VaultViewController *) createVaultViewController;
@@ -52,6 +50,8 @@
 - (ReceiptBreakDownViewController *) createReceiptBreakDownViewControllerForReceiptID: (NSString *) receiptID cameFromReceiptCheckingViewController: (BOOL) cameFromReceiptCheckingViewController;
 
 - (SelectionsPickerViewController *) createSelectionsPickerViewControllerWithSelections: (NSArray *) selections;
+
+- (TransferSelectionsViewController *) createTransferSelectionsViewController: (NSArray *) selections;
 
 - (ColorPickerViewController *) createColorPickerViewController;
 

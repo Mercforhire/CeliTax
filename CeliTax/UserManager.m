@@ -30,7 +30,7 @@
     
     self.user = newUser;
     
-    //save user 
+    //save user
 }
 
 -(void)logOutUser

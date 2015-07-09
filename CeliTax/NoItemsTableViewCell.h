@@ -10,4 +10,6 @@
 
 @interface NoItemsTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *label;
+
 @end

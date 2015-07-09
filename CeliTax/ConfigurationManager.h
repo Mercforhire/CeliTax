@@ -14,8 +14,13 @@
 
 -(void)setNewSettings:(NSDictionary *)settings;
 
+
 -(NSInteger)getCurrentTaxYear;
 
 -(void)setCurrentTaxYear:(NSInteger)taxYear;
+
+-(BOOL)isTutorialOn;
+
+-(void)setTutorialON:(BOOL)on;
 
 @end

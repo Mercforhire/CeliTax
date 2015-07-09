@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class AuthorizeResult,RegisterResult,UserDataDAO;
+@class AuthorizeResult,RegisterResult,UserDataDAO,ConfigurationManager;
 
 @protocol AuthenticationService <NSObject>
 
@@ -18,7 +18,11 @@ typedef void (^AuthenticateUserFailureBlock) (AuthorizeResult *authorizeResult);
 typedef void (^RegisterNewUserSuccessBlock) (RegisterResult *registerResult);
 typedef void (^RegisterNewUserFailureBlock) (RegisterResult *registerResult);
 
-@property (nonatomic, strong) UserDataDAO       *userDataDAO;
+typedef void (^SendCommentSuccessBlock) ();
+typedef void (^SendCommentFailureBlock) (NSString *reason);
+
+@property (nonatomic, strong) UserDataDAO               *userDataDAO;
+@property (nonatomic, strong) ConfigurationManager      *configManager;
 
 - (void) authenticateUser: (NSString *) userName
                       withPassword: (NSString *) password
@@ -34,5 +38,9 @@ typedef void (^RegisterNewUserFailureBlock) (RegisterResult *registerResult);
                        withPostal: (NSString *) postal
                           success: (RegisterNewUserSuccessBlock) success
                           failure: (RegisterNewUserSuccessBlock) failure;
+
+- (void) sendComment:(NSString *)comment
+             success: (SendCommentSuccessBlock) success
+             failure: (SendCommentFailureBlock) failure;
 
 @end

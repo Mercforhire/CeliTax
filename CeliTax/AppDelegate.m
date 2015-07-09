@@ -14,6 +14,7 @@
 #import "ServiceFactory.h"
 #import "DAOFactory.h"
 #import "LookAndFeel.h"
+#import "TutorialManager.h"
 
 @class SplashViewController, ConfigurationManager, ViewControllerFactory, UserManager;
 

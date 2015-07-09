@@ -12,6 +12,7 @@
 #import "AuthenticationService.h"
 #import "RegisterResult.h"
 #import "UIView+Helper.h"
+#import "M13Checkbox.h"
 
 @interface RegisterViewController () <UITextFieldDelegate, UIScrollViewDelegate>
 
@@ -36,6 +37,9 @@
 @property (strong, nonatomic) MBProgressHUD *waitView;
 
 @property (strong, nonatomic) NSString *country;
+
+@property (weak, nonatomic) IBOutlet M13Checkbox *agreeCheckBox;
+
 @end
 
 @implementation RegisterViewController
@@ -67,7 +71,14 @@
     [self.lookAndFeel addLeftInsetToTextField: self.postalField];
 
     [self.lookAndFeel applyHollowGreenButtonStyleTo: self.doneButton];
-
+    
+    
+    [self.agreeCheckBox.titleLabel setFont: [UIFont latoFontOfSize: 13]];
+    [self.agreeCheckBox.titleLabel setTextColor: [UIColor blackColor]];
+    [self.agreeCheckBox setStrokeColor: [UIColor grayColor]];
+    [self.agreeCheckBox setCheckColor: self.lookAndFeel.appGreenColor];
+    [self.agreeCheckBox setCheckAlignment: M13CheckboxAlignmentLeft];
+    [self.agreeCheckBox.titleLabel setText: @"I agree to the terms and conditions"];
 }
 
 - (void) viewDidLoad
@@ -122,7 +133,17 @@
                          action: @selector(textFieldDidChange:)
                forControlEvents: UIControlEventEditingChanged];
 
+    
+    [self.agreeCheckBox addTarget: self
+                           action: @selector(agreeChecked:)
+                 forControlEvents: UIControlEventValueChanged];
+    
     [self canadaPressed: nil];
+}
+
+- (void) agreeChecked: (M13Checkbox *) checkBox
+{
+    [self textFieldDidChange:nil];
 }
 
 - (void) createAndShowWaitViewForRegister
@@ -281,7 +302,8 @@
 {
     if (self.emailField.text.length && self.passwordField.text.length &&
         self.emailRepeatField.text.length && self.passwordRepeatField.text.length &&
-        self.firstnameField.text.length && self.lastnameField && self.country && self.postalField)
+        self.firstnameField.text.length && self.lastnameField && self.country &&
+        self.postalField && self.agreeCheckBox.checkState == M13CheckboxStateChecked)
     {
         [self.doneButton setEnabled: YES];
     }

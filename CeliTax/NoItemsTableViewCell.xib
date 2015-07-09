@@ -38,6 +38,9 @@
                     <constraint firstAttribute="centerY" secondItem="tE2-aw-Jqa" secondAttribute="centerY" id="F4v-im-dFQ"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="label" destination="tE2-aw-Jqa" id="mHa-Zb-tZu"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>

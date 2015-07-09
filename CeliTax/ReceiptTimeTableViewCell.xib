@@ -5,9 +5,6 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Lato-Bold.ttf">
-            <string>Lato-Bold</string>
-        </mutableArray>
         <mutableArray key="Lato-Regular.ttf">
             <string>Lato-Regular</string>
         </mutableArray>
@@ -39,30 +36,28 @@
                             <constraint firstAttribute="width" constant="25" id="qeG-4F-gpW"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0IC-YE-RsI">
-                        <rect key="frame" x="244" y="6" width="68" height="28"/>
-                        <color key="backgroundColor" red="0.55334633690000001" green="0.82171581770000002" blue="0.4125430142" alpha="1" colorSpace="calibratedRGB"/>
-                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
-                        <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
-                        <state key="normal" title="Details">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AEZ-Cj-Bop" customClass="ImageCounterIconView">
+                        <rect key="frame" x="269" y="1" width="38" height="38"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="38" id="f6U-CV-q1W"/>
+                            <constraint firstAttribute="height" constant="38" id="tt5-ol-92s"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="AEZ-Cj-Bop" secondAttribute="trailing" constant="5" id="3f2-yg-xHO"/>
                     <constraint firstAttribute="centerY" secondItem="tvf-aD-nBx" secondAttribute="centerY" id="3vk-Ly-KhD"/>
                     <constraint firstItem="tvf-aD-nBx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="18" id="GpO-UP-0FV"/>
-                    <constraint firstItem="0IC-YE-RsI" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="Zv6-xT-6Xp"/>
                     <constraint firstItem="fMv-hU-bX0" firstAttribute="leading" secondItem="tvf-aD-nBx" secondAttribute="trailing" constant="21" id="cdx-I8-SBk"/>
+                    <constraint firstAttribute="centerY" secondItem="AEZ-Cj-Bop" secondAttribute="centerY" id="iTq-ab-2JV"/>
                     <constraint firstItem="fMv-hU-bX0" firstAttribute="centerY" secondItem="tvf-aD-nBx" secondAttribute="centerY" id="ixx-nD-K9e"/>
-                    <constraint firstAttribute="centerY" secondItem="0IC-YE-RsI" secondAttribute="centerY" constant="-0.25" id="re4-O5-OYv"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="checkBoxView" destination="tvf-aD-nBx" id="5Of-na-RdS"/>
                 <outlet property="dateLabel" destination="fMv-hU-bX0" id="tti-Xf-fFQ"/>
-                <outlet property="detailsButton" destination="0IC-YE-RsI" id="CAY-Jz-ytD"/>
+                <outlet property="receiptCounterView" destination="AEZ-Cj-Bop" id="IsX-6X-NAI"/>
             </connections>
             <point key="canvasLocation" x="395.5" y="250"/>
         </tableViewCell>

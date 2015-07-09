@@ -24,6 +24,9 @@
 #import "ReceiptScrollView.h"
 #import "ReceiptEditModeTableViewCell.h"
 #import "CameraViewController.h"
+#import "TutorialManager.h"
+#import "TutorialStep.h"
+#import "ConfigurationManager.h"
 
 NSString *ReceiptItemCellIdentifier = @"ReceiptItemCellIdentifier";
 NSString *ReceiptEditModeTableViewCellIdentifier = @"ReceiptEditModeTableViewCellIdentifier";
@@ -84,7 +87,7 @@ typedef enum : NSUInteger
     self.numberToolbar.barStyle = UIBarStyleDefault;
 
     UIBarButtonItem *doneToolbarButton = [[UIBarButtonItem alloc]initWithTitle: @"Done" style: UIBarButtonItemStyleDone target: self action: @selector(doneWithNumberPad)];
-    [doneToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoFontOfSize: 14], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
+    [doneToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
 
     self.numberToolbar.items = [NSArray arrayWithObjects:
                                 [[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil],
@@ -99,9 +102,6 @@ typedef enum : NSUInteger
     self.receiptScrollView.lookAndFeel = self.lookAndFeel;
     [self.receiptScrollView setBackgroundColor: [UIColor blackColor]];
     [self.receiptScrollView setInsets:UIEdgeInsetsMake(64, 0, 0, 0)];
-
-    [self.lookAndFeel applyDisabledButtonStyleTo: self.addOrEditItemButton];
-    [self.lookAndFeel applyDisabledButtonStyleTo: self.deleteItemButton];
 
     UICollectionViewFlowLayout *collectionLayout = [[UICollectionViewFlowLayout alloc] init];
     [collectionLayout setItemSize: CGSizeMake(self.view.frame.size.width, 53)];
@@ -259,6 +259,129 @@ typedef enum : NSUInteger
     }];
 }
 
+-(void)showTutorial
+{
+    NSMutableArray *tutorials = [NSMutableArray new];
+    
+    //Each Stage represents a different group of Tutorial pop ups
+    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewControllerNamed: NSStringFromClass([self class])];
+    
+    if ( currentTutorialStage == 1 )
+    {
+        //add Tutorials specific for this step
+        TutorialStep *tutorialStep1 = [TutorialStep new];
+        
+        tutorialStep1.text = @"Scroll up and down your receipt to view all items that need to be allocated";
+        tutorialStep1.origin = self.editReceiptTable.center;
+        tutorialStep1.size = CGSizeMake(290, 60);
+        tutorialStep1.pointsUp = YES;
+        
+        [tutorials addObject:tutorialStep1];
+        
+        TutorialStep *tutorialStep2 = [TutorialStep new];
+        
+        tutorialStep2.origin = self.catagoriesBar.center;
+        
+        tutorialStep2.text = @"Choose a category to allocate a purchase.\n\nClick the + button if you need to add another category!";
+        tutorialStep2.size = CGSizeMake(290, 100);
+        tutorialStep2.pointsUp = NO;
+        
+        [tutorials addObject:tutorialStep2];
+        
+        currentTutorialStage++;
+        
+        [self.tutorialManager setCurrentTutorialStageForViewControllerNamed:NSStringFromClass([self class]) forStage:currentTutorialStage];
+    }
+    else if ( currentTutorialStage == 3 )
+    {
+        //add Tutorials specific for this step
+        TutorialStep *tutorialStep3 = [TutorialStep new];
+        
+        tutorialStep3.text = @"Use the Add Item button to add an additional item to the current category";
+        
+        CGPoint addOrEditItemButtonCenterInContainer = self.addOrEditItemButton.center;
+        CGPoint containerOrigin = self.itemControlsContainer.frame.origin;
+        
+        tutorialStep3.origin = CGPointMake(containerOrigin.x + addOrEditItemButtonCenterInContainer.x
+                                           , containerOrigin.y + addOrEditItemButtonCenterInContainer.y);
+        tutorialStep3.size = CGSizeMake(290, 70);
+        tutorialStep3.pointsUp = NO;
+        
+        [tutorials addObject:tutorialStep3];
+        
+        TutorialStep *tutorialStep4 = [TutorialStep new];
+        
+        tutorialStep4.text = @"Use the < > arrows to quickly review or delete purchases allocated to this category";
+        
+        CGPoint previousItemButtonCenterInContainer = self.previousItemButton.center;
+        CGPoint nextItemButtonInContainer = self.nextItemButton.center;
+        
+        tutorialStep4.origin = CGPointMake(containerOrigin.x + (previousItemButtonCenterInContainer.x + nextItemButtonInContainer.x) / 2, containerOrigin.y + (previousItemButtonCenterInContainer.y + nextItemButtonInContainer.y) / 2);
+        tutorialStep4.size = CGSizeMake(290, 80);
+        tutorialStep4.pointsUp = NO;
+        
+        [tutorials addObject:tutorialStep4];
+        
+        TutorialStep *tutorialStep5 = [TutorialStep new];
+        
+        tutorialStep5.text = @"Once you are done with one category, simply click on a different category to add more purcahses until you are done allocating all eligible purchases";
+        
+        tutorialStep5.origin = self.catagoriesBar.center;
+        tutorialStep5.size = CGSizeMake(290, 100);
+        tutorialStep5.pointsUp = NO;
+        
+        [tutorials addObject:tutorialStep5];
+        
+        TutorialStep *tutorialStep6 = [TutorialStep new];
+        
+        tutorialStep6.text = @"When finished allocating the entire receipt, click Complete";
+        
+        CGPoint barButtonCenter = CGPointMake(self.view.frame.size.width - self.completeButton.frame.size.width / 2 - 15,
+                                              50);
+        
+        tutorialStep6.origin = barButtonCenter;
+        tutorialStep6.size = CGSizeMake(290, 60);
+        tutorialStep6.pointsUp = YES;
+        
+        [tutorials addObject:tutorialStep6];
+        
+        TutorialStep *tutorialStep7 = [TutorialStep new];
+        
+        tutorialStep7.text = @"Don’t have time to allocate right now? No worries. You can always review, add, edit and delete receipts and allocations from, Recent Uploads, the Vault or My Account";
+        
+        tutorialStep7.size = CGSizeMake(290, 110);
+        tutorialStep7.pointsUp = YES;
+        
+        [tutorials addObject:tutorialStep7];
+        
+        currentTutorialStage++;
+        
+        [self.tutorialManager setCurrentTutorialStageForViewControllerNamed:NSStringFromClass([self class]) forStage:currentTutorialStage];
+    }
+    else
+    {
+        return;
+    }
+    
+    [self.tutorialManager startTutorialInViewController:self andTutorials:tutorials];
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    //Create tutorial items if it's ON
+    if ([self.configurationManager isTutorialOn])
+    {
+        NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewControllerNamed: NSStringFromClass([self class])];
+        
+        if (currentTutorialStage == 1)
+        {
+            [self showTutorial];
+        }
+    }
+}
+
 - (void) viewWillDisappear: (BOOL) animated
 {
     [super viewWillDisappear: animated];
@@ -305,7 +428,12 @@ typedef enum : NSUInteger
 {
     for (Record *record in records)
     {
-        NSMutableArray *recordsOfThisCatagory = [NSMutableArray new];
+        NSMutableArray *recordsOfThisCatagory = [self.records objectForKeyedSubscript:record.catagoryID];
+        
+        if (!recordsOfThisCatagory)
+        {
+            recordsOfThisCatagory = [NSMutableArray new];
+        }
 
         [recordsOfThisCatagory addObject: record];
 
@@ -354,25 +482,25 @@ typedef enum : NSUInteger
 - (void) disableAddItemButton
 {
     [self.addOrEditItemButton setEnabled: NO];
-    [self.lookAndFeel applyDisabledButtonStyleTo: self.addOrEditItemButton];
+    [self.addOrEditItemButton setAlpha:0.5f];
 }
 
 - (void) enableAddItemButton
 {
     [self.addOrEditItemButton setEnabled: YES];
-    [self.lookAndFeel applySolidGreenButtonStyleTo: self.addOrEditItemButton];
+    [self.addOrEditItemButton setAlpha:1];
 }
 
 - (void) disableDeleteItemButton
 {
     [self.deleteItemButton setEnabled: NO];
-    [self.lookAndFeel applyDisabledButtonStyleTo: self.deleteItemButton];
+    [self.deleteItemButton setAlpha:0.5f];
 }
 
 - (void) enableDeleteItemButton
 {
     [self.deleteItemButton setEnabled: YES];
-    [self.lookAndFeel applySolidGreenButtonStyleTo: self.deleteItemButton];
+    [self.deleteItemButton setAlpha:1];
 }
 
 - (IBAction) editReceiptsPressed: (UIButton *) sender
@@ -381,7 +509,7 @@ typedef enum : NSUInteger
 
     if (self.editReceiptMode)
     {
-        [self.editReceiptsButton setTitle: @"Cancel" forState: UIControlStateNormal];
+        [self.editReceiptsButton setTitle: @"Done" forState: UIControlStateNormal];
     }
     else
     {
@@ -460,6 +588,8 @@ typedef enum : NSUInteger
             self.currentlySelectedRecord.amount = tempPricePerItem;
 
             [self saveCurrentlySelectedRecord];
+            
+            [self.view endEditing: YES];
         }
         else
         {
@@ -497,11 +627,14 @@ typedef enum : NSUInteger
 
                 // calls the setter to refresh UI
                 self.recordsOfCurrentlySelectedCatagory = recordsOfThisCatagory;
-
-                // load the newest record (which also refreshes the UI)
-                self.currentlySelectedRecord = record;
+                
+                [self.receiptItemCollectionView reloadData];
+                
+                [self.receiptItemCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.recordsOfCurrentlySelectedCatagory.count inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
 
                 [self refreshRecordsCounter];
+                
+                [self performSelector:@selector(selectedNoRecord) withObject:nil afterDelay:0.3];
             }                          failure: ^(NSString *reason) {
                 DLog(@"self.dataService fetchRecordForID failed");
             }];
@@ -509,6 +642,11 @@ typedef enum : NSUInteger
             DLog(@"self.manipulationService addRecordForCatagoryID failed");
         }];
     }
+}
+
+-(void)selectedNoRecord
+{
+    self.currentlySelectedRecord = 0;
 }
 
 - (IBAction) deleteRecordPressed: (UIButton *) sender
@@ -859,6 +997,28 @@ typedef enum : NSUInteger
     self.currentlySelectedRecord = nil;
 
     [self showAddRecordControls];
+    
+    [self.view layoutIfNeeded];
+    
+    if ([self.configurationManager isTutorialOn] && !self.cameFromReceiptBreakDownViewController)
+    {
+        NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewControllerNamed: NSStringFromClass([self class])];
+        
+        if (currentTutorialStage == 2)
+        {
+            currentTutorialStage++;
+            
+            [self.tutorialManager setCurrentTutorialStageForViewControllerNamed:NSStringFromClass([self class]) forStage:currentTutorialStage];
+            
+            [self showTutorial];
+            
+            return;
+        }
+    }
+   
+    ReceiptItemCell *itemCell = (ReceiptItemCell *)[self.receiptItemCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    
+    [itemCell.qtyField becomeFirstResponder];
 }
 
 - (void) buttonUnselected

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -23,6 +23,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegisterViewController">
             <connections>
+                <outlet property="agreeCheckBox" destination="5Cz-zv-7eW" id="gLR-0I-3ms"/>
                 <outlet property="canadaButton" destination="6Qf-KT-Eb3" id="fQB-vN-vbp"/>
                 <outlet property="cityField" destination="JAu-vJ-PwW" id="kqi-ZB-UrR"/>
                 <outlet property="doneButton" destination="LxA-sw-eBy" id="aVl-SJ-sTX"/>
@@ -40,11 +41,11 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="661"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="674"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L0H-bi-TpZ">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="661"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="674"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Please enter email address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ml5-Fh-98B">
                             <rect key="frame" x="28" y="78" width="266" height="31"/>
@@ -171,8 +172,15 @@
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no"/>
                         </textField>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Cz-zv-7eW" customClass="M13Checkbox">
+                            <rect key="frame" x="28" y="554" width="268" height="47"/>
+                            <color key="backgroundColor" red="0.20649079740000001" green="1" blue="0.48699400129999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="47" id="aYG-WC-fpq"/>
+                            </constraints>
+                        </view>
                         <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LxA-sw-eBy">
-                            <rect key="frame" x="92" y="578" width="136" height="32"/>
+                            <rect key="frame" x="92" y="609" width="136" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="42" id="5g1-Mz-tcs"/>
                                 <constraint firstAttribute="width" constant="90" id="9pr-7R-DVD"/>
@@ -196,9 +204,13 @@
                         </button>
                     </subviews>
                     <constraints>
+                        <constraint firstItem="5Cz-zv-7eW" firstAttribute="top" secondItem="yzP-e6-wMF" secondAttribute="bottom" constant="16" id="2BV-TQ-qd7"/>
                         <constraint firstItem="txk-FD-UAb" firstAttribute="leading" secondItem="L0H-bi-TpZ" secondAttribute="leading" constant="28" id="2ix-da-Vci"/>
                         <constraint firstAttribute="trailing" secondItem="adG-e5-ad9" secondAttribute="trailing" constant="26" id="5go-yH-agR"/>
+                        <constraint firstAttribute="trailing" secondItem="5Cz-zv-7eW" secondAttribute="trailing" constant="24" id="6YA-c9-y36"/>
                         <constraint firstItem="adG-e5-ad9" firstAttribute="top" secondItem="Ml5-Fh-98B" secondAttribute="bottom" constant="18" id="744-1k-XXw"/>
+                        <constraint firstItem="5Cz-zv-7eW" firstAttribute="leading" secondItem="L0H-bi-TpZ" secondAttribute="leading" constant="28" id="BDv-wl-9Vx"/>
+                        <constraint firstItem="5Cz-zv-7eW" firstAttribute="leading" secondItem="yzP-e6-wMF" secondAttribute="trailing" constant="-132" id="C85-Lh-Fb4"/>
                         <constraint firstAttribute="bottom" secondItem="LxA-sw-eBy" secondAttribute="bottom" constant="56" id="Diu-Z2-vSE"/>
                         <constraint firstItem="gLl-gh-IMC" firstAttribute="leading" secondItem="gUs-5p-abZ" secondAttribute="trailing" constant="20" id="E3Z-IC-E2u"/>
                         <constraint firstAttribute="trailing" secondItem="mNQ-F5-y90" secondAttribute="trailing" constant="26" id="G4X-c3-eOE"/>
@@ -229,11 +241,18 @@
                         <constraint firstItem="Rzg-Ql-Kgj" firstAttribute="top" secondItem="L0H-bi-TpZ" secondAttribute="top" id="szC-Ae-4GP"/>
                         <constraint firstItem="gUs-5p-abZ" firstAttribute="centerY" secondItem="6Qf-KT-Eb3" secondAttribute="centerY" id="tMO-Fe-kLO"/>
                         <constraint firstAttribute="centerX" secondItem="ANe-dl-pJH" secondAttribute="centerX" id="tWS-zP-8zs"/>
+                        <constraint firstItem="LxA-sw-eBy" firstAttribute="top" secondItem="5Cz-zv-7eW" secondAttribute="bottom" constant="8" id="v4I-VZ-sxg"/>
                         <constraint firstItem="yzP-e6-wMF" firstAttribute="leading" secondItem="L0H-bi-TpZ" secondAttribute="leading" constant="28" id="vci-Ri-afN"/>
                         <constraint firstItem="LxA-sw-eBy" firstAttribute="top" secondItem="yzP-e6-wMF" secondAttribute="bottom" constant="40" id="vhN-Nx-ugo"/>
                         <constraint firstItem="mNQ-F5-y90" firstAttribute="leading" secondItem="L0H-bi-TpZ" secondAttribute="leading" constant="28" id="w4E-Pe-ZQk"/>
                         <constraint firstItem="JAu-vJ-PwW" firstAttribute="top" secondItem="6Qf-KT-Eb3" secondAttribute="bottom" constant="30" id="xyM-Yb-9h7"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="C85-Lh-Fb4"/>
+                            <exclude reference="vhN-Nx-ugo"/>
+                        </mask>
+                    </variation>
                 </scrollView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -245,7 +264,7 @@
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="314" y="408.5"/>
+            <point key="canvasLocation" x="314" y="415"/>
         </view>
     </objects>
     <resources>

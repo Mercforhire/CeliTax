@@ -31,6 +31,7 @@
     {
         self.authenticationService = [[AuthenticationServiceImpl alloc] init];
         self.authenticationService.userDataDAO = [self.daoFactory createUserDataDAO];
+        self.authenticationService.configManager = self.configurationManager;
     }
     
     return self.authenticationService;

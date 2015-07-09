@@ -24,8 +24,16 @@
 #import "TriangleView.h"
 #import "LoginViewController.h"
 #import "ConfigurationManager.h"
+#import "UIView+Helper.h"
+#import "NoItemsTableViewCell.h"
+#import "TutorialManager.h"
+#import "TutorialStep.h"
 
-#define kRecentUploadTableRowHeight         40
+@class UIToolbarTextButton;
+
+#define kRecentUploadTableRowHeight                     40
+
+#define kNoItemsTableViewCellIdentifier                 @"NoItemsTableViewCell"
 
 typedef enum : NSUInteger
 {
@@ -34,12 +42,18 @@ typedef enum : NSUInteger
     SectionCount,
 } SectionTitles;
 
-@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate>
+@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
+@property (nonatomic, strong) UIToolbar *pickerToolbar;
+@property (nonatomic, strong) UIBarButtonItem *addCatagoryMenuItem;
 @property (weak, nonatomic) IBOutlet UITableView *recentUploadsTable;
 @property (weak, nonatomic) IBOutlet UIButton *cameraButton;
 @property (weak, nonatomic) IBOutlet UILabel *taxYearLabel;
 @property (weak, nonatomic) IBOutlet TriangleView *taxYearTriangle;
+@property (strong, nonatomic) UIPickerView *taxYearPicker;
+@property (weak, nonatomic) IBOutlet UITextField *invisibleNewTaxYearField;
+@property (weak, nonatomic) IBOutlet UIButton *myAccountButton;
+@property (weak, nonatomic) IBOutlet UIButton *vaultButton;
 
 @property (nonatomic, strong) WYPopoverController *selectionPopover;
 @property (nonatomic, strong) SelectionsPickerViewController *taxYearPickerViewController;
@@ -48,7 +62,9 @@ typedef enum : NSUInteger
 @property (nonatomic, strong) NSArray *receiptInfos;
 
 // sorted from most recent to oldest
-@property (nonatomic, strong) NSArray *taxYears;
+@property (nonatomic, strong) NSArray *existingTaxYears;
+@property (nonatomic, strong) NSMutableArray *possibleTaxYears;
+@property (nonatomic, copy) NSString *taxYearToAdd;
 
 @property (nonatomic, strong) NSNumber *currentlySelectedYear;
 
@@ -69,13 +85,16 @@ typedef enum : NSUInteger
     [addCatagoryButton addTarget: self action: @selector(addCatagoryPressed:) forControlEvents: UIControlEventTouchUpInside];
     [addCatagoryButton sizeToFit];
 
-    UIBarButtonItem *menuItem = [[UIBarButtonItem alloc] initWithCustomView: addCatagoryButton];
-    self.navigationItem.leftBarButtonItem = menuItem;
+    self.addCatagoryMenuItem = [[UIBarButtonItem alloc] initWithCustomView: addCatagoryButton];
+    self.navigationItem.leftBarButtonItem = self.addCatagoryMenuItem;
 
     [self.navigationItem setHidesBackButton: YES];
 
     UINib *mainTableCell = [UINib nibWithNibName: @"MainViewTableViewCell" bundle: nil];
     [self.recentUploadsTable registerNib: mainTableCell forCellReuseIdentifier: @"MainTableCell"];
+    
+    UINib *noItemTableCell = [UINib nibWithNibName: @"NoItemsTableViewCell" bundle: nil];
+    [self.recentUploadsTable registerNib: noItemTableCell forCellReuseIdentifier: kNoItemsTableViewCellIdentifier];
 
     // remove loginViewController from stack
     NSMutableArray *viewControllers = [[self.navigationController viewControllers] mutableCopy];
@@ -90,6 +109,84 @@ typedef enum : NSUInteger
     }
 
     [self.navigationController setViewControllers: viewControllers];
+    
+    self.possibleTaxYears = [NSMutableArray new];
+    for (int year = 2010; year < 2016; year++)
+    {
+        [self.possibleTaxYears addObject:[NSNumber numberWithInteger:year]];
+    }
+    
+    self.taxYearPicker = [[UIPickerView alloc] init];
+    self.taxYearPicker.delegate = self;
+    self.taxYearPicker.dataSource = self;
+    self.taxYearPicker.showsSelectionIndicator = YES;
+    
+    self.invisibleNewTaxYearField.inputView = self.taxYearPicker;
+    
+    // Create Cancel and Add button in UIPickerView toolbar
+    self.pickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
+    self.pickerToolbar.barStyle = UIBarStyleDefault;
+    
+    UIBarButtonItem *cancelToolbarButton = [[UIBarButtonItem alloc]initWithTitle: @"Cancel" style: UIBarButtonItemStylePlain target: self action: @selector(cancelAddTaxYear)];
+    [cancelToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
+    
+    UIBarButtonItem *addToolbarButton = [[UIBarButtonItem alloc]initWithTitle: @"Done" style: UIBarButtonItemStylePlain target: self action: @selector(addTaxYear)];
+    [addToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
+    
+    
+    self.pickerToolbar.items = [NSArray arrayWithObjects:
+                                cancelToolbarButton,
+                           [[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil],
+                           addToolbarButton, nil];
+    [self.pickerToolbar sizeToFit];
+
+    
+    self.invisibleNewTaxYearField.inputAccessoryView = self.pickerToolbar;
+}
+
+-(void)cancelAddTaxYear
+{
+    [self.invisibleNewTaxYearField resignFirstResponder];
+}
+
+-(void)addTaxYear
+{
+    if ([self.existingTaxYears containsObject:self.taxYearToAdd])
+    {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@""
+                                                          message:@"You can not add a duplicate tax year."
+                                                         delegate:nil
+                                                cancelButtonTitle:nil
+                                                otherButtonTitles:@"Dimiss",nil];
+        
+        [message show];
+        
+        return;
+    }
+    
+    [self.invisibleNewTaxYearField resignFirstResponder];
+    
+    [self.manipulationService addTaxYear:self.taxYearToAdd.integerValue];
+    
+    [self refreshTaxYears];
+}
+
+-(void)refreshTaxYears
+{
+    self.existingTaxYears = [self.dataService fetchTaxYears];
+    
+    NSMutableArray *yearSelections = [NSMutableArray new];
+    
+    for (NSNumber *year in self.existingTaxYears )
+    {
+        [yearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", (long)year.integerValue]];
+    }
+    
+    [yearSelections addObject:@"Add Tax Year"];
+    
+    self.taxYearPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: yearSelections];
+    self.selectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.taxYearPickerViewController];
+    [self.taxYearPickerViewController setDelegate: self];
 }
 
 - (void) viewDidLoad
@@ -115,18 +212,7 @@ typedef enum : NSUInteger
     [self.taxYearLabel addGestureRecognizer: taxYearPressedTap];
     [self.taxYearTriangle addGestureRecognizer: taxYearPressedTap2];
 
-    self.taxYears = [self.dataService fetchTaxYears];
-    
-    NSMutableArray *yearSelections = [NSMutableArray new];
-    
-    for (NSNumber *year in self.taxYears )
-    {
-        [yearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", (long)year.integerValue]];
-    }
-    
-    self.taxYearPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: yearSelections];
-    self.selectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.taxYearPickerViewController];
-    [self.taxYearPickerViewController setDelegate: self];
+    [self refreshTaxYears];
 }
 
 - (void) reloadReceiptInfo
@@ -137,7 +223,20 @@ typedef enum : NSUInteger
     {
         self.receiptInfos = receiptInfos;
         [self.recentUploadsTable reloadData];
-    }                                failure: ^(NSString *reason)
+        
+        if (self.receiptInfos.count)
+        {
+            NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewControllerNamed: NSStringFromClass([self class])];
+            
+            if (currentTutorialStage == 3)
+            {
+                currentTutorialStage++;
+                
+                [self.tutorialManager setCurrentTutorialStageForViewControllerNamed:NSStringFromClass([self class]) forStage:currentTutorialStage];
+            }
+        }
+    }
+    failure: ^(NSString *reason)
     {
         // should not happen
     }];
@@ -151,7 +250,7 @@ typedef enum : NSUInteger
     
     [self.configurationManager setCurrentTaxYear:_currentlySelectedYear.integerValue];
     
-    self.taxYearPickerViewController.highlightedSelectionIndex = [self.taxYears indexOfObject:self.currentlySelectedYear];
+    self.taxYearPickerViewController.highlightedSelectionIndex = [self.existingTaxYears indexOfObject:self.currentlySelectedYear];
 
     [self reloadReceiptInfo];
 }
@@ -163,7 +262,7 @@ typedef enum : NSUInteger
     //if there is no selected tax year saved, select the newest year by default
     if (![self.configurationManager getCurrentTaxYear])
     {
-        self.currentlySelectedYear = [self.taxYears firstObject];
+        self.currentlySelectedYear = [self.existingTaxYears firstObject];
     }
     else
     {
@@ -171,6 +270,111 @@ typedef enum : NSUInteger
     }
     
     [self reloadReceiptInfo];
+}
+
+-(void)displayTutorials
+{
+    NSMutableArray *tutorials = [NSMutableArray new];
+    
+    //Each Stage represents a different group of Tutorial pop ups
+    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewControllerNamed: NSStringFromClass([self class])];
+    
+    if ( currentTutorialStage == 1 )
+    {
+        TutorialStep *tutorialStep1 = [TutorialStep new];
+        
+        tutorialStep1.text = @"Welcome to CeliTax, the simple tax tool designed specifically for Celiacs.\n\nNo manual calculations. No paper receipts. No stress.\n\nYou have enough to worry about already, calculating your GF tax claim should not be one of them!\n\nThis wizard will guide you through each feature of CeliTax so you will quickly get familiar with its functions.\n\nLet’s go!";
+        tutorialStep1.size = CGSizeMake(290, 300);
+        tutorialStep1.pointsUp = YES;
+        
+        [tutorials addObject:tutorialStep1];
+        
+        TutorialStep *tutorialStep2 = [TutorialStep new];
+        
+        UIView *barButton = (UIView *)[self.pickerToolbar.subviews objectAtIndex:2]; // 0 for the first item
+        
+        CGPoint barButtonCenter = barButton.center;
+        barButtonCenter.x += 30;
+        barButtonCenter.y += [UIApplication sharedApplication].statusBarFrame.size.height + 10;
+        
+        tutorialStep2.origin = barButtonCenter;
+        
+        tutorialStep2.text = @"Click the Catagories button to add a new food category to keep all of your purchases allocated separately";
+        tutorialStep2.size = CGSizeMake(200, 120);
+        tutorialStep2.pointsUp = YES;
+        
+        [tutorials addObject:tutorialStep2];
+        
+        currentTutorialStage++;
+        
+        [self.tutorialManager setCurrentTutorialStageForViewControllerNamed:NSStringFromClass([self class]) forStage:currentTutorialStage];
+    }
+    else if ( currentTutorialStage == 2)
+    {
+        TutorialStep *tutorialStep3 = [TutorialStep new];
+        
+        tutorialStep3.origin = self.cameraButton.center;
+        tutorialStep3.text = @"Now that you’ve created your categories, click the camera button to take a photo of your receipt";
+        tutorialStep3.size = CGSizeMake(290, 80);
+        tutorialStep3.pointsUp = NO;
+        
+        [tutorials addObject:tutorialStep3];
+        
+        currentTutorialStage++;
+        
+        [self.tutorialManager setCurrentTutorialStageForViewControllerNamed:NSStringFromClass([self class]) forStage:currentTutorialStage];
+    }
+    else if ( currentTutorialStage == 4)
+    {
+        TutorialStep *tutorialStep4 = [TutorialStep new];
+        
+        tutorialStep4.origin = self.recentUploadsTable.center;
+        tutorialStep4.text = @"Use recent uploads to quickly manage your latest receipts";
+        tutorialStep4.size = CGSizeMake(290, 60);
+        tutorialStep4.pointsUp = YES;
+        
+        [tutorials addObject:tutorialStep4];
+        
+        TutorialStep *tutorialStep5 = [TutorialStep new];
+        
+        tutorialStep5.origin = self.myAccountButton.center;
+        tutorialStep5.text = @"Use My Account to manage categories, view total allocations, and calculate your tax claim!";
+        tutorialStep5.size = CGSizeMake(290, 80);
+        tutorialStep5.pointsUp = NO;
+        
+        [tutorials addObject:tutorialStep5];
+        
+        TutorialStep *tutorialStep6 = [TutorialStep new];
+        
+        tutorialStep6.origin = self.vaultButton.center;
+        tutorialStep6.text = @"Access all receipts from the Vault\n\nEvery photo capture is automatically saved and stored in the Vault";
+        tutorialStep6.size = CGSizeMake(290, 100);
+        tutorialStep6.pointsUp = NO;
+        
+        [tutorials addObject:tutorialStep6];
+        
+        currentTutorialStage++;
+        
+        [self.tutorialManager setCurrentTutorialStageForViewControllerNamed:NSStringFromClass([self class]) forStage:currentTutorialStage];
+    }
+    else
+    {
+        //don't show any tutorial
+        return;
+    }
+    
+    [self.tutorialManager startTutorialInViewController:self andTutorials:tutorials];
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    //Create tutorial items if it's ON
+    if ([self.configurationManager isTutorialOn])
+    {
+        [self displayTutorials];
+    }
 }
 
 - (void) taxYearPressed
@@ -206,15 +410,46 @@ typedef enum : NSUInteger
     [super selectedMenuIndex: RootViewControllerVault];
 }
 
+#pragma mark - UIPickerView delegate
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return self.possibleTaxYears.count;
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return [NSString stringWithFormat:@"%@", self.possibleTaxYears[row]];
+}
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    self.taxYearToAdd = self.possibleTaxYears[row];
+}
+
 #pragma mark - SelectionsPickerPopUpDelegate
 
 - (void) selectedSelectionAtIndex: (NSInteger) index fromPopUp:(SelectionsPickerViewController *)popUpController
 {
     [self.selectionPopover dismissPopoverAnimated: YES];
-
-    self.currentlySelectedYear = self.taxYears[index];
-
-    self.taxYearPickerViewController.highlightedSelectionIndex = index;
+    
+    if (index < self.existingTaxYears.count)
+    {
+        self.currentlySelectedYear = self.existingTaxYears[index];
+        
+        self.taxYearPickerViewController.highlightedSelectionIndex = index;
+    }
+    else
+    {
+        self.taxYearToAdd = [self.possibleTaxYears firstObject];
+        
+        [self.invisibleNewTaxYearField becomeFirstResponder];
+    }
 }
 
 #pragma mark - UITableview DataSource
@@ -226,11 +461,35 @@ typedef enum : NSUInteger
 
 - (NSInteger) tableView: (UITableView *) tableView numberOfRowsInSection: (NSInteger) section
 {
-    return self.receiptInfos.count;
+    if (!self.receiptInfos.count)
+    {
+        return 1;
+    }
+    else
+    {
+        return self.receiptInfos.count;
+    }
 }
 
-- (MainViewTableViewCell *) tableView: (UITableView *) tableView cellForRowAtIndexPath: (NSIndexPath *) indexPath
+- (UITableViewCell *) tableView: (UITableView *) tableView cellForRowAtIndexPath: (NSIndexPath *) indexPath
 {
+    if (!self.receiptInfos.count)
+    {
+        //show a NoItemsTableViewCell
+        static NSString *cellId2 = kNoItemsTableViewCellIdentifier;
+        
+        NoItemsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: cellId2];
+        
+        if (cell == nil)
+        {
+            cell = [[NoItemsTableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: cellId2];
+        }
+        
+        [cell.label setText:@"No Uploads"];
+        
+        return cell;
+    }
+    
     static NSString *cellId = @"MainTableCell";
     MainViewTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: cellId];
 
@@ -267,6 +526,11 @@ typedef enum : NSUInteger
 
 - (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath
 {
+    if (!self.receiptInfos.count)
+    {
+        return;
+    }
+    
     NSDictionary *uploadInfoDictionary = self.receiptInfos [indexPath.row];
 
     NSString *clickedReceiptID = [uploadInfoDictionary objectForKey: kReceiptIDKey];

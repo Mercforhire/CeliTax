@@ -58,4 +58,60 @@
     }
 }
 
+-(UIView *) findReorderView:(UIView *) view
+{
+    UIView *reorderView = nil;
+    for (UIView *subview in view.subviews)
+    {
+        if ([[[subview class] description] rangeOfString:@"Reorder"].location != NSNotFound)
+        {
+            reorderView = subview;
+            break;
+        }
+        else
+        {
+            reorderView = [self findReorderView:subview];
+            if (reorderView != nil)
+            {
+                break;
+            }
+        }
+    }
+    return reorderView;
+}
+
+-(void) setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
+    if (editing)
+    {
+        // find the reorder view here
+        // place the previous method either directly in your
+        // subclassed UITableViewCell, or in a category
+        // defined on UIView
+        UIView *reorderView = [self findReorderView:self];
+        if (reorderView)
+        {
+            // here, I am changing the background color to match my custom cell
+            // you may not want or need to do this
+            reorderView.backgroundColor = self.contentView.backgroundColor;
+            // now scan the reorder control's subviews for the reorder image
+            for (UIView *sv in reorderView.subviews)
+            {
+                if ([sv isKindOfClass:[UIImageView class]])
+                {
+                    // and replace the image with one that you want
+                    ((UIImageView *)sv).image = [UIImage imageNamed:@"menu.png"];
+                    // it may be necessary to properly size the image's frame
+                    // for your new image - in my experience, this was necessary
+                    // the upper left position of the UIImageView's frame
+                    // does not seem to matter - the parent reorder control
+                    // will center it properly for you
+                    sv.frame = CGRectMake(0, 0, 25, 25);
+                }
+            }
+        }
+    }
+}
+
 @end

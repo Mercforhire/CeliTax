@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LookAndFeel.h"
 
-@class ConfigurationManager, ViewControllerFactory, UserManager, LookAndFeel;
+@class ConfigurationManager, ViewControllerFactory, UserManager, LookAndFeel, TutorialManager;
 
 @interface BaseViewController : UIViewController
 
@@ -19,5 +19,7 @@
 @property (nonatomic, weak) ViewControllerFactory *viewControllerFactory; /** Allows all view controllers to create other view controllers without knowing about the details */
 @property (nonatomic, weak) UserManager *userManager;
 @property (nonatomic, weak) LookAndFeel *lookAndFeel;
+
+@property (nonatomic, strong) TutorialManager *tutorialManager;
 
 @end

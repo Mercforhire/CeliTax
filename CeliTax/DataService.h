@@ -74,9 +74,11 @@ typedef void (^FetchCatagoryInfoFailureBlock)(NSString *reason);
                         failure: (FetchReceiptsFailureBlock) failure;
 
 #define kReceiptIDKey       @"ReceiptID"
-#define kColorsKey          @"Colors"
 #define kUploadTimeKey      @"UploadTime"
 #define kTotalAmountKey     @"TotalAmount"
+#define kReceiptTimeKey     @"ReceiptTime"
+#define kTotalQtyKey        @"TotalQty"
+#define kNumberOfRecordsKey @"NumberOfRecords"
 
 - (void) fetchNewestReceiptInfo: (NSInteger) nThNewest
                          inYear: (NSInteger) year
@@ -97,8 +99,7 @@ typedef void (^FetchCatagoryInfoFailureBlock)(NSString *reason);
 //                         failure: (FetchReceiptsYearsRangeFailureBlock) failure;
 
 
-#define kReceiptTimeKey          @"ReceiptTime"
-#define kTotalQtyKey             @"TotalQty"
+
 
 - (void) fetchCatagoryInfoFromDate: (NSDate *) fromDate
                             toDate: (NSDate *) toDate

@@ -33,7 +33,7 @@
     
     for (UIView *subview in [self.view subviews])
     {
-        [self.lookAndFeel applyGrayBorderTo: subview];
+        [self.lookAndFeel applySlightlyDarkerBorderTo: subview];
     }
 }
 

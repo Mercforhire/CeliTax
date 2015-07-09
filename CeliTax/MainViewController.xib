@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -18,9 +18,12 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
             <connections>
                 <outlet property="cameraButton" destination="7Oe-J2-WxF" id="QC0-be-RV4"/>
+                <outlet property="invisibleNewTaxYearField" destination="bJx-RQ-5ke" id="Tbk-0V-XMy"/>
+                <outlet property="myAccountButton" destination="te4-wa-ilJ" id="98u-Bz-PcT"/>
                 <outlet property="recentUploadsTable" destination="fcU-BM-YHD" id="0bp-KU-Jpm"/>
                 <outlet property="taxYearLabel" destination="CIl-yA-Aq2" id="DnD-BV-d7d"/>
                 <outlet property="taxYearTriangle" destination="PUX-L9-4Oq" id="fzb-5i-8O9"/>
+                <outlet property="vaultButton" destination="dPP-MN-6ot" id="Nar-Td-kPd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -49,15 +52,15 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quick Links" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Xs-w8-O4L">
-                    <rect key="frame" x="110" y="397" width="99" height="23"/>
+                    <rect key="frame" x="110" y="410" width="99" height="23"/>
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="19"/>
                     <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dPP-MN-6ot">
-                    <rect key="frame" x="22" y="465" width="93" height="30"/>
+                    <rect key="frame" x="22" y="478" width="40" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="93" id="7y3-y0-dov"/>
+                        <constraint firstAttribute="width" constant="40" id="7y3-y0-dov"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                     <state key="normal" title="Vault">
@@ -69,7 +72,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="te4-wa-ilJ">
-                    <rect key="frame" x="22" y="430" width="93" height="30"/>
+                    <rect key="frame" x="22" y="443" width="93" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="93" id="WM5-fq-n05"/>
                     </constraints>
@@ -83,16 +86,16 @@
                     </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" style="plain" separatorStyle="none" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="fcU-BM-YHD">
-                    <rect key="frame" x="0.0" y="161" width="320" height="216"/>
+                    <rect key="frame" x="0.0" y="161" width="320" height="229"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Oe-J2-WxF">
-                    <rect key="frame" x="120" y="505" width="80" height="53"/>
+                    <rect key="frame" x="130" y="518" width="60" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="2AM-Hk-6Mz"/>
-                        <constraint firstAttribute="height" constant="53" id="G2n-BQ-MqR"/>
+                        <constraint firstAttribute="height" constant="40" id="G2n-BQ-MqR"/>
                         <constraint firstAttribute="width" constant="70" id="o13-fF-bXh"/>
-                        <constraint firstAttribute="width" constant="80" id="oVj-wl-lPU"/>
+                        <constraint firstAttribute="width" constant="60" id="oVj-wl-lPU"/>
                     </constraints>
                     <state key="normal" image="camera_icon.png">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -107,6 +110,14 @@
                         <action selector="cameraButtonPressed:" destination="-1" eventType="touchUpInside" id="Nau-6t-p43"/>
                     </connections>
                 </button>
+                <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bJx-RQ-5ke">
+                    <rect key="frame" x="215" y="74" width="97" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="97" id="pXN-MO-FjY"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -118,7 +129,9 @@
                 <constraint firstItem="7Oe-J2-WxF" firstAttribute="top" secondItem="fcU-BM-YHD" secondAttribute="bottom" constant="10" id="ACW-pl-Jrx"/>
                 <constraint firstItem="CIl-yA-Aq2" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="Fbo-lU-4Hv"/>
                 <constraint firstItem="fcU-BM-YHD" firstAttribute="top" secondItem="JSJ-GN-Ij8" secondAttribute="bottom" constant="20" id="FzY-ME-k90"/>
+                <constraint firstAttribute="trailing" secondItem="bJx-RQ-5ke" secondAttribute="trailing" constant="8" id="H2y-Q5-Arj"/>
                 <constraint firstAttribute="centerX" secondItem="JSJ-GN-Ij8" secondAttribute="centerX" id="IGb-g6-5bk"/>
+                <constraint firstItem="PUX-L9-4Oq" firstAttribute="centerY" secondItem="bJx-RQ-5ke" secondAttribute="centerY" constant="0.5" id="QLf-O0-kpP"/>
                 <constraint firstItem="te4-wa-ilJ" firstAttribute="top" secondItem="1Xs-w8-O4L" secondAttribute="bottom" constant="10" id="Tmg-qM-ABc"/>
                 <constraint firstItem="fcU-BM-YHD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="VSI-VB-U8s"/>
                 <constraint firstAttribute="centerX" secondItem="1Xs-w8-O4L" secondAttribute="centerX" id="Vhp-TD-1dW"/>

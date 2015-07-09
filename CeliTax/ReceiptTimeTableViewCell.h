@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "M13Checkbox.h"
+#import "ImageCounterIconView.h"
 
 @interface ReceiptTimeTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet M13Checkbox *checkBoxView;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property (weak, nonatomic) IBOutlet UIButton *detailsButton;
+@property (weak, nonatomic) IBOutlet ImageCounterIconView *receiptCounterView;
 
 @end

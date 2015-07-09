@@ -53,7 +53,7 @@
     self.catagoryNameField.delegate = self;
     self.catagoryNameField.text = self.catagoryToModify.name;
     
-    [self.lookAndFeel applyGrayBorderTo:self.colorBoxView];
+    [self.lookAndFeel applySlightlyDarkerBorderTo:self.colorBoxView];
     [self.lookAndFeel applyGrayBorderTo:self.catagoryNameField];
     [self.lookAndFeel addLeftInsetToTextField:self.catagoryNameField];
     
@@ -105,6 +105,7 @@
 - (void) colorSelected: (UIColor *) newColor
 {
     [self.colorBoxView setBackgroundColor: newColor];
+    [self.lookAndFeel applySlightlyDarkerBorderTo:self.colorBoxView];
 
     self.catagoryToModify.color = newColor;
 }

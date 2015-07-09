@@ -40,6 +40,31 @@
     [view setClipsToBounds: YES];
 }
 
+
+- (UIColor *)darkerColorFrom:(UIColor *)originalColor
+{
+    CGFloat h, s, b, a;
+    
+    if ([originalColor getHue:&h saturation:&s brightness:&b alpha:&a])
+    {
+        return [UIColor colorWithHue:h
+                          saturation:s
+                          brightness:b * 0.75
+                               alpha:a];
+    }
+    
+    return nil;
+}
+- (void) applySlightlyDarkerBorderTo: (UIView *) view
+{
+    UIColor *viewColor = view.backgroundColor;
+    
+    view.layer.cornerRadius = 2.0f;
+    view.layer.borderColor = [self darkerColorFrom:viewColor].CGColor;
+    view.layer.borderWidth = 1.0f;
+    [view setClipsToBounds: YES];
+}
+
 - (void) applyHollowGreenButtonStyleTo: (UIButton *) button
 {
     [button setBackgroundColor: [UIColor whiteColor]];

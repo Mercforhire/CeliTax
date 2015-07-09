@@ -11,8 +11,6 @@
 
 @interface ImageCounterIconView ()
 
-@property (nonatomic, strong) UIButton *imageButtonView;
-
 @property (nonatomic, strong) UILabel *counterLabel;
 
 @property (nonatomic, strong) UIColor *redColor;
@@ -27,10 +25,10 @@
 
     self.redColor = [UIColor colorWithRed: 255/255.0f green: 45/255.0f blue: 85/255.0f alpha: 1.0f];
 
-    self.imageButtonView = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-    [self.imageButtonView addTarget: self action: @selector(imagePressed) forControlEvents: UIControlEventTouchUpInside];
+    self.imageButton = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    [self.imageButton addTarget: self action: @selector(imagePressed) forControlEvents: UIControlEventTouchUpInside];
 
-    [self addSubview: self.imageButtonView];
+    [self addSubview: self.imageButton];
 
     [self refreshCounterLabel];
 }
@@ -49,7 +47,7 @@
     
     self.counterLabel = [[UILabel alloc] initWithFrame: CGRectMake(0, 0, labelSize.width, labelSize.height)];
 
-    [self.counterLabel setCenter: self.imageButtonView.center];
+    [self.counterLabel setCenter: self.imageButton.center];
     self.counterLabel.textAlignment = NSTextAlignmentCenter;
     [self.counterLabel setFont: [UIFont latoFontOfSize: 12]];
     [self.counterLabel setBackgroundColor: self.redColor];
@@ -105,7 +103,7 @@
 {
     _image = image;
 
-    [self.imageButtonView setImage: _image forState: UIControlStateNormal];
+    [self.imageButton setImage: _image forState: UIControlStateNormal];
 }
 
 @end

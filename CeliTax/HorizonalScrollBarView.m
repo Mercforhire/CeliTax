@@ -104,13 +104,13 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
     UIColor *cellColor = [self.buttonColors objectAtIndex: indexPath.row];
 
     [cell.selectionColorBox setBackgroundColor: cellColor];
-    [self.lookAndFeel applyGrayBorderTo: cell.selectionColorBox];
+    [self.lookAndFeel applySlightlyDarkerBorderTo: cell.selectionColorBox];
 
     [cell.selectionLabel setText: [self.buttonNames objectAtIndex: indexPath.row]];
 
     if (indexPath.row == self.selectedButtonIndex)
     {
-        [self.lookAndFeel applyGreenBorderTo: cell.contentView];
+        [self.lookAndFeel applyGrayBorderTo: cell.contentView];
     }
     else
     {

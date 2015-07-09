@@ -9,6 +9,7 @@
 #import "ConfigurationManager.h"
 
 #define kKeyTaxYear                 @"TaxYear"
+#define kTutorialOn                 @"TutorialOn"
 
 @interface ConfigurationManager ()
 
@@ -54,6 +55,28 @@
 -(void)setCurrentTaxYear:(NSInteger)taxYear
 {
     [self.settings setObject:[NSNumber numberWithInteger:taxYear] forKey:kKeyTaxYear];
+}
+
+-(BOOL)isTutorialOn
+{
+    if ([self.settings objectForKey:kTutorialOn])
+    {
+        return YES;
+    }
+    
+    return NO;
+}
+
+-(void)setTutorialON:(BOOL)on
+{
+    if (on)
+    {
+        [self.settings setObject:@"ON" forKey:kTutorialOn];
+    }
+    else
+    {
+        [self.settings removeObjectForKey:kTutorialOn];
+    }
 }
 
 @end

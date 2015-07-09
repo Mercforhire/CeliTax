@@ -18,6 +18,9 @@
 #import "ReceiptCheckingViewController.h"
 #import "WYPopoverController.h"
 #import "SelectionsPickerViewController.h"
+#import "TutorialManager.h"
+#import "TutorialStep.h"
+#import "ConfigurationManager.h"
 
 @interface ReceiptBreakDownViewController () <XYPieChartDelegate, XYPieChartDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, SelectionsPickerPopUpDelegate>
 
@@ -61,7 +64,7 @@
     [self.pieChart setDelegate: self];
     [self.pieChart setStartPieAngle: M_PI_2];
     [self.pieChart setAnimationSpeed: 1.0];
-    [self.pieChart setLabelFont: [UIFont systemFontOfSize: 14]];
+    [self.pieChart setLabelFont: [UIFont latoFontOfSize: 10]];
     [self.pieChart setLabelRadius: self.pieChart.frame.size.width / 4];
     [self.pieChart setShowPercentage: NO];
     [self.pieChart setPieBackgroundColor: [UIColor clearColor]];
@@ -81,7 +84,7 @@
     self.numberToolbar.barStyle = UIBarStyleDefault;
 
     UIBarButtonItem *doneToolbarButton = [[UIBarButtonItem alloc]initWithTitle: @"Done" style: UIBarButtonItemStyleDone target: self action: @selector(doneWithKeyboard)];
-    [doneToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoFontOfSize: 13], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
+    [doneToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
 
     self.numberToolbar.items = [NSArray arrayWithObjects:
                                 [[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil], doneToolbarButton, nil];
@@ -200,6 +203,48 @@
                                              selector: @selector(keyboardWillHide:)
                                                  name: UIKeyboardWillHideNotification
                                                object: nil];
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    //Create tutorial items if it's ON
+    if ([self.configurationManager isTutorialOn])
+    {
+        [self displayTutorials];
+    }
+}
+
+-(void)displayTutorials
+{
+    NSMutableArray *tutorials = [NSMutableArray new];
+    
+    //Each Stage represents a different group of Tutorial pop ups
+    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewControllerNamed: NSStringFromClass([self class])];
+    
+    if ( currentTutorialStage == 1 )
+    {
+        TutorialStep *tutorialStep1 = [TutorialStep new];
+        
+        tutorialStep1.text = @"Use the receipt breakdown view to manage allocations to a receipt.\n\nNot finished allocating? Simply click the view receipt button to allocate more purchases.";
+        tutorialStep1.origin = self.viewReceiptButton.center;
+        tutorialStep1.size = CGSizeMake(290, 140);
+        tutorialStep1.pointsUp = YES;
+        
+        [tutorials addObject:tutorialStep1];
+        
+        currentTutorialStage++;
+        
+        [self.tutorialManager setCurrentTutorialStageForViewControllerNamed:NSStringFromClass([self class]) forStage:currentTutorialStage];
+    }
+    else
+    {
+        //don't show any tutorial
+        return;
+    }
+    
+    [self.tutorialManager startTutorialInViewController:self andTutorials:tutorials];
 }
 
 - (void) refreshPieChart
@@ -601,7 +646,6 @@
         Catagory *thisCatagory = [self getCatagoryOfNthRecordFromRecordsDictionary: indexPath.row / 2];
 
         cell.catagoryColor = thisCatagory.color;
-        [self.lookAndFeel applyGrayBorderTo: cell.colorBoxView];
         
         cell.catagoryName.text = thisCatagory.name;
 
@@ -638,6 +682,8 @@
         {
             [cell makeCellAppearActive];
         }
+        
+        [self.lookAndFeel applySlightlyDarkerBorderTo: cell.colorBoxView];
 
         return cell;
     }

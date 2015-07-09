@@ -21,6 +21,8 @@
 #import "Utils.h"
 #import "ConfigurationManager.h"
 #import "ProfileBarView.h"
+#import "TutorialManager.h"
+#import "TutorialStep.h"
 
 #define kCatagoryTableRowHeight                     65
 
@@ -96,7 +98,7 @@
     [self.pieChart setDelegate: self];
     [self.pieChart setStartPieAngle: M_PI_2];
     [self.pieChart setAnimationSpeed: 1.0];
-    [self.pieChart setLabelFont: [UIFont latoFontOfSize: 12]];
+    [self.pieChart setLabelFont: [UIFont latoFontOfSize: 10]];
     [self.pieChart setLabelRadius: self.pieChart.frame.size.width / 4];
     [self.pieChart setShowPercentage: NO];
     [self.pieChart setPieBackgroundColor: [UIColor clearColor]];
@@ -422,8 +424,7 @@
                                                    inTaxYear: self.configurationManager.getCurrentTaxYear
                                                      success:^(NSArray *catagoryInfos)
     {
-        
-        DLog(@"%@", catagoryInfos);
+
         self.catagoryInfosToShow = catagoryInfos;
 
         [self.accountTableView reloadData];
@@ -438,12 +439,22 @@
 #define kBiggestLabelHeight         20
 #define kMargin                     10
 #define kTableCellHeight            35
+#define kNoItemsTableViewCellHeight 40
 
 - (CGFloat) calculateHeightForCellWithNumberOfCatagoryInfos: (NSInteger) numberOfCatagoryInfos
 {
-    float totalHeight = (kMargin + kBiggestLabelHeight + kMargin) * 4 + kTableCellHeight * numberOfCatagoryInfos + kMargin;
-
-    return totalHeight;
+    if (numberOfCatagoryInfos)
+    {
+        float totalHeight = (kMargin + kBiggestLabelHeight + kMargin) * 4 + kTableCellHeight * numberOfCatagoryInfos + kMargin;
+        
+        return totalHeight;
+    }
+    else
+    {
+        float totalHeight = (kMargin + kBiggestLabelHeight + kMargin) * 4 + kNoItemsTableViewCellHeight + kMargin;
+        
+        return totalHeight;
+    }
 }
 
 - (NSInteger) numberOfSectionsInTableView: (UITableView *) tableView
@@ -481,8 +492,6 @@
         cell.colorBoxColor = thisCatagory.color;
         cell.colorBox.backgroundColor = thisCatagory.color;
 
-        [self.lookAndFeel applyGrayBorderTo: cell.colorBox];
-
         [cell.catagoryNameLabel setText: thisCatagory.name];
         [cell.totalQuantityField setText: [NSString stringWithFormat: @"%ld", (long)sumQuantity]];
         [cell.totalAmountField setText: [NSString stringWithFormat: @"%.2f", sumAmount]];
@@ -515,6 +524,8 @@
         {
             [cell makeCellAppearActive];
         }
+        
+        [self.lookAndFeel applySlightlyDarkerBorderTo: cell.colorBox];
 
         return cell;
     }

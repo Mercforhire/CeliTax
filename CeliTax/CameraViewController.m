@@ -417,7 +417,6 @@
         default:
             break;
     }
-
 }
 
 - (IBAction)imageViewPan: (UIPanGestureRecognizer *)recognizer

@@ -137,8 +137,6 @@
 
 - (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath
 {
-    DLog(@"Name %@ clicked", self.selections [indexPath.row]);
-
     // Notify the delegate if it exists.
     if (self.delegate != nil)
     {

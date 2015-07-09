@@ -8,6 +8,10 @@
 
 #import "BaseSideBarViewController.h"
 
+@protocol AuthenticationService;
+
 @interface HelpScreenViewController : BaseSideBarViewController
+
+@property (nonatomic, weak) id <AuthenticationService> authenticationService;
 
 @end

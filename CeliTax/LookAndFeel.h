@@ -19,6 +19,8 @@
 
 - (void) applyGreenBorderTo: (UIView *) view;
 
+- (void) applySlightlyDarkerBorderTo: (UIView *) view;
+
 - (void) applyHollowGreenButtonStyleTo: (UIButton *) button;
 
 - (void) applySolidGreenButtonStyleTo: (UIButton *) button;

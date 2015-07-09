@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+            <string>Lato-Regular</string>
+            <string>Lato-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TutorialBubbleUp">
+            <connections>
+                <outlet property="arrowLeftDistance" destination="Hcp-Sw-08q" id="1Ea-tl-cd5"/>
+                <outlet property="arrowView" destination="NAx-0v-wHD" id="TxN-yk-uHy"/>
+                <outlet property="bubbleHeightBar" destination="DrE-jm-tWG" id="x3P-Wj-HUC"/>
+                <outlet property="bubbleLeftDistance" destination="bAl-Lb-rCl" id="OMQ-iZ-i3c"/>
+                <outlet property="bubbleView" destination="MKi-fL-jLE" id="kJn-GC-s25"/>
+                <outlet property="bubbleWidthBar" destination="dHR-lg-bMT" id="5gb-TP-VMn"/>
+                <outlet property="continueButton" destination="Yc5-dM-5lF" id="LqR-zi-1Nf"/>
+                <outlet property="skipButton" destination="ccP-8V-2ka" id="XBK-jU-iJk"/>
+                <outlet property="tutorialTextView" destination="O3y-3C-V0Y" id="ZOE-vN-c5S"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MKi-fL-jLE">
+                    <rect key="frame" x="20" y="13" width="260" height="250"/>
+                    <subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O3y-3C-V0Y">
+                            <rect key="frame" x="5" y="5" width="250" height="240"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="250" id="DrE-jm-tWG"/>
+                        <constraint firstAttribute="trailing" secondItem="O3y-3C-V0Y" secondAttribute="trailing" constant="5" id="Ry5-u0-dEL"/>
+                        <constraint firstAttribute="bottom" secondItem="O3y-3C-V0Y" secondAttribute="bottom" constant="5" id="a1O-SS-3zc"/>
+                        <constraint firstAttribute="width" constant="260" id="dHR-lg-bMT"/>
+                        <constraint firstItem="O3y-3C-V0Y" firstAttribute="top" secondItem="MKi-fL-jLE" secondAttribute="top" constant="5" id="ioh-Qs-tI2"/>
+                        <constraint firstItem="O3y-3C-V0Y" firstAttribute="leading" secondItem="MKi-fL-jLE" secondAttribute="leading" constant="5" id="vgt-76-S0c"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NAx-0v-wHD" customClass="Triangle">
+                    <rect key="frame" x="76" y="0.0" width="25" height="13"/>
+                    <color key="backgroundColor" red="0.55334633690000001" green="0.82171581770000002" blue="0.4125430142" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="13" id="9HE-iG-Imy"/>
+                        <constraint firstAttribute="width" constant="25" id="MdG-kJ-Y7i"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ccP-8V-2ka">
+                    <rect key="frame" x="15" y="278" width="125" height="35"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="125" id="Ct6-Sn-d47"/>
+                        <constraint firstAttribute="height" constant="35" id="qpZ-7u-vtX"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
+                    <state key="normal" title="Skip">
+                        <color key="titleColor" red="0.55334633690000001" green="0.82171581770000002" blue="0.4125430142" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="skipPressed:" destination="-1" eventType="touchUpInside" id="2gn-Gg-172"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yc5-dM-5lF">
+                    <rect key="frame" x="180" y="278" width="125" height="35"/>
+                    <color key="backgroundColor" red="0.55334633690000001" green="0.82171581770000002" blue="0.4125430142" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="7K6-wO-kM5"/>
+                        <constraint firstAttribute="width" constant="125" id="RvD-Tb-N1C"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
+                    <state key="normal" title="Continue">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="continuePressed:" destination="-1" eventType="touchUpInside" id="y5U-hF-54g"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="NAx-0v-wHD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="1oU-Rv-J47"/>
+                <constraint firstItem="MKi-fL-jLE" firstAttribute="top" secondItem="NAx-0v-wHD" secondAttribute="bottom" id="3Xr-0M-dD8"/>
+                <constraint firstItem="NAx-0v-wHD" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="76" id="Hcp-Sw-08q"/>
+                <constraint firstItem="Yc5-dM-5lF" firstAttribute="top" secondItem="MKi-fL-jLE" secondAttribute="bottom" constant="15" id="KLm-Lz-UR8"/>
+                <constraint firstItem="ccP-8V-2ka" firstAttribute="top" secondItem="MKi-fL-jLE" secondAttribute="bottom" constant="15" id="PXB-p4-2g4"/>
+                <constraint firstItem="MKi-fL-jLE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="bAl-Lb-rCl"/>
+                <constraint firstAttribute="trailing" secondItem="MKi-fL-jLE" secondAttribute="trailing" id="cai-W4-uZ3"/>
+                <constraint firstItem="ccP-8V-2ka" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="ccp-0S-XBx"/>
+                <constraint firstAttribute="trailing" secondItem="Yc5-dM-5lF" secondAttribute="trailing" constant="15" id="d5Z-DZ-UpH"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="cai-W4-uZ3"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="239" y="242.5"/>
+        </view>
+    </objects>
+</document>
