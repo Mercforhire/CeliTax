@@ -198,6 +198,63 @@
     }];
 }
 
+-(void)displayTutorials
+{
+    NSMutableArray *tutorials = [NSMutableArray new];
+    
+    //Each Stage represents a different group of Tutorial pop ups
+    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewControllerNamed: NSStringFromClass([self class])];
+    
+    if ( currentTutorialStage == 1 )
+    {
+        TutorialStep *tutorialStep1 = [TutorialStep new];
+        
+        tutorialStep1.text = @"Quickly view purchase totals for each category.\n\nClick a receipt to easily edit/transfer/delete the purchase allocations";
+        tutorialStep1.size = CGSizeMake(290, 120);
+        tutorialStep1.pointsUp = YES;
+        
+        [tutorials addObject:tutorialStep1];
+        
+        TutorialStep *tutorialStep2 = [TutorialStep new];
+        
+        tutorialStep2.origin = self.calculateButton.center;
+        
+        tutorialStep2.text = @"The Calculate button is the MOST important feature. Simply click Calculate and we will provide you with the correct GF tax claim based on your allocations for you!";
+        tutorialStep2.size = CGSizeMake(290, 120);
+        tutorialStep2.pointsUp = NO;
+        
+        [tutorials addObject:tutorialStep2];
+        
+        TutorialStep *tutorialStep3 = [TutorialStep new];
+        
+        tutorialStep3.text = @"All you need to do is add in the average price of a regular food item per category before the calculate feature can be used.\n\nYou can find these average food price items either online or in the quick help link we have provided";
+        tutorialStep3.size = CGSizeMake(290, 160);
+        tutorialStep3.pointsUp = YES;
+        
+        [tutorials addObject:tutorialStep3];
+        
+        [self.tutorialManager setTutorialDoneForViewControllerNamed:NSStringFromClass([self class])];
+    }
+    else
+    {
+        //don't show any tutorial
+        return;
+    }
+    
+    [self.tutorialManager startTutorialInViewController:self andTutorials:tutorials];
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    //Create tutorial items if it's ON
+    if ([self.configurationManager isTutorialOn])
+    {
+        [self displayTutorials];
+    }
+}
+
 - (void) viewWillDisappear: (BOOL) animated
 {
     [super viewWillDisappear: animated];

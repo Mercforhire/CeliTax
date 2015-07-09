@@ -14,6 +14,8 @@
 #import "TutorialBubbleDown.h"
 #import "TutorialBubbleProtocol.h"
 
+#define kNumberOfViewsWithTutorials     6
+
 @interface TutorialManager () <TutorialBubbleProtocol>
 
 @property (nonatomic, weak) ViewControllerFactory *factory;
@@ -28,7 +30,6 @@
 @property (nonatomic, strong) TutorialStep *currentTutorial;
 
 @end
-
 
 @implementation TutorialManager
 
@@ -181,6 +182,11 @@
     [self.rememberedTutorialStages setObject:[NSNumber numberWithInteger:stage] forKey:viewControllerName];
 }
 
+-(void)setTutorialDoneForViewControllerNamed:(NSString *)viewControllerName
+{
+    [self.rememberedTutorialStages setObject:[NSNumber numberWithInteger: -1] forKey:viewControllerName];
+}
+
 -(NSInteger)getCurrentTutorialStageForViewControllerNamed:(NSString *)viewControllerName
 {
     if ([self.rememberedTutorialStages objectForKey:viewControllerName])
@@ -189,6 +195,26 @@
     }
     
     return 1;
+}
+
+-(BOOL)areAllTutorialsShown
+{
+    if (self.rememberedTutorialStages.count == 6)
+    {
+        for (NSNumber *step in self.rememberedTutorialStages.allValues)
+        {
+            if (step.integerValue != -1)
+            {
+                return NO;
+            }
+        }
+    }
+    else
+    {
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end

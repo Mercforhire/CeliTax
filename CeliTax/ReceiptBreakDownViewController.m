@@ -234,9 +234,7 @@
         
         [tutorials addObject:tutorialStep1];
         
-        currentTutorialStage++;
-        
-        [self.tutorialManager setCurrentTutorialStageForViewControllerNamed:NSStringFromClass([self class]) forStage:currentTutorialStage];
+        [self.tutorialManager setTutorialDoneForViewControllerNamed:NSStringFromClass([self class])];
     }
     else
     {

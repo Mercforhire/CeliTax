@@ -354,9 +354,7 @@ typedef enum : NSUInteger
         
         [tutorials addObject:tutorialStep7];
         
-        currentTutorialStage++;
-        
-        [self.tutorialManager setCurrentTutorialStageForViewControllerNamed:NSStringFromClass([self class]) forStage:currentTutorialStage];
+        [self.tutorialManager setTutorialDoneForViewControllerNamed:NSStringFromClass([self class])];
     }
     else
     {

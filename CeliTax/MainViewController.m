@@ -29,8 +29,6 @@
 #import "TutorialManager.h"
 #import "TutorialStep.h"
 
-@class UIToolbarTextButton;
-
 #define kRecentUploadTableRowHeight                     40
 
 #define kNoItemsTableViewCellIdentifier                 @"NoItemsTableViewCell"
@@ -353,9 +351,19 @@ typedef enum : NSUInteger
         
         [tutorials addObject:tutorialStep6];
         
-        currentTutorialStage++;
+        [self.tutorialManager setTutorialDoneForViewControllerNamed:NSStringFromClass([self class])];
+    }
+    else if ( [self.tutorialManager areAllTutorialsShown] )
+    {
+        TutorialStep *tutorialStep7 = [TutorialStep new];
         
-        [self.tutorialManager setCurrentTutorialStageForViewControllerNamed:NSStringFromClass([self class]) forStage:currentTutorialStage];
+        tutorialStep7.text = @"There you have it! Calculating that GF tax claim has never been so easy. No more manual calculations or paper receipts to worry about!\n\nIf you ever need help or have questions, please use the help feature located in the (burger) menu.\n\nEnjoy!";
+        tutorialStep7.size = CGSizeMake(290, 210);
+        tutorialStep7.pointsUp = YES;
+        
+        [tutorials addObject:tutorialStep7];
+        
+        [self.tutorialManager setTutorialDoneForViewControllerNamed:@"ALL DONE"];
     }
     else
     {

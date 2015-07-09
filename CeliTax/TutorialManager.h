@@ -19,6 +19,10 @@
 
 -(void)setCurrentTutorialStageForViewControllerNamed:(NSString *)viewControllerName forStage:(NSInteger)stage;
 
+-(void)setTutorialDoneForViewControllerNamed:(NSString *)viewControllerName;
+
 -(NSInteger)getCurrentTutorialStageForViewControllerNamed:(NSString *)viewControllerName;
+
+-(BOOL)areAllTutorialsShown;
 
 @end
