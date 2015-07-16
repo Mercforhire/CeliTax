@@ -140,62 +140,53 @@
     self.sliceNames = [NSMutableArray new];
 
     // load all Catagory
-    [self.dataService fetchCatagories: ^(NSArray *catagories) {
-        self.catagories = catagories;
-
-        __block float totalAmount = 0;
-
-        for (Catagory *catagory in self.catagories)
+    NSArray *catagories = [self.dataService fetchCatagories];
+    
+    self.catagories = catagories;
+    
+    float totalAmount = 0;
+    
+    for (Catagory *catagory in self.catagories)
+    {
+        NSArray *records = [self.dataService fetchRecordsForCatagoryID: catagory.localID
+                                                             inTaxYear: self.configurationManager.getCurrentTaxYear];
+        NSArray *recordsForThisCatagory = records;
+        
+        // calculate the totals for each catagory from recordsForThisCatagory
+        NSInteger totalQuantityForThisCatagory = 0;
+        float totalAmountSpentOnThisCatagory = 0;
+        
+        for (Record *record in recordsForThisCatagory)
         {
-            [self.dataService fetchRecordsForCatagoryID: catagory.identifer
-                                              inTaxYear:self.configurationManager.getCurrentTaxYear
-                                                success: ^(NSArray *records)
-            {
-                
-                NSArray *recordsForThisCatagory = records;
-
-                // calculate the totals for each catagory from recordsForThisCatagory
-                NSInteger totalQuantityForThisCatagory = 0;
-                float totalAmountSpentOnThisCatagory = 0;
-
-                for (Record *record in recordsForThisCatagory)
-                {
-                    totalQuantityForThisCatagory = totalQuantityForThisCatagory + record.quantity;
-                    totalAmountSpentOnThisCatagory = totalAmountSpentOnThisCatagory + [record calculateTotal];
-                }
-
-                totalAmount = totalAmount + totalAmountSpentOnThisCatagory;
-
-                NSMutableDictionary *catagoryDetail = [NSMutableDictionary new];
-                [catagoryDetail setObject: [NSNumber numberWithInteger: totalQuantityForThisCatagory] forKey: kCatagoryDetailsKeyTotalQty];
-                [catagoryDetail setObject: [NSNumber numberWithFloat: totalAmountSpentOnThisCatagory] forKey: kCatagoryDetailsKeyTotalAmount];
-
-                [self.catagoryDetails setObject: catagoryDetail forKey: catagory.identifer];
-                
-            } failure: ^(NSString *reason) {
-                // shouldn't happen
-            }];
+            totalQuantityForThisCatagory = totalQuantityForThisCatagory + record.quantity;
+            totalAmountSpentOnThisCatagory = totalAmountSpentOnThisCatagory + [record calculateTotal];
         }
-
-        [self.accountTableView reloadData];
-
-        // refresh pie chart
-        for (Catagory *catagory in self.catagories)
-        {
-            [self.sliceColors addObject: catagory.color];
-            [self.sliceNames addObject: catagory.name];
-
-            NSMutableDictionary *catagoryDetailForThisCatagory = [self.catagoryDetails objectForKey: catagory.identifer];
-
-            float sumAmount = [[catagoryDetailForThisCatagory objectForKey: kCatagoryDetailsKeyTotalAmount] floatValue];
-
-            [self.slicePercentages addObject: [NSNumber numberWithInt: sumAmount * 100 / totalAmount]];
-        }
-
-        [self.pieChart reloadData];
-    } failure: ^(NSString *reason) {
-        // should not happen
-    }];
+        
+        totalAmount = totalAmount + totalAmountSpentOnThisCatagory;
+        
+        NSMutableDictionary *catagoryDetail = [NSMutableDictionary new];
+        [catagoryDetail setObject: [NSNumber numberWithInteger: totalQuantityForThisCatagory] forKey: kCatagoryDetailsKeyTotalQty];
+        [catagoryDetail setObject: [NSNumber numberWithFloat: totalAmountSpentOnThisCatagory] forKey: kCatagoryDetailsKeyTotalAmount];
+        
+        [self.catagoryDetails setObject: catagoryDetail forKey: catagory.localID];
+    }
+    
+    [self.accountTableView reloadData];
+    
+    // refresh pie chart
+    for (Catagory *catagory in self.catagories)
+    {
+        [self.sliceColors addObject: catagory.color];
+        [self.sliceNames addObject: catagory.name];
+        
+        NSMutableDictionary *catagoryDetailForThisCatagory = [self.catagoryDetails objectForKey: catagory.localID];
+        
+        float sumAmount = [[catagoryDetailForThisCatagory objectForKey: kCatagoryDetailsKeyTotalAmount] floatValue];
+        
+        [self.slicePercentages addObject: [NSNumber numberWithInt: sumAmount * 100 / totalAmount]];
+    }
+    
+    [self.pieChart reloadData];
 }
 
 -(void)displayTutorials
@@ -203,7 +194,7 @@
     NSMutableArray *tutorials = [NSMutableArray new];
     
     //Each Stage represents a different group of Tutorial pop ups
-    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewControllerNamed: NSStringFromClass([self class])];
+    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
     
     if ( currentTutorialStage == 1 )
     {
@@ -233,7 +224,7 @@
         
         [tutorials addObject:tutorialStep3];
         
-        [self.tutorialManager setTutorialDoneForViewControllerNamed:NSStringFromClass([self class])];
+        [self.tutorialManager setTutorialDoneForViewController:self];
     }
     else
     {
@@ -322,7 +313,7 @@
 {
     Catagory *thisCatagory = [self.catagories objectAtIndex: index];
 
-    DLog(@"Catagory %@: %@ pressed", thisCatagory.identifer, thisCatagory.name);
+    DLog(@"Catagory %@: %@ pressed", thisCatagory.localID, thisCatagory.name);
 
     self.currentlySelectedCatagory = thisCatagory;
 
@@ -362,18 +353,12 @@
     // get the last 5 recent uploads
     if (self.currentlySelectedCatagory)
     {
-        [self.dataService fetchLatestNthCatagoryInfosforCatagory: self.currentlySelectedCatagory.identifer
-                                                          forNth: 5
-                                                       inTaxYear: self.configurationManager.getCurrentTaxYear
-                                                         success:^(NSArray *catagoryInfos)
-        {
-            DLog(@"%@", catagoryInfos);
-            self.catagoryInfosToShow = catagoryInfos;
-
-            [self.accountTableView reloadData];
-        } failure:^(NSString *reason) {
-            // should not happen
-        }];
+        NSArray *catagoryInfos = [self.dataService fetchLatestNthCatagoryInfosforCatagory: self.currentlySelectedCatagory.localID forNth: 5 inTaxYear: self.configurationManager.getCurrentTaxYear];
+        
+        DLog(@"%@", catagoryInfos);
+        self.catagoryInfosToShow = catagoryInfos;
+        
+        [self.accountTableView reloadData];
     }
 }
 
@@ -400,20 +385,16 @@
     DLog(@"Monday of this week is %@", mondayOfThisWeek.description);
     NSDate *mondayOfPreviousWeek = [Utils dateForMondayOfPreviousWeek];
     DLog(@"Monday of previous week is %@", mondayOfPreviousWeek.description);
-
-    [self.dataService fetchCatagoryInfoFromDate: mondayOfPreviousWeek
-                                         toDate: mondayOfThisWeek
-                                      inTaxYear: self.configurationManager.getCurrentTaxYear
-                                    forCatagory: self.currentlySelectedCatagory.identifer
-                                        success: ^(NSArray *catagoryInfos)
-    {
-        DLog(@"%@", catagoryInfos);
-        self.catagoryInfosToShow = catagoryInfos;
-
-        [self.accountTableView reloadData];
-    } failure:^(NSString *reason) {
-        // should not happen
-    }];
+    
+    NSArray *catagoryInfos = [self.dataService fetchCatagoryInfoFromDate: mondayOfPreviousWeek
+                                                                  toDate: mondayOfThisWeek
+                                                               inTaxYear: self.configurationManager.getCurrentTaxYear
+                                                             forCatagory: self.currentlySelectedCatagory.localID];
+    
+    DLog(@"%@", catagoryInfos);
+    self.catagoryInfosToShow = catagoryInfos;
+    
+    [self.accountTableView reloadData];
 }
 
 - (void) previousMonthLabelPressed
@@ -441,19 +422,14 @@
     NSDate *firstDayOfPreviousMonth = [Utils dateForFirstDayOfPreviousMonth];
     DLog(@"First Day Of Previous Month is %@", firstDayOfPreviousMonth.description);
 
-    [self.dataService fetchCatagoryInfoFromDate: firstDayOfPreviousMonth
-                                         toDate: firstDayOfThisMonth
-                                      inTaxYear: self.configurationManager.getCurrentTaxYear
-                                    forCatagory: self.currentlySelectedCatagory.identifer
-                                        success:^(NSArray *catagoryInfos)
-    {
-        DLog(@"%@", catagoryInfos);
-        self.catagoryInfosToShow = catagoryInfos;
-
-        [self.accountTableView reloadData];
-    } failure:^(NSString *reason) {
-        // should not happen
-    }];
+    NSArray *catagoryInfos = [self.dataService fetchCatagoryInfoFromDate: firstDayOfPreviousMonth
+                                                                  toDate: firstDayOfThisMonth
+                                                               inTaxYear: self.configurationManager.getCurrentTaxYear
+                                                             forCatagory: self.currentlySelectedCatagory.localID];
+    DLog(@"%@", catagoryInfos);
+    self.catagoryInfosToShow = catagoryInfos;
+    
+    [self.accountTableView reloadData];
 }
 
 - (void) viewAllLabelPressed
@@ -476,19 +452,13 @@
     self.viewAllSelected = YES;
 
     // all receipts from this catagory
-    [self.dataService fetchLatestNthCatagoryInfosforCatagory: self.currentlySelectedCatagory.identifer
-                                                      forNth: -1
-                                                   inTaxYear: self.configurationManager.getCurrentTaxYear
-                                                     success:^(NSArray *catagoryInfos)
-    {
-
-        self.catagoryInfosToShow = catagoryInfos;
-
-        [self.accountTableView reloadData];
-        
-    } failure:^(NSString *reason) {
-        // should not happen
-    }];
+    NSArray *catagoryInfos = [self.dataService fetchLatestNthCatagoryInfosforCatagory: self.currentlySelectedCatagory.localID
+                                                                               forNth: -1
+                                                                            inTaxYear: self.configurationManager.getCurrentTaxYear];
+    
+    self.catagoryInfosToShow = catagoryInfos;
+    
+    [self.accountTableView reloadData];
 }
 
 #pragma mark - UITableview DataSource
@@ -541,7 +511,7 @@
 
         Catagory *thisCatagory = [self.catagories objectAtIndex: indexPath.row / 2];
 
-        NSMutableDictionary *catagoryDetailForThisCatagory = [self.catagoryDetails objectForKey: thisCatagory.identifer];
+        NSMutableDictionary *catagoryDetailForThisCatagory = [self.catagoryDetails objectForKey: thisCatagory.localID];
 
         NSInteger sumQuantity = [[catagoryDetailForThisCatagory objectForKey: kCatagoryDetailsKeyTotalQty] integerValue];
         float sumAmount = [[catagoryDetailForThisCatagory objectForKey: kCatagoryDetailsKeyTotalAmount] floatValue];
@@ -583,6 +553,40 @@
         }
         
         [self.lookAndFeel applySlightlyDarkerBorderTo: cell.colorBox];
+        
+        if (thisCatagory == [self.catagories firstObject])
+        {
+            if (!self.currentlySelectedCatagory)
+            {
+                [cell.totalQtyLabel setHidden:NO];
+                [cell.totalAmountLabel setHidden:NO];
+                [cell.avgPriceLabel setHidden:NO];
+            }
+        }
+        else
+        {
+            if (self.currentlySelectedCatagory)
+            {
+                if (thisCatagory == self.currentlySelectedCatagory)
+                {
+                    [cell.totalQtyLabel setHidden:NO];
+                    [cell.totalAmountLabel setHidden:NO];
+                    [cell.avgPriceLabel setHidden:NO];
+                }
+                else
+                {
+                    [cell.totalQtyLabel setHidden:YES];
+                    [cell.totalAmountLabel setHidden:YES];
+                    [cell.avgPriceLabel setHidden:YES];
+                }
+            }
+            else
+            {
+                [cell.totalQtyLabel setHidden:YES];
+                [cell.totalAmountLabel setHidden:YES];
+                [cell.avgPriceLabel setHidden:YES];
+            }
+        }
 
         return cell;
     }

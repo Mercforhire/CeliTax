@@ -19,4 +19,10 @@
 
 @property (nonatomic, strong) NSMutableArray *taxYears;
 
+@property (nonatomic, strong) NSDate *lastUploadedDate;
+
+- (NSDictionary *) generateJSONToUploadToServer;
+
+- (void) setAllDataToDateActionNone;
+
 @end

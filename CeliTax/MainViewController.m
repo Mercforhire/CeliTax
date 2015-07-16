@@ -215,29 +215,22 @@ typedef enum : NSUInteger
 
 - (void) reloadReceiptInfo
 {
-    [self.dataService fetchNewestReceiptInfo: 5
-                                      inYear: self.currentlySelectedYear.integerValue
-                                     success: ^(NSArray *receiptInfos)
+    NSArray *receiptInfos = [self.dataService fetchNewestReceiptInfo: 5
+                                                              inYear: self.currentlySelectedYear.integerValue];
+    self.receiptInfos = receiptInfos;
+    [self.recentUploadsTable reloadData];
+    
+    if (self.receiptInfos.count)
     {
-        self.receiptInfos = receiptInfos;
-        [self.recentUploadsTable reloadData];
+        NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
         
-        if (self.receiptInfos.count)
+        if (currentTutorialStage == 3)
         {
-            NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewControllerNamed: NSStringFromClass([self class])];
+            currentTutorialStage++;
             
-            if (currentTutorialStage == 3)
-            {
-                currentTutorialStage++;
-                
-                [self.tutorialManager setCurrentTutorialStageForViewControllerNamed:NSStringFromClass([self class]) forStage:currentTutorialStage];
-            }
+            [self.tutorialManager setCurrentTutorialStageForViewController:self forStage:currentTutorialStage];
         }
     }
-    failure: ^(NSString *reason)
-    {
-        // should not happen
-    }];
 }
 
 - (void) setCurrentlySelectedYear: (NSNumber *) currentlySelectedYear
@@ -275,7 +268,7 @@ typedef enum : NSUInteger
     NSMutableArray *tutorials = [NSMutableArray new];
     
     //Each Stage represents a different group of Tutorial pop ups
-    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewControllerNamed: NSStringFromClass([self class])];
+    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
     
     if ( currentTutorialStage == 1 )
     {
@@ -305,7 +298,7 @@ typedef enum : NSUInteger
         
         currentTutorialStage++;
         
-        [self.tutorialManager setCurrentTutorialStageForViewControllerNamed:NSStringFromClass([self class]) forStage:currentTutorialStage];
+        [self.tutorialManager setCurrentTutorialStageForViewController:self forStage:currentTutorialStage];
     }
     else if ( currentTutorialStage == 2)
     {
@@ -320,7 +313,7 @@ typedef enum : NSUInteger
         
         currentTutorialStage++;
         
-        [self.tutorialManager setCurrentTutorialStageForViewControllerNamed:NSStringFromClass([self class]) forStage:currentTutorialStage];
+        [self.tutorialManager setCurrentTutorialStageForViewController:self forStage:currentTutorialStage];
     }
     else if ( currentTutorialStage == 4)
     {
@@ -328,7 +321,7 @@ typedef enum : NSUInteger
         
         tutorialStep4.origin = self.recentUploadsTable.center;
         tutorialStep4.text = @"Use recent uploads to quickly manage your latest receipts";
-        tutorialStep4.size = CGSizeMake(290, 60);
+        tutorialStep4.size = CGSizeMake(290, 70);
         tutorialStep4.pointsUp = YES;
         
         [tutorials addObject:tutorialStep4];
@@ -337,7 +330,7 @@ typedef enum : NSUInteger
         
         tutorialStep5.origin = self.myAccountButton.center;
         tutorialStep5.text = @"Use My Account to manage categories, view total allocations, and calculate your tax claim!";
-        tutorialStep5.size = CGSizeMake(290, 80);
+        tutorialStep5.size = CGSizeMake(290, 90);
         tutorialStep5.pointsUp = NO;
         
         [tutorials addObject:tutorialStep5];
@@ -351,7 +344,7 @@ typedef enum : NSUInteger
         
         [tutorials addObject:tutorialStep6];
         
-        [self.tutorialManager setTutorialDoneForViewControllerNamed:NSStringFromClass([self class])];
+        [self.tutorialManager setTutorialDoneForViewController:self];
     }
     else if ( [self.tutorialManager areAllTutorialsShown] )
     {
@@ -363,7 +356,9 @@ typedef enum : NSUInteger
         
         [tutorials addObject:tutorialStep7];
         
-        [self.tutorialManager setTutorialDoneForViewControllerNamed:@"ALL DONE"];
+        [self.tutorialManager resetTutorialStages];
+        
+        [self.configurationManager setTutorialON:NO];
     }
     else
     {
@@ -544,23 +539,17 @@ typedef enum : NSUInteger
     NSString *clickedReceiptID = [uploadInfoDictionary objectForKey: kReceiptIDKey];
     
     //push to Receipt Checking view directly if this receipt has no items
-    [self.dataService fetchRecordsForReceiptID: clickedReceiptID
-                                       success: ^(NSArray *records)
-     {
-         if (!records || records.count == 0)
-         {
-             // push ReceiptCheckingViewController
-             [self.navigationController pushViewController: [self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID: clickedReceiptID cameFromReceiptBreakDownViewController: YES] animated: YES];
-         }
-         else
-         {
-             [self.navigationController pushViewController: [self.viewControllerFactory createReceiptBreakDownViewControllerForReceiptID: clickedReceiptID cameFromReceiptCheckingViewController: NO] animated: YES];
-         }
-         
-     } failure: ^(NSString *reason) {
-         // failure
-     }];
-
+    NSArray *records = [self.dataService fetchRecordsForReceiptID: clickedReceiptID];
+    
+    if (!records || records.count == 0)
+    {
+        // push ReceiptCheckingViewController
+        [self.navigationController pushViewController: [self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID: clickedReceiptID cameFromReceiptBreakDownViewController: YES] animated: YES];
+    }
+    else
+    {
+        [self.navigationController pushViewController: [self.viewControllerFactory createReceiptBreakDownViewControllerForReceiptID: clickedReceiptID cameFromReceiptCheckingViewController: NO] animated: YES];
+    }
 }
 
 @end

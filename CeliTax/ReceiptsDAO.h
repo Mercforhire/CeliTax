@@ -21,11 +21,7 @@
  */
 - (NSString *) addReceiptWithFilenames: (NSArray *) filenames inTaxYear:(NSInteger)taxYear;
 
-/*
-   @param filenames NSArray of NSString filenames for this receipt
-
-   @return YES if success, NO if user not found or receiptToAdd is nil
- */
+//used by debug purposes only
 - (BOOL) addReceipt: (Receipt *) receiptToAdd;
 
 /*
@@ -58,7 +54,7 @@
 /**
  @return YES if success, NO if record is not found in existing database
  */
-- (BOOL)modifyReceipt: (Receipt *)Receipt;
+- (BOOL)modifyReceipt: (Receipt *)receipt;
 
 /*
    @param receiptID NSString receiptID

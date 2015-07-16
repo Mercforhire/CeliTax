@@ -101,6 +101,8 @@
     SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithNibName: @"SettingsViewController" bundle: nil];
 
     [self initializeViewController: settingsViewController];
+    
+    settingsViewController.syncService = self.syncService;
 
     return settingsViewController;
 }

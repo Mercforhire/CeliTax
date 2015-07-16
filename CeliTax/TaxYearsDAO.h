@@ -17,6 +17,4 @@
 
 -(BOOL)addTaxYear:(NSInteger)taxYear;
 
--(BOOL)removeTaxYear:(NSInteger)taxYear;
-
 @end

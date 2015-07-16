@@ -215,48 +215,37 @@ typedef enum : NSUInteger
                                                object: nil];
 
     // load the receipt images for this receipt
-    [self.dataService fetchReceiptForReceiptID: self.receiptID success: ^(Receipt *receipt)
+    Receipt *receipt = [self.dataService fetchReceiptForReceiptID: self.receiptID];
+    
+    self.receipt = receipt;
+    
+    // load images from this receipt
+    for (NSString *filename in self.receipt.fileNames)
     {
-        self.receipt = receipt;
-
-        // load images from this receipt
-        for (NSString *filename in self.receipt.fileNames)
-        {
-            UIImage *image = [Utils readImageWithFileName: filename forUser: self.userManager.user.userKey];
-
-            if (image)
-            {
-                [self.receiptImages addObject: image];
-            }
-        }
-
-        [self.receiptScrollView setImages: self.receiptImages];
-        [self.editReceiptTable reloadData];
+        UIImage *image = [Utils readImageWithFileName: filename forUser: self.userManager.user.userKey];
         
-    } failure: ^(NSString *reason) {
-        // should not happen
-    }];
+        if (image)
+        {
+            [self.receiptImages addObject: image];
+        }
+    }
+    
+    [self.receiptScrollView setImages: self.receiptImages];
+    [self.editReceiptTable reloadData];
 
     // load all the catagories
-    [self.dataService fetchCatagories: ^(NSArray *catagories) {
-        self.catagories = catagories;
-
-        [self refreshButtonBar];
-    } failure: ^(NSString *reason) {
-        // if no catagories
-    }];
+    NSArray *catagories = [self.dataService fetchCatagories];
+    
+    self.catagories = catagories;
+    
+    [self refreshButtonBar];
 
     // load catagory records for this receipt
-    [self.dataService fetchRecordsForReceiptID: self.receiptID
-                                       success: ^(NSArray *records)
-    {
-        [self populateRecordsDictionaryUsing: records];
-
-        [self refreshRecordsCounter];
-    }
-    failure: ^(NSString *reason) {
-        // failure
-    }];
+    NSArray *records = [self.dataService fetchRecordsForReceiptID: self.receiptID];
+    
+    [self populateRecordsDictionaryUsing: records];
+    
+    [self refreshRecordsCounter];
 }
 
 -(void)showTutorial
@@ -264,7 +253,7 @@ typedef enum : NSUInteger
     NSMutableArray *tutorials = [NSMutableArray new];
     
     //Each Stage represents a different group of Tutorial pop ups
-    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewControllerNamed: NSStringFromClass([self class])];
+    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
     
     if ( currentTutorialStage == 1 )
     {
@@ -273,7 +262,7 @@ typedef enum : NSUInteger
         
         tutorialStep1.text = @"Scroll up and down your receipt to view all items that need to be allocated";
         tutorialStep1.origin = self.editReceiptTable.center;
-        tutorialStep1.size = CGSizeMake(290, 60);
+        tutorialStep1.size = CGSizeMake(290, 70);
         tutorialStep1.pointsUp = YES;
         
         [tutorials addObject:tutorialStep1];
@@ -283,14 +272,14 @@ typedef enum : NSUInteger
         tutorialStep2.origin = self.catagoriesBar.center;
         
         tutorialStep2.text = @"Choose a category to allocate a purchase.\n\nClick the + button if you need to add another category!";
-        tutorialStep2.size = CGSizeMake(290, 100);
+        tutorialStep2.size = CGSizeMake(290, 120);
         tutorialStep2.pointsUp = NO;
         
         [tutorials addObject:tutorialStep2];
         
         currentTutorialStage++;
         
-        [self.tutorialManager setCurrentTutorialStageForViewControllerNamed:NSStringFromClass([self class]) forStage:currentTutorialStage];
+        [self.tutorialManager setCurrentTutorialStageForViewController:self forStage:currentTutorialStage];
     }
     else if ( currentTutorialStage == 3 )
     {
@@ -337,10 +326,10 @@ typedef enum : NSUInteger
         tutorialStep6.text = @"When finished allocating the entire receipt, click Complete";
         
         CGPoint barButtonCenter = CGPointMake(self.view.frame.size.width - self.completeButton.frame.size.width / 2 - 15,
-                                              50);
+                                              [UIApplication sharedApplication].statusBarFrame.size.height + 30);
         
         tutorialStep6.origin = barButtonCenter;
-        tutorialStep6.size = CGSizeMake(290, 60);
+        tutorialStep6.size = CGSizeMake(290, 65);
         tutorialStep6.pointsUp = YES;
         
         [tutorials addObject:tutorialStep6];
@@ -349,12 +338,12 @@ typedef enum : NSUInteger
         
         tutorialStep7.text = @"Don’t have time to allocate right now? No worries. You can always review, add, edit and delete receipts and allocations from, Recent Uploads, the Vault or My Account";
         
-        tutorialStep7.size = CGSizeMake(290, 110);
+        tutorialStep7.size = CGSizeMake(290, 120);
         tutorialStep7.pointsUp = YES;
         
         [tutorials addObject:tutorialStep7];
         
-        [self.tutorialManager setTutorialDoneForViewControllerNamed:NSStringFromClass([self class])];
+        [self.tutorialManager setTutorialDoneForViewController:self];
     }
     else
     {
@@ -371,7 +360,7 @@ typedef enum : NSUInteger
     //Create tutorial items if it's ON
     if ([self.configurationManager isTutorialOn])
     {
-        NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewControllerNamed: NSStringFromClass([self class])];
+        NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
         
         if (currentTutorialStage == 1)
         {
@@ -560,11 +549,10 @@ typedef enum : NSUInteger
 - (void) deleteCurrentReceiptAndQuit
 {
     // delete the receipt
-    [self.manipulationService deleteReceiptAndAllItsRecords: self.receiptID success:^{
+    if ([self.manipulationService deleteReceiptAndAllItsRecords: self.receiptID])
+    {
         [self.navigationController popViewControllerAnimated: YES];
-    } failure:^(NSString *reason) {
-        DLog(@"%@", reason);
-    }];
+    }
 }
 
 - (IBAction) nextRecordPressed: (UIButton *) sender
@@ -603,42 +591,38 @@ typedef enum : NSUInteger
     // Add Mode
     else
     {
-        [self.manipulationService addRecordForCatagoryID: self.currentlySelectedCatagory.identifer
-                                            forReceiptID: self.receipt.identifer
-                                             forQuantity: tempQuantity
-                                               forAmount: tempPricePerItem
-                                                 success: ^(NSString *newestRecordID)
+        NSString *newestRecordID = [self.manipulationService addRecordForCatagoryID: self.currentlySelectedCatagory.localID
+                                                                       forReceiptID: self.receipt.localID
+                                                                        forQuantity: tempQuantity
+                                                                          forAmount: tempPricePerItem];
+        
+        if (newestRecordID)
         {
-            [self.dataService fetchRecordForID: newestRecordID success: ^(Record *record)
+            Record *record = [self.dataService fetchRecordForID: newestRecordID];
+            
+            // add that to self.records
+            NSMutableArray *recordsOfThisCatagory = [self.records objectForKey: record.catagoryID];
+            
+            if (!recordsOfThisCatagory)
             {
-                // add that to self.records
-                NSMutableArray *recordsOfThisCatagory = [self.records objectForKey: record.catagoryID];
-
-                if (!recordsOfThisCatagory)
-                {
-                    recordsOfThisCatagory = [NSMutableArray new];
-                }
-
-                [recordsOfThisCatagory addObject: record];
-
-                [self.records setObject: recordsOfThisCatagory forKey: record.catagoryID];
-
-                // calls the setter to refresh UI
-                self.recordsOfCurrentlySelectedCatagory = recordsOfThisCatagory;
-                
-                [self.receiptItemCollectionView reloadData];
-                
-                [self.receiptItemCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.recordsOfCurrentlySelectedCatagory.count inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-
-                [self refreshRecordsCounter];
-                
-                [self performSelector:@selector(selectedNoRecord) withObject:nil afterDelay:0.3];
-            }                          failure: ^(NSString *reason) {
-                DLog(@"self.dataService fetchRecordForID failed");
-            }];
-        }                                        failure: ^(NSString *reason) {
-            DLog(@"self.manipulationService addRecordForCatagoryID failed");
-        }];
+                recordsOfThisCatagory = [NSMutableArray new];
+            }
+            
+            [recordsOfThisCatagory addObject: record];
+            
+            [self.records setObject: recordsOfThisCatagory forKey: record.catagoryID];
+            
+            // calls the setter to refresh UI
+            self.recordsOfCurrentlySelectedCatagory = recordsOfThisCatagory;
+            
+            [self.receiptItemCollectionView reloadData];
+            
+            [self.receiptItemCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.recordsOfCurrentlySelectedCatagory.count inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+            
+            [self refreshRecordsCounter];
+            
+            [self performSelector:@selector(selectedNoRecord) withObject:nil afterDelay:0.3];
+        }
     }
 }
 
@@ -649,29 +633,28 @@ typedef enum : NSUInteger
 
 - (IBAction) deleteRecordPressed: (UIButton *) sender
 {
-    [self.manipulationService deleteRecord: self.currentlySelectedRecord.identifer WithSuccess: ^{
+    if ([self.manipulationService deleteRecord: self.currentlySelectedRecord.localID])
+    {
         // delete the record from self.records
         NSMutableArray *recordsOfThisCatagory = [self.records objectForKey: self.currentlySelectedRecord.catagoryID];
-
+        
         [recordsOfThisCatagory removeObject: self.currentlySelectedRecord];
-
+        
         [self.records setObject: recordsOfThisCatagory forKey: self.currentlySelectedRecord.catagoryID];
-
+        
         // calls the setter to refresh UI
         self.recordsOfCurrentlySelectedCatagory = recordsOfThisCatagory;
-
+        
         // finally jump to 0th record again to prepare to add another one
         self.currentlySelectedRecord = nil;
-
+        
         [self refreshRecordsCounter];
-    } andFailure: ^(NSString *reason) {
-        DLog(@"self.manipulationService deleteRecord failed");
-    }];
+    }
 }
 
 - (void) loadFirstRecordFromCurrentlySelectedCatagory
 {
-    self.recordsOfCurrentlySelectedCatagory = [self.records objectForKey: self.currentlySelectedCatagory.identifer];
+    self.recordsOfCurrentlySelectedCatagory = [self.records objectForKey: self.currentlySelectedCatagory.localID];
 
     if (self.recordsOfCurrentlySelectedCatagory.count)
     {
@@ -695,11 +678,10 @@ typedef enum : NSUInteger
 
 - (void) saveCurrentlySelectedRecord
 {
-    [self.manipulationService modifyRecord: self.currentlySelectedRecord WithSuccess: ^{
-        DLog(@"Record %ld saved", (long)self.currentlySelectedRecord.identifer);
-    } andFailure: ^(NSString *reason) {
-        DLog(@"modifyRecord failed");
-    }];
+    if ([self.manipulationService modifyRecord: self.currentlySelectedRecord])
+    {
+        DLog(@"Record %ld saved", (long)self.currentlySelectedRecord.localID);
+    }
 }
 
 // use these functions to dynamically manage the UI when data is changed
@@ -1000,13 +982,13 @@ typedef enum : NSUInteger
     
     if ([self.configurationManager isTutorialOn] && !self.cameFromReceiptBreakDownViewController)
     {
-        NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewControllerNamed: NSStringFromClass([self class])];
+        NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
         
         if (currentTutorialStage == 2)
         {
             currentTutorialStage++;
             
-            [self.tutorialManager setCurrentTutorialStageForViewControllerNamed:NSStringFromClass([self class]) forStage:currentTutorialStage];
+            [self.tutorialManager setCurrentTutorialStageForViewController:self forStage:currentTutorialStage];
             
             [self showTutorial];
             

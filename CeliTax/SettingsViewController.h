@@ -7,8 +7,10 @@
 //
 
 #import "BaseSideBarViewController.h"
+#import "SyncService.h"
 
 @interface SettingsViewController : BaseSideBarViewController
 
+@property (nonatomic, weak) id <SyncService> syncService;
 
 @end

@@ -11,11 +11,17 @@
 
 @interface Catagory : NSObject <NSCoding, NSCopying>
 
-@property (nonatomic, copy) NSString    *identifer;
+@property (nonatomic) NSInteger         serverID;
+
+@property (nonatomic, copy) NSString    *localID;
 
 @property (nonatomic, copy) NSString    *name;
 @property (nonatomic, strong) UIColor   *color;
 
 @property float                         nationalAverageCost;
+
+@property (nonatomic, assign) NSInteger dataAction;
+
+- (NSDictionary *) toJson;
 
 @end

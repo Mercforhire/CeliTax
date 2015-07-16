@@ -138,6 +138,7 @@
 		8582A47E1AF181C20048DCD6 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8582A47C1AF181C20048DCD6 /* RegisterViewController.xib */; };
 		8582A4821AF1C96C0048DCD6 /* AuthenticationServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 8582A4811AF1C96C0048DCD6 /* AuthenticationServiceImpl.m */; };
 		8582A4851AF1EBA50048DCD6 /* AuthorizeResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 8582A4841AF1EBA50048DCD6 /* AuthorizeResult.m */; };
+		8584C3E31B559CD800026DF3 /* SyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8584C3E21B559CD800026DF3 /* SyncManager.m */; };
 		8586E5E61B17A04400C1014F /* userIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8586E5E51B17A04400C1014F /* userIcon.png */; };
 		858FD7181B40DEE60008B325 /* TransferConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 858FD7161B40DEE60008B325 /* TransferConfirmationViewController.m */; };
 		858FD7191B40DEE60008B325 /* TransferConfirmationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 858FD7171B40DEE60008B325 /* TransferConfirmationViewController.xib */; };
@@ -163,6 +164,7 @@
 		85ACE4291B2801AD0041B7C5 /* USA_flag_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4271B2801AD0041B7C5 /* USA_flag_small.png */; };
 		85CDB5661B3767BC00C388CF /* ReceiptCollectionFooterViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 85CDB5641B3767BC00C388CF /* ReceiptCollectionFooterViewCell.m */; };
 		85CDB5671B3767BC00C388CF /* ReceiptCollectionFooterViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85CDB5651B3767BC00C388CF /* ReceiptCollectionFooterViewCell.xib */; };
+		85D4F4711B544FF600F0803C /* SyncServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D4F4701B544FF600F0803C /* SyncServiceImpl.m */; };
 		85D8D8521AF873AA00197D85 /* AccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8D8501AF873AA00197D85 /* AccountTableViewCell.m */; };
 		85D8D8531AF873AA00197D85 /* AccountTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85D8D8511AF873AA00197D85 /* AccountTableViewCell.xib */; };
 		85D8D8561AF914B500197D85 /* AlertDialogsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8D8551AF914B500197D85 /* AlertDialogsProvider.m */; };
@@ -171,6 +173,7 @@
 		85F485881B16D220005E0EDE /* SideMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85F485871B16D220005E0EDE /* SideMenuView.m */; };
 		85F977391B0ACEC6002B3DF3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85F977381B0ACEC6002B3DF3 /* AVFoundation.framework */; };
 		85F977661B0AF696002B3DF3 /* WhiteBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85F977651B0AF696002B3DF3 /* WhiteBorderView.m */; };
+		85FD2BE51B575C95006E907C /* TaxYear.m in Sources */ = {isa = PBXBuildFile; fileRef = 85FD2BE41B575C95006E907C /* TaxYear.m */; };
 		D35569FF52BBBBF1A5EB521A /* libPods-CeliTax.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB7CA2B0039977CAFAA11122 /* libPods-CeliTax.a */; };
 /* End PBXBuildFile section */
 
@@ -233,6 +236,7 @@
 		854497031AF734EB0068779A /* Record.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Record.m; sourceTree = "<group>"; };
 		854497051AF736DE0068779A /* UserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserData.h; sourceTree = "<group>"; };
 		854497061AF736DE0068779A /* UserData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserData.m; sourceTree = "<group>"; };
+		85491E591B522BAA00C618D9 /* SyncService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncService.h; sourceTree = "<group>"; };
 		854D00401B33AFD600859433 /* ProfileBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileBarView.xib; sourceTree = "<group>"; };
 		854D00421B33B6E700859433 /* ProfileBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileBarView.h; sourceTree = "<group>"; };
 		854D00431B33B6E700859433 /* ProfileBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileBarView.m; sourceTree = "<group>"; };
@@ -394,6 +398,8 @@
 		8582A4811AF1C96C0048DCD6 /* AuthenticationServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationServiceImpl.m; sourceTree = "<group>"; };
 		8582A4831AF1EBA50048DCD6 /* AuthorizeResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizeResult.h; sourceTree = "<group>"; };
 		8582A4841AF1EBA50048DCD6 /* AuthorizeResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizeResult.m; sourceTree = "<group>"; };
+		8584C3E11B559CD800026DF3 /* SyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncManager.h; sourceTree = "<group>"; };
+		8584C3E21B559CD800026DF3 /* SyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncManager.m; sourceTree = "<group>"; };
 		8586E5E51B17A04400C1014F /* userIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userIcon.png; sourceTree = "<group>"; };
 		858FD7151B40DEE60008B325 /* TransferConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferConfirmationViewController.h; sourceTree = "<group>"; };
 		858FD7161B40DEE60008B325 /* TransferConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferConfirmationViewController.m; sourceTree = "<group>"; };
@@ -429,6 +435,8 @@
 		85CDB5631B3767BC00C388CF /* ReceiptCollectionFooterViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptCollectionFooterViewCell.h; sourceTree = "<group>"; };
 		85CDB5641B3767BC00C388CF /* ReceiptCollectionFooterViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptCollectionFooterViewCell.m; sourceTree = "<group>"; };
 		85CDB5651B3767BC00C388CF /* ReceiptCollectionFooterViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptCollectionFooterViewCell.xib; sourceTree = "<group>"; };
+		85D4F46F1B544FF600F0803C /* SyncServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncServiceImpl.h; sourceTree = "<group>"; };
+		85D4F4701B544FF600F0803C /* SyncServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncServiceImpl.m; sourceTree = "<group>"; };
 		85D8D84F1AF873AA00197D85 /* AccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountTableViewCell.h; sourceTree = "<group>"; };
 		85D8D8501AF873AA00197D85 /* AccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountTableViewCell.m; sourceTree = "<group>"; };
 		85D8D8511AF873AA00197D85 /* AccountTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountTableViewCell.xib; sourceTree = "<group>"; };
@@ -443,6 +451,8 @@
 		85F977381B0ACEC6002B3DF3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		85F977641B0AF696002B3DF3 /* WhiteBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhiteBorderView.h; sourceTree = "<group>"; };
 		85F977651B0AF696002B3DF3 /* WhiteBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhiteBorderView.m; sourceTree = "<group>"; };
+		85FD2BE31B575C95006E907C /* TaxYear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaxYear.h; sourceTree = "<group>"; };
+		85FD2BE41B575C95006E907C /* TaxYear.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaxYear.m; sourceTree = "<group>"; };
 		8AA2324D1D08B2B334CE7A16 /* Pods-CeliTax.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CeliTax.release.xcconfig"; path = "Pods/Target Support Files/Pods-CeliTax/Pods-CeliTax.release.xcconfig"; sourceTree = "<group>"; };
 		AB7CA2B0039977CAFAA11122 /* libPods-CeliTax.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CeliTax.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F788CFBC0F01FE54E67FAE9A /* Pods-CeliTax.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CeliTax.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CeliTax/Pods-CeliTax.debug.xcconfig"; sourceTree = "<group>"; };
@@ -579,6 +589,16 @@
 				8537A9301B28A851000C848F /* TriangleView.m */,
 			);
 			name = Triangle;
+			sourceTree = "<group>";
+		};
+		85491E581B51B94800C618D9 /* Syncing Service */ = {
+			isa = PBXGroup;
+			children = (
+				85491E591B522BAA00C618D9 /* SyncService.h */,
+				85D4F46F1B544FF600F0803C /* SyncServiceImpl.h */,
+				85D4F4701B544FF600F0803C /* SyncServiceImpl.m */,
+			);
+			name = "Syncing Service";
 			sourceTree = "<group>";
 		};
 		8552AF691B326CFF001D3650 /* Tax Years */ = {
@@ -982,6 +1002,7 @@
 		85A8CAC01AF069EA0023504D /* CeliTax */ = {
 			isa = PBXGroup;
 			children = (
+				85D4F4721B54D9A400F0803C /* Sync Manager */,
 				859AEF741B4851190085AC6D /* Tutorial Manager */,
 				855B6FB21B279E2E00864E0B /* LookAndFeel */,
 				8556E3081AF3E5A1003CCDD2 /* Categories */,
@@ -1137,9 +1158,11 @@
 				854497051AF736DE0068779A /* UserData.h */,
 				854497061AF736DE0068779A /* UserData.m */,
 				856024CF1AFAB9ED004C1254 /* Receipt.h */,
-				859AEF681B464C690085AC6D /* Notifications.m */,
-				859AEF691B464C690085AC6D /* Notifications.h */,
 				856024D01AFAB9ED004C1254 /* Receipt.m */,
+				85FD2BE31B575C95006E907C /* TaxYear.h */,
+				85FD2BE41B575C95006E907C /* TaxYear.m */,
+				859AEF691B464C690085AC6D /* Notifications.h */,
+				859AEF681B464C690085AC6D /* Notifications.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1147,6 +1170,7 @@
 		85A8CAEE1AF078E70023504D /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				85491E581B51B94800C618D9 /* Syncing Service */,
 				85D8D8581AF9210000197D85 /* Data Manipulation Service */,
 				8556E3671AF56C96003CCDD2 /* Data Fetching Service */,
 				8556E30C1AF3F554003CCDD2 /* Factory */,
@@ -1240,6 +1264,15 @@
 			);
 			name = Fonts;
 			path = LatoFont/Source/Fonts;
+			sourceTree = "<group>";
+		};
+		85D4F4721B54D9A400F0803C /* Sync Manager */ = {
+			isa = PBXGroup;
+			children = (
+				8584C3E11B559CD800026DF3 /* SyncManager.h */,
+				8584C3E21B559CD800026DF3 /* SyncManager.m */,
+			);
+			name = "Sync Manager";
 			sourceTree = "<group>";
 		};
 		85D8D8491AF8737600197D85 /* Account Table Cells */ = {
@@ -1518,6 +1551,7 @@
 				85F485881B16D220005E0EDE /* SideMenuView.m in Sources */,
 				855303E21B0FEC61006B3D5F /* UserDataDAO.m in Sources */,
 				857902A51B2CF9A900C86662 /* ReceiptScrollView.m in Sources */,
+				85FD2BE51B575C95006E907C /* TaxYear.m in Sources */,
 				85A8CAC71AF069EA0023504D /* AppDelegate.m in Sources */,
 				8562739A1B1B782600EECA26 /* PasswordRecoverySentViewController.m in Sources */,
 				85547BF71AF2FB0500D9E1CE /* ViewControllerFactory.m in Sources */,
@@ -1541,6 +1575,7 @@
 				856273951B1B780900EECA26 /* PasswordRecoveryViewController.m in Sources */,
 				8537A9351B293639000C848F /* ModifyCatagoryTableViewCell.m in Sources */,
 				852929FA1B3675E20074DD24 /* ReceiptEditModeTableViewCell.m in Sources */,
+				8584C3E31B559CD800026DF3 /* SyncManager.m in Sources */,
 				8552AF6C1B326D33001D3650 /* TaxYearsDAO.m in Sources */,
 				85547C001AF32F4500D9E1CE /* Utils.m in Sources */,
 				8558940C1B1C1BD100D3F353 /* XYPieChart.m in Sources */,
@@ -1568,6 +1603,7 @@
 				8555E0D61B091E0400B91138 /* HorizonalScrollBarView.m in Sources */,
 				85A8CAC41AF069EA0023504D /* main.m in Sources */,
 				85547BFA1AF31CFA00D9E1CE /* UserManager.m in Sources */,
+				85D4F4711B544FF600F0803C /* SyncServiceImpl.m in Sources */,
 				85D8D8561AF914B500197D85 /* AlertDialogsProvider.m in Sources */,
 				856024D11AFAB9ED004C1254 /* Receipt.m in Sources */,
 				85560FE21B019857004D2963 /* ColorPickerViewController.m in Sources */,

@@ -14,12 +14,15 @@
 #import "DAOFactory.h"
 #import "ManipulationService.h"
 #import "ManipulationServiceImpl.h"
+#import "SyncService.h"
+#import "SyncServiceImpl.h"
 
 @interface ServiceFactory ()
 
 @property (nonatomic, strong) id<AuthenticationService> authenticationService;
 @property (nonatomic, strong) id<DataService> dataService;
 @property (nonatomic, strong) id<ManipulationService> manipulationService;
+@property (nonatomic, strong) id<SyncService> syncService;
 
 @end
 
@@ -63,6 +66,17 @@
     }
     
     return self.manipulationService;
+}
+
+- (id<SyncService>) createSyncService
+{
+    if (!self.syncService)
+    {
+        self.syncService = [[SyncServiceImpl alloc] init];
+        self.syncService.userDataDAO = [self.daoFactory createUserDataDAO];
+    }
+    
+    return self.syncService;
 }
 
 @end

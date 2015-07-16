@@ -3,31 +3,76 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+            <string>Lato-Bold</string>
+        </mutableArray>
+        <mutableArray key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingsViewController">
             <connections>
+                <outlet property="backupNowButton" destination="H6W-fg-WO8" id="7xa-Jp-KpG"/>
+                <outlet property="lastBackUpLabel" destination="aWv-vc-6uB" id="kBS-I3-QOH"/>
+                <outlet property="profileBarView" destination="Qr1-NN-1Ck" id="mg1-ls-mvT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bq6-RQ-yJb">
-                    <rect key="frame" x="156" y="323" width="63" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4b-sr-dcZ">
+                    <rect key="frame" x="125" y="79" width="69.5" height="23"/>
+                    <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="19"/>
+                    <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qr1-NN-1Ck" customClass="ProfileBarView">
+                    <rect key="frame" x="0.0" y="117" width="320" height="60"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="69C-au-QuW"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H6W-fg-WO8">
+                    <rect key="frame" x="15" y="197" width="110" height="28"/>
+                    <color key="backgroundColor" red="0.55334633690000001" green="0.82171581770000002" blue="0.4125430142" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
+                    <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
+                    <state key="normal" title="Back Up Now">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="backupPressed:" destination="-1" eventType="touchUpInside" id="1I5-yW-hEM"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Backup: Never" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aWv-vc-6uB">
+                    <rect key="frame" x="15" y="235" width="109.5" height="16"/>
+                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="bq6-RQ-yJb" secondAttribute="centerX" id="maA-po-Q4P"/>
-                <constraint firstAttribute="centerY" secondItem="bq6-RQ-yJb" secondAttribute="centerY" id="p5J-jQ-GIg"/>
+                <constraint firstItem="H6W-fg-WO8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="3gx-iU-O2M"/>
+                <constraint firstItem="Qr1-NN-1Ck" firstAttribute="top" secondItem="g4b-sr-dcZ" secondAttribute="bottom" constant="15" id="9oW-SX-ANE"/>
+                <constraint firstItem="aWv-vc-6uB" firstAttribute="top" secondItem="H6W-fg-WO8" secondAttribute="bottom" constant="10" id="ARp-kV-45f"/>
+                <constraint firstItem="aWv-vc-6uB" firstAttribute="leading" secondItem="H6W-fg-WO8" secondAttribute="leading" id="DJ9-ZL-O8f"/>
+                <constraint firstAttribute="trailing" secondItem="Qr1-NN-1Ck" secondAttribute="trailing" id="JOW-vH-rkP"/>
+                <constraint firstItem="H6W-fg-WO8" firstAttribute="top" secondItem="Qr1-NN-1Ck" secondAttribute="bottom" constant="20" id="PDa-zY-0SW"/>
+                <constraint firstAttribute="centerX" secondItem="g4b-sr-dcZ" secondAttribute="centerX" id="U7C-uy-zUA"/>
+                <constraint firstItem="Qr1-NN-1Ck" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="b5K-O9-Ffb"/>
+                <constraint firstItem="g4b-sr-dcZ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="79" id="pxd-gn-HEc"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
     </objects>
 </document>

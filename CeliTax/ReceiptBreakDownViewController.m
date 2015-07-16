@@ -109,29 +109,32 @@
 
 - (void) loadData
 {
-    [self.dataService fetchReceiptForReceiptID: self.receiptID success: ^(Receipt *receipt) {
-        [self.dateLabel setText: [self.dateFormatter stringFromDate: receipt.dateCreated]];
-    } failure: ^(NSString *reason) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }];
+    Receipt *receipt = [self.dataService fetchReceiptForReceiptID: self.receiptID];
     
-    [self.dataService fetchCatagories: ^(NSArray *catagories) {
-        self.allCatagories = catagories;
-
-        NSMutableArray *catagorySelections = [NSMutableArray new];
-
-        for (Catagory *catagory in self.allCatagories)
-        {
-            [catagorySelections addObject: catagory.name];
-        }
-
-        self.catagoryPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: catagorySelections];
-        self.catagoryPickerViewController.highlightedSelectionIndex = -1;
-        self.selectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.catagoryPickerViewController];
-        [self.catagoryPickerViewController setDelegate: self];
-    } failure: ^(NSString *reason) {
-        // should not happen
-    }];
+    if (receipt)
+    {
+        [self.dateLabel setText: [self.dateFormatter stringFromDate: receipt.dateCreated]];
+    }
+    else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+    NSArray *catagories = [self.dataService fetchCatagories];
+    
+    self.allCatagories = catagories;
+    
+    NSMutableArray *catagorySelections = [NSMutableArray new];
+    
+    for (Catagory *catagory in self.allCatagories)
+    {
+        [catagorySelections addObject: catagory.name];
+    }
+    
+    self.catagoryPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: catagorySelections];
+    self.catagoryPickerViewController.highlightedSelectionIndex = -1;
+    self.selectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.catagoryPickerViewController];
+    [self.catagoryPickerViewController setDelegate: self];
 
     self.currentlySelectedRecord = nil;
 
@@ -140,47 +143,41 @@
 
     // get all the items in this receipt
     // load catagory records for this receipt
-    [self.dataService fetchRecordsForReceiptID: self.receiptID
-                                       success: ^(NSArray *records) {
-        if (!records || records.count == 0)
+    NSArray *records = [self.dataService fetchRecordsForReceiptID: self.receiptID];
+    
+    if (!records || records.count == 0)
+    {
+        [self.noItemsShield setHidden: NO];
+        
+        [self.view bringSubviewToFront: self.noItemsShield];
+    }
+    else
+    {
+        [self.noItemsShield setHidden: YES];
+    }
+    
+    // get all the catagories used in this receipt
+    for (Record *record in records)
+    {
+        // get the catagory of this Record
+        Catagory *catagory = [self.dataService fetchCatagory: record.catagoryID];
+        
+        if (![self.catagoriesUsedByThisReceipt containsObject: catagory])
         {
-            [self.noItemsShield setHidden: NO];
-
-            [self.view bringSubviewToFront: self.noItemsShield];
+            [self.catagoriesUsedByThisReceipt addObject: catagory];
         }
-        else
+        
+        NSMutableArray *recordsOfThisCatagory = [self.recordsDictionary objectForKey: catagory.localID];
+        
+        if (!recordsOfThisCatagory)
         {
-            [self.noItemsShield setHidden: YES];
+            recordsOfThisCatagory = [NSMutableArray new];
         }
-
-        // get all the catagories used in this receipt
-        for (Record *record in records)
-        {
-            // get the catagory of this Record
-            [self.dataService fetchCatagory: record.catagoryID
-                                    success: ^(Catagory *catagory) {
-                if (![self.catagoriesUsedByThisReceipt containsObject: catagory])
-                {
-                    [self.catagoriesUsedByThisReceipt addObject: catagory];
-                }
-
-                NSMutableArray *recordsOfThisCatagory = [self.recordsDictionary objectForKey: catagory.identifer];
-
-                if (!recordsOfThisCatagory)
-                {
-                    recordsOfThisCatagory = [NSMutableArray new];
-                }
-
-                [recordsOfThisCatagory addObject: record];
-
-                [self.recordsDictionary setObject: recordsOfThisCatagory forKey: catagory.identifer];
-            } failure: ^(NSString *reason) {
-                NSAssert(NO, @"INVALID RECORD");
-            }];
-        }
-    } failure: ^(NSString *reason) {
-        // failure
-    }];
+        
+        [recordsOfThisCatagory addObject: record];
+        
+        [self.recordsDictionary setObject: recordsOfThisCatagory forKey: catagory.localID];
+    }
 
     [self refreshPieChart];
 
@@ -221,7 +218,7 @@
     NSMutableArray *tutorials = [NSMutableArray new];
     
     //Each Stage represents a different group of Tutorial pop ups
-    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewControllerNamed: NSStringFromClass([self class])];
+    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
     
     if ( currentTutorialStage == 1 )
     {
@@ -234,7 +231,7 @@
         
         [tutorials addObject:tutorialStep1];
         
-        [self.tutorialManager setTutorialDoneForViewControllerNamed:NSStringFromClass([self class])];
+        [self.tutorialManager setTutorialDoneForViewController:self];
     }
     else
     {
@@ -270,7 +267,7 @@
         [self.sliceColors addObject: catagory.color];
         [self.sliceNames addObject: catagory.name];
 
-        NSMutableArray *recordsOfThisCatagory = [self.recordsDictionary objectForKey: catagory.identifer];
+        NSMutableArray *recordsOfThisCatagory = [self.recordsDictionary objectForKey: catagory.localID];
 
         float totalForThisCatagory = 0;
 
@@ -363,7 +360,7 @@
 
         for (Record *record in records)
         {
-            if ([recordToFind.identifer isEqualToString: record.identifer])
+            if ([recordToFind.localID isEqualToString: record.localID])
             {
                 foundAlready = YES;
                 break;
@@ -416,7 +413,7 @@
 
 - (Catagory *) getCatagoryFromCatagoryID: (NSString *) catagoryID
 {
-    NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"identifer == %@", catagoryID];
+    NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"localID == %@", catagoryID];
     NSArray *catagory = [self.catagoriesUsedByThisReceipt filteredArrayUsingPredicate: findCatagories];
 
     return [catagory firstObject];
@@ -442,13 +439,10 @@
 {
     Record *thisRecord = [self getNthRecordFromRecordsDictionary: sender.tag];
 
-    DLog(@"Delete button for record %@ pressed", thisRecord.identifer);
-
-    [self.manipulationService deleteRecord: thisRecord.identifer WithSuccess: ^{
+    if ([self.manipulationService deleteRecord: thisRecord.localID])
+    {
         [self loadData];
-    } andFailure: ^(NSString *reason) {
-        // should not happen
-    }];
+    }
 }
 
 - (void) setCurrentlySelectedRecord: (Record *) currentlySelectedRecord
@@ -470,19 +464,17 @@
     // change the current selected record to this new catagory
     Catagory *chosenCatagory = [self.allCatagories objectAtIndex: index];
 
-    if ([self.currentlySelectedRecord.catagoryID isEqualToString: chosenCatagory.identifer])
+    if ([self.currentlySelectedRecord.catagoryID isEqualToString: chosenCatagory.localID])
     {
         return;
     }
 
-    self.currentlySelectedRecord.catagoryID = chosenCatagory.identifer;
-    self.currentlySelectedRecord.catagoryName = chosenCatagory.name;
+    self.currentlySelectedRecord.catagoryID = chosenCatagory.localID;
 
-    [self.manipulationService modifyRecord: self.currentlySelectedRecord WithSuccess:^{
+    if ([self.manipulationService modifyRecord: self.currentlySelectedRecord])
+    {
         [self loadData];
-    } andFailure:^(NSString *reason) {
-        DLog(@"self.manipulationService modifyRecord failed");
-    }];
+    }
 }
 
 #pragma mark - XYPieChart Data Source
@@ -540,11 +532,10 @@
 
         thisRecord.amount = [textField.text floatValue];
 
-        [self.manipulationService modifyRecord: thisRecord WithSuccess: ^{
-            DLog(@"Record %@ saved", thisRecord.identifer);
-        } andFailure: ^(NSString *reason) {
-            // should not happen
-        }];
+        if ([self.manipulationService modifyRecord: thisRecord])
+        {
+            DLog(@"Record %@ saved", thisRecord.localID);
+        }
     }
     else
     {
@@ -560,11 +551,10 @@
 
         thisRecord.quantity = [textField.text integerValue];
 
-        [self.manipulationService modifyRecord: thisRecord WithSuccess: ^{
-            DLog(@"Record %@ saved", thisRecord.identifer);
-        } andFailure: ^(NSString *reason) {
-            // should not happen
-        }];
+        if ([self.manipulationService modifyRecord: thisRecord])
+        {
+            DLog(@"Record %@ saved", thisRecord.localID);
+        }
     }
 
     [self refreshPieChart];
@@ -601,7 +591,7 @@
 
     DLog(@"Catagory %@ clicked", thisCatagory.name);
 
-    NSMutableArray *recordsOfThisCatagory = [self.recordsDictionary objectForKey: thisCatagory.identifer];
+    NSMutableArray *recordsOfThisCatagory = [self.recordsDictionary objectForKey: thisCatagory.localID];
 
     if (self.currentlySelectedRecord != [recordsOfThisCatagory firstObject])
     {
@@ -682,6 +672,36 @@
         }
         
         [self.lookAndFeel applySlightlyDarkerBorderTo: cell.colorBoxView];
+        
+        if (indexPath.row  == 0)
+        {
+            if (!self.currentlySelectedRecord)
+            {
+                [cell.quantityLabel setHidden:NO];
+                [cell.pricePerItemLabel setHidden:NO];
+            }
+        }
+        else
+        {
+            if (self.currentlySelectedRecord)
+            {
+                if (thisRecord == self.currentlySelectedRecord)
+                {
+                    [cell.quantityLabel setHidden:NO];
+                    [cell.pricePerItemLabel setHidden:NO];
+                }
+                else
+                {
+                    [cell.quantityLabel setHidden:YES];
+                    [cell.pricePerItemLabel setHidden:YES];
+                }
+            }
+            else
+            {
+                [cell.quantityLabel setHidden:YES];
+                [cell.pricePerItemLabel setHidden:YES];
+            }
+        }
 
         return cell;
     }

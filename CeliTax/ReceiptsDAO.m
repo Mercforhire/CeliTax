@@ -20,7 +20,7 @@
     }
 
     Receipt *newReceipt = [Receipt new];
-    newReceipt.identifer = [Utils generateUniqueID];
+    newReceipt.localID = [Utils generateUniqueID];
     newReceipt.fileNames = [filenames mutableCopy];
     newReceipt.dateCreated = [NSDate date];
     newReceipt.taxYear = taxYear;
@@ -29,12 +29,13 @@
 
     if ( [self.userDataDAO saveUserData] )
     {
-        return newReceipt.identifer;
+        return newReceipt.localID;
     }
     
     return nil;
 }
 
+//used by debug purposes only
 - (BOOL) addReceipt: (Receipt *) receiptToAdd
 {
     if (!receiptToAdd)
@@ -52,13 +53,16 @@
  */
 - (NSArray *) loadAllReceipts
 {
-    return [self.userDataDAO getReceipts];
+    NSPredicate *loadReceipts = [NSPredicate predicateWithFormat: @"dataAction != %ld", DataActionDelete];
+    NSArray *receipts = [[self.userDataDAO getReceipts] filteredArrayUsingPredicate: loadReceipts];
+    
+    return receipts;
 }
 
 - (NSArray *) loadReceiptsFromTaxYear:(NSInteger)taxYear;
 {
     NSPredicate *filterReceipts = [NSPredicate predicateWithFormat: @"taxYear == %ld", taxYear];
-    NSArray *receipts = [[self.userDataDAO getReceipts] filteredArrayUsingPredicate: filterReceipts];
+    NSArray *receipts = [[self loadAllReceipts] filteredArrayUsingPredicate: filterReceipts];
     
     return receipts;
 }
@@ -108,20 +112,25 @@
 
 - (Receipt *) loadReceipt: (NSString *) receiptID
 {
-    NSPredicate *findReceipt = [NSPredicate predicateWithFormat: @"identifer == %@", receiptID];
-    NSArray *receipt = [[self.userDataDAO getReceipts] filteredArrayUsingPredicate: findReceipt];
+    NSPredicate *findReceipt = [NSPredicate predicateWithFormat: @"localID == %@", receiptID];
+    NSArray *receipt = [[self loadAllReceipts] filteredArrayUsingPredicate: findReceipt];
 
     return [receipt firstObject];
 }
 
 - (BOOL)modifyReceipt: (Receipt *)receipt
 {
-    Receipt *receiptToModify = [self loadReceipt:receipt.identifer];
+    Receipt *receiptToModify = [self loadReceipt:receipt.localID];
     
     if (receiptToModify)
     {
         receiptToModify.fileNames = [receipt.fileNames mutableCopy];
         receiptToModify.taxYear = receipt.taxYear;
+        
+        if (receiptToModify.dataAction != DataActionInsert)
+        {
+            receiptToModify.dataAction = DataActionUpdate;
+        }
         
         return [self.userDataDAO saveUserData];
     }
@@ -137,7 +146,14 @@
     
     if (receiptToDelete)
     {
-        [[self.userDataDAO getReceipts] removeObject: receiptToDelete];
+        if (!receiptToDelete.serverID)
+        {
+            [[self.userDataDAO getReceipts] removeObject: receiptToDelete];
+        }
+        else
+        {
+            receiptToDelete.dataAction = DataActionDelete;
+        }
         
         return [self.userDataDAO saveUserData];
     }

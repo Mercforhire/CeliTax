@@ -10,6 +10,13 @@
 
 @interface UserDataDAO : NSObject
 
+typedef enum : NSUInteger {
+    DataActionNone,
+    DataActionInsert,
+    DataActionUpdate,
+    DataActionDelete
+} DataActionStatus;
+
 @property (nonatomic, strong) NSString *userKey;
 
 -(BOOL)loadUserData;
@@ -23,5 +30,17 @@
 -(NSMutableArray *)getReceipts;
 
 -(NSMutableArray *)getTaxYears;
+
+-(NSDate *)getLastUploadDate;
+
+-(void)setLastUploadDate:(NSDate *)date;
+
+-(NSString *)getLastestDataHash;
+
+-(void)updateLastestDataHash:(NSString *)date;
+
+-(NSDictionary *)generateJSONToUploadToServer;
+
+- (void) setAllDataToDateActionNone;
 
 @end

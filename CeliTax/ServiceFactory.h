@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class ConfigurationManager, DAOFactory;
-@protocol AuthenticationService, DataService, ManipulationService;
+@protocol AuthenticationService, DataService, ManipulationService, SyncService;
 
 @interface ServiceFactory : NSObject
 
@@ -22,5 +22,7 @@
 - (id<DataService>) createDataService;
 
 - (id<ManipulationService>) createManipulationService;
+
+- (id<SyncService>) createSyncService;
 
 @end

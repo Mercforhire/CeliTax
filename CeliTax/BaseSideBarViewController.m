@@ -119,8 +119,6 @@
 #pragma mark - LeftSideMenuViewProtocol
 - (void) selectedMenuIndex: (NSInteger) index
 {
-    DLog(@"Sidebar selection %ld clicked", (long)index);
-
     switch (index)
     {
         case RootViewControllerHome:

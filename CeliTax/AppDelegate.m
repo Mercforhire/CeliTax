@@ -53,6 +53,7 @@
     self.viewControllerFactory.authenticationService = [self.serviceFactory createAuthenticationService];
     self.viewControllerFactory.dataService = [self.serviceFactory createDataService];
     self.viewControllerFactory.manipulationService = [self.serviceFactory createManipulationService];
+    self.viewControllerFactory.syncService = [self.serviceFactory createSyncService];
     self.viewControllerFactory.lookAndFeel = self.lookAndFeel;
     self.viewControllerFactory.navigationBarTitleImageContainer = self.navigationBarTitleImageContainer;
 }

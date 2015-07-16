@@ -25,21 +25,21 @@ typedef void (^SendCommentFailureBlock) (NSString *reason);
 @property (nonatomic, strong) ConfigurationManager      *configManager;
 
 - (void) authenticateUser: (NSString *) userName
-                      withPassword: (NSString *) password
-                           success: (AuthenticateUserSuccessBlock) success
-                           failure: (AuthenticateUserFailureBlock) failure;
+             withPassword: (NSString *) password
+                  success: (AuthenticateUserSuccessBlock) success
+                  failure: (AuthenticateUserFailureBlock) failure;
 
 - (void) registerNewUser: (NSString *) userName
-                     withPassword: (NSString *) password
-                    withFirstname: (NSString *) firstname
-                     withLastname: (NSString *) lastname
-                         withCity: (NSString *) city
-                      withCountry: (NSString *) country
-                       withPostal: (NSString *) postal
-                          success: (RegisterNewUserSuccessBlock) success
-                          failure: (RegisterNewUserSuccessBlock) failure;
+            withPassword: (NSString *) password
+           withFirstname: (NSString *) firstname
+            withLastname: (NSString *) lastname
+                withCity: (NSString *) city
+             withCountry: (NSString *) country
+              withPostal: (NSString *) postal
+                 success: (RegisterNewUserSuccessBlock) success
+                 failure: (RegisterNewUserSuccessBlock) failure;
 
-- (void) sendComment:(NSString *)comment
+- (void) sendComment: (NSString *)comment
              success: (SendCommentSuccessBlock) success
              failure: (SendCommentFailureBlock) failure;
 

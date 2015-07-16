@@ -117,8 +117,8 @@
 
     [self refreshCropEdgeRatio];
     
-    [self.lookAndFeel applyGreenBorderTo:self.cancelButton];
-    [self.lookAndFeel applyGreenBorderTo:self.continueButton];
+    [self.lookAndFeel applySolidGreenButtonStyleTo:self.cancelButton];
+    [self.lookAndFeel applyDisabledButtonStyleTo:self.continueButton];
     
     // snap button to capture image
     self.snapButton.clipsToBounds = YES;
@@ -295,6 +295,7 @@
                                                              self.bottomRightCornerView.frame.size.height)];
             
             [self.continueButton setEnabled:YES];
+            [self.lookAndFeel applySolidGreenButtonStyleTo:self.continueButton];
             
             [self.view setNeedsUpdateConstraints];
             
@@ -336,46 +337,37 @@
     {
         NSInteger taxYear = [self.configurationManager getCurrentTaxYear];
         
-        [self.manipulationService addReceiptForFilenames: self.takenImageFilenames
-                                              andTaxYear: taxYear
-                                                 success: ^(NSString *newestReceiptID)
-         {
-             
-             DLog(@"addReceiptForUserKey success");
-             newlyAddedReceiptID = newestReceiptID;
-             
-         } failure: ^(NSString *reason) {
-             // should not happen
-             DLog(@"saveNewReceipt ERROR");
-         }];
+        NSString *newestReceiptID = [self.manipulationService addReceiptForFilenames: self.takenImageFilenames
+                                                                          andTaxYear: taxYear];
         
-        ReceiptCheckingViewController *receiptCheckingViewController = [self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID:newlyAddedReceiptID cameFromReceiptBreakDownViewController:NO];
-        
-        // push the new viewController
-        [self.navigationController pushViewController: receiptCheckingViewController animated: YES];
-        
-        // remove self viewController
-        NSMutableArray *viewControllers = [NSMutableArray arrayWithArray: self.navigationController.viewControllers];
-        
-        [viewControllers removeObject: self];
-        
-        // Assign the updated stack with animation
-        [self.navigationController setViewControllers: viewControllers animated: NO];
+        if (newestReceiptID)
+        {
+            DLog(@"addReceiptForUserKey success");
+            newlyAddedReceiptID = newestReceiptID;
+            
+            ReceiptCheckingViewController *receiptCheckingViewController = [self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID:newlyAddedReceiptID cameFromReceiptBreakDownViewController:NO];
+            
+            // push the new viewController
+            [self.navigationController pushViewController: receiptCheckingViewController animated: YES];
+            
+            // remove self viewController
+            NSMutableArray *viewControllers = [NSMutableArray arrayWithArray: self.navigationController.viewControllers];
+            
+            [viewControllers removeObject: self];
+            
+            // Assign the updated stack with animation
+            [self.navigationController setViewControllers: viewControllers animated: NO];
+        }
     }
     
     //adding the photos taken to an existing receipt
     else
     {
-        [self.dataService fetchReceiptForReceiptID:self.existingReceiptID
-                                           success:^(Receipt *receipt)
-        {
-            [receipt.fileNames addObjectsFromArray:self.takenImageFilenames];
-            
-            [self.manipulationService modifyReceipt:receipt];
-            
-        } failure:^(NSString *reason) {
-            DLog(@"self.dataService fetchReceiptForReceiptID failed");
-        }];
+        Receipt *receipt = [self.dataService fetchReceiptForReceiptID:self.existingReceiptID];
+        
+        [receipt.fileNames addObjectsFromArray:self.takenImageFilenames];
+        
+        [self.manipulationService modifyReceipt:receipt];
         
         [self.navigationController popViewControllerAnimated: YES];
     }

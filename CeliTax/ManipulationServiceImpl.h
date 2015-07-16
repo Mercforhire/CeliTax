@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 #import "ManipulationService.h"
 
 @class CatagoriesDAO,RecordsDAO,ReceiptsDAO;

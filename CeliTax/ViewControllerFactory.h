@@ -11,7 +11,7 @@
 @class ConfigurationManager, UserManager, LookAndFeel;
 @class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCatagoryViewController, SidebarViewController, Catagory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager;
 
-@protocol AuthenticationService, DataService, ManipulationService;
+@protocol AuthenticationService, DataService, ManipulationService, SyncService;
 
 @interface ViewControllerFactory : NSObject
 
@@ -21,6 +21,7 @@
 @property (nonatomic, weak) id <AuthenticationService> authenticationService;
 @property (nonatomic, weak) id <DataService> dataService;
 @property (nonatomic, weak) id <ManipulationService> manipulationService;
+@property (nonatomic, weak) id <SyncService> syncService;
 @property (nonatomic, weak) LookAndFeel *lookAndFeel;
 
 @property (nonatomic, weak) UIView *navigationBarTitleImageContainer;

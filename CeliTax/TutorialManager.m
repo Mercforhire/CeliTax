@@ -109,6 +109,9 @@
         return;
     }
     
+    [((UIView *)self.tutorialBubbleView) removeFromSuperview];
+    [self.maskView removeFromSuperview];
+    
     self.viewController = viewController;
     self.tutorials = tutorials;
 
@@ -177,21 +180,27 @@
      }];
 }
 
--(void)setCurrentTutorialStageForViewControllerNamed:(NSString *)viewControllerName forStage:(NSInteger)stage
+-(void)setCurrentTutorialStageForViewController:(UIViewController *)viewController forStage:(NSInteger)stage
 {
-    [self.rememberedTutorialStages setObject:[NSNumber numberWithInteger:stage] forKey:viewControllerName];
+    NSString *className = NSStringFromClass([viewController class]);
+    
+    [self.rememberedTutorialStages setObject:[NSNumber numberWithInteger:stage] forKey:className];
 }
 
--(void)setTutorialDoneForViewControllerNamed:(NSString *)viewControllerName
+-(void)setTutorialDoneForViewController:(UIViewController *)viewController
 {
-    [self.rememberedTutorialStages setObject:[NSNumber numberWithInteger: -1] forKey:viewControllerName];
+    NSString *className = NSStringFromClass([viewController class]);
+    
+    [self.rememberedTutorialStages setObject:[NSNumber numberWithInteger: -1] forKey:className];
 }
 
--(NSInteger)getCurrentTutorialStageForViewControllerNamed:(NSString *)viewControllerName
+-(NSInteger)getCurrentTutorialStageForViewController:(UIViewController *)viewController
 {
-    if ([self.rememberedTutorialStages objectForKey:viewControllerName])
+    NSString *className = NSStringFromClass([viewController class]);
+    
+    if ([self.rememberedTutorialStages objectForKey:className])
     {
-        return [[self.rememberedTutorialStages objectForKey:viewControllerName] integerValue];
+        return [[self.rememberedTutorialStages objectForKey:className] integerValue];
     }
     
     return 1;
@@ -215,6 +224,11 @@
     }
     
     return YES;
+}
+
+-(void)resetTutorialStages
+{
+    [self.rememberedTutorialStages removeAllObjects];
 }
 
 @end

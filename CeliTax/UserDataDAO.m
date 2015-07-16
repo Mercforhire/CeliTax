@@ -45,6 +45,16 @@
     return self.userData.taxYears;
 }
 
+-(NSDate *)getLastUploadDate
+{
+    return self.userData.lastUploadedDate;
+}
+
+-(void)setLastUploadDate:(NSDate *)date
+{
+    self.userData.lastUploadedDate = date;
+}
+
 - (NSString *) generateUserDataFileName
 {
     if (!self.userKey)
@@ -104,6 +114,16 @@
     {
         return NO;
     }
+}
+
+-(NSDictionary *)generateJSONToUploadToServer
+{
+    return [self.userData generateJSONToUploadToServer];
+}
+
+- (void) setAllDataToDateActionNone
+{
+    [self.userData setAllDataToDateActionNone];
 }
 
 @end

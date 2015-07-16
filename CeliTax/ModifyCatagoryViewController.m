@@ -112,20 +112,15 @@
 
 - (IBAction) confirmPressed: (UIButton *) sender
 {
-    [self.manipulationService modifyCatagoryForCatagoryID:self.catagoryToModify.identifer
-                                                  newName:self.catagoryToModify.name
-                                                 newColor:self.catagoryToModify.color
-                                                  success:^
+    if ([self.manipulationService modifyCatagoryForCatagoryID:self.catagoryToModify.localID
+                                                      newName:self.catagoryToModify.name
+                                                     newColor:self.catagoryToModify.color])
     {
         if (self.delegate)
         {
             [self.delegate requestPopUpToDismiss];
         }
-        
-    } failure:^(NSString *reason) {
-        //should not happen
-        
-    }];
+    }
 }
 
 #pragma mark - UITextFieldDelegate

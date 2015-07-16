@@ -71,7 +71,7 @@
             self.userDataDAO.userKey = testKey;
             
             //TODO: default to on, will change this later
-            [self.configManager setTutorialON:YES];
+            [self.configManager setTutorialON:NO];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 success ( returnedResult );

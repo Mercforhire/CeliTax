@@ -17,12 +17,14 @@
 
 -(void)startTutorialInViewController: (UIViewController *) viewController andTutorials:(NSArray *)tutorials;
 
--(void)setCurrentTutorialStageForViewControllerNamed:(NSString *)viewControllerName forStage:(NSInteger)stage;
+-(void)setCurrentTutorialStageForViewController:(UIViewController *)viewController forStage:(NSInteger)stage;
 
--(void)setTutorialDoneForViewControllerNamed:(NSString *)viewControllerName;
+-(void)setTutorialDoneForViewController:(UIViewController *)viewController;
 
--(NSInteger)getCurrentTutorialStageForViewControllerNamed:(NSString *)viewControllerName;
+-(NSInteger)getCurrentTutorialStageForViewController:(UIViewController *)viewController;
 
 -(BOOL)areAllTutorialsShown;
+
+-(void)resetTutorialStages;
 
 @end

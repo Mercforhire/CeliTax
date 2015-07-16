@@ -16,70 +16,56 @@
 
 @implementation ManipulationServiceImpl
 
-- (void) addCatagoryForName: (NSString *) catagoryName forColor: (UIColor *) catagoryColor success: (AddCatagorySuccessBlock) success failure: (AddCatagoryFailureBlock) failure
+- (BOOL) addCatagoryForName: (NSString *) catagoryName forColor: (UIColor *) catagoryColor
 {
     if (!catagoryName || !catagoryColor)
     {
-        failure (@"missing parameters");
-
-        return;
+        return NO;
     }
 
     if ([self.catagoriesDAO addCatagoryForName: catagoryName andColor: catagoryColor andNationalAverageCost: 0])
     {
-        success( );
-    }
-    else
-    {
-        failure (@"unable to add catagory");
+        return YES;
     }
 
-    return;
+    return NO;
 }
 
-- (void) modifyCatagoryForCatagoryID: (NSString *) catagoryID newName: (NSString *) catagoryName newColor: (UIColor *) catagoryColor success: (ModifyCatagorySuccessBlock) success failure: (ModifyCatagoryFailureBlock) failure
+- (BOOL) modifyCatagoryForCatagoryID: (NSString *) catagoryID newName: (NSString *) catagoryName newColor: (UIColor *) catagoryColor
 {
     if ([self.catagoriesDAO modifyCatagory: catagoryID forName: catagoryName andColor: catagoryColor])
     {
-        success( );
+        return YES;
     }
-    else
-    {
-        failure (@"unable to modified catagory");
-    }
-
-    return;
+    
+    return NO;
 }
 
-- (void) deleteCatagoryForCatagoryID: (NSString *) catagoryID success: (DeleteCatagorySuccessBlock) success failure: (DeleteCatagoryFailureBlock) failure
+- (BOOL) deleteCatagoryForCatagoryID: (NSString *) catagoryID
 {
     if ([self.catagoriesDAO deleteCatagory: catagoryID])
     {
-        success( );
+        return YES;
     }
-    else
-    {
-        failure (@"unable to delete catagory");
-    }
-
-    return;
+    
+    return NO;
 }
 
-- (void) transferCatagoryFromCatagoryID: (NSString *) fromCatagoryID toCatagoryID: (NSString *) toCatagoryID success: (ModifyCatagorySuccessBlock) success failure: (ModifyCatagoryFailureBlock) failure
+- (BOOL) transferCatagoryFromCatagoryID: (NSString *) fromCatagoryID toCatagoryID: (NSString *) toCatagoryID
 {
     NSArray *fromRecords = [self.recordsDAO loadRecordsforCatagory: fromCatagoryID];
 
     if (!fromRecords)
     {
         // nothing to transfer
-        success ();
+        return YES;
     }
 
     Catagory *toItemCatagory = [self.catagoriesDAO loadCatagory: toCatagoryID];
 
     if (!toItemCatagory)
     {
-        failure (@"invalid toCatagoryID");
+        return NO;
     }
 
     NSMutableArray *modifiedRecordsToAdd = [NSMutableArray new];
@@ -93,94 +79,68 @@
 
     if ([self.recordsDAO addRecords: modifiedRecordsToAdd])
     {
-        success ();
+        return YES;
     }
-    else
-    {
-        failure (@"unable to add catagory records");
-    }
-
-    return;
+    
+    return NO;
 }
 
-- (void) addRecordForCatagoryID: (NSString *) catagoryID forReceiptID: (NSString *) receiptID forQuantity: (NSInteger) quantity forAmount: (float) amount success: (AddRecordSuccessBlock) success failure: (AddRecordFailureBlock) failure
+- (NSString *) addRecordForCatagoryID: (NSString *) catagoryID forReceiptID: (NSString *) receiptID forQuantity: (NSInteger) quantity forAmount: (float) amount
 {
     Catagory *toItemCatagory = [self.catagoriesDAO loadCatagory: catagoryID];
 
     if (!toItemCatagory)
     {
-        failure (@"invalid catagoryID");
+        return nil;
     }
 
     NSString *newestRecordID = [self.recordsDAO addRecordForCatagoryID: catagoryID andReceiptID: receiptID forQuantity: quantity forAmount: amount];
 
     if (newestRecordID)
     {
-        success (newestRecordID);
+        return newestRecordID;
     }
-    else
-    {
-        failure (@"unable to add catagory record");
-    }
-
-    return;
+    
+    return nil;
 }
 
-- (void) deleteRecord: (NSString *) recordID WithSuccess: (DeleteRecordSuccessBlock) success andFailure: (DeleteRecordFailureBlock) failure
+- (BOOL) deleteRecord: (NSString *) recordID
 {
     NSArray *arrayWithSingleNumber = [NSArray arrayWithObject: recordID];
 
     if ([self.recordsDAO deleteRecordsForRecordIDs: arrayWithSingleNumber])
     {
-        success ();
+        return YES;
     }
-    else
-    {
-        failure (@"failed to deleteRecordsForRecordIDs");
-    }
-
-    return;
+    
+    return NO;
 }
 
-- (void) modifyRecord: (Record *) record
-          WithSuccess: (ModifyRecordSuccessBlock) success
-           andFailure: (ModifyRecordFailureBlock) failure
+- (BOOL) modifyRecord: (Record *) record
 {
     if ([self.recordsDAO modifyRecord: record])
     {
-        success ();
+        return YES;
     }
-    else
-    {
-        failure ([NSString stringWithFormat: @"failed to modify Record: %ld", (long)record.identifer]);
-    }
-
-    return;
+    
+    return NO;
 }
 
-- (void) addReceiptForFilenames: (NSArray *) filenames
-                     andTaxYear: (NSInteger) taxYear
-                        success: (AddReceiptSuccessBlock) success
-                        failure: (AddReceiptFailureBlock) failure;
+- (NSString *) addReceiptForFilenames: (NSArray *) filenames
+                           andTaxYear: (NSInteger) taxYear
 {
     if ( !filenames )
     {
-        failure (@"missing filenames");
-
-        return;
+        return nil;
     }
     
     NSString *newReceiptID = [self.receiptsDAO addReceiptWithFilenames: filenames inTaxYear:taxYear];
     if ( newReceiptID )
     {
-        success ( newReceiptID );
+        return ( newReceiptID );
     }
-    else
-    {
-        failure (@"unable to add receipt");
-    }
-
-    return;
+    
+    return nil;
 }
 
 - (BOOL) modifyReceipt:(Receipt *)receipt
@@ -193,15 +153,11 @@
     return [self.receiptsDAO modifyReceipt:receipt];
 }
 
-- (void) deleteReceiptAndAllItsRecords: (NSString *) receiptID
-                               success: (DeleteReceiptSuccessBlock) success
-                               failure: (DeleteReceiptFailureBlock) failure
+- (BOOL) deleteReceiptAndAllItsRecords: (NSString *) receiptID
 {
     if (!receiptID)
     {
-        failure (@"missing receiptID");
-
-        return;
+        return NO;
     }
 
     NSArray *recordsForThisReceipt = [self.recordsDAO loadRecordsforReceipt: receiptID];
@@ -210,30 +166,23 @@
 
     for (Record *recordToDelete in recordsForThisReceipt)
     {
-        [arrayOfReceiptIDs addObject: recordToDelete.identifer];
+        [arrayOfReceiptIDs addObject: recordToDelete.localID];
     }
 
     if ([self.recordsDAO deleteRecordsForRecordIDs: arrayOfReceiptIDs])
     {
         if ([self.receiptsDAO deleteReceipt: receiptID])
         {
-            success ();
-        }
-        else
-        {
-            failure (@"self.receiptsDAO deleteReceipt failed");
+            return YES;
         }
     }
+    
+    return NO;
 }
 
 - (BOOL) addTaxYear: (NSInteger) taxYear
 {
     return [self.taxYearsDAO addTaxYear:taxYear];
-}
-
-- (BOOL) removeTaxYear: (NSInteger) taxYear
-{
-    return [self.taxYearsDAO removeTaxYear:taxYear];
 }
 
 @end

@@ -40,7 +40,7 @@
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Help" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FlW-Ov-vcm">
-                            <rect key="frame" x="140" y="25" width="40.5" height="23"/>
+                            <rect key="frame" x="140" y="15" width="40.5" height="23"/>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="19"/>
                             <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -64,7 +64,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CYY-Lx-iO3">
-                            <rect key="frame" x="123" y="520" width="65" height="30"/>
+                            <rect key="frame" x="123" y="493" width="65" height="30"/>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                             <inset key="contentEdgeInsets" minX="15" minY="5" maxX="15" maxY="5"/>
                             <state key="normal" title="Send">
@@ -76,7 +76,7 @@
                             </connections>
                         </button>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Type message" translatesAutoresizingMaskIntoConstraints="NO" id="57p-ex-MG5">
-                            <rect key="frame" x="16" y="353" width="288" height="154"/>
+                            <rect key="frame" x="16" y="326" width="288" height="154"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="154" id="Xgg-VV-1nc"/>
@@ -85,16 +85,16 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send us a message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dPo-pl-QYd">
-                            <rect key="frame" x="16" y="322" width="152" height="23"/>
+                            <rect key="frame" x="16" y="295" width="152" height="23"/>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="19"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Aoy-Gh-cv4">
-                            <rect key="frame" x="65" y="148" width="202" height="157"/>
+                            <rect key="frame" x="65" y="148" width="202" height="130"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="157" id="BHf-zq-OS2"/>
+                                <constraint firstAttribute="height" constant="130" id="BHf-zq-OS2"/>
                                 <constraint firstAttribute="width" constant="202" id="RTk-UW-z4C"/>
                             </constraints>
                             <attributedString key="attributedText">
@@ -144,7 +144,7 @@ L7J41Y  </string>
                         <constraint firstItem="57p-ex-MG5" firstAttribute="leading" secondItem="dPo-pl-QYd" secondAttribute="trailing" constant="-152" id="5l7-Le-o2n"/>
                         <constraint firstItem="W4K-kW-zDg" firstAttribute="leading" secondItem="4NW-DW-8lj" secondAttribute="leading" constant="16" id="Ae5-8z-oEt"/>
                         <constraint firstItem="FNa-gc-fNN" firstAttribute="top" secondItem="W4K-kW-zDg" secondAttribute="bottom" constant="20" id="FnS-LB-xV4"/>
-                        <constraint firstItem="FlW-Ov-vcm" firstAttribute="top" secondItem="4NW-DW-8lj" secondAttribute="top" constant="25" id="G9k-79-5ql"/>
+                        <constraint firstItem="FlW-Ov-vcm" firstAttribute="top" secondItem="4NW-DW-8lj" secondAttribute="top" constant="15" id="G9k-79-5ql"/>
                         <constraint firstItem="CYY-Lx-iO3" firstAttribute="top" secondItem="57p-ex-MG5" secondAttribute="bottom" constant="13" id="H3P-9Q-aL7"/>
                         <constraint firstAttribute="centerX" secondItem="FlW-Ov-vcm" secondAttribute="centerX" id="PO2-Ox-KIZ"/>
                         <constraint firstItem="57p-ex-MG5" firstAttribute="leading" secondItem="4NW-DW-8lj" secondAttribute="leading" constant="16" id="Q4A-BD-Zih"/>

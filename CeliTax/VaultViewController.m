@@ -265,7 +265,7 @@ typedef enum : NSUInteger
     NSMutableArray *tutorials = [NSMutableArray new];
     
     //Each Stage represents a different group of Tutorial pop ups
-    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewControllerNamed: NSStringFromClass([self class])];
+    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
     
     if ( currentTutorialStage == 1 )
     {
@@ -287,7 +287,7 @@ typedef enum : NSUInteger
         
         [tutorials addObject:tutorialStep2];
         
-        [self.tutorialManager setTutorialDoneForViewControllerNamed:NSStringFromClass([self class])];
+        [self.tutorialManager setTutorialDoneForViewController:self];
     }
     else
     {
@@ -466,22 +466,17 @@ typedef enum : NSUInteger
     NSString *receiptID = [thisReceiptInfo objectForKey: kReceiptIDKey];
     
     //push to Receipt Checking view directly if this receipt has no items
-    [self.dataService fetchRecordsForReceiptID: receiptID
-                                       success: ^(NSArray *records)
-     {
-         if (!records || records.count == 0)
-         {
-             // push ReceiptCheckingViewController
-             [self.navigationController pushViewController: [self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID: receiptID cameFromReceiptBreakDownViewController: YES] animated: YES];
-         }
-         else
-         {
-             [self.navigationController pushViewController: [self.viewControllerFactory createReceiptBreakDownViewControllerForReceiptID: receiptID cameFromReceiptCheckingViewController: NO] animated: YES];
-         }
-         
-     } failure: ^(NSString *reason) {
-         // failure
-     }];
+    NSArray *records = [self.dataService fetchRecordsForReceiptID: receiptID];
+    
+    if (!records || records.count == 0)
+    {
+        // push ReceiptCheckingViewController
+        [self.navigationController pushViewController: [self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID: receiptID cameFromReceiptBreakDownViewController: YES] animated: YES];
+    }
+    else
+    {
+        [self.navigationController pushViewController: [self.viewControllerFactory createReceiptBreakDownViewControllerForReceiptID: receiptID cameFromReceiptCheckingViewController: NO] animated: YES];
+    }
 }
 
 - (void) setYearLabelToBe: (NSInteger) year
@@ -552,15 +547,10 @@ typedef enum : NSUInteger
 
 -(void)fetchRecentUploadReceipts
 {
-    [self.dataService fetchNewestReceiptInfo : 5
-                                       inYear: self.currentlySelectedYear.integerValue
-                                      success:^(NSArray *receiptInfos)
-     {
-         self.recentUploadReceipts = receiptInfos;
-         
-     } failure:^(NSString *reason) {
-         // should not happen
-     }];
+    NSArray *receiptInfos = [self.dataService fetchNewestReceiptInfo : 5
+                                                               inYear: self.currentlySelectedYear.integerValue];
+    
+    self.recentUploadReceipts = receiptInfos;
 }
 
 -(void)fetchPreviousWeekReceipts
@@ -569,16 +559,10 @@ typedef enum : NSUInteger
     
     NSDate *mondayOfPreviousWeek = [Utils dateForMondayOfPreviousWeek];
     
-    [self.dataService fetchReceiptInfoFromDate: mondayOfPreviousWeek
-                                        toDate: mondayOfThisWeek
-                                     inTaxYear: self.currentlySelectedYear.integerValue
-                                       success:^(NSArray *receiptInfos)
-     {
-         self.previousWeekReceipts = receiptInfos;
-         
-     } failure:^(NSString *reason) {
-         // should not happen
-     }];
+    NSArray *receiptInfos = [self.dataService fetchReceiptInfoFromDate: mondayOfPreviousWeek
+                                                                toDate: mondayOfThisWeek
+                                                             inTaxYear: self.currentlySelectedYear.integerValue];
+    self.previousWeekReceipts = receiptInfos;
 }
 
 -(void)fetchPreviousMonthReceipts
@@ -587,31 +571,19 @@ typedef enum : NSUInteger
     
     NSDate *firstDayOfPreviousMonth = [Utils dateForFirstDayOfPreviousMonth];
     
-    [self.dataService fetchReceiptInfoFromDate: firstDayOfPreviousMonth
-                                        toDate: firstDayOfThisMonth
-                                     inTaxYear: self.currentlySelectedYear.integerValue
-                                       success:^(NSArray *receiptInfos)
-     {
-         
-         self.previousMonthReceipts = receiptInfos;
-         
-     } failure:^(NSString *reason) {
-         // should not happen
-     }];
+    NSArray *receiptInfos = [self.dataService fetchReceiptInfoFromDate: firstDayOfPreviousMonth
+                                                                toDate: firstDayOfThisMonth
+                                                             inTaxYear: self.currentlySelectedYear.integerValue];
+    
+    self.previousMonthReceipts = receiptInfos;
 }
 
 -(void)fetchViewAllReceipts
 {
-    [self.dataService fetchNewestReceiptInfo: 999
-                                      inYear: self.currentlySelectedYear.integerValue
-                                     success:^(NSArray *receiptInfos)
-     {
-         
-         self.viewAllReceipts = receiptInfos;
-         
-     } failure:^(NSString *reason) {
-         // should not happen
-     }];
+    NSArray *receiptInfos = [self.dataService fetchNewestReceiptInfo: 999
+                                                              inYear: self.currentlySelectedYear.integerValue];
+    
+    self.viewAllReceipts = receiptInfos;
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -683,12 +655,7 @@ typedef enum : NSUInteger
         {
             DLog(@"Delete receipt: %@", receiptID);
             
-            [self.manipulationService deleteReceiptAndAllItsRecords:receiptID success:^{
-                DLog(@"Deleted receipt: %@", receiptID);
-                
-            } failure:^(NSString *reason) {
-                DLog(@"self.manipulationService deleteReceiptAndAllItsRecords failed");
-            }];
+            [self.manipulationService deleteReceiptAndAllItsRecords:receiptID];
         }
         
         //refresh UI
@@ -763,14 +730,11 @@ typedef enum : NSUInteger
     
     for (NSString *receiptID in receiptIDsToTransfer)
     {
-        [self.dataService fetchReceiptForReceiptID:receiptID success:^(Receipt *receipt) {
-            receipt.taxYear = yearToTransferTo.integerValue;
-            
-            [self.manipulationService modifyReceipt:receipt];
-            
-        } failure:^(NSString *reason) {
-            //not possible
-        }];
+        Receipt *receipt = [self.dataService fetchReceiptForReceiptID:receiptID];
+        
+        receipt.taxYear = yearToTransferTo.integerValue;
+        
+        [self.manipulationService modifyReceipt:receipt];
     }
     
     //refresh UI

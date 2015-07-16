@@ -51,9 +51,6 @@
         UIImage *testImage1 = [UIImage imageNamed: @"ReceiptPic-1.jpg"];
         UIImage *testImage2 = [UIImage imageNamed: @"ReceiptPic-2.jpg"];
 
-        [Utils saveImage: testImage1 withFilename: @"ReceiptPic-1" forUser: @"testKey"];
-        [Utils saveImage: testImage2 withFilename: @"ReceiptPic-2" forUser: @"testKey"];
-
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDateComponents *components = [[NSDateComponents alloc] init];
 
@@ -64,6 +61,12 @@
         // add ~300 random receipts
         for (int receiptNumber = 0; receiptNumber < 300; receiptNumber++)
         {
+            NSString *fileName1 = [NSString stringWithFormat: @"Receipt-%@-%d", [Utils generateUniqueID], 1];
+            NSString *fileName2 = [NSString stringWithFormat: @"Receipt-%@-%d", [Utils generateUniqueID], 2];
+            
+            [Utils saveImage: testImage1 withFilename: fileName1 forUser: @"testKey"];
+            [Utils saveImage: testImage2 withFilename: fileName2 forUser: @"testKey"];
+            
             [components setDay: [Utils randomNumberBetween: 1 maxNumber: 28]];
             [components setMonth: [Utils randomNumberBetween: 1 maxNumber: 12]];
             [components setYear: [Utils randomNumberBetween: 2013 maxNumber: 2015]];
@@ -79,10 +82,11 @@
             
             Receipt *newReceipt = [Receipt new];
             
-            newReceipt.identifer = [Utils generateUniqueID];
-            newReceipt.fileNames = [NSMutableArray arrayWithObjects: @"ReceiptPic-1", @"ReceiptPic-2", nil];
+            newReceipt.localID = [Utils generateUniqueID];
+            newReceipt.fileNames = [NSMutableArray arrayWithObjects: fileName1, fileName2, nil];
             newReceipt.dateCreated = date;
             newReceipt.taxYear = [Utils randomNumberBetween: 2013 maxNumber: 2015];
+            newReceipt.dataAction = DataActionInsert;
             
             [self.receiptsDAO addReceipt: newReceipt];
             
@@ -100,53 +104,39 @@
     }
 }
 
-- (void) fetchCatagories: (FetchCatagoriesSuccessBlock) success failure: (FetchCatagoriesFailureBlock) failure
+- (NSArray *) fetchCatagories
 {
     NSArray *catagories = [self.catagoriesDAO loadCatagories];
 
-    success(catagories);
-
-    return;
+    return (catagories);
 }
 
-- (void) fetchCatagory: (NSString *) catagoryID
-               success: (FetchCatagorySuccessBlock) success
-               failure: (FetchCatagoryFailureBlock) failure
+- (Catagory *) fetchCatagory: (NSString *) catagoryID;
 {
     Catagory *catagory = [self.catagoriesDAO loadCatagory: catagoryID];
 
     if (catagory)
     {
-        success(catagory);
-    }
-    else
-    {
-        failure(@"catagory not found");
+        return (catagory);
     }
 
-    return;
+    return nil;
 }
 
-- (void) fetchAllRecordsSuccess: (FetchRecordsSuccessBlock) success failure: (FetchRecordsFailureBlock) failure
+- (NSArray *) fetchAllRecords
 {
     NSArray *records = [self.recordsDAO loadRecords];
 
     if (records && records.count)
     {
-        success(records);
+        return (records);
     }
-    else
-    {
-        failure(@"records not found");
-    }
-
-    return;
+    
+    return nil;
 }
 
-- (void) fetchRecordsForCatagoryID: (NSString *) catagoryID
+- (NSArray *) fetchRecordsForCatagoryID: (NSString *) catagoryID
                          inTaxYear: (NSInteger) taxYear
-                           success: (FetchRecordsSuccessBlock) success
-                           failure: (FetchRecordsFailureBlock) failure
 {
     NSArray *recordsFromAllTime = [self.recordsDAO loadRecordsforCatagory: catagoryID];
 
@@ -154,79 +144,57 @@
     
     for (Record *record in recordsFromAllTime)
     {
-        [self fetchReceiptForReceiptID:record.receiptID success:^(Receipt *receipt) {
-            
+        Receipt *receipt = [self fetchReceiptForReceiptID:record.receiptID];
+        
+        if (receipt)
+        {
             if (receipt.taxYear == taxYear)
             {
                 [recordsInTaxYear addObject:record];
             }
-            
-        } failure:^(NSString *reason) {
-            //impossible
-        }];
+        }
     }
     
-    success(recordsInTaxYear);
-
-    return;
+    return (recordsInTaxYear);
 }
 
-- (void) fetchRecordsForReceiptID: (NSString *) receiptID success: (FetchRecordsSuccessBlock) success failure: (FetchRecordsFailureBlock) failure
+- (NSArray *) fetchRecordsForReceiptID: (NSString *) receiptID
 {
     NSArray *records = [self.recordsDAO loadRecordsforReceipt: receiptID];
 
     if (records)
     {
-        success(records);
+        return (records);
     }
-    else
-    {
-        failure(@"records not found");
-    }
-
-    return;
+    return nil;
 }
 
-- (void) fetchRecordForID: (NSString *) recordID
-                  success: (FetchRecordSuccessBlock) success
-                  failure: (FetchRecordFailureBlock) failure
+- (Record *) fetchRecordForID: (NSString *) recordID
 {
     Record *record = [self.recordsDAO loadRecord: recordID];
 
     if (record)
     {
-        success(record);
-    }
-    else
-    {
-        failure(@"record not found");
+        return(record);
     }
 
-    return;
+    return nil;
 }
 
-- (void) fetchReceiptsInTaxYear: (NSInteger) taxYear
-                        success: (FetchReceiptsSuccessBlock) success
-                        failure: (FetchReceiptsFailureBlock) failure
+- (NSArray *) fetchReceiptsInTaxYear: (NSInteger) taxYear
 {
     NSArray *receipts = [self.receiptsDAO loadReceiptsFromTaxYear:taxYear];
 
     if (receipts && receipts.count)
     {
-        success(receipts);
-    }
-    else
-    {
-        failure(@"receipts not found");
+        return(receipts);
     }
 
-    return;
+    return nil;
 }
 
-- (void) fetchNewestReceiptInfo: (NSInteger) nThNewest
-                         inYear: (NSInteger) year
-                        success: (FetchReceiptInfoSuccessBlock) success
-                        failure: (FetchReceiptInfoFailureBlock) failure
+- (NSArray *) fetchNewestReceiptInfo: (NSInteger) nThNewest
+                              inYear: (NSInteger) year
 {
     NSMutableArray *receiptInfos = [NSMutableArray new];
 
@@ -236,13 +204,13 @@
     {
         NSMutableDictionary *receiptInfo = [NSMutableDictionary new];
 
-        [receiptInfo setObject: receipt.identifer forKeyedSubscript: kReceiptIDKey];
+        [receiptInfo setObject: receipt.localID forKeyedSubscript: kReceiptIDKey];
         [receiptInfo setObject: receipt.dateCreated forKeyedSubscript: kUploadTimeKey];
 
         float totalAmountForReceipt = 0.0f;
 
         // get all catagories for this receipt
-        NSArray *records = [self.recordsDAO loadRecordsforReceipt: receipt.identifer];
+        NSArray *records = [self.recordsDAO loadRecordsforReceipt: receipt.localID];
         
         [receiptInfo setObject:[NSNumber numberWithInteger:records.count] forKey:kNumberOfRecordsKey];
 
@@ -256,16 +224,12 @@
         [receiptInfos addObject: receiptInfo];
     }
 
-    success(receiptInfos);
-
-    return;
+    return(receiptInfos);
 }
 
-- (void) fetchReceiptInfoFromDate: (NSDate *) fromDate
-                           toDate: (NSDate *) toDate
-                        inTaxYear: (NSInteger) taxYear
-                          success: (FetchReceiptInfoSuccessBlock) success
-                          failure: (FetchReceiptInfoFailureBlock) failure
+- (NSArray *) fetchReceiptInfoFromDate: (NSDate *) fromDate
+                                toDate: (NSDate *) toDate
+                             inTaxYear: (NSInteger) taxYear
 {
     NSMutableArray *receiptInfos = [NSMutableArray new];
     
@@ -284,13 +248,13 @@
     {
         NSMutableDictionary *receiptInfo = [NSMutableDictionary new];
         
-        [receiptInfo setObject: receipt.identifer forKeyedSubscript: kReceiptIDKey];
+        [receiptInfo setObject: receipt.localID forKeyedSubscript: kReceiptIDKey];
         [receiptInfo setObject: receipt.dateCreated forKeyedSubscript: kUploadTimeKey];
         
         float totalAmountForReceipt = 0.0f;
         
         // get all catagories for this receipt
-        NSArray *records = [self.recordsDAO loadRecordsforReceipt: receipt.identifer];
+        NSArray *records = [self.recordsDAO loadRecordsforReceipt: receipt.localID];
         
         [receiptInfo setObject:[NSNumber numberWithInteger:records.count] forKey:kNumberOfRecordsKey];
         
@@ -304,62 +268,25 @@
         [receiptInfos addObject: receiptInfo];
     }
     
-    success(receiptInfos);
-    
-    return;
+    return (receiptInfos);
 }
 
-- (void) fetchReceiptForReceiptID: (NSString *) receiptID success: (FetchReceiptSuccessBlock) success failure: (FetchReceiptFailureBlock) failure
+- (Receipt *) fetchReceiptForReceiptID: (NSString *) receiptID
 {
     Receipt *receipt = [self.receiptsDAO loadReceipt: receiptID];
 
     if (receipt)
     {
-        success(receipt);
-    }
-    else
-    {
-        failure(@"Receipt not found");
+        return(receipt);
     }
 
-    return;
+    return nil;
 }
 
-//- (void) fetchReceiptsYearsRange: (FetchReceiptsYearsRangeSuccessBlock) success
-//                         failure: (FetchReceiptsYearsRangeFailureBlock) failure
-//{
-//    NSArray *receipts = [self.receiptsDAO loadReceipts];
-//
-//    NSMutableDictionary *years = [NSMutableDictionary new];
-//
-//    NSCalendar *calendar = [NSCalendar currentCalendar];
-//    NSDateComponents *components;
-//
-//    for (Receipt *receipt in receipts)
-//    {
-//        NSDate *date = receipt.dateCreated;
-//
-//        components = [calendar components: NSCalendarUnitYear fromDate: date];
-//        NSInteger year = [components year]; // gives you year
-//
-//        [years setObject: @"GARBAGE" forKey: [NSNumber numberWithInteger: year]];
-//    }
-//
-//    NSArray *sortedYears = [years.allKeys sortedArrayUsingComparator: ^NSComparisonResult (NSNumber *a, NSNumber *b) {
-//        return b.integerValue > a.integerValue;
-//    }];
-//
-//    success(sortedYears);
-//
-//    return;
-//}
-
-- (void) fetchCatagoryInfoFromDate: (NSDate *) fromDate
-                            toDate: (NSDate *) toDate
-                         inTaxYear: (NSInteger) taxYear
-                       forCatagory: (NSString *) catagoryID
-                           success: (FetchCatagoryInfoSuccessBlock) success
-                           failure: (FetchCatagoryInfoFailureBlock) failure
+- (NSArray *) fetchCatagoryInfoFromDate: (NSDate *) fromDate
+                                 toDate: (NSDate *) toDate
+                              inTaxYear: (NSInteger) taxYear
+                            forCatagory: (NSString *) catagoryID
 {
     NSMutableArray *catagoryInfos = [NSMutableArray new];
 
@@ -384,7 +311,7 @@
 
             NSMutableDictionary *catagoryInfo = [NSMutableDictionary new];
 
-            [catagoryInfo setObject: receipt.identifer forKey: kReceiptIDKey];
+            [catagoryInfo setObject: receipt.localID forKey: kReceiptIDKey];
             [catagoryInfo setObject: receipt.dateCreated forKey: kReceiptTimeKey];
             [catagoryInfo setObject: [NSNumber numberWithInteger: totalQty] forKey: kTotalQtyKey];
             [catagoryInfo setObject: [NSNumber numberWithFloat: totalAmount] forKey: kTotalAmountKey];
@@ -393,16 +320,12 @@
         }
     }
 
-    success(catagoryInfos);
-
-    return;
+    return(catagoryInfos);
 }
 
-- (void) fetchLatestNthCatagoryInfosforCatagory: (NSString *) catagoryID
-                                         forNth: (NSInteger) nTh
-                                      inTaxYear: (NSInteger) taxYear
-                                        success: (FetchCatagoryInfoSuccessBlock) success
-                                        failure: (FetchCatagoryInfoFailureBlock) failure
+- (NSArray *) fetchLatestNthCatagoryInfosforCatagory: (NSString *) catagoryID
+                                              forNth: (NSInteger) nTh
+                                           inTaxYear: (NSInteger) taxYear
 {
     NSMutableArray *catagoryInfos = [NSMutableArray new];
 
@@ -440,7 +363,7 @@
 
             NSMutableDictionary *catagoryInfo = [NSMutableDictionary new];
 
-            [catagoryInfo setObject: receipt.identifer forKey: kReceiptIDKey];
+            [catagoryInfo setObject: receipt.localID forKey: kReceiptIDKey];
             [catagoryInfo setObject: receipt.dateCreated forKey: kReceiptTimeKey];
             [catagoryInfo setObject: [NSNumber numberWithInteger: totalQty] forKey: kTotalQtyKey];
             [catagoryInfo setObject: [NSNumber numberWithFloat: totalAmount] forKey: kTotalAmountKey];
@@ -451,9 +374,7 @@
         }
     }
 
-    success(catagoryInfos);
-
-    return;
+    return(catagoryInfos);
 }
 
 - (NSArray *) fetchTaxYears

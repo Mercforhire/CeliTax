@@ -91,13 +91,13 @@
     self.saveButton = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, 50, 25)];
     [self.saveButton setTitle: @"Save" forState: UIControlStateNormal];
     [self.saveButton.titleLabel setFont: [UIFont latoFontOfSize: 14]];
-    [self.saveButton setEnabled: NO];
     [self.saveButton setTitleEdgeInsets: UIEdgeInsetsMake(5, 10, 5, 10)];
     [self.saveButton addTarget: self action: @selector(saveCatagoryPressed:) forControlEvents: UIControlEventTouchUpInside];
-    [self.lookAndFeel applySolidGreenButtonStyleTo: self.saveButton];
+    [self.lookAndFeel applyDisabledButtonStyleTo: self.saveButton];
 
     self.rightMenuItem = [[UIBarButtonItem alloc] initWithCustomView: self.saveButton];
     self.navigationItem.rightBarButtonItem = self.rightMenuItem;
+    [self.rightMenuItem setEnabled:NO];
 
     [self.lookAndFeel applyGrayBorderTo: self.catagoryNameField];
     [self.lookAndFeel addLeftInsetToTextField: self.catagoryNameField];
@@ -184,7 +184,7 @@
     NSMutableArray *tutorials = [NSMutableArray new];
     
     //Each Stage represents a different group of Tutorial pop ups
-    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewControllerNamed: NSStringFromClass([self class])];
+    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
     
     if ( currentTutorialStage == 1 )
         
@@ -198,7 +198,7 @@
         
         [tutorials addObject:tutorialStep1];
         
-        [self.tutorialManager setTutorialDoneForViewControllerNamed:NSStringFromClass([self class])];
+        [self.tutorialManager setTutorialDoneForViewController:self];
     }
     
     [self.tutorialManager startTutorialInViewController:self andTutorials:tutorials];
@@ -245,26 +245,23 @@
 {
     self.currentlySelectedCatagory = nil;
 
-    [self.dataService fetchCatagories: ^(NSArray *catagories) {
-        self.catagories =  [[NSMutableArray alloc] initWithArray: catagories copyItems: YES];
-
-        [self.catagoriesTable reloadData];
-        
-        self.catagoryNames = [[NSMutableArray alloc] init];
-        
-        for (Catagory *catagory in self.catagories)
-        {
-            [self.catagoryNames addObject:catagory.name];
-        }
-        
-        //set up the catagoryPickerViewController
-        self.catagoryPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: self.catagoryNames];
-        self.catagoryPickerViewController.highlightedSelectionIndex = -1;
-        [self.catagoryPickerViewController setDelegate: self];
-        
-    } failure: ^(NSString *reason) {
-        // should not happen
-    }];
+    NSArray *catagories = [self.dataService fetchCatagories];
+    
+    self.catagories = [[NSMutableArray alloc] initWithArray: catagories copyItems: YES];
+    
+    [self.catagoriesTable reloadData];
+    
+    self.catagoryNames = [[NSMutableArray alloc] init];
+    
+    for (Catagory *catagory in self.catagories)
+    {
+        [self.catagoryNames addObject:catagory.name];
+    }
+    
+    //set up the catagoryPickerViewController
+    self.catagoryPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: self.catagoryNames];
+    self.catagoryPickerViewController.highlightedSelectionIndex = -1;
+    [self.catagoryPickerViewController setDelegate: self];
 }
 
 - (void) setCurrentlySelectedCatagory: (Catagory *) currentlySelectedCatagory
@@ -343,15 +340,13 @@
 
 - (void) saveCatagoryPressed: (UIButton *) sender
 {
-    [self.manipulationService addCatagoryForName: self.catagoryNameField.text
-                                        forColor: self.colorView.backgroundColor
-                                         success: ^{
+    if ([self.manipulationService addCatagoryForName: self.catagoryNameField.text
+                                            forColor: self.colorView.backgroundColor])
+    {
         self.addingCatagoryMode = NO;
         self.catagoryNameField.text = @"";
         [self refreshCatagories];
-    } failure: ^(NSString *reason) {
-        DLog(@"self.manipulationService addCatagoryForUserKey failed!");
-    }];
+    }
 }
 
 - (void) showColorPickerViewController
@@ -489,11 +484,13 @@
 {
     if (self.catagoryNameField.text.length)
     {
-        [self.saveButton setEnabled: YES];
+        [self.rightMenuItem setEnabled: YES];
+        [self.lookAndFeel applySolidGreenButtonStyleTo:self.saveButton];
     }
     else
     {
-        [self.saveButton setEnabled: NO];
+        [self.rightMenuItem setEnabled: NO];
+        [self.lookAndFeel applyDisabledButtonStyleTo:self.saveButton];
     }
 }
 
@@ -549,37 +546,24 @@
     
     if ([title isEqualToString: @"Yes"])
     {
-        [self.manipulationService transferCatagoryFromCatagoryID:self.currentlySelectedCatagory.identifer
-                                                    toCatagoryID:self.catagoryToTransferTo.identifer
-                                                         success:^
+        if ([self.manipulationService transferCatagoryFromCatagoryID:self.currentlySelectedCatagory.localID
+                                                        toCatagoryID:self.catagoryToTransferTo.localID])
         {
             self.catagoryToTransferTo = nil;
             
-            [self.manipulationService deleteCatagoryForCatagoryID:self.currentlySelectedCatagory.identifer
-                                                          success:^
+            if ([self.manipulationService deleteCatagoryForCatagoryID:self.currentlySelectedCatagory.localID])
             {
                 [self refreshCatagories];
-                
-            } failure:^(NSString *reason) {
-                DLog(@"self.manipulationService deleteCatagoryForCatagoryID failed");
-            }];
-                                                        
-        } failure:^(NSString *reason) {
-            DLog(@"self.manipulationService transferCatagoryFromCatagoryID failed");
-        }];
+            }
+        }
     }
     
     else if ([title isEqualToString: @"Delete"])
     {
-        [self.manipulationService deleteCatagoryForCatagoryID:self.currentlySelectedCatagory.identifer
-                                                      success:^
+        if ([self.manipulationService deleteCatagoryForCatagoryID:self.currentlySelectedCatagory.localID])
         {
-            
             [self refreshCatagories];
-            
-        } failure:^(NSString *reason) {
-            DLog(@"self.manipulationService deleteCatagoryForCatagoryID failed");
-        }];
+        }
     }
 }
 
