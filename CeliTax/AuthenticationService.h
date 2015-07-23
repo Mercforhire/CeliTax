@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class AuthorizeResult,RegisterResult,UserDataDAO,ConfigurationManager;
+@class AuthorizeResult,RegisterResult,UserDataDAO,ConfigurationManager,NetworkCommunicator;
 
 @protocol AuthenticationService <NSObject>
 
@@ -23,6 +23,7 @@ typedef void (^SendCommentFailureBlock) (NSString *reason);
 
 @property (nonatomic, strong) UserDataDAO               *userDataDAO;
 @property (nonatomic, strong) ConfigurationManager      *configManager;
+@property (nonatomic, strong) NetworkCommunicator       *networkCommunicator;
 
 - (void) authenticateUser: (NSString *) userName
              withPassword: (NSString *) password

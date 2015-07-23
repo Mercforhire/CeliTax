@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7F5024F3556F1CA7EC5C405A"
+               BlueprintIdentifier = "516A01DDEC5E1C6B7A236879"
                BuildableName = "libPods-CeliTax-LLSimpleCamera.a"
                BlueprintName = "Pods-CeliTax-LLSimpleCamera"
                ReferencedContainer = "container:Pods.xcodeproj">

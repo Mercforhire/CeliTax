@@ -10,11 +10,7 @@
 
 @interface Record : NSObject <NSCoding, NSCopying>
 
-@property (nonatomic) NSInteger         serverID;
-
 @property (nonatomic, copy) NSString    *localID;
-
-@property (nonatomic, strong) NSDate    *dateCreated;
 
 @property (nonatomic, copy) NSString    *catagoryID; //must match an ItemCatagory's localID
 
@@ -28,5 +24,7 @@
 -(float)calculateTotal;
 
 - (NSDictionary *) toJson;
+
+-(void)copyDataFromRecord:(Record *)thisOne;
 
 @end

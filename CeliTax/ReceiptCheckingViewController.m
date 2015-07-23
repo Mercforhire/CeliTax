@@ -27,6 +27,7 @@
 #import "TutorialManager.h"
 #import "TutorialStep.h"
 #import "ConfigurationManager.h"
+#import "SolidGreenButton.h"
 
 NSString *ReceiptItemCellIdentifier = @"ReceiptItemCellIdentifier";
 NSString *ReceiptEditModeTableViewCellIdentifier = @"ReceiptEditModeTableViewCellIdentifier";
@@ -38,7 +39,7 @@ typedef enum : NSUInteger
 } TextFieldTypes;
 
 @interface ReceiptCheckingViewController ()
-<ImageCounterIconViewProtocol, HorizonalScrollBarViewProtocol, UITextFieldDelegate, UIAlertViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate, ReceiptScrollViewProtocol>
+<ImageCounterIconViewProtocol, HorizonalScrollBarViewProtocol, UITextFieldDelegate, UIAlertViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate>
 {
     // these values store the temp values user entered in the Quantity and Price/Item fields
     // for a soon to be added item
@@ -61,7 +62,7 @@ typedef enum : NSUInteger
 @property (nonatomic, strong) UIBarButtonItem *leftMenuItem;
 @property (nonatomic, strong) UIBarButtonItem *rightMenuItem;
 @property (nonatomic, strong) UIToolbar *numberToolbar;
-@property (weak, nonatomic) IBOutlet UIButton *editReceiptsButton;
+@property (weak, nonatomic) IBOutlet SolidGreenButton *editReceiptsButton;
 @property (weak, nonatomic) IBOutlet UITableView *editReceiptTable;
 
 @property (strong, nonatomic) NSMutableArray *receiptImages;
@@ -96,9 +97,6 @@ typedef enum : NSUInteger
 
     [self.numberToolbar sizeToFit];
 
-    UIImage *receiptImage = [UIImage imageNamed: @"receipt_icon.png"];
-    [self.recordsCounter setImage: receiptImage];
-
     self.receiptScrollView.lookAndFeel = self.lookAndFeel;
     [self.receiptScrollView setBackgroundColor: [UIColor blackColor]];
     [self.receiptScrollView setInsets:UIEdgeInsetsMake(64, 0, 0, 0)];
@@ -115,7 +113,7 @@ typedef enum : NSUInteger
     UINib *receiptEditModeTableViewCell = [UINib nibWithNibName: @"ReceiptEditModeTableViewCell" bundle: nil];
     [self.editReceiptTable registerNib: receiptEditModeTableViewCell forCellReuseIdentifier: ReceiptEditModeTableViewCellIdentifier];
 
-    [self.lookAndFeel applySolidGreenButtonStyleTo: self.editReceiptsButton];
+    [self.editReceiptsButton setLookAndFeel:self.lookAndFeel];
 
     // if we are straight from the camera, we show the X, and Complete button while hiding the Back button
     if (!self.cameFromReceiptBreakDownViewController)
@@ -183,8 +181,6 @@ typedef enum : NSUInteger
     self.catagoriesBar.delegate = self;
 
     [self.recordsCounter setDelegate: self];
-    
-    self.receiptScrollView.delegate = self;
 
     self.receiptItemCollectionView.delegate = self;
     self.receiptItemCollectionView.dataSource = self;
@@ -549,7 +545,7 @@ typedef enum : NSUInteger
 - (void) deleteCurrentReceiptAndQuit
 {
     // delete the receipt
-    if ([self.manipulationService deleteReceiptAndAllItsRecords: self.receiptID])
+    if ([self.manipulationService deleteReceiptAndAllItsRecords: self.receiptID save:YES])
     {
         [self.navigationController popViewControllerAnimated: YES];
     }
@@ -594,7 +590,8 @@ typedef enum : NSUInteger
         NSString *newestRecordID = [self.manipulationService addRecordForCatagoryID: self.currentlySelectedCatagory.localID
                                                                        forReceiptID: self.receipt.localID
                                                                         forQuantity: tempQuantity
-                                                                          forAmount: tempPricePerItem];
+                                                                          forAmount: tempPricePerItem
+                                                                               save:YES];
         
         if (newestRecordID)
         {
@@ -633,7 +630,7 @@ typedef enum : NSUInteger
 
 - (IBAction) deleteRecordPressed: (UIButton *) sender
 {
-    if ([self.manipulationService deleteRecord: self.currentlySelectedRecord.localID])
+    if ([self.manipulationService deleteRecord: self.currentlySelectedRecord.localID save:YES])
     {
         // delete the record from self.records
         NSMutableArray *recordsOfThisCatagory = [self.records objectForKey: self.currentlySelectedRecord.catagoryID];
@@ -678,7 +675,7 @@ typedef enum : NSUInteger
 
 - (void) saveCurrentlySelectedRecord
 {
-    if ([self.manipulationService modifyRecord: self.currentlySelectedRecord])
+    if ([self.manipulationService modifyRecord: self.currentlySelectedRecord save:YES])
     {
         DLog(@"Record %ld saved", (long)self.currentlySelectedRecord.localID);
     }
@@ -811,9 +808,7 @@ typedef enum : NSUInteger
     [self.view scrollToY: 0];
 }
 
-#pragma mark - ReceiptScrollViewProtocol
-
--(void)addImagePressed
+- (IBAction)addImagePressed:(UIButton *)sender
 {
     [self.navigationController pushViewController:[self.viewControllerFactory createCameraOverlayViewControllerWithExistingReceiptID:self.receiptID] animated:YES];
 }
@@ -1052,7 +1047,7 @@ typedef enum : NSUInteger
 {
     [self.receiptImages exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];
     [self.receipt.fileNames exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];
-    [self.manipulationService modifyReceipt:self.receipt];
+    [self.manipulationService modifyReceipt:self.receipt save:YES];
     
     [self.receiptScrollView setImages:self.receiptImages];
 }
@@ -1071,7 +1066,7 @@ typedef enum : NSUInteger
             [Utils deleteImageWithFileName:fileToDelete forUser: self.userManager.user.userKey];
             
             [self.receipt.fileNames removeObjectAtIndex:indexPath.row];
-            [self.manipulationService modifyReceipt:self.receipt];
+            [self.manipulationService modifyReceipt:self.receipt save:YES];
             [self.receiptScrollView setImages:self.receiptImages];
             
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];

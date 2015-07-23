@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1D7DAE5777B8EB264B54BD6A"
+               BlueprintIdentifier = "55E5FDA3D07F88980DC70FFF"
                BuildableName = "libPods-CeliTax-Reachability.a"
                BlueprintName = "Pods-CeliTax-Reachability"
                ReferencedContainer = "container:Pods.xcodeproj">

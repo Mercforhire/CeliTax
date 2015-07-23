@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "TutorialBubbleProtocol.h"
 #import "TutorialBubbleInterface.h"
+#import "HollowGreenButton.h"
+#import "SolidGreenButton.h"
 
 @interface TutorialBubbleDown : UIView <TutorialBubbleInterface>
 
@@ -26,9 +28,9 @@
 
 @property (nonatomic, strong) NSString *tutorialText;
 
-@property (weak, nonatomic) IBOutlet UIButton *skipButton;
+@property (weak, nonatomic) IBOutlet HollowGreenButton *skipButton;
 
-@property (weak, nonatomic) IBOutlet UIButton *continueButton;
+@property (weak, nonatomic) IBOutlet SolidGreenButton *continueButton;
 
 //Run this once after all properties have been set
 -(void)setupUI;

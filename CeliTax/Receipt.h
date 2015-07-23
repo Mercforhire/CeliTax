@@ -11,8 +11,6 @@
 
 @interface Receipt : NSObject <NSCoding, NSCopying>
 
-@property (nonatomic) NSInteger serverID;
-
 @property (nonatomic, copy) NSString *localID;
 
 @property NSMutableArray *fileNames;
@@ -26,5 +24,7 @@
 - (NSArray *) fetchRecordsOfCatagory: (NSString *) catagoryID usingRecordsDAO: (RecordsDAO *) recordsDAO;
 
 - (NSDictionary *) toJson;
+
+-(void)copyDataFromReceipt:(Receipt *)thisOne;
 
 @end

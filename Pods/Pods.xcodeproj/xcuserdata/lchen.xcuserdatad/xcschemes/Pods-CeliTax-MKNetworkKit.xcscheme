@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E83610981AEF435A7F17BFB3"
+               BlueprintIdentifier = "1364F0C96B9341E090C53E62"
                BuildableName = "libPods-CeliTax-MKNetworkKit.a"
                BlueprintName = "Pods-CeliTax-MKNetworkKit"
                ReferencedContainer = "container:Pods.xcodeproj">

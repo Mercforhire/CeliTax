@@ -99,9 +99,9 @@
     
     [self.bubbleView setBackgroundColor:self.lookAndFeel.appGreenColor];
     
-    [self.lookAndFeel applyHollowGreenButtonStyleTo:self.skipButton];
+    [self.skipButton setLookAndFeel:self.lookAndFeel];
     
-    [self.lookAndFeel applySolidGreenButtonStyleTo:self.continueButton];
+    [self.continueButton setLookAndFeel:self.lookAndFeel];
     
      self.bubbleView.layer.cornerRadius = 10.0f;
     

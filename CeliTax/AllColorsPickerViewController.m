@@ -8,11 +8,12 @@
 
 #import "AllColorsPickerViewController.h"
 #import "NKOColorPickerView.h"
+#import "SolidGreenButton.h"
 
 @interface AllColorsPickerViewController ()
 
 @property (weak, nonatomic) IBOutlet NKOColorPickerView *colorPicker;
-@property (weak, nonatomic) IBOutlet UIButton *doneButton;
+@property (weak, nonatomic) IBOutlet SolidGreenButton *doneButton;
 
 @end
 
@@ -31,8 +32,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    [self.lookAndFeel applySolidGreenButtonStyleTo:self.doneButton];
+    // Do any additional setup after loading the view from its nib
+    
+    [self.doneButton setLookAndFeel:self.lookAndFeel];
     
     NKOColorPickerDidChangeColorBlock colorDidChangeBlock = ^(UIColor *color) {
         //Your code handling a color change in the picker view.

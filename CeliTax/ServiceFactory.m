@@ -16,6 +16,7 @@
 #import "ManipulationServiceImpl.h"
 #import "SyncService.h"
 #import "SyncServiceImpl.h"
+#import "BuilderFactory.h"
 
 @interface ServiceFactory ()
 
@@ -35,6 +36,7 @@
         self.authenticationService = [[AuthenticationServiceImpl alloc] init];
         self.authenticationService.userDataDAO = [self.daoFactory createUserDataDAO];
         self.authenticationService.configManager = self.configurationManager;
+        self.authenticationService.networkCommunicator = self.networkCommunicator;
     }
     
     return self.authenticationService;
@@ -74,6 +76,15 @@
     {
         self.syncService = [[SyncServiceImpl alloc] init];
         self.syncService.userDataDAO = [self.daoFactory createUserDataDAO];
+        self.syncService.networkCommunicator = self.networkCommunicator;
+        self.syncService.catagoriesDAO = [self.daoFactory createCatagoriesDAO];
+        self.syncService.recordsDAO = [self.daoFactory createRecordsDAO];
+        self.syncService.receiptsDAO = [self.daoFactory createReceiptsDAO];
+        self.syncService.taxYearsDAO = [self.daoFactory createTaxYearsDAO];
+        self.syncService.catagoryBuilder = [self.builderFactory createCatagoryBuilder];
+        self.syncService.recordBuilder = [self.builderFactory createRecordBuilder];
+        self.syncService.receiptBuilder = [self.builderFactory createReceiptBuilder];
+        self.syncService.taxYearBuilder = [self.builderFactory createTaxYearBuilder];
     }
     
     return self.syncService;

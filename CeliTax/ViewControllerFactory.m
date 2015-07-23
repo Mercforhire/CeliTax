@@ -92,6 +92,7 @@
 
     mainViewController.manipulationService = self.manipulationService;
     mainViewController.dataService = self.dataService;
+    mainViewController.syncService = self.syncService;
 
     return mainViewController;
 }

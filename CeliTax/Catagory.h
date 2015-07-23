@@ -11,8 +11,6 @@
 
 @interface Catagory : NSObject <NSCoding, NSCopying>
 
-@property (nonatomic) NSInteger         serverID;
-
 @property (nonatomic, copy) NSString    *localID;
 
 @property (nonatomic, copy) NSString    *name;
@@ -23,5 +21,7 @@
 @property (nonatomic, assign) NSInteger dataAction;
 
 - (NSDictionary *) toJson;
+
+-(void)copyDataFromCatagory:(Catagory *)thisOne;
 
 @end

@@ -13,6 +13,7 @@
 #import "RegisterResult.h"
 #import "UIView+Helper.h"
 #import "M13Checkbox.h"
+#import "HollowGreenButton.h"
 
 @interface RegisterViewController () <UITextFieldDelegate, UIScrollViewDelegate>
 
@@ -31,7 +32,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *canadaButton;
 @property (weak, nonatomic) IBOutlet UIButton *usaButton;
 
-@property (weak, nonatomic) IBOutlet UIButton *doneButton;
+@property (weak, nonatomic) IBOutlet HollowGreenButton *doneButton;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) MBProgressHUD *waitView;
@@ -70,8 +71,7 @@
     [self.lookAndFeel applyGrayBorderTo: self.postalField];
     [self.lookAndFeel addLeftInsetToTextField: self.postalField];
 
-    [self.lookAndFeel applyHollowGreenButtonStyleTo: self.doneButton];
-    
+    [self.doneButton setLookAndFeel:self.lookAndFeel];
     
     [self.agreeCheckBox.titleLabel setFont: [UIFont latoFontOfSize: 13]];
     [self.agreeCheckBox.titleLabel setTextColor: [UIColor blackColor]];
@@ -217,7 +217,7 @@
         [self.waitView hide: YES];
 
         UIAlertView *message = [[UIAlertView alloc]
-                                initWithTitle: @"Welcome"
+                                    initWithTitle: @"Welcome"
                                           message: registerResult.message
                                          delegate: nil
                                 cancelButtonTitle: nil

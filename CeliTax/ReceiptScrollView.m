@@ -8,10 +8,8 @@
 
 #import "ReceiptScrollView.h"
 #import "ReceiptCollectionViewCell.h"
-#import "ReceiptCollectionFooterViewCell.h"
 
 NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
-NSString *ReceiptCollectionFooterViewCellIdentifier = @"ReceiptCollectionFooterViewCell";
 
 #define kReceiptCollectionFooterViewCellHeight           30
 
@@ -37,11 +35,6 @@ NSString *ReceiptCollectionFooterViewCellIdentifier = @"ReceiptCollectionFooterV
                                                       bundle: nil];
     [self.collectionView registerNib: receiptCollectionViewCell
           forCellWithReuseIdentifier: ReceiptCollectionViewCellIdentifier];
-    
-    UINib *receiptCollectionFooterViewCell = [UINib nibWithNibName: @"ReceiptCollectionFooterViewCell"
-                                                      bundle: nil];
-    [self.collectionView registerNib: receiptCollectionFooterViewCell
-          forCellWithReuseIdentifier: ReceiptCollectionFooterViewCellIdentifier];
     
     [self.collectionView setDataSource: self];
     [self.collectionView setDelegate: self];
@@ -93,37 +86,21 @@ NSString *ReceiptCollectionFooterViewCellIdentifier = @"ReceiptCollectionFooterV
 
 - (NSInteger) collectionView: (UICollectionView *) collectionView numberOfItemsInSection: (NSInteger) section
 {
-    return self.images.count + 1;
+    return self.images.count;
 }
 
 - (UICollectionViewCell *) collectionView: (UICollectionView *) collectionView cellForItemAtIndexPath: (NSIndexPath *) indexPath
 {
-    if (indexPath.row < self.images.count)
+    ReceiptCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier: ReceiptCollectionViewCellIdentifier forIndexPath: indexPath];
+    
+    if (!cell)
     {
-        ReceiptCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier: ReceiptCollectionViewCellIdentifier forIndexPath: indexPath];
-        
-        if (!cell)
-        {
-            cell = [[ReceiptCollectionViewCell alloc] init];
-        }
-        
-        [cell.image setImage: [self.images objectAtIndex: indexPath.row]];
-        
-        return cell;
-    }
-    else
-    {
-        ReceiptCollectionFooterViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier: ReceiptCollectionFooterViewCellIdentifier forIndexPath: indexPath];
-        
-        if (!cell)
-        {
-            cell = [[ReceiptCollectionFooterViewCell alloc] init];
-        }
-        
-        return cell;
+        cell = [[ReceiptCollectionViewCell alloc] init];
     }
     
-    return nil;
+    [cell.image setImage: [self.images objectAtIndex: indexPath.row]];
+    
+    return cell;
 }
 
 - (UIEdgeInsets) collectionView: (UICollectionView *) collectionView layout: (UICollectionViewLayout *) collectionViewLayout insetForSectionAtIndex: (NSInteger) section
@@ -133,32 +110,13 @@ NSString *ReceiptCollectionFooterViewCellIdentifier = @"ReceiptCollectionFooterV
 
 - (CGSize) collectionView: (UICollectionView *) collectionView layout: (UICollectionViewLayout *) collectionViewLayout sizeForItemAtIndexPath: (NSIndexPath *) indexPath
 {
-    if (indexPath.row < self.images.count)
-    {
-        UIImage *imageForThisImage  = self.images [indexPath.row];
-        
-        float ratioHeightVsWidth = imageForThisImage.size.height / imageForThisImage.size.width;
-        
-        float heightForThisImage = collectionView.frame.size.width * ratioHeightVsWidth;
-        
-        return CGSizeMake(collectionView.frame.size.width, heightForThisImage);
-    }
-    else
-    {
-        return CGSizeMake(collectionView.frame.size.width, kReceiptCollectionFooterViewCellHeight);
-    }
-}
-
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == self.images.count)
-    {
-        if (self.delegate)
-        {
-            [self.delegate addImagePressed];
-        }
-
-    }
+    UIImage *imageForThisImage  = self.images [indexPath.row];
+    
+    float ratioHeightVsWidth = imageForThisImage.size.height / imageForThisImage.size.width;
+    
+    float heightForThisImage = collectionView.frame.size.width * ratioHeightVsWidth;
+    
+    return CGSizeMake(collectionView.frame.size.width, heightForThisImage);
 }
 
 - (CGFloat) collectionView: (UICollectionView *) collectionView layout: (UICollectionViewLayout *) collectionViewLayout minimumInteritemSpacingForSectionAtIndex: (NSInteger) section

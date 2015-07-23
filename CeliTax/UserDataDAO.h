@@ -37,10 +37,10 @@ typedef enum : NSUInteger {
 
 -(NSString *)getLastestDataHash;
 
--(void)updateLastestDataHash:(NSString *)date;
+-(void)setLastestDataHash:(NSString *)hash;
 
 -(NSDictionary *)generateJSONToUploadToServer;
 
-- (void) setAllDataToDateActionNone;
+- (void) resetAllDataActionsAndClearOutDeletedOnes;
 
 @end

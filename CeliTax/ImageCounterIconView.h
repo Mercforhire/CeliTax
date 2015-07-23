@@ -16,8 +16,6 @@
 
 @interface ImageCounterIconView : UIView
 
-@property (nonatomic, strong) UIImage *image;
-
 @property (nonatomic, strong) UIButton *imageButton;
 
 @property (nonatomic) NSInteger counter;

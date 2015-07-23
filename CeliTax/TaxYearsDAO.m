@@ -26,7 +26,7 @@
     return taxYearNumbers;
 }
 
--(BOOL)addTaxYear:(NSInteger)taxYear
+-(BOOL)addTaxYear:(NSInteger)taxYear save:(BOOL)save
 {
     if (taxYear > 2000)
     {
@@ -36,10 +36,59 @@
         
         [[self.userDataDAO getTaxYears] addObject:taxTear];
         
-        return [self.userDataDAO saveUserData];
+        if (save)
+        {
+            return [self.userDataDAO saveUserData];
+        }
+        else
+        {
+            return YES;
+        }
     }
     
     return NO;
+}
+
+-(BOOL)mergeWith:(NSArray *)taxyears save:(BOOL)save
+{
+    NSMutableArray *localTaxyears = [NSMutableArray arrayWithArray:[self.userDataDAO getTaxYears]];
+    
+    for (TaxYear *taxyear in taxyears)
+    {
+        //find any existing Taxyear with same year as this new one
+        NSPredicate *findTaxyear = [NSPredicate predicateWithFormat: @"taxYear == %ld", taxyear.taxYear];
+        NSArray *existingYear = [localTaxyears filteredArrayUsingPredicate: findTaxyear];
+        
+        if (!existingYear.count)
+        {
+            [[self.userDataDAO getTaxYears] addObject:taxyear];
+        }
+        else
+        {
+            TaxYear *existing = [existingYear firstObject];
+            
+            [localTaxyears removeObject:existing];
+        }
+    }
+    
+    //For any local TaxYear that the server doesn't have and isn't marked DataActionInsert,
+    //we need to set these to DataActionInsert again so that can be uploaded to the server next time
+    for (TaxYear *taxYear in localTaxyears)
+    {
+        if (taxYear.dataAction != DataActionInsert)
+        {
+            taxYear.dataAction = DataActionInsert;
+        }
+    }
+    
+    if (save)
+    {
+        return [self.userDataDAO saveUserData];
+    }
+    else
+    {
+        return YES;
+    }
 }
 
 @end

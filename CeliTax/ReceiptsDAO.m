@@ -12,7 +12,7 @@
 
 @implementation ReceiptsDAO
 
-- (NSString *) addReceiptWithFilenames: (NSArray *) filenames inTaxYear:(NSInteger)taxYear
+- (NSString *) addReceiptWithFilenames: (NSArray *) filenames inTaxYear:(NSInteger)taxYear save:(BOOL) save
 {
     if (!filenames)
     {
@@ -26,8 +26,15 @@
     newReceipt.taxYear = taxYear;
 
     [[self.userDataDAO getReceipts] addObject: newReceipt];
-
-    if ( [self.userDataDAO saveUserData] )
+    
+    if (save)
+    {
+        if ( [self.userDataDAO saveUserData] )
+        {
+            return newReceipt.localID;
+        }
+    }
+    else
     {
         return newReceipt.localID;
     }
@@ -35,8 +42,7 @@
     return nil;
 }
 
-//used by debug purposes only
-- (BOOL) addReceipt: (Receipt *) receiptToAdd
+- (BOOL) addReceipt: (Receipt *) receiptToAdd save:(BOOL) save
 {
     if (!receiptToAdd)
     {
@@ -45,7 +51,14 @@
 
     [[self.userDataDAO getReceipts] addObject: receiptToAdd];
 
-    return [self.userDataDAO saveUserData];
+    if (save)
+    {
+        return [self.userDataDAO saveUserData];
+    }
+    else
+    {
+        return YES;
+    }
 }
 
 /*
@@ -118,7 +131,7 @@
     return [receipt firstObject];
 }
 
-- (BOOL)modifyReceipt: (Receipt *)receipt
+- (BOOL)modifyReceipt: (Receipt *)receipt save:(BOOL) save
 {
     Receipt *receiptToModify = [self loadReceipt:receipt.localID];
     
@@ -132,7 +145,14 @@
             receiptToModify.dataAction = DataActionUpdate;
         }
         
-        return [self.userDataDAO saveUserData];
+        if (save)
+        {
+            return [self.userDataDAO saveUserData];
+        }
+        else
+        {
+            return YES;
+        }
     }
     else
     {
@@ -140,26 +160,71 @@
     }
 }
 
-- (BOOL) deleteReceipt: (NSString *) receiptID
+- (BOOL) deleteReceipt: (NSString *) receiptID save:(BOOL) save
 {
     Receipt *receiptToDelete = [self loadReceipt:receiptID];
     
     if (receiptToDelete)
     {
-        if (!receiptToDelete.serverID)
+        receiptToDelete.dataAction = DataActionDelete;
+        
+        if (save)
         {
-            [[self.userDataDAO getReceipts] removeObject: receiptToDelete];
+            return [self.userDataDAO saveUserData];
         }
         else
         {
-            receiptToDelete.dataAction = DataActionDelete;
+            return YES;
         }
-        
-        return [self.userDataDAO saveUserData];
     }
     else
     {
         return NO;
     }
 }
+
+-(BOOL)mergeWith:(NSArray *)receipts save:(BOOL)save
+{
+    NSMutableArray *localReceipts = [NSMutableArray arrayWithArray:[self loadAllReceipts]];
+    
+    for (Receipt *receipt in receipts)
+    {
+        //find any existing Receipt with same id as this new one
+        NSPredicate *findReceipt = [NSPredicate predicateWithFormat: @"localID == %ld", receipt.localID];
+        NSArray *existingReceipt = [localReceipts filteredArrayUsingPredicate: findReceipt];
+        
+        if (existingReceipt.count)
+        {
+            Receipt *existing = [existingReceipt firstObject];
+            
+            [existing copyDataFromReceipt:receipt];
+            
+            [localReceipts removeObject:existing];
+        }
+        else
+        {
+            [self addReceipt:receipt save:NO];
+        }
+    }
+    
+    //For any local Receipt that the server doesn't have and isn't marked DataActionInsert,
+    //we need to set these to DataActionInsert again so that can be uploaded to the server next time
+    for (Receipt *receipt in localReceipts)
+    {
+        if (receipt.dataAction != DataActionInsert)
+        {
+            receipt.dataAction = DataActionInsert;
+        }
+    }
+    
+    if (save)
+    {
+        return [self.userDataDAO saveUserData];
+    }
+    else
+    {
+        return YES;
+    }
+}
+
 @end

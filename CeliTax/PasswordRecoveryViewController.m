@@ -11,11 +11,12 @@
 #import "UIView+Helper.h"
 #import "ViewControllerFactory.h"
 #import "PasswordRecoverySentViewController.h"
+#import "HollowGreenButton.h"
 
 @interface PasswordRecoveryViewController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *emailAddressField;
-@property (weak, nonatomic) IBOutlet UIButton *sendEmailButton;
+@property (weak, nonatomic) IBOutlet HollowGreenButton *sendEmailButton;
 
 @end
 
@@ -26,7 +27,7 @@
     [self.lookAndFeel applyGrayBorderTo: self.emailAddressField];
     [self.lookAndFeel addLeftInsetToTextField: self.emailAddressField];
 
-    [self.lookAndFeel applyHollowGreenButtonStyleTo: self.sendEmailButton];
+    [self.sendEmailButton setLookAndFeel:self.lookAndFeel];
 }
 
 - (void) viewDidLoad

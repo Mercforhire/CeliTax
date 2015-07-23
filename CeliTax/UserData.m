@@ -18,6 +18,7 @@
 #define kKeyReceipts         @"Receipts"
 #define kKeyTaxYears         @"TaxYears"
 #define kKeyLastUploadedDate @"LastUploadedDate"
+#define kKeyLastUploadHash  @"LastUploadHash"
 
 @implementation UserData
 
@@ -40,6 +41,7 @@
     [coder encodeObject:self.receipts               forKey:kKeyReceipts];
     [coder encodeObject:self.taxYears               forKey:kKeyTaxYears];
     [coder encodeObject:self.lastUploadedDate       forKey:kKeyLastUploadedDate];
+    [coder encodeObject:self.lastUploadHash         forKey:kKeyLastUploadHash];
 }
 
 - (id)initWithCoder:(NSCoder *)coder
@@ -59,6 +61,8 @@
     self.taxYears = [[NSMutableArray alloc] initWithArray:taxYears copyItems:NO];
     
     self.lastUploadedDate = [coder decodeObjectForKey:kKeyLastUploadedDate];
+    
+    self.lastUploadHash = [coder decodeObjectForKey:kKeyLastUploadHash];
     
     return self;
 }
@@ -116,7 +120,7 @@
         if (taxYear.dataAction != DataActionNone)
         {
             //convert receipt to JSON and add to receiptsJSONs
-            [taxYearsJSONs addObject:[NSNumber numberWithInteger:taxYear.taxYear]];
+            [taxYearsJSONs addObject:[taxYear toJson]];
         }
     }
     
@@ -125,27 +129,74 @@
     return json;
 }
 
-- (void) setAllDataToDateActionNone
+- (void) resetAllDataActionsAndClearOutDeletedOnes
 {
+    NSMutableArray *catagoriesToDelete = [NSMutableArray new];
+    
     for (Catagory *catagory in self.catagories)
     {
-        catagory.dataAction = DataActionNone;
+        if (catagory.dataAction == DataActionDelete)
+        {
+            [catagoriesToDelete addObject:catagory];
+        }
+        else
+        {
+            catagory.dataAction = DataActionNone;
+        }
     }
+    
+    [self.catagories removeObjectsInArray:catagoriesToDelete];
+    
+    
+    NSMutableArray *recordsToDelete = [NSMutableArray new];
     
     for (Record *record in self.records)
     {
-        record.dataAction = DataActionNone;
+        if (record.dataAction == DataActionDelete)
+        {
+            [recordsToDelete addObject:record];
+        }
+        else
+        {
+            record.dataAction = DataActionNone;
+        }
     }
+    
+    [self.records removeObjectsInArray:recordsToDelete];
+    
+    
+    NSMutableArray *receiptsToDelete = [NSMutableArray new];
     
     for (Receipt *receipt in self.receipts)
     {
-        receipt.dataAction = DataActionNone;
+        if (receipt.dataAction == DataActionDelete)
+        {
+            [receiptsToDelete addObject:receipt];
+        }
+        else
+        {
+            receipt.dataAction = DataActionNone;
+        }
     }
+    
+    [self.receipts removeObjectsInArray:receiptsToDelete];
+    
+    
+    NSMutableArray *taxYearsToDelete = [NSMutableArray new];
     
     for (TaxYear *taxYear in self.taxYears)
     {
-        taxYear.dataAction = DataActionNone;
+        if (taxYear.dataAction == DataActionDelete)
+        {
+            [taxYearsToDelete addObject:taxYear];
+        }
+        else
+        {
+            taxYear.dataAction = DataActionNone;
+        }
     }
+    
+    [self.taxYears removeObjectsInArray:taxYearsToDelete];
 }
 
 @end

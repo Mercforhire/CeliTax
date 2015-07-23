@@ -15,6 +15,8 @@
 #import "DAOFactory.h"
 #import "LookAndFeel.h"
 #import "TutorialManager.h"
+#import "NetworkCommunicator.h"
+#import "BuilderFactory.h"
 
 @class SplashViewController, ConfigurationManager, ViewControllerFactory, UserManager;
 
@@ -26,6 +28,8 @@
 @property (nonatomic, strong) ServiceFactory *serviceFactory;
 @property (nonatomic, strong) DAOFactory *daoFactory;
 @property (nonatomic, strong) LookAndFeel *lookAndFeel;
+@property (nonatomic, strong) BuilderFactory *builderFactory;
+@property (nonatomic, strong) NetworkCommunicator *networkCommunicator;
 
 @property (nonatomic, strong) UINavigationController *navigationController;
 @property (nonatomic, strong) UIView *navigationBarTitleImageContainer;
@@ -68,6 +72,8 @@
     self.serviceFactory = [[ServiceFactory alloc] init];
     self.serviceFactory.configurationManager = self.configurationManager;
     self.serviceFactory.daoFactory = self.daoFactory;
+    self.serviceFactory.networkCommunicator = self.networkCommunicator;
+    self.serviceFactory.builderFactory = self.builderFactory;
 }
 
 - (void) initializeDAOFactory
@@ -75,11 +81,23 @@
     self.daoFactory = [[DAOFactory alloc] init];
 }
 
+- (void) initializeNetworkCommunicator
+{
+    self.networkCommunicator = [[NetworkCommunicator alloc] initWithHostName:WEBSERVICE_URL];
+}
+
+- (void) initializeBuilderFactory
+{
+    self.builderFactory = [[BuilderFactory alloc] init];
+}
+
 #pragma mark App lifecycle
 
 // do loading here
 - (BOOL) application: (UIApplication *) application didFinishLaunchingWithOptions: (NSDictionary *) launchOptions
 {
+    [self initializeNetworkCommunicator];
+    [self initializeBuilderFactory];
     [self initializeLookAndFeel];
     [self initializeConfigurationManager];
     [self initializeDAOFactory];

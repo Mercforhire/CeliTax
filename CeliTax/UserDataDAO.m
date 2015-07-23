@@ -55,6 +55,16 @@
     self.userData.lastUploadedDate = date;
 }
 
+-(NSString *)getLastestDataHash
+{
+    return self.userData.lastUploadHash;
+}
+
+-(void)setLastestDataHash:(NSString *)hash
+{
+    self.userData.lastUploadHash = hash;
+}
+
 - (NSString *) generateUserDataFileName
 {
     if (!self.userKey)
@@ -121,9 +131,9 @@
     return [self.userData generateJSONToUploadToServer];
 }
 
-- (void) setAllDataToDateActionNone
+- (void) resetAllDataActionsAndClearOutDeletedOnes
 {
-    [self.userData setAllDataToDateActionNone];
+    [self.userData resetAllDataActionsAndClearOutDeletedOnes];
 }
 
 @end

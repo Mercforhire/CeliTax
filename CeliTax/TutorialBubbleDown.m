@@ -9,6 +9,8 @@
 #import "TutorialBubbleDown.h"
 #import "LookAndFeel.h"
 #import "Triangle.h"
+#import "HollowGreenButton.h"
+#import "SolidGreenButton.h"
 
 @interface TutorialBubbleDown ()
 
@@ -99,9 +101,8 @@
     
     [self.bubbleView setBackgroundColor:self.lookAndFeel.appGreenColor];
     
-    [self.lookAndFeel applyHollowGreenButtonStyleTo:self.skipButton];
-    
-    [self.lookAndFeel applySolidGreenButtonStyleTo:self.continueButton];
+    [self.skipButton setLookAndFeel:self.lookAndFeel];
+    [self.continueButton setLookAndFeel:self.lookAndFeel];
     
     self.bubbleView.layer.cornerRadius = 10.0f;
     

@@ -21,8 +21,10 @@
 
 @property (nonatomic, strong) NSDate *lastUploadedDate;
 
+@property (nonatomic, strong) NSString *lastUploadHash;
+
 - (NSDictionary *) generateJSONToUploadToServer;
 
-- (void) setAllDataToDateActionNone;
+- (void) resetAllDataActionsAndClearOutDeletedOnes;
 
 @end

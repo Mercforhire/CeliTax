@@ -13,4 +13,22 @@
 
 @property (nonatomic, strong) UserDataDAO *userDataDAO;
 
+@property (nonatomic, strong) TaxYearsDAO *taxYearsDAO;
+
+@property (nonatomic, strong) RecordsDAO *recordsDAO;
+
+@property (nonatomic, strong) ReceiptsDAO *receiptsDAO;
+
+@property (nonatomic, strong) CatagoriesDAO *catagoriesDAO;
+
+@property (nonatomic, strong) NetworkCommunicator *networkCommunicator;
+
+@property (nonatomic, strong) CatagoryBuilder *catagoryBuilder;
+
+@property (nonatomic, strong) RecordBuilder *recordBuilder;
+
+@property (nonatomic, strong) ReceiptBuilder *receiptBuilder;
+
+@property (nonatomic, strong) TaxYearBuilder *taxYearBuilder;
+
 @end

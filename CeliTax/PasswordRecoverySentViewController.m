@@ -7,10 +7,11 @@
 //
 
 #import "PasswordRecoverySentViewController.h"
+#import "HollowGreenButton.h"
 
 @interface PasswordRecoverySentViewController ()
 
-@property (weak, nonatomic) IBOutlet UIButton *returnToLoginButton;
+@property (weak, nonatomic) IBOutlet HollowGreenButton *returnToLoginButton;
 
 @end
 
@@ -18,7 +19,7 @@
 
 - (void) setupUI
 {
-    [self.lookAndFeel applyHollowGreenButtonStyleTo: self.returnToLoginButton];
+    [self.returnToLoginButton setLookAndFeel:self.lookAndFeel];
 }
 
 - (void) viewDidLoad

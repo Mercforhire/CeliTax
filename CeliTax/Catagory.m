@@ -8,7 +8,6 @@
 
 #import "Catagory.h"
 
-#define kKeyServerID                @"ServerID"
 #define kKeyIdentifer               @"Identifer"
 #define kKeyName                    @"Name"
 #define kKeyColor                   @"Color"
@@ -19,7 +18,6 @@
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-    [coder encodeInteger:self.serverID forKey:kKeyServerID];
 	[coder encodeObject:self.localID forKey:kKeyIdentifer];
 
 	[coder encodeObject:self.name forKey:kKeyName];
@@ -34,7 +32,6 @@
 {
 	self = [self init];
 
-    self.serverID = [coder decodeIntegerForKey:kKeyServerID];
 	self.localID = [coder decodeObjectForKey:kKeyIdentifer];
 
 	self.name = [coder decodeObjectForKey:kKeyName];
@@ -53,7 +50,6 @@
 
 	if (copy)
     {
-        copy.serverID = self.serverID;
 		copy.localID = [self.localID copy];
 		copy.name = [self.name copy];
 		copy.color = [self.color copy];
@@ -88,8 +84,6 @@
 {
     NSMutableDictionary *json = [NSMutableDictionary dictionary];
     
-    [json setObject:[NSNumber numberWithInteger:self.serverID] forKey:kKeyServerID];
-    
     [json setObject:self.localID forKey:kKeyIdentifer];
     
     [json setObject:self.name forKey:kKeyName];
@@ -101,6 +95,14 @@
     [json setObject:[NSNumber numberWithInteger:self.dataAction] forKey:kKeyDataAction];
     
     return json;
+}
+
+-(void)copyDataFromCatagory:(Catagory *)thisOne
+{
+    self.name = [thisOne.name copy];
+    self.color = [thisOne.color copy];
+    self.nationalAverageCost = thisOne.nationalAverageCost;
+    self.dataAction = thisOne.dataAction;
 }
 
 @end

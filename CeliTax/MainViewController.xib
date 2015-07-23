@@ -32,14 +32,14 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20XX Tax Year" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CIl-yA-Aq2">
-                    <rect key="frame" x="22" y="80" width="94.5" height="18"/>
+                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Tax Year Added" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CIl-yA-Aq2">
+                    <rect key="frame" x="22" y="80" width="123.5" height="18"/>
                     <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="greenTrianglePointDown.png" translatesAutoresizingMaskIntoConstraints="NO" id="PUX-L9-4Oq" customClass="TriangleView">
-                    <rect key="frame" x="126" y="84" width="17" height="11"/>
+                    <rect key="frame" x="155" y="84" width="17" height="11"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="17" id="YRA-oe-mRY"/>
                         <constraint firstAttribute="height" constant="11" id="dux-xK-Zsb"/>

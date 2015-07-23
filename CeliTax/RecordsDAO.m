@@ -50,13 +50,13 @@
                        andReceipt: (Receipt *) receipt
                       forQuantity: (NSInteger) quantity
                         forAmount: (float) amount
+                             save: (BOOL)save
 {
     if (catagory)
     {
         Record *newRecord = [Record new];
         
         newRecord.localID = [Utils generateUniqueID];
-        newRecord.dateCreated = [NSDate date];
         newRecord.catagoryID = [catagory.localID copy];
         newRecord.receiptID = [receipt.localID copy];
         newRecord.quantity = quantity;
@@ -68,7 +68,14 @@
         
         NSString *newRecordID = newRecord.localID;
         
-        if ([self.userDataDAO saveUserData])
+        if (save)
+        {
+            if ([self.userDataDAO saveUserData])
+            {
+                return newRecordID;
+            }
+        }
+        else
         {
             return newRecordID;
         }
@@ -82,6 +89,7 @@
                        andReceiptID: (NSString *) receiptID
                         forQuantity: (NSInteger) quantity
                           forAmount: (float) amount
+                               save: (BOOL)save
 {
     Catagory *catagory = [self.catagoriesDAO loadCatagory:catagoryID];
     
@@ -90,7 +98,6 @@
         Record *newRecord = [Record new];
         
         newRecord.localID = [Utils generateUniqueID];
-        newRecord.dateCreated = [NSDate date];
         newRecord.catagoryID = [catagoryID copy];
         newRecord.receiptID = [receiptID copy];
         newRecord.quantity = quantity;
@@ -102,7 +109,14 @@
         
         NSString *newRecordID = newRecord.localID;
         
-        if ([self.userDataDAO saveUserData])
+        if (save)
+        {
+            if ([self.userDataDAO saveUserData])
+            {
+                return newRecordID;
+            }
+        }
+        else
         {
             return newRecordID;
         }
@@ -112,14 +126,21 @@
     return nil;
 }
 
--(BOOL)addRecords:(NSArray *)records
+-(BOOL)addRecords:(NSArray *)records save: (BOOL)save
 {
     [[self.userDataDAO getRecords] addObjectsFromArray:records];
     
-    return [self.userDataDAO saveUserData];
+    if (save)
+    {
+        return [self.userDataDAO saveUserData];
+    }
+    else
+    {
+        return YES;
+    }
 }
 
--(BOOL)modifyRecord:(Record *)record
+-(BOOL)modifyRecord:(Record *)record save: (BOOL)save
 {
     Record *recordToModify = [self loadRecord:record.localID];
     
@@ -135,7 +156,14 @@
             recordToModify.dataAction = DataActionUpdate;
         }
         
-        return [self.userDataDAO saveUserData];
+        if (save)
+        {
+            return [self.userDataDAO saveUserData];
+        }
+        else
+        {
+            return YES;
+        }
     }
     else
     {
@@ -143,7 +171,7 @@
     }
 }
 
--(BOOL)deleteRecordsForRecordIDs:(NSArray *)recordIDs
+-(BOOL)deleteRecordsForRecordIDs:(NSArray *)recordIDs save: (BOOL)save
 {
     if ( !recordIDs || !recordIDs.count )
     {
@@ -160,19 +188,62 @@
     
     for (Record *recordToDelete in recordsToDelete)
     {
-        if (!recordToDelete.serverID)
+        recordToDelete.dataAction = DataActionDelete;
+    }
+    
+    if (save)
+    {
+        return [self.userDataDAO saveUserData];
+    }
+    else
+    {
+        return YES;
+    }
+}
+
+-(BOOL)mergeWith:(NSArray *)records save:(BOOL)save
+{
+    NSMutableArray *localRecords = [NSMutableArray arrayWithArray:[self loadRecords]];
+    
+    for (Record *record in records)
+    {
+        //find any existing Record with same id as this new one
+        NSPredicate *findRecord = [NSPredicate predicateWithFormat: @"localID == %ld", record.localID];
+        NSArray *existingRecord = [localRecords filteredArrayUsingPredicate: findRecord];
+        
+        if (existingRecord.count)
         {
-            //recordToDelete is not on server, delete it right away
-            [[self.userDataDAO getRecords] removeObject:recordToDelete];
+            Record *existing = [existingRecord firstObject];
+            
+            [existing copyDataFromRecord:record];
+            
+            [localRecords removeObject:existing];
         }
         else
         {
-            //recordToDelete is on server, have to set its DataAction to delete
-            recordToDelete.dataAction = DataActionDelete;
+            [[self.userDataDAO getRecords] addObject:record];
         }
     }
     
-    return [self.userDataDAO saveUserData];
+    //For any local Record that the server doesn't have and isn't marked DataActionInsert,
+    //we need to set these to DataActionInsert again so that can be uploaded to the server next time
+    for (Record *record in localRecords)
+    {
+        if (record.dataAction != DataActionInsert)
+        {
+            record.dataAction = DataActionInsert;
+        }
+    }
+    
+    
+    if (save)
+    {
+        return [self.userDataDAO saveUserData];
+    }
+    else
+    {
+        return YES;
+    }
 }
 
 @end

@@ -28,9 +28,12 @@
 #import "NoItemsTableViewCell.h"
 #import "TutorialManager.h"
 #import "TutorialStep.h"
+#import "DataService.h"
+#import "ManipulationService.h"
+#import "SyncService.h"
+#import "MBProgressHUD.h"
 
 #define kRecentUploadTableRowHeight                     40
-
 #define kNoItemsTableViewCellIdentifier                 @"NoItemsTableViewCell"
 
 typedef enum : NSUInteger
@@ -52,6 +55,7 @@ typedef enum : NSUInteger
 @property (weak, nonatomic) IBOutlet UITextField *invisibleNewTaxYearField;
 @property (weak, nonatomic) IBOutlet UIButton *myAccountButton;
 @property (weak, nonatomic) IBOutlet UIButton *vaultButton;
+@property (strong, nonatomic) MBProgressHUD *waitView;
 
 @property (nonatomic, strong) WYPopoverController *selectionPopover;
 @property (nonatomic, strong) SelectionsPickerViewController *taxYearPickerViewController;
@@ -142,6 +146,20 @@ typedef enum : NSUInteger
     self.invisibleNewTaxYearField.inputAccessoryView = self.pickerToolbar;
 }
 
+- (void) createAndShowWaitViewForDownload
+{
+    if (!self.waitView)
+    {
+        self.waitView = [[MBProgressHUD alloc] initWithView: self.view];
+        self.waitView.labelText = @"Please wait";
+        self.waitView.detailsLabelText = @"Downloading Data...";
+        self.waitView.mode = MBProgressHUDModeIndeterminate;
+        [self.view addSubview: self.waitView];
+    }
+    
+    [self.waitView show: YES];
+}
+
 -(void)cancelAddTaxYear
 {
     [self.invisibleNewTaxYearField resignFirstResponder];
@@ -164,7 +182,7 @@ typedef enum : NSUInteger
     
     [self.invisibleNewTaxYearField resignFirstResponder];
     
-    [self.manipulationService addTaxYear:self.taxYearToAdd.integerValue];
+    [self.manipulationService addTaxYear:self.taxYearToAdd.integerValue save:YES];
     
     [self refreshTaxYears];
 }
@@ -194,8 +212,6 @@ typedef enum : NSUInteger
 
     [self setupUI];
 
-    [self.dataService loadDemoData];
-
     self.recentUploadsTable.dataSource = self;
     self.recentUploadsTable.delegate = self;
 
@@ -209,8 +225,21 @@ typedef enum : NSUInteger
                                             action: @selector(taxYearPressed)];
     [self.taxYearLabel addGestureRecognizer: taxYearPressedTap];
     [self.taxYearTriangle addGestureRecognizer: taxYearPressedTap2];
-
+    
     [self refreshTaxYears];
+    
+    //if there is no selected tax year saved, select the newest year by default
+    if (![self.configurationManager getCurrentTaxYear])
+    {
+        if (self.existingTaxYears.count)
+        {
+            self.currentlySelectedYear = [self.existingTaxYears firstObject];
+        }
+    }
+    else
+    {
+        self.currentlySelectedYear = [NSNumber numberWithInteger:[self.configurationManager getCurrentTaxYear]];
+    }
 }
 
 - (void) reloadReceiptInfo
@@ -249,18 +278,6 @@ typedef enum : NSUInteger
 - (void) viewWillAppear: (BOOL) animated
 {
     [super viewWillAppear: animated];
-
-    //if there is no selected tax year saved, select the newest year by default
-    if (![self.configurationManager getCurrentTaxYear])
-    {
-        self.currentlySelectedYear = [self.existingTaxYears firstObject];
-    }
-    else
-    {
-        self.currentlySelectedYear = [NSNumber numberWithInteger:[self.configurationManager getCurrentTaxYear]];
-    }
-    
-    [self reloadReceiptInfo];
 }
 
 -(void)displayTutorials
@@ -378,6 +395,67 @@ typedef enum : NSUInteger
     {
         [self displayTutorials];
     }
+
+    [self syncLocalData];
+}
+
+/*
+ Check if local Data is up to date with the server data
+ If yes, do nothing, if not, notify the user and download from the server.
+ 
+ DEMO FEATURE: If no data exist locally or remotely, generate the demo data
+ */
+-(void)syncLocalData
+{
+    //if no local data exist, start downloading User Data
+    if (![self.syncService getLocalDataBatchID])
+    {
+        if (![self.syncService getLocalDataBatchID])
+        {
+            //check the server to see if the server has saved data
+            [self.syncService getLastestServerDataBatchID:^(NSString *batchID) {
+                
+                //ask user if they want to download from server
+                UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Download"
+                                                                  message: @"The server contains saved data. Do you want to download the data to app?"
+                                                                 delegate: self
+                                                        cancelButtonTitle: @"No"
+                                                        otherButtonTitles: @"Yes", nil];
+                
+                [message show];
+                
+            } failure:^(NSString *reason) {
+                
+            }];
+        }
+    }
+    
+    //local data exist
+    else
+    {
+        //silently check the server to see if the server has different data by comparing BatchID
+        [self.syncService getLastestServerDataBatchID:^(NSString *batchID) {
+            
+            if ([[self.syncService getLocalDataBatchID] isEqualToString:batchID])
+            {
+                
+            }
+            else
+            {
+                //ask user if they want to download from server
+                UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Download"
+                                                                  message: @"The server contains different data than what's in the app, do you want to download and merge the new data?"
+                                                                 delegate: self
+                                                        cancelButtonTitle: @"No"
+                                                        otherButtonTitles: @"Yes", nil];
+                
+                [message show];
+            }
+            
+        } failure:^(NSString *reason) {
+            
+        }];
+    }
 }
 
 - (void) taxYearPressed
@@ -411,6 +489,51 @@ typedef enum : NSUInteger
 - (IBAction) vaultPressed: (UIButton *) sender
 {
     [super selectedMenuIndex: RootViewControllerVault];
+}
+
+-(void)hideWaitingView
+{
+    if (self.waitView)
+    {
+        //hide the Waiting view
+        [self.waitView hide: YES];
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void) alertView: (UIAlertView *) alertView clickedButtonAtIndex: (NSInteger) buttonIndex
+{
+    NSString *title = [alertView buttonTitleAtIndex: buttonIndex];
+    
+    if ([title isEqualToString: @"Yes"])
+    {
+        [self createAndShowWaitViewForDownload];
+        
+        [self.syncService downloadUserData:^{
+            
+            [self refreshTaxYears];
+            
+            self.currentlySelectedYear = [self.existingTaxYears firstObject];
+            
+            [self.recentUploadsTable reloadData];
+            
+            [self hideWaitingView];
+            
+        } failure:^(NSString *reason) {
+            
+            UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Error"
+                                                              message: reason
+                                                             delegate: nil
+                                                    cancelButtonTitle: @"Dismiss"
+                                                    otherButtonTitles: nil];
+            
+            [message show];
+            
+            [self hideWaitingView];
+            
+        }];
+    }
 }
 
 #pragma mark - UIPickerView delegate

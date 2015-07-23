@@ -13,5 +13,6 @@
 
 @property (nonatomic, strong) UserDataDAO               *userDataDAO;
 @property (nonatomic, strong) ConfigurationManager      *configManager;
+@property (nonatomic, strong) NetworkCommunicator       *networkCommunicator;
 
 @end

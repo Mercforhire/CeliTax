@@ -10,11 +10,111 @@
 #import "UserDataDAO.h"
 #import "Receipt.h"
 #import "Utils.h"
+#import "NetworkCommunicator.h"
+#import "RecordsDAO.h"
+#import "TaxYearsDAO.h"
+#import "ReceiptsDAO.h"
+#import "CatagoriesDAO.h"
+#import "TaxYearBuilder.h"
+#import "ReceiptBuilder.h"
+#import "RecordBuilder.h"
+#import "CatagoryBuilder.h"
 
 @implementation SyncServiceImpl
 
 #define kKeyLastUpdatedDateTime        @"LastUpdatedDateTime"
 #define kKeyHashString                 @"HashString"
+
+- (void) loadDemoData:(GenerateDemoDataCompleteBlock) complete
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^() {
+        if (![self.taxYearsDAO loadAllTaxYears].count)
+        {
+            [self.taxYearsDAO addTaxYear:2013 save:NO];
+            [self.taxYearsDAO addTaxYear:2014 save:NO];
+            [self.taxYearsDAO addTaxYear:2015 save:NO];
+        }
+        
+        if (![self.catagoriesDAO loadCatagories].count)
+        {
+            // add some demo data
+            [self.catagoriesDAO addCatagoryForName: @"Rice" andColor: [UIColor yellowColor] andNationalAverageCost: 2.5f save:NO];
+            
+            [self.catagoriesDAO addCatagoryForName: @"Bread" andColor: [UIColor orangeColor] andNationalAverageCost: 5 save:NO];
+            
+            [self.catagoriesDAO addCatagoryForName: @"Meat" andColor: [UIColor redColor] andNationalAverageCost: 7.5f save:NO];
+            
+            [self.catagoriesDAO addCatagoryForName: @"Flour" andColor: [UIColor lightGrayColor] andNationalAverageCost: 3.0f save:NO];
+            
+            [self.catagoriesDAO addCatagoryForName: @"Cake" andColor: [UIColor purpleColor] andNationalAverageCost: 8.0f save:NO];
+        }
+        
+        if ( ![self.receiptsDAO loadAllReceipts].count && ![self.recordsDAO loadRecords].count )
+        {
+            UIImage *testImage1 = [UIImage imageNamed: @"ReceiptPic-1.jpg"];
+            UIImage *testImage2 = [UIImage imageNamed: @"ReceiptPic-2.jpg"];
+            
+            NSCalendar *calendar = [NSCalendar currentCalendar];
+            NSDateComponents *components = [[NSDateComponents alloc] init];
+            
+            NSInteger numberOfCatagories = [self.catagoriesDAO loadCatagories].count;
+            
+            NSDate *currentTime = [[NSDate alloc] init];
+            
+            // add random receipts
+            for (int receiptNumber = 0; receiptNumber < 10; receiptNumber++)
+            {
+                NSString *fileName1 = [NSString stringWithFormat: @"Receipt-%@-%d", [Utils generateUniqueID], 1];
+                NSString *fileName2 = [NSString stringWithFormat: @"Receipt-%@-%d", [Utils generateUniqueID], 2];
+                
+                [Utils saveImage: testImage1 withFilename: fileName1 forUser: self.userDataDAO.userKey];
+                [Utils saveImage: testImage2 withFilename: fileName2 forUser: self.userDataDAO.userKey];
+                
+                [components setDay: [Utils randomNumberBetween: 1 maxNumber: 28]];
+                [components setMonth: [Utils randomNumberBetween: 1 maxNumber: 12]];
+                [components setYear: [Utils randomNumberBetween: 2013 maxNumber: 2015]];
+                [components setHour: [Utils randomNumberBetween: 0 maxNumber: 23]];
+                [components setMinute: [Utils randomNumberBetween: 0 maxNumber: 59]];
+                
+                NSDate *date = [calendar dateFromComponents: components];
+                
+                if ([date laterDate: currentTime] == date)
+                {
+                    continue;
+                }
+                
+                Receipt *newReceipt = [Receipt new];
+                
+                newReceipt.localID = [Utils generateUniqueID];
+                newReceipt.fileNames = [NSMutableArray arrayWithObjects: fileName1, fileName2, nil];
+                newReceipt.dateCreated = date;
+                newReceipt.taxYear = [Utils randomNumberBetween: 2013 maxNumber: 2015];
+                newReceipt.dataAction = DataActionInsert;
+                
+                [self.receiptsDAO addReceipt: newReceipt save:NO];
+                
+                // add 1-10 items for each receipt
+                int numberOfItems = [Utils randomNumberBetween: 1 maxNumber: 5];
+                
+                for (int itemNumber = 0; itemNumber < numberOfItems; itemNumber++)
+                {
+                    [self.recordsDAO addRecordForCatagory: [[self.catagoriesDAO loadCatagories] objectAtIndex: [Utils randomNumberBetween: 0 maxNumber: (int)numberOfCatagories - 1]]
+                                               andReceipt: newReceipt
+                                              forQuantity: [Utils randomNumberBetween: 1 maxNumber: 20]
+                                                forAmount: [Utils randomNumberBetween: 10 maxNumber: 100] / 10.0f
+                                                     save:NO];
+                }
+            }
+        }
+        
+        [self.userDataDAO saveUserData];
+        
+        dispatch_async(dispatch_get_main_queue(), ^()
+                       {
+                           complete();
+                       });
+    });
+}
 
 -(BOOL)needToBackUp
 {
@@ -36,164 +136,425 @@
     return [self.userDataDAO getLastUploadDate];
 }
 
+- (NSString *) getLocalDataBatchID
+{
+    return [self.userDataDAO getLastestDataHash];
+}
+
 - (void) startSyncingUserData: (SyncingSuccessBlock) success
                       failure: (SyncingFailureBlock) failure
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        //simulate 3 seconds wait
-        [NSThread sleepForTimeInterval:3.0f];
+    NSDictionary *dictionary = [self.userDataDAO generateJSONToUploadToServer];
+    
+    NSData *dictionaryData = [NSJSONSerialization dataWithJSONObject: dictionary
+                                                             options: NSJSONWritingPrettyPrinted
+                                                               error: nil];
+    
+    NSString *jsonString = [[NSString alloc] initWithData:dictionaryData encoding:NSUTF8StringEncoding];
+    
+    //DUMP:
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    
+//    NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent: @"upload.json"];
+//    
+//    if ([fileManager fileExistsAtPath: filePath])
+//    {
+//        [fileManager removeItemAtPath: filePath error: nil];
+//    }
+//    
+//    [dictionaryData writeToFile: filePath options: 0 error: nil];
+    //END DUMP:
+    
+    NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       jsonString,@"data"
+                                       ,nil];
+    
+    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path: [WEB_API_FILE stringByAppendingPathComponent:@"upload"] ] ;
+    
+    [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
+    
+    [networkOperation setPostDataEncoding:MKNKPostDataEncodingTypeURL];
+    
+    __block UIBackgroundTaskIdentifier bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler: nil];
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
         
-        NSString *userKey = self.userDataDAO.userKey;
+        NSDictionary *response = [completedOperation responseJSON];
         
-        NSDictionary *data = [self.userDataDAO generateJSONToUploadToServer];
-        
-        if (userKey && data)
+        if ( [response objectForKey:@"error"] && [[response objectForKey:@"error"] boolValue] == NO )
         {
-            //produce some fake data
-            NSDateFormatter *gmtDateFormatter = [[NSDateFormatter alloc] init];
-            gmtDateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-            gmtDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-            NSString *dateStringFromServer = [gmtDateFormatter stringFromDate:[NSDate date]];
+            NSDate *dateUploaded = [NSDate new];
             
-            //change the local UserData.lastUploadedDate to the one we received from server
-            NSDate *dateFromServer = [gmtDateFormatter dateFromString:dateStringFromServer];
-            [self.userDataDAO setLastUploadDate:dateFromServer];
+            [self.userDataDAO setLastUploadDate:dateUploaded];
             
-            [self.userDataDAO setAllDataToDateActionNone];
+            [self.userDataDAO setLastestDataHash:[response objectForKey:@"batchID"]];
+            
+            [self.userDataDAO resetAllDataActionsAndClearOutDeletedOnes];
             
             [self.userDataDAO saveUserData];
             
-            //FAKE DATA
-            NSString *hashStringFromServer = @"ABC123";
-            
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                 NSDictionary *lastestDataInfo = [[NSDictionary alloc] initWithObjectsAndKeys:dateFromServer,kKeyLastUpdatedDateTime,hashStringFromServer,kKeyHashString, nil];
+                if (success)
+                {
+                    success ( dateUploaded );
+                }
                 
-                success ( lastestDataInfo );
             });
+            
         }
         else
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                failure ( @"uploadUserData failed" );
+                
+                if (failure)
+                {
+                    failure ( [response objectForKey:@"message"] );
+                }
+                
             });
         }
-    });
+        
+        [[UIApplication sharedApplication] endBackgroundTask: bgTask];
+    };
     
-    return;
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (failure)
+            {
+                failure ( @"Network Error" );
+            }
+        });
+        
+        [[UIApplication sharedApplication] endBackgroundTask: bgTask];
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+    
+    [self.networkCommunicator enqueueOperation:networkOperation];
 }
 
-- (void) getLastestServerDataInfo: (GetLastestServerDataInfoSuccessBlock) success
-                          failure: (GetLastestServerDataInfoFailureBlock) failure
+-(void) downloadUserData: (DownloadDataSuccessBlock) success
+                 failure: (DownloadDataFailureBlock) failure
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        //simulate 3 seconds wait
-        [NSThread sleepForTimeInterval:3.0f];
+    MKNetworkOperation *networkOperation = [self.networkCommunicator getRequestToServer:[WEB_API_FILE stringByAppendingPathComponent:@"download"]];
+    
+    [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
+    
+    __block UIBackgroundTaskIdentifier bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler: nil];
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
         
-        NSString *userKey = self.userDataDAO.userKey;
+        NSDictionary *response = [completedOperation responseJSON];
         
-        NSDictionary *data = [self.userDataDAO generateJSONToUploadToServer];
-        
-        if (userKey && data)
+        if ( [response objectForKey:@"error"] && [[response objectForKey:@"error"] boolValue] == NO )
         {
-            //produce fake data
-            NSCalendar *calendar = [NSCalendar currentCalendar];
-            NSDateComponents *calendarComponents = [calendar components: (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay |  NSCalendarUnitWeekday) fromDate: [NSDate date]];
+            NSDictionary *dataDictionary = [response objectForKey:@"data"];
             
-            NSInteger dayOfYear = [calendarComponents day];
+            //First merge the Tax Years
             
-            if (dayOfYear > 1)
+            NSArray *taxYearNumbers = [dataDictionary objectForKey:@"TaxYears"];
+            
+            NSMutableArray *taxYears = [NSMutableArray new];
+            
+            for (NSNumber *taxYearNumber in taxYearNumbers)
             {
-                dayOfYear = dayOfYear - 1;
+                TaxYear *taxYear = [self.taxYearBuilder buildTaxYearFrom:taxYearNumber];
+                
+                if (taxYear)
+                {
+                    [taxYears addObject:taxYear];
+                }
             }
             
-            [calendarComponents setDay: dayOfYear];
+            [self.taxYearsDAO mergeWith:taxYears save:NO];
             
-            [calendarComponents setCalendar: calendar];  // Must do this before calling [NSDateComponents date]
+            //Second merge the Catagories
             
-            NSDate *yesterday = [calendarComponents date];
+            NSArray *catagoryDictionaries = [dataDictionary objectForKey:@"Catagories"];
             
-            //convert [NSDate date] to string
-            NSDateFormatter *gmtDateFormatter = [[NSDateFormatter alloc] init];
-            gmtDateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-            gmtDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-            NSString *yesterdayDateString = [gmtDateFormatter stringFromDate:yesterday];
+            NSMutableArray *catagories = [NSMutableArray new];
             
-            //FAKE DATA
-            NSDate *dateFromServer = [gmtDateFormatter dateFromString:yesterdayDateString];
+            for (NSDictionary *catagoryDictionary in catagoryDictionaries)
+            {
+                Catagory *catagory = [self.catagoryBuilder buildCatagoryFrom:catagoryDictionary];
+                
+                if (catagory)
+                {
+                    [catagories addObject:catagory];
+                }
+            }
             
-            //FAKE DATA
-            NSString *hashStringFromServer = @"ABC123";
+            [self.catagoriesDAO mergeWith:catagories save:NO];
+            
+            //Third the receipts
+            
+            NSArray *receiptDictionaries = [dataDictionary objectForKey:@"Receipts"];
+            
+            NSMutableArray *receipts = [NSMutableArray new];
+            
+            for (NSDictionary *receiptDictionary in receiptDictionaries)
+            {
+                Receipt *receipt = [self.receiptBuilder buildReceiptFrom:receiptDictionary];
+                
+                if (receipt)
+                {
+                    [receipts addObject:receipt];
+                }
+            }
+            
+            [self.receiptsDAO mergeWith:receipts save:NO];
+            
+            //Lastly, the records
+            
+            NSArray *recordDictionaries = [dataDictionary objectForKey:@"Records"];
+            
+            NSMutableArray *records = [NSMutableArray new];
+            
+            for (NSDictionary *recordDictionary in recordDictionaries)
+            {
+                Record *record = [self.recordBuilder buildRecordFrom:recordDictionary];
+                
+                //check if catagoryID is valid
+                
+                if (![self.catagoriesDAO loadCatagory:record.catagoryID])
+                {
+                    DLog(@"ERROR: Record has an invalid catagoryID");
+                    continue;
+                }
+                
+                //check if receiptID is valid
+                if (![self.receiptsDAO loadReceipt:record.receiptID])
+                {
+                    DLog(@"ERROR: Record has an invalid receiptID");
+                    continue;
+                }
+                
+                if (record)
+                {
+                    [records addObject:record];
+                }
+            }
+            
+            [self.recordsDAO mergeWith:records save:NO];
+            
+            [self.userDataDAO setLastestDataHash:[response objectForKey:@"batchID"]];
+            
+            [self.userDataDAO saveUserData];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSDictionary *lastestDataInfo = [[NSDictionary alloc] initWithObjectsAndKeys:dateFromServer,kKeyLastUpdatedDateTime,hashStringFromServer, nil];
                 
-                success ( lastestDataInfo );
+                if (success)
+                {
+                    success ( );
+                }
+                
             });
+            
         }
         else
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                failure ( @"getLastestServerDataInfo failed" );
+                
+                if (failure)
+                {
+                    failure ( [response objectForKey:@"message"] );
+                }
+                
             });
         }
-    });
+        
+        [[UIApplication sharedApplication] endBackgroundTask: bgTask];
+    };
     
-    return;
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (failure)
+            {
+                failure ( @"Network Error" );
+            }
+        });
+        
+        [[UIApplication sharedApplication] endBackgroundTask: bgTask];
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+    
+    [self.networkCommunicator enqueueOperation:networkOperation];
+}
+
+- (void) getLastestServerDataBatchID: (GetLastestServerDataInfoSuccessBlock) success
+                             failure: (GetLastestServerDataInfoFailureBlock) failure
+{
+    MKNetworkOperation *networkOperation = [self.networkCommunicator getRequestToServer:[WEB_API_FILE stringByAppendingPathComponent:@"data_batchid"]];
+    
+    [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
+    
+    __block UIBackgroundTaskIdentifier bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler: nil];
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
+        
+        NSDictionary *response = [completedOperation responseJSON];
+        
+        NSString *batchID = [response objectForKey:@"batchID"];
+        
+        if ( [response objectForKey:@"error"] && [[response objectForKey:@"error"] boolValue] == NO && batchID)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if (success)
+                {
+                    success ( batchID );
+                }
+                
+            });
+            
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if (failure)
+                {
+                    failure ( [response objectForKey:@"message"] );
+                }
+                
+            });
+        }
+        
+        [[UIApplication sharedApplication] endBackgroundTask: bgTask];
+    };
+    
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (failure)
+            {
+                failure ( @"Network Error" );
+            }
+        });
+        
+        [[UIApplication sharedApplication] endBackgroundTask: bgTask];
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+    
+    [self.networkCommunicator enqueueOperation:networkOperation];
 }
 
 - (void) getFilesNeedToUpload: (GetListOfFilesNeedUploadSuccessBlock) success
                       failure: (GetListOfFilesNeedUploadFailureBlock) failure
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        //simulate 3 seconds wait
-        [NSThread sleepForTimeInterval:3.0f];
-        
-        NSMutableArray *filenamesToUpload = [NSMutableArray new];
-        
-        NSArray *receipts = [self.userDataDAO getReceipts];
-        
-        for (Receipt *receipt in receipts)
-        {
-            for (NSString *filename in receipt.fileNames)
-            {
-                [filenamesToUpload addObject:filename];
-            }
-        }
-        
-        success (filenamesToUpload);
-    });
+    MKNetworkOperation *networkOperation = [self.networkCommunicator getRequestToServer:[WEB_API_FILE stringByAppendingPathComponent:@"get_files_need_upload"]];
     
-    return;
+    [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
+    
+    __block UIBackgroundTaskIdentifier bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler: nil];
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
+        
+        NSDictionary *response = [completedOperation responseJSON];
+        
+        NSArray *filesnamesToUpload = [response objectForKey:@"files_need_upload"];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (success)
+            {
+                success ( filesnamesToUpload );
+            }
+            
+        });
+        
+        [[UIApplication sharedApplication] endBackgroundTask: bgTask];
+    };
+    
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (failure)
+            {
+                failure ( @"Network Error" );
+            }
+        });
+        
+        [[UIApplication sharedApplication] endBackgroundTask: bgTask];
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+    
+    [self.networkCommunicator enqueueOperation:networkOperation];
 }
 
 -(void) uploadFile:(NSString *)filename andData:(NSData *)data success:(FileUploadSuccessBlock) success
            failure: (FileUploadFailureBlock) failure
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        UIImage *image = [Utils readImageWithFileName:filename forUser:self.userDataDAO.userKey];
+    NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       filename,@"filename"
+                                       ,nil];
+    
+    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path: [WEB_API_FILE stringByAppendingPathComponent:@"upload_photo"] ] ;
+    
+    [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
+    
+    //used for server temp storage file name. Not important
+    NSString *fileNameWithExtension = [NSString stringWithFormat:@"%@.jpg",filename];
+    
+    [networkOperation addData:data forKey:@"photos" mimeType:@"image/jpeg" fileName:fileNameWithExtension];
+    
+    __block UIBackgroundTaskIdentifier bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler: nil];
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
         
-        if (!image)
+        NSDictionary *response = [completedOperation responseJSON];
+        
+        if ( [response objectForKey:@"error"] && [[response objectForKey:@"error"] boolValue] == NO)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                failure ( @"uploadUserData failed" );
+                
+                if (success)
+                {
+                    success ( );
+                }
+                
             });
             
-            return ;
+            [[UIApplication sharedApplication] endBackgroundTask: bgTask];
         }
-        
-        NSData *dataToUpload = UIImageJPEGRepresentation(image, 0.9);
-        
-        //simulate 5 seconds wait
-        [NSThread sleepForTimeInterval:5.0f];
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if (failure)
+                {
+                    failure ( [response objectForKey:@"message"] );
+                }
+                
+            });
+            
+            [[UIApplication sharedApplication] endBackgroundTask: bgTask];
+        }
+    };
+    
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            success ();
+            
+            if (failure)
+            {
+                failure ( @"Network Error" );
+            }
+            
         });
-    });
+        
+        [[UIApplication sharedApplication] endBackgroundTask: bgTask];
+    };
     
-    return;
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+    
+    [self.networkCommunicator enqueueOperation:networkOperation];
 }
 
 @end

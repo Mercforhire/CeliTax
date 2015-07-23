@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class ConfigurationManager, DAOFactory;
+@class ConfigurationManager, DAOFactory, NetworkCommunicator, BuilderFactory;
 @protocol AuthenticationService, DataService, ManipulationService, SyncService;
 
 @interface ServiceFactory : NSObject
@@ -16,6 +16,10 @@
 @property (nonatomic, weak) ConfigurationManager *configurationManager;     /** Used to access global config values */
 
 @property (nonatomic, weak) DAOFactory  *daoFactory;
+
+@property (nonatomic, weak) NetworkCommunicator *networkCommunicator;
+
+@property (nonatomic, strong) BuilderFactory *builderFactory;
 
 - (id<AuthenticationService>) createAuthenticationService;
 

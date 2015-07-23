@@ -17,8 +17,6 @@
 @property (nonatomic, strong) ReceiptsDAO *receiptsDAO;
 @property (nonatomic, strong) TaxYearsDAO *taxYearsDAO;
 
-- (void) loadDemoData;
-
 - (NSArray *) fetchCatagories;
 
 - (Catagory *) fetchCatagory: (NSString *) catagoryID;

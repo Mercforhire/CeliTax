@@ -11,12 +11,14 @@
 #import "UserManager.h"
 #import "User.h"
 #import "AlertDialogsProvider.h"
+#import "SolidGreenButton.h"
 
 @interface SettingsViewController ()
 
 @property (weak, nonatomic) IBOutlet ProfileBarView *profileBarView;
-@property (weak, nonatomic) IBOutlet UIButton *backupNowButton;
+@property (weak, nonatomic) IBOutlet SolidGreenButton *backupNowButton;
 @property (weak, nonatomic) IBOutlet UILabel *lastBackUpLabel;
+@property (weak, nonatomic) IBOutlet SolidGreenButton *insertDemoButton;
 
 @end
 
@@ -38,7 +40,8 @@
     [self.profileBarView.editButton1 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.profileBarView.editButton2 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.lookAndFeel applySolidGreenButtonStyleTo:self.backupNowButton];
+    [self.backupNowButton setLookAndFeel:self.lookAndFeel];
+    [self.insertDemoButton setLookAndFeel:self.lookAndFeel];
 }
 
 - (void)viewDidLoad
@@ -52,16 +55,17 @@
     
     [self setLastBackUpLabelDate:lastUploadDate];
     
+    //move to did appear
+    
     if ([self.syncService needToBackUp])
     {
         [self.backupNowButton setEnabled:YES];
-        [self.backupNowButton setTitle:@"Back Up Now" forState:UIControlStateNormal];
+        [self.backupNowButton setTitle:@"Sync" forState:UIControlStateNormal];
     }
     else
     {
         [self.backupNowButton setEnabled:NO];
         [self.backupNowButton setTitle:@"Up to Date" forState:UIControlStateNormal];
-        [self.lookAndFeel applyDisabledButtonStyleTo:self.backupNowButton];
     }
 }
 
@@ -69,7 +73,7 @@
 {
     if (!date)
     {
-        [self.lastBackUpLabel setText:[NSString stringWithFormat:@"Last Backup: Never"]];
+        [self.lastBackUpLabel setText:[NSString stringWithFormat:@"Last Sync: Never"]];
         
         return;
     }
@@ -79,7 +83,7 @@
     gmtDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSString *dateStringFromUploadDate = [gmtDateFormatter stringFromDate:date];
     
-    [self.lastBackUpLabel setText:[NSString stringWithFormat:@"Last Backup: %@", dateStringFromUploadDate]];
+    [self.lastBackUpLabel setText:[NSString stringWithFormat:@"Last Sync: %@", dateStringFromUploadDate]];
 }
 
 - (void) editProfilePressed: (UIButton *) sender
@@ -87,26 +91,53 @@
     [AlertDialogsProvider showWorkInProgressDialog];
 }
 
+- (IBAction)insertDemoDataPressed:(UIButton *)sender
+{
+    [self.insertDemoButton setEnabled:NO];
+    [self.insertDemoButton setTitle:@"Generating..." forState:UIControlStateNormal];
+    
+    [self.syncService loadDemoData:^{
+        [self.insertDemoButton setTitle:@"Demo Data Generated" forState:UIControlStateNormal];
+        
+        [self.insertDemoButton setEnabled:YES];
+    }];
+}
+
 #define kKeyLastUpdatedDateTime        @"LastUpdatedDateTime"
 
 - (IBAction)backupPressed:(UIButton *)sender
 {
     [self.backupNowButton setEnabled:NO];
-    [self.backupNowButton setTitle:@"Backing Up..." forState:UIControlStateNormal];
+    [self.backupNowButton setTitle:@"Syncing..." forState:UIControlStateNormal];
     
-    [self.syncService startSyncingUserData:^(NSDictionary *lastestDataInfo) {
-        //disable the Backup Now Button
-        [self.backupNowButton setEnabled:NO];
-        [self.backupNowButton setTitle:@"Backed Up" forState:UIControlStateNormal];
-        [self.lookAndFeel applyDisabledButtonStyleTo:self.backupNowButton];
+    //1. Download and merge data from server first
+    [self.syncService downloadUserData:^{
         
-        NSDate *uploadDate = [lastestDataInfo objectForKey:kKeyLastUpdatedDateTime];
-        
-        [self setLastBackUpLabelDate:uploadDate];
+        //2.Upload local data to server
+        [self.syncService startSyncingUserData:^(NSDate *updateDate) {
+            
+            //disable the Backup Now Button
+            [self.backupNowButton setEnabled:NO];
+            [self.backupNowButton setTitle:@"Synced" forState:UIControlStateNormal];
+            
+            [self setLastBackUpLabelDate:updateDate];
+            
+        } failure:^(NSString *reason) {
+            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                              message:reason
+                                                             delegate:nil
+                                                    cancelButtonTitle:nil
+                                                    otherButtonTitles:@"Dismiss",nil];
+            
+            [message show];
+            
+            [self.backupNowButton setEnabled:YES];
+            [self.backupNowButton setTitle:@"Sync" forState:UIControlStateNormal];
+        }];
         
     } failure:^(NSString *reason) {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                          message:@"Back up failed, please try again later"
+                                                          message:reason
                                                          delegate:nil
                                                 cancelButtonTitle:nil
                                                 otherButtonTitles:@"Dismiss",nil];
@@ -114,7 +145,7 @@
         [message show];
         
         [self.backupNowButton setEnabled:YES];
-        [self.backupNowButton setTitle:@"Back Up Now" forState:UIControlStateNormal];
+        [self.backupNowButton setTitle:@"Sync" forState:UIControlStateNormal];
     }];
 }
 

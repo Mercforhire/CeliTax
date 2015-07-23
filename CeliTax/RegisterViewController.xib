@@ -179,7 +179,7 @@
                                 <constraint firstAttribute="height" constant="47" id="aYG-WC-fpq"/>
                             </constraints>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LxA-sw-eBy">
+                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LxA-sw-eBy" customClass="HollowGreenButton">
                             <rect key="frame" x="92" y="599" width="136" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="42" id="5g1-Mz-tcs"/>

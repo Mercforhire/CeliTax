@@ -16,14 +16,14 @@
 
 @implementation ManipulationServiceImpl
 
-- (BOOL) addCatagoryForName: (NSString *) catagoryName forColor: (UIColor *) catagoryColor
+- (BOOL) addCatagoryForName: (NSString *) catagoryName forColor: (UIColor *) catagoryColor save: (BOOL)save
 {
     if (!catagoryName || !catagoryColor)
     {
         return NO;
     }
 
-    if ([self.catagoriesDAO addCatagoryForName: catagoryName andColor: catagoryColor andNationalAverageCost: 0])
+    if ([self.catagoriesDAO addCatagoryForName: catagoryName andColor: catagoryColor andNationalAverageCost: 0 save:save])
     {
         return YES;
     }
@@ -31,9 +31,9 @@
     return NO;
 }
 
-- (BOOL) modifyCatagoryForCatagoryID: (NSString *) catagoryID newName: (NSString *) catagoryName newColor: (UIColor *) catagoryColor
+- (BOOL) modifyCatagoryForCatagoryID: (NSString *) catagoryID newName: (NSString *) catagoryName newColor: (UIColor *) catagoryColor save: (BOOL)save
 {
-    if ([self.catagoriesDAO modifyCatagory: catagoryID forName: catagoryName andColor: catagoryColor])
+    if ([self.catagoriesDAO modifyCatagory: catagoryID forName: catagoryName andColor: catagoryColor save:save])
     {
         return YES;
     }
@@ -41,9 +41,9 @@
     return NO;
 }
 
-- (BOOL) deleteCatagoryForCatagoryID: (NSString *) catagoryID
+- (BOOL) deleteCatagoryForCatagoryID: (NSString *) catagoryID save: (BOOL)save
 {
-    if ([self.catagoriesDAO deleteCatagory: catagoryID])
+    if ([self.catagoriesDAO deleteCatagory: catagoryID save:save])
     {
         return YES;
     }
@@ -51,7 +51,7 @@
     return NO;
 }
 
-- (BOOL) transferCatagoryFromCatagoryID: (NSString *) fromCatagoryID toCatagoryID: (NSString *) toCatagoryID
+- (BOOL) transferCatagoryFromCatagoryID: (NSString *) fromCatagoryID toCatagoryID: (NSString *) toCatagoryID save: (BOOL)save
 {
     NSArray *fromRecords = [self.recordsDAO loadRecordsforCatagory: fromCatagoryID];
 
@@ -73,11 +73,12 @@
     for (Record *record in fromRecords)
     {
         record.catagoryID = [toCatagoryID copy];
+        record.dataAction = DataActionInsert;
 
         [modifiedRecordsToAdd addObject: record];
     }
 
-    if ([self.recordsDAO addRecords: modifiedRecordsToAdd])
+    if ([self.recordsDAO addRecords: modifiedRecordsToAdd save:save])
     {
         return YES;
     }
@@ -85,7 +86,7 @@
     return NO;
 }
 
-- (NSString *) addRecordForCatagoryID: (NSString *) catagoryID forReceiptID: (NSString *) receiptID forQuantity: (NSInteger) quantity forAmount: (float) amount
+- (NSString *) addRecordForCatagoryID: (NSString *) catagoryID forReceiptID: (NSString *) receiptID forQuantity: (NSInteger) quantity forAmount: (float) amount save: (BOOL)save
 {
     Catagory *toItemCatagory = [self.catagoriesDAO loadCatagory: catagoryID];
 
@@ -94,7 +95,7 @@
         return nil;
     }
 
-    NSString *newestRecordID = [self.recordsDAO addRecordForCatagoryID: catagoryID andReceiptID: receiptID forQuantity: quantity forAmount: amount];
+    NSString *newestRecordID = [self.recordsDAO addRecordForCatagoryID: catagoryID andReceiptID: receiptID forQuantity: quantity forAmount: amount save:save];
 
     if (newestRecordID)
     {
@@ -104,11 +105,11 @@
     return nil;
 }
 
-- (BOOL) deleteRecord: (NSString *) recordID
+- (BOOL) deleteRecord: (NSString *) recordID save:(BOOL)save
 {
     NSArray *arrayWithSingleNumber = [NSArray arrayWithObject: recordID];
 
-    if ([self.recordsDAO deleteRecordsForRecordIDs: arrayWithSingleNumber])
+    if ([self.recordsDAO deleteRecordsForRecordIDs: arrayWithSingleNumber save:save])
     {
         return YES;
     }
@@ -116,9 +117,9 @@
     return NO;
 }
 
-- (BOOL) modifyRecord: (Record *) record
+- (BOOL) modifyRecord: (Record *) record save:(BOOL)save
 {
-    if ([self.recordsDAO modifyRecord: record])
+    if ([self.recordsDAO modifyRecord: record save:save])
     {
         return YES;
     }
@@ -128,13 +129,14 @@
 
 - (NSString *) addReceiptForFilenames: (NSArray *) filenames
                            andTaxYear: (NSInteger) taxYear
+                                 save: (BOOL)save
 {
     if ( !filenames )
     {
         return nil;
     }
     
-    NSString *newReceiptID = [self.receiptsDAO addReceiptWithFilenames: filenames inTaxYear:taxYear];
+    NSString *newReceiptID = [self.receiptsDAO addReceiptWithFilenames: filenames inTaxYear:taxYear save:save];
     if ( newReceiptID )
     {
         return ( newReceiptID );
@@ -143,17 +145,17 @@
     return nil;
 }
 
-- (BOOL) modifyReceipt:(Receipt *)receipt
+- (BOOL) modifyReceipt:(Receipt *)receipt save: (BOOL)save
 {
     if (!receipt)
     {
         return NO;
     }
     
-    return [self.receiptsDAO modifyReceipt:receipt];
+    return [self.receiptsDAO modifyReceipt:receipt save:save];
 }
 
-- (BOOL) deleteReceiptAndAllItsRecords: (NSString *) receiptID
+- (BOOL) deleteReceiptAndAllItsRecords: (NSString *) receiptID save: (BOOL)save
 {
     if (!receiptID)
     {
@@ -169,9 +171,9 @@
         [arrayOfReceiptIDs addObject: recordToDelete.localID];
     }
 
-    if ([self.recordsDAO deleteRecordsForRecordIDs: arrayOfReceiptIDs])
+    if ([self.recordsDAO deleteRecordsForRecordIDs: arrayOfReceiptIDs save:save])
     {
-        if ([self.receiptsDAO deleteReceipt: receiptID])
+        if ([self.receiptsDAO deleteReceipt: receiptID save:save])
         {
             return YES;
         }
@@ -180,9 +182,9 @@
     return NO;
 }
 
-- (BOOL) addTaxYear: (NSInteger) taxYear
+- (BOOL) addTaxYear: (NSInteger) taxYear save: (BOOL)save
 {
-    return [self.taxYearsDAO addTaxYear:taxYear];
+    return [self.taxYearsDAO addTaxYear:taxYear save:save];
 }
 
 @end

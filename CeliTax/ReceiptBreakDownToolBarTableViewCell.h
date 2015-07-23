@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SolidGreenButton.h"
 
 @interface ReceiptBreakDownToolBarTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIButton *transferButton;
-@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+@property (weak, nonatomic) IBOutlet SolidGreenButton *transferButton;
+@property (weak, nonatomic) IBOutlet SolidGreenButton *deleteButton;
 
 @end

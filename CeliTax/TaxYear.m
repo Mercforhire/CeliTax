@@ -43,4 +43,15 @@
     return copy;
 }
 
+- (NSDictionary *) toJson
+{
+    NSMutableDictionary *json = [NSMutableDictionary dictionary];
+    
+    [json setObject:[NSNumber numberWithInteger:self.taxYear] forKey:kKeyTaxYear];
+    
+    [json setObject:[NSNumber numberWithInteger:self.dataAction] forKey:kKeyDataAction];
+    
+    return json;
+}
+
 @end

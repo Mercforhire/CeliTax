@@ -19,6 +19,7 @@
 #import "ReceiptCheckingViewController.h"
 #import "FlashButtonView.h"
 #import "Receipt.h"
+#import "SolidGreenButton.h"
 
 @interface CameraViewController ()
 {
@@ -29,8 +30,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *previousImageView;
 @property (weak, nonatomic) IBOutlet UIView *greenBar;
 
-@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
-@property (weak, nonatomic) IBOutlet UIButton *continueButton;
+@property (weak, nonatomic) IBOutlet SolidGreenButton *cancelButton;
+@property (weak, nonatomic) IBOutlet SolidGreenButton *continueButton;
 @property (weak, nonatomic) IBOutlet UIButton *snapButton;
 @property (weak, nonatomic) IBOutlet FlashButtonView *flashButtonView;
 @property (weak, nonatomic) IBOutlet WhiteBorderView *topLeftCornerView;
@@ -117,8 +118,8 @@
 
     [self refreshCropEdgeRatio];
     
-    [self.lookAndFeel applySolidGreenButtonStyleTo:self.cancelButton];
-    [self.lookAndFeel applyDisabledButtonStyleTo:self.continueButton];
+    [self.cancelButton setLookAndFeel:self.lookAndFeel];
+    [self.continueButton setLookAndFeel:self.lookAndFeel];
     
     // snap button to capture image
     self.snapButton.clipsToBounds = YES;
@@ -295,7 +296,6 @@
                                                              self.bottomRightCornerView.frame.size.height)];
             
             [self.continueButton setEnabled:YES];
-            [self.lookAndFeel applySolidGreenButtonStyleTo:self.continueButton];
             
             [self.view setNeedsUpdateConstraints];
             
@@ -338,7 +338,8 @@
         NSInteger taxYear = [self.configurationManager getCurrentTaxYear];
         
         NSString *newestReceiptID = [self.manipulationService addReceiptForFilenames: self.takenImageFilenames
-                                                                          andTaxYear: taxYear];
+                                                                          andTaxYear: taxYear
+                                                                                save:YES];
         
         if (newestReceiptID)
         {
@@ -367,7 +368,7 @@
         
         [receipt.fileNames addObjectsFromArray:self.takenImageFilenames];
         
-        [self.manipulationService modifyReceipt:receipt];
+        [self.manipulationService modifyReceipt:receipt save:YES];
         
         [self.navigationController popViewControllerAnimated: YES];
     }

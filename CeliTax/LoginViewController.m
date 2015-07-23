@@ -19,12 +19,13 @@
 #import "User.h"
 #import "MainViewController.h"
 #import "PasswordRecoveryViewController.h"
+#import "HollowGreenButton.h"
 
 @interface LoginViewController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *emailField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
-@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet HollowGreenButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
 @property (weak, nonatomic) IBOutlet UIButton *signupButton;
 
@@ -42,7 +43,7 @@
     [self.lookAndFeel applyGrayBorderTo: self.passwordField];
     [self.lookAndFeel addLeftInsetToTextField: self.passwordField];
 
-    [self.lookAndFeel applyHollowGreenButtonStyleTo: self.loginButton];
+    [self.loginButton setLookAndFeel:self.lookAndFeel];
 }
 
 - (void) viewDidLoad
@@ -61,7 +62,7 @@
                            action: @selector(textFieldDidChange:)
                  forControlEvents: UIControlEventEditingChanged];
 
-    // DEMO CODE:
+    //TODO: Remove DEMO CODE
     self.emailField.text = @"leonchn84@gmail.com";
     self.passwordField.text = @"123456";
     [self.loginButton setEnabled: YES];

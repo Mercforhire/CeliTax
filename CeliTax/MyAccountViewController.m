@@ -23,6 +23,7 @@
 #import "ProfileBarView.h"
 #import "TutorialManager.h"
 #import "TutorialStep.h"
+#import "HollowGreenButton.h"
 
 #define kCatagoryTableRowHeight                     65
 
@@ -37,7 +38,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) XYPieChart *pieChart;
 @property (weak, nonatomic) IBOutlet UITableView *accountTableView;
-@property (weak, nonatomic) IBOutlet UIButton *calculateButton;
+@property (weak, nonatomic) IBOutlet HollowGreenButton *calculateButton;
 @property (nonatomic, strong) NSArray *catagories; // of Catagory
 // Key: Catagory ID, Value: NSMutableDictionary of :
 // KEY: kCatagoryDetailsKeyTotalQty, VALUE: total quantity for this catagory
@@ -109,9 +110,12 @@
     [self.accountTableView setTableHeaderView: pieChartContainer];
 
     // other set up
-    [self.lookAndFeel applyHollowGreenButtonStyleTo: self.calculateButton];
+    [self.calculateButton setLookAndFeel:self.lookAndFeel];
     
-    [self.titleLabel setText:[NSString stringWithFormat:@"Tax Year for %ld", (long)self.configurationManager.getCurrentTaxYear]];
+    if (self.configurationManager.getCurrentTaxYear)
+    {
+        [self.titleLabel setText:[NSString stringWithFormat:@"Tax Year for %ld", (long)self.configurationManager.getCurrentTaxYear]];
+    }
 }
 
 - (void) viewDidLoad

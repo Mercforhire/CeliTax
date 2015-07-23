@@ -8,11 +8,12 @@
 
 #import "SendReceiptsToViewController.h"
 #import "NSString+Helper.h"
+#import "HollowGreenButton.h"
 
 @interface SendReceiptsToViewController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *emailField;
-@property (weak, nonatomic) IBOutlet UIButton *sendButton;
+@property (weak, nonatomic) IBOutlet HollowGreenButton *sendButton;
 
 @end
 
@@ -34,7 +35,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
-    [self.lookAndFeel applyHollowGreenButtonStyleTo: self.sendButton];
+    [self.sendButton setLookAndFeel:self.lookAndFeel];
 
     // Set the property to tell the popover container how big this view will be.
     self.preferredContentSize = self.viewSize;

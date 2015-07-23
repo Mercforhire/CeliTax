@@ -9,7 +9,6 @@
 #import "Receipt.h"
 #import "RecordsDAO.h"
 
-#define kKeyServerID        @"ServerID"
 #define kKeyIdentifer       @"Identifer"
 #define kKeyFileNames       @"FileNames"
 #define kKeyDateCreated     @"DateCreated"
@@ -20,7 +19,6 @@
 
 - (void) encodeWithCoder: (NSCoder *) coder
 {
-    [coder encodeInteger: self.serverID forKey: kKeyServerID];
     [coder encodeObject: self.localID forKey: kKeyIdentifer];
     [coder encodeObject: self.fileNames forKey: kKeyFileNames];
     [coder encodeObject: self.dateCreated forKey: kKeyDateCreated];
@@ -31,8 +29,6 @@
 - (id) initWithCoder: (NSCoder *) coder
 {
     self = [self init];
-
-    self.serverID = [coder decodeIntegerForKey: kKeyServerID];
     
     self.localID = [coder decodeObjectForKey: kKeyIdentifer];
 
@@ -54,7 +50,6 @@
 
     if (copy)
     {
-        copy.serverID = self.serverID;
         copy.localID = [self.localID copy];
         copy.dateCreated = [self.dateCreated copy];
         copy.fileNames = [self.fileNames copy];
@@ -79,8 +74,6 @@
 {
     NSMutableDictionary *json = [NSMutableDictionary dictionary];
     
-    [json setObject:[NSNumber numberWithInteger:self.serverID] forKey:kKeyServerID];
-    
     [json setObject:self.localID forKey:kKeyIdentifer];
     
     NSMutableArray *filenamesJSONs = [NSMutableArray new];
@@ -102,6 +95,14 @@
     [json setObject:[NSNumber numberWithInteger:self.dataAction] forKey:kKeyDataAction];
     
     return json;
+}
+
+-(void)copyDataFromReceipt:(Receipt *)thisOne
+{
+    self.dateCreated = [thisOne.dateCreated copy];
+    self.fileNames = [thisOne.fileNames copy];
+    self.taxYear = self.taxYear;
+    self.dataAction = self.dataAction;
 }
 
 @end

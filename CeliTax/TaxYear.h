@@ -14,4 +14,6 @@
 
 @property (nonatomic, assign) NSInteger dataAction;
 
+- (NSDictionary *) toJson;
+
 @end

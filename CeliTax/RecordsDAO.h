@@ -47,32 +47,36 @@
  @return NSString ID of the new record added, nil if error occurred
  */
 -(NSString *)addRecordForCatagory: (Catagory *) catagory
-                 andReceipt: (Receipt *) receipt
-                forQuantity: (NSInteger) quantity
-                  forAmount: (float) amount;
+                       andReceipt: (Receipt *) receipt
+                      forQuantity: (NSInteger) quantity
+                        forAmount: (float) amount
+                             save: (BOOL)save;
 
 
 /**
  @return NSString ID of the new record added, nil if error occurred
  */
 -(NSString *)addRecordForCatagoryID: (NSString *) catagoryID
-                 andReceiptID: (NSString *) receiptID
-                  forQuantity: (NSInteger) quantity
-                    forAmount: (float) amount;
+                       andReceiptID: (NSString *) receiptID
+                        forQuantity: (NSInteger) quantity
+                          forAmount: (float) amount
+                               save: (BOOL)save;
 
 /**
  @return YES if success, NO if user not found or records is nil
  */
--(BOOL)addRecords:(NSArray *)records;
+-(BOOL)addRecords:(NSArray *)records save: (BOOL)save;
 
 /**
  @return YES if success, NO if record is not found in existing database
  */
--(BOOL)modifyRecord:(Record *)record;
+-(BOOL)modifyRecord:(Record *)record save: (BOOL)save;
 
 /**
  @return YES if success, NO if user not found or catagory not found
  */
--(BOOL)deleteRecordsForRecordIDs:(NSArray *)recordIDs;
+-(BOOL)deleteRecordsForRecordIDs:(NSArray *)recordIDs save: (BOOL)save;
+
+-(BOOL)mergeWith:(NSArray *)records save:(BOOL)save;
 
 @end

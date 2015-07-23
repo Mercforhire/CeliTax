@@ -27,25 +27,39 @@
 /**
  @param name NSString name
  @param color UIColor color
+ @param save BOOL save to disk at end of operation
  
- @return YES if success, NO if user not found or name or color is nil
+ @return YES if success
  */
--(BOOL)addCatagoryForName:(NSString *)name andColor:(UIColor *)color andNationalAverageCost:(float)cost;
+-(BOOL)addCatagoryForName:(NSString *)name andColor:(UIColor *)color andNationalAverageCost:(float)cost save:(BOOL)save;
 
 /**
  @param catagoryID NSString catagory to modify ID
  @param name NSString name
  @param color UIColor color
+ @param save BOOL save to disk at end of operation
  
- @return YES if success, NO if user not found or catagory is nil
+ @return YES if success
  */
--(BOOL)modifyCatagory:(NSString *)catagoryID forName:(NSString *)name andColor:(UIColor *)color;
+-(BOOL)modifyCatagory:(NSString *)catagoryID forName:(NSString *)name andColor:(UIColor *)color save:(BOOL)save;
 
 /**
  @param catagoryID NSString ID of catagory to delete
+ @param save BOOL save to disk at end of operation
  
- @return YES if success, NO if user not found or catagory is not found
+ @return YES if success
  */
--(BOOL)deleteCatagory:(NSString *)catagoryID;
+-(BOOL)deleteCatagory:(NSString *)catagoryID save:(BOOL)save;
+
+
+/**
+ @param catagories NSArray of Catagory objects to merge with
+        any Catagory with existing Catagory in local Database of same id will be updated with new data
+        any Catagory that doesn't exist locally will be added as new ones
+ @param save BOOL save to disk at end of operation
+ 
+ @return YES if success
+ */
+-(BOOL)mergeWith:(NSArray *)catagories save:(BOOL)save;
 
 @end

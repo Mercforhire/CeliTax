@@ -21,12 +21,13 @@
 #import "TutorialManager.h"
 #import "TutorialStep.h"
 #import "ConfigurationManager.h"
+#import "HollowGreenButton.h"
 
 @interface ReceiptBreakDownViewController () <XYPieChartDelegate, XYPieChartDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, SelectionsPickerPopUpDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *noItemsShield;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (weak, nonatomic) IBOutlet UIButton *viewReceiptButton;
+@property (weak, nonatomic) IBOutlet HollowGreenButton *viewReceiptButton;
 @property (weak, nonatomic) IBOutlet XYPieChart *pieChart;
 @property (weak, nonatomic) IBOutlet UITableView *receiptItemsTable;
 @property (nonatomic, strong) UIToolbar *numberToolbar;
@@ -90,7 +91,7 @@
                                 [[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil], doneToolbarButton, nil];
     [self.numberToolbar sizeToFit];
 
-    [self.lookAndFeel applyHollowGreenButtonStyleTo: self.viewReceiptButton];
+    [self.viewReceiptButton setLookAndFeel:self.lookAndFeel];
 }
 
 - (void) viewDidLoad
@@ -439,7 +440,7 @@
 {
     Record *thisRecord = [self getNthRecordFromRecordsDictionary: sender.tag];
 
-    if ([self.manipulationService deleteRecord: thisRecord.localID])
+    if ([self.manipulationService deleteRecord: thisRecord.localID save:YES])
     {
         [self loadData];
     }
@@ -471,7 +472,7 @@
 
     self.currentlySelectedRecord.catagoryID = chosenCatagory.localID;
 
-    if ([self.manipulationService modifyRecord: self.currentlySelectedRecord])
+    if ([self.manipulationService modifyRecord: self.currentlySelectedRecord save:YES])
     {
         [self loadData];
     }
@@ -532,7 +533,7 @@
 
         thisRecord.amount = [textField.text floatValue];
 
-        if ([self.manipulationService modifyRecord: thisRecord])
+        if ([self.manipulationService modifyRecord: thisRecord save:YES])
         {
             DLog(@"Record %@ saved", thisRecord.localID);
         }
@@ -551,7 +552,7 @@
 
         thisRecord.quantity = [textField.text integerValue];
 
-        if ([self.manipulationService modifyRecord: thisRecord])
+        if ([self.manipulationService modifyRecord: thisRecord save:YES])
         {
             DLog(@"Record %@ saved", thisRecord.localID);
         }
@@ -720,8 +721,9 @@
 
         cell.transferButton.tag = (indexPath.row - 1) / 2;
         cell.deleteButton.tag = (indexPath.row - 1) / 2;
-        [self.lookAndFeel applySolidGreenButtonStyleTo: cell.transferButton];
-        [self.lookAndFeel applySolidGreenButtonStyleTo: cell.deleteButton];
+        
+        [cell.transferButton setLookAndFeel:self.lookAndFeel];
+        [cell.deleteButton setLookAndFeel:self.lookAndFeel];
 
         [cell.transferButton addTarget: self
                                 action: @selector(transferButtonPressed:)

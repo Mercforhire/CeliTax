@@ -33,7 +33,7 @@
     return [catagory firstObject];
 }
 
--(BOOL)addCatagoryForName:(NSString *)name andColor:(UIColor *)color andNationalAverageCost:(float)cost
+-(BOOL)addCatagoryForName:(NSString *)name andColor:(UIColor *)color andNationalAverageCost:(float)cost save:(BOOL)save
 {
     if ( !name || !color )
     {
@@ -50,10 +50,17 @@
     
     [[self.userDataDAO getCatagories] addObject:catagoryToAdd];
     
-    return [self.userDataDAO saveUserData];
+    if (save)
+    {
+        return [self.userDataDAO saveUserData];
+    }
+    else
+    {
+        return YES;
+    }
 }
 
--(BOOL)modifyCatagory:(NSString *)catagoryID forName:(NSString *)name andColor:(UIColor *)color
+-(BOOL)modifyCatagory:(NSString *)catagoryID forName:(NSString *)name andColor:(UIColor *)color save:(BOOL)save
 {
     NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"localID == %@", catagoryID];
     NSArray *catagory = [[self.userDataDAO getCatagories] filteredArrayUsingPredicate: findCatagories];
@@ -70,7 +77,14 @@
             catagoryToModify.dataAction = DataActionUpdate;
         }
         
-        return [self.userDataDAO saveUserData];
+        if (save)
+        {
+            return [self.userDataDAO saveUserData];
+        }
+        else
+        {
+            return YES;
+        }
     }
     else
     {
@@ -78,7 +92,7 @@
     }
 }
 
--(BOOL)deleteCatagory:(NSString *)catagoryID
+-(BOOL)deleteCatagory:(NSString *)catagoryID save:(BOOL)save
 {
     //delete the existing catagory with same ID as catagory's ID
     NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"localID == %@", catagoryID];
@@ -86,16 +100,7 @@
     
     for (Catagory *catagoryToDelete in catagoriesToDelete)
     {
-        if (!catagoryToDelete.serverID)
-        {
-            //catagoryToDelete is not on server, delete it right away
-            [[self.userDataDAO getCatagories] removeObject:catagoryToDelete];
-        }
-        else
-        {
-            //catagoryToDelete is on server, have to set its DataAction to delete
-            catagoryToDelete.dataAction = DataActionDelete;
-        }
+        catagoryToDelete.dataAction = DataActionDelete;
     }
     
     //delete any catagory records belonging to the catagoryID
@@ -104,19 +109,66 @@
     
     for (Record *recordToDelete in RecordsToDelete)
     {
-        if (!recordToDelete.serverID)
+        recordToDelete.dataAction = DataActionDelete;
+    }
+    
+    if (save)
+    {
+        return [self.userDataDAO saveUserData];
+    }
+    else
+    {
+        return YES;
+    }
+}
+
+-(void)addCatagory:(Catagory *)catagory
+{
+    [[self.userDataDAO getCatagories] addObject:catagory];
+}
+
+-(BOOL)mergeWith:(NSArray *)catagories save:(BOOL)save
+{
+    NSMutableArray *localCatagories = [NSMutableArray arrayWithArray:[self loadCatagories]];
+    
+    for (Catagory *catagory in catagories)
+    {
+        //find any existing Catagory with same id as this new one
+        NSPredicate *findCatagory = [NSPredicate predicateWithFormat: @"localID == %@", catagory.localID];
+        NSArray *existingCatagory = [localCatagories filteredArrayUsingPredicate: findCatagory];
+        
+        if (existingCatagory.count)
         {
-            //recordToDelete is not on server, delete it right away
-            [[self.userDataDAO getRecords] removeObject:recordToDelete];
+            Catagory *existing = [existingCatagory firstObject];
+            
+            [existing copyDataFromCatagory:catagory];
+            
+            [localCatagories removeObject:existing];
         }
         else
         {
-            //recordToDelete is on server, have to set its DataAction to delete
-            recordToDelete.dataAction = DataActionDelete;
+            [self addCatagory:catagory];
         }
     }
     
-    return [self.userDataDAO saveUserData];
+    //For any local Catagory that the server doesn't have and isn't marked DataActionInsert,
+    //we need to set these to DataActionInsert again so that can be uploaded to the server next time
+    for (Catagory *catagory in localCatagories)
+    {
+        if (catagory.dataAction != DataActionInsert)
+        {
+            catagory.dataAction = DataActionInsert;
+        }
+    }
+    
+    if (save)
+    {
+        return [self.userDataDAO saveUserData];
+    }
+    else
+    {
+        return YES;
+    }
 }
 
 @end

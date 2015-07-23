@@ -7,12 +7,13 @@
 //
 
 #import "BaseSideBarViewController.h"
-#import "DataService.h"
-#import "ManipulationService.h"
+
+@protocol DataService, ManipulationService, SyncService;
 
 @interface MainViewController : BaseSideBarViewController
 
 @property (nonatomic, weak) id <DataService> dataService;
 @property (nonatomic, weak) id <ManipulationService> manipulationService;
+@property (nonatomic, weak) id <SyncService> syncService;
 
 @end

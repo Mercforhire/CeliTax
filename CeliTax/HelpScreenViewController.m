@@ -11,6 +11,7 @@
 #import "MBProgressHUD.h"
 #import "AlertDialogsProvider.h"
 #import "UIView+Helper.h"
+#import "HollowGreenButton.h"
 
 @interface HelpScreenViewController () <UITextViewDelegate>
 {
@@ -18,7 +19,7 @@
 }
 
 @property (weak, nonatomic) IBOutlet UITextView *commentField;
-@property (weak, nonatomic) IBOutlet UIButton *sendButton;
+@property (weak, nonatomic) IBOutlet HollowGreenButton *sendButton;
 @property (nonatomic, strong) UIToolbar *keyboardToolbar;
 @property (strong, nonatomic) MBProgressHUD *waitView;
 
@@ -28,7 +29,7 @@
 
 -(void)setupUI
 {
-    [self.lookAndFeel applyDisabledButtonStyleTo:self.sendButton];
+    [self.sendButton setLookAndFeel:self.lookAndFeel];
     [self.sendButton setEnabled:NO];
     
     [self.lookAndFeel applyGrayBorderTo:self.commentField];
@@ -131,7 +132,6 @@
         
         [message show];
         
-        [self.lookAndFeel applyHollowGreenButtonStyleTo:self.sendButton];
         [self.sendButton setEnabled:YES];
         
         [self.waitView hide: YES];
@@ -145,7 +145,6 @@
         
         [message show];
         
-        [self.lookAndFeel applyHollowGreenButtonStyleTo:self.sendButton];
         [self.sendButton setEnabled:YES];
         
         [self.waitView hide: YES];
@@ -187,12 +186,10 @@
 {
     if (textView.text.length)
     {
-        [self.lookAndFeel applyHollowGreenButtonStyleTo:self.sendButton];
         [self.sendButton setEnabled:YES];
     }
     else
     {
-        [self.lookAndFeel applyDisabledButtonStyleTo:self.sendButton];
         [self.sendButton setEnabled:NO];
     }
 }

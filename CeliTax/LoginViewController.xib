@@ -72,7 +72,7 @@
                         <action selector="signupPressed:" destination="-1" eventType="touchUpInside" id="cAb-hA-JQf"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rwv-cx-Dof">
+                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rwv-cx-Dof" customClass="HollowGreenButton">
                     <rect key="frame" x="100" y="333" width="120" height="31"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="31" id="Ebt-Xr-q2A"/>

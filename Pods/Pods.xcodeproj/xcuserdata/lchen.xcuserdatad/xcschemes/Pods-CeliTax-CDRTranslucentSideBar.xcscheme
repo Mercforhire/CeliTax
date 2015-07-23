@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F432CC7D6583008D8F767646"
+               BlueprintIdentifier = "C0DC30199F894F24A837C6B5"
                BuildableName = "libPods-CeliTax-CDRTranslucentSideBar.a"
                BlueprintName = "Pods-CeliTax-CDRTranslucentSideBar"
                ReferencedContainer = "container:Pods.xcodeproj">

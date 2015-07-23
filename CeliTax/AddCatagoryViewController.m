@@ -23,6 +23,7 @@
 #import "TutorialManager.h"
 #import "TutorialStep.h"
 #import "ConfigurationManager.h"
+#import "SolidGreenButton.h"
 
 @interface AddCatagoryViewController () <SelectionsPickerPopUpDelegate, ColorPickerViewPopUpDelegate, UIPopoverControllerDelegate, AllColorsPickerViewPopUpDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, PopUpViewControllerProtocol>
 
@@ -341,7 +342,7 @@
 - (void) saveCatagoryPressed: (UIButton *) sender
 {
     if ([self.manipulationService addCatagoryForName: self.catagoryNameField.text
-                                            forColor: self.colorView.backgroundColor])
+                                            forColor: self.colorView.backgroundColor save:YES])
     {
         self.addingCatagoryMode = NO;
         self.catagoryNameField.text = @"";
@@ -546,12 +547,11 @@
     
     if ([title isEqualToString: @"Yes"])
     {
-        if ([self.manipulationService transferCatagoryFromCatagoryID:self.currentlySelectedCatagory.localID
-                                                        toCatagoryID:self.catagoryToTransferTo.localID])
+        if ([self.manipulationService transferCatagoryFromCatagoryID:self.currentlySelectedCatagory.localID toCatagoryID:self.catagoryToTransferTo.localID save:YES])
         {
             self.catagoryToTransferTo = nil;
             
-            if ([self.manipulationService deleteCatagoryForCatagoryID:self.currentlySelectedCatagory.localID])
+            if ([self.manipulationService deleteCatagoryForCatagoryID:self.currentlySelectedCatagory.localID save:YES])
             {
                 [self refreshCatagories];
             }
@@ -560,7 +560,7 @@
     
     else if ([title isEqualToString: @"Delete"])
     {
-        if ([self.manipulationService deleteCatagoryForCatagoryID:self.currentlySelectedCatagory.localID])
+        if ([self.manipulationService deleteCatagoryForCatagoryID:self.currentlySelectedCatagory.localID save:YES])
         {
             [self refreshCatagories];
         }
@@ -674,9 +674,9 @@
 
         cell.clipsToBounds = YES;
 
-        [self.lookAndFeel applySolidGreenButtonStyleTo: cell.editButton];
-        [self.lookAndFeel applySolidGreenButtonStyleTo: cell.transferButton];
-        [self.lookAndFeel applySolidGreenButtonStyleTo: cell.deleteButton];
+        [cell.editButton setLookAndFeel:self.lookAndFeel];
+        [cell.transferButton setLookAndFeel:self.lookAndFeel];
+        [cell.deleteButton setLookAndFeel:self.lookAndFeel];
 
         if (self.catagories.count > 1)
         {
@@ -698,6 +698,7 @@
         [cell.transferButton addTarget: self
                                 action: @selector(transferPressed:)
                       forControlEvents: UIControlEventTouchUpInside];
+        
         [cell.deleteButton addTarget: self
                               action: @selector(deletePressed:)
                     forControlEvents: UIControlEventTouchUpInside];

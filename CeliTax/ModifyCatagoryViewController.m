@@ -11,13 +11,14 @@
 #import "UserManager.h"
 #import "User.h"
 #import "UIView+Helper.h"
+#import "SolidGreenButton.h"
 
 @interface ModifyCatagoryViewController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *colorBoxView;
 @property (weak, nonatomic) IBOutlet UITextField *catagoryNameField;
 @property (weak, nonatomic) IBOutlet NKOColorPickerView *colorPickerView;
-@property (weak, nonatomic) IBOutlet UIButton *confirmButton;
+@property (weak, nonatomic) IBOutlet SolidGreenButton *confirmButton;
 
 @end
 
@@ -57,7 +58,7 @@
     [self.lookAndFeel applyGrayBorderTo:self.catagoryNameField];
     [self.lookAndFeel addLeftInsetToTextField:self.catagoryNameField];
     
-    [self.lookAndFeel applySolidGreenButtonStyleTo:self.confirmButton];
+    [self.confirmButton setLookAndFeel:self.lookAndFeel];
 }
 
 - (void) viewWillAppear: (BOOL) animated
@@ -114,7 +115,8 @@
 {
     if ([self.manipulationService modifyCatagoryForCatagoryID:self.catagoryToModify.localID
                                                       newName:self.catagoryToModify.name
-                                                     newColor:self.catagoryToModify.color])
+                                                     newColor:self.catagoryToModify.color
+                                                         save:YES])
     {
         if (self.delegate)
         {

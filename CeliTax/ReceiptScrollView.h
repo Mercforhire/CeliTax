@@ -9,12 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "LookAndFeel.h"
 
-@protocol ReceiptScrollViewProtocol <NSObject>
-
-- (void) addImagePressed;
-
-@end
-
 @interface ReceiptScrollView : UIView
 
 @property (nonatomic, strong) NSArray *images;
@@ -24,7 +18,5 @@
 @property (nonatomic, strong) LookAndFeel *lookAndFeel;
 
 @property (nonatomic) UIEdgeInsets insets;
-
-@property (nonatomic, weak) id <ReceiptScrollViewProtocol> delegate;
 
 @end

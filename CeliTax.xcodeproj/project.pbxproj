@@ -119,6 +119,11 @@
 		856273A11B1B84D500EECA26 /* ReceiptBreakDownViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8562739F1B1B84D500EECA26 /* ReceiptBreakDownViewController.xib */; };
 		856273A61B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 856273A41B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.m */; };
 		856273A71B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856273A51B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.xib */; };
+		856538411B5FFC2600915A2E /* receipt_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 856538401B5FFC2600915A2E /* receipt_icon.png */; };
+		856538431B5FFEF000915A2E /* camera_add_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 856538421B5FFEF000915A2E /* camera_add_icon.png */; };
+		856538471B608AC200915A2E /* SolidGreenButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 856538461B608AC200915A2E /* SolidGreenButton.m */; };
+		8565384A1B608ACD00915A2E /* HollowGreenButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 856538491B608ACD00915A2E /* HollowGreenButton.m */; };
+		856538511B60A7F800915A2E /* SyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 856538501B60A7F800915A2E /* SyncManager.m */; };
 		85665DD51B20EFD200848D36 /* ReceiptTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 85665DD31B20EFD200848D36 /* ReceiptTableViewCell.m */; };
 		85665DD61B20EFD200848D36 /* ReceiptTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85665DD41B20EFD200848D36 /* ReceiptTableViewCell.xib */; };
 		857902A11B2CF8A400C86662 /* ReceiptCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8579029F1B2CF8A400C86662 /* ReceiptCollectionViewCell.m */; };
@@ -138,7 +143,6 @@
 		8582A47E1AF181C20048DCD6 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8582A47C1AF181C20048DCD6 /* RegisterViewController.xib */; };
 		8582A4821AF1C96C0048DCD6 /* AuthenticationServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 8582A4811AF1C96C0048DCD6 /* AuthenticationServiceImpl.m */; };
 		8582A4851AF1EBA50048DCD6 /* AuthorizeResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 8582A4841AF1EBA50048DCD6 /* AuthorizeResult.m */; };
-		8584C3E31B559CD800026DF3 /* SyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8584C3E21B559CD800026DF3 /* SyncManager.m */; };
 		8586E5E61B17A04400C1014F /* userIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8586E5E51B17A04400C1014F /* userIcon.png */; };
 		858FD7181B40DEE60008B325 /* TransferConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 858FD7161B40DEE60008B325 /* TransferConfirmationViewController.m */; };
 		858FD7191B40DEE60008B325 /* TransferConfirmationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 858FD7171B40DEE60008B325 /* TransferConfirmationViewController.xib */; };
@@ -162,18 +166,21 @@
 		85ACE4241B27F55A0041B7C5 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4161B27F55A0041B7C5 /* Lato-Regular.ttf */; };
 		85ACE4281B2801AD0041B7C5 /* canada_flag_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4261B2801AD0041B7C5 /* canada_flag_small.png */; };
 		85ACE4291B2801AD0041B7C5 /* USA_flag_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4271B2801AD0041B7C5 /* USA_flag_small.png */; };
-		85CDB5661B3767BC00C388CF /* ReceiptCollectionFooterViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 85CDB5641B3767BC00C388CF /* ReceiptCollectionFooterViewCell.m */; };
-		85CDB5671B3767BC00C388CF /* ReceiptCollectionFooterViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85CDB5651B3767BC00C388CF /* ReceiptCollectionFooterViewCell.xib */; };
+		85B114FF1B5CAE9C00C01DC3 /* CatagoryBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B114FE1B5CAE9C00C01DC3 /* CatagoryBuilder.m */; };
+		85B115021B5CAEA700C01DC3 /* RecordBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B115011B5CAEA700C01DC3 /* RecordBuilder.m */; };
+		85B115051B5CAEB200C01DC3 /* ReceiptBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B115041B5CAEB200C01DC3 /* ReceiptBuilder.m */; };
+		85B115081B5CAEBD00C01DC3 /* TaxYearBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B115071B5CAEBD00C01DC3 /* TaxYearBuilder.m */; };
+		85B1150B1B5CAEDE00C01DC3 /* BuilderFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B1150A1B5CAEDE00C01DC3 /* BuilderFactory.m */; };
 		85D4F4711B544FF600F0803C /* SyncServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D4F4701B544FF600F0803C /* SyncServiceImpl.m */; };
 		85D8D8521AF873AA00197D85 /* AccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8D8501AF873AA00197D85 /* AccountTableViewCell.m */; };
 		85D8D8531AF873AA00197D85 /* AccountTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85D8D8511AF873AA00197D85 /* AccountTableViewCell.xib */; };
 		85D8D8561AF914B500197D85 /* AlertDialogsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8D8551AF914B500197D85 /* AlertDialogsProvider.m */; };
 		85D8D85C1AF924BE00197D85 /* ManipulationServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8D85B1AF924BE00197D85 /* ManipulationServiceImpl.m */; };
-		85E20F581B2A8FAD005D7F4A /* receipt_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 85E20F571B2A8FAD005D7F4A /* receipt_icon.png */; };
 		85F485881B16D220005E0EDE /* SideMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85F485871B16D220005E0EDE /* SideMenuView.m */; };
 		85F977391B0ACEC6002B3DF3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85F977381B0ACEC6002B3DF3 /* AVFoundation.framework */; };
 		85F977661B0AF696002B3DF3 /* WhiteBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85F977651B0AF696002B3DF3 /* WhiteBorderView.m */; };
 		85FD2BE51B575C95006E907C /* TaxYear.m in Sources */ = {isa = PBXBuildFile; fileRef = 85FD2BE41B575C95006E907C /* TaxYear.m */; };
+		85FD2BE91B599089006E907C /* NetworkCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 85FD2BE81B599089006E907C /* NetworkCommunicator.m */; };
 		D35569FF52BBBBF1A5EB521A /* libPods-CeliTax.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB7CA2B0039977CAFAA11122 /* libPods-CeliTax.a */; };
 /* End PBXBuildFile section */
 
@@ -366,6 +373,14 @@
 		856273A31B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptBreakDownItemTableViewCell.h; sourceTree = "<group>"; };
 		856273A41B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptBreakDownItemTableViewCell.m; sourceTree = "<group>"; };
 		856273A51B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptBreakDownItemTableViewCell.xib; sourceTree = "<group>"; };
+		856538401B5FFC2600915A2E /* receipt_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = receipt_icon.png; sourceTree = "<group>"; };
+		856538421B5FFEF000915A2E /* camera_add_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera_add_icon.png; sourceTree = "<group>"; };
+		856538451B608AC200915A2E /* SolidGreenButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SolidGreenButton.h; sourceTree = "<group>"; };
+		856538461B608AC200915A2E /* SolidGreenButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SolidGreenButton.m; sourceTree = "<group>"; };
+		856538481B608ACD00915A2E /* HollowGreenButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HollowGreenButton.h; sourceTree = "<group>"; };
+		856538491B608ACD00915A2E /* HollowGreenButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HollowGreenButton.m; sourceTree = "<group>"; };
+		8565384F1B60A7F800915A2E /* SyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncManager.h; sourceTree = "<group>"; };
+		856538501B60A7F800915A2E /* SyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncManager.m; sourceTree = "<group>"; };
 		85665DD21B20EFD200848D36 /* ReceiptTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptTableViewCell.h; sourceTree = "<group>"; };
 		85665DD31B20EFD200848D36 /* ReceiptTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptTableViewCell.m; sourceTree = "<group>"; };
 		85665DD41B20EFD200848D36 /* ReceiptTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptTableViewCell.xib; sourceTree = "<group>"; };
@@ -398,8 +413,6 @@
 		8582A4811AF1C96C0048DCD6 /* AuthenticationServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationServiceImpl.m; sourceTree = "<group>"; };
 		8582A4831AF1EBA50048DCD6 /* AuthorizeResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizeResult.h; sourceTree = "<group>"; };
 		8582A4841AF1EBA50048DCD6 /* AuthorizeResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizeResult.m; sourceTree = "<group>"; };
-		8584C3E11B559CD800026DF3 /* SyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncManager.h; sourceTree = "<group>"; };
-		8584C3E21B559CD800026DF3 /* SyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncManager.m; sourceTree = "<group>"; };
 		8586E5E51B17A04400C1014F /* userIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userIcon.png; sourceTree = "<group>"; };
 		858FD7151B40DEE60008B325 /* TransferConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferConfirmationViewController.h; sourceTree = "<group>"; };
 		858FD7161B40DEE60008B325 /* TransferConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferConfirmationViewController.m; sourceTree = "<group>"; };
@@ -432,9 +445,16 @@
 		85ACE4161B27F55A0041B7C5 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
 		85ACE4261B2801AD0041B7C5 /* canada_flag_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canada_flag_small.png; sourceTree = "<group>"; };
 		85ACE4271B2801AD0041B7C5 /* USA_flag_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = USA_flag_small.png; sourceTree = "<group>"; };
-		85CDB5631B3767BC00C388CF /* ReceiptCollectionFooterViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptCollectionFooterViewCell.h; sourceTree = "<group>"; };
-		85CDB5641B3767BC00C388CF /* ReceiptCollectionFooterViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptCollectionFooterViewCell.m; sourceTree = "<group>"; };
-		85CDB5651B3767BC00C388CF /* ReceiptCollectionFooterViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptCollectionFooterViewCell.xib; sourceTree = "<group>"; };
+		85B114FD1B5CAE9C00C01DC3 /* CatagoryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatagoryBuilder.h; sourceTree = "<group>"; };
+		85B114FE1B5CAE9C00C01DC3 /* CatagoryBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CatagoryBuilder.m; sourceTree = "<group>"; };
+		85B115001B5CAEA700C01DC3 /* RecordBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordBuilder.h; sourceTree = "<group>"; };
+		85B115011B5CAEA700C01DC3 /* RecordBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordBuilder.m; sourceTree = "<group>"; };
+		85B115031B5CAEB200C01DC3 /* ReceiptBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptBuilder.h; sourceTree = "<group>"; };
+		85B115041B5CAEB200C01DC3 /* ReceiptBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptBuilder.m; sourceTree = "<group>"; };
+		85B115061B5CAEBD00C01DC3 /* TaxYearBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaxYearBuilder.h; sourceTree = "<group>"; };
+		85B115071B5CAEBD00C01DC3 /* TaxYearBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaxYearBuilder.m; sourceTree = "<group>"; };
+		85B115091B5CAEDE00C01DC3 /* BuilderFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuilderFactory.h; sourceTree = "<group>"; };
+		85B1150A1B5CAEDE00C01DC3 /* BuilderFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuilderFactory.m; sourceTree = "<group>"; };
 		85D4F46F1B544FF600F0803C /* SyncServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncServiceImpl.h; sourceTree = "<group>"; };
 		85D4F4701B544FF600F0803C /* SyncServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncServiceImpl.m; sourceTree = "<group>"; };
 		85D8D84F1AF873AA00197D85 /* AccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountTableViewCell.h; sourceTree = "<group>"; };
@@ -445,7 +465,6 @@
 		85D8D8591AF9212200197D85 /* ManipulationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManipulationService.h; sourceTree = "<group>"; };
 		85D8D85A1AF924BE00197D85 /* ManipulationServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManipulationServiceImpl.h; sourceTree = "<group>"; };
 		85D8D85B1AF924BE00197D85 /* ManipulationServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManipulationServiceImpl.m; sourceTree = "<group>"; };
-		85E20F571B2A8FAD005D7F4A /* receipt_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = receipt_icon.png; sourceTree = "<group>"; };
 		85F485861B16D220005E0EDE /* SideMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuView.h; sourceTree = "<group>"; };
 		85F485871B16D220005E0EDE /* SideMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuView.m; sourceTree = "<group>"; };
 		85F977381B0ACEC6002B3DF3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -453,6 +472,8 @@
 		85F977651B0AF696002B3DF3 /* WhiteBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhiteBorderView.m; sourceTree = "<group>"; };
 		85FD2BE31B575C95006E907C /* TaxYear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaxYear.h; sourceTree = "<group>"; };
 		85FD2BE41B575C95006E907C /* TaxYear.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaxYear.m; sourceTree = "<group>"; };
+		85FD2BE71B599089006E907C /* NetworkCommunicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkCommunicator.h; sourceTree = "<group>"; };
+		85FD2BE81B599089006E907C /* NetworkCommunicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkCommunicator.m; sourceTree = "<group>"; };
 		8AA2324D1D08B2B334CE7A16 /* Pods-CeliTax.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CeliTax.release.xcconfig"; path = "Pods/Target Support Files/Pods-CeliTax/Pods-CeliTax.release.xcconfig"; sourceTree = "<group>"; };
 		AB7CA2B0039977CAFAA11122 /* libPods-CeliTax.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CeliTax.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F788CFBC0F01FE54E67FAE9A /* Pods-CeliTax.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CeliTax.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CeliTax/Pods-CeliTax.debug.xcconfig"; sourceTree = "<group>"; };
@@ -535,6 +556,7 @@
 		85100D421AF6CE76005C24D2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				856538421B5FFEF000915A2E /* camera_add_icon.png */,
 				855CED251B38D2CC0043D20D /* lightning.png */,
 				8537A92C1B289FB1000C848F /* pencil.png */,
 				8537A92A1B288B31000C848F /* camera_icon.png */,
@@ -546,7 +568,7 @@
 				855A52881B0D2D6F004C54ED /* USA_flag.png */,
 				8562738E1B1A8ECF00EECA26 /* greenTrianglePointDown.png */,
 				8562738F1B1A8ECF00EECA26 /* greenTrianglePointUp.png */,
-				85E20F571B2A8FAD005D7F4A /* receipt_icon.png */,
+				856538401B5FFC2600915A2E /* receipt_icon.png */,
 				85100D4F1AF6CEC6005C24D2 /* menu.png */,
 				85100D501AF6CEC6005C24D2 /* menu@2x.png */,
 				85100D431AF6CE90005C24D2 /* account.png */,
@@ -875,9 +897,6 @@
 				8579029E1B2CF8A400C86662 /* ReceiptCollectionViewCell.h */,
 				8579029F1B2CF8A400C86662 /* ReceiptCollectionViewCell.m */,
 				857902A01B2CF8A400C86662 /* ReceiptCollectionViewCell.xib */,
-				85CDB5631B3767BC00C388CF /* ReceiptCollectionFooterViewCell.h */,
-				85CDB5641B3767BC00C388CF /* ReceiptCollectionFooterViewCell.m */,
-				85CDB5651B3767BC00C388CF /* ReceiptCollectionFooterViewCell.xib */,
 				857902A31B2CF9A900C86662 /* ReceiptScrollView.h */,
 				857902A41B2CF9A900C86662 /* ReceiptScrollView.m */,
 			);
@@ -914,6 +933,26 @@
 				855894141B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.xib */,
 			);
 			name = "Receipt Break Down Cells";
+			sourceTree = "<group>";
+		};
+		856538441B608AAB00915A2E /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				856538451B608AC200915A2E /* SolidGreenButton.h */,
+				856538461B608AC200915A2E /* SolidGreenButton.m */,
+				856538481B608ACD00915A2E /* HollowGreenButton.h */,
+				856538491B608ACD00915A2E /* HollowGreenButton.m */,
+			);
+			name = Button;
+			sourceTree = "<group>";
+		};
+		8565384B1B60A7C500915A2E /* Sync Manager */ = {
+			isa = PBXGroup;
+			children = (
+				8565384F1B60A7F800915A2E /* SyncManager.h */,
+				856538501B60A7F800915A2E /* SyncManager.m */,
+			);
+			name = "Sync Manager";
 			sourceTree = "<group>";
 		};
 		857EC8C31B044CD800B6A5B2 /* All Colors Picker Pop Up */ = {
@@ -1002,7 +1041,8 @@
 		85A8CAC01AF069EA0023504D /* CeliTax */ = {
 			isa = PBXGroup;
 			children = (
-				85D4F4721B54D9A400F0803C /* Sync Manager */,
+				8565384B1B60A7C500915A2E /* Sync Manager */,
+				85FD2BE61B599071006E907C /* Network Communicator */,
 				859AEF741B4851190085AC6D /* Tutorial Manager */,
 				855B6FB21B279E2E00864E0B /* LookAndFeel */,
 				8556E3081AF3E5A1003CCDD2 /* Categories */,
@@ -1098,6 +1138,7 @@
 		85A8CAEB1AF071FC0023504D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				856538441B608AAB00915A2E /* Button */,
 				85081A141B4B723300C5AD10 /* Tutorial Bubble */,
 				855CED221B38D0030043D20D /* Camera Flash Button */,
 				852929F61B3673C30074DD24 /* Receipt Item Checking Cells */,
@@ -1143,6 +1184,7 @@
 		85A8CAED1AF078D80023504D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				85B114FC1B5CADF500C01DC3 /* Builders */,
 				859AEF6B1B464C8D0085AC6D /* TutorialStep.h */,
 				859AEF6C1B464C8D0085AC6D /* TutorialStep.m */,
 				8582A4831AF1EBA50048DCD6 /* AuthorizeResult.h */,
@@ -1266,13 +1308,21 @@
 			path = LatoFont/Source/Fonts;
 			sourceTree = "<group>";
 		};
-		85D4F4721B54D9A400F0803C /* Sync Manager */ = {
+		85B114FC1B5CADF500C01DC3 /* Builders */ = {
 			isa = PBXGroup;
 			children = (
-				8584C3E11B559CD800026DF3 /* SyncManager.h */,
-				8584C3E21B559CD800026DF3 /* SyncManager.m */,
+				85B115091B5CAEDE00C01DC3 /* BuilderFactory.h */,
+				85B1150A1B5CAEDE00C01DC3 /* BuilderFactory.m */,
+				85B114FD1B5CAE9C00C01DC3 /* CatagoryBuilder.h */,
+				85B114FE1B5CAE9C00C01DC3 /* CatagoryBuilder.m */,
+				85B115001B5CAEA700C01DC3 /* RecordBuilder.h */,
+				85B115011B5CAEA700C01DC3 /* RecordBuilder.m */,
+				85B115031B5CAEB200C01DC3 /* ReceiptBuilder.h */,
+				85B115041B5CAEB200C01DC3 /* ReceiptBuilder.m */,
+				85B115061B5CAEBD00C01DC3 /* TaxYearBuilder.h */,
+				85B115071B5CAEBD00C01DC3 /* TaxYearBuilder.m */,
 			);
-			name = "Sync Manager";
+			name = Builders;
 			sourceTree = "<group>";
 		};
 		85D8D8491AF8737600197D85 /* Account Table Cells */ = {
@@ -1311,6 +1361,15 @@
 				855D0B7E1B177B4400BD5EB4 /* MenuSelectionTableViewCell.xib */,
 			);
 			name = "LeftSide Menu";
+			sourceTree = "<group>";
+		};
+		85FD2BE61B599071006E907C /* Network Communicator */ = {
+			isa = PBXGroup;
+			children = (
+				85FD2BE71B599089006E907C /* NetworkCommunicator.h */,
+				85FD2BE81B599089006E907C /* NetworkCommunicator.m */,
+			);
+			name = "Network Communicator";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1398,7 +1457,6 @@
 			files = (
 				85ACE41C1B27F55A0041B7C5 /* Lato-BlackItalic.ttf in Resources */,
 				8582A4791AF17DFD0048DCD6 /* LoginViewController.xib in Resources */,
-				85E20F581B2A8FAD005D7F4A /* receipt_icon.png in Resources */,
 				856273911B1A8ECF00EECA26 /* greenTrianglePointUp.png in Resources */,
 				8586E5E61B17A04400C1014F /* userIcon.png in Resources */,
 				8537A92D1B289FB1000C848F /* pencil.png in Resources */,
@@ -1412,6 +1470,7 @@
 				85552B461B35191900AE77CE /* ReceiptItemCell.xib in Resources */,
 				85665DD61B20EFD200848D36 /* ReceiptTableViewCell.xib in Resources */,
 				852929FB1B3675E20074DD24 /* ReceiptEditModeTableViewCell.xib in Resources */,
+				856538431B5FFEF000915A2E /* camera_add_icon.png in Resources */,
 				85100D521AF6CEC6005C24D2 /* menu@2x.png in Resources */,
 				856273961B1B780900EECA26 /* PasswordRecoveryViewController.xib in Resources */,
 				85ACE41E1B27F55A0041B7C5 /* Lato-BoldItalic.ttf in Resources */,
@@ -1426,6 +1485,7 @@
 				8556E35B1AF53233003CCDD2 /* SettingsViewController.xib in Resources */,
 				85D8D8531AF873AA00197D85 /* AccountTableViewCell.xib in Resources */,
 				85100D511AF6CEC6005C24D2 /* menu.png in Resources */,
+				856538411B5FFC2600915A2E /* receipt_icon.png in Resources */,
 				855973921AFD2BF800DFC176 /* MainViewTableViewCell.xib in Resources */,
 				85ACE41B1B27F55A0041B7C5 /* Lato-Black.ttf in Resources */,
 				854D00411B33AFD600859433 /* ProfileBarView.xib in Resources */,
@@ -1452,7 +1512,6 @@
 				85081A201B4CD72800C5AD10 /* TutorialBubbleDown.xib in Resources */,
 				855894161B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.xib in Resources */,
 				8582A4701AF176660048DCD6 /* SplashViewController.xib in Resources */,
-				85CDB5671B3767BC00C388CF /* ReceiptCollectionFooterViewCell.xib in Resources */,
 				85ACE4221B27F55A0041B7C5 /* Lato-Light.ttf in Resources */,
 				85100D461AF6CE90005C24D2 /* account@2x.png in Resources */,
 				855B6FB71B279F3000864E0B /* celitaxlogo.png in Resources */,
@@ -1526,6 +1585,7 @@
 			files = (
 				855894151B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.m in Sources */,
 				85552B451B35191900AE77CE /* ReceiptItemCell.m in Sources */,
+				85B1150B1B5CAEDE00C01DC3 /* BuilderFactory.m in Sources */,
 				854497071AF736DE0068779A /* UserData.m in Sources */,
 				855D0B7F1B177B4400BD5EB4 /* MenuSelectionTableViewCell.m in Sources */,
 				856024B81AFA5E2C004C1254 /* ReceiptCheckingViewController.m in Sources */,
@@ -1539,14 +1599,18 @@
 				85547BFD1AF31DCE00D9E1CE /* User.m in Sources */,
 				855B6FB51B279E4700864E0B /* LookAndFeel.m in Sources */,
 				856273851B17E30400EECA26 /* BaseSideBarViewController.m in Sources */,
+				85B115021B5CAEA700C01DC3 /* RecordBuilder.m in Sources */,
 				85665DD51B20EFD200848D36 /* ReceiptTableViewCell.m in Sources */,
 				8500FA881B20CAA300F04E98 /* UploadsHistoryTableViewCell.m in Sources */,
 				857EC8C71B044CF400B6A5B2 /* AllColorsPickerViewController.m in Sources */,
-				85CDB5661B3767BC00C388CF /* ReceiptCollectionFooterViewCell.m in Sources */,
 				85F977661B0AF696002B3DF3 /* WhiteBorderView.m in Sources */,
+				856538471B608AC200915A2E /* SolidGreenButton.m in Sources */,
+				85FD2BE91B599089006E907C /* NetworkCommunicator.m in Sources */,
+				85B114FF1B5CAE9C00C01DC3 /* CatagoryBuilder.m in Sources */,
 				855BD2C61B25E151001ACBB2 /* ReceiptTimeTableViewCell.m in Sources */,
 				8556E3641AF53264003CCDD2 /* HelpScreenViewController.m in Sources */,
 				85081A191B4B7A6900C5AD10 /* TutorialBubbleUp.m in Sources */,
+				85B115051B5CAEB200C01DC3 /* ReceiptBuilder.m in Sources */,
 				8556E36B1AF56CEF003CCDD2 /* DataServiceImpl.m in Sources */,
 				85F485881B16D220005E0EDE /* SideMenuView.m in Sources */,
 				855303E21B0FEC61006B3D5F /* UserDataDAO.m in Sources */,
@@ -1575,7 +1639,6 @@
 				856273951B1B780900EECA26 /* PasswordRecoveryViewController.m in Sources */,
 				8537A9351B293639000C848F /* ModifyCatagoryTableViewCell.m in Sources */,
 				852929FA1B3675E20074DD24 /* ReceiptEditModeTableViewCell.m in Sources */,
-				8584C3E31B559CD800026DF3 /* SyncManager.m in Sources */,
 				8552AF6C1B326D33001D3650 /* TaxYearsDAO.m in Sources */,
 				85547C001AF32F4500D9E1CE /* Utils.m in Sources */,
 				8558940C1B1C1BD100D3F353 /* XYPieChart.m in Sources */,
@@ -1592,6 +1655,7 @@
 				85081A231B4CE90200C5AD10 /* TutorialBubbleDown.m in Sources */,
 				855303DB1B0FE953006B3D5F /* RecordsDAO.m in Sources */,
 				8582A4691AF15BC20048DCD6 /* ConfigurationManager.m in Sources */,
+				856538511B60A7F800915A2E /* SyncManager.m in Sources */,
 				8582A4851AF1EBA50048DCD6 /* AuthorizeResult.m in Sources */,
 				8556E35A1AF53233003CCDD2 /* SettingsViewController.m in Sources */,
 				8537A9311B28A851000C848F /* TriangleView.m in Sources */,
@@ -1601,6 +1665,7 @@
 				8556E35F1AF53250003CCDD2 /* VaultViewController.m in Sources */,
 				856273A61B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.m in Sources */,
 				8555E0D61B091E0400B91138 /* HorizonalScrollBarView.m in Sources */,
+				8565384A1B608ACD00915A2E /* HollowGreenButton.m in Sources */,
 				85A8CAC41AF069EA0023504D /* main.m in Sources */,
 				85547BFA1AF31CFA00D9E1CE /* UserManager.m in Sources */,
 				85D4F4711B544FF600F0803C /* SyncServiceImpl.m in Sources */,
@@ -1609,6 +1674,7 @@
 				85560FE21B019857004D2963 /* ColorPickerViewController.m in Sources */,
 				855303DE1B0FE961006B3D5F /* ReceiptsDAO.m in Sources */,
 				8582A46F1AF176660048DCD6 /* SplashViewController.m in Sources */,
+				85B115081B5CAEBD00C01DC3 /* TaxYearBuilder.m in Sources */,
 				85100D411AF6BFC9005C24D2 /* UIView+Helper.m in Sources */,
 				859AEF701B46504D0085AC6D /* TutorialManager.m in Sources */,
 			);

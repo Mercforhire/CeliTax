@@ -11,6 +11,8 @@
 
 @interface ImageCounterIconView ()
 
+@property (nonatomic, strong) UIImage *image;
+
 @property (nonatomic, strong) UILabel *counterLabel;
 
 @property (nonatomic, strong) UIColor *redColor;
@@ -29,6 +31,8 @@
     [self.imageButton addTarget: self action: @selector(imagePressed) forControlEvents: UIControlEventTouchUpInside];
 
     [self addSubview: self.imageButton];
+    
+    self.image = [UIImage imageNamed:@"receipt_icon.png"];
 
     [self refreshCounterLabel];
 }
@@ -45,9 +49,10 @@
     labelSize.height = labelSize.height + 4;
     labelSize.width = labelSize.height > labelSize.width ? labelSize.height : labelSize.width;
     
-    self.counterLabel = [[UILabel alloc] initWithFrame: CGRectMake(0, 0, labelSize.width, labelSize.height)];
-
-    [self.counterLabel setCenter: self.imageButton.center];
+    self.counterLabel = [[UILabel alloc] initWithFrame: CGRectMake(self.frame.size.width - labelSize.width,
+                                                                   0,
+                                                                   labelSize.width, labelSize.height)];
+   
     self.counterLabel.textAlignment = NSTextAlignmentCenter;
     [self.counterLabel setFont: [UIFont latoFontOfSize: 12]];
     [self.counterLabel setBackgroundColor: self.redColor];

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "90784975D5E5C3336C242CC4"
+               BlueprintIdentifier = "BF6026C88F2BFBDAA97C1DB6"
                BuildableName = "libPods-CeliTax-WYPopoverController.a"
                BlueprintName = "Pods-CeliTax-WYPopoverController"
                ReferencedContainer = "container:Pods.xcodeproj">

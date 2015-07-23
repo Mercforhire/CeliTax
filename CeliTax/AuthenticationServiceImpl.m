@@ -11,108 +11,122 @@
 #import "RegisterResult.h"
 #import "UserDataDAO.h"
 #import "ConfigurationManager.h"
-
-#define testUserName    @"leonchn84@gmail.com"
-#define testPassword    @"123456"
-#define testFirstname   @"Leon"
-#define testLastname    @"Chen"
-#define testCity        @"Toronto"
-#define testPostal      @"M1T2Z4"
-#define testCountry     @"Canada"
-#define testKey         @"testKey"
+#import "NetworkCommunicator.h"
 
 @interface AuthenticationServiceImpl ()
-
-//demo purposes
-@property (nonatomic, strong) NSMutableDictionary *userAccounts;
 
 @end
 
 @implementation AuthenticationServiceImpl
 
-- (id) init
-{
-    self = [super init];
-    
-    self.userAccounts = [NSMutableDictionary new];
-    
-    //add demo account
-    [self.userAccounts setObject:testPassword forKey:testUserName];
-    
-    return self;
-}
-
 - (void) authenticateUser: (NSString *) userName
-                      withPassword: (NSString *) password
-                           success: (AuthenticateUserSuccessBlock) success
-                           failure: (AuthenticateUserFailureBlock) failure
+             withPassword: (NSString *) password
+                  success: (AuthenticateUserSuccessBlock) success
+                  failure: (AuthenticateUserFailureBlock) failure
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        
-        //simulate 1 seconds wait
-        [NSThread sleepForTimeInterval:1.0f];
+    NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       userName,@"email",
+                                       password,@"password"
+                                       ,nil];
+    
+    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path: [WEB_API_FILE stringByAppendingPathComponent:@"login"] ] ;
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
         
         AuthorizeResult *returnedResult = [AuthorizeResult new];
         
-        if ([self.userAccounts objectForKey:userName] &&
-            [[self.userAccounts objectForKey:userName] isEqualToString:password])
+        NSDictionary *response = [completedOperation responseJSON];
+        
+        if ( [[response objectForKey:@"error"] boolValue] == NO )
         {
             returnedResult.success = YES;
-            returnedResult.message = @"login success";
-            returnedResult.userName = userName;
-            returnedResult.userAPIKey = testKey;
-            returnedResult.firstname = testFirstname;
-            returnedResult.lastname = testLastname;
-            returnedResult.city = testCity;
-            returnedResult.postalCode = testPostal;
-            returnedResult.country = testCountry;
+            returnedResult.message = @"Login Success";
+            returnedResult.userName = [response objectForKey:@"email"];
+            returnedResult.userAPIKey = [response objectForKey:@"api_key"];
+            returnedResult.firstname = [response objectForKey:@"first_name"];
+            returnedResult.lastname = [response objectForKey:@"last_name"];
+            returnedResult.city = [response objectForKey:@"city"];
+            returnedResult.postalCode = [response objectForKey:@"postal_code"];
+            returnedResult.country = [response objectForKey:@"country"];
             
             //IMPORTANT: set the userKey to userDataDAO
-            self.userDataDAO.userKey = testKey;
+            self.userDataDAO.userKey = returnedResult.userAPIKey;
             
             //TODO: default to on, will change this later
             [self.configManager setTutorialON:NO];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                success ( returnedResult );
+                if (success)
+                {
+                    success ( returnedResult );
+                }
             });
         }
         else
         {
             returnedResult.success = NO;
-            returnedResult.message = @"wrong credientials";
+            returnedResult.message = [response objectForKey:@"message"];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                failure ( returnedResult );
+                if (failure)
+                {
+                    failure ( returnedResult );
+                }
             });
         }
-    });
+    };
     
-    return;
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        AuthorizeResult *returnedResult = [AuthorizeResult new];
+        
+        returnedResult.success = NO;
+        returnedResult.message = @"network error";
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (failure)
+            {
+                failure ( returnedResult );
+            }
+        });
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+    
+    [self.networkCommunicator enqueueOperation:networkOperation];
 }
 
 - (void) registerNewUser: (NSString *) userName
-                     withPassword: (NSString *) password
-                    withFirstname: (NSString *) firstname
-                     withLastname: (NSString *) lastname
-                         withCity: (NSString *) city
-                      withCountry: (NSString *) country
-                       withPostal: (NSString *) postal
-                          success: (RegisterNewUserSuccessBlock) success
-                          failure: (RegisterNewUserSuccessBlock) failure
+            withPassword: (NSString *) password
+           withFirstname: (NSString *) firstname
+            withLastname: (NSString *) lastname
+                withCity: (NSString *) city
+             withCountry: (NSString *) country
+              withPostal: (NSString *) postal
+                 success: (RegisterNewUserSuccessBlock) success
+                 failure: (RegisterNewUserSuccessBlock) failure
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        //simulate 1 seconds wait
-        [NSThread sleepForTimeInterval:1.0f];
+    NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       userName,@"email",
+                                       password,@"password",
+                                       firstname,@"first_name",
+                                       lastname,@"last_name",
+                                       city,@"city",
+                                       postal,@"postal_code",
+                                       country,@"country"
+                                       ,nil];
+    
+    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path: [WEB_API_FILE stringByAppendingPathComponent:@"register"] ] ;
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
         
         RegisterResult *registerResult = [RegisterResult new];
         
-        if (userName.length && password.length)
+        NSDictionary *response = [completedOperation responseJSON];
+        
+        if ( [[response objectForKey:@"error"] boolValue] == NO )
         {
-            [self.userAccounts setObject:password forKey:userName];
-            
             registerResult.success = YES;
-            registerResult.message = @"register success";
+            registerResult.message = @"You are successfully registered.";
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 success ( registerResult );
@@ -121,40 +135,84 @@
         else
         {
             registerResult.success = NO;
-            registerResult.message = @"missing credientials";
+            registerResult.message = [response objectForKey:@"message"];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 failure ( registerResult );
             });
         }
-    });
+    };
     
-    return;
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        
+        RegisterResult *registerResult = [RegisterResult new];
+        
+        registerResult.success = NO;
+        registerResult.message = @"Network Error";
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (failure)
+            {
+                failure ( registerResult );
+            }
+        });
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+    
+    [self.networkCommunicator enqueueOperation:networkOperation];
 }
 
 - (void) sendComment: (NSString *)comment
              success: (SendCommentSuccessBlock) success
              failure: (SendCommentFailureBlock) failure
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        //simulate 1 seconds wait
-        [NSThread sleepForTimeInterval:1.0f];
-
-        if (self.userDataDAO.userKey)
+    NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       comment,@"feedback_text"
+                                       ,nil];
+    
+    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path: [WEB_API_FILE stringByAppendingPathComponent:@"submit_feedback"] ] ;
+    
+    [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
+        
+        NSDictionary *response = [completedOperation responseJSON];
+        
+        if ( [[response objectForKey:@"error"] boolValue] == NO )
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                success ( );
+                if (success)
+                {
+                    success ( );
+                }
             });
+            
         }
         else
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                failure ( @"No user logged in" );
+                if (failure)
+                {
+                    failure ( [response objectForKey:@"message"] );
+                }
             });
         }
-    });
+    };
     
-    return;
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (failure)
+            {
+                failure ( @"Network Error" );
+            }
+        });
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+    
+    [self.networkCommunicator enqueueOperation:networkOperation];
 }
 
 @end

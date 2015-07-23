@@ -15,6 +15,8 @@
 
 -(NSArray *)loadAllTaxYears;
 
--(BOOL)addTaxYear:(NSInteger)taxYear;
+-(BOOL)addTaxYear:(NSInteger)taxYear save:(BOOL)save; 
+
+-(BOOL)mergeWith:(NSArray *)taxyears save:(BOOL)save;
 
 @end
