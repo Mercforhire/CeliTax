@@ -12,6 +12,7 @@ pod 'LLSimpleCamera', '~> 3.0'
 pod 'CDRTranslucentSideBar'
 pod "UIImage-ResizeMagick"
 pod 'LatoFont', '~> 1.0.0'
+pod 'TOCropViewController'
 
 end
 

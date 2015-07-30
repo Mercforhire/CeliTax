@@ -30,6 +30,7 @@
 #import "PasswordRecoverySentViewController.h"
 #import "TransferSelectionsViewController.h"
 #import "TutorialManager.h"
+#import "MyProfileViewController.h"
 
 @implementation ViewControllerFactory
 {
@@ -92,7 +93,7 @@
 
     mainViewController.manipulationService = self.manipulationService;
     mainViewController.dataService = self.dataService;
-    mainViewController.syncService = self.syncService;
+    mainViewController.syncManager = self.syncManager;
 
     return mainViewController;
 }
@@ -104,6 +105,7 @@
     [self initializeViewController: settingsViewController];
     
     settingsViewController.syncService = self.syncService;
+    settingsViewController.syncManager = self.syncManager;
 
     return settingsViewController;
 }
@@ -176,6 +178,7 @@
     receiptCheckingViewController.manipulationService = self.manipulationService;
     receiptCheckingViewController.receiptID = receiptID;
     receiptCheckingViewController.cameFromReceiptBreakDownViewController = cameFromReceiptBreakDownViewController;
+    receiptCheckingViewController.syncManager = self.syncManager;
 
     return receiptCheckingViewController;
 }
@@ -271,6 +274,18 @@
     [self initializeViewController: passwordRecoverySentViewController];
 
     return passwordRecoverySentViewController;
+}
+
+- (MyProfileViewController *) createMyProfileViewController
+{
+    MyProfileViewController *myProfileViewController = [[MyProfileViewController alloc] initWithNibName: @"MyProfileViewController" bundle: nil];
+    
+    [self initializeViewController: myProfileViewController];
+    
+    myProfileViewController.lookAndFeel = self.lookAndFeel;
+    myProfileViewController.authenticationService = self.authenticationService;
+    
+    return myProfileViewController;
 }
 
 - (NSArray *) getMenuSelections

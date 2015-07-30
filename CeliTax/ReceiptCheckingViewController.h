@@ -10,10 +10,13 @@
 #import "DataService.h"
 #import "ManipulationService.h"
 
+@class SyncManager;
+
 @interface ReceiptCheckingViewController : BaseViewController
 
 @property (nonatomic, weak) id <DataService> dataService;
 @property (nonatomic, weak) id <ManipulationService> manipulationService;
+@property (nonatomic, weak) SyncManager *syncManager;
 
 @property NSString *receiptID;
 

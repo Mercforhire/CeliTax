@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DA6695CE7EC2920D647F2BD0"
+               BlueprintIdentifier = "299E0FB53BDF6980B821B996"
                BuildableName = "libPods-CeliTax-LatoFont.a"
                BlueprintName = "Pods-CeliTax-LatoFont"
                ReferencedContainer = "container:Pods.xcodeproj">

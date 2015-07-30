@@ -11,15 +11,6 @@
 
 @implementation Utils
 
-+ (NSString *) getFilePathForFileName: (NSString *) fileName
-{
-    NSString *storagePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-
-    NSString *filePath = [storagePath stringByAppendingPathComponent: fileName];
-
-    return filePath;
-}
-
 + (id) unarchiveFile: (NSString *) path
 {
     id archive = nil;
@@ -71,6 +62,70 @@
     }
 }
 
++ (NSString *) getProfileImagePathForUser: (NSString *) userKey
+{
+    NSString *storagePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    
+    NSString *imageFilePath = [storagePath stringByAppendingPathComponent: [NSString stringWithFormat: @"PROFILE_IMAGE-%ld.jpg",(unsigned long)[userKey hash]]];
+    
+    return imageFilePath;
+}
+
++ (UIImage *) readProfileImageForUser: (NSString *) userKey
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSString *imageFilePath = [self getProfileImagePathForUser:userKey];
+    
+    if (![fileManager fileExistsAtPath: imageFilePath])
+    {
+        return nil;
+    }
+    
+    // get the NSData from UIImage
+    NSData *imageData = [NSData dataWithContentsOfFile: imageFilePath];
+
+    
+    UIImage *image = [UIImage imageWithData: imageData];
+    
+    return image;
+}
+
++ (void) setProfileImageForUser: (NSString *) userKey image:(UIImage *)image
+{
+    if (image == nil)
+    {
+        return;
+    }
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSString *profileImageFilePath = [self getProfileImagePathForUser:userKey];
+    
+    // delete the old file if it exists
+    if ([fileManager fileExistsAtPath: profileImageFilePath])
+    {
+        [fileManager removeItemAtPath: profileImageFilePath error: nil];
+    }
+    
+    // get the NSData from UIIMage
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.9f);
+    
+    [imageData writeToFile: profileImageFilePath atomically: YES];
+}
+
++ (void) deleteProfileImageForUser: (NSString *) userKey
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSString *imageFilePath = [self getProfileImagePathForUser:userKey];
+    
+    if ([fileManager fileExistsAtPath: imageFilePath])
+    {
+        [fileManager removeItemAtPath: imageFilePath error: nil];
+    }
+}
+
 + (NSString *) getImageStorageFolderPathForUser: (NSString *) userKey
 {
     NSString *storagePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
@@ -80,6 +135,22 @@
     NSString *imageFolderPath = [storagePath stringByAppendingString: imageFolderName];
 
     return imageFolderPath;
+}
+
++ (NSString *) getFilePathForImage: (NSString *) fileName forUser: (NSString *) userKey
+{
+    NSString *imageFolderPath = [self getImageStorageFolderPathForUser: userKey];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    if (![fileManager fileExistsAtPath: imageFolderPath])
+    {
+        [fileManager createDirectoryAtPath: imageFolderPath withIntermediateDirectories: YES attributes: nil error: nil];
+    }
+    
+    NSString *imageFilePath = [imageFolderPath stringByAppendingPathComponent: [NSString stringWithFormat: @"%@.jpg", fileName]];
+    
+    return imageFilePath;
 }
 
 + (NSString *) saveImage: (UIImage *) image withFilename: (NSString *) filename forUser: (NSString *) userKey
@@ -98,7 +169,7 @@
         [fileManager createDirectoryAtPath: imageFolderPath withIntermediateDirectories: YES attributes: nil error: nil];
     }
 
-    NSString *imageFilePath = [imageFolderPath stringByAppendingPathComponent: [NSString stringWithFormat: @"%@.JPG", filename]];
+    NSString *imageFilePath = [imageFolderPath stringByAppendingPathComponent: [NSString stringWithFormat: @"%@.jpg", filename]];
 
     // delete the old file if it exists
     if ([fileManager fileExistsAtPath: imageFilePath])
@@ -113,26 +184,34 @@
     return imageFilePath;
 }
 
-+ (UIImage *) readImageWithFileName: (NSString *) filename forUser: (NSString *) userKey
++ (NSData *) readImageDataWithFileName: (NSString *) filename forUser: (NSString *) userKey
 {
     if (filename == nil)
     {
         return nil;
     }
-
+    
     NSFileManager *fileManager = [NSFileManager defaultManager];
-
+    
     NSString *imageFolderPath = [self getImageStorageFolderPathForUser: userKey];
-
-    NSString *imageFilePath = [imageFolderPath stringByAppendingPathComponent: [NSString stringWithFormat: @"%@.JPG", filename]];
-
+    
+    NSString *imageFilePath = [imageFolderPath stringByAppendingPathComponent: [NSString stringWithFormat: @"%@.jpg", filename]];
+    
     if (![fileManager fileExistsAtPath: imageFilePath])
     {
         return nil;
     }
-
+    
     // get the NSData from UIImage
     NSData *imageData = [NSData dataWithContentsOfFile: imageFilePath];
+    
+    return imageData;
+}
+
++ (UIImage *) readImageWithFileName: (NSString *) filename forUser: (NSString *) userKey
+{
+    // get the NSData first
+    NSData *imageData = [self readImageDataWithFileName:filename forUser:userKey];
 
     UIImage *image = [UIImage imageWithData: imageData];
 
@@ -171,7 +250,7 @@
 
     NSString *imageFolderPath = [self getImageStorageFolderPathForUser: userKey];
 
-    NSString *imageFilePath = [imageFolderPath stringByAppendingPathComponent: [NSString stringWithFormat: @"%@.JPG", filename]];
+    NSString *imageFilePath = [imageFolderPath stringByAppendingPathComponent: [NSString stringWithFormat: @"%@.jpg", filename]];
 
     return [fileManager fileExistsAtPath: imageFilePath];
 }
@@ -187,7 +266,7 @@
 
     NSString *imageFolderPath = [self getImageStorageFolderPathForUser: userKey];
 
-    NSString *imageFilePath = [imageFolderPath stringByAppendingPathComponent: [NSString stringWithFormat: @"%@.JPG", filename]];
+    NSString *imageFilePath = [imageFolderPath stringByAppendingPathComponent: [NSString stringWithFormat: @"%@.jpg", filename]];
 
     if ([fileManager fileExistsAtPath: imageFilePath])
     {
@@ -370,6 +449,30 @@
     NSDate *firstDayOfPreviousMonth = [calendarComponents date];
 
     return firstDayOfPreviousMonth;
+}
+
++ (NSArray *) getImageFilenamesForUser: (NSString *) userKey
+{
+    NSString *imageFolderPath = [self getImageStorageFolderPathForUser: userKey];
+    
+    NSArray *filePathsArray = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:imageFolderPath  error:nil];
+    
+    NSMutableArray *filenames = [NSMutableArray new];
+    
+    for (NSString *filePath in filePathsArray)
+    {
+        NSArray *filePathComponents = [filePath componentsSeparatedByString:@"/"];
+        
+        NSString *wholeFilename = [filePathComponents lastObject];
+        
+        NSArray *filenameComponents = [wholeFilename componentsSeparatedByString:@"."];
+        
+        NSString *filename = [filenameComponents firstObject];
+        
+        [filenames addObject:filename];
+    }
+    
+    return filenames;
 }
 
 @end

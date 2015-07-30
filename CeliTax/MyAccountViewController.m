@@ -24,6 +24,7 @@
 #import "TutorialManager.h"
 #import "TutorialStep.h"
 #import "HollowGreenButton.h"
+#import "MyProfileViewController.h"
 
 #define kCatagoryTableRowHeight                     65
 
@@ -39,11 +40,16 @@
 @property (strong, nonatomic) XYPieChart *pieChart;
 @property (weak, nonatomic) IBOutlet UITableView *accountTableView;
 @property (weak, nonatomic) IBOutlet HollowGreenButton *calculateButton;
+@property (strong, nonatomic) ProfileBarView *profileBarView;
+
+
 @property (nonatomic, strong) NSArray *catagories; // of Catagory
+
 // Key: Catagory ID, Value: NSMutableDictionary of :
 // KEY: kCatagoryDetailsKeyTotalQty, VALUE: total quantity for this catagory
 // KEY: kCatagoryDetailsKeyTotalAmount, VALUE: total amount spent for this catagory
 @property (strong, nonatomic) NSMutableDictionary *catagoryDetails;
+
 @property (nonatomic, strong) NSMutableArray *slicePercentages;
 @property (nonatomic, strong) NSMutableArray *sliceColors;
 @property (nonatomic, strong) NSMutableArray *sliceNames;
@@ -60,19 +66,15 @@
 
 - (void) setupUI
 {
-    ProfileBarView *profileBarView = [[ProfileBarView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
-    
-    // load user info
-    [profileBarView.nameLabel setText: [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]];
+    self.profileBarView = [[ProfileBarView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
 
-    profileBarView.profileImageView.layer.cornerRadius = profileBarView.profileImageView.frame.size.width / 2;
-    profileBarView.profileImageView.layer.borderColor = [UIColor colorWithWhite: 187.0f/255.0f alpha: 1].CGColor;
-    profileBarView.profileImageView.layer.borderWidth = 1.0f;
-    [profileBarView.profileImageView setClipsToBounds: YES];
-    [profileBarView.profileImageView setImage: self.userManager.user.avatarImage];
+    self.profileBarView.profileImageView.layer.cornerRadius = self.profileBarView.profileImageView.frame.size.width / 2;
+    self.profileBarView.profileImageView.layer.borderColor = [UIColor colorWithWhite: 187.0f/255.0f alpha: 1].CGColor;
+    self.profileBarView.profileImageView.layer.borderWidth = 1.0f;
+    [self.profileBarView.profileImageView setClipsToBounds: YES];
     
-    [profileBarView.editButton1 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
-    [profileBarView.editButton2 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.profileBarView.editButton1 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.profileBarView.editButton2 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
     
     // set up tableview
     UINib *accountTableCell = [UINib nibWithNibName: @"AccountTableViewCell" bundle: nil];
@@ -84,7 +86,7 @@
     // set up pieChart
     UIView *pieChartContainer = [[UIView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 250)];
     
-    [pieChartContainer addSubview: profileBarView];
+    [pieChartContainer addSubview: self.profileBarView];
 
     self.pieChart = [[XYPieChart alloc] initWithFrame: CGRectMake(0, 60, 180, 180)];
     CGPoint pieChartCenter = pieChartContainer.center;
@@ -137,6 +139,10 @@
                                                  name: kReceiptItemsTableReceiptPressedNotification
                                                object: nil];
 
+    // load user info
+    [self.profileBarView.nameLabel setText: [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]];
+    [self.profileBarView.profileImageView setImage: self.userManager.user.avatarImage];
+    
     // reset all state values
     self.catagoryDetails = [NSMutableDictionary new];
     self.slicePercentages = [NSMutableArray new];
@@ -187,7 +193,14 @@
         
         float sumAmount = [[catagoryDetailForThisCatagory objectForKey: kCatagoryDetailsKeyTotalAmount] floatValue];
         
-        [self.slicePercentages addObject: [NSNumber numberWithInt: sumAmount * 100 / totalAmount]];
+        if (totalAmount == 0)
+        {
+            [self.slicePercentages addObject: [NSNumber numberWithInt: 0]];
+        }
+        else
+        {
+            [self.slicePercentages addObject: [NSNumber numberWithInt: sumAmount * 100 / totalAmount]];
+        }
     }
     
     [self.pieChart reloadData];
@@ -268,7 +281,7 @@
 
 - (void) editProfilePressed: (UIButton *) sender
 {
-    [AlertDialogsProvider showWorkInProgressDialog];
+    [self.navigationController pushViewController: [self.viewControllerFactory createMyProfileViewController] animated: YES];
 }
 
 - (void) openReceiptBreakDownView: (NSNotification *) notification

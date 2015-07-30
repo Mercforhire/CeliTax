@@ -17,6 +17,7 @@
 #import "TutorialManager.h"
 #import "NetworkCommunicator.h"
 #import "BuilderFactory.h"
+#import "SyncManager.h"
 
 @class SplashViewController, ConfigurationManager, ViewControllerFactory, UserManager;
 
@@ -30,6 +31,7 @@
 @property (nonatomic, strong) LookAndFeel *lookAndFeel;
 @property (nonatomic, strong) BuilderFactory *builderFactory;
 @property (nonatomic, strong) NetworkCommunicator *networkCommunicator;
+@property (nonatomic, strong) SyncManager *syncManager;
 
 @property (nonatomic, strong) UINavigationController *navigationController;
 @property (nonatomic, strong) UIView *navigationBarTitleImageContainer;
@@ -60,11 +62,13 @@
     self.viewControllerFactory.syncService = [self.serviceFactory createSyncService];
     self.viewControllerFactory.lookAndFeel = self.lookAndFeel;
     self.viewControllerFactory.navigationBarTitleImageContainer = self.navigationBarTitleImageContainer;
+    self.viewControllerFactory.syncManager = self.syncManager;
 }
 
 - (void) initializeUserManager
 {
     self.userManager = [[UserManager alloc] init];
+    self.userManager.authenticationService = [self.serviceFactory createAuthenticationService];
 }
 
 - (void) initializeServiceFactory
@@ -91,6 +95,11 @@
     self.builderFactory = [[BuilderFactory alloc] init];
 }
 
+-(void)initializeSyncManager
+{
+    self.syncManager = [[SyncManager alloc] initWithSyncService:[self.serviceFactory createSyncService] andUserManager:self.userManager];
+}
+
 #pragma mark App lifecycle
 
 // do loading here
@@ -103,7 +112,9 @@
     [self initializeDAOFactory];
     [self initializeServiceFactory];
     [self initializeUserManager];
+    [self initializeSyncManager];
     [self initializeViewControllerFactory];
+    
 
     self.window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
 

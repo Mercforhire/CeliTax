@@ -28,6 +28,8 @@
 #import "TutorialStep.h"
 #import "ConfigurationManager.h"
 #import "SolidGreenButton.h"
+#import "MBProgressHUD.h"
+#import "SyncManager.h"
 
 NSString *ReceiptItemCellIdentifier = @"ReceiptItemCellIdentifier";
 NSString *ReceiptEditModeTableViewCellIdentifier = @"ReceiptEditModeTableViewCellIdentifier";
@@ -39,7 +41,7 @@ typedef enum : NSUInteger
 } TextFieldTypes;
 
 @interface ReceiptCheckingViewController ()
-<ImageCounterIconViewProtocol, HorizonalScrollBarViewProtocol, UITextFieldDelegate, UIAlertViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate>
+<ImageCounterIconViewProtocol, HorizonalScrollBarViewProtocol, UITextFieldDelegate, UIAlertViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate, SyncManagerDelegate>
 {
     // these values store the temp values user entered in the Quantity and Price/Item fields
     // for a soon to be added item
@@ -64,6 +66,7 @@ typedef enum : NSUInteger
 @property (nonatomic, strong) UIToolbar *numberToolbar;
 @property (weak, nonatomic) IBOutlet SolidGreenButton *editReceiptsButton;
 @property (weak, nonatomic) IBOutlet UITableView *editReceiptTable;
+@property (strong, nonatomic) MBProgressHUD *waitView;
 
 @property (strong, nonatomic) NSMutableArray *receiptImages;
 @property (strong, nonatomic) NSArray *catagories;
@@ -144,6 +147,29 @@ typedef enum : NSUInteger
     self.automaticallyAdjustsScrollViewInsets = YES;
 }
 
+- (void) createAndShowWaitViewForDownload
+{
+    if (!self.waitView)
+    {
+        self.waitView = [[MBProgressHUD alloc] initWithView: self.view];
+        self.waitView.labelText = @"Please wait";
+        self.waitView.detailsLabelText = @"Downloading Images...";
+        self.waitView.mode = MBProgressHUDModeIndeterminate;
+        [self.view addSubview: self.waitView];
+    }
+    
+    [self.waitView show: YES];
+}
+
+-(void)hideWaitingView
+{
+    if (self.waitView)
+    {
+        //hide the Waiting view
+        [self.waitView hide: YES];
+    }
+}
+
 - (void) cancelPressed
 {
     // if the user has added at least one item, show a confirmation dialog,
@@ -214,20 +240,6 @@ typedef enum : NSUInteger
     Receipt *receipt = [self.dataService fetchReceiptForReceiptID: self.receiptID];
     
     self.receipt = receipt;
-    
-    // load images from this receipt
-    for (NSString *filename in self.receipt.fileNames)
-    {
-        UIImage *image = [Utils readImageWithFileName: filename forUser: self.userManager.user.userKey];
-        
-        if (image)
-        {
-            [self.receiptImages addObject: image];
-        }
-    }
-    
-    [self.receiptScrollView setImages: self.receiptImages];
-    [self.editReceiptTable reloadData];
 
     // load all the catagories
     NSArray *catagories = [self.dataService fetchCatagories];
@@ -242,6 +254,39 @@ typedef enum : NSUInteger
     [self populateRecordsDictionaryUsing: records];
     
     [self refreshRecordsCounter];
+    
+    [self.syncManager setDelegate:self];
+    
+    NSMutableArray *filenamesToDownload = [NSMutableArray new];
+    
+    // load images from this receipt
+    for (NSString *filename in self.receipt.fileNames)
+    {
+        UIImage *image = [Utils readImageWithFileName: filename forUser: self.userManager.user.userKey];
+        
+        if (image)
+        {
+            [self.receiptImages addObject: image];
+        }
+        else
+        {
+            //need to download the image
+            [filenamesToDownload addObject:filename];
+        }
+    }
+    
+    if (filenamesToDownload.count)
+    {
+        //start download progress
+        [self createAndShowWaitViewForDownload];
+        
+        [self.syncManager startDownloadPhotos:filenamesToDownload];
+    }
+    else
+    {
+        [self.receiptScrollView setImages: self.receiptImages];
+        [self.editReceiptTable reloadData];
+    }
 }
 
 -(void)showTutorial
@@ -377,6 +422,8 @@ typedef enum : NSUInteger
     [[NSNotificationCenter defaultCenter] removeObserver: self
                                                     name: UIKeyboardWillHideNotification
                                                   object: nil];
+    
+    [self.syncManager setDelegate:nil];
 }
 
 - (NSInteger) calculateNumberOfRecords
@@ -811,6 +858,36 @@ typedef enum : NSUInteger
 - (IBAction)addImagePressed:(UIButton *)sender
 {
     [self.navigationController pushViewController:[self.viewControllerFactory createCameraOverlayViewControllerWithExistingReceiptID:self.receiptID] animated:YES];
+}
+
+#pragma mark - SyncManagerDelegate
+
+- (void) syncManagerDownloadFilesComplete:(SyncManager *)syncManager
+{
+    // load images from this receipt
+    for (NSString *filename in self.receipt.fileNames)
+    {
+        UIImage *image = [Utils readImageWithFileName: filename forUser: self.userManager.user.userKey];
+        
+        if (image)
+        {
+            [self.receiptImages addObject: image];
+        }
+    }
+    
+    [self.receiptScrollView setImages: self.receiptImages];
+    [self.editReceiptTable reloadData];
+    
+    [self hideWaitingView];
+}
+
+- (void) syncManagerDownloadFilesFailed:(NSArray *)filenamesFailedDownload manager:(SyncManager *)syncManager
+{
+    [self hideWaitingView];
+    
+    //show Error to user about the images that couldn't be downloaded
+    DLog(@"Images failed to download:");
+    DLog(@"%@", filenamesFailedDownload);
 }
 
 #pragma mark - UIAlertViewDelegate

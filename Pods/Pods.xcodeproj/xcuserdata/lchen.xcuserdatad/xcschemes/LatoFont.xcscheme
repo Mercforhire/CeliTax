@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BEFC0065F79CCFA5A992DD05"
+               BlueprintIdentifier = "F485226DEC239A8ECC89BB9A"
                BuildableName = "LatoFont.bundle"
                BlueprintName = "LatoFont"
                ReferencedContainer = "container:Pods.xcodeproj">

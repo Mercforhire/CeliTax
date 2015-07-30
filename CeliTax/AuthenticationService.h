@@ -21,6 +21,12 @@ typedef void (^RegisterNewUserFailureBlock) (RegisterResult *registerResult);
 typedef void (^SendCommentSuccessBlock) ();
 typedef void (^SendCommentFailureBlock) (NSString *reason);
 
+typedef void (^UpdateAccountInfoSuccessBlock) ();
+typedef void (^UpdateAccountInfoFailureBlock) (NSString *reason);
+
+typedef void (^RetrieveProfileImageSuccessBlock) (UIImage *profileImage);
+typedef void (^RetrieveProfileImageFailureBlock) (NSString *reason);
+
 @property (nonatomic, strong) UserDataDAO               *userDataDAO;
 @property (nonatomic, strong) ConfigurationManager      *configManager;
 @property (nonatomic, strong) NetworkCommunicator       *networkCommunicator;
@@ -43,5 +49,19 @@ typedef void (^SendCommentFailureBlock) (NSString *reason);
 - (void) sendComment: (NSString *)comment
              success: (SendCommentSuccessBlock) success
              failure: (SendCommentFailureBlock) failure;
+
+- (void) updateAccountInfo: (NSString *) firstname
+              withLastname: (NSString *) lastname
+                  withCity: (NSString *) city
+                withPostal: (NSString *) postal
+                   success: (UpdateAccountInfoSuccessBlock) success
+                   failure: (UpdateAccountInfoFailureBlock) failure;
+
+- (void) updateProfileImage: (UIImage *) profileImage
+                    success: (UpdateAccountInfoSuccessBlock) success
+                    failure: (UpdateAccountInfoFailureBlock) failure;
+
+- (void) retrieveProfileImage: (RetrieveProfileImageSuccessBlock) success
+                      failure: (RetrieveProfileImageFailureBlock) failure;
 
 @end

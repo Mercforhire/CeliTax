@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class ConfigurationManager, UserManager, LookAndFeel;
-@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCatagoryViewController, SidebarViewController, Catagory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager;
+@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCatagoryViewController, SidebarViewController, Catagory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager, SyncManager, MyProfileViewController;
 
 @protocol AuthenticationService, DataService, ManipulationService, SyncService;
 
@@ -23,6 +23,7 @@
 @property (nonatomic, weak) id <ManipulationService> manipulationService;
 @property (nonatomic, weak) id <SyncService> syncService;
 @property (nonatomic, weak) LookAndFeel *lookAndFeel;
+@property (nonatomic, weak) SyncManager *syncManager;
 
 @property (nonatomic, weak) UIView *navigationBarTitleImageContainer;
 
@@ -65,6 +66,8 @@
 - (PasswordRecoveryViewController *) createPasswordRecoveryViewController;
 
 - (PasswordRecoverySentViewController *) createPasswordRecoverySentViewController;
+
+- (MyProfileViewController *) createMyProfileViewController;
 
 - (NSArray *) getMenuSelections;
 

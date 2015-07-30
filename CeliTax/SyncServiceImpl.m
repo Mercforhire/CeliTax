@@ -133,7 +133,7 @@
 
 - (NSDate *) getLastBackUpDate
 {
-    return [self.userDataDAO getLastUploadDate];
+    return [self.userDataDAO getLastBackUpDate];
 }
 
 - (NSString *) getLocalDataBatchID
@@ -185,7 +185,7 @@
         {
             NSDate *dateUploaded = [NSDate new];
             
-            [self.userDataDAO setLastUploadDate:dateUploaded];
+            [self.userDataDAO setLastBackUpDate:dateUploaded];
             
             [self.userDataDAO setLastestDataHash:[response objectForKey:@"batchID"]];
             
@@ -400,7 +400,7 @@
         
         NSString *batchID = [response objectForKey:@"batchID"];
         
-        if ( [response objectForKey:@"error"] && [[response objectForKey:@"error"] boolValue] == NO && batchID)
+        if ( [response objectForKey:@"error"] && [[response objectForKey:@"error"] boolValue] == NO)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
                 
@@ -556,5 +556,150 @@
     
     [self.networkCommunicator enqueueOperation:networkOperation];
 }
+
+- (void) downloadFileFromURL: (NSString *)url
+                      toPath: (NSString *)filePath
+                     success: (FileDownloadSuccessBlock) success
+                     failure: (FileDownloadFailureBlock) failure
+{
+    MKNetworkOperation *networkOperation = [self.networkCommunicator downloadFileFrom:url toFile:filePath];
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (success)
+            {
+                success ( );
+            }
+            
+        });
+    };
+    
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (failure)
+            {
+                failure ( @"Network Error" );
+            }
+        });
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+}
+
+- (void) downloadFile: (NSString *)filename
+              success: (FileDownloadSuccessBlock) success
+              failure: (FileDownloadFailureBlock) failure
+{
+    // 1.get the URL of the image first
+    
+    NSString *filePath = [Utils getFilePathForImage:filename forUser: self.userDataDAO.userKey];
+    
+    NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       filename,@"filename"
+                                       ,nil];
+    
+    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path:[WEB_API_FILE stringByAppendingPathComponent:@"request_file_url"]];
+    
+    [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
+        
+        NSDictionary *response = [completedOperation responseJSON];
+        
+        NSString *url = [response objectForKey:@"url"];
+        
+        if ( [response objectForKey:@"error"] && [[response objectForKey:@"error"] boolValue] == NO && url)
+        {
+            // 2.start downloading the image from the url
+            
+            [self downloadFileFromURL:url toPath:filePath success:success failure:failure];
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if (failure)
+                {
+                    failure ( [response objectForKey:@"message"] );
+                }
+                
+            });
+        }
+    };
+    
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (failure)
+            {
+                failure ( @"Network Error" );
+            }
+            
+        });
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+    
+    [self.networkCommunicator enqueueOperation:networkOperation];
+}
+
+- (NSArray *) getListOfFilesToDownload
+{
+    NSMutableArray *allFilenames = [NSMutableArray new];
+    
+    NSArray *allReceipts = [self.receiptsDAO loadAllReceipts];
+    
+    for (Receipt *receipt in allReceipts)
+    {
+        [allFilenames addObjectsFromArray:receipt.fileNames];
+    }
+    
+    NSMutableArray *filesNeedToDownload = [NSMutableArray new];
+    
+    //check which file in allFilenames doesn't exist
+    for (NSString *filename in allFilenames)
+    {
+        if (![Utils imageWithFileNameExist:filename forUser:self.userDataDAO.userKey])
+        {
+            [filesNeedToDownload addObject:filename];
+        }
+    }
+    
+    return filesNeedToDownload;
+}
+
+- (void) cleanUpReceiptImages
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        //1. Get all names of files we should keep
+        NSMutableArray *allFilenames = [NSMutableArray new];
+        
+        NSArray *allReceipts = [self.receiptsDAO loadAllReceipts];
+        
+        for (Receipt *receipt in allReceipts)
+        {
+            [allFilenames addObjectsFromArray:receipt.fileNames];
+        }
+        
+        //2. Get names of all files that exist
+        NSArray *existingFilenames = [Utils getImageFilenamesForUser:self.userDataDAO.userKey];
+        
+        //3. Check if each existing file also exist in the list of files those we should keep
+        for (NSString *existingFilename in existingFilenames)
+        {
+            if (![allFilenames containsObject:existingFilename])
+            {
+                //delete this file
+                [Utils deleteImageWithFileName:existingFilename forUser:self.userDataDAO.userKey];
+            }
+        }
+        
+    });
+};
 
 @end

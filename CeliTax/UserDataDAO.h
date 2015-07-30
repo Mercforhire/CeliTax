@@ -31,9 +31,9 @@ typedef enum : NSUInteger {
 
 -(NSMutableArray *)getTaxYears;
 
--(NSDate *)getLastUploadDate;
+-(NSDate *)getLastBackUpDate;
 
--(void)setLastUploadDate:(NSDate *)date;
+-(void)setLastBackUpDate:(NSDate *)date;
 
 -(NSString *)getLastestDataHash;
 

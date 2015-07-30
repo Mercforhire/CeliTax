@@ -12,6 +12,7 @@
 #import "UserDataDAO.h"
 #import "ConfigurationManager.h"
 #import "NetworkCommunicator.h"
+#import "Utils.h"
 
 @interface AuthenticationServiceImpl ()
 
@@ -52,7 +53,7 @@
             //IMPORTANT: set the userKey to userDataDAO
             self.userDataDAO.userKey = returnedResult.userAPIKey;
             
-            //TODO: default to on, will change this later
+            //TODO: default to OFF, will change this later
             [self.configManager setTutorialON:NO];
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -198,6 +199,7 @@
                 }
             });
         }
+        
     };
     
     MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
@@ -208,6 +210,186 @@
                 failure ( @"Network Error" );
             }
         });
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+    
+    [self.networkCommunicator enqueueOperation:networkOperation];
+}
+
+- (void) updateAccountInfo: (NSString *) firstname
+              withLastname: (NSString *) lastname
+                  withCity: (NSString *) city
+                withPostal: (NSString *) postal
+                   success: (UpdateAccountInfoSuccessBlock) success
+                   failure: (UpdateAccountInfoFailureBlock) failure
+{
+    NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       firstname,@"firstname",
+                                       lastname,@"lastname",
+                                       city,@"city",
+                                       postal,@"postalcode"
+                                       ,nil];
+    
+    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path: [WEB_API_FILE stringByAppendingPathComponent:@"update_account"] ] ;
+    
+    [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (success)
+            {
+                success ( );
+            }
+        });
+        
+    };
+    
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (failure)
+            {
+                failure ( @"Network Error" );
+            }
+        });
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+    
+    [self.networkCommunicator enqueueOperation:networkOperation];
+}
+
+- (void) updateProfileImage: (UIImage *) profileImage
+                    success: (UpdateAccountInfoSuccessBlock) success
+                    failure: (UpdateAccountInfoFailureBlock) failure
+{
+    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:nil path: [WEB_API_FILE stringByAppendingPathComponent:@"update_profile_photo"] ] ;
+    
+    [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
+    
+    NSData *imageData = UIImageJPEGRepresentation(profileImage, 0.9f);
+    
+    //used for server temp storage file name. Not important
+    NSString *fileNameWithExtension = [NSString stringWithFormat:@"%@.jpg",@"ProfileImage"];
+    
+    [networkOperation addData:imageData forKey:@"photos" mimeType:@"image/jpeg" fileName:fileNameWithExtension];
+    
+    __block UIBackgroundTaskIdentifier bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler: nil];
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (success)
+            {
+                success ( );
+            }
+            
+        });
+        
+        [[UIApplication sharedApplication] endBackgroundTask: bgTask];
+        
+    };
+    
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (failure)
+            {
+                failure ( @"Network Error" );
+            }
+            
+        });
+        
+        [[UIApplication sharedApplication] endBackgroundTask: bgTask];
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+    
+    [self.networkCommunicator enqueueOperation:networkOperation];
+}
+
+- (void) downloadProfileImageFrom: (NSString *)url
+                          success: (RetrieveProfileImageSuccessBlock) success
+                          failure: (RetrieveProfileImageFailureBlock) failure
+{
+    NSString *profileImagePath = [Utils getProfileImagePathForUser:self.userDataDAO.userKey];
+    
+    MKNetworkOperation *networkOperation = [self.networkCommunicator downloadFileFrom:url toFile:profileImagePath];
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
+        
+        UIImage *profileImage = [Utils readProfileImageForUser:self.userDataDAO.userKey];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (success)
+            {
+                success ( profileImage );
+            }
+            
+        });
+    };
+    
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (failure)
+            {
+                failure ( @"Network Error" );
+            }
+        });
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+}
+
+- (void) retrieveProfileImage: (RetrieveProfileImageSuccessBlock) success
+                      failure: (RetrieveProfileImageFailureBlock) failure
+{
+    MKNetworkOperation *networkOperation = [self.networkCommunicator getRequestToServer:[WEB_API_FILE stringByAppendingPathComponent:@"get_profile_image"]];
+    
+    [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
+    
+    __block UIBackgroundTaskIdentifier bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler: nil];
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
+        
+        NSDictionary *response = [completedOperation responseJSON];
+        
+        if ( [[response objectForKey:@"error"] boolValue] == NO )
+        {
+            NSString *imageURL = [response objectForKey:@"url"];
+            
+            //go download the image
+            [self downloadProfileImageFrom:imageURL success:success failure:failure];
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (failure)
+                {
+                    failure ( [response objectForKey:@"message"] );
+                }
+            });
+        }
+        
+        [[UIApplication sharedApplication] endBackgroundTask: bgTask];
+    };
+    
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (failure)
+            {
+                failure ( @"Network Error" );
+            }
+        });
+        
+        [[UIApplication sharedApplication] endBackgroundTask: bgTask];
     };
     
     [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];

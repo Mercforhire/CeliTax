@@ -45,12 +45,12 @@
     return self.userData.taxYears;
 }
 
--(NSDate *)getLastUploadDate
+-(NSDate *)getLastBackUpDate
 {
     return self.userData.lastUploadedDate;
 }
 
--(void)setLastUploadDate:(NSDate *)date
+-(void)setLastBackUpDate:(NSDate *)date
 {
     self.userData.lastUploadedDate = date;
 }

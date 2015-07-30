@@ -12,8 +12,9 @@
 #import "User.h"
 #import "AlertDialogsProvider.h"
 #import "SolidGreenButton.h"
+#import "SyncManager.h"
 
-@interface SettingsViewController ()
+@interface SettingsViewController () <SyncManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet ProfileBarView *profileBarView;
 @property (weak, nonatomic) IBOutlet SolidGreenButton *backupNowButton;
@@ -51,13 +52,13 @@
     
     [self setupUI];
     
-    NSDate *lastUploadDate = [self.syncService getLastBackUpDate];
+    NSDate *lastUploadDate = [self.syncManager getLastBackUpDate];
     
     [self setLastBackUpLabelDate:lastUploadDate];
     
     //move to did appear
     
-    if ([self.syncService needToBackUp])
+    if ([self.syncManager needToBackUp])
     {
         [self.backupNowButton setEnabled:YES];
         [self.backupNowButton setTitle:@"Sync" forState:UIControlStateNormal];
@@ -68,6 +69,21 @@
         [self.backupNowButton setTitle:@"Up to Date" forState:UIControlStateNormal];
     }
 }
+
+- (void) viewWillAppear: (BOOL) animated
+{
+    [super viewWillAppear: animated];
+    
+    [self.syncManager setDelegate:self];
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear: animated];
+    
+    [self.syncManager setDelegate:nil];
+}
+
 
 -(void)setLastBackUpLabelDate:(NSDate *)date
 {
@@ -97,10 +113,37 @@
     [self.insertDemoButton setTitle:@"Generating..." forState:UIControlStateNormal];
     
     [self.syncService loadDemoData:^{
+        
         [self.insertDemoButton setTitle:@"Demo Data Generated" forState:UIControlStateNormal];
         
         [self.insertDemoButton setEnabled:YES];
+        
     }];
+}
+
+#pragma mark - SyncManagerDelegate
+
+-(void)syncManagerSyncCompleteOn:(NSDate *)date manager:(SyncManager *)syncManager
+{
+    //disable the Backup Now Button
+    [self.backupNowButton setEnabled:NO];
+    [self.backupNowButton setTitle:@"Synced" forState:UIControlStateNormal];
+    
+    [self setLastBackUpLabelDate:date];
+}
+
+-(void)syncManagerSyncFailedWithMessage:(NSString *)message manager:(SyncManager *)syncManager
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                      message:message
+                                                     delegate:nil
+                                            cancelButtonTitle:nil
+                                            otherButtonTitles:@"Dismiss",nil];
+    
+    [alertView show];
+    
+    [self.backupNowButton setEnabled:YES];
+    [self.backupNowButton setTitle:@"Sync" forState:UIControlStateNormal];
 }
 
 #define kKeyLastUpdatedDateTime        @"LastUpdatedDateTime"
@@ -110,43 +153,7 @@
     [self.backupNowButton setEnabled:NO];
     [self.backupNowButton setTitle:@"Syncing..." forState:UIControlStateNormal];
     
-    //1. Download and merge data from server first
-    [self.syncService downloadUserData:^{
-        
-        //2.Upload local data to server
-        [self.syncService startSyncingUserData:^(NSDate *updateDate) {
-            
-            //disable the Backup Now Button
-            [self.backupNowButton setEnabled:NO];
-            [self.backupNowButton setTitle:@"Synced" forState:UIControlStateNormal];
-            
-            [self setLastBackUpLabelDate:updateDate];
-            
-        } failure:^(NSString *reason) {
-            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                              message:reason
-                                                             delegate:nil
-                                                    cancelButtonTitle:nil
-                                                    otherButtonTitles:@"Dismiss",nil];
-            
-            [message show];
-            
-            [self.backupNowButton setEnabled:YES];
-            [self.backupNowButton setTitle:@"Sync" forState:UIControlStateNormal];
-        }];
-        
-    } failure:^(NSString *reason) {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                          message:reason
-                                                         delegate:nil
-                                                cancelButtonTitle:nil
-                                                otherButtonTitles:@"Dismiss",nil];
-        
-        [message show];
-        
-        [self.backupNowButton setEnabled:YES];
-        [self.backupNowButton setTitle:@"Sync" forState:UIControlStateNormal];
-    }];
+    [self.syncManager startSync];
 }
 
 @end

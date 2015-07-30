@@ -8,7 +8,7 @@
 
 #import "MKNetworkEngine.h"
 
-#define WEBSERVICE_URL @"localhost/v1"
+#define WEBSERVICE_URL @"localhost/Celitax-WebAPI/v1"
 //#define WEBSERVICE_URL @"www.crave-n-save.ca/crave/Celitax-WebAPI/v1"
 #define WEB_API_FILE @"/index.php"
 

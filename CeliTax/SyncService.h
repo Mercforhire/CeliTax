@@ -28,6 +28,9 @@ typedef void (^GetListOfFilesNeedUploadFailureBlock) (NSString *reason);
 typedef void (^FileUploadSuccessBlock) ();
 typedef void (^FileUploadFailureBlock) (NSString *reason);
 
+typedef void (^FileDownloadSuccessBlock) ();
+typedef void (^FileDownloadFailureBlock) (NSString *reason);
+
 @protocol SyncService <NSObject>
 
 @property (nonatomic, strong) UserDataDAO *userDataDAO;
@@ -50,6 +53,9 @@ typedef void (^FileUploadFailureBlock) (NSString *reason);
 
 @property (nonatomic, strong) TaxYearBuilder *taxYearBuilder;
 
+/*
+ Insert some random receipt data locally for testing purporses
+ */
 - (void) loadDemoData:(GenerateDemoDataCompleteBlock) complete;
 
 /*
@@ -100,5 +106,22 @@ typedef void (^FileUploadFailureBlock) (NSString *reason);
             andData: (NSData *)data
             success: (FileUploadSuccessBlock) success
             failure: (FileUploadFailureBlock) failure;
+
+/*
+ Download the file of the given filename for the currently logged in user
+ */
+- (void) downloadFile: (NSString *)filename
+              success: (FileDownloadSuccessBlock) success
+              failure: (FileDownloadFailureBlock) failure;
+
+/*
+ Get the list of receipt images that need to be downloaded from server
+ */
+- (NSArray *) getListOfFilesToDownload;
+
+/*
+ Find any Photo files that are not in an exsting Receipt's filenames and delete these files
+ */
+- (void) cleanUpReceiptImages;
 
 @end

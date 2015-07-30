@@ -21,7 +21,7 @@
  */
 - (NSString *) addReceiptWithFilenames: (NSArray *) filenames inTaxYear:(NSInteger)taxYear save:(BOOL) save;
 
-//used by debug purposes only
+
 - (BOOL) addReceipt: (Receipt *) receiptToAdd save:(BOOL) save;
 
 /*

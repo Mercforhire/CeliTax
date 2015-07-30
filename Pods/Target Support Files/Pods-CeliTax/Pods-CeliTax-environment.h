@@ -48,6 +48,12 @@
 #define COCOAPODS_VERSION_MINOR_Reachability 1
 #define COCOAPODS_VERSION_PATCH_Reachability 1
 
+// TOCropViewController
+#define COCOAPODS_POD_AVAILABLE_TOCropViewController
+#define COCOAPODS_VERSION_MAJOR_TOCropViewController 1
+#define COCOAPODS_VERSION_MINOR_TOCropViewController 0
+#define COCOAPODS_VERSION_PATCH_TOCropViewController 6
+
 // UIImage-ResizeMagick
 #define COCOAPODS_POD_AVAILABLE_UIImage_ResizeMagick
 #define COCOAPODS_VERSION_MAJOR_UIImage_ResizeMagick 0

@@ -44,6 +44,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-CeliTax-TOCropViewController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-CeliTax-UIImage-ResizeMagick.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -62,57 +67,62 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0510DC64312BA1BB1C4ABF41</key>
+		<key>06FD8E1C5567C5396AA04633</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1364F0C96B9341E090C53E62</key>
+		<key>299E0FB53BDF6980B821B996</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>14FEE1D293F1C4F62316A047</key>
+		<key>3FE4EC9447DFDB97E0E39165</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>516A01DDEC5E1C6B7A236879</key>
+		<key>4C0FD94F742ED05676A7B394</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>55E5FDA3D07F88980DC70FFF</key>
+		<key>5EB47D3DC484112084510869</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7683E6BA27ECBF5D6B08E5DD</key>
+		<key>7FC745B6BD3A099ED7089AC5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BEFC0065F79CCFA5A992DD05</key>
+		<key>98E37D91704B12C78D8C6629</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BF6026C88F2BFBDAA97C1DB6</key>
+		<key>AA22D74BFCBFE9E3D24312B8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C0DC30199F894F24A837C6B5</key>
+		<key>ABEAA20EA8997ACB447B988C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D2CD6B2D8B7192A5A83A54E4</key>
+		<key>E13D37188BFD754F0F44011D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DA6695CE7EC2920D647F2BD0</key>
+		<key>F485226DEC239A8ECC89BB9A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F9E58F6AEB3E6311E6DA0A69</key>
 		<dict>
 			<key>primary</key>
 			<true/>

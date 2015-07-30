@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7683E6BA27ECBF5D6B08E5DD"
+               BlueprintIdentifier = "ABEAA20EA8997ACB447B988C"
                BuildableName = "libPods-CeliTax-UIImage-ResizeMagick.a"
                BlueprintName = "Pods-CeliTax-UIImage-ResizeMagick"
                ReferencedContainer = "container:Pods.xcodeproj">

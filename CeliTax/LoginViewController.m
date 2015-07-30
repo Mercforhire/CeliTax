@@ -138,7 +138,6 @@
                                andCity: authorizeResult.city
                          andPostalCode: authorizeResult.postalCode
                             andCountry: authorizeResult.country];
-        self.userManager.user.avatarImage = [UIImage imageNamed: @"userIcon.png"];
 
         [self.navigationController pushViewController: [self.viewControllerFactory createMainViewController] animated: YES];
 

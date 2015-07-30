@@ -12,15 +12,25 @@
 
 @interface Utils : NSObject
 
-+ (NSString *) getFilePathForFileName: (NSString *) fileName;
-
 + (id) unarchiveFile: (NSString *) path;
 
 + (BOOL) archiveFile: (id) objectToArchive toFile: (NSString *) path;
 
++ (NSString *) getProfileImagePathForUser: (NSString *) userKey;
+
++ (UIImage *) readProfileImageForUser: (NSString *) userKey;
+
++ (void) deleteProfileImageForUser: (NSString *) userKey;
+
++ (void) setProfileImageForUser: (NSString *) userKey image:(UIImage *)image;
+
 + (NSString *) getImageStorageFolderPathForUser: (NSString *) userKey;
 
++ (NSString *) getFilePathForImage: (NSString *) fileName forUser: (NSString *) userKey;
+
 + (NSString *) saveImage: (UIImage *) image withFilename: (NSString *) filename forUser: (NSString *) userKey;
+
++ (NSData *) readImageDataWithFileName: (NSString *) filename forUser: (NSString *) userKey;
 
 + (UIImage *) readImageWithFileName: (NSString *) filename forUser: (NSString *) userKey;
 
@@ -47,5 +57,7 @@
 + (NSDate *) dateForFirstDayOfThisMonth;
 
 + (NSDate *) dateForFirstDayOfPreviousMonth;
+
++ (NSArray *) getImageFilenamesForUser: (NSString *) userKey;
 
 @end

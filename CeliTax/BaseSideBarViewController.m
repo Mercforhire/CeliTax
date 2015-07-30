@@ -85,6 +85,8 @@
 // slide out the slider bar
 - (void) revealSidebar
 {
+    [self.sideMenuView setProfileImage:self.userManager.user.avatarImage];
+    
     [self.rightSideBar show];
 }
 

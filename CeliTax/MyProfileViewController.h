@@ -7,7 +7,10 @@
 //
 
 #import "BaseViewController.h"
+#import "AuthenticationService.h"
 
 @interface MyProfileViewController : BaseViewController
+
+@property (nonatomic, weak) id <AuthenticationService> authenticationService;
 
 @end
