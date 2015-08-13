@@ -18,6 +18,7 @@
 #import "NetworkCommunicator.h"
 #import "BuilderFactory.h"
 #import "SyncManager.h"
+#import "BackgroundWorker.h"
 
 @class SplashViewController, ConfigurationManager, ViewControllerFactory, UserManager;
 
@@ -32,6 +33,7 @@
 @property (nonatomic, strong) BuilderFactory *builderFactory;
 @property (nonatomic, strong) NetworkCommunicator *networkCommunicator;
 @property (nonatomic, strong) SyncManager *syncManager;
+@property (nonatomic, strong) BackgroundWorker *backgroundWorker;
 
 @property (nonatomic, strong) UINavigationController *navigationController;
 @property (nonatomic, strong) UIView *navigationBarTitleImageContainer;
@@ -69,6 +71,8 @@
 {
     self.userManager = [[UserManager alloc] init];
     self.userManager.authenticationService = [self.serviceFactory createAuthenticationService];
+    self.userManager.userDataDAO = [self.daoFactory createUserDataDAO];
+    self.userManager.configManager = self.configurationManager;
 }
 
 - (void) initializeServiceFactory
@@ -100,6 +104,28 @@
     self.syncManager = [[SyncManager alloc] initWithSyncService:[self.serviceFactory createSyncService] andUserManager:self.userManager];
 }
 
+-(void)initializeBackgroundWorker
+{
+    self.backgroundWorker = [[BackgroundWorker alloc] init];
+}
+
+- (void) customizeGlobalLookAndFeel
+{
+    // Sets the status and nav bar color
+    [[UINavigationBar appearance] setBarTintColor: self.lookAndFeel.navBarColor];
+    
+    // White elements in the status bar works with our branding
+    [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
+    
+    // We want white buttons in the nav bar
+    [[UINavigationBar appearance] setTintColor: [UIColor whiteColor]];
+    
+    // We want a white title in the nav bar
+    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIColor whiteColor], NSForegroundColorAttributeName, nil]];
+    
+    [[UIBarButtonItem appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIColor whiteColor], NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
+}
+
 #pragma mark App lifecycle
 
 // do loading here
@@ -114,23 +140,24 @@
     [self initializeUserManager];
     [self initializeSyncManager];
     [self initializeViewControllerFactory];
-    
+    [self initializeBackgroundWorker];
 
     self.window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
 
     [self.window makeKeyAndVisible];
+    
+    [self customizeGlobalLookAndFeel];
 
     if (!self.navigationController)
     {
         self.navigationController = [[UINavigationController alloc] init];
         self.window.rootViewController = self.navigationController;
         [self.navigationController.navigationBar setTranslucent: YES];
-        self.navigationController.navigationBar.tintColor = [UIColor blackColor];
 
         self.navigationBarTitleImageContainer = [[UIView alloc] initWithFrame: self.navigationController.navigationBar.frame];
         [self.navigationBarTitleImageContainer setUserInteractionEnabled: NO];
 
-        UIImageView *titleImage = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"celitaxlogo_small.png"]];
+        UIImageView *titleImage = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"CelitaxNavBarLogo.png"]];
         [titleImage setFrame: CGRectMake(0, 10, self.navigationController.navigationBar.frame.size.width, 30)];
         [titleImage setContentMode: UIViewContentModeScaleAspectFit];
         [titleImage setUserInteractionEnabled: NO];

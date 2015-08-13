@@ -31,6 +31,7 @@
 #import "TransferSelectionsViewController.h"
 #import "TutorialManager.h"
 #import "MyProfileViewController.h"
+#import "UnitPickerViewController.h"
 
 @implementation ViewControllerFactory
 {
@@ -140,6 +141,7 @@
     [self initializeViewController: myAccountViewController];
 
     myAccountViewController.dataService = self.dataService;
+    myAccountViewController.manipulationService = self.manipulationService;
 
     return myAccountViewController;
 }
@@ -286,6 +288,18 @@
     myProfileViewController.authenticationService = self.authenticationService;
     
     return myProfileViewController;
+}
+
+- (UnitPickerViewController *) createUnitPickerViewControllerWithDefaultUnit:(NSInteger)defaultUnit
+{
+    UnitPickerViewController *unitPickerViewController = [[UnitPickerViewController alloc] initWithNibName: @"UnitPickerViewController" bundle: nil];
+    
+    [self initializeViewController: unitPickerViewController];
+    
+    unitPickerViewController.lookAndFeel = self.lookAndFeel;
+    unitPickerViewController.defaultSelectedUnit = defaultUnit;
+    
+    return unitPickerViewController;
 }
 
 - (NSArray *) getMenuSelections

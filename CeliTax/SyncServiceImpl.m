@@ -19,6 +19,7 @@
 #import "ReceiptBuilder.h"
 #import "RecordBuilder.h"
 #import "CatagoryBuilder.h"
+#import "Catagory.h"
 
 @implementation SyncServiceImpl
 
@@ -37,16 +38,52 @@
         
         if (![self.catagoriesDAO loadCatagories].count)
         {
-            // add some demo data
-            [self.catagoriesDAO addCatagoryForName: @"Rice" andColor: [UIColor yellowColor] andNationalAverageCost: 2.5f save:NO];
+            [self.catagoriesDAO addCatagoryForName: @"Rice" andColor: [UIColor yellowColor] save:NO];
             
-            [self.catagoriesDAO addCatagoryForName: @"Bread" andColor: [UIColor orangeColor] andNationalAverageCost: 5 save:NO];
+            [self.catagoriesDAO addCatagoryForName: @"Bread" andColor: [UIColor orangeColor] save:NO];
             
-            [self.catagoriesDAO addCatagoryForName: @"Meat" andColor: [UIColor redColor] andNationalAverageCost: 7.5f save:NO];
+            [self.catagoriesDAO addCatagoryForName: @"Meat" andColor: [UIColor redColor] save:NO];
             
-            [self.catagoriesDAO addCatagoryForName: @"Flour" andColor: [UIColor lightGrayColor] andNationalAverageCost: 3.0f save:NO];
+            [self.catagoriesDAO addCatagoryForName: @"Flour" andColor: [UIColor lightGrayColor] save:NO];
             
-            [self.catagoriesDAO addCatagoryForName: @"Cake" andColor: [UIColor purpleColor] andNationalAverageCost: 8.0f save:NO];
+            [self.catagoriesDAO addCatagoryForName: @"Cake" andColor: [UIColor purpleColor] save:NO];
+            
+            //Give all Categories a random Unit Item national average amount
+            NSArray *allCategories = [self.catagoriesDAO loadCatagories];
+            
+             //Pick 3 random catagories and give them a random national average amount for at least one other Unit
+            NSMutableArray *indexesOf3ChoosenCategories = [NSMutableArray new];
+            
+            int i = 0;
+            
+            while (i < 2)
+            {
+                NSNumber *randomIndex = [NSNumber numberWithInteger:[Utils randomNumberBetween: 0 maxNumber: (int)allCategories.count - 1]];
+                
+                if (![indexesOf3ChoosenCategories containsObject:randomIndex])
+                {
+                    [indexesOf3ChoosenCategories addObject:randomIndex];
+                    
+                    i++;
+                }
+            }
+            
+            for (Catagory *catagory in allCategories)
+            {
+                NSNumber *indexOfCatagory = [NSNumber numberWithInteger:[allCategories indexOfObject:catagory]];
+                
+                if ([indexesOf3ChoosenCategories containsObject:indexOfCatagory])
+                {
+                    for (int j = UnitItem; j < UnitCount; j++)
+                    {
+                        //50% Chance of adding a National Average Cost for the current Unit Type
+                        if ([Utils randomNumberBetween: 1 maxNumber: 10] <= 5)
+                        {
+                            [catagory addOrUpdateNationalAverageCostForUnitType:j amount:[Utils randomNumberBetween: 10 maxNumber: 100] / 10.0f];
+                        }
+                    }
+                }
+            }
         }
         
         if ( ![self.receiptsDAO loadAllReceipts].count && ![self.recordsDAO loadRecords].count )
@@ -93,16 +130,25 @@
                 
                 [self.receiptsDAO addReceipt: newReceipt save:NO];
                 
-                // add 1-10 items for each receipt
+                // add random items for each receipt
                 int numberOfItems = [Utils randomNumberBetween: 1 maxNumber: 5];
                 
                 for (int itemNumber = 0; itemNumber < numberOfItems; itemNumber++)
                 {
-                    [self.recordsDAO addRecordForCatagory: [[self.catagoriesDAO loadCatagories] objectAtIndex: [Utils randomNumberBetween: 0 maxNumber: (int)numberOfCatagories - 1]]
+                    Catagory *recordCatagory = [[self.catagoriesDAO loadCatagories] objectAtIndex: [Utils randomNumberBetween: 0 maxNumber: (int)numberOfCatagories - 1]];
+                    
+                    NSInteger recordQuantity = [Utils randomNumberBetween: 1 maxNumber: 20];
+                    
+                    NSInteger recordUnitType = [Utils randomNumberBetween: UnitItem maxNumber: UnitKG];
+                    
+                    float recordAmount = [Utils randomNumberBetween: 10 maxNumber: 100] / 10.0f;
+                    
+                    [self.recordsDAO addRecordForCatagory: recordCatagory
                                                andReceipt: newReceipt
-                                              forQuantity: [Utils randomNumberBetween: 1 maxNumber: 20]
-                                                forAmount: [Utils randomNumberBetween: 10 maxNumber: 100] / 10.0f
-                                                     save:NO];
+                                              forQuantity: recordQuantity
+                                                   orUnit: recordUnitType
+                                                forAmount: recordAmount
+                                                     save: NO];
                 }
             }
         }
@@ -110,9 +156,9 @@
         [self.userDataDAO saveUserData];
         
         dispatch_async(dispatch_get_main_queue(), ^()
-                       {
-                           complete();
-                       });
+           {
+               complete();
+           });
     });
 }
 
@@ -153,16 +199,18 @@
     NSString *jsonString = [[NSString alloc] initWithData:dictionaryData encoding:NSUTF8StringEncoding];
     
     //DUMP:
-//    NSFileManager *fileManager = [NSFileManager defaultManager];
-//    
-//    NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent: @"upload.json"];
-//    
-//    if ([fileManager fileExistsAtPath: filePath])
-//    {
-//        [fileManager removeItemAtPath: filePath error: nil];
-//    }
-//    
-//    [dictionaryData writeToFile: filePath options: 0 error: nil];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent: @"Upload.json"];
+    
+    if ([fileManager fileExistsAtPath: filePath])
+    {
+        [fileManager removeItemAtPath: filePath error: nil];
+    }
+
+    [dictionaryData writeToFile: filePath options: 0 error: nil];
+    
+    DLog(@"Dumped upload JSON to : \n %@", filePath);
     //END DUMP:
     
     NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -570,6 +618,7 @@
             
             if (success)
             {
+                DLog(@"Downloaded image from %@", url);
                 success ( );
             }
             
@@ -581,6 +630,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (failure)
             {
+                DLog(@"Failed to download image from %@", url);
                 failure ( @"Network Error" );
             }
         });
@@ -614,7 +664,7 @@
         if ( [response objectForKey:@"error"] && [[response objectForKey:@"error"] boolValue] == NO && url)
         {
             // 2.start downloading the image from the url
-            
+            DLog(@"Received URL of image: %@", url);
             [self downloadFileFromURL:url toPath:filePath success:success failure:failure];
         }
         else
@@ -623,6 +673,7 @@
                 
                 if (failure)
                 {
+                    DLog(@"Failed to get URL of image: %@", filename);
                     failure ( [response objectForKey:@"message"] );
                 }
                 

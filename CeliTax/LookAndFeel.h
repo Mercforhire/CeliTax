@@ -11,6 +11,8 @@
 
 @interface LookAndFeel : NSObject
 
+- (UIColor *) navBarColor;
+
 - (UIColor *) appGreenColor;
 
 - (void) addLeftInsetToTextField: (UITextField *) textField;
@@ -21,9 +23,13 @@
 
 - (void) applySlightlyDarkerBorderTo: (UIView *) view;
 
+- (void) applyNormalButtonStyleTo: (UIButton *) button;
+
 - (void) applyHollowGreenButtonStyleTo: (UIButton *) button;
 
 - (void) applySolidGreenButtonStyleTo: (UIButton *) button;
+
+- (void) applyTransperantWhiteTextButtonStyleTo: (UIButton *) button;
 
 - (void) applyDisabledButtonStyleTo: (UIButton *) button;
 

@@ -70,6 +70,16 @@
     return recordsWithGivenCatagoryID;
 }
 
+- (NSArray *) fetchRecordsOfCatagory: (NSString *) catagoryID ofUnitType:(NSInteger) unitType usingRecordsDAO: (RecordsDAO *) recordsDAO
+{
+    NSArray *allRecordsForReceipt = [recordsDAO loadRecordsforReceipt: self.localID];
+    
+    NSPredicate *findRecordsWithGivenCatagoryIDAndUnitType = [NSPredicate predicateWithFormat: @"catagoryID == %@ AND unitType == %ld", catagoryID, unitType];
+    NSArray *recordsWithGivenCatagoryIDAndUnitType = [allRecordsForReceipt filteredArrayUsingPredicate: findRecordsWithGivenCatagoryIDAndUnitType];
+    
+    return recordsWithGivenCatagoryIDAndUnitType;
+}
+
 - (NSDictionary *) toJson
 {
     NSMutableDictionary *json = [NSMutableDictionary dictionary];

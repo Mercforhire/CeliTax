@@ -15,6 +15,8 @@
 
 -(void)buttonClickedWithIndex:(NSInteger)index andName:(NSString *)name;
 
+-(void)buttonLongPressedWithIndex:(NSInteger)index andName:(NSString *)name atPoint:(CGPoint)point;
+
 @end
 
 @interface HorizonalScrollBarView : UIView

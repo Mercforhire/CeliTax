@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class ConfigurationManager, UserManager, LookAndFeel;
-@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCatagoryViewController, SidebarViewController, Catagory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager, SyncManager, MyProfileViewController;
+@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCatagoryViewController, SidebarViewController, Catagory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager, SyncManager, MyProfileViewController, UnitPickerViewController;
 
 @protocol AuthenticationService, DataService, ManipulationService, SyncService;
 
@@ -68,6 +68,8 @@
 - (PasswordRecoverySentViewController *) createPasswordRecoverySentViewController;
 
 - (MyProfileViewController *) createMyProfileViewController;
+
+- (UnitPickerViewController *) createUnitPickerViewControllerWithDefaultUnit:(NSInteger)defaultUnit;
 
 - (NSArray *) getMenuSelections;
 

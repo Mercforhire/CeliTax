@@ -14,7 +14,8 @@
 #import "TutorialBubbleDown.h"
 #import "TutorialBubbleProtocol.h"
 
-#define kNumberOfViewsWithTutorials     6
+#define kNumberOfViewsWithTutorials             6
+#define kRemeberedTutorialStagesDefaultsKey     @"RemeberedTutorialStagesDefaultsKey"
 
 @interface TutorialManager () <TutorialBubbleProtocol>
 
@@ -29,6 +30,8 @@
 @property (nonatomic, strong) NSArray *tutorials;
 @property (nonatomic, strong) TutorialStep *currentTutorial;
 
+@property (nonatomic,strong) NSUserDefaults *defaults;
+
 @end
 
 @implementation TutorialManager
@@ -40,7 +43,15 @@
     {
         _factory = factory;
         _lookAndFeel = lookAndFeel;
-        _rememberedTutorialStages = [NSMutableDictionary new];
+        
+        _defaults = [NSUserDefaults standardUserDefaults];
+        
+        _rememberedTutorialStages = [[_defaults valueForKey:kRemeberedTutorialStagesDefaultsKey] mutableCopy];
+        
+        if (!_rememberedTutorialStages)
+        {
+            _rememberedTutorialStages = [NSMutableDictionary new];
+        }
     }
     
     return self;
@@ -180,11 +191,20 @@
      }];
 }
 
+-(void)saveRememberedTutorialStagesToDefaults
+{
+    [self.defaults setValue:self.rememberedTutorialStages forKey:kRemeberedTutorialStagesDefaultsKey];
+    
+    [self.defaults synchronize];
+}
+
 -(void)setCurrentTutorialStageForViewController:(UIViewController *)viewController forStage:(NSInteger)stage
 {
     NSString *className = NSStringFromClass([viewController class]);
     
     [self.rememberedTutorialStages setObject:[NSNumber numberWithInteger:stage] forKey:className];
+    
+    [self saveRememberedTutorialStagesToDefaults];
 }
 
 -(void)setTutorialDoneForViewController:(UIViewController *)viewController
@@ -192,6 +212,8 @@
     NSString *className = NSStringFromClass([viewController class]);
     
     [self.rememberedTutorialStages setObject:[NSNumber numberWithInteger: -1] forKey:className];
+    
+    [self saveRememberedTutorialStagesToDefaults];
 }
 
 -(NSInteger)getCurrentTutorialStageForViewController:(UIViewController *)viewController
@@ -229,6 +251,8 @@
 -(void)resetTutorialStages
 {
     [self.rememberedTutorialStages removeAllObjects];
+    
+    [self saveRememberedTutorialStagesToDefaults];
 }
 
 @end

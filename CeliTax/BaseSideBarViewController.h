@@ -23,6 +23,7 @@ enum RootViewControllers
 @interface BaseSideBarViewController : BaseViewController
 
 @property (nonatomic, strong) SideMenuView *sideMenuView;
+
 @property (nonatomic, strong) CDRTranslucentSideBar *rightSideBar;
 
 - (void) selectedMenuIndex: (NSInteger) index;

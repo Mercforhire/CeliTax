@@ -26,6 +26,21 @@
     [self applyDefaults];
 }
 
+- (void)setHighlighted:(BOOL)highlighted
+{
+    [super setHighlighted:highlighted];
+    
+    if (highlighted)
+    {
+        self.backgroundColor = [UIColor whiteColor];
+        [self setTitleColor: [myLookAndFeel appGreenColor] forState:UIControlStateHighlighted];
+    }
+    else
+    {
+        self.backgroundColor = [myLookAndFeel appGreenColor];
+    }
+}
+
 - (void) setEnabled: (BOOL) enabled
 {
     [super setEnabled: enabled];

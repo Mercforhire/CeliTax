@@ -60,7 +60,12 @@
 - (void)checkUpdate;
 
 /*
- Download existing data from server, merge with local data, upload any new data to server.
+ Upload any new data to server
+ */
+- (void)quickUpdate;
+
+/*
+ Upload any new data to server, download newest data from server, merge with local data
  */
 - (void)startSync;
 

@@ -30,12 +30,14 @@
 
 -(void)loadSettingsFromPersistence
 {
-    
+    ///TODO:
+    //...
 }
 
 -(void)setNewSettings:(NSDictionary *)settings
 {
-    
+    ///TODO:
+    //...
 }
 
 -(NSInteger)getCurrentTaxYear

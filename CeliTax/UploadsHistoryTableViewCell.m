@@ -235,6 +235,22 @@
     [self layoutIfNeeded];
 }
 
+- (void) setToDisplayItems
+{
+    [self.recentUploadsQtyLabel setText:@"Total Qty"];
+    [self.previousWeekQtyLabel setText:@"Total Qty"];
+    [self.previousMonthQtyLabel setText:@"Total Qty"];
+    [self.viewAllLabelQtyLabel setText:@"Total Qty"];
+}
+
+- (void) setToDisplayWeight
+{
+    [self.recentUploadsQtyLabel setText:@"Weight"];
+    [self.previousWeekQtyLabel setText:@"Weight"];
+    [self.previousMonthQtyLabel setText:@"Weight"];
+    [self.viewAllLabelQtyLabel setText:@"Weight"];
+}
+
 - (void) selectNothing
 {
     self.recentUploadsSelected = NO;

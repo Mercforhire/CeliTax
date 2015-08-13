@@ -31,7 +31,7 @@
  
  @return YES if success
  */
--(BOOL)addCatagoryForName:(NSString *)name andColor:(UIColor *)color andNationalAverageCost:(float)cost save:(BOOL)save;
+-(BOOL)addCatagoryForName:(NSString *)name andColor:(UIColor *)color save:(BOOL)save;
 
 /**
  @param catagoryID NSString catagory to modify ID
@@ -61,5 +61,15 @@
  @return YES if success
  */
 -(BOOL)mergeWith:(NSArray *)catagories save:(BOOL)save;
+
+/**
+ @return YES if success
+ */
+-(BOOL)addOrUpdateNationalAverageCostForCatagoryID: (NSString *) catagoryID andUnitType:(NSInteger)unitType amount:(float)amount save: (BOOL)save;
+
+/**
+ @return YES if success
+ */
+-(BOOL)deleteNationalAverageCostForCatagoryID: (NSString *) catagoryID andUnitType:(NSInteger)unitType save: (BOOL)save;
 
 @end

@@ -50,12 +50,6 @@
             returnedResult.postalCode = [response objectForKey:@"postal_code"];
             returnedResult.country = [response objectForKey:@"country"];
             
-            //IMPORTANT: set the userKey to userDataDAO
-            self.userDataDAO.userKey = returnedResult.userAPIKey;
-            
-            //TODO: default to OFF, will change this later
-            [self.configManager setTutorialON:NO];
-            
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (success)
                 {

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class SideMenuView;
+@class SideMenuView, User;
 
 @interface Utils : NSObject
 
@@ -16,6 +16,16 @@
 
 + (BOOL) archiveFile: (id) objectToArchive toFile: (NSString *) path;
 
+//User Account Related
++ (NSString *) getSavedProfilePath;
+
++ (User *) loadSavedUser;
+
++ (BOOL) saveUser:(User *)user;
+
++ (BOOL) deleteSavedUser;
+
+//Profile Image Related
 + (NSString *) getProfileImagePathForUser: (NSString *) userKey;
 
 + (UIImage *) readProfileImageForUser: (NSString *) userKey;
@@ -24,6 +34,8 @@
 
 + (void) setProfileImageForUser: (NSString *) userKey image:(UIImage *)image;
 
+
+//Receipt Image Storage Related
 + (NSString *) getImageStorageFolderPathForUser: (NSString *) userKey;
 
 + (NSString *) getFilePathForImage: (NSString *) fileName forUser: (NSString *) userKey;
@@ -42,6 +54,10 @@
 
 + (UIImage *) getCroppedImageUsingRect: (CGRect) cropRect forImage: (UIImage *) originalImage;
 
++ (NSArray *) getImageFilenamesForUser: (NSString *) userKey;
+
+//Misc
+
 + (SideMenuView *) getLeftSideViewUsing: (UIImage *) profileImage andUsername: (NSString *) userName andMenuSelections: (NSArray *) menuSelections;
 
 + (NSString *) generateUniqueID;
@@ -57,7 +73,5 @@
 + (NSDate *) dateForFirstDayOfThisMonth;
 
 + (NSDate *) dateForFirstDayOfPreviousMonth;
-
-+ (NSArray *) getImageFilenamesForUser: (NSString *) userKey;
 
 @end

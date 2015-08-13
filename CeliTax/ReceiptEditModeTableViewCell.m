@@ -29,32 +29,40 @@
 
     if (state == UITableViewCellStateDefaultMask)
     {
-        DLog(@"Default");
         // When the cell returns to normal (not editing)
         // Do something...
         self.leftBar.constant = -15;
         self.rightBar.constant = -15;
+        
+        if (self.addPhotoButtonShouldBeVisible)
+            [self.addPhotoButton setHidden:NO];
+        else
+            [self.addPhotoButton setHidden:YES];
     }
     else if ((state & UITableViewCellStateShowingEditControlMask) && (state & UITableViewCellStateShowingDeleteConfirmationMask))
     {
-        DLog(@"Edit Control + Delete Button");
         // When the cell goes from Showing-the-Edit-Control (-) to Showing-the-Edit-Control (-) AND the Delete Button [Delete]
         // !!! It's important to have this BEFORE just showing the Edit Control because the edit control applies to both cases.!!!
         // Do something...
+        [self.addPhotoButton setHidden:YES];
     }
     else if (state & UITableViewCellStateShowingEditControlMask)
     {
-        DLog(@"Edit Control Only");
         // When the cell goes into edit mode and Shows-the-Edit-Control (-)
         // Do something...
         self.leftBar.constant = -46;
         self.rightBar.constant = -49;
+        
+        if (self.addPhotoButtonShouldBeVisible)
+            [self.addPhotoButton setHidden:NO];
+        else
+            [self.addPhotoButton setHidden:YES];
     }
     else if (state == UITableViewCellStateShowingDeleteConfirmationMask)
     {
-        DLog(@"Swipe to Delete [Delete] button only");
         // When the user swipes a row to delete without using the edit button.
         // Do something...
+        [self.addPhotoButton setHidden:YES];
     }
 }
 
@@ -107,7 +115,7 @@
                     // the upper left position of the UIImageView's frame
                     // does not seem to matter - the parent reorder control
                     // will center it properly for you
-                    sv.frame = CGRectMake(0, 0, 25, 25);
+                    sv.frame = CGRectMake(0, 0, 25, 20);
                 }
             }
         }

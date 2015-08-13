@@ -35,15 +35,19 @@
                            toCatagoryID: (NSString *) toCatagoryID
                                    save: (BOOL)save;
 
+- (BOOL)addOrUpdateNationalAverageCostForCatagoryID: (NSString *) catagoryID andUnitType:(NSInteger)unitType amount:(float)amount save: (BOOL)save;
+
+- (BOOL)deleteNationalAverageCostForCatagoryID: (NSString *) catagoryID andUnitType:(NSInteger)unitType save: (BOOL)save;
 
 
 
 
-- (NSString *) addRecordForCatagoryID: (NSString *) catagoryID
-                         forReceiptID: (NSString *) receiptID
-                          forQuantity: (NSInteger) quantity
-                            forAmount: (float) amount
-                                 save: (BOOL)save;
+-(NSString *)addRecordForCatagoryID: (NSString *) catagoryID
+                       andReceiptID: (NSString *) receiptID
+                        forQuantity: (NSInteger) quantity
+                             orUnit: (NSInteger) unitType
+                          forAmount: (float) amount
+                               save: (BOOL)save;
 
 - (BOOL) deleteRecord: (NSString *) recordID save: (BOOL)save;
 

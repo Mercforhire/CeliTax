@@ -15,7 +15,6 @@
 #define kKeyCity                @"city"
 #define kKeyPostalCode          @"postalCode"
 #define kKeyCountry             @"country"
-#define kKeyAvatarImage         @"avatarImage"
 
 @implementation User
 
@@ -30,7 +29,6 @@
         self.city = [aDecoder decodeObjectForKey: kKeyCity];
         self.postalCode = [aDecoder decodeObjectForKey: kKeyPostalCode];
         self.country = [aDecoder decodeObjectForKey: kKeyCountry];
-        self.avatarImage = [UIImage imageWithData: [aDecoder decodeObjectForKey: kKeyAvatarImage]];
     }
 
     return self;
@@ -45,7 +43,6 @@
     [aCoder encodeObject: self.city forKey: kKeyCity];
     [aCoder encodeObject: self.postalCode forKey: kKeyPostalCode];
     [aCoder encodeObject: self.country forKey: kKeyCountry];
-    [aCoder encodeObject: UIImagePNGRepresentation(self.avatarImage) forKey: kKeyAvatarImage];
 }
 
 @end

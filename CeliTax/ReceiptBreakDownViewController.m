@@ -179,6 +179,21 @@
         
         [self.recordsDictionary setObject: recordsOfThisCatagory forKey: catagory.localID];
     }
+    
+    // Sort each recordsOfThisCatagory by Unit Type order: Item, ML, L, G, KG
+    for (NSString *catagoryIDKey in self.recordsDictionary.allKeys)
+    {
+        NSMutableArray *unsortedRecordsOfThisCatagory = [self.recordsDictionary objectForKey:catagoryIDKey];
+        
+        NSArray *sortedRecordsOfThisCatagory = [unsortedRecordsOfThisCatagory sortedArrayUsingComparator: ^NSComparisonResult (Record *a, Record *b)
+        {
+            
+            return a.unitType > b.unitType;
+            
+        }];
+        
+        [self.recordsDictionary setObject: sortedRecordsOfThisCatagory forKey: catagoryIDKey];
+    }
 
     [self refreshPieChart];
 
@@ -214,35 +229,6 @@
     }
 }
 
--(void)displayTutorials
-{
-    NSMutableArray *tutorials = [NSMutableArray new];
-    
-    //Each Stage represents a different group of Tutorial pop ups
-    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
-    
-    if ( currentTutorialStage == 1 )
-    {
-        TutorialStep *tutorialStep1 = [TutorialStep new];
-        
-        tutorialStep1.text = @"Use the receipt breakdown view to manage allocations to a receipt.\n\nNot finished allocating? Simply click the view receipt button to allocate more purchases.";
-        tutorialStep1.origin = self.viewReceiptButton.center;
-        tutorialStep1.size = CGSizeMake(290, 140);
-        tutorialStep1.pointsUp = YES;
-        
-        [tutorials addObject:tutorialStep1];
-        
-        [self.tutorialManager setTutorialDoneForViewController:self];
-    }
-    else
-    {
-        //don't show any tutorial
-        return;
-    }
-    
-    [self.tutorialManager startTutorialInViewController:self andTutorials:tutorials];
-}
-
 - (void) refreshPieChart
 {
     self.slicePercentages = [NSMutableArray new];
@@ -259,8 +245,6 @@
         }
     }
 
-    DLog(@"Receipt total:%.2f", totalAmount);
-
     // calculate the percentage of total of each catagory of items and
     // populate the self.slices, self.sliceColors, and self.sliceNames arrays
     for (Catagory *catagory in self.catagoriesUsedByThisReceipt)
@@ -274,12 +258,10 @@
 
         for (Record *record in recordsOfThisCatagory)
         {
-            totalForThisCatagory = totalForThisCatagory + record.amount * record.quantity;
+            totalForThisCatagory = totalForThisCatagory + [record calculateTotal];
         }
 
         [self.slicePercentages addObject: [NSNumber numberWithInt: totalForThisCatagory * 100 / totalAmount]];
-
-        DLog("Catagory %@, Catagory Total %.2f, Percentage of total %@", catagory.name, totalForThisCatagory, [self.slicePercentages lastObject]);
     }
 
     [self.pieChart reloadData];
@@ -674,34 +656,13 @@
         
         [self.lookAndFeel applySlightlyDarkerBorderTo: cell.colorBoxView];
         
-        if (indexPath.row  == 0)
+        if (thisRecord.unitType == UnitItem)
         {
-            if (!self.currentlySelectedRecord)
-            {
-                [cell.quantityLabel setHidden:NO];
-                [cell.pricePerItemLabel setHidden:NO];
-            }
+            [cell setToDisplayItem];
         }
         else
         {
-            if (self.currentlySelectedRecord)
-            {
-                if (thisRecord == self.currentlySelectedRecord)
-                {
-                    [cell.quantityLabel setHidden:NO];
-                    [cell.pricePerItemLabel setHidden:NO];
-                }
-                else
-                {
-                    [cell.quantityLabel setHidden:YES];
-                    [cell.pricePerItemLabel setHidden:YES];
-                }
-            }
-            else
-            {
-                [cell.quantityLabel setHidden:YES];
-                [cell.pricePerItemLabel setHidden:YES];
-            }
+            [cell setToDisplayUnit:thisRecord.unitType];
         }
 
         return cell;
@@ -783,5 +744,37 @@
         }
     }
 }
+
+#pragma mark - Tutorial
+
+-(void)displayTutorials
+{
+    NSMutableArray *tutorials = [NSMutableArray new];
+    
+    //Each Stage represents a different group of Tutorial pop ups
+    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
+    
+    if ( currentTutorialStage == 1 )
+    {
+        TutorialStep *tutorialStep1 = [TutorialStep new];
+        
+        tutorialStep1.text = @"Use the receipt breakdown view to manage allocations to a receipt.\n\nNot finished allocating? Simply click the view receipt button to allocate more purchases.";
+        tutorialStep1.origin = self.viewReceiptButton.center;
+        tutorialStep1.size = CGSizeMake(290, 140);
+        tutorialStep1.pointsUp = YES;
+        
+        [tutorials addObject:tutorialStep1];
+        
+        [self.tutorialManager setTutorialDoneForViewController:self];
+    }
+    else
+    {
+        //don't show any tutorial
+        return;
+    }
+    
+    [self.tutorialManager startTutorialInViewController:self andTutorials:tutorials];
+}
+
 
 @end

@@ -33,7 +33,7 @@
     return [catagory firstObject];
 }
 
--(BOOL)addCatagoryForName:(NSString *)name andColor:(UIColor *)color andNationalAverageCost:(float)cost save:(BOOL)save
+-(BOOL)addCatagoryForName:(NSString *)name andColor:(UIColor *)color save:(BOOL)save
 {
     if ( !name || !color )
     {
@@ -45,7 +45,6 @@
     catagoryToAdd.localID = [Utils generateUniqueID];
     catagoryToAdd.name = name;
     catagoryToAdd.color = color;
-    catagoryToAdd.nationalAverageCost = cost;
     catagoryToAdd.dataAction = DataActionInsert;
     
     [[self.userDataDAO getCatagories] addObject:catagoryToAdd];
@@ -168,6 +167,70 @@
     else
     {
         return YES;
+    }
+}
+
+-(BOOL)addOrUpdateNationalAverageCostForCatagoryID: (NSString *) catagoryID andUnitType:(NSInteger)unitType amount:(float)amount save: (BOOL)save
+{
+    NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"localID == %@", catagoryID];
+    NSArray *catagory = [[self.userDataDAO getCatagories] filteredArrayUsingPredicate: findCatagories];
+    
+    if (catagory && catagory.count)
+    {
+        Catagory *catagoryToModify = [catagory firstObject];
+        
+        // Do modifying here
+        [catagoryToModify addOrUpdateNationalAverageCostForUnitType:unitType amount:amount];
+        
+        if (catagoryToModify.dataAction != DataActionInsert)
+        {
+            catagoryToModify.dataAction = DataActionUpdate;
+        }
+        
+        if (save)
+        {
+            return [self.userDataDAO saveUserData];
+        }
+        else
+        {
+            return YES;
+        }
+    }
+    else
+    {
+        return NO;
+    }
+}
+
+-(BOOL)deleteNationalAverageCostForCatagoryID: (NSString *) catagoryID andUnitType:(NSInteger)unitType save: (BOOL)save
+{
+    NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"localID == %@", catagoryID];
+    NSArray *catagory = [[self.userDataDAO getCatagories] filteredArrayUsingPredicate: findCatagories];
+    
+    if (catagory && catagory.count)
+    {
+        Catagory *catagoryToModify = [catagory firstObject];
+        
+        // Do modifying here
+        [catagoryToModify deleteNationalAverageCostForUnitType:unitType];
+        
+        if (catagoryToModify.dataAction != DataActionInsert)
+        {
+            catagoryToModify.dataAction = DataActionUpdate;
+        }
+        
+        if (save)
+        {
+            return [self.userDataDAO saveUserData];
+        }
+        else
+        {
+            return YES;
+        }
+    }
+    else
+    {
+        return NO;
     }
 }
 

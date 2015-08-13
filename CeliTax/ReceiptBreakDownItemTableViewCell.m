@@ -7,6 +7,7 @@
 //
 
 #import "ReceiptBreakDownItemTableViewCell.h"
+#import "Record.h"
 
 @interface ReceiptBreakDownItemTableViewCell ()
 
@@ -33,7 +34,7 @@
     [self.colorBoxView setBackgroundColor:[UIColor lightGrayColor]];
     [self.catagoryName setTextColor:[UIColor lightGrayColor]];
     
-    [self.quantityLabel setHidden:YES];
+//    [self.quantityLabel setHidden:YES];
     [self.quantityField setHidden:YES];
     [self.pricePerItemLabel setHidden:YES];
     [self.pricePerItemField setHidden:YES];
@@ -45,11 +46,63 @@
     [self.colorBoxView setBackgroundColor:self.catagoryColor];
     [self.catagoryName setTextColor:[UIColor blackColor]];
     
-    [self.quantityLabel setHidden:NO];
+//    [self.quantityLabel setHidden:NO];
     [self.quantityField setHidden:NO];
     [self.pricePerItemLabel setHidden:NO];
     [self.pricePerItemField setHidden:NO];
     [self.dollarSignLabel setHidden:NO];
+}
+
+-(void)setToDisplayItem
+{
+    [self.quantityLabel setText:@"Qty"];
+    
+    [self.pricePerItemLabel setText:@"Price per Item"];
+}
+
+-(void)setToDisplayUnit:(NSInteger)unitType
+{
+    NSString *unitSuffix = @"";
+    
+    switch (unitType)
+    {
+        case UnitML:
+            unitSuffix = @"(ml)";
+            break;
+            
+        case UnitL:
+            unitSuffix = @"(L)";
+            break;
+            
+        case UnitG:
+            unitSuffix = @"(g)";
+            break;
+            
+        case UnitKG:
+            unitSuffix = @"(kg)";
+            break;
+            
+        default:
+            break;
+    }
+    
+    switch (unitType)
+    {
+        case UnitML:
+        case UnitL:
+            [self.quantityLabel setText:[NSString stringWithFormat:@"Volume-%@", unitSuffix]];
+            break;
+            
+        case UnitG:
+        case UnitKG:
+            [self.quantityLabel setText:[NSString stringWithFormat:@"Weight-%@", unitSuffix]];
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self.pricePerItemLabel setText:@"Total Price"];
 }
 
 @end

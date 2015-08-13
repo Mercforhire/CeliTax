@@ -14,4 +14,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *priceField;
 @property (weak, nonatomic) IBOutlet UITextField *totalField;
 
+-(void)setUnitTypeTo:(NSInteger)unitType;
+
 @end

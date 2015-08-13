@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class AuthorizeResult,RegisterResult,UserDataDAO,ConfigurationManager,NetworkCommunicator;
+@class AuthorizeResult,RegisterResult,UserDataDAO,NetworkCommunicator;
 
 @protocol AuthenticationService <NSObject>
 
@@ -28,7 +28,6 @@ typedef void (^RetrieveProfileImageSuccessBlock) (UIImage *profileImage);
 typedef void (^RetrieveProfileImageFailureBlock) (NSString *reason);
 
 @property (nonatomic, strong) UserDataDAO               *userDataDAO;
-@property (nonatomic, strong) ConfigurationManager      *configManager;
 @property (nonatomic, strong) NetworkCommunicator       *networkCommunicator;
 
 - (void) authenticateUser: (NSString *) userName

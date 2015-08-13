@@ -53,9 +53,11 @@
 - (NSArray *) fetchCatagoryInfoFromDate: (NSDate *) fromDate
                                  toDate: (NSDate *) toDate
                               inTaxYear: (NSInteger) taxYear
-                            forCatagory: (NSString *) catagoryID;
+                            forCatagory: (NSString *) catagoryID
+                            forUnitType: (NSInteger) unitType;
 
 - (NSArray *) fetchLatestNthCatagoryInfosforCatagory: (NSString *) catagoryID
+                                         andUnitType: (NSInteger) unitType
                                               forNth: (NSInteger) nTh
                                            inTaxYear: (NSInteger) taxYear;
 

@@ -63,10 +63,27 @@
     if (!localDataBatchID)
     {
         //no local data batch exist. Meaning the app has never been sync with server
-        if (self.delegate)
-        {
-            [self.delegate syncManagerNeedsUpdate:self];
-        }
+        
+        //check the server to see if the server has different data by comparing BatchID
+        [self.syncService getLastestServerDataBatchID:^(NSString *batchID) {
+            
+            if (!batchID)
+            {
+                //server has no data
+                DLog(@"Server has no data to donnload.");
+            }
+            else
+            {
+                if (self.delegate)
+                {
+                    [self.delegate syncManagerNeedsUpdate:self];
+                }
+            }
+            
+        } failure:^(NSString *reason) {
+            DLog(@"Failed to check update.");
+        }];
+        
     }
     //app has synced with server before
     else
@@ -107,12 +124,16 @@
         
         if (fileData)
         {
+            DLog(@"Uploading %@...", filenameToUpload);
             [self.syncService uploadFile:filenameToUpload andData:fileData success:^{
                 
+                DLog(@"%@ Uploaded.", filenameToUpload);
                 self.indexOfFileToUpload++;
                 [self uploadPhotos];
                 
             } failure:^(NSString *reason) {
+                
+                DLog(@"%@ failed to uploaded, stopping all uploads!", filenameToUpload);
                 
                 //stop uploading
                 self.uploading = NO;
@@ -174,6 +195,24 @@
     }];
 }
 
+-(void)quickUpdate
+{
+    //1.Upload local data to server
+    [self.syncService startSyncingUserData:^(NSDate *updateDate) {
+        
+        //2. Silently starts uploading images:
+        [self startUploadingPhotos];
+        
+    } failure:^(NSString *reason) {
+        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(syncManagerSyncFailedWithMessage:manager:)])
+        {
+            [self.delegate syncManagerSyncFailedWithMessage:reason manager:self];
+        }
+        
+    }];
+}
+
 - (void)startSync
 {
     //1.Upload local data to server
@@ -220,6 +259,8 @@
         {
             [self.delegate syncManagerDownloadAndMergeDataComplete:self];
         }
+        
+        [self downloadMissingImages];
         
     } failure:^(NSString *reason) {
         
@@ -310,6 +351,7 @@
     
     if (missingImageFiles.count)
     {
+        DLog(@"List of images to download: \n %@", missingImageFiles);
         [self startDownloadPhotos:missingImageFiles];
     }
 }

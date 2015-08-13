@@ -15,20 +15,36 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="J9G-cH-dJa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hVd-uv-CA1" userLabel="Add Photo Button">
+                        <rect key="frame" x="8" y="259" width="43" height="33"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="43" id="bQ8-8O-U7P"/>
+                            <constraint firstAttribute="height" constant="33" id="wOt-8F-6OH"/>
+                        </constraints>
+                        <state key="normal" image="camera_add_icon.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="J9G-cH-dJa" secondAttribute="trailing" id="5HG-gs-7T8"/>
+                <constraint firstAttribute="bottom" secondItem="hVd-uv-CA1" secondAttribute="bottom" constant="8" id="DK2-ni-eth"/>
                 <constraint firstAttribute="bottom" secondItem="J9G-cH-dJa" secondAttribute="bottom" id="V8Z-st-7KC"/>
                 <constraint firstItem="J9G-cH-dJa" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="haX-Ht-YIW"/>
                 <constraint firstItem="J9G-cH-dJa" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="v7O-B9-uA3"/>
+                <constraint firstItem="hVd-uv-CA1" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="zsZ-Kl-HkZ"/>
             </constraints>
             <size key="customSize" width="261" height="312"/>
             <connections>
+                <outlet property="addPhotoButton" destination="hVd-uv-CA1" id="GFw-Tf-q6a"/>
                 <outlet property="image" destination="J9G-cH-dJa" id="xvF-mS-YhL"/>
             </connections>
             <point key="canvasLocation" x="264.5" y="325"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="camera_add_icon.png" width="360" height="270"/>
+    </resources>
 </document>

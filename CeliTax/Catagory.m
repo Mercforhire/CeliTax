@@ -7,14 +7,25 @@
 //
 
 #import "Catagory.h"
+#import "Record.h"
 
 #define kKeyIdentifer               @"Identifer"
 #define kKeyName                    @"Name"
 #define kKeyColor                   @"Color"
-#define kKeyNationalAverageCost     @"NationalAverageCost"
+#define kKeyNationalAverageCost     @"NationalAverageCosts"
 #define kKeyDataAction              @"DataAction"
 
 @implementation Catagory
+
+- (id) init
+{
+    if (self = [super init])
+    {
+        self.nationalAverageCosts = [[NSMutableDictionary alloc] init];
+    }
+    
+    return self;
+}
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
@@ -23,7 +34,7 @@
 	[coder encodeObject:self.name forKey:kKeyName];
 	[coder encodeObject:self.color forKey:kKeyColor];
 
-	[coder encodeInteger:self.nationalAverageCost forKey:kKeyNationalAverageCost];
+	[coder encodeObject:self.nationalAverageCosts forKey:kKeyNationalAverageCost];
     
     [coder encodeInteger:self.dataAction forKey:kKeyDataAction];
 }
@@ -37,7 +48,8 @@
 	self.name = [coder decodeObjectForKey:kKeyName];
 	self.color = [coder decodeObjectForKey:kKeyColor];
 
-	self.nationalAverageCost = [coder decodeIntegerForKey:kKeyNationalAverageCost];
+    NSMutableDictionary *nationalAverageCosts = [coder decodeObjectForKey: kKeyNationalAverageCost];
+    self.nationalAverageCosts = [[NSMutableDictionary alloc] initWithDictionary: nationalAverageCosts copyItems: NO];
     
     self.dataAction = [coder decodeIntegerForKey:kKeyDataAction];
 
@@ -53,7 +65,7 @@
 		copy.localID = [self.localID copy];
 		copy.name = [self.name copy];
 		copy.color = [self.color copy];
-		copy.nationalAverageCost = self.nationalAverageCost;
+		copy.nationalAverageCosts = [self.nationalAverageCosts copy];
         copy.dataAction = self.dataAction;
 	}
 
@@ -80,6 +92,10 @@
     return json;
 }
 
+#define kKeyRed                 @"Red"
+#define kKeyGreen               @"Green"
+#define kKeyBlue                @"Blue"
+
 - (NSDictionary *) toJson
 {
     NSMutableDictionary *json = [NSMutableDictionary dictionary];
@@ -90,7 +106,26 @@
     
     [json setObject:[self colorToJson:self.color] forKey:kKeyColor];
     
-    [json setObject:[NSNumber numberWithFloat:self.nationalAverageCost] forKey:kKeyNationalAverageCost];
+    //Convert self.nationalAverageCosts dictionary to a string looking like:
+    //item:2.5,ml:1.0:l:5.0,g:6.0,kg:5
+    NSString *stringOfNationAverageCosts = @"";
+    
+    for (NSString *key in self.nationalAverageCosts)
+    {
+        NSNumber *valueForKey = [self.nationalAverageCosts objectForKey:key];
+        
+        NSString *unitNameAndDollarAmount = [NSString stringWithFormat:@"%@:%.2f", key, [valueForKey floatValue]];
+        
+        stringOfNationAverageCosts = [stringOfNationAverageCosts stringByAppendingFormat:@"%@,", unitNameAndDollarAmount];
+    }
+    
+    //Remove the last ,
+    if (self.nationalAverageCosts.count)
+    {
+        stringOfNationAverageCosts = [stringOfNationAverageCosts substringToIndex:stringOfNationAverageCosts.length - 1];
+    }
+    
+    [json setObject:stringOfNationAverageCosts forKey:kKeyNationalAverageCost];
     
     [json setObject:[NSNumber numberWithInteger:self.dataAction] forKey:kKeyDataAction];
     
@@ -101,8 +136,90 @@
 {
     self.name = [thisOne.name copy];
     self.color = [thisOne.color copy];
-    self.nationalAverageCost = thisOne.nationalAverageCost;
+    self.nationalAverageCosts = [thisOne.nationalAverageCosts copy];
     self.dataAction = thisOne.dataAction;
+}
+
+-(void)addOrUpdateNationalAverageCostForUnitType:(NSInteger)unitType amount:(float)amount
+{
+    NSNumber *value = [NSNumber numberWithFloat:amount];
+    
+    switch (unitType)
+    {
+        case UnitItem:
+            
+            [self.nationalAverageCosts setObject:value forKey:kUnitItemKey];
+            
+            break;
+            
+        case UnitML:
+            
+            [self.nationalAverageCosts setObject:value forKey:kUnitMLKey];
+            
+            break;
+            
+        case UnitL:
+            
+            [self.nationalAverageCosts setObject:value forKey:kUnitLKey];
+            
+            break;
+            
+        case UnitG:
+            
+            [self.nationalAverageCosts setObject:value forKey:kUnitGKey];
+            
+            break;
+            
+        case UnitKG:
+            
+            [self.nationalAverageCosts setObject:value forKey:kUnitKGKey];
+            
+            break;
+            
+        default:
+            
+            break;
+    }
+}
+
+-(void)deleteNationalAverageCostForUnitType:(NSInteger)unitType
+{
+    switch (unitType)
+    {
+        case UnitItem:
+            
+            [self.nationalAverageCosts removeObjectForKey:kUnitItemKey];
+            
+            break;
+            
+        case UnitML:
+            
+            [self.nationalAverageCosts removeObjectForKey:kUnitMLKey];
+            
+            break;
+            
+        case UnitL:
+            
+            [self.nationalAverageCosts removeObjectForKey:kUnitLKey];
+            
+            break;
+            
+        case UnitG:
+            
+            [self.nationalAverageCosts removeObjectForKey:kUnitGKey];
+            
+            break;
+            
+        case UnitKG:
+            
+            [self.nationalAverageCosts removeObjectForKey:kUnitKGKey];
+            
+            break;
+            
+        default:
+            
+            break;
+    }
 }
 
 @end

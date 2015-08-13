@@ -48,19 +48,6 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mSE-8o-Q5G">
-                    <rect key="frame" x="8" y="465" width="43" height="33"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="33" id="8b5-wx-kzJ"/>
-                        <constraint firstAttribute="width" constant="43" id="TpH-xa-RIx"/>
-                    </constraints>
-                    <state key="normal" image="camera_add_icon.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="addImagePressed:" destination="-1" eventType="touchUpInside" id="8CO-UG-G1I"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rJV-dd-ujZ">
                     <rect key="frame" x="280" y="508" width="40" height="60"/>
                     <color key="backgroundColor" white="1" alpha="0.70000000000000007" colorSpace="calibratedWhite"/>
@@ -272,7 +259,6 @@
                 <constraint firstItem="wgS-bS-mwy" firstAttribute="top" secondItem="mSN-Eh-8vn" secondAttribute="bottom" id="V22-i3-f98"/>
                 <constraint firstItem="Dzw-c2-aIg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="VOp-rh-x8w"/>
                 <constraint firstAttribute="trailing" secondItem="mSN-Eh-8vn" secondAttribute="trailing" id="ZhO-dc-12f"/>
-                <constraint firstItem="wgS-bS-mwy" firstAttribute="top" secondItem="mSE-8o-Q5G" secondAttribute="bottom" constant="10" id="b0y-ea-Lgu"/>
                 <constraint firstItem="rJV-dd-ujZ" firstAttribute="leading" secondItem="wgS-bS-mwy" secondAttribute="trailing" id="byO-mX-t6x"/>
                 <constraint firstItem="F7n-zK-aNw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="du1-so-R8C"/>
                 <constraint firstItem="mSN-Eh-8vn" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="gbL-sQ-Upp"/>
@@ -282,7 +268,6 @@
                 <constraint firstAttribute="centerX" secondItem="tP5-SY-lVh" secondAttribute="centerX" id="lpx-PO-7Qg"/>
                 <constraint firstAttribute="trailing" secondItem="tP5-SY-lVh" secondAttribute="trailing" id="oT0-05-GW2"/>
                 <constraint firstItem="F7n-zK-aNw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="pcS-Mg-bSr"/>
-                <constraint firstItem="mSE-8o-Q5G" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="qXW-se-Wej"/>
                 <constraint firstAttribute="bottom" secondItem="rJV-dd-ujZ" secondAttribute="bottom" id="r60-8b-XsE"/>
                 <constraint firstItem="rJV-dd-ujZ" firstAttribute="leading" secondItem="wgS-bS-mwy" secondAttribute="trailing" constant="-2" id="rFb-27-wBk"/>
                 <constraint firstItem="Dzw-c2-aIg" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="74" id="rpu-ao-9Hn"/>
@@ -309,7 +294,4 @@
             <point key="canvasLocation" x="563" y="383"/>
         </view>
     </objects>
-    <resources>
-        <image name="camera_add_icon.png" width="360" height="270"/>
-    </resources>
 </document>

@@ -29,7 +29,7 @@ NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
     CGRect frame = self.frame;
     
     self.collectionView = [[UICollectionView alloc] initWithFrame: CGRectMake(0, 0, frame.size.width, frame.size.height) collectionViewLayout: collectionLayout];
-    [self.collectionView setBackgroundColor: [UIColor clearColor]];
+    [self.collectionView setBackgroundColor: [UIColor whiteColor]];
 
     UINib *receiptCollectionViewCell = [UINib nibWithNibName: @"ReceiptCollectionViewCell"
                                                       bundle: nil];
@@ -82,6 +82,14 @@ NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
     [self.collectionView setContentInset:_insets];
 }
 
+- (void)addImagePressed
+{
+    if (self.delegate)
+    {
+        [self.delegate addImagePressed];
+    }
+}
+
 #pragma mark - From UICollectionView Delegate/Datasource
 
 - (NSInteger) collectionView: (UICollectionView *) collectionView numberOfItemsInSection: (NSInteger) section
@@ -99,6 +107,16 @@ NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
     }
     
     [cell.image setImage: [self.images objectAtIndex: indexPath.row]];
+    
+    if (indexPath.row == self.images.count - 1)
+    {
+        [cell.addPhotoButton setHidden:NO];
+        [cell.addPhotoButton addTarget: self action: @selector(addImagePressed) forControlEvents: UIControlEventTouchUpInside];
+    }
+    else
+    {
+        [cell.addPhotoButton setHidden:YES];
+    }
     
     return cell;
 }

@@ -25,4 +25,8 @@
 
 -(void)makeCellAppearActive;
 
+-(void)setToDisplayItem;
+
+-(void)setToDisplayUnit:(NSInteger)unitType;
+
 @end

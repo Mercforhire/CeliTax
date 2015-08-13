@@ -9,6 +9,8 @@
 #import "UserManager.h"
 #import "User.h"
 #import "Utils.h"
+#import "UserDataDAO.h"
+#import "ConfigurationManager.h"
 
 @implementation UserManager
 {
@@ -23,6 +25,32 @@
     }
     
     return self;
+}
+
+-(BOOL)attemptToLoginSavedUser
+{
+    self.user = [Utils loadSavedUser];
+    
+    if (self.user)
+    {
+        UIImage *avatar = [Utils readProfileImageForUser:self.user.userKey];
+        
+        if (avatar)
+        {
+            self.user.avatarImage = avatar;
+        }
+        else
+        {
+            self.user.avatarImage = defaultAvatarImage;
+        }
+        
+        //IMPORTANT: set the userKey to userDataDAO
+        self.userDataDAO.userKey = self.user.userKey;
+        
+        [self.configManager setTutorialON:YES];
+    }
+    
+    return (self.user != nil);
 }
 
 -(void)loginUserFor:(NSString *)loginName
@@ -43,13 +71,20 @@
     newUser.postalCode = postalCode;
     newUser.country = country;
     
+    //IMPORTANT: set the userKey to userDataDAO
+    self.userDataDAO.userKey = newUser.userKey;
+    
     //set this as default image
     newUser.avatarImage = defaultAvatarImage;
     
     self.user = newUser;
     
-    //TODO: Save user to UserDefaults
-    //...
+    if (![Utils saveUser:self.user])
+    {
+        DLog(@"ERROR: Did not save User");
+    }
+    
+    [self.configManager setTutorialON:YES];
     
     [self.authenticationService retrieveProfileImage:^(UIImage *profileImage) {
         
@@ -71,9 +106,12 @@
     self.user.city = city;
     self.user.postalCode = postalCode;
     
-    //TODO: Save user to UserDefaults
-    //...
+    if (![Utils saveUser:self.user])
+    {
+        DLog(@"ERROR: Did not save User");
+    }
     
+    //TODO: Send this task to BackgroundWorker
     [self.authenticationService updateAccountInfo:firstname
                                      withLastname:lastname
                                          withCity:city
@@ -98,9 +136,6 @@
     
     self.user.avatarImage = defaultAvatarImage;
     
-    //TODO: Save user to UserDefaults
-    //...
-    
     //TODO: Update the server when possible
     //...
 }
@@ -111,9 +146,6 @@
     
     self.user.avatarImage = [Utils readProfileImageForUser:self.user.userKey];
     
-    //TODO: Save user to UserDefaults
-    //...
-    
     //TODO: Update the server when possible
     //...
 }
@@ -122,8 +154,10 @@
 {
     self.user = nil;
     
-    //TODO: delete user login from UserDefaults
-    //...
+    if (![Utils deleteSavedUser])
+    {
+        DLog(@"ERROR: Did not delete saved User");
+    }
 }
 
 @end

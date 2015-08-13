@@ -13,6 +13,8 @@
 #import "AlertDialogsProvider.h"
 #import "SolidGreenButton.h"
 #import "SyncManager.h"
+#import "ViewControllerFactory.h"
+#import "MyProfileViewController.h"
 
 @interface SettingsViewController () <SyncManagerDelegate>
 
@@ -29,14 +31,10 @@
 {
     [self.profileBarView setBackgroundColor:[UIColor clearColor]];
     
-    // load user info
-    [self.profileBarView.nameLabel setText: [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]];
-    
     self.profileBarView.profileImageView.layer.cornerRadius = self.profileBarView.profileImageView.frame.size.width / 2;
     self.profileBarView.profileImageView.layer.borderColor = [UIColor colorWithWhite: 187.0f/255.0f alpha: 1].CGColor;
     self.profileBarView.profileImageView.layer.borderWidth = 1.0f;
     [self.profileBarView.profileImageView setClipsToBounds: YES];
-    [self.profileBarView.profileImageView setImage: self.userManager.user.avatarImage];
     
     [self.profileBarView.editButton1 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.profileBarView.editButton2 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -75,6 +73,11 @@
     [super viewWillAppear: animated];
     
     [self.syncManager setDelegate:self];
+    
+    // load user info
+    [self.profileBarView.nameLabel setText: [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]];
+    
+    [self.profileBarView.profileImageView setImage: self.userManager.user.avatarImage];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -104,7 +107,7 @@
 
 - (void) editProfilePressed: (UIButton *) sender
 {
-    [AlertDialogsProvider showWorkInProgressDialog];
+    [self.navigationController pushViewController: [self.viewControllerFactory createMyProfileViewController] animated: YES];
 }
 
 - (IBAction)insertDemoDataPressed:(UIButton *)sender

@@ -60,6 +60,12 @@
     self.profileImageView.layer.borderColor = [UIColor colorWithWhite: 187.0f/255.0f alpha: 1].CGColor;
     self.profileImageView.layer.borderWidth = 1.0f;
     [self.profileImageView setClipsToBounds: YES];
+    
+    UITapGestureRecognizer *profileImageViewTap =
+    [[UITapGestureRecognizer alloc] initWithTarget: self
+                                            action: @selector(editProfilePressed:)];
+    
+    [self.profileImageView addGestureRecognizer: profileImageViewTap];
 }
 
 -(void)loadUserData
@@ -173,12 +179,6 @@
     
     
     [self.photoActions showInView:self.view];
-    
-//    UIImagePickerController *photoPickerController = [[UIImagePickerController alloc] init];
-//    photoPickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-//    photoPickerController.allowsEditing = NO;
-//    photoPickerController.delegate = self;
-//    [self presentViewController:photoPickerController animated:YES completion:nil];
 }
 
 - (IBAction)savePressed:(HollowGreenButton *)sender
@@ -285,7 +285,7 @@
             self.imagePicker.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
             self.imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
             self.imagePicker.modalPresentationStyle = UIModalPresentationCurrentContext;
-            self.imagePicker.allowsEditing = YES;
+            self.imagePicker.allowsEditing = NO;
             self.imagePicker.showsCameraControls = YES;
             
             dispatch_async(dispatch_get_main_queue(), ^{

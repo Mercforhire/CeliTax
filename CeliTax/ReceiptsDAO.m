@@ -24,6 +24,7 @@
     newReceipt.fileNames = [filenames mutableCopy];
     newReceipt.dateCreated = [NSDate date];
     newReceipt.taxYear = taxYear;
+    newReceipt.dataAction = DataActionInsert;
 
     [[self.userDataDAO getReceipts] addObject: newReceipt];
     
@@ -190,7 +191,7 @@
     for (Receipt *receipt in receipts)
     {
         //find any existing Receipt with same id as this new one
-        NSPredicate *findReceipt = [NSPredicate predicateWithFormat: @"localID == %ld", receipt.localID];
+        NSPredicate *findReceipt = [NSPredicate predicateWithFormat: @"localID == %@", receipt.localID];
         NSArray *existingReceipt = [localReceipts filteredArrayUsingPredicate: findReceipt];
         
         if (existingReceipt.count)

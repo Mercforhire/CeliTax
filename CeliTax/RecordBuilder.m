@@ -13,6 +13,7 @@
 #define kKeyReceiptID            @"receiptid"
 #define kKeyAmount               @"amount"
 #define kKeyQuantity             @"quantity"
+#define kKeyUnitType             @"unit_type"
 
 @implementation RecordBuilder
 
@@ -30,6 +31,7 @@
     record.receiptID = [json objectForKey: kKeyReceiptID];
     record.amount = [[json objectForKey: kKeyAmount] doubleValue];
     record.quantity = [[json objectForKey: kKeyQuantity] integerValue];
+    record.unitType = [[json objectForKey: kKeyUnitType] integerValue];
     
     return record;
 }

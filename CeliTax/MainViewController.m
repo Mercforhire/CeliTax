@@ -83,7 +83,7 @@ typedef enum : NSUInteger
     [addCatagoryButton setTitle: @"Catagories" forState: UIControlStateNormal];
     [addCatagoryButton.titleLabel setFont: [UIFont latoBoldFontOfSize: 15]];
     addCatagoryButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [addCatagoryButton setTitleColor: self.lookAndFeel.appGreenColor forState: UIControlStateNormal];
+    [addCatagoryButton setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
     [addCatagoryButton addTarget: self action: @selector(addCatagoryPressed:) forControlEvents: UIControlEventTouchUpInside];
     [addCatagoryButton sizeToFit];
 
@@ -122,6 +122,7 @@ typedef enum : NSUInteger
     self.taxYearPicker.delegate = self;
     self.taxYearPicker.dataSource = self;
     self.taxYearPicker.showsSelectionIndicator = YES;
+    self.taxYearPicker.backgroundColor = [UIColor whiteColor];
     
     self.invisibleNewTaxYearField.inputView = self.taxYearPicker;
     
@@ -144,6 +145,70 @@ typedef enum : NSUInteger
 
     
     self.invisibleNewTaxYearField.inputAccessoryView = self.pickerToolbar;
+}
+
+- (void) viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+
+    [self setupUI];
+
+    self.recentUploadsTable.dataSource = self;
+    self.recentUploadsTable.delegate = self;
+
+    self.dateFormatter = [[NSDateFormatter alloc] init];
+
+    UITapGestureRecognizer *taxYearPressedTap =
+        [[UITapGestureRecognizer alloc] initWithTarget: self
+                                                action: @selector(taxYearPressed)];
+    UITapGestureRecognizer *taxYearPressedTap2 =
+    [[UITapGestureRecognizer alloc] initWithTarget: self
+                                            action: @selector(taxYearPressed)];
+    [self.taxYearLabel addGestureRecognizer: taxYearPressedTap];
+    [self.taxYearTriangle addGestureRecognizer: taxYearPressedTap2];
+}
+
+- (void) viewWillAppear: (BOOL) animated
+{
+    [super viewWillAppear: animated];
+    
+    [self.syncManager setDelegate:self];
+    
+    [self refreshTaxYears];
+    
+    //if there is no selected tax year saved, select the newest year by default
+    if (![self.configurationManager getCurrentTaxYear])
+    {
+        if (self.existingTaxYears.count)
+        {
+            self.currentlySelectedYear = [self.existingTaxYears firstObject];
+        }
+    }
+    else
+    {
+        self.currentlySelectedYear = [NSNumber numberWithInteger:[self.configurationManager getCurrentTaxYear]];
+    }
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    //Create tutorial items if it's ON
+    if ([self.configurationManager isTutorialOn])
+    {
+        [self displayTutorials];
+    }
+    
+    [self.syncManager checkUpdate];
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear: animated];
+    
+    [self.syncManager setDelegate:nil];
 }
 
 - (void) createAndShowWaitViewForDownload
@@ -205,43 +270,6 @@ typedef enum : NSUInteger
     [self.taxYearPickerViewController setDelegate: self];
 }
 
-- (void) viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-
-    [self setupUI];
-
-    self.recentUploadsTable.dataSource = self;
-    self.recentUploadsTable.delegate = self;
-
-    self.dateFormatter = [[NSDateFormatter alloc] init];
-
-    UITapGestureRecognizer *taxYearPressedTap =
-        [[UITapGestureRecognizer alloc] initWithTarget: self
-                                                action: @selector(taxYearPressed)];
-    UITapGestureRecognizer *taxYearPressedTap2 =
-    [[UITapGestureRecognizer alloc] initWithTarget: self
-                                            action: @selector(taxYearPressed)];
-    [self.taxYearLabel addGestureRecognizer: taxYearPressedTap];
-    [self.taxYearTriangle addGestureRecognizer: taxYearPressedTap2];
-    
-    [self refreshTaxYears];
-    
-    //if there is no selected tax year saved, select the newest year by default
-    if (![self.configurationManager getCurrentTaxYear])
-    {
-        if (self.existingTaxYears.count)
-        {
-            self.currentlySelectedYear = [self.existingTaxYears firstObject];
-        }
-    }
-    else
-    {
-        self.currentlySelectedYear = [NSNumber numberWithInteger:[self.configurationManager getCurrentTaxYear]];
-    }
-}
-
 - (void) reloadReceiptInfo
 {
     NSArray *receiptInfos = [self.dataService fetchNewestReceiptInfo: 5
@@ -273,139 +301,6 @@ typedef enum : NSUInteger
     self.taxYearPickerViewController.highlightedSelectionIndex = [self.existingTaxYears indexOfObject:self.currentlySelectedYear];
 
     [self reloadReceiptInfo];
-}
-
-- (void) viewWillAppear: (BOOL) animated
-{
-    [super viewWillAppear: animated];
-    
-    [self.syncManager setDelegate:self];
-}
-
-- (void) viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear: animated];
-    
-    [self.syncManager setDelegate:nil];
-}
-
--(void)displayTutorials
-{
-    NSMutableArray *tutorials = [NSMutableArray new];
-    
-    //Each Stage represents a different group of Tutorial pop ups
-    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
-    
-    if ( currentTutorialStage == 1 )
-    {
-        TutorialStep *tutorialStep1 = [TutorialStep new];
-        
-        tutorialStep1.text = @"Welcome to CeliTax, the simple tax tool designed specifically for Celiacs.\n\nNo manual calculations. No paper receipts. No stress.\n\nYou have enough to worry about already, calculating your GF tax claim should not be one of them!\n\nThis wizard will guide you through each feature of CeliTax so you will quickly get familiar with its functions.\n\nLet’s go!";
-        tutorialStep1.size = CGSizeMake(290, 300);
-        tutorialStep1.pointsUp = YES;
-        
-        [tutorials addObject:tutorialStep1];
-        
-        TutorialStep *tutorialStep2 = [TutorialStep new];
-        
-        UIView *barButton = (UIView *)[self.pickerToolbar.subviews objectAtIndex:2]; // 0 for the first item
-        
-        CGPoint barButtonCenter = barButton.center;
-        barButtonCenter.x += 30;
-        barButtonCenter.y += [UIApplication sharedApplication].statusBarFrame.size.height + 10;
-        
-        tutorialStep2.origin = barButtonCenter;
-        
-        tutorialStep2.text = @"Click the Catagories button to add a new food category to keep all of your purchases allocated separately";
-        tutorialStep2.size = CGSizeMake(200, 120);
-        tutorialStep2.pointsUp = YES;
-        
-        [tutorials addObject:tutorialStep2];
-        
-        currentTutorialStage++;
-        
-        [self.tutorialManager setCurrentTutorialStageForViewController:self forStage:currentTutorialStage];
-    }
-    else if ( currentTutorialStage == 2)
-    {
-        TutorialStep *tutorialStep3 = [TutorialStep new];
-        
-        tutorialStep3.origin = self.cameraButton.center;
-        tutorialStep3.text = @"Now that you’ve created your categories, click the camera button to take a photo of your receipt";
-        tutorialStep3.size = CGSizeMake(290, 80);
-        tutorialStep3.pointsUp = NO;
-        
-        [tutorials addObject:tutorialStep3];
-        
-        currentTutorialStage++;
-        
-        [self.tutorialManager setCurrentTutorialStageForViewController:self forStage:currentTutorialStage];
-    }
-    else if ( currentTutorialStage == 4)
-    {
-        TutorialStep *tutorialStep4 = [TutorialStep new];
-        
-        tutorialStep4.origin = self.recentUploadsTable.center;
-        tutorialStep4.text = @"Use recent uploads to quickly manage your latest receipts";
-        tutorialStep4.size = CGSizeMake(290, 70);
-        tutorialStep4.pointsUp = YES;
-        
-        [tutorials addObject:tutorialStep4];
-        
-        TutorialStep *tutorialStep5 = [TutorialStep new];
-        
-        tutorialStep5.origin = self.myAccountButton.center;
-        tutorialStep5.text = @"Use My Account to manage categories, view total allocations, and calculate your tax claim!";
-        tutorialStep5.size = CGSizeMake(290, 90);
-        tutorialStep5.pointsUp = NO;
-        
-        [tutorials addObject:tutorialStep5];
-        
-        TutorialStep *tutorialStep6 = [TutorialStep new];
-        
-        tutorialStep6.origin = self.vaultButton.center;
-        tutorialStep6.text = @"Access all receipts from the Vault\n\nEvery photo capture is automatically saved and stored in the Vault";
-        tutorialStep6.size = CGSizeMake(290, 100);
-        tutorialStep6.pointsUp = NO;
-        
-        [tutorials addObject:tutorialStep6];
-        
-        [self.tutorialManager setTutorialDoneForViewController:self];
-    }
-    else if ( [self.tutorialManager areAllTutorialsShown] )
-    {
-        TutorialStep *tutorialStep7 = [TutorialStep new];
-        
-        tutorialStep7.text = @"There you have it! Calculating that GF tax claim has never been so easy. No more manual calculations or paper receipts to worry about!\n\nIf you ever need help or have questions, please use the help feature located in the (burger) menu.\n\nEnjoy!";
-        tutorialStep7.size = CGSizeMake(290, 210);
-        tutorialStep7.pointsUp = YES;
-        
-        [tutorials addObject:tutorialStep7];
-        
-        [self.tutorialManager resetTutorialStages];
-        
-        [self.configurationManager setTutorialON:NO];
-    }
-    else
-    {
-        //don't show any tutorial
-        return;
-    }
-    
-    [self.tutorialManager startTutorialInViewController:self andTutorials:tutorials];
-}
-
-- (void) viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    //Create tutorial items if it's ON
-    if ([self.configurationManager isTutorialOn])
-    {
-        [self displayTutorials];
-    }
-    
-    [self.syncManager checkUpdate];
 }
 
 - (void) taxYearPressed
@@ -631,6 +526,114 @@ typedef enum : NSUInteger
     {
         [self.navigationController pushViewController: [self.viewControllerFactory createReceiptBreakDownViewControllerForReceiptID: clickedReceiptID cameFromReceiptCheckingViewController: NO] animated: YES];
     }
+}
+
+#pragma mark - Tutorial
+
+-(void)displayTutorials
+{
+    NSMutableArray *tutorials = [NSMutableArray new];
+    
+    //Each Stage represents a different group of Tutorial pop ups
+    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
+    
+    if ( currentTutorialStage == 1 )
+    {
+        TutorialStep *tutorialStep1 = [TutorialStep new];
+        
+        tutorialStep1.text = @"Welcome to CeliTax, the simple tax tool designed specifically for Celiacs.\n\nNo manual calculations. No paper receipts. No stress.\n\nYou have enough to worry about already, calculating your GF tax claim should not be one of them!\n\nThis wizard will guide you through each feature of CeliTax so you will quickly get familiar with its functions.\n\nLet’s go!";
+        tutorialStep1.size = CGSizeMake(290, 300);
+        tutorialStep1.pointsUp = YES;
+        
+        [tutorials addObject:tutorialStep1];
+        
+        TutorialStep *tutorialStep2 = [TutorialStep new];
+        
+        UIView *barButton = (UIView *)[self.pickerToolbar.subviews objectAtIndex:2]; // 0 for the first item
+        
+        CGPoint barButtonCenter = barButton.center;
+        barButtonCenter.x += 30;
+        barButtonCenter.y += [UIApplication sharedApplication].statusBarFrame.size.height + 10;
+        
+        tutorialStep2.origin = barButtonCenter;
+        
+        tutorialStep2.text = @"Click the Catagories button to add a new food category to keep all of your purchases allocated separately";
+        tutorialStep2.size = CGSizeMake(200, 120);
+        tutorialStep2.pointsUp = YES;
+        
+        [tutorials addObject:tutorialStep2];
+        
+        currentTutorialStage++;
+        
+        [self.tutorialManager setCurrentTutorialStageForViewController:self forStage:currentTutorialStage];
+    }
+    else if ( currentTutorialStage == 2)
+    {
+        TutorialStep *tutorialStep3 = [TutorialStep new];
+        
+        tutorialStep3.origin = self.cameraButton.center;
+        tutorialStep3.text = @"Now that you’ve created your categories, click the camera button to take a photo of your receipt";
+        tutorialStep3.size = CGSizeMake(290, 80);
+        tutorialStep3.pointsUp = NO;
+        
+        [tutorials addObject:tutorialStep3];
+        
+        currentTutorialStage++;
+        
+        [self.tutorialManager setCurrentTutorialStageForViewController:self forStage:currentTutorialStage];
+    }
+    else if ( currentTutorialStage == 4)
+    {
+        TutorialStep *tutorialStep4 = [TutorialStep new];
+        
+        tutorialStep4.origin = self.recentUploadsTable.center;
+        tutorialStep4.text = @"Use recent uploads to quickly manage your latest receipts";
+        tutorialStep4.size = CGSizeMake(290, 70);
+        tutorialStep4.pointsUp = YES;
+        
+        [tutorials addObject:tutorialStep4];
+        
+        TutorialStep *tutorialStep5 = [TutorialStep new];
+        
+        tutorialStep5.origin = self.myAccountButton.center;
+        tutorialStep5.text = @"Use My Account to manage categories, view total allocations, and calculate your tax claim!";
+        tutorialStep5.size = CGSizeMake(290, 90);
+        tutorialStep5.pointsUp = NO;
+        
+        [tutorials addObject:tutorialStep5];
+        
+        TutorialStep *tutorialStep6 = [TutorialStep new];
+        
+        tutorialStep6.origin = self.vaultButton.center;
+        tutorialStep6.text = @"Access all receipts from the Vault\n\nEvery photo capture is automatically saved and stored in the Vault";
+        tutorialStep6.size = CGSizeMake(290, 100);
+        tutorialStep6.pointsUp = NO;
+        
+        [tutorials addObject:tutorialStep6];
+        
+        [self.tutorialManager setTutorialDoneForViewController:self];
+    }
+    else if ( [self.tutorialManager areAllTutorialsShown] )
+    {
+        TutorialStep *tutorialStep7 = [TutorialStep new];
+        
+        tutorialStep7.text = @"There you have it! Calculating that GF tax claim has never been so easy. No more manual calculations or paper receipts to worry about!\n\nIf you ever need help or have questions, please use the help feature located in the (burger) menu.\n\nEnjoy!";
+        tutorialStep7.size = CGSizeMake(290, 210);
+        tutorialStep7.pointsUp = YES;
+        
+        [tutorials addObject:tutorialStep7];
+        
+        [self.tutorialManager resetTutorialStages];
+        
+        [self.configurationManager setTutorialON:NO];
+    }
+    else
+    {
+        //don't show any tutorial
+        return;
+    }
+    
+    [self.tutorialManager startTutorialInViewController:self andTutorials:tutorials];
 }
 
 @end

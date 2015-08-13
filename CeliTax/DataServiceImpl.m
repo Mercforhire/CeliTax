@@ -206,6 +206,7 @@
                                  toDate: (NSDate *) toDate
                               inTaxYear: (NSInteger) taxYear
                             forCatagory: (NSString *) catagoryID
+                            forUnitType: (NSInteger) unitType
 {
     NSMutableArray *catagoryInfos = [NSMutableArray new];
 
@@ -224,6 +225,11 @@
             // calculate totalQty and totalAmount
             for (Record *record in recordsWithGivenCatagoryID)
             {
+                if (record.unitType != unitType)
+                {
+                    continue;
+                }
+                
                 totalQty = totalQty + record.quantity;
                 totalAmount = totalAmount + [record calculateTotal];
             }
@@ -243,6 +249,7 @@
 }
 
 - (NSArray *) fetchLatestNthCatagoryInfosforCatagory: (NSString *) catagoryID
+                                         andUnitType: (NSInteger) unitType
                                               forNth: (NSInteger) nTh
                                            inTaxYear: (NSInteger) taxYear
 {
@@ -266,7 +273,7 @@
             break;
         }
 
-        NSArray *recordsWithGivenCatagoryID = [receipt fetchRecordsOfCatagory: catagoryID usingRecordsDAO: self.recordsDAO];
+        NSArray *recordsWithGivenCatagoryID = [receipt fetchRecordsOfCatagory: catagoryID ofUnitType:unitType usingRecordsDAO:self.recordsDAO];
 
         if (recordsWithGivenCatagoryID && recordsWithGivenCatagoryID.count)
         {
@@ -276,6 +283,11 @@
             // calculate totalQty and totalAmount
             for (Record *record in recordsWithGivenCatagoryID)
             {
+                if (record.unitType != unitType)
+                {
+                    continue;
+                }
+                
                 totalQty = totalQty + record.quantity;
                 totalAmount = totalAmount + [record calculateTotal];
             }

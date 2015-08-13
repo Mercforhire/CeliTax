@@ -8,16 +8,29 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum : NSUInteger
+{
+    UnitItem,
+    UnitML,
+    UnitL,
+    UnitG,
+    UnitKG,
+    UnitCount
+} UnitTypes;
+
 @interface Record : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, copy) NSString    *localID;
 
-@property (nonatomic, copy) NSString    *catagoryID; //must match an ItemCatagory's localID
+@property (nonatomic, copy) NSString    *catagoryID; // must match an ItemCatagory's localID
 
-@property (nonatomic, copy) NSString    *receiptID; //must match an Receipt's localID
+@property (nonatomic, copy) NSString    *receiptID; // must match an Receipt's localID
 
 @property float                         amount;
+
 @property NSInteger                     quantity;
+
+@property NSInteger                     unitType; // one of the UnitTypes enum
 
 @property (nonatomic, assign) NSInteger dataAction;
 

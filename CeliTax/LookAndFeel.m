@@ -10,6 +10,11 @@
 
 @implementation LookAndFeel
 
+- (UIColor *) navBarColor
+{
+    return [UIColor colorWithRed: 116.0f/255.0f green: 191.0f/255.0f blue: 81.0f/255.0f alpha: 1];
+}
+
 - (UIColor *) appGreenColor
 {
     return [UIColor colorWithRed: 158.0f/255.0f green: 216.0f/255.0f blue: 113.0f/255.0f alpha: 1];
@@ -65,6 +70,13 @@
     [view setClipsToBounds: YES];
 }
 
+- (void) applyNormalButtonStyleTo: (UIButton *) button
+{
+    [button setBackgroundColor: [UIColor whiteColor]];
+    [button setTitleColor: [UIColor blackColor] forState: UIControlStateNormal];
+    [self applyGreenBorderTo:button];
+}
+
 - (void) applyHollowGreenButtonStyleTo: (UIButton *) button
 {
     [button setBackgroundColor: [UIColor whiteColor]];
@@ -88,6 +100,14 @@
     [button setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
     [button setClipsToBounds: YES];
 }
+
+- (void) applyTransperantWhiteTextButtonStyleTo: (UIButton *) button
+{
+    [button setBackgroundColor: [UIColor clearColor]];
+    [button setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
+    [button setClipsToBounds: YES];
+}
+
 
 - (void) applyDisabledButtonStyleTo: (UIButton *) button
 {

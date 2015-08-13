@@ -14,7 +14,6 @@
 
 -(void)setNewSettings:(NSDictionary *)settings;
 
-
 -(NSInteger)getCurrentTaxYear;
 
 -(void)setCurrentTaxYear:(NSInteger)taxYear;

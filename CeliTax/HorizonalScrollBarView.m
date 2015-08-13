@@ -11,13 +11,16 @@
 
 NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionViewCell";
 
-@interface HorizonalScrollBarView () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface HorizonalScrollBarView () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NSArray *buttonNames;
 @property (nonatomic, strong) NSArray *buttonColors;
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic) NSInteger selectedButtonIndex;
+
+@property (nonatomic, strong) UILongPressGestureRecognizer* longPress;
+
 @end
 
 @implementation HorizonalScrollBarView
@@ -42,6 +45,11 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
     [self.collectionView setDelegate: self];
     [self.collectionView setBounces: NO];
     [self addSubview: self.collectionView];
+    
+    self.longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+    self.longPress.minimumPressDuration = 0.5; //seconds
+    self.longPress.delegate = self;
+    [self.collectionView addGestureRecognizer:self.longPress];
 }
 
 - (id) initWithFrame: (CGRect) frame;
@@ -85,7 +93,37 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
     [self.collectionView reloadData];
 }
 
-#pragma mark - From UICollectionView Delegate/Datasource
+-(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
+{
+    CGPoint point = [gestureRecognizer locationInView:self.collectionView];
+    
+    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:point];
+    
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan)
+    {
+        if (indexPath)
+        {
+            NSString *clickedName = [self.buttonNames objectAtIndex: indexPath.row];
+            
+            UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
+            
+            CGRect cellRect = attributes.frame;
+            
+            cellRect = [self.collectionView convertRect:cellRect toView:self];
+            
+            point.x = cellRect.origin.x + cellRect.size.width / 2;
+            
+            point.y = 0;
+            
+            if (self.delegate)
+            {
+                [self.delegate buttonLongPressedWithIndex: indexPath.row andName: clickedName atPoint:point];
+            }
+        }
+    }
+}
+
+#pragma mark - From UICollectionView Delegate / Datasource
 
 - (NSInteger) collectionView: (UICollectionView *) collectionView numberOfItemsInSection: (NSInteger) section
 {
@@ -96,7 +134,7 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
 {
     SelectionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier: SelectionCollectionViewCellReuseIdentifier forIndexPath: indexPath];
 
-    if (!cell)
+    if ( !cell )
     {
         cell = [[SelectionCollectionViewCell alloc] initWithFrame: CGRectMake(0, 0, 87, 60)];
     }

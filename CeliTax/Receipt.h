@@ -21,7 +21,12 @@
 
 @property (nonatomic, assign) NSInteger dataAction;
 
-- (NSArray *) fetchRecordsOfCatagory: (NSString *) catagoryID usingRecordsDAO: (RecordsDAO *) recordsDAO;
+- (NSArray *) fetchRecordsOfCatagory: (NSString *) catagoryID
+                     usingRecordsDAO: (RecordsDAO *) recordsDAO;
+
+- (NSArray *) fetchRecordsOfCatagory: (NSString *) catagoryID
+                          ofUnitType: (NSInteger)unitType
+                     usingRecordsDAO: (RecordsDAO *) recordsDAO;
 
 - (NSDictionary *) toJson;
 

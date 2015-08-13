@@ -26,7 +26,28 @@
     
     catagory.localID = [json objectForKey: kKeyIdentifer];
     catagory.name = [json objectForKey: kKeyName];
-    catagory.nationalAverageCost = [[json objectForKey: kKeyNationalAverageCost] doubleValue];
+    
+    catagory.nationalAverageCosts = [[NSMutableDictionary alloc] init];
+    
+    //Convert a string of format 'item:2.5,ml:1.0:l:5.0,g:6.0,kg:5'
+    //To Dictionary of KEY: item; VALUE: 2.5, KEY: ml; VALUE: 1.0,...
+    NSString *averageCostString = [json objectForKey: kKeyNationalAverageCost];
+    
+    NSArray *components = [averageCostString componentsSeparatedByString:@","];
+    
+    for (NSString *component in components)
+    {
+        NSArray *components2 = [component componentsSeparatedByString:@":"];
+        
+        if (components2.count == 2)
+        {
+            NSString *unitName = [components2 firstObject];
+            
+            NSString *unitValue = [components2 lastObject];
+            
+            [catagory.nationalAverageCosts setObject:[NSNumber numberWithFloat:unitValue.floatValue] forKey:unitName];
+        }
+    }
     
     NSString *colorString = [json objectForKey: kKeyColor];
     

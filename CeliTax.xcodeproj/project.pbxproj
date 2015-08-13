@@ -17,17 +17,13 @@
 		85081A201B4CD72800C5AD10 /* TutorialBubbleDown.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85081A1F1B4CD72800C5AD10 /* TutorialBubbleDown.xib */; };
 		85081A231B4CE90200C5AD10 /* TutorialBubbleDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 85081A221B4CE90200C5AD10 /* TutorialBubbleDown.m */; };
 		85100D411AF6BFC9005C24D2 /* UIView+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 85100D401AF6BFC9005C24D2 /* UIView+Helper.m */; };
-		85100D451AF6CE90005C24D2 /* account.png in Resources */ = {isa = PBXBuildFile; fileRef = 85100D431AF6CE90005C24D2 /* account.png */; };
-		85100D461AF6CE90005C24D2 /* account@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 85100D441AF6CE90005C24D2 /* account@2x.png */; };
-		85100D491AF6CE9D005C24D2 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 85100D471AF6CE9D005C24D2 /* arrow.png */; };
-		85100D4A1AF6CE9D005C24D2 /* arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 85100D481AF6CE9D005C24D2 /* arrow@2x.png */; };
-		85100D4D1AF6CEBA005C24D2 /* envelope.png in Resources */ = {isa = PBXBuildFile; fileRef = 85100D4B1AF6CEBA005C24D2 /* envelope.png */; };
-		85100D4E1AF6CEBA005C24D2 /* envelope@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 85100D4C1AF6CEBA005C24D2 /* envelope@2x.png */; };
-		85100D511AF6CEC6005C24D2 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 85100D4F1AF6CEC6005C24D2 /* menu.png */; };
-		85100D521AF6CEC6005C24D2 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 85100D501AF6CEC6005C24D2 /* menu@2x.png */; };
 		85100D561AF70FBF005C24D2 /* CatagoriesDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 85100D551AF70FBF005C24D2 /* CatagoriesDAO.m */; };
 		852929FA1B3675E20074DD24 /* ReceiptEditModeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 852929F81B3675E20074DD24 /* ReceiptEditModeTableViewCell.m */; };
 		852929FB1B3675E20074DD24 /* ReceiptEditModeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 852929F91B3675E20074DD24 /* ReceiptEditModeTableViewCell.xib */; };
+		852FF8971B78FBF50033A6D9 /* CelitaxNavBarLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 852FF8961B78FBF50033A6D9 /* CelitaxNavBarLogo.png */; };
+		852FF8991B7901D80033A6D9 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 852FF8981B7901D80033A6D9 /* menu.png */; };
+		852FF89B1B7907AA0033A6D9 /* xIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 852FF89A1B7907AA0033A6D9 /* xIcon.png */; };
+		852FF89D1B79083A0033A6D9 /* canada_flag_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 852FF89C1B79083A0033A6D9 /* canada_flag_small.png */; };
 		8537A92B1B288B31000C848F /* camera_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8537A92A1B288B31000C848F /* camera_icon.png */; };
 		8537A92D1B289FB1000C848F /* pencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 8537A92C1B289FB1000C848F /* pencil.png */; };
 		8537A9311B28A851000C848F /* TriangleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8537A9301B28A851000C848F /* TriangleView.m */; };
@@ -85,13 +81,13 @@
 		8558940C1B1C1BD100D3F353 /* XYPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 8558940B1B1C1BD100D3F353 /* XYPieChart.m */; };
 		855894151B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 855894131B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.m */; };
 		855894161B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 855894141B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.xib */; };
+		855919201B6AE3BE001F712C /* BackgroundWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 8559191F1B6AE3BE001F712C /* BackgroundWorker.m */; };
 		855973911AFD2BF800DFC176 /* MainViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8559738F1AFD2BF800DFC176 /* MainViewTableViewCell.m */; };
 		855973921AFD2BF800DFC176 /* MainViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 855973901AFD2BF800DFC176 /* MainViewTableViewCell.xib */; };
-		855A52891B0D2D6F004C54ED /* canada_flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 855A52871B0D2D6F004C54ED /* canada_flag.png */; };
-		855A528A1B0D2D6F004C54ED /* USA_flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 855A52881B0D2D6F004C54ED /* USA_flag.png */; };
+		855A9AA21B7259FE00455291 /* UnitPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 855A9AA01B7259FE00455291 /* UnitPickerViewController.m */; };
+		855A9AA31B7259FE00455291 /* UnitPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 855A9AA11B7259FE00455291 /* UnitPickerViewController.xib */; };
 		855B6FB51B279E4700864E0B /* LookAndFeel.m in Sources */ = {isa = PBXBuildFile; fileRef = 855B6FB41B279E4700864E0B /* LookAndFeel.m */; };
 		855B6FB71B279F3000864E0B /* celitaxlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 855B6FB61B279F3000864E0B /* celitaxlogo.png */; };
-		855B6FB91B27CE4F00864E0B /* celitaxlogo_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 855B6FB81B27CE4F00864E0B /* celitaxlogo_small.png */; };
 		855BD2C61B25E151001ACBB2 /* ReceiptTimeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 855BD2C41B25E151001ACBB2 /* ReceiptTimeTableViewCell.m */; };
 		855BD2C71B25E151001ACBB2 /* ReceiptTimeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 855BD2C51B25E151001ACBB2 /* ReceiptTimeTableViewCell.xib */; };
 		855BD2CB1B267029001ACBB2 /* SendReceiptsToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 855BD2C91B267029001ACBB2 /* SendReceiptsToViewController.m */; };
@@ -162,7 +158,6 @@
 		85ACE4221B27F55A0041B7C5 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4141B27F55A0041B7C5 /* Lato-Light.ttf */; };
 		85ACE4231B27F55A0041B7C5 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4151B27F55A0041B7C5 /* Lato-LightItalic.ttf */; };
 		85ACE4241B27F55A0041B7C5 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4161B27F55A0041B7C5 /* Lato-Regular.ttf */; };
-		85ACE4281B2801AD0041B7C5 /* canada_flag_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4261B2801AD0041B7C5 /* canada_flag_small.png */; };
 		85ACE4291B2801AD0041B7C5 /* USA_flag_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4271B2801AD0041B7C5 /* USA_flag_small.png */; };
 		85B114FF1B5CAE9C00C01DC3 /* CatagoryBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B114FE1B5CAE9C00C01DC3 /* CatagoryBuilder.m */; };
 		85B115021B5CAEA700C01DC3 /* RecordBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B115011B5CAEA700C01DC3 /* RecordBuilder.m */; };
@@ -215,19 +210,15 @@
 		85081A241B4CECAB00C5AD10 /* TutorialBubbleInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialBubbleInterface.h; sourceTree = "<group>"; };
 		85100D3F1AF6BFC9005C24D2 /* UIView+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Helper.h"; sourceTree = "<group>"; };
 		85100D401AF6BFC9005C24D2 /* UIView+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Helper.m"; sourceTree = "<group>"; };
-		85100D431AF6CE90005C24D2 /* account.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = account.png; sourceTree = "<group>"; };
-		85100D441AF6CE90005C24D2 /* account@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "account@2x.png"; sourceTree = "<group>"; };
-		85100D471AF6CE9D005C24D2 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
-		85100D481AF6CE9D005C24D2 /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2x.png"; sourceTree = "<group>"; };
-		85100D4B1AF6CEBA005C24D2 /* envelope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = envelope.png; sourceTree = "<group>"; };
-		85100D4C1AF6CEBA005C24D2 /* envelope@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "envelope@2x.png"; sourceTree = "<group>"; };
-		85100D4F1AF6CEC6005C24D2 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
-		85100D501AF6CEC6005C24D2 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@2x.png"; sourceTree = "<group>"; };
 		85100D541AF70FBF005C24D2 /* CatagoriesDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatagoriesDAO.h; sourceTree = "<group>"; };
 		85100D551AF70FBF005C24D2 /* CatagoriesDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CatagoriesDAO.m; sourceTree = "<group>"; };
 		852929F71B3675E20074DD24 /* ReceiptEditModeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptEditModeTableViewCell.h; sourceTree = "<group>"; };
 		852929F81B3675E20074DD24 /* ReceiptEditModeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptEditModeTableViewCell.m; sourceTree = "<group>"; };
 		852929F91B3675E20074DD24 /* ReceiptEditModeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptEditModeTableViewCell.xib; sourceTree = "<group>"; };
+		852FF8961B78FBF50033A6D9 /* CelitaxNavBarLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CelitaxNavBarLogo.png; sourceTree = "<group>"; };
+		852FF8981B7901D80033A6D9 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		852FF89A1B7907AA0033A6D9 /* xIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xIcon.png; sourceTree = "<group>"; };
+		852FF89C1B79083A0033A6D9 /* canada_flag_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canada_flag_small.png; sourceTree = "<group>"; };
 		8537A92A1B288B31000C848F /* camera_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera_icon.png; sourceTree = "<group>"; };
 		8537A92C1B289FB1000C848F /* pencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pencil.png; sourceTree = "<group>"; };
 		8537A92F1B28A851000C848F /* TriangleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriangleView.h; sourceTree = "<group>"; };
@@ -327,15 +318,17 @@
 		855894121B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptBreakDownToolBarTableViewCell.h; sourceTree = "<group>"; };
 		855894131B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptBreakDownToolBarTableViewCell.m; sourceTree = "<group>"; };
 		855894141B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptBreakDownToolBarTableViewCell.xib; sourceTree = "<group>"; };
+		8559191E1B6AE3BE001F712C /* BackgroundWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundWorker.h; sourceTree = "<group>"; };
+		8559191F1B6AE3BE001F712C /* BackgroundWorker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundWorker.m; sourceTree = "<group>"; };
 		8559738E1AFD2BF800DFC176 /* MainViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewTableViewCell.h; sourceTree = "<group>"; };
 		8559738F1AFD2BF800DFC176 /* MainViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewTableViewCell.m; sourceTree = "<group>"; };
 		855973901AFD2BF800DFC176 /* MainViewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewTableViewCell.xib; sourceTree = "<group>"; };
-		855A52871B0D2D6F004C54ED /* canada_flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canada_flag.png; sourceTree = "<group>"; };
-		855A52881B0D2D6F004C54ED /* USA_flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = USA_flag.png; sourceTree = "<group>"; };
+		855A9A9F1B7259FE00455291 /* UnitPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitPickerViewController.h; sourceTree = "<group>"; };
+		855A9AA01B7259FE00455291 /* UnitPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnitPickerViewController.m; sourceTree = "<group>"; };
+		855A9AA11B7259FE00455291 /* UnitPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnitPickerViewController.xib; sourceTree = "<group>"; };
 		855B6FB31B279E4700864E0B /* LookAndFeel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookAndFeel.h; sourceTree = "<group>"; };
 		855B6FB41B279E4700864E0B /* LookAndFeel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookAndFeel.m; sourceTree = "<group>"; };
 		855B6FB61B279F3000864E0B /* celitaxlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = celitaxlogo.png; sourceTree = "<group>"; };
-		855B6FB81B27CE4F00864E0B /* celitaxlogo_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = celitaxlogo_small.png; sourceTree = "<group>"; };
 		855BD2C31B25E151001ACBB2 /* ReceiptTimeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptTimeTableViewCell.h; sourceTree = "<group>"; };
 		855BD2C41B25E151001ACBB2 /* ReceiptTimeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptTimeTableViewCell.m; sourceTree = "<group>"; };
 		855BD2C51B25E151001ACBB2 /* ReceiptTimeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptTimeTableViewCell.xib; sourceTree = "<group>"; };
@@ -442,7 +435,6 @@
 		85ACE4141B27F55A0041B7C5 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
 		85ACE4151B27F55A0041B7C5 /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
 		85ACE4161B27F55A0041B7C5 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
-		85ACE4261B2801AD0041B7C5 /* canada_flag_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canada_flag_small.png; sourceTree = "<group>"; };
 		85ACE4271B2801AD0041B7C5 /* USA_flag_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = USA_flag_small.png; sourceTree = "<group>"; };
 		85B114FD1B5CAE9C00C01DC3 /* CatagoryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatagoryBuilder.h; sourceTree = "<group>"; };
 		85B114FE1B5CAE9C00C01DC3 /* CatagoryBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CatagoryBuilder.m; sourceTree = "<group>"; };
@@ -563,25 +555,17 @@
 			children = (
 				856538421B5FFEF000915A2E /* camera_add_icon.png */,
 				855CED251B38D2CC0043D20D /* lightning.png */,
+				852FF89A1B7907AA0033A6D9 /* xIcon.png */,
 				8537A92C1B289FB1000C848F /* pencil.png */,
 				8537A92A1B288B31000C848F /* camera_icon.png */,
-				85ACE4261B2801AD0041B7C5 /* canada_flag_small.png */,
+				852FF89C1B79083A0033A6D9 /* canada_flag_small.png */,
 				85ACE4271B2801AD0041B7C5 /* USA_flag_small.png */,
-				855B6FB81B27CE4F00864E0B /* celitaxlogo_small.png */,
+				852FF8961B78FBF50033A6D9 /* CelitaxNavBarLogo.png */,
 				855B6FB61B279F3000864E0B /* celitaxlogo.png */,
-				855A52871B0D2D6F004C54ED /* canada_flag.png */,
-				855A52881B0D2D6F004C54ED /* USA_flag.png */,
 				8562738E1B1A8ECF00EECA26 /* greenTrianglePointDown.png */,
 				8562738F1B1A8ECF00EECA26 /* greenTrianglePointUp.png */,
+				852FF8981B7901D80033A6D9 /* menu.png */,
 				856538401B5FFC2600915A2E /* receipt_icon.png */,
-				85100D4F1AF6CEC6005C24D2 /* menu.png */,
-				85100D501AF6CEC6005C24D2 /* menu@2x.png */,
-				85100D431AF6CE90005C24D2 /* account.png */,
-				85100D441AF6CE90005C24D2 /* account@2x.png */,
-				85100D471AF6CE9D005C24D2 /* arrow.png */,
-				85100D481AF6CE9D005C24D2 /* arrow@2x.png */,
-				85100D4B1AF6CEBA005C24D2 /* envelope.png */,
-				85100D4C1AF6CEBA005C24D2 /* envelope@2x.png */,
 				8586E5E51B17A04400C1014F /* userIcon.png */,
 			);
 			name = Images;
@@ -717,6 +701,7 @@
 				857EC8C31B044CD800B6A5B2 /* All Colors Picker Pop Up */,
 				85560FDE1B019830004D2963 /* Color Picker Pop Up */,
 				85A8CAF51AF07B5F0023504D /* Edit Catagory Pop Up */,
+				855A9A9E1B7258A800455291 /* Unit Picker Pop Up */,
 				85552E971B02F67A005D9FB1 /* PopUpViewControllerProtocol.h */,
 			);
 			name = "Pop Up";
@@ -857,6 +842,15 @@
 			name = Factory;
 			sourceTree = "<group>";
 		};
+		8559191D1B6AE3A8001F712C /* Background Worker */ = {
+			isa = PBXGroup;
+			children = (
+				8559191E1B6AE3BE001F712C /* BackgroundWorker.h */,
+				8559191F1B6AE3BE001F712C /* BackgroundWorker.m */,
+			);
+			name = "Background Worker";
+			sourceTree = "<group>";
+		};
 		8559738D1AFD2BDD00DFC176 /* Main View Table Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -865,6 +859,16 @@
 				855973901AFD2BF800DFC176 /* MainViewTableViewCell.xib */,
 			);
 			name = "Main View Table Cells";
+			sourceTree = "<group>";
+		};
+		855A9A9E1B7258A800455291 /* Unit Picker Pop Up */ = {
+			isa = PBXGroup;
+			children = (
+				855A9A9F1B7259FE00455291 /* UnitPickerViewController.h */,
+				855A9AA01B7259FE00455291 /* UnitPickerViewController.m */,
+				855A9AA11B7259FE00455291 /* UnitPickerViewController.xib */,
+			);
+			name = "Unit Picker Pop Up";
 			sourceTree = "<group>";
 		};
 		855B6FB21B279E2E00864E0B /* LookAndFeel */ = {
@@ -1046,6 +1050,7 @@
 		85A8CAC01AF069EA0023504D /* CeliTax */ = {
 			isa = PBXGroup;
 			children = (
+				8559191D1B6AE3A8001F712C /* Background Worker */,
 				8565384B1B60A7C500915A2E /* Sync Manager */,
 				85FD2BE61B599071006E907C /* Network Communicator */,
 				859AEF741B4851190085AC6D /* Tutorial Manager */,
@@ -1498,16 +1503,16 @@
 				853AF04A1B41075B00B2C4D8 /* TransferSelectionsViewController.xib in Resources */,
 				8500FA891B20CAA300F04E98 /* UploadsHistoryTableViewCell.xib in Resources */,
 				856024B91AFA5E2C004C1254 /* ReceiptCheckingViewController.xib in Resources */,
+				855A9AA31B7259FE00455291 /* UnitPickerViewController.xib in Resources */,
 				850212811B0A925D00170785 /* CameraViewController.xib in Resources */,
 				856273A71B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.xib in Resources */,
 				85552B461B35191900AE77CE /* ReceiptItemCell.xib in Resources */,
 				85665DD61B20EFD200848D36 /* ReceiptTableViewCell.xib in Resources */,
 				852929FB1B3675E20074DD24 /* ReceiptEditModeTableViewCell.xib in Resources */,
 				856538431B5FFEF000915A2E /* camera_add_icon.png in Resources */,
-				85100D521AF6CEC6005C24D2 /* menu@2x.png in Resources */,
+				852FF89D1B79083A0033A6D9 /* canada_flag_small.png in Resources */,
 				856273961B1B780900EECA26 /* PasswordRecoveryViewController.xib in Resources */,
 				85ACE41E1B27F55A0041B7C5 /* Lato-BoldItalic.ttf in Resources */,
-				85100D491AF6CE9D005C24D2 /* arrow.png in Resources */,
 				855BD2CC1B267029001ACBB2 /* SendReceiptsToViewController.xib in Resources */,
 				85ACE4291B2801AD0041B7C5 /* USA_flag_small.png in Resources */,
 				8554BCEA1B254F45002333ED /* TimePeriodSelectionTableViewCell.xib in Resources */,
@@ -1515,11 +1520,9 @@
 				856273901B1A8ECF00EECA26 /* greenTrianglePointDown.png in Resources */,
 				85C54B841B65A82500120961 /* ProfileBarView.xib in Resources */,
 				85C54B6E1B62C75C00120961 /* MyProfileViewController.xib in Resources */,
-				85100D4D1AF6CEBA005C24D2 /* envelope.png in Resources */,
 				8556E3281AF41BFA003CCDD2 /* MainViewController.xib in Resources */,
 				8556E35B1AF53233003CCDD2 /* SettingsViewController.xib in Resources */,
 				85D8D8531AF873AA00197D85 /* AccountTableViewCell.xib in Resources */,
-				85100D511AF6CEC6005C24D2 /* menu.png in Resources */,
 				856538411B5FFC2600915A2E /* receipt_icon.png in Resources */,
 				855973921AFD2BF800DFC176 /* MainViewTableViewCell.xib in Resources */,
 				85ACE41B1B27F55A0041B7C5 /* Lato-Black.ttf in Resources */,
@@ -1528,10 +1531,10 @@
 				8556E3651AF53264003CCDD2 /* HelpScreenViewController.xib in Resources */,
 				8556E32F1AF428C4003CCDD2 /* CatagoryTableViewCell.xib in Resources */,
 				855D0B801B177B4400BD5EB4 /* MenuSelectionTableViewCell.xib in Resources */,
+				852FF89B1B7907AA0033A6D9 /* xIcon.png in Resources */,
 				855CED261B38D2CC0043D20D /* lightning.png in Resources */,
 				85560FE91B01B82A004D2963 /* SelectionsPickerViewController.xib in Resources */,
 				8582A47E1AF181C20048DCD6 /* RegisterViewController.xib in Resources */,
-				855A528A1B0D2D6F004C54ED /* USA_flag.png in Resources */,
 				857EC8C81B044CF400B6A5B2 /* AllColorsPickerViewController.xib in Resources */,
 				85ACE41F1B27F55A0041B7C5 /* Lato-Hairline.ttf in Resources */,
 				85A8CAD21AF069EA0023504D /* LaunchScreen.xib in Resources */,
@@ -1540,16 +1543,13 @@
 				8562739B1B1B782600EECA26 /* PasswordRecoverySentViewController.xib in Resources */,
 				858FD7191B40DEE60008B325 /* TransferConfirmationViewController.xib in Resources */,
 				8537A9361B293639000C848F /* ModifyCatagoryTableViewCell.xib in Resources */,
-				85100D4E1AF6CEBA005C24D2 /* envelope@2x.png in Resources */,
-				85100D451AF6CE90005C24D2 /* account.png in Resources */,
 				85ACE4211B27F55A0041B7C5 /* Lato-Italic.ttf in Resources */,
 				85081A201B4CD72800C5AD10 /* TutorialBubbleDown.xib in Resources */,
 				855894161B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.xib in Resources */,
 				8582A4701AF176660048DCD6 /* SplashViewController.xib in Resources */,
 				85ACE4221B27F55A0041B7C5 /* Lato-Light.ttf in Resources */,
-				85100D461AF6CE90005C24D2 /* account@2x.png in Resources */,
+				852FF8971B78FBF50033A6D9 /* CelitaxNavBarLogo.png in Resources */,
 				855B6FB71B279F3000864E0B /* celitaxlogo.png in Resources */,
-				85100D4A1AF6CE9D005C24D2 /* arrow@2x.png in Resources */,
 				857902A21B2CF8A400C86662 /* ReceiptCollectionViewCell.xib in Resources */,
 				856024CE1AFA9E6F004C1254 /* ReceiptPic-2.jpg in Resources */,
 				85552B401B34EF5400AE77CE /* NoItemsTableViewCell.xib in Resources */,
@@ -1557,14 +1557,12 @@
 				8556E3341AF47C0D003CCDD2 /* MyAccountViewController.xib in Resources */,
 				855BD2C71B25E151001ACBB2 /* ReceiptTimeTableViewCell.xib in Resources */,
 				856024CD1AFA9E6F004C1254 /* ReceiptPic-1.jpg in Resources */,
-				85ACE4281B2801AD0041B7C5 /* canada_flag_small.png in Resources */,
-				855A52891B0D2D6F004C54ED /* canada_flag.png in Resources */,
 				85ACE4241B27F55A0041B7C5 /* Lato-Regular.ttf in Resources */,
 				8537A92B1B288B31000C848F /* camera_icon.png in Resources */,
-				855B6FB91B27CE4F00864E0B /* celitaxlogo_small.png in Resources */,
 				85A8CACF1AF069EA0023504D /* Images.xcassets in Resources */,
 				85ACE4201B27F55A0041B7C5 /* Lato-HairlineItalic.ttf in Resources */,
 				8556E3431AF48591003CCDD2 /* ModifyCatagoryViewController.xib in Resources */,
+				852FF8991B7901D80033A6D9 /* menu.png in Resources */,
 				85081A161B4B728600C5AD10 /* TutorialBubbleUp.xib in Resources */,
 				8581E2931B2E6AD3006CB6F6 /* SelectionsPickerTableViewCell.xib in Resources */,
 			);
@@ -1647,6 +1645,7 @@
 				85B115051B5CAEB200C01DC3 /* ReceiptBuilder.m in Sources */,
 				8556E36B1AF56CEF003CCDD2 /* DataServiceImpl.m in Sources */,
 				85F485881B16D220005E0EDE /* SideMenuView.m in Sources */,
+				855A9AA21B7259FE00455291 /* UnitPickerViewController.m in Sources */,
 				855303E21B0FEC61006B3D5F /* UserDataDAO.m in Sources */,
 				857902A51B2CF9A900C86662 /* ReceiptScrollView.m in Sources */,
 				85FD2BE51B575C95006E907C /* TaxYear.m in Sources */,
@@ -1688,6 +1687,7 @@
 				8556E32E1AF428C4003CCDD2 /* CatagoryTableViewCell.m in Sources */,
 				855CED291B38D3420043D20D /* FlashButtonView.m in Sources */,
 				85081A231B4CE90200C5AD10 /* TutorialBubbleDown.m in Sources */,
+				855919201B6AE3BE001F712C /* BackgroundWorker.m in Sources */,
 				855303DB1B0FE953006B3D5F /* RecordsDAO.m in Sources */,
 				8582A4691AF15BC20048DCD6 /* ConfigurationManager.m in Sources */,
 				856538511B60A7F800915A2E /* SyncManager.m in Sources */,

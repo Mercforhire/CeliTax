@@ -13,6 +13,7 @@
 #define kKeyReceiptID            @"ReceiptID"
 #define kKeyAmount               @"Amount"
 #define kKeyQuantity             @"Quantity"
+#define kKeyUnitType             @"UnitType"
 #define kKeyDataAction           @"DataAction"
 
 @implementation Record
@@ -24,6 +25,7 @@
     [coder encodeObject: self.receiptID forKey: kKeyReceiptID];
     [coder encodeFloat: self.amount forKey: kKeyAmount];
     [coder encodeInteger: self.quantity forKey: kKeyQuantity];
+    [coder encodeInteger: self.unitType forKey: kKeyUnitType];
     [coder encodeInteger:self.dataAction forKey:kKeyDataAction];
 }
 
@@ -36,6 +38,7 @@
     self.receiptID = [coder decodeObjectForKey: kKeyReceiptID];
     self.amount = [coder decodeFloatForKey: kKeyAmount];
     self.quantity = [coder decodeIntegerForKey: kKeyQuantity];
+    self.unitType = [coder decodeIntegerForKey: kKeyUnitType];
     self.dataAction = [coder decodeIntegerForKey:kKeyDataAction];
 
     return self;
@@ -52,6 +55,7 @@
         copy.receiptID = [self.receiptID copy];
         copy.amount = self.amount;
         copy.quantity = self.quantity;
+        copy.unitType = self.unitType;
         copy.dataAction = self.dataAction;
     }
 
@@ -60,7 +64,14 @@
 
 - (float) calculateTotal
 {
-    return self.quantity * self.amount;
+    if (self.unitType == UnitItem)
+    {
+        return self.quantity * self.amount;
+    }
+    else
+    {
+        return self.amount;
+    }
 }
 
 - (NSDictionary *) toJson
@@ -77,6 +88,8 @@
     
     [json setObject:[NSNumber numberWithInteger:self.quantity] forKey:kKeyQuantity];
     
+    [json setObject:[NSNumber numberWithInteger:self.unitType] forKey:kKeyUnitType];
+    
     [json setObject:[NSNumber numberWithInteger:self.dataAction] forKey:kKeyDataAction];
     
     return json;
@@ -88,6 +101,7 @@
     self.receiptID = [thisOne.receiptID copy];
     self.amount = thisOne.amount;
     self.quantity = thisOne.quantity;
+    self.unitType = thisOne.unitType;
     self.dataAction = thisOne.dataAction;
 }
 

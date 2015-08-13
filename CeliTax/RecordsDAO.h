@@ -49,6 +49,7 @@
 -(NSString *)addRecordForCatagory: (Catagory *) catagory
                        andReceipt: (Receipt *) receipt
                       forQuantity: (NSInteger) quantity
+                           orUnit: (NSInteger) unitType
                         forAmount: (float) amount
                              save: (BOOL)save;
 
@@ -59,6 +60,7 @@
 -(NSString *)addRecordForCatagoryID: (NSString *) catagoryID
                        andReceiptID: (NSString *) receiptID
                         forQuantity: (NSInteger) quantity
+                             orUnit: (NSInteger) unitType
                           forAmount: (float) amount
                                save: (BOOL)save;
 

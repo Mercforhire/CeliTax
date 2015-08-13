@@ -23,7 +23,7 @@
         return NO;
     }
 
-    if ([self.catagoriesDAO addCatagoryForName: catagoryName andColor: catagoryColor andNationalAverageCost: 0 save:save])
+    if ([self.catagoriesDAO addCatagoryForName: catagoryName andColor: catagoryColor save:save])
     {
         return YES;
     }
@@ -86,7 +86,46 @@
     return NO;
 }
 
-- (NSString *) addRecordForCatagoryID: (NSString *) catagoryID forReceiptID: (NSString *) receiptID forQuantity: (NSInteger) quantity forAmount: (float) amount save: (BOOL)save
+-(BOOL)addOrUpdateNationalAverageCostForCatagoryID: (NSString *) catagoryID andUnitType:(NSInteger)unitType amount:(float)amount save: (BOOL)save
+{
+    Catagory *catagoryToModify = [self.catagoriesDAO loadCatagory: catagoryID];
+    
+    if (!catagoryToModify)
+    {
+        return NO;
+    }
+    
+    if ([self.catagoriesDAO addOrUpdateNationalAverageCostForCatagoryID: catagoryID andUnitType:unitType amount:amount save: save])
+    {
+        return YES;
+    }
+    
+    return NO;
+}
+
+-(BOOL)deleteNationalAverageCostForCatagoryID: (NSString *) catagoryID andUnitType:(NSInteger)unitType save: (BOOL)save
+{
+    Catagory *catagoryToModify = [self.catagoriesDAO loadCatagory: catagoryID];
+    
+    if (!catagoryToModify)
+    {
+        return NO;
+    }
+    
+    if ([self.catagoriesDAO deleteNationalAverageCostForCatagoryID: catagoryID andUnitType: unitType save: save])
+    {
+        return YES;
+    }
+    
+    return NO;
+}
+
+-(NSString *)addRecordForCatagoryID: (NSString *) catagoryID
+                       andReceiptID: (NSString *) receiptID
+                        forQuantity: (NSInteger) quantity
+                             orUnit: (NSInteger) unitType
+                          forAmount: (float) amount
+                               save: (BOOL)save
 {
     Catagory *toItemCatagory = [self.catagoriesDAO loadCatagory: catagoryID];
 
@@ -95,8 +134,12 @@
         return nil;
     }
 
-    NSString *newestRecordID = [self.recordsDAO addRecordForCatagoryID: catagoryID andReceiptID: receiptID forQuantity: quantity forAmount: amount save:save];
-
+    NSString *newestRecordID = [self.recordsDAO addRecordForCatagoryID: catagoryID
+                                                          andReceiptID: receiptID
+                                                           forQuantity: quantity
+                                                                orUnit:unitType
+                                                             forAmount: amount
+                                                                  save:save];
     if (newestRecordID)
     {
         return newestRecordID;

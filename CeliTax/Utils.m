@@ -8,6 +8,7 @@
 
 #import "Utils.h"
 #import "SideMenuView.h"
+#import "User.h"
 
 @implementation Utils
 
@@ -62,6 +63,66 @@
     }
 }
 
++ (NSString *) getSavedProfilePath
+{
+    NSString *storagePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    
+    NSString *profileFilePath = [storagePath stringByAppendingPathComponent: @"USER.acc"];
+    
+    return profileFilePath;
+}
+
++ (User *) loadSavedUser
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSString *profilePath = [self getSavedProfilePath];
+    
+    if ([fileManager fileExistsAtPath: profilePath])
+    {
+        User *savedUser = [self unarchiveFile:profilePath];
+        
+        return savedUser;
+    }
+    
+    return nil;
+}
+
++ (BOOL) saveUser:(User *)user
+{
+    if (!user)
+    {
+        return NO;
+    }
+    
+    NSString *profilePath = [self getSavedProfilePath];
+    
+    if ([Utils archiveFile: user toFile: profilePath])
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
+
++ (BOOL) deleteSavedUser
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSString *profilePath = [self getSavedProfilePath];
+    
+    if ([fileManager fileExistsAtPath: profilePath])
+    {
+        [fileManager removeItemAtPath: profilePath error: nil];
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
 + (NSString *) getProfileImagePathForUser: (NSString *) userKey
 {
     NSString *storagePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
@@ -85,7 +146,6 @@
     // get the NSData from UIImage
     NSData *imageData = [NSData dataWithContentsOfFile: imageFilePath];
 
-    
     UIImage *image = [UIImage imageWithData: imageData];
     
     return image;
@@ -111,6 +171,8 @@
     // get the NSData from UIIMage
     NSData *imageData = UIImageJPEGRepresentation(image, 0.9f);
     
+    DLog(@"Saving to file: %@", profileImageFilePath);
+    
     [imageData writeToFile: profileImageFilePath atomically: YES];
 }
 
@@ -122,6 +184,8 @@
     
     if ([fileManager fileExistsAtPath: imageFilePath])
     {
+        DLog(@"Deleting file: %@", imageFilePath);
+        
         [fileManager removeItemAtPath: imageFilePath error: nil];
     }
 }
@@ -181,6 +245,8 @@
     NSData *imageData = UIImageJPEGRepresentation(image, 0.9f);
     [imageData writeToFile: imageFilePath atomically: YES];
 
+    DLog(@"Saving to file: %@", imageFilePath);
+    
     return imageFilePath;
 }
 
@@ -229,7 +295,9 @@
     for (NSString *fileName in fileEnumerator)
     {
         NSString *filePath = [imageFolderPath stringByAppendingPathComponent: fileName];
-
+        
+        DLog(@"Deleting file: %@", filePath);
+        
         if (![fileManager removeItemAtPath: filePath error: nil])
         {
             return NO;
@@ -270,6 +338,8 @@
 
     if ([fileManager fileExistsAtPath: imageFilePath])
     {
+        DLog(@"Deleting file: %@", imageFilePath);
+        
         return [fileManager removeItemAtPath: imageFilePath error: nil];
     }
 
@@ -320,6 +390,30 @@
     UIGraphicsEndImageContext();
 
     return scaledNewImage;
+}
+
++ (NSArray *) getImageFilenamesForUser: (NSString *) userKey
+{
+    NSString *imageFolderPath = [self getImageStorageFolderPathForUser: userKey];
+    
+    NSArray *filePathsArray = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:imageFolderPath  error:nil];
+    
+    NSMutableArray *filenames = [NSMutableArray new];
+    
+    for (NSString *filePath in filePathsArray)
+    {
+        NSArray *filePathComponents = [filePath componentsSeparatedByString:@"/"];
+        
+        NSString *wholeFilename = [filePathComponents lastObject];
+        
+        NSArray *filenameComponents = [wholeFilename componentsSeparatedByString:@"."];
+        
+        NSString *filename = [filenameComponents firstObject];
+        
+        [filenames addObject:filename];
+    }
+    
+    return filenames;
 }
 
 + (SideMenuView *) getLeftSideViewUsing: (UIImage *) profileImage andUsername: (NSString *) userName andMenuSelections: (NSArray *) menuSelections
@@ -449,30 +543,6 @@
     NSDate *firstDayOfPreviousMonth = [calendarComponents date];
 
     return firstDayOfPreviousMonth;
-}
-
-+ (NSArray *) getImageFilenamesForUser: (NSString *) userKey
-{
-    NSString *imageFolderPath = [self getImageStorageFolderPathForUser: userKey];
-    
-    NSArray *filePathsArray = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:imageFolderPath  error:nil];
-    
-    NSMutableArray *filenames = [NSMutableArray new];
-    
-    for (NSString *filePath in filePathsArray)
-    {
-        NSArray *filePathComponents = [filePath componentsSeparatedByString:@"/"];
-        
-        NSString *wholeFilename = [filePathComponents lastObject];
-        
-        NSArray *filenameComponents = [wholeFilename componentsSeparatedByString:@"."];
-        
-        NSString *filename = [filenameComponents firstObject];
-        
-        [filenames addObject:filename];
-    }
-    
-    return filenames;
 }
 
 @end

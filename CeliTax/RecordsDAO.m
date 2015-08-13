@@ -49,6 +49,7 @@
 -(NSString *)addRecordForCatagory: (Catagory *) catagory
                        andReceipt: (Receipt *) receipt
                       forQuantity: (NSInteger) quantity
+                           orUnit: (NSInteger) unitType
                         forAmount: (float) amount
                              save: (BOOL)save
 {
@@ -60,6 +61,7 @@
         newRecord.catagoryID = [catagory.localID copy];
         newRecord.receiptID = [receipt.localID copy];
         newRecord.quantity = quantity;
+        newRecord.unitType = unitType;
         newRecord.amount = amount;
         newRecord.dataAction = DataActionInsert;
         
@@ -88,6 +90,7 @@
 -(NSString *)addRecordForCatagoryID: (NSString *) catagoryID
                        andReceiptID: (NSString *) receiptID
                         forQuantity: (NSInteger) quantity
+                             orUnit: (NSInteger) unitType
                           forAmount: (float) amount
                                save: (BOOL)save
 {
@@ -101,6 +104,7 @@
         newRecord.catagoryID = [catagoryID copy];
         newRecord.receiptID = [receiptID copy];
         newRecord.quantity = quantity;
+        newRecord.unitType = unitType;
         newRecord.amount = amount;
         newRecord.dataAction = DataActionInsert;
         
@@ -148,6 +152,7 @@
     {
         recordToModify.quantity = record.quantity;
         recordToModify.amount = record.amount;
+        recordToModify.unitType = record.unitType;
         recordToModify.catagoryID = [record.catagoryID copy];
         recordToModify.receiptID = [record.receiptID copy];
         
@@ -208,7 +213,7 @@
     for (Record *record in records)
     {
         //find any existing Record with same id as this new one
-        NSPredicate *findRecord = [NSPredicate predicateWithFormat: @"localID == %ld", record.localID];
+        NSPredicate *findRecord = [NSPredicate predicateWithFormat: @"localID == %@", record.localID];
         NSArray *existingRecord = [localRecords filteredArrayUsingPredicate: findRecord];
         
         if (existingRecord.count)

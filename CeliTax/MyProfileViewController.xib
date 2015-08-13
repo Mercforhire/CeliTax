@@ -70,7 +70,7 @@
                                 <action selector="editProfilePressed:" destination="-1" eventType="touchUpInside" id="1Af-vv-7xN"/>
                             </connections>
                         </button>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bxX-x8-Hub">
+                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bxX-x8-Hub">
                             <rect key="frame" x="23" y="58" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="50" id="1vw-Ua-Izp"/>
@@ -138,7 +138,7 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qh1-uV-NR8" customClass="HollowGreenButton">
-                            <rect key="frame" x="129" y="464" width="62" height="32"/>
+                            <rect key="frame" x="129" y="434" width="62" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="UHF-Ph-xwf"/>
                                 <constraint firstAttribute="height" constant="42" id="dOW-q2-Dcb"/>
@@ -191,7 +191,7 @@
                         <constraint firstItem="bxX-x8-Hub" firstAttribute="centerY" secondItem="kzS-kr-Ivr" secondAttribute="centerY" id="lkA-Mn-dTR"/>
                         <constraint firstItem="uQF-22-iUU" firstAttribute="centerY" secondItem="jU8-ib-Nm7" secondAttribute="centerY" id="now-Rf-ocZ"/>
                         <constraint firstItem="x5i-Y3-Ind" firstAttribute="leading" secondItem="uQF-22-iUU" secondAttribute="trailing" constant="16" id="sbE-Ii-uXz"/>
-                        <constraint firstItem="qh1-uV-NR8" firstAttribute="top" secondItem="jU8-ib-Nm7" secondAttribute="bottom" constant="150" id="tBr-VT-if0"/>
+                        <constraint firstItem="qh1-uV-NR8" firstAttribute="top" secondItem="jU8-ib-Nm7" secondAttribute="bottom" constant="120" id="tBr-VT-if0"/>
                         <constraint firstItem="KLt-no-GYK" firstAttribute="centerY" secondItem="iCs-eO-dWG" secondAttribute="centerY" id="ufp-qf-WE4"/>
                         <constraint firstItem="bxX-x8-Hub" firstAttribute="centerX" secondItem="kzS-kr-Ivr" secondAttribute="centerX" id="vDW-gp-PgP"/>
                         <constraint firstItem="hvg-wU-SNV" firstAttribute="top" secondItem="ti1-xI-Y4g" secondAttribute="top" id="yXC-gK-ydk"/>

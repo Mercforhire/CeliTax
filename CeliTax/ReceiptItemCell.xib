@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -30,7 +30,7 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="00.00" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="USg-Qm-X7u">
+                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0.00" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="USg-Qm-X7u">
                         <rect key="frame" x="236" y="23" width="69" height="30"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -39,7 +39,7 @@
                         </constraints>
                         <color key="textColor" red="0.4549019608" green="0.74901960779999999" blue="0.31764705879999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
-                        <textInputTraits key="textInputTraits"/>
+                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad"/>
                     </textField>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gYj-1z-yOt">
                         <rect key="frame" x="15" y="23" width="50" height="30"/>
@@ -113,8 +113,12 @@
             <size key="customSize" width="524" height="106"/>
             <connections>
                 <outlet property="priceField" destination="atZ-2y-QQd" id="CFX-ex-HBl"/>
-                <outlet property="qtyField" destination="gYj-1z-yOt" id="Wd6-d5-lqV"/>
+                <outlet property="priceUnitFieldDollarSign" destination="Rsq-h4-GX5" id="FmQ-P0-J2T"/>
+                <outlet property="priceUnitLabel" destination="eUb-u9-96I" id="7l7-tv-Edm"/>
+                <outlet property="qtyField" destination="gYj-1z-yOt" id="W8o-Ug-Uhl"/>
+                <outlet property="qtyLabel" destination="HXB-ye-ugy" id="9oB-9m-y4o"/>
                 <outlet property="totalField" destination="USg-Qm-X7u" id="hat-0o-NnN"/>
+                <outlet property="totalLabel" destination="GS3-9d-o46" id="7fA-Ty-5QE"/>
             </connections>
             <point key="canvasLocation" x="572" y="203.5"/>
         </collectionViewCell>

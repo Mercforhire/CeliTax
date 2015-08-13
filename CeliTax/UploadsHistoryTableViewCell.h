@@ -25,6 +25,10 @@
 @property (nonatomic, strong) NSArray *previousMonthReceipts;
 @property (nonatomic, strong) NSArray *viewAllReceipts;
 
+- (void) setToDisplayItems;
+
+- (void) setToDisplayWeight;
+
 // shrink all tables
 - (void) selectNothing;
 

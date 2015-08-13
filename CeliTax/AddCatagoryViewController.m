@@ -91,7 +91,7 @@
     // initialize the Save menu button button
     self.saveButton = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, 50, 25)];
     [self.saveButton setTitle: @"Save" forState: UIControlStateNormal];
-    [self.saveButton.titleLabel setFont: [UIFont latoFontOfSize: 14]];
+    [self.saveButton.titleLabel setFont: [UIFont latoBoldFontOfSize: 14]];
     [self.saveButton setTitleEdgeInsets: UIEdgeInsetsMake(5, 10, 5, 10)];
     [self.saveButton addTarget: self action: @selector(saveCatagoryPressed:) forControlEvents: UIControlEventTouchUpInside];
     [self.lookAndFeel applyDisabledButtonStyleTo: self.saveButton];
@@ -113,12 +113,11 @@
     [self.lookAndFeel applySlightlyDarkerBorderTo: self.colorView];
 
     // initialize the Cancel menu button button
-    self.cancelButton = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, 25, 25)];
-    [self.cancelButton setTitle: @"X" forState: UIControlStateNormal];
-    [self.cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.cancelButton.titleLabel setFont: [UIFont latoBoldFontOfSize: 14]];
+    self.cancelButton = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, 20, 20)];
+    [self.cancelButton setImage:[UIImage imageNamed:@"xIcon.png"] forState:UIControlStateNormal];
     [self.cancelButton addTarget: self action: @selector(cancelEditing) forControlEvents: UIControlEventTouchUpInside];
-
+    [self.lookAndFeel applyTransperantWhiteTextButtonStyleTo:self.cancelButton];
+    
     self.leftMenuItem = [[UIBarButtonItem alloc] initWithCustomView: self.cancelButton];
 }
 
@@ -363,8 +362,12 @@
     popUpTheme.outerShadowBlurRadius = 1;
     popUpTheme.outerShadowOffset = CGSizeMake(0, 2);
     [self.pickerPopover setTheme: popUpTheme];
+    
+    CGRect popoverRect = self.colorView.frame;
+    
+    popoverRect.origin.y += 10;
 
-    [self.pickerPopover presentPopoverFromRect: self.colorView.frame inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
+    [self.pickerPopover presentPopoverFromRect: popoverRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
 }
 
 - (void) showNamesPickerViewController
@@ -378,8 +381,12 @@
     popUpTheme.outerShadowBlurRadius = 1;
     popUpTheme.outerShadowOffset = CGSizeMake(0, 2);
     [self.pickerPopover setTheme: popUpTheme];
+    
+    CGRect popoverRect = self.catagoryNameField.frame;
+    
+    popoverRect.origin.y += 10;
 
-    [self.pickerPopover presentPopoverFromRect: self.catagoryNameField.frame inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
+    [self.pickerPopover presentPopoverFromRect: popoverRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
 }
 
 - (void) showAllColorsPickerViewController
@@ -395,8 +402,12 @@
     popUpTheme.outerShadowOffset = CGSizeMake(0, 2);
 
     [self.pickerPopover setTheme: popUpTheme];
+    
+    CGRect popoverRect = self.colorView.frame;
+    
+    popoverRect.origin.y += 10;
 
-    [self.pickerPopover presentPopoverFromRect: self.colorView.frame inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
+    [self.pickerPopover presentPopoverFromRect: popoverRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
 }
 
 -(void)editPressed:(UIButton *)button
@@ -486,7 +497,7 @@
     if (self.catagoryNameField.text.length)
     {
         [self.rightMenuItem setEnabled: YES];
-        [self.lookAndFeel applySolidGreenButtonStyleTo:self.saveButton];
+        [self.lookAndFeel applyTransperantWhiteTextButtonStyleTo:self.saveButton];
     }
     else
     {
