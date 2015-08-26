@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *unitMLButton;
 @property (weak, nonatomic) IBOutlet UIButton *unitLButton;
 @property (weak, nonatomic) IBOutlet UIButton *unitGButton;
+@property (weak, nonatomic) IBOutlet UIButton *unit100GButton;
 @property (weak, nonatomic) IBOutlet UIButton *unitKGButton;
 
 @end
@@ -28,7 +29,7 @@
     if (self = [super initWithNibName: nibNameOrNil bundle: nibBundleOrNil])
     {
         // Custom initialization
-        self.viewSize = CGSizeMake(60, 204);
+        self.viewSize = CGSizeMake(60, 237);
     }
     
     return self;
@@ -45,6 +46,7 @@
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitMLButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitLButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitGButton];
+            [self.lookAndFeel applyNormalButtonStyleTo:self.unit100GButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitKGButton];
             break;
             
@@ -55,6 +57,7 @@
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitItemButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitLButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitGButton];
+            [self.lookAndFeel applyNormalButtonStyleTo:self.unit100GButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitKGButton];
             
             break;
@@ -66,6 +69,7 @@
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitItemButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitMLButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitGButton];
+            [self.lookAndFeel applyNormalButtonStyleTo:self.unit100GButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitKGButton];
             
             break;
@@ -77,6 +81,19 @@
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitItemButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitMLButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitLButton];
+            [self.lookAndFeel applyNormalButtonStyleTo:self.unit100GButton];
+            [self.lookAndFeel applyNormalButtonStyleTo:self.unitKGButton];
+            
+            break;
+            
+        case Unit100G:
+            //highlight unitGButton and un-highlight the rest
+            [self.lookAndFeel applySolidGreenButtonStyleTo:self.unit100GButton];
+            
+            [self.lookAndFeel applyNormalButtonStyleTo:self.unitItemButton];
+            [self.lookAndFeel applyNormalButtonStyleTo:self.unitMLButton];
+            [self.lookAndFeel applyNormalButtonStyleTo:self.unitLButton];
+            [self.lookAndFeel applyNormalButtonStyleTo:self.unitGButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitKGButton];
             
             break;
@@ -88,6 +105,7 @@
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitItemButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitMLButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitGButton];
+            [self.lookAndFeel applyNormalButtonStyleTo:self.unit100GButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitLButton];
             
             break;
@@ -97,6 +115,7 @@
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitItemButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitMLButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitGButton];
+            [self.lookAndFeel applyNormalButtonStyleTo:self.unit100GButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitLButton];
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitKGButton];
             
@@ -170,6 +189,16 @@
     if (self.delegate)
     {
         [self.delegate selectedUnit:UnitG];
+    }
+}
+
+- (IBAction)g100ButtonPressed:(UIButton *)sender
+{
+    [self highlightUnitButton:Unit100G];
+    
+    if (self.delegate)
+    {
+        [self.delegate selectedUnit:Unit100G];
     }
 }
 

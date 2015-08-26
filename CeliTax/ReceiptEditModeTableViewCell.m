@@ -33,18 +33,12 @@
         // Do something...
         self.leftBar.constant = -15;
         self.rightBar.constant = -15;
-        
-        if (self.addPhotoButtonShouldBeVisible)
-            [self.addPhotoButton setHidden:NO];
-        else
-            [self.addPhotoButton setHidden:YES];
     }
     else if ((state & UITableViewCellStateShowingEditControlMask) && (state & UITableViewCellStateShowingDeleteConfirmationMask))
     {
         // When the cell goes from Showing-the-Edit-Control (-) to Showing-the-Edit-Control (-) AND the Delete Button [Delete]
         // !!! It's important to have this BEFORE just showing the Edit Control because the edit control applies to both cases.!!!
-        // Do something...
-        [self.addPhotoButton setHidden:YES];
+        // Do something...=
     }
     else if (state & UITableViewCellStateShowingEditControlMask)
     {
@@ -52,17 +46,11 @@
         // Do something...
         self.leftBar.constant = -46;
         self.rightBar.constant = -49;
-        
-        if (self.addPhotoButtonShouldBeVisible)
-            [self.addPhotoButton setHidden:NO];
-        else
-            [self.addPhotoButton setHidden:YES];
     }
     else if (state == UITableViewCellStateShowingDeleteConfirmationMask)
     {
         // When the user swipes a row to delete without using the edit button.
-        // Do something...
-        [self.addPhotoButton setHidden:YES];
+        // Do something...=
     }
 }
 

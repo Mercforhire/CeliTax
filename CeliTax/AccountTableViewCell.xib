@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -62,7 +62,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="swA-ir-McF">
-                        <rect key="frame" x="155.5" y="36" width="7" height="14.5"/>
+                        <rect key="frame" x="157" y="36" width="7" height="14.5"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -79,23 +79,14 @@
                             </mask>
                         </variation>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Qty" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ko-lE-Y3j">
-                        <rect key="frame" x="96" y="10" width="60" height="14.5"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="60" id="RwI-S0-wf3"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mTZ-8z-oaO">
-                        <rect key="frame" x="182.5" y="10" width="26.5" height="14.5"/>
+                        <rect key="frame" x="183" y="10" width="26.5" height="14.5"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="9999" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MYV-8a-zAj">
-                        <rect key="frame" x="106.5" y="30" width="40" height="25"/>
+                        <rect key="frame" x="106" y="30" width="40" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="1cP-dk-IWI"/>
                             <constraint firstAttribute="height" constant="25" id="5xp-Jo-zUc"/>
@@ -110,7 +101,7 @@
                         </variation>
                     </textField>
                     <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="99999.99" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G5D-tW-JSA">
-                        <rect key="frame" x="167.5" y="30" width="56" height="25"/>
+                        <rect key="frame" x="169" y="30" width="56" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="56" id="90b-tr-E0M"/>
                             <constraint firstAttribute="width" constant="60" id="Dvh-7r-ryq"/>
@@ -138,6 +129,15 @@
                             <constraint firstAttribute="height" constant="20" id="tbo-AP-0cL"/>
                         </constraints>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Qty." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ko-lE-Y3j">
+                        <rect key="frame" x="96" y="10" width="60" height="14.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="RwI-S0-wf3"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Gj8-1V-E3q" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="0PL-jm-shf"/>

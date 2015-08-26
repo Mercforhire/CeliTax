@@ -8,23 +8,42 @@
 
 #import <Foundation/Foundation.h>
 
-@class ViewControllerFactory, LookAndFeel;
+@class ViewControllerFactory, LookAndFeel, TutorialStep;
+
+@protocol TutorialManagerDelegate <NSObject>
+
+- (void) tutorialLeftSideButtonPressed;
+
+- (void) tutorialRightSideButtonPressed;
+
+@end
 
 @interface TutorialManager : NSObject
+
+typedef void (^TutorialDismissedBlock) ();
+
+@property (nonatomic, weak) id<TutorialManagerDelegate> delegate;
 
 - (instancetype) initWithViewControllerFactory: (ViewControllerFactory *)factory
                                 andLookAndFeel: (LookAndFeel *)lookAndFeel;
 
--(void)startTutorialInViewController: (UIViewController *) viewController andTutorials:(NSArray *)tutorials;
+-(void)displayTutorialInViewController: (UIViewController *) viewController andTutorial:(TutorialStep *)tutorial;
 
--(void)setCurrentTutorialStageForViewController:(UIViewController *)viewController forStage:(NSInteger)stage;
+-(void)dismissTutorial:(TutorialDismissedBlock) dismissBlock;
 
--(void)setTutorialDoneForViewController:(UIViewController *)viewController;
+// after all Tutorials has been show, or skip was clicked, call this function
+-(void)setTutorialsAsShown;
 
--(NSInteger)getCurrentTutorialStageForViewController:(UIViewController *)viewController;
+// unset the Tutorial Shown flag
+-(void)setTutorialsAsNotShown;
 
--(BOOL)areAllTutorialsShown;
+// returns True if tutorials have been shown, false otherwise
+-(BOOL)hasTutorialBeenShown;
 
--(void)resetTutorialStages;
+// before we push a new view to continue the tutorial, we want to set this,
+// so when the next view is pushed, it will know to automatically start its tutorial
+-(void)setAutomaticallyShowTutorialNextTime;
+
+-(BOOL)automaticallyShowTutorialNextTime;
 
 @end

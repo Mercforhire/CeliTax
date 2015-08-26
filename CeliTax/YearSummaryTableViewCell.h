@@ -10,4 +10,15 @@
 
 @interface YearSummaryTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIView *colorView;
+@property (weak, nonatomic) IBOutlet UILabel *catagoryNameLabel;
+@property (weak, nonatomic) IBOutlet UITextField *totalSpentField;
+@property (weak, nonatomic) IBOutlet UITextField *totalAvgCostField;
+@property (weak, nonatomic) IBOutlet UITextField *gfSavingsField;
+@property (weak, nonatomic) IBOutlet UIButton *exclaimationButton;
+
+-(void)showLabels;
+
+-(void)hideLabels;
+
 @end

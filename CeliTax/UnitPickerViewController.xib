@@ -13,6 +13,7 @@
             <string>Lato-Regular</string>
             <string>Lato-Regular</string>
             <string>Lato-Regular</string>
+            <string>Lato-Regular</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -20,6 +21,7 @@
             <connections>
                 <outlet property="bottomContainer" destination="C2f-6p-ZEc" id="jRP-1N-9yt"/>
                 <outlet property="topContainer" destination="5Nm-0C-Mjh" id="HfY-QK-zfr"/>
+                <outlet property="unit100GButton" destination="cLm-fa-v9I" id="rwA-EC-euZ"/>
                 <outlet property="unitGButton" destination="bh6-JB-abD" id="TpD-5G-EHe"/>
                 <outlet property="unitItemButton" destination="moX-an-z3q" id="Y0o-kq-62D"/>
                 <outlet property="unitKGButton" destination="c3J-pd-iBL" id="CNB-WR-H4I"/>
@@ -30,7 +32,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="60" height="204"/>
+            <rect key="frame" x="0.0" y="0.0" width="60" height="237"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Nm-0C-Mjh">
@@ -61,7 +63,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C2f-6p-ZEc">
-                    <rect key="frame" x="0.0" y="42" width="60" height="162"/>
+                    <rect key="frame" x="0.0" y="42" width="60" height="195"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bh6-JB-abD">
                             <rect key="frame" x="6" y="96" width="48" height="25"/>
@@ -79,20 +81,20 @@
                                 <action selector="gButtonPressed:" destination="-1" eventType="touchUpInside" id="Se0-dv-Kz7"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c3J-pd-iBL">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cLm-fa-v9I">
                             <rect key="frame" x="6" y="129" width="48" height="25"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="48" id="aZZ-jh-sBm"/>
-                                <constraint firstAttribute="height" constant="25" id="y3P-X1-yjv"/>
+                                <constraint firstAttribute="height" constant="25" id="CKc-4R-5xa"/>
+                                <constraint firstAttribute="width" constant="48" id="f1K-Oz-TQg"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="13"/>
-                            <state key="normal" title="(kg)">
+                            <state key="normal" title="(100g)">
                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
-                                <action selector="kgButtonPressed:" destination="-1" eventType="touchUpInside" id="IOs-d9-0BW"/>
+                                <action selector="g100ButtonPressed:" destination="-1" eventType="touchUpInside" id="z86-tH-Xud"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eSt-4B-VKb">
@@ -133,6 +135,22 @@
                                 <action selector="mlButtonPressed:" destination="-1" eventType="touchUpInside" id="4Me-3t-r8c"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c3J-pd-iBL">
+                            <rect key="frame" x="6" y="162" width="48" height="25"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="48" id="aZZ-jh-sBm"/>
+                                <constraint firstAttribute="height" constant="25" id="y3P-X1-yjv"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="13"/>
+                            <state key="normal" title="(kg)">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="kgButtonPressed:" destination="-1" eventType="touchUpInside" id="IOs-d9-0BW"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -143,7 +161,10 @@
                         <constraint firstItem="eSt-4B-VKb" firstAttribute="top" secondItem="v8I-lx-hgL" secondAttribute="bottom" constant="6" id="DF6-kR-n87"/>
                         <constraint firstItem="jpL-3R-BXu" firstAttribute="top" secondItem="C2f-6p-ZEc" secondAttribute="top" constant="8" id="HSg-Nn-vJI"/>
                         <constraint firstAttribute="centerX" secondItem="jpL-3R-BXu" secondAttribute="centerX" id="LlO-ik-qI0"/>
+                        <constraint firstAttribute="centerX" secondItem="cLm-fa-v9I" secondAttribute="centerX" id="PVR-YT-Aes"/>
                         <constraint firstAttribute="centerX" secondItem="c3J-pd-iBL" secondAttribute="centerX" id="ZXb-1j-b0n"/>
+                        <constraint firstItem="cLm-fa-v9I" firstAttribute="top" secondItem="bh6-JB-abD" secondAttribute="bottom" constant="8" id="b1x-hP-wCe"/>
+                        <constraint firstItem="c3J-pd-iBL" firstAttribute="top" secondItem="cLm-fa-v9I" secondAttribute="bottom" constant="8" id="lNy-uD-sZi"/>
                         <constraint firstItem="c3J-pd-iBL" firstAttribute="top" secondItem="bh6-JB-abD" secondAttribute="bottom" constant="8" id="sTA-z2-UaG"/>
                         <constraint firstAttribute="centerX" secondItem="bh6-JB-abD" secondAttribute="centerX" id="uZe-oA-khb"/>
                         <constraint firstItem="bh6-JB-abD" firstAttribute="top" secondItem="eSt-4B-VKb" secondAttribute="bottom" constant="8" id="zf9-DB-63R"/>
@@ -151,6 +172,7 @@
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="4Pn-np-tSl"/>
+                            <exclude reference="sTA-z2-UaG"/>
                         </mask>
                     </variation>
                 </view>
@@ -175,7 +197,7 @@
                     <exclude reference="QOO-5t-Qaj"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="150" y="168"/>
+            <point key="canvasLocation" x="150" y="184.5"/>
         </view>
     </objects>
 </document>

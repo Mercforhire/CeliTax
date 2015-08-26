@@ -11,11 +11,9 @@
 		8500FA891B20CAA300F04E98 /* UploadsHistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8500FA871B20CAA300F04E98 /* UploadsHistoryTableViewCell.xib */; };
 		850212801B0A925D00170785 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8502127E1B0A925D00170785 /* CameraViewController.m */; };
 		850212811B0A925D00170785 /* CameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8502127F1B0A925D00170785 /* CameraViewController.xib */; };
-		85081A161B4B728600C5AD10 /* TutorialBubbleUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85081A151B4B728600C5AD10 /* TutorialBubbleUp.xib */; };
-		85081A191B4B7A6900C5AD10 /* TutorialBubbleUp.m in Sources */ = {isa = PBXBuildFile; fileRef = 85081A181B4B7A6900C5AD10 /* TutorialBubbleUp.m */; };
+		85081A161B4B728600C5AD10 /* TutorialBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85081A151B4B728600C5AD10 /* TutorialBubble.xib */; };
+		85081A191B4B7A6900C5AD10 /* TutorialBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = 85081A181B4B7A6900C5AD10 /* TutorialBubble.m */; };
 		85081A1D1B4B88A900C5AD10 /* Triangle.m in Sources */ = {isa = PBXBuildFile; fileRef = 85081A1C1B4B88A900C5AD10 /* Triangle.m */; };
-		85081A201B4CD72800C5AD10 /* TutorialBubbleDown.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85081A1F1B4CD72800C5AD10 /* TutorialBubbleDown.xib */; };
-		85081A231B4CE90200C5AD10 /* TutorialBubbleDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 85081A221B4CE90200C5AD10 /* TutorialBubbleDown.m */; };
 		85100D411AF6BFC9005C24D2 /* UIView+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 85100D401AF6BFC9005C24D2 /* UIView+Helper.m */; };
 		85100D561AF70FBF005C24D2 /* CatagoriesDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 85100D551AF70FBF005C24D2 /* CatagoriesDAO.m */; };
 		852929FA1B3675E20074DD24 /* ReceiptEditModeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 852929F81B3675E20074DD24 /* ReceiptEditModeTableViewCell.m */; };
@@ -35,6 +33,13 @@
 		853AF04A1B41075B00B2C4D8 /* TransferSelectionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 853AF0481B41075B00B2C4D8 /* TransferSelectionsViewController.xib */; };
 		854497041AF734EB0068779A /* Record.m in Sources */ = {isa = PBXBuildFile; fileRef = 854497031AF734EB0068779A /* Record.m */; };
 		854497071AF736DE0068779A /* UserData.m in Sources */ = {isa = PBXBuildFile; fileRef = 854497061AF736DE0068779A /* UserData.m */; };
+		854880B81B85471300E89339 /* receipt_green_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 854880B71B85471300E89339 /* receipt_green_icon.png */; };
+		854880BA1B86312D00E89339 /* camera_add_icon_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 854880B91B86312D00E89339 /* camera_add_icon_green.png */; };
+		854880BC1B86550E00E89339 /* xIconWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 854880BB1B86550E00E89339 /* xIconWhite.png */; };
+		854AC6E31B7D6B2700F0D91D /* YearSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 854AC6E11B7D6B2700F0D91D /* YearSummaryViewController.m */; };
+		854AC6E41B7D6B2700F0D91D /* YearSummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 854AC6E21B7D6B2700F0D91D /* YearSummaryViewController.xib */; };
+		854AC6E91B7D94EE00F0D91D /* YearSummaryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 854AC6E71B7D94EE00F0D91D /* YearSummaryTableViewCell.m */; };
+		854AC6EA1B7D94EE00F0D91D /* YearSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 854AC6E81B7D94EE00F0D91D /* YearSummaryTableViewCell.xib */; };
 		8552AF6C1B326D33001D3650 /* TaxYearsDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 8552AF6B1B326D33001D3650 /* TaxYearsDAO.m */; };
 		855303DB1B0FE953006B3D5F /* RecordsDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 855303DA1B0FE953006B3D5F /* RecordsDAO.m */; };
 		855303DE1B0FE961006B3D5F /* ReceiptsDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 855303DD1B0FE961006B3D5F /* ReceiptsDAO.m */; };
@@ -164,6 +169,9 @@
 		85B115051B5CAEB200C01DC3 /* ReceiptBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B115041B5CAEB200C01DC3 /* ReceiptBuilder.m */; };
 		85B115081B5CAEBD00C01DC3 /* TaxYearBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B115071B5CAEBD00C01DC3 /* TaxYearBuilder.m */; };
 		85B1150B1B5CAEDE00C01DC3 /* BuilderFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B1150A1B5CAEDE00C01DC3 /* BuilderFactory.m */; };
+		85BE69C71B7E6F4A004C24A2 /* YearSavingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BE69C51B7E6F4A004C24A2 /* YearSavingViewController.m */; };
+		85BE69C81B7E6F4A004C24A2 /* YearSavingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85BE69C61B7E6F4A004C24A2 /* YearSavingViewController.xib */; };
+		85BE69CB1B7E754E004C24A2 /* HollowWhiteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BE69CA1B7E754E004C24A2 /* HollowWhiteButton.m */; };
 		85C54B6D1B62C75C00120961 /* MyProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85C54B6B1B62C75C00120961 /* MyProfileViewController.m */; };
 		85C54B6E1B62C75C00120961 /* MyProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85C54B6C1B62C75C00120961 /* MyProfileViewController.xib */; };
 		85C54B841B65A82500120961 /* ProfileBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85C54B811B65A82500120961 /* ProfileBarView.xib */; };
@@ -198,16 +206,11 @@
 		8502127D1B0A925D00170785 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		8502127E1B0A925D00170785 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		8502127F1B0A925D00170785 /* CameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraViewController.xib; sourceTree = "<group>"; };
-		85081A151B4B728600C5AD10 /* TutorialBubbleUp.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialBubbleUp.xib; sourceTree = "<group>"; };
-		85081A171B4B7A6900C5AD10 /* TutorialBubbleUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialBubbleUp.h; sourceTree = "<group>"; };
-		85081A181B4B7A6900C5AD10 /* TutorialBubbleUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialBubbleUp.m; sourceTree = "<group>"; };
+		85081A151B4B728600C5AD10 /* TutorialBubble.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialBubble.xib; sourceTree = "<group>"; };
+		85081A171B4B7A6900C5AD10 /* TutorialBubble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialBubble.h; sourceTree = "<group>"; };
+		85081A181B4B7A6900C5AD10 /* TutorialBubble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialBubble.m; sourceTree = "<group>"; };
 		85081A1B1B4B88A900C5AD10 /* Triangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Triangle.h; sourceTree = "<group>"; };
 		85081A1C1B4B88A900C5AD10 /* Triangle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Triangle.m; sourceTree = "<group>"; };
-		85081A1E1B4CCFF500C5AD10 /* TutorialBubbleProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialBubbleProtocol.h; sourceTree = "<group>"; };
-		85081A1F1B4CD72800C5AD10 /* TutorialBubbleDown.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialBubbleDown.xib; sourceTree = "<group>"; };
-		85081A211B4CE90200C5AD10 /* TutorialBubbleDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialBubbleDown.h; sourceTree = "<group>"; };
-		85081A221B4CE90200C5AD10 /* TutorialBubbleDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialBubbleDown.m; sourceTree = "<group>"; };
-		85081A241B4CECAB00C5AD10 /* TutorialBubbleInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialBubbleInterface.h; sourceTree = "<group>"; };
 		85100D3F1AF6BFC9005C24D2 /* UIView+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Helper.h"; sourceTree = "<group>"; };
 		85100D401AF6BFC9005C24D2 /* UIView+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Helper.m"; sourceTree = "<group>"; };
 		85100D541AF70FBF005C24D2 /* CatagoriesDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatagoriesDAO.h; sourceTree = "<group>"; };
@@ -236,7 +239,16 @@
 		854497031AF734EB0068779A /* Record.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Record.m; sourceTree = "<group>"; };
 		854497051AF736DE0068779A /* UserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserData.h; sourceTree = "<group>"; };
 		854497061AF736DE0068779A /* UserData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserData.m; sourceTree = "<group>"; };
+		854880B71B85471300E89339 /* receipt_green_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = receipt_green_icon.png; sourceTree = "<group>"; };
+		854880B91B86312D00E89339 /* camera_add_icon_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera_add_icon_green.png; sourceTree = "<group>"; };
+		854880BB1B86550E00E89339 /* xIconWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xIconWhite.png; sourceTree = "<group>"; };
 		85491E591B522BAA00C618D9 /* SyncService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncService.h; sourceTree = "<group>"; };
+		854AC6E01B7D6B2700F0D91D /* YearSummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YearSummaryViewController.h; sourceTree = "<group>"; };
+		854AC6E11B7D6B2700F0D91D /* YearSummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YearSummaryViewController.m; sourceTree = "<group>"; };
+		854AC6E21B7D6B2700F0D91D /* YearSummaryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YearSummaryViewController.xib; sourceTree = "<group>"; };
+		854AC6E61B7D94EE00F0D91D /* YearSummaryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YearSummaryTableViewCell.h; sourceTree = "<group>"; };
+		854AC6E71B7D94EE00F0D91D /* YearSummaryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YearSummaryTableViewCell.m; sourceTree = "<group>"; };
+		854AC6E81B7D94EE00F0D91D /* YearSummaryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YearSummaryTableViewCell.xib; sourceTree = "<group>"; };
 		8552AF6A1B326D33001D3650 /* TaxYearsDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaxYearsDAO.h; sourceTree = "<group>"; };
 		8552AF6B1B326D33001D3650 /* TaxYearsDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaxYearsDAO.m; sourceTree = "<group>"; };
 		855303D91B0FE953006B3D5F /* RecordsDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordsDAO.h; sourceTree = "<group>"; };
@@ -446,6 +458,11 @@
 		85B115071B5CAEBD00C01DC3 /* TaxYearBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaxYearBuilder.m; sourceTree = "<group>"; };
 		85B115091B5CAEDE00C01DC3 /* BuilderFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuilderFactory.h; sourceTree = "<group>"; };
 		85B1150A1B5CAEDE00C01DC3 /* BuilderFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuilderFactory.m; sourceTree = "<group>"; };
+		85BE69C41B7E6F4A004C24A2 /* YearSavingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YearSavingViewController.h; sourceTree = "<group>"; };
+		85BE69C51B7E6F4A004C24A2 /* YearSavingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YearSavingViewController.m; sourceTree = "<group>"; };
+		85BE69C61B7E6F4A004C24A2 /* YearSavingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YearSavingViewController.xib; sourceTree = "<group>"; };
+		85BE69C91B7E754E004C24A2 /* HollowWhiteButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HollowWhiteButton.h; sourceTree = "<group>"; };
+		85BE69CA1B7E754E004C24A2 /* HollowWhiteButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HollowWhiteButton.m; sourceTree = "<group>"; };
 		85C54B6A1B62C75C00120961 /* MyProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProfileViewController.h; sourceTree = "<group>"; };
 		85C54B6B1B62C75C00120961 /* MyProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProfileViewController.m; sourceTree = "<group>"; };
 		85C54B6C1B62C75C00120961 /* MyProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyProfileViewController.xib; sourceTree = "<group>"; };
@@ -536,16 +553,11 @@
 		85081A141B4B723300C5AD10 /* Tutorial Bubble */ = {
 			isa = PBXGroup;
 			children = (
-				85081A171B4B7A6900C5AD10 /* TutorialBubbleUp.h */,
-				85081A181B4B7A6900C5AD10 /* TutorialBubbleUp.m */,
-				85081A151B4B728600C5AD10 /* TutorialBubbleUp.xib */,
-				85081A211B4CE90200C5AD10 /* TutorialBubbleDown.h */,
-				85081A221B4CE90200C5AD10 /* TutorialBubbleDown.m */,
-				85081A1F1B4CD72800C5AD10 /* TutorialBubbleDown.xib */,
+				85081A171B4B7A6900C5AD10 /* TutorialBubble.h */,
+				85081A181B4B7A6900C5AD10 /* TutorialBubble.m */,
+				85081A151B4B728600C5AD10 /* TutorialBubble.xib */,
 				85081A1B1B4B88A900C5AD10 /* Triangle.h */,
 				85081A1C1B4B88A900C5AD10 /* Triangle.m */,
-				85081A1E1B4CCFF500C5AD10 /* TutorialBubbleProtocol.h */,
-				85081A241B4CECAB00C5AD10 /* TutorialBubbleInterface.h */,
 			);
 			name = "Tutorial Bubble";
 			sourceTree = "<group>";
@@ -554,8 +566,10 @@
 			isa = PBXGroup;
 			children = (
 				856538421B5FFEF000915A2E /* camera_add_icon.png */,
+				854880B91B86312D00E89339 /* camera_add_icon_green.png */,
 				855CED251B38D2CC0043D20D /* lightning.png */,
 				852FF89A1B7907AA0033A6D9 /* xIcon.png */,
+				854880BB1B86550E00E89339 /* xIconWhite.png */,
 				8537A92C1B289FB1000C848F /* pencil.png */,
 				8537A92A1B288B31000C848F /* camera_icon.png */,
 				852FF89C1B79083A0033A6D9 /* canada_flag_small.png */,
@@ -566,6 +580,7 @@
 				8562738F1B1A8ECF00EECA26 /* greenTrianglePointUp.png */,
 				852FF8981B7901D80033A6D9 /* menu.png */,
 				856538401B5FFC2600915A2E /* receipt_icon.png */,
+				854880B71B85471300E89339 /* receipt_green_icon.png */,
 				8586E5E51B17A04400C1014F /* userIcon.png */,
 			);
 			name = Images;
@@ -610,6 +625,29 @@
 				85D4F4701B544FF600F0803C /* SyncServiceImpl.m */,
 			);
 			name = "Syncing Service";
+			sourceTree = "<group>";
+		};
+		854AC6DF1B7D6A8C00F0D91D /* Year Summary */ = {
+			isa = PBXGroup;
+			children = (
+				854AC6E01B7D6B2700F0D91D /* YearSummaryViewController.h */,
+				854AC6E11B7D6B2700F0D91D /* YearSummaryViewController.m */,
+				854AC6E21B7D6B2700F0D91D /* YearSummaryViewController.xib */,
+				85BE69C41B7E6F4A004C24A2 /* YearSavingViewController.h */,
+				85BE69C51B7E6F4A004C24A2 /* YearSavingViewController.m */,
+				85BE69C61B7E6F4A004C24A2 /* YearSavingViewController.xib */,
+			);
+			name = "Year Summary";
+			sourceTree = "<group>";
+		};
+		854AC6E51B7D94B700F0D91D /* Year Summary Table Cell */ = {
+			isa = PBXGroup;
+			children = (
+				854AC6E61B7D94EE00F0D91D /* YearSummaryTableViewCell.h */,
+				854AC6E71B7D94EE00F0D91D /* YearSummaryTableViewCell.m */,
+				854AC6E81B7D94EE00F0D91D /* YearSummaryTableViewCell.xib */,
+			);
+			name = "Year Summary Table Cell";
 			sourceTree = "<group>";
 		};
 		8552AF691B326CFF001D3650 /* Tax Years */ = {
@@ -951,6 +989,8 @@
 				856538461B608AC200915A2E /* SolidGreenButton.m */,
 				856538481B608ACD00915A2E /* HollowGreenButton.h */,
 				856538491B608ACD00915A2E /* HollowGreenButton.m */,
+				85BE69C91B7E754E004C24A2 /* HollowWhiteButton.h */,
+				85BE69CA1B7E754E004C24A2 /* HollowWhiteButton.m */,
 			);
 			name = Button;
 			sourceTree = "<group>";
@@ -1148,6 +1188,7 @@
 		85A8CAEB1AF071FC0023504D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				854AC6E51B7D94B700F0D91D /* Year Summary Table Cell */,
 				85C54B861B6736D300120961 /* ProfileBar View */,
 				85C54B6F1B648FA300120961 /* Image Editor */,
 				856538441B608AAB00915A2E /* Button */,
@@ -1189,6 +1230,7 @@
 				8556E34F1AF49415003CCDD2 /* Vault */,
 				8562739C1B1B7FCC00EECA26 /* Receipt Break Down */,
 				85A8CAF21AF07A720023504D /* My Account */,
+				854AC6DF1B7D6A8C00F0D91D /* Year Summary */,
 				85A8CAF11AF07A640023504D /* Main Screen */,
 			);
 			name = ViewControllers;
@@ -1528,10 +1570,13 @@
 				85ACE41B1B27F55A0041B7C5 /* Lato-Black.ttf in Resources */,
 				8556E3391AF47C8C003CCDD2 /* AddCatagoryViewController.xib in Resources */,
 				85ACE41D1B27F55A0041B7C5 /* Lato-Bold.ttf in Resources */,
+				85BE69C81B7E6F4A004C24A2 /* YearSavingViewController.xib in Resources */,
+				854AC6EA1B7D94EE00F0D91D /* YearSummaryTableViewCell.xib in Resources */,
 				8556E3651AF53264003CCDD2 /* HelpScreenViewController.xib in Resources */,
 				8556E32F1AF428C4003CCDD2 /* CatagoryTableViewCell.xib in Resources */,
 				855D0B801B177B4400BD5EB4 /* MenuSelectionTableViewCell.xib in Resources */,
 				852FF89B1B7907AA0033A6D9 /* xIcon.png in Resources */,
+				854AC6E41B7D6B2700F0D91D /* YearSummaryViewController.xib in Resources */,
 				855CED261B38D2CC0043D20D /* lightning.png in Resources */,
 				85560FE91B01B82A004D2963 /* SelectionsPickerViewController.xib in Resources */,
 				8582A47E1AF181C20048DCD6 /* RegisterViewController.xib in Resources */,
@@ -1539,12 +1584,13 @@
 				85ACE41F1B27F55A0041B7C5 /* Lato-Hairline.ttf in Resources */,
 				85A8CAD21AF069EA0023504D /* LaunchScreen.xib in Resources */,
 				85560FE31B019857004D2963 /* ColorPickerViewController.xib in Resources */,
+				854880BA1B86312D00E89339 /* camera_add_icon_green.png in Resources */,
 				855CED241B38D0600043D20D /* FlashButtonView.xib in Resources */,
 				8562739B1B1B782600EECA26 /* PasswordRecoverySentViewController.xib in Resources */,
 				858FD7191B40DEE60008B325 /* TransferConfirmationViewController.xib in Resources */,
+				854880BC1B86550E00E89339 /* xIconWhite.png in Resources */,
 				8537A9361B293639000C848F /* ModifyCatagoryTableViewCell.xib in Resources */,
 				85ACE4211B27F55A0041B7C5 /* Lato-Italic.ttf in Resources */,
-				85081A201B4CD72800C5AD10 /* TutorialBubbleDown.xib in Resources */,
 				855894161B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.xib in Resources */,
 				8582A4701AF176660048DCD6 /* SplashViewController.xib in Resources */,
 				85ACE4221B27F55A0041B7C5 /* Lato-Light.ttf in Resources */,
@@ -1555,6 +1601,7 @@
 				85552B401B34EF5400AE77CE /* NoItemsTableViewCell.xib in Resources */,
 				85ACE4231B27F55A0041B7C5 /* Lato-LightItalic.ttf in Resources */,
 				8556E3341AF47C0D003CCDD2 /* MyAccountViewController.xib in Resources */,
+				854880B81B85471300E89339 /* receipt_green_icon.png in Resources */,
 				855BD2C71B25E151001ACBB2 /* ReceiptTimeTableViewCell.xib in Resources */,
 				856024CD1AFA9E6F004C1254 /* ReceiptPic-1.jpg in Resources */,
 				85ACE4241B27F55A0041B7C5 /* Lato-Regular.ttf in Resources */,
@@ -1563,7 +1610,7 @@
 				85ACE4201B27F55A0041B7C5 /* Lato-HairlineItalic.ttf in Resources */,
 				8556E3431AF48591003CCDD2 /* ModifyCatagoryViewController.xib in Resources */,
 				852FF8991B7901D80033A6D9 /* menu.png in Resources */,
-				85081A161B4B728600C5AD10 /* TutorialBubbleUp.xib in Resources */,
+				85081A161B4B728600C5AD10 /* TutorialBubble.xib in Resources */,
 				8581E2931B2E6AD3006CB6F6 /* SelectionsPickerTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1622,9 +1669,12 @@
 				855D0B7F1B177B4400BD5EB4 /* MenuSelectionTableViewCell.m in Sources */,
 				856024B81AFA5E2C004C1254 /* ReceiptCheckingViewController.m in Sources */,
 				85D8D8521AF873AA00197D85 /* AccountTableViewCell.m in Sources */,
+				85BE69CB1B7E754E004C24A2 /* HollowWhiteButton.m in Sources */,
 				8557E1881AF84218003E2880 /* DAOFactory.m in Sources */,
 				8556E3121AF40D43003CCDD2 /* Catagory.m in Sources */,
 				855973911AFD2BF800DFC176 /* MainViewTableViewCell.m in Sources */,
+				854AC6E91B7D94EE00F0D91D /* YearSummaryTableViewCell.m in Sources */,
+				854AC6E31B7D6B2700F0D91D /* YearSummaryViewController.m in Sources */,
 				859AEF6D1B464C8D0085AC6D /* TutorialStep.m in Sources */,
 				85D8D85C1AF924BE00197D85 /* ManipulationServiceImpl.m in Sources */,
 				854497041AF734EB0068779A /* Record.m in Sources */,
@@ -1641,7 +1691,7 @@
 				85B114FF1B5CAE9C00C01DC3 /* CatagoryBuilder.m in Sources */,
 				855BD2C61B25E151001ACBB2 /* ReceiptTimeTableViewCell.m in Sources */,
 				8556E3641AF53264003CCDD2 /* HelpScreenViewController.m in Sources */,
-				85081A191B4B7A6900C5AD10 /* TutorialBubbleUp.m in Sources */,
+				85081A191B4B7A6900C5AD10 /* TutorialBubble.m in Sources */,
 				85B115051B5CAEB200C01DC3 /* ReceiptBuilder.m in Sources */,
 				8556E36B1AF56CEF003CCDD2 /* DataServiceImpl.m in Sources */,
 				85F485881B16D220005E0EDE /* SideMenuView.m in Sources */,
@@ -1670,6 +1720,7 @@
 				8555E0CE1B080DAD00B91138 /* ImageCounterIconView.m in Sources */,
 				8556E3271AF41BFA003CCDD2 /* MainViewController.m in Sources */,
 				855BD2CB1B267029001ACBB2 /* SendReceiptsToViewController.m in Sources */,
+				85BE69C71B7E6F4A004C24A2 /* YearSavingViewController.m in Sources */,
 				856273951B1B780900EECA26 /* PasswordRecoveryViewController.m in Sources */,
 				8537A9351B293639000C848F /* ModifyCatagoryTableViewCell.m in Sources */,
 				852929FA1B3675E20074DD24 /* ReceiptEditModeTableViewCell.m in Sources */,
@@ -1686,7 +1737,6 @@
 				8582A4781AF17DFD0048DCD6 /* LoginViewController.m in Sources */,
 				8556E32E1AF428C4003CCDD2 /* CatagoryTableViewCell.m in Sources */,
 				855CED291B38D3420043D20D /* FlashButtonView.m in Sources */,
-				85081A231B4CE90200C5AD10 /* TutorialBubbleDown.m in Sources */,
 				855919201B6AE3BE001F712C /* BackgroundWorker.m in Sources */,
 				855303DB1B0FE953006B3D5F /* RecordsDAO.m in Sources */,
 				8582A4691AF15BC20048DCD6 /* ConfigurationManager.m in Sources */,

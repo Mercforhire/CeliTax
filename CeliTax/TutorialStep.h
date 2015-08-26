@@ -10,11 +10,13 @@
 
 @interface TutorialStep : NSObject
 
-@property (nonatomic) CGPoint origin;
-
-@property (nonatomic) CGSize size;
+@property (nonatomic) CGRect highlightedItemRect;
 
 @property (nonatomic, strong) NSString *text;
+
+@property (nonatomic, strong) NSString *leftButtonTitle;
+
+@property (nonatomic, strong) NSString *rightButtonTitle;
 
 @property (nonatomic) BOOL pointsUp;
 

@@ -27,6 +27,8 @@
 
 - (void) applyHollowGreenButtonStyleTo: (UIButton *) button;
 
+- (void) applyHollowWhiteButtonStyleTo: (UIButton *) button;
+
 - (void) applySolidGreenButtonStyleTo: (UIButton *) button;
 
 - (void) applyTransperantWhiteTextButtonStyleTo: (UIButton *) button;

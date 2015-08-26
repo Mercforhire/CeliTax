@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "LookAndFeel.h"
+#import "TriangleView.h"
 
 @interface UploadsHistoryTableViewCell : UITableViewCell
 
@@ -16,9 +17,16 @@
 @property (strong, nonatomic) UIColor *catagoryColor;
 
 @property (weak, nonatomic) IBOutlet UILabel *recentUploadsLabel;
+@property (weak, nonatomic) IBOutlet TriangleView *recentUploadsTriangle;
+
 @property (weak, nonatomic) IBOutlet UILabel *previousWeekLabel;
+@property (weak, nonatomic) IBOutlet TriangleView *previousWeekTriangle;
+
 @property (weak, nonatomic) IBOutlet UILabel *previousMonthLabel;
+@property (weak, nonatomic) IBOutlet TriangleView *previousMonthTriangle;
+
 @property (weak, nonatomic) IBOutlet UILabel *viewAllLabel;
+@property (weak, nonatomic) IBOutlet TriangleView *viewAllTriangle;
 
 @property (nonatomic, strong) NSArray *recentUploadReceipts;
 @property (nonatomic, strong) NSArray *previousWeekReceipts;

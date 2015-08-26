@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class LookAndFeel;
+
 @interface HollowWhiteButton : UIButton
+
+- (void) setLookAndFeel: (LookAndFeel *) lookAndFeel;
 
 @end

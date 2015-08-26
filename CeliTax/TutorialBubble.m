@@ -6,27 +6,33 @@
 //  Copyright (c) 2015 CraveNSave. All rights reserved.
 //
 
-#import "TutorialBubbleUp.h"
+#import "TutorialBubble.h"
 #import "LookAndFeel.h"
 #import "Triangle.h"
 
-@interface TutorialBubbleUp ()
+@interface TutorialBubble ()
 
-@property (weak, nonatomic) IBOutlet Triangle *arrowView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *arrowLeftDistance;
+@property (weak, nonatomic) IBOutlet Triangle *topArrowView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topArrowLeftDistance;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topArrowTopDistance;
+
+@property (weak, nonatomic) IBOutlet Triangle *bottomArrowView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomArrowLeftDistance;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewHeightBar;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bubbleViewHeightBar; //+80 than textViewHeightBar
 
 @property (weak, nonatomic) IBOutlet UIView *bubbleView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bubbleLeftDistance;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bubbleHeightBar;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bubbleWidthBar;
 
 @property (weak, nonatomic) IBOutlet UITextView *tutorialTextView;
 
+@property (strong, nonatomic) UIFont *textViewFont;
+
 @end
 
-@implementation TutorialBubbleUp
+@implementation TutorialBubble
 {
-    TutorialBubbleUp *customView;
+    TutorialBubble *customView;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -71,57 +77,108 @@
 
 -(void)setupUI
 {
-    [self.arrowView setLookAndFeel:self.lookAndFeel];
-    [self.arrowView setPointsUp:YES];
-    
-    self.arrowLeftDistance.constant = self.xOriginOfArrow - self.arrowView.frame.size.width / 2;
-    
-    if (self.arrowLeftDistance.constant < 0)
+    switch (self.arrowDirection)
     {
-        [self.arrowView setHidden:YES];
-        
-        self.bubbleLeftDistance.constant = (self.frame.size.width - self.bubbleWidth) / 2;
-    }
-    else
-    {
-        [self.arrowView setHidden:NO];
-        
-        self.bubbleLeftDistance.constant = self.leftMarginOfBubble;
+        case ArrowDirectionNone:
+        {
+            [self.topArrowView setHidden:YES];
+            [self.bottomArrowView setHidden:YES];
+            
+            self.topArrowLeftDistance.constant = 0;
+            self.bottomArrowLeftDistance.constant = 0;
+        }
+            break;
+            
+        case ArrowDirectionUp:
+        {
+            [self.bottomArrowView setHidden:YES];
+            self.bottomArrowLeftDistance.constant = 0;
+            
+            [self.topArrowView setLookAndFeel:self.lookAndFeel];
+            [self.topArrowView setPointsUp:YES];
+            
+            self.topArrowLeftDistance.constant = self.originOfArrow.x - self.topArrowView.frame.size.width / 2;
+        }
+            break;
+            
+        case ArrowDirectionDown:
+        {
+            [self.topArrowView setHidden:YES];
+            self.topArrowLeftDistance.constant = 0;
+            
+            [self.bottomArrowView setLookAndFeel:self.lookAndFeel];
+            [self.bottomArrowView setPointsUp:NO];
+            
+            self.bottomArrowLeftDistance.constant = self.originOfArrow.x - self.bottomArrowView.frame.size.width / 2;
+        }
+            break;
+            
+        default:
+            break;
     }
     
-    self.bubbleHeightBar.constant = self.bubbleHeight;
-    
-    self.bubbleWidthBar.constant = self.bubbleWidth;
+    self.textViewFont = [UIFont latoLightFontOfSize:14];
     
     [self.tutorialTextView setText:self.tutorialText];
     
-    [self.tutorialTextView setBackgroundColor:self.lookAndFeel.appGreenColor];
+    if (self.leftButtonTitle)
+    {
+        [self.leftButton setTitle:self.leftButtonTitle forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.leftButton setEnabled:NO];
+        [self.lookAndFeel applyDisabledButtonStyleTo:self.leftButton];
+    }
     
-    [self.bubbleView setBackgroundColor:self.lookAndFeel.appGreenColor];
+    if (self.rightButtonTitle)
+    {
+        [self.rightButton setTitle:self.rightButtonTitle forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.rightButton setEnabled:NO];
+        [self.lookAndFeel applyDisabledButtonStyleTo:self.rightButton];
+    }
     
-    [self.skipButton setLookAndFeel:self.lookAndFeel];
+    self.bubbleView.layer.cornerRadius = 3.0f;
     
-    [self.continueButton setLookAndFeel:self.lookAndFeel];
+    self.leftButton.layer.cornerRadius = 2.0f;
+    self.rightButton.layer.cornerRadius = 2.0f;
     
-     self.bubbleView.layer.cornerRadius = 10.0f;
+    self.closeButton.layer.cornerRadius = self.closeButton.frame.size.height / 2;
+    self.closeButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.closeButton.layer.borderWidth = 3.0f;
+    self.closeButton.clipsToBounds = YES;
+    
+    // calculate the text height and
+    CGFloat fixedWidth = self.tutorialTextView.frame.size.width;
+    CGSize newSize = [self.tutorialTextView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    CGRect newFrame = self.tutorialTextView.frame;
+    newFrame.size = CGSizeMake(fmaxf(newSize.width, fixedWidth), newSize.height);
+    
+    // set the correct textViewHeightBar and bubbleViewHeightBar
+    [self.textViewHeightBar setConstant:newFrame.size.height];
+    [self.bubbleViewHeightBar setConstant:newFrame.size.height + 80];
+    
+    if (self.originOfArrow.x || self.originOfArrow.y)
+    {
+        if (self.arrowDirection == ArrowDirectionUp)
+        {
+            self.topArrowTopDistance.constant = self.originOfArrow.y;
+        }
+        else
+        {
+            self.topArrowTopDistance.constant = self.originOfArrow.y - self.bubbleViewHeightBar.constant - self.topArrowView.frame.size.height * 2;
+        }
+    }
+    else
+    {
+        //Center the view
+        self.topArrowTopDistance.constant = (self.frame.size.height - self.bubbleViewHeightBar.constant - self.topArrowView.frame.size.height * 2) / 2;
+    }
     
     [self setNeedsUpdateConstraints];
-}
-
-- (IBAction)skipPressed:(UIButton *)sender
-{
-    if (self.delegate)
-    {
-        [self.delegate exitTutorialPressed];
-    }
-}
-
-- (IBAction)continuePressed:(id)sender
-{
-    if (self.delegate)
-    {
-        [self.delegate nextTutorialPressed];
-    }
 }
 
 @end

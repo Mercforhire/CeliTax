@@ -93,6 +93,22 @@
     [button setTitleColor: [self appGreenColor] forState: UIControlStateNormal];
 }
 
+- (void) applyHollowWhiteButtonStyleTo: (UIButton *) button
+{
+    [button setBackgroundColor: [self appGreenColor]];
+    button.layer.cornerRadius = 3.0f;
+    button.layer.borderColor = [UIColor whiteColor].CGColor;
+    button.layer.borderWidth = 1.0f;
+    
+    button.layer.shadowColor = [UIColor whiteColor].CGColor;
+    button.layer.shadowOffset = CGSizeMake(0, 1.5);
+    button.layer.shadowOpacity = 1;
+    button.layer.shadowRadius = 0;
+    [button setClipsToBounds: NO];
+    
+    [button setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
+}
+
 - (void) applySolidGreenButtonStyleTo: (UIButton *) button
 {
     [button setBackgroundColor: [self appGreenColor]];

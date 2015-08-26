@@ -149,6 +149,7 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
     if (indexPath.row == self.selectedButtonIndex)
     {
         [self.lookAndFeel applyGrayBorderTo: cell.contentView];
+        cell.contentView.layer.borderWidth = 2;
     }
     else
     {
@@ -176,7 +177,7 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
 
         if (self.delegate)
         {
-            [self.delegate buttonClickedWithIndex: indexPath.row andName: clickedName];
+            [self.delegate buttonClickedWithIndex: indexPath.row andName: clickedName highlightTextField:YES];
         }
 
         self.selectedButtonIndex = indexPath.row;

@@ -14,9 +14,17 @@ typedef enum : NSUInteger
     UnitML,
     UnitL,
     UnitG,
+    Unit100G,
     UnitKG,
     UnitCount
 } UnitTypes;
+
+#define kUnitItemKey            @"UnitItem"
+#define kUnitMLKey              @"UnitML"
+#define kUnitLKey               @"UnitL"
+#define kUnitGKey               @"UnitG"
+#define kUnit100GKey            @"Unit100G"
+#define kUnitKGKey              @"UnitKG"
 
 @interface Record : NSObject <NSCoding, NSCopying>
 
@@ -39,5 +47,9 @@ typedef enum : NSUInteger
 - (NSDictionary *) toJson;
 
 -(void)copyDataFromRecord:(Record *)thisOne;
+
++ (NSInteger)unitTypeStringToUnitTypeInt:(NSString *)unitTypeString;
+
++ (NSString *)unitTypeIntToUnitTypeString:(NSInteger)unitTypeInt;
 
 @end

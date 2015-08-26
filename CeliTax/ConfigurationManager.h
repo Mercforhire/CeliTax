@@ -18,8 +18,4 @@
 
 -(void)setCurrentTaxYear:(NSInteger)taxYear;
 
--(BOOL)isTutorialOn;
-
--(void)setTutorialON:(BOOL)on;
-
 @end

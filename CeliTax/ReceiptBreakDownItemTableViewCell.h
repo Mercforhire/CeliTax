@@ -25,6 +25,10 @@
 
 -(void)makeCellAppearActive;
 
+-(void)showLabels;
+
+-(void)hideLabels;
+
 -(void)setToDisplayItem;
 
 -(void)setToDisplayUnit:(NSInteger)unitType;

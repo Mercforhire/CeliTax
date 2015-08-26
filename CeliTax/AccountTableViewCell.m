@@ -29,14 +29,7 @@
     [self.colorBox setBackgroundColor:[UIColor lightGrayColor]];
     [self.catagoryNameLabel setTextColor:[UIColor lightGrayColor]];
     
-    [self.totalQuantityField setHidden:YES];
-    [self.totalAmountField setHidden:YES];
-    [self.averageNationalPriceField setHidden:YES];
-    [self.totalQtyLabel setHidden:YES];
-    [self.totalAmountLabel setHidden:YES];
-    [self.avgPriceLabel setHidden:YES];
-    [self.totalAmountDollarSign setHidden:YES];
-    [self.avgPriceDollarSign setHidden:YES];
+    [self hideLabels];
 }
 
 -(void)makeCellAppearActive
@@ -44,6 +37,11 @@
     [self.colorBox setBackgroundColor:self.colorBoxColor];
     [self.catagoryNameLabel setTextColor:[UIColor blackColor]];
     
+    [self showLabels];
+}
+
+-(void)showLabels
+{
     [self.totalQuantityField setHidden:NO];
     [self.totalAmountField setHidden:NO];
     [self.averageNationalPriceField setHidden:NO];
@@ -54,5 +52,16 @@
     [self.avgPriceDollarSign setHidden:NO];
 }
 
+-(void)hideLabels
+{
+    [self.totalQuantityField setHidden:YES];
+    [self.totalAmountField setHidden:YES];
+    [self.averageNationalPriceField setHidden:YES];
+    [self.totalQtyLabel setHidden:YES];
+    [self.totalAmountLabel setHidden:YES];
+    [self.avgPriceLabel setHidden:YES];
+    [self.totalAmountDollarSign setHidden:YES];
+    [self.avgPriceDollarSign setHidden:YES];
+}
 
 @end

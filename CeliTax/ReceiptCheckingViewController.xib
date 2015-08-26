@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -63,6 +63,19 @@
                         <action selector="addCatagoryPressed:" destination="-1" eventType="touchUpInside" id="NJV-eZ-Lei"/>
                     </connections>
                 </button>
+                <button opaque="NO" alpha="0.59999999999999964" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6NK-Tw-ieb" userLabel="Add Photo Button">
+                    <rect key="frame" x="10" y="465" width="43" height="33"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="43" id="IHI-PX-O2s"/>
+                        <constraint firstAttribute="height" constant="33" id="uEA-kA-Ohb"/>
+                    </constraints>
+                    <state key="normal" image="camera_add_icon_green.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="addImagePressed:" destination="-1" eventType="touchUpInside" id="ymp-dw-wXP"/>
+                    </connections>
+                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tP5-SY-lVh">
                     <rect key="frame" x="0.0" y="378" width="320" height="130"/>
                     <subviews>
@@ -80,7 +93,7 @@
                                 <constraint firstAttribute="width" constant="92" id="MEn-7A-83Y"/>
                                 <constraint firstAttribute="height" constant="32" id="nYm-qb-NlR"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
+                            <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
                             <state key="normal" title="Add">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -161,7 +174,7 @@
                                 <constraint firstAttribute="height" constant="32" id="hVx-fy-Ro7"/>
                                 <constraint firstAttribute="width" constant="82" id="ixM-bf-1bQ"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
+                            <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
                             <state key="normal" title="Delete">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -251,6 +264,7 @@
                 <constraint firstAttribute="bottom" secondItem="F7n-zK-aNw" secondAttribute="bottom" id="BMi-J1-gwP"/>
                 <constraint firstAttribute="bottom" secondItem="wgS-bS-mwy" secondAttribute="bottom" id="CEx-Zd-Ngb"/>
                 <constraint firstItem="wgS-bS-mwy" firstAttribute="top" secondItem="F7n-zK-aNw" secondAttribute="bottom" id="F95-Ex-p4T"/>
+                <constraint firstItem="wgS-bS-mwy" firstAttribute="top" secondItem="6NK-Tw-ieb" secondAttribute="bottom" constant="10" id="IJG-Dn-Xo7"/>
                 <constraint firstItem="wgS-bS-mwy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="JmH-qf-E5H"/>
                 <constraint firstItem="rJV-dd-ujZ" firstAttribute="centerY" secondItem="Dzw-c2-aIg" secondAttribute="centerY" id="O1P-aU-tfL"/>
                 <constraint firstItem="wgS-bS-mwy" firstAttribute="top" secondItem="Dzw-c2-aIg" secondAttribute="bottom" constant="10" id="OOc-qr-404"/>
@@ -265,6 +279,7 @@
                 <constraint firstAttribute="bottom" secondItem="mSN-Eh-8vn" secondAttribute="bottom" id="iJV-T7-iuq"/>
                 <constraint firstItem="E0U-n2-Zu2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="145" id="ijL-zu-D6e"/>
                 <constraint firstItem="Dzw-c2-aIg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="kSG-q4-S8K"/>
+                <constraint firstItem="6NK-Tw-ieb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="lEc-Fb-4hf"/>
                 <constraint firstAttribute="centerX" secondItem="tP5-SY-lVh" secondAttribute="centerX" id="lpx-PO-7Qg"/>
                 <constraint firstAttribute="trailing" secondItem="tP5-SY-lVh" secondAttribute="trailing" id="oT0-05-GW2"/>
                 <constraint firstItem="F7n-zK-aNw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="pcS-Mg-bSr"/>
@@ -294,4 +309,7 @@
             <point key="canvasLocation" x="563" y="383"/>
         </view>
     </objects>
+    <resources>
+        <image name="camera_add_icon_green.png" width="360" height="270"/>
+    </resources>
 </document>

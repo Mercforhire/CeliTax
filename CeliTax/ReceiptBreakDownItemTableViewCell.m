@@ -34,11 +34,9 @@
     [self.colorBoxView setBackgroundColor:[UIColor lightGrayColor]];
     [self.catagoryName setTextColor:[UIColor lightGrayColor]];
     
-//    [self.quantityLabel setHidden:YES];
+    [self hideLabels];
     [self.quantityField setHidden:YES];
-    [self.pricePerItemLabel setHidden:YES];
     [self.pricePerItemField setHidden:YES];
-    [self.dollarSignLabel setHidden:YES];
 }
 
 -(void)makeCellAppearActive
@@ -46,18 +44,30 @@
     [self.colorBoxView setBackgroundColor:self.catagoryColor];
     [self.catagoryName setTextColor:[UIColor blackColor]];
     
-//    [self.quantityLabel setHidden:NO];
+    [self showLabels];
     [self.quantityField setHidden:NO];
-    [self.pricePerItemLabel setHidden:NO];
     [self.pricePerItemField setHidden:NO];
+}
+
+-(void)showLabels
+{
+    [self.quantityLabel setHidden:NO];
+    [self.pricePerItemLabel setHidden:NO];
     [self.dollarSignLabel setHidden:NO];
+}
+
+-(void)hideLabels
+{
+    [self.quantityLabel setHidden:YES];
+    [self.pricePerItemLabel setHidden:YES];
+    [self.dollarSignLabel setHidden:YES];
 }
 
 -(void)setToDisplayItem
 {
-    [self.quantityLabel setText:@"Qty"];
+    [self.quantityLabel setText:@"Qty."];
     
-    [self.pricePerItemLabel setText:@"Price per Item"];
+    [self.pricePerItemLabel setText:@"Price/Item"];
 }
 
 -(void)setToDisplayUnit:(NSInteger)unitType
@@ -78,6 +88,10 @@
             unitSuffix = @"(g)";
             break;
             
+        case Unit100G:
+            unitSuffix = @"(100g)";
+            break;
+            
         case UnitKG:
             unitSuffix = @"(kg)";
             break;
@@ -94,6 +108,7 @@
             break;
             
         case UnitG:
+        case Unit100G:
         case UnitKG:
             [self.quantityLabel setText:[NSString stringWithFormat:@"Weight-%@", unitSuffix]];
             break;

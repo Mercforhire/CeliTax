@@ -7,15 +7,54 @@
 //
 
 #import "HollowWhiteButton.h"
+#import "LookAndFeel.h"
 
 @implementation HollowWhiteButton
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+{
+    LookAndFeel *myLookAndFeel;
 }
-*/
+
+- (void) applyDefaults
+{
+    [self setEnabled:self.enabled];
+}
+
+- (void) setLookAndFeel: (LookAndFeel *) lookAndFeel;
+{
+    myLookAndFeel = lookAndFeel;
+    
+    [self applyDefaults];
+}
+
+- (void)setHighlighted:(BOOL)highlighted
+{
+    [super setHighlighted:highlighted];
+    
+    if (highlighted)
+    {
+        self.backgroundColor = [UIColor whiteColor];
+        [self.titleLabel setTextColor:myLookAndFeel.appGreenColor];
+    }
+    else
+    {
+        self.backgroundColor = myLookAndFeel.appGreenColor;
+        [self.titleLabel setTextColor:[UIColor whiteColor]];
+        
+    }
+}
+
+- (void) setEnabled: (BOOL) enabled
+{
+    [super setEnabled: enabled];
+    
+    if (enabled)
+    {
+        [myLookAndFeel applyHollowWhiteButtonStyleTo:self];
+    }
+    else
+    {
+        [myLookAndFeel applyDisabledButtonStyleTo:self];
+    }
+}
 
 @end

@@ -26,6 +26,7 @@
 #import "HollowGreenButton.h"
 #import "MyProfileViewController.h"
 #import "UIView+Helper.h"
+#import "YearSavingViewController.h"
 
 #define kCatagoryTableRowHeight                     65
 
@@ -114,8 +115,8 @@
     
     // set up the National Average Cost ? button
     
-    self.navHelpButton = [[UIButton alloc] initWithFrame:CGRectMake(pieChartContainer.frame.size.width - 27 - 15,
-                                                                         pieChartContainer.frame.size.height - 27 - 15,
+    self.navHelpButton = [[UIButton alloc] initWithFrame:CGRectMake(pieChartContainer.frame.size.width - 27 - 35,
+                                                                         pieChartContainer.frame.size.height - 27,
                                                                          27,
                                                                          27)];
     
@@ -221,7 +222,7 @@
         
         for (Record *record in recordsForThisCatagory)
         {
-            NSString *key = [self unitTypeIntToUnitTypeString:record.unitType];
+            NSString *key = [Record unitTypeIntToUnitTypeString:record.unitType];
             
             NSMutableArray *recordsOfSameType = [recordsOfEachType objectForKey:key];
             
@@ -256,11 +257,10 @@
             {
                 self.currentlySelectedRow = rowArray;
             }
-                
         }
         
         //Process the Unit Types in order: Item, ML, L, G, KG
-        NSArray *orderOfUnitTypesToProcess = [NSArray arrayWithObjects:kUnitItemKey, kUnitMLKey, kUnitLKey, kUnitGKey, kUnitKGKey, nil];
+        NSArray *orderOfUnitTypesToProcess = [NSArray arrayWithObjects:kUnitItemKey, kUnitMLKey, kUnitLKey, kUnitGKey, kUnit100GKey, kUnitKGKey, nil];
         
         for (NSString *key in orderOfUnitTypesToProcess)
         {
@@ -340,12 +340,6 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    //Create tutorial items if it's ON
-    if ([self.configurationManager isTutorialOn])
-    {
-        [self displayTutorials];
-    }
 }
 
 - (void) viewWillDisappear: (BOOL) animated
@@ -378,67 +372,6 @@
     NSString *receiptID = [notificationDictionary objectForKey: kReceiptIDKey];
 
     [self.navigationController pushViewController: [self.viewControllerFactory createReceiptBreakDownViewControllerForReceiptID: receiptID cameFromReceiptCheckingViewController: NO] animated: YES];
-}
-
--(NSInteger)unitTypeStringToUnitTypeInt:(NSString *)unitTypeString
-{
-    if ([unitTypeString isEqualToString:kUnitItemKey])
-    {
-        return UnitItem;
-    }
-    else if ([unitTypeString isEqualToString:kUnitGKey])
-    {
-        return UnitG;
-    }
-    else if ([unitTypeString isEqualToString:kUnitKGKey])
-    {
-        return UnitKG;
-    }
-    else if ([unitTypeString isEqualToString:kUnitLKey])
-    {
-        return UnitL;
-    }
-    else if ([unitTypeString isEqualToString:kUnitMLKey])
-    {
-        return UnitML;
-    }
-    
-    return -1;
-}
-             
--(NSString *)unitTypeIntToUnitTypeString:(NSInteger)unitTypeInt
-{
-    switch (unitTypeInt)
-    {
-        case UnitItem:
-            return kUnitItemKey;
-            
-            break;
-            
-        case UnitML:
-            return kUnitMLKey;
-            
-            break;
-            
-        case UnitL:
-            return kUnitLKey;
-            
-            break;
-            
-        case UnitG:
-            return kUnitGKey;
-            
-            break;
-            
-        case UnitKG:
-            return kUnitKGKey;
-            
-            break;
-            
-        default:
-            return nil;
-            break;
-    }
 }
 
 -(NSArray *)getFirstRowForCatagory:(Catagory *)catagory
@@ -484,7 +417,63 @@
 
 - (IBAction) calculateButtonPressed: (UIButton *) sender
 {
-    [AlertDialogsProvider showWorkInProgressDialog];
+    BOOL allNationalAverageCostsEntered = YES;
+    
+    BOOL hasAtLeastOneItem = NO;
+    
+    // Check if all rows containing Records have national average entered
+    for (NSMutableArray *catagoryRow in self.catagoryRows)
+    {
+        // (CatagoryID, UnitTypeString, Total Qty/Total Weight, Total $ amount, national average cost)
+        
+        NSInteger quantityOrWeight = [[catagoryRow objectAtIndex:2] integerValue];
+        
+        float amountPerItemOrAllWeight = [[catagoryRow objectAtIndex:3] floatValue];
+        
+        float nationalAverageCost = [[catagoryRow objectAtIndex:4] floatValue];
+        
+        if (quantityOrWeight > 0 && amountPerItemOrAllWeight > 0)
+        {
+            hasAtLeastOneItem = YES;
+        }
+        
+        if (quantityOrWeight > 0 && amountPerItemOrAllWeight > 0 && nationalAverageCost < 0)
+        {
+            allNationalAverageCostsEntered = NO;
+            
+            break;
+        }
+    }
+    
+    if (!hasAtLeastOneItem)
+    {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Sorry"
+                                                          message:@"This tax year has no recorded items."
+                                                         delegate:nil
+                                                cancelButtonTitle:nil
+                                                otherButtonTitles:@"Ok",nil];
+        
+        [message show];
+        
+        return;
+    }
+    
+    if (allNationalAverageCostsEntered)
+    {
+        [self.navigationController pushViewController: [self.viewControllerFactory createYearSavingViewController] animated: YES];
+    }
+    else
+    {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Sorry"
+                                                          message:@"Not all category unit types have its national average cost entered."
+                                                         delegate:nil
+                                                cancelButtonTitle:nil
+                                                otherButtonTitles:@"Ok",nil];
+        
+        [message show];
+        
+        return;
+    }
 }
 
 - (void) editProfilePressed: (UIButton *) sender
@@ -524,7 +513,7 @@
     
     NSString *unitTypeString = [dataForThisRow objectAtIndex:1];
     
-    NSInteger unitType = [self unitTypeStringToUnitTypeInt:unitTypeString];
+    NSInteger unitType = [Record unitTypeStringToUnitTypeInt:unitTypeString];
     
     // if user types nothing for a textField, we default it to ----
     if (textField.text.length == 0 || textField.text.floatValue == 0)
@@ -533,7 +522,7 @@
         
         [self.manipulationService deleteNationalAverageCostForCatagoryID:catagoryID andUnitType:unitType save:YES];
         
-        [dataForThisRow setObject:[NSNumber numberWithFloat:0] atIndexedSubscript:4];
+        [dataForThisRow setObject:[NSNumber numberWithFloat:-1] atIndexedSubscript:4];
         
         [self.catagoryRows setObject:dataForThisRow atIndexedSubscript:textField.tag];
     }
@@ -586,7 +575,6 @@
 {
     Catagory *thisCatagory = [self.catagories objectAtIndex: index];
 
-    //TODO: Selected the first row that is the above Catagory
     self.currentlySelectedRow = [self getFirstRowForCatagory:thisCatagory];
 
     self.catagoryInfosToShow = nil;
@@ -634,7 +622,7 @@
         
         NSArray *catagoryInfos =
         [self.dataService fetchLatestNthCatagoryInfosforCatagory: catagoryID
-                                                     andUnitType: [self unitTypeStringToUnitTypeInt:unitTypeString]
+                                                     andUnitType: [Record unitTypeStringToUnitTypeInt:unitTypeString]
                                                           forNth: 5
                                                        inTaxYear: self.configurationManager.getCurrentTaxYear];
         
@@ -671,7 +659,7 @@
     NSString *catagoryID = [self.currentlySelectedRow firstObject];
     NSString *unitTypeString = [self.currentlySelectedRow objectAtIndex:1];
     
-    NSArray *catagoryInfos = [self.dataService fetchCatagoryInfoFromDate:mondayOfPreviousWeek toDate:mondayOfThisWeek inTaxYear:self.configurationManager.getCurrentTaxYear forCatagory:catagoryID forUnitType:[self unitTypeStringToUnitTypeInt:unitTypeString]];
+    NSArray *catagoryInfos = [self.dataService fetchCatagoryInfoFromDate:mondayOfPreviousWeek toDate:mondayOfThisWeek inTaxYear:self.configurationManager.getCurrentTaxYear forCatagory:catagoryID forUnitType:[Record unitTypeStringToUnitTypeInt:unitTypeString]];
     
     DLog(@"%@", catagoryInfos);
     self.catagoryInfosToShow = catagoryInfos;
@@ -707,7 +695,7 @@
     NSString *catagoryID = [self.currentlySelectedRow firstObject];
     NSString *unitTypeString = [self.currentlySelectedRow objectAtIndex:1];
     
-    NSArray *catagoryInfos = [self.dataService fetchCatagoryInfoFromDate:firstDayOfPreviousMonth toDate:firstDayOfThisMonth inTaxYear:self.configurationManager.getCurrentTaxYear forCatagory:catagoryID forUnitType:[self unitTypeStringToUnitTypeInt:unitTypeString]];
+    NSArray *catagoryInfos = [self.dataService fetchCatagoryInfoFromDate:firstDayOfPreviousMonth toDate:firstDayOfThisMonth inTaxYear:self.configurationManager.getCurrentTaxYear forCatagory:catagoryID forUnitType:[Record unitTypeStringToUnitTypeInt:unitTypeString]];
     
     DLog(@"%@", catagoryInfos);
     self.catagoryInfosToShow = catagoryInfos;
@@ -738,7 +726,7 @@
     NSString *unitTypeString = [self.currentlySelectedRow objectAtIndex:1];
 
     // all receipts from this catagory
-    NSArray *catagoryInfos = [self.dataService fetchLatestNthCatagoryInfosforCatagory:catagoryID andUnitType:[self unitTypeStringToUnitTypeInt:unitTypeString] forNth:-1 inTaxYear:self.configurationManager.getCurrentTaxYear];
+    NSArray *catagoryInfos = [self.dataService fetchLatestNthCatagoryInfosforCatagory:catagoryID andUnitType:[Record unitTypeStringToUnitTypeInt:unitTypeString] forNth:-1 inTaxYear:self.configurationManager.getCurrentTaxYear];
     
     self.catagoryInfosToShow = catagoryInfos;
     
@@ -793,6 +781,13 @@
         }
 
         // (CatagoryID, UnitTypeString, Total Qty/Total Weight, Total $ amount, national average cost)
+        NSArray *dataForPreviousRow;
+        
+        if (indexPath.row >= 2)
+        {
+            dataForPreviousRow = [self.catagoryRows objectAtIndex:(indexPath.row - 2) / 2];
+        }
+        
         NSArray *dataForThisRow = [self.catagoryRows objectAtIndex:indexPath.row / 2];
         
         NSString *catagoryID = [dataForThisRow firstObject];
@@ -825,6 +820,10 @@
         else if ([unitTypeString isEqualToString:kUnitGKey])
         {
             [cell.catagoryNameLabel setText: @"(g)"];
+        }
+        else if ([unitTypeString isEqualToString:kUnit100GKey])
+        {
+            [cell.catagoryNameLabel setText: @"(100g)"];
         }
         else if ([unitTypeString isEqualToString:kUnitKGKey])
         {
@@ -880,6 +879,32 @@
         else
         {
             [cell makeCellAppearActive];
+            
+            if (dataForPreviousRow)
+            {
+                // hide cell labels if the previous cell is same type
+                NSString *unitTypeStringPreviousRow = [dataForPreviousRow objectAtIndex:1];
+                
+                BOOL isCurrentRowAItem = [unitTypeString isEqualToString:kUnitItemKey];
+                
+                BOOL isPreviousRowAItem = [unitTypeStringPreviousRow isEqualToString:kUnitItemKey];
+                
+                if (isCurrentRowAItem == isPreviousRowAItem)
+                {
+                    [cell hideLabels];
+                }
+                else
+                {
+                    [cell showLabels];
+                }
+                
+                [cell.avgPriceLabel setHidden:YES];
+            }
+            else
+            {
+                // this is the first row
+                [cell showLabels];
+            }
         }
         
         [self.lookAndFeel applySlightlyDarkerBorderTo: cell.colorBox];
@@ -915,26 +940,50 @@
         UITapGestureRecognizer *recentUploadsLabelTap =
             [[UITapGestureRecognizer alloc] initWithTarget: self
                                                     action: @selector(recentUploadsLabelPressed)];
+        
+        UITapGestureRecognizer *recentUploadsLabelTap2 =
+        [[UITapGestureRecognizer alloc] initWithTarget: self
+                                                action: @selector(recentUploadsLabelPressed)];
 
         UITapGestureRecognizer *previousWeekLabelTap =
             [[UITapGestureRecognizer alloc] initWithTarget: self
                                                     action: @selector(previousWeekLabelPressed)];
+        
+        UITapGestureRecognizer *previousWeekLabelTap2 =
+        [[UITapGestureRecognizer alloc] initWithTarget: self
+                                                action: @selector(previousWeekLabelPressed)];
 
         UITapGestureRecognizer *previousMonthLabelTap =
             [[UITapGestureRecognizer alloc] initWithTarget: self
                                                     action: @selector(previousMonthLabelPressed)];
+        
+        UITapGestureRecognizer *previousMonthLabelTap2 =
+        [[UITapGestureRecognizer alloc] initWithTarget: self
+                                                action: @selector(previousMonthLabelPressed)];
 
         UITapGestureRecognizer *viewAllLabelTap =
             [[UITapGestureRecognizer alloc] initWithTarget: self
                                                     action: @selector(viewAllLabelPressed)];
+        
+        UITapGestureRecognizer *viewAllLabelTap2 =
+        [[UITapGestureRecognizer alloc] initWithTarget: self
+                                                action: @selector(viewAllLabelPressed)];
 
         [cell.recentUploadsLabel addGestureRecognizer: recentUploadsLabelTap];
+        [cell.recentUploadsTriangle setUserInteractionEnabled:YES];
+        [cell.recentUploadsTriangle addGestureRecognizer: recentUploadsLabelTap2];
 
         [cell.previousWeekLabel addGestureRecognizer: previousWeekLabelTap];
+        [cell.previousWeekTriangle setUserInteractionEnabled:YES];
+        [cell.previousWeekTriangle addGestureRecognizer: previousWeekLabelTap2];
 
         [cell.previousMonthLabel addGestureRecognizer: previousMonthLabelTap];
+        [cell.previousMonthTriangle setUserInteractionEnabled:YES];
+        [cell.previousMonthTriangle addGestureRecognizer: previousMonthLabelTap2];
 
         [cell.viewAllLabel addGestureRecognizer: viewAllLabelTap];
+        [cell.viewAllTriangle setUserInteractionEnabled:YES];
+        [cell.viewAllTriangle addGestureRecognizer: viewAllLabelTap2];
 
         NSArray *dataForThisRow = [self.catagoryRows objectAtIndex:(indexPath.row - 1) / 2];
         
@@ -1053,48 +1102,7 @@
 
 -(void)displayTutorials
 {
-    NSMutableArray *tutorials = [NSMutableArray new];
-    
-    //Each Stage represents a different group of Tutorial pop ups
-    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
-    
-    if ( currentTutorialStage == 1 )
-    {
-        TutorialStep *tutorialStep1 = [TutorialStep new];
-        
-        tutorialStep1.text = @"Quickly view purchase totals for each category.\n\nClick a receipt to easily edit/transfer/delete the purchase allocations";
-        tutorialStep1.size = CGSizeMake(290, 120);
-        tutorialStep1.pointsUp = YES;
-        
-        [tutorials addObject:tutorialStep1];
-        
-        TutorialStep *tutorialStep2 = [TutorialStep new];
-        
-        tutorialStep2.origin = self.calculateButton.center;
-        
-        tutorialStep2.text = @"The Calculate button is the MOST important feature. Simply click Calculate and we will provide you with the correct GF tax claim based on your allocations for you!";
-        tutorialStep2.size = CGSizeMake(290, 120);
-        tutorialStep2.pointsUp = NO;
-        
-        [tutorials addObject:tutorialStep2];
-        
-        TutorialStep *tutorialStep3 = [TutorialStep new];
-        
-        tutorialStep3.text = @"All you need to do is add in the average price of a regular food item per category before the calculate feature can be used.\n\nYou can find these average food price items either online or in the quick help link we have provided";
-        tutorialStep3.size = CGSizeMake(290, 160);
-        tutorialStep3.pointsUp = YES;
-        
-        [tutorials addObject:tutorialStep3];
-        
-        [self.tutorialManager setTutorialDoneForViewController:self];
-    }
-    else
-    {
-        //don't show any tutorial
-        return;
-    }
-    
-    [self.tutorialManager startTutorialInViewController:self andTutorials:tutorials];
+
 }
 
 @end

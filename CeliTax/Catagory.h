@@ -9,12 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#define kUnitItemKey            @"UnitItem"
-#define kUnitMLKey              @"UnitML"
-#define kUnitLKey               @"UnitL"
-#define kUnitGKey               @"UnitG"
-#define kUnitKGKey              @"UnitKG"
-
 @interface Catagory : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, copy) NSString    *localID;

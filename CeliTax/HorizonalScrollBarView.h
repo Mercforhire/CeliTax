@@ -13,7 +13,7 @@
 
 -(void)buttonUnselected;
 
--(void)buttonClickedWithIndex:(NSInteger)index andName:(NSString *)name;
+- (void) buttonClickedWithIndex: (NSInteger) index andName: (NSString *) name highlightTextField:(BOOL)highlight;
 
 -(void)buttonLongPressedWithIndex:(NSInteger)index andName:(NSString *)name atPoint:(CGPoint)point;
 

@@ -46,8 +46,6 @@
         
         //IMPORTANT: set the userKey to userDataDAO
         self.userDataDAO.userKey = self.user.userKey;
-        
-        [self.configManager setTutorialON:YES];
     }
     
     return (self.user != nil);
@@ -83,8 +81,6 @@
     {
         DLog(@"ERROR: Did not save User");
     }
-    
-    [self.configManager setTutorialON:YES];
     
     [self.authenticationService retrieveProfileImage:^(UIImage *profileImage) {
         

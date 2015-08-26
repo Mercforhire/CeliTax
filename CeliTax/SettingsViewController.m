@@ -15,10 +15,12 @@
 #import "SyncManager.h"
 #import "ViewControllerFactory.h"
 #import "MyProfileViewController.h"
+#import "TutorialManager.h"
 
 @interface SettingsViewController () <SyncManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet ProfileBarView *profileBarView;
+@property (weak, nonatomic) IBOutlet SolidGreenButton *showTutorialButton;
 @property (weak, nonatomic) IBOutlet SolidGreenButton *backupNowButton;
 @property (weak, nonatomic) IBOutlet UILabel *lastBackUpLabel;
 @property (weak, nonatomic) IBOutlet SolidGreenButton *insertDemoButton;
@@ -39,6 +41,7 @@
     [self.profileBarView.editButton1 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.profileBarView.editButton2 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
     
+    [self.showTutorialButton setLookAndFeel:self.lookAndFeel];
     [self.backupNowButton setLookAndFeel:self.lookAndFeel];
     [self.insertDemoButton setLookAndFeel:self.lookAndFeel];
 }
@@ -55,7 +58,6 @@
     [self setLastBackUpLabelDate:lastUploadDate];
     
     //move to did appear
-    
     if ([self.syncManager needToBackUp])
     {
         [self.backupNowButton setEnabled:YES];
@@ -122,6 +124,14 @@
         [self.insertDemoButton setEnabled:YES];
         
     }];
+}
+
+- (IBAction)showTutorialPressed:(SolidGreenButton *)sender
+{
+    [self.tutorialManager setTutorialsAsNotShown];
+    
+    //go to Main View
+    [self selectedMenuIndex:RootViewControllerHome];
 }
 
 #pragma mark - SyncManagerDelegate

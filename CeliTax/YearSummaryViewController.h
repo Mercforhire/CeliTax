@@ -7,7 +7,10 @@
 //
 
 #import "BaseViewController.h"
+#import "DataService.h"
 
-@interface TaxYearSummaryViewController : BaseViewController
+@interface YearSummaryViewController : BaseViewController
+
+@property (nonatomic, weak) id <DataService> dataService;
 
 @end

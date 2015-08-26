@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+            <string>Lato-Bold</string>
+            <string>Lato-Bold</string>
+        </mutableArray>
         <mutableArray key="Lato-Regular.ttf">
-            <string>Lato-Regular</string>
-            <string>Lato-Regular</string>
-            <string>Lato-Regular</string>
             <string>Lato-Regular</string>
             <string>Lato-Regular</string>
             <string>Lato-Regular</string>
@@ -25,8 +27,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Qty" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HXB-ye-ugy">
-                        <rect key="frame" x="28" y="0.0" width="25.5" height="18"/>
-                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
+                        <rect key="frame" x="27" y="0.0" width="26" height="18"/>
+                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -51,18 +53,9 @@
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad"/>
                     </textField>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GS3-9d-o46">
-                        <rect key="frame" x="254" y="0.0" width="33" height="18"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="18" id="Zbr-KF-oMv"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price/Item" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eUb-u9-96I">
-                        <rect key="frame" x="124" y="0.0" width="70" height="18"/>
-                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
+                        <rect key="frame" x="123" y="0.0" width="72" height="18"/>
+                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -88,6 +81,15 @@
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad"/>
                     </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GS3-9d-o46">
+                        <rect key="frame" x="253.5" y="0.0" width="34" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="Zbr-KF-oMv"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>

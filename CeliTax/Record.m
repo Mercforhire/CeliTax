@@ -105,4 +105,74 @@
     self.dataAction = thisOne.dataAction;
 }
 
++ (NSInteger)unitTypeStringToUnitTypeInt:(NSString *)unitTypeString
+{
+    if ([unitTypeString isEqualToString:kUnitItemKey])
+    {
+        return UnitItem;
+    }
+    else if ([unitTypeString isEqualToString:kUnitGKey])
+    {
+        return UnitG;
+    }
+    else if ([unitTypeString isEqualToString:kUnit100GKey])
+    {
+        return Unit100G;
+    }
+    else if ([unitTypeString isEqualToString:kUnitKGKey])
+    {
+        return UnitKG;
+    }
+    else if ([unitTypeString isEqualToString:kUnitLKey])
+    {
+        return UnitL;
+    }
+    else if ([unitTypeString isEqualToString:kUnitMLKey])
+    {
+        return UnitML;
+    }
+    
+    return -1;
+}
+
++ (NSString *)unitTypeIntToUnitTypeString:(NSInteger)unitTypeInt
+{
+    switch (unitTypeInt)
+    {
+        case UnitItem:
+            return kUnitItemKey;
+            
+            break;
+            
+        case UnitML:
+            return kUnitMLKey;
+            
+            break;
+            
+        case UnitL:
+            return kUnitLKey;
+            
+            break;
+            
+        case UnitG:
+            return kUnitGKey;
+            
+            break;
+            
+        case Unit100G:
+            return kUnit100GKey;
+            
+            break;
+            
+        case UnitKG:
+            return kUnitKGKey;
+            
+            break;
+            
+        default:
+            return nil;
+            break;
+    }
+}
+
 @end

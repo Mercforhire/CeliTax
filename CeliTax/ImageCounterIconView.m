@@ -111,4 +111,9 @@
     [self.imageButton setImage: _image forState: UIControlStateNormal];
 }
 
+-(void)setToGreen
+{
+    self.image = [UIImage imageNamed:@"receipt_green_icon.png"];
+}
+
 @end

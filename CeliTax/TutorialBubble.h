@@ -7,30 +7,33 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TutorialBubbleProtocol.h"
-#import "TutorialBubbleInterface.h"
-#import "HollowGreenButton.h"
-#import "SolidGreenButton.h"
+#import "LookAndFeel.h"
 
-@interface TutorialBubbleUp : UIView <TutorialBubbleInterface>
+typedef enum : NSUInteger {
+    ArrowDirectionNone,
+    ArrowDirectionUp,
+    ArrowDirectionDown,
+} ArrowDirection;
 
-@property (nonatomic, weak) id <TutorialBubbleProtocol> delegate;
+@interface TutorialBubble : UIView
 
 @property (weak, nonatomic) LookAndFeel *lookAndFeel;
 
-@property (nonatomic) float xOriginOfArrow;
-
-@property (nonatomic) float leftMarginOfBubble;
-
-@property (nonatomic) float bubbleWidth;
-
-@property (nonatomic) float bubbleHeight;
+@property (nonatomic) CGPoint originOfArrow;
 
 @property (nonatomic, strong) NSString *tutorialText;
 
-@property (weak, nonatomic) IBOutlet HollowGreenButton *skipButton;
+@property (nonatomic) NSUInteger arrowDirection;
 
-@property (weak, nonatomic) IBOutlet SolidGreenButton *continueButton;
+@property (nonatomic, strong) NSString *leftButtonTitle;
+
+@property (nonatomic, strong) NSString *rightButtonTitle;
+
+@property (weak, nonatomic) IBOutlet UIButton *leftButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *rightButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *closeButton;
 
 //Run this once after all properties have been set
 -(void)setupUI;

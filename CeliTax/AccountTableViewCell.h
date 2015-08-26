@@ -30,4 +30,8 @@
 
 -(void)makeCellAppearActive;
 
+-(void)showLabels;
+
+-(void)hideLabels;
+
 @end

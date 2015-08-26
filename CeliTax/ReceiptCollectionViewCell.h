@@ -12,6 +12,5 @@
 @interface ReceiptCollectionViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *image;
-@property (weak, nonatomic) IBOutlet UIButton *addPhotoButton;
 
 @end

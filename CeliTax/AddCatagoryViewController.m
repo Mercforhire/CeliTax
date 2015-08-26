@@ -181,38 +181,12 @@
 
 -(void)displayTutorials
 {
-    NSMutableArray *tutorials = [NSMutableArray new];
     
-    //Each Stage represents a different group of Tutorial pop ups
-    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
-    
-    if ( currentTutorialStage == 1 )
-        
-    {
-        //add Tutorials specific for this View
-        TutorialStep *tutorialStep1 = [TutorialStep new];
-        
-        tutorialStep1.text = @"Choose from any of the pre-made food categories or customize your own. Once you save, you can manage your categories here or in My Account.";
-        tutorialStep1.size = CGSizeMake(250, 120);
-        tutorialStep1.pointsUp = YES;
-        
-        [tutorials addObject:tutorialStep1];
-        
-        [self.tutorialManager setTutorialDoneForViewController:self];
-    }
-    
-    [self.tutorialManager startTutorialInViewController:self andTutorials:tutorials];
 }
 
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    //Create tutorial items if it's ON
-    if ([self.configurationManager isTutorialOn])
-    {
-        [self displayTutorials];
-    }
 }
 
 - (void) viewWillDisappear: (BOOL) animated
@@ -340,7 +314,9 @@
 
 - (void) saveCatagoryPressed: (UIButton *) sender
 {
-    if ([self.manipulationService addCatagoryForName: self.catagoryNameField.text
+    NSString *trimmedString = [self.catagoryNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    if ([self.manipulationService addCatagoryForName: trimmedString
                                             forColor: self.colorView.backgroundColor save:YES])
     {
         self.addingCatagoryMode = NO;
@@ -466,7 +442,7 @@
 {
     //show a UIAlertView Confirmation
     UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Delete"
-                                                      message: [NSString stringWithFormat:@"Are you sure you want to delete the catagory %@?", self.currentlySelectedCatagory.name]
+                                                      message: [NSString stringWithFormat:@"Are you sure you want to delete the category %@?", self.currentlySelectedCatagory.name]
                                                      delegate: self
                                             cancelButtonTitle: @"No"
                                             otherButtonTitles: @"Delete", nil];
@@ -483,6 +459,10 @@
     [self refreshCatagories];
 }
 
+-(void)checkCatagoryNameField
+{
+    
+}
 #pragma mark - UITextFieldDelegate
 
 - (BOOL) textFieldShouldReturn: (UITextField *) textField
@@ -494,7 +474,9 @@
 
 - (void) textFieldDidChange: (UITextField *) textfield
 {
-    if (self.catagoryNameField.text.length)
+    NSString *trimmedString = [textfield.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    if (trimmedString.length)
     {
         [self.rightMenuItem setEnabled: YES];
         [self.lookAndFeel applyTransperantWhiteTextButtonStyleTo:self.saveButton];
@@ -748,7 +730,7 @@
     {
         Catagory *thisCatagory = [self.catagories objectAtIndex: indexPath.row / 2];
 
-        DLog(@"Catagory %@ clicked", thisCatagory.name);
+        DLog(@"Category %@ clicked", thisCatagory.name);
 
         if (self.currentlySelectedCatagory == thisCatagory)
         {

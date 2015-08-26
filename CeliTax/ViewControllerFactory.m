@@ -32,6 +32,8 @@
 #import "TutorialManager.h"
 #import "MyProfileViewController.h"
 #import "UnitPickerViewController.h"
+#import "YearSummaryViewController.h"
+#import "YearSavingViewController.h"
 
 @implementation ViewControllerFactory
 {
@@ -300,6 +302,30 @@
     unitPickerViewController.defaultSelectedUnit = defaultUnit;
     
     return unitPickerViewController;
+}
+
+- (YearSummaryViewController *) createYearSummaryViewController
+{
+    YearSummaryViewController *yearSummaryViewController = [[YearSummaryViewController alloc] initWithNibName: @"YearSummaryViewController" bundle: nil];
+    
+    [self initializeViewController: yearSummaryViewController];
+    
+    yearSummaryViewController.lookAndFeel = self.lookAndFeel;
+    yearSummaryViewController.dataService = self.dataService;
+    
+    return yearSummaryViewController;
+}
+
+- (YearSavingViewController *) createYearSavingViewController
+{
+    YearSavingViewController *yearSavingViewController = [[YearSavingViewController alloc] initWithNibName: @"YearSavingViewController" bundle: nil];
+    
+    [self initializeViewController: yearSavingViewController];
+    
+    yearSavingViewController.lookAndFeel = self.lookAndFeel;
+    yearSavingViewController.dataService = self.dataService;
+    
+    return yearSavingViewController;
 }
 
 - (NSArray *) getMenuSelections

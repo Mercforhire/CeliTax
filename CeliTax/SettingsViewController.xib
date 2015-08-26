@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
             <string>Lato-Bold</string>
             <string>Lato-Bold</string>
             <string>Lato-Bold</string>
@@ -20,6 +21,7 @@
                 <outlet property="insertDemoButton" destination="1ox-WF-Ofz" id="IGk-Ba-CDx"/>
                 <outlet property="lastBackUpLabel" destination="aWv-vc-6uB" id="kBS-I3-QOH"/>
                 <outlet property="profileBarView" destination="Qr1-NN-1Ck" id="mg1-ls-mvT"/>
+                <outlet property="showTutorialButton" destination="ld2-Wy-uiO" id="q6d-Cx-nnF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -42,7 +44,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H6W-fg-WO8" customClass="SolidGreenButton">
-                    <rect key="frame" x="15" y="197" width="52" height="28"/>
+                    <rect key="frame" x="15" y="235" width="52" height="28"/>
                     <color key="backgroundColor" red="0.55334633690000001" green="0.82171581770000002" blue="0.4125430142" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
                     <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
@@ -55,13 +57,13 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Sync: Never" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aWv-vc-6uB">
-                    <rect key="frame" x="15" y="235" width="94" height="16"/>
+                    <rect key="frame" x="15" y="273" width="94" height="16"/>
                     <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="13"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ox-WF-Ofz" customClass="SolidGreenButton">
-                    <rect key="frame" x="15" y="270" width="139" height="28"/>
+                    <rect key="frame" x="15" y="308" width="139" height="28"/>
                     <color key="backgroundColor" red="0.55334633690000001" green="0.82171581770000002" blue="0.4125430142" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
                     <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
@@ -73,18 +75,34 @@
                         <action selector="insertDemoDataPressed:" destination="-1" eventType="touchUpInside" id="dAt-2T-9bT"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ld2-Wy-uiO" customClass="SolidGreenButton">
+                    <rect key="frame" x="15" y="192" width="113" height="28"/>
+                    <color key="backgroundColor" red="0.55334633690000001" green="0.82171581770000002" blue="0.4125430142" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
+                    <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
+                    <state key="normal" title="Show Tutorial">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="backupPressed:" destination="-1" eventType="touchUpInside" id="q2G-rd-b9H"/>
+                        <action selector="showTutorialPressed:" destination="-1" eventType="touchUpInside" id="Llr-C0-GWW"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="H6W-fg-WO8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="3gx-iU-O2M"/>
                 <constraint firstItem="1ox-WF-Ofz" firstAttribute="top" secondItem="aWv-vc-6uB" secondAttribute="bottom" constant="19" id="5bW-2P-1PN"/>
+                <constraint firstItem="ld2-Wy-uiO" firstAttribute="top" secondItem="Qr1-NN-1Ck" secondAttribute="bottom" constant="15" id="7hO-Yt-XGK"/>
+                <constraint firstItem="H6W-fg-WO8" firstAttribute="top" secondItem="ld2-Wy-uiO" secondAttribute="bottom" constant="15" id="9k8-VY-Jes"/>
                 <constraint firstItem="Qr1-NN-1Ck" firstAttribute="top" secondItem="g4b-sr-dcZ" secondAttribute="bottom" constant="15" id="9oW-SX-ANE"/>
                 <constraint firstItem="aWv-vc-6uB" firstAttribute="top" secondItem="H6W-fg-WO8" secondAttribute="bottom" constant="10" id="ARp-kV-45f"/>
                 <constraint firstItem="aWv-vc-6uB" firstAttribute="leading" secondItem="H6W-fg-WO8" secondAttribute="leading" id="DJ9-ZL-O8f"/>
                 <constraint firstAttribute="trailing" secondItem="Qr1-NN-1Ck" secondAttribute="trailing" id="JOW-vH-rkP"/>
                 <constraint firstItem="1ox-WF-Ofz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="Krp-vk-GFi"/>
-                <constraint firstItem="H6W-fg-WO8" firstAttribute="top" secondItem="Qr1-NN-1Ck" secondAttribute="bottom" constant="20" id="PDa-zY-0SW"/>
                 <constraint firstAttribute="centerX" secondItem="g4b-sr-dcZ" secondAttribute="centerX" id="U7C-uy-zUA"/>
+                <constraint firstItem="ld2-Wy-uiO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="YwR-iF-SUc"/>
                 <constraint firstItem="Qr1-NN-1Ck" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="b5K-O9-Ffb"/>
                 <constraint firstItem="g4b-sr-dcZ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="79" id="pxd-gn-HEc"/>
             </constraints>

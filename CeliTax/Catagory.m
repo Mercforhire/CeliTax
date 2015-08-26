@@ -170,6 +170,12 @@
             
             break;
             
+        case Unit100G:
+            
+            [self.nationalAverageCosts setObject:value forKey:kUnit100GKey];
+            
+            break;
+            
         case UnitKG:
             
             [self.nationalAverageCosts setObject:value forKey:kUnitKGKey];
@@ -207,6 +213,12 @@
         case UnitG:
             
             [self.nationalAverageCosts removeObjectForKey:kUnitGKey];
+            
+            break;
+            
+        case Unit100G:
+            
+            [self.nationalAverageCosts removeObjectForKey:kUnit100GKey];
             
             break;
             

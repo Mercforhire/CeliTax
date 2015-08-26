@@ -43,7 +43,7 @@ typedef enum : NSUInteger
     SectionCount,
 } SectionTitles;
 
-@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate, UIPickerViewDataSource, UIPickerViewDelegate, SyncManagerDelegate>
+@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate, UIPickerViewDataSource, UIPickerViewDelegate, SyncManagerDelegate, TutorialManagerDelegate>
 
 @property (nonatomic, strong) UIToolbar *pickerToolbar;
 @property (nonatomic, strong) UIBarButtonItem *addCatagoryMenuItem;
@@ -72,6 +72,10 @@ typedef enum : NSUInteger
 
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
+//Tutorials
+@property (nonatomic, strong) NSMutableArray *tutorials;
+@property (nonatomic) NSUInteger currentTutorialStep;
+
 @end
 
 @implementation MainViewController
@@ -80,7 +84,7 @@ typedef enum : NSUInteger
 {
     // setup the navigation bar items
     UIButton *addCatagoryButton = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, 80, 54)];
-    [addCatagoryButton setTitle: @"Catagories" forState: UIControlStateNormal];
+    [addCatagoryButton setTitle: @"Categories" forState: UIControlStateNormal];
     [addCatagoryButton.titleLabel setFont: [UIFont latoBoldFontOfSize: 15]];
     addCatagoryButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [addCatagoryButton setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
@@ -195,13 +199,21 @@ typedef enum : NSUInteger
 {
     [super viewDidAppear:animated];
     
-    //Create tutorial items if it's ON
-    if ([self.configurationManager isTutorialOn])
+    if (![self.tutorialManager hasTutorialBeenShown])
     {
-        [self displayTutorials];
+        [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+        
+        if ([self.tutorialManager automaticallyShowTutorialNextTime])
+        {
+            [self setupTutorials];
+            
+            [self displayTutorialStep:0];
+        }
     }
-    
-    [self.syncManager checkUpdate];
+    else
+    {
+        [self.syncManager checkUpdate];
+    }
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -276,18 +288,6 @@ typedef enum : NSUInteger
                                                               inYear: self.currentlySelectedYear.integerValue];
     self.receiptInfos = receiptInfos;
     [self.recentUploadsTable reloadData];
-    
-    if (self.receiptInfos.count)
-    {
-        NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
-        
-        if (currentTutorialStage == 3)
-        {
-            currentTutorialStage++;
-            
-            [self.tutorialManager setCurrentTutorialStageForViewController:self forStage:currentTutorialStage];
-        }
-    }
 }
 
 - (void) setCurrentlySelectedYear: (NSNumber *) currentlySelectedYear
@@ -530,110 +530,192 @@ typedef enum : NSUInteger
 
 #pragma mark - Tutorial
 
--(void)displayTutorials
+typedef enum : NSUInteger
 {
-    NSMutableArray *tutorials = [NSMutableArray new];
+    TutorialStep1,
+    TutorialStep2,
+    TutorialStep3,
+    TutorialStep4,
+    TutorialStep5,
+    TutorialStep6,
+    TutorialStep7,
+    TutorialStepsCount,
+} TutorialSteps;
+
+-(void)setupTutorials
+{
+    [self.tutorialManager setDelegate:self];
     
-    //Each Stage represents a different group of Tutorial pop ups
-    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
+    self.tutorials = [NSMutableArray new];
     
-    if ( currentTutorialStage == 1 )
-    {
-        TutorialStep *tutorialStep1 = [TutorialStep new];
-        
-        tutorialStep1.text = @"Welcome to CeliTax, the simple tax tool designed specifically for Celiacs.\n\nNo manual calculations. No paper receipts. No stress.\n\nYou have enough to worry about already, calculating your GF tax claim should not be one of them!\n\nThis wizard will guide you through each feature of CeliTax so you will quickly get familiar with its functions.\n\nLet’s go!";
-        tutorialStep1.size = CGSizeMake(290, 300);
-        tutorialStep1.pointsUp = YES;
-        
-        [tutorials addObject:tutorialStep1];
-        
-        TutorialStep *tutorialStep2 = [TutorialStep new];
-        
-        UIView *barButton = (UIView *)[self.pickerToolbar.subviews objectAtIndex:2]; // 0 for the first item
-        
-        CGPoint barButtonCenter = barButton.center;
-        barButtonCenter.x += 30;
-        barButtonCenter.y += [UIApplication sharedApplication].statusBarFrame.size.height + 10;
-        
-        tutorialStep2.origin = barButtonCenter;
-        
-        tutorialStep2.text = @"Click the Catagories button to add a new food category to keep all of your purchases allocated separately";
-        tutorialStep2.size = CGSizeMake(200, 120);
-        tutorialStep2.pointsUp = YES;
-        
-        [tutorials addObject:tutorialStep2];
-        
-        currentTutorialStage++;
-        
-        [self.tutorialManager setCurrentTutorialStageForViewController:self forStage:currentTutorialStage];
-    }
-    else if ( currentTutorialStage == 2)
-    {
-        TutorialStep *tutorialStep3 = [TutorialStep new];
-        
-        tutorialStep3.origin = self.cameraButton.center;
-        tutorialStep3.text = @"Now that you’ve created your categories, click the camera button to take a photo of your receipt";
-        tutorialStep3.size = CGSizeMake(290, 80);
-        tutorialStep3.pointsUp = NO;
-        
-        [tutorials addObject:tutorialStep3];
-        
-        currentTutorialStage++;
-        
-        [self.tutorialManager setCurrentTutorialStageForViewController:self forStage:currentTutorialStage];
-    }
-    else if ( currentTutorialStage == 4)
-    {
-        TutorialStep *tutorialStep4 = [TutorialStep new];
-        
-        tutorialStep4.origin = self.recentUploadsTable.center;
-        tutorialStep4.text = @"Use recent uploads to quickly manage your latest receipts";
-        tutorialStep4.size = CGSizeMake(290, 70);
-        tutorialStep4.pointsUp = YES;
-        
-        [tutorials addObject:tutorialStep4];
-        
-        TutorialStep *tutorialStep5 = [TutorialStep new];
-        
-        tutorialStep5.origin = self.myAccountButton.center;
-        tutorialStep5.text = @"Use My Account to manage categories, view total allocations, and calculate your tax claim!";
-        tutorialStep5.size = CGSizeMake(290, 90);
-        tutorialStep5.pointsUp = NO;
-        
-        [tutorials addObject:tutorialStep5];
-        
-        TutorialStep *tutorialStep6 = [TutorialStep new];
-        
-        tutorialStep6.origin = self.vaultButton.center;
-        tutorialStep6.text = @"Access all receipts from the Vault\n\nEvery photo capture is automatically saved and stored in the Vault";
-        tutorialStep6.size = CGSizeMake(290, 100);
-        tutorialStep6.pointsUp = NO;
-        
-        [tutorials addObject:tutorialStep6];
-        
-        [self.tutorialManager setTutorialDoneForViewController:self];
-    }
-    else if ( [self.tutorialManager areAllTutorialsShown] )
-    {
-        TutorialStep *tutorialStep7 = [TutorialStep new];
-        
-        tutorialStep7.text = @"There you have it! Calculating that GF tax claim has never been so easy. No more manual calculations or paper receipts to worry about!\n\nIf you ever need help or have questions, please use the help feature located in the (burger) menu.\n\nEnjoy!";
-        tutorialStep7.size = CGSizeMake(290, 210);
-        tutorialStep7.pointsUp = YES;
-        
-        [tutorials addObject:tutorialStep7];
-        
-        [self.tutorialManager resetTutorialStages];
-        
-        [self.configurationManager setTutorialON:NO];
-    }
-    else
-    {
-        //don't show any tutorial
-        return;
-    }
+    TutorialStep *tutorialStep1 = [TutorialStep new];
     
-    [self.tutorialManager startTutorialInViewController:self andTutorials:tutorials];
+    tutorialStep1.text = @"Welcome to CeliTax, the simple, easy to use tax tool designed specifically for Celiacs.\n\nWe make your Gluten Free (GF) tax claim easy!\n\nNo complicated spreadsheets, no paper receipts, no stress.";
+    tutorialStep1.leftButtonTitle = @"Skip";
+    tutorialStep1.rightButtonTitle = @"Begin Tutorial";
+    
+    [self.tutorials addObject:tutorialStep1];
+    
+    TutorialStep *tutorialStep2 = [TutorialStep new];
+    
+    tutorialStep2.text = @"Individuals diagnosed with Celiacs disease are entitled to a government tax claim based on the incremental difference between the cost of GF products and regular food items.";
+    tutorialStep2.leftButtonTitle = @"Back";
+    tutorialStep2.rightButtonTitle = @"Continue";
+    
+    [self.tutorials addObject:tutorialStep2];
+    
+    TutorialStep *tutorialStep3 = [TutorialStep new];
+    
+    tutorialStep3.text = @"CeliTax is here to simplify your life. You already have enough to worry about, taxes should not be one of them.";
+    tutorialStep3.leftButtonTitle = @"Back";
+    tutorialStep3.rightButtonTitle = @"Continue";
+    
+    [self.tutorials addObject:tutorialStep3];
+    
+    TutorialStep *tutorialStep4 = [TutorialStep new];
+    
+    tutorialStep4.text = @"Lets get started!";
+    tutorialStep4.leftButtonTitle = @"Back";
+    tutorialStep4.rightButtonTitle = @"Continue";
+    
+    [self.tutorials addObject:tutorialStep4];
+    
+    TutorialStep *tutorialStep5 = [TutorialStep new];
+    
+    tutorialStep5.text = @"CeliTax helps you organize your GF food purchases by allocating each item to a custom GF food category. No need for complex spreadsheets.";
+    tutorialStep5.leftButtonTitle = @"Back";
+    tutorialStep5.rightButtonTitle = @"Continue";
+    
+    [self.tutorials addObject:tutorialStep5];
+    
+    TutorialStep *tutorialStep6 = [TutorialStep new];
+    
+    tutorialStep6.text = @"Quickly keep track of your GF spending throughout the year and automatically calculate your GF tax claim in one simple click!";
+    tutorialStep6.leftButtonTitle = @"Back";
+    tutorialStep6.rightButtonTitle = @"Continue";
+    
+    [self.tutorials addObject:tutorialStep6];
+    
+    TutorialStep *tutorialStep7 = [TutorialStep new];
+    
+    tutorialStep7.text = @"Once you obtain your grocery receipt, simply take a photo of it and start allocating your GF purchases to your categories!";
+    tutorialStep7.leftButtonTitle = @"Back";
+    tutorialStep7.rightButtonTitle = @"Continue";
+    
+    tutorialStep7.highlightedItemRect = self.cameraButton.frame;
+    tutorialStep7.pointsUp = NO;
+    
+    [self.tutorials addObject:tutorialStep7];
+    
+    self.currentTutorialStep = TutorialStep1;
+}
+
+-(void)displayTutorialStep:(NSInteger)step
+{
+    if (self.tutorials.count && step < self.tutorials.count)
+    {
+        TutorialStep *tutorialStep = [self.tutorials objectAtIndex:step];
+        
+        [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
+        
+        self.currentTutorialStep = step;
+    }
+}
+
+- (void) tutorialLeftSideButtonPressed
+{
+    switch (self.currentTutorialStep)
+    {
+        case TutorialStep1:
+            //Close tutorial
+            [self.tutorialManager dismissTutorial:^{
+                //
+            }];
+            break;
+            
+        case TutorialStep2:
+            //Go back to Step 1
+            [self displayTutorialStep:TutorialStep1];
+            break;
+            
+        case TutorialStep3:
+            //Go back to Step 2
+            [self displayTutorialStep:TutorialStep2];
+            break;
+            
+        case TutorialStep4:
+            //Go back to Step 3
+            [self displayTutorialStep:TutorialStep3];
+            break;
+            
+        case TutorialStep5:
+            //Go back to Step 4
+            [self displayTutorialStep:TutorialStep4];
+            break;
+            
+        case TutorialStep6:
+            //Go back to Step 5
+            [self displayTutorialStep:TutorialStep5];
+            break;
+            
+        case TutorialStep7:
+            //Go back to Step 6
+            [self displayTutorialStep:TutorialStep6];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void) tutorialRightSideButtonPressed
+{
+    switch (self.currentTutorialStep)
+    {
+        case TutorialStep1:
+            //Go to Step 2
+            [self displayTutorialStep:TutorialStep2];
+            break;
+            
+        case TutorialStep2:
+            //Go to Step 3
+            [self displayTutorialStep:TutorialStep3];
+            break;
+            
+        case TutorialStep3:
+            //Go to Step 4
+            [self displayTutorialStep:TutorialStep4];
+            break;
+            
+        case TutorialStep4:
+            //Go to Step 5
+            [self displayTutorialStep:TutorialStep5];
+            break;
+            
+        case TutorialStep5:
+            //Go to Step 6
+            [self displayTutorialStep:TutorialStep6];
+            break;
+            
+        case TutorialStep6:
+            //Go to Step 7
+            [self displayTutorialStep:TutorialStep7];
+            break;
+            
+        case TutorialStep7:
+        {
+            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+            
+            [self.tutorialManager dismissTutorial:^{
+                //Go to Camera view
+                [self cameraButtonPressed:self.cameraButton];
+            }];
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end

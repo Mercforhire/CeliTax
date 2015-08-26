@@ -22,6 +22,8 @@
 #import "TutorialStep.h"
 #import "ConfigurationManager.h"
 #import "HollowGreenButton.h"
+#import "TutorialManager.h"
+#import "TutorialStep.h"
 
 @interface ReceiptBreakDownViewController () <XYPieChartDelegate, XYPieChartDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, SelectionsPickerPopUpDelegate>
 
@@ -221,12 +223,6 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    //Create tutorial items if it's ON
-    if ([self.configurationManager isTutorialOn])
-    {
-        [self displayTutorials];
-    }
 }
 
 - (void) refreshPieChart
@@ -613,6 +609,12 @@
 
         cell.clipsToBounds = YES;
 
+        Record *previousRecord;
+        if (indexPath.row >= 2)
+        {
+            previousRecord = [self getNthRecordFromRecordsDictionary:(indexPath.row - 2) / 2];
+        }
+        
         Record *thisRecord = [self getNthRecordFromRecordsDictionary: indexPath.row / 2];
         Catagory *thisCatagory = [self getCatagoryOfNthRecordFromRecordsDictionary: indexPath.row / 2];
 
@@ -652,6 +654,24 @@
         else
         {
             [cell makeCellAppearActive];
+            
+            if (previousRecord)
+            {
+                // hide cell labels if the previous cell is same type
+                if (previousRecord.unitType == thisRecord.unitType)
+                {
+                    [cell hideLabels];
+                }
+                else
+                {
+                    [cell showLabels];
+                }
+            }
+            else
+            {
+                // this is the first row
+                [cell showLabels];
+            }
         }
         
         [self.lookAndFeel applySlightlyDarkerBorderTo: cell.colorBoxView];
@@ -749,31 +769,7 @@
 
 -(void)displayTutorials
 {
-    NSMutableArray *tutorials = [NSMutableArray new];
     
-    //Each Stage represents a different group of Tutorial pop ups
-    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
-    
-    if ( currentTutorialStage == 1 )
-    {
-        TutorialStep *tutorialStep1 = [TutorialStep new];
-        
-        tutorialStep1.text = @"Use the receipt breakdown view to manage allocations to a receipt.\n\nNot finished allocating? Simply click the view receipt button to allocate more purchases.";
-        tutorialStep1.origin = self.viewReceiptButton.center;
-        tutorialStep1.size = CGSizeMake(290, 140);
-        tutorialStep1.pointsUp = YES;
-        
-        [tutorials addObject:tutorialStep1];
-        
-        [self.tutorialManager setTutorialDoneForViewController:self];
-    }
-    else
-    {
-        //don't show any tutorial
-        return;
-    }
-    
-    [self.tutorialManager startTutorialInViewController:self andTutorials:tutorials];
 }
 
 

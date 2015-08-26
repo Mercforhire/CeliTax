@@ -10,7 +10,6 @@
 #import "ReceiptTableViewCell.h"
 #import "DataService.h"
 #import "Notifications.h"
-#import "TriangleView.h"
 #import "NoItemsTableViewCell.h"
 
 #define kReceiptTableTableCellHeight                    35
@@ -24,7 +23,7 @@
 @property (nonatomic) BOOL recentUploadsSelected;
 
 @property (weak, nonatomic) IBOutlet UILabel *recentUploadsQtyLabel;
-@property (weak, nonatomic) IBOutlet TriangleView *recentUploadsTriangle;
+
 @property (weak, nonatomic) IBOutlet UILabel *recentUploadsTotalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *recentUploadsTable;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *recentUploadsHeightBar;
@@ -32,14 +31,14 @@
 @property (nonatomic) BOOL previousWeekSelected;
 
 @property (weak, nonatomic) IBOutlet UILabel *previousWeekQtyLabel;
-@property (weak, nonatomic) IBOutlet TriangleView *previousWeekTriangle;
+
 @property (weak, nonatomic) IBOutlet UILabel *previousWeekTotalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *previousWeekTable;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *previousWeekHeightBar;
 
 @property (nonatomic) BOOL previousMonthSelected;
 @property (weak, nonatomic) IBOutlet UILabel *previousMonthQtyLabel;
-@property (weak, nonatomic) IBOutlet TriangleView *previousMonthTriangle;
+
 @property (weak, nonatomic) IBOutlet UILabel *previousMonthTotalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *previousMonthTable;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *previousMonthHeightBar;
@@ -47,7 +46,7 @@
 @property (nonatomic) BOOL viewAllSelected;
 
 @property (weak, nonatomic) IBOutlet UILabel *viewAllLabelQtyLabel;
-@property (weak, nonatomic) IBOutlet TriangleView *viewAllTriangle;
+
 @property (weak, nonatomic) IBOutlet UILabel *viewAllTotalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *viewAllTable;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewAllHeightBar;

@@ -20,8 +20,11 @@
 #import "FlashButtonView.h"
 #import "Receipt.h"
 #import "SolidGreenButton.h"
+#import "TutorialManager.h"
+#import "TutorialStep.h"
 
-@interface CameraViewController ()
+
+@interface CameraViewController () <TutorialManagerDelegate>
 {
     NSString *newlyAddedReceiptID;
 }
@@ -66,6 +69,10 @@
 @property float buttomCornersOriginalYCoordinate;
 
 @property NSMutableArray *takenImageFilenames;
+
+//Tutorials
+@property (nonatomic, strong) NSMutableArray *tutorials;
+@property (nonatomic) NSUInteger currentTutorialStep;
 
 @end
 
@@ -233,6 +240,21 @@
             {
                 [self addImageToPreviousImageView:image];
             }
+        }
+    }
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (![self.tutorialManager hasTutorialBeenShown])
+    {
+        if ([self.tutorialManager automaticallyShowTutorialNextTime])
+        {
+            [self setupTutorials];
+            
+            [self displayTutorialStep:0];
         }
     }
 }
@@ -535,6 +557,169 @@
             //DLog(@"Dragging completed with translation of X: %.1f, YL %.1f", translation.x, translation.y);
             [self refreshCropEdgeRatio];
             [self.dragBarView2 setBackgroundColor:[UIColor whiteColor]];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - Tutorial
+
+typedef enum : NSUInteger
+{
+    TutorialStep1,
+    TutorialStep2,
+    TutorialStep3,
+    TutorialStep4,
+    TutorialStepsCount,
+} TutorialSteps;
+
+-(void)setupTutorials
+{
+    [self.tutorialManager setDelegate:self];
+    
+    self.tutorials = [NSMutableArray new];
+    
+    TutorialStep *tutorialStep1 = [TutorialStep new];
+    
+    tutorialStep1.text = @"Use the flash function when you have poor lighting. TIP: images always work better in well-lit environments!";
+    tutorialStep1.rightButtonTitle = @"Continue";
+    
+    [self.tutorials addObject:tutorialStep1];
+    
+    TutorialStep *tutorialStep2 = [TutorialStep new];
+    
+    tutorialStep2.text = @"Receipt too long? Take multiple photos to capture the entire receipt. The last photo taken is saved at the top of your screen. Drag it downward to help find out what is left of the receipt to capture.";
+    tutorialStep2.leftButtonTitle = @"Back";
+    tutorialStep2.rightButtonTitle = @"Continue";
+    
+    [self.tutorials addObject:tutorialStep2];
+    
+    TutorialStep *tutorialStep3 = [TutorialStep new];
+    
+    tutorialStep3.text = @"Drag the bar up or down to capture the exact part of the receipt you need and crop accordingly";
+    tutorialStep3.leftButtonTitle = @"Back";
+    tutorialStep3.rightButtonTitle = @"Continue";
+    tutorialStep3.highlightedItemRect = self.dragBarContainer.frame;
+    tutorialStep3.pointsUp = NO;
+    
+    [self.tutorials addObject:tutorialStep3];
+    
+    TutorialStep *tutorialStep4 = [TutorialStep new];
+    
+    tutorialStep4.text = @"Click “Continue” when all images have been captured.";
+    tutorialStep4.leftButtonTitle = @"Back";
+    tutorialStep4.rightButtonTitle = @"Continue";
+    tutorialStep4.pointsUp = NO;
+    
+    CGRect continueButtonFrame = self.continueButton.frame;
+    continueButtonFrame.origin.x -= 5;
+    continueButtonFrame.origin.y -= 5;
+    continueButtonFrame.size.height += 10;
+    continueButtonFrame.size.width += 10;
+    
+    tutorialStep4.highlightedItemRect = continueButtonFrame;
+    
+    [self.tutorials addObject:tutorialStep4];
+    
+    self.currentTutorialStep = TutorialStep1;
+}
+
+-(void)displayTutorialStep:(NSInteger)step
+{
+    if (self.tutorials.count && step < self.tutorials.count)
+    {
+        TutorialStep *tutorialStep = [self.tutorials objectAtIndex:step];
+        
+        [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
+        
+        self.currentTutorialStep = step;
+    }
+}
+
+- (void) tutorialLeftSideButtonPressed
+{
+    switch (self.currentTutorialStep)
+    {
+        case TutorialStep2:
+            //Go back to Step 1
+            [self displayTutorialStep:TutorialStep1];
+            break;
+            
+        case TutorialStep3:
+            //Go back to Step 2
+            [self displayTutorialStep:TutorialStep2];
+            break;
+            
+        case TutorialStep4:
+            //Go back to Step 3
+            [self displayTutorialStep:TutorialStep3];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void) tutorialRightSideButtonPressed
+{
+    switch (self.currentTutorialStep)
+    {
+        case TutorialStep1:
+        {
+            //Go to Step 2
+            [self displayTutorialStep:TutorialStep2];
+        }
+            break;
+            
+        case TutorialStep2:
+        {
+            //Add some sample images
+            UIImage *testImage1 = [UIImage imageNamed: @"ReceiptPic-1.jpg"];
+            UIImage *testImage2 = [UIImage imageNamed: @"ReceiptPic-2.jpg"];
+            
+            NSString *fileName1 = [NSString stringWithFormat: @"Receipt-%@-%d", [Utils generateUniqueID], 1];
+            NSString *fileName2 = [NSString stringWithFormat: @"Receipt-%@-%d", [Utils generateUniqueID], 2];
+            
+            NSString *savedFilePath1 = [Utils saveImage: testImage1 withFilename: fileName1 forUser: self.userManager.user.userKey];
+            NSString *savedFilePath2 = [Utils saveImage: testImage2 withFilename: fileName2 forUser: self.userManager.user.userKey];
+            
+            DLog(@"Image saved to %@", savedFilePath1);
+            DLog(@"Image saved to %@", savedFilePath2);
+            
+            [self.takenImageFilenames addObject: fileName1];
+            [self.takenImageFilenames addObject: fileName2];
+            
+            [self addImageToPreviousImageView:testImage2];
+            
+            [self.continueButton setEnabled:YES];
+            
+            [self.view setNeedsUpdateConstraints];
+            
+            //Go to Step 3
+            [self displayTutorialStep:TutorialStep3];
+        }
+            break;
+            
+        case TutorialStep3:
+        {
+            //Go to Step 4
+            [self displayTutorialStep:TutorialStep4];
+        }
+            
+            break;
+            
+        case TutorialStep4:
+        {
+            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+            
+            [self.tutorialManager dismissTutorial:^{
+                //Go to Receipt Overlay
+                [self continuePressed:self.continueButton];
+            }];
+        }
+            
             break;
             
         default:

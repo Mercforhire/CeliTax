@@ -82,14 +82,6 @@ NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
     [self.collectionView setContentInset:_insets];
 }
 
-- (void)addImagePressed
-{
-    if (self.delegate)
-    {
-        [self.delegate addImagePressed];
-    }
-}
-
 #pragma mark - From UICollectionView Delegate/Datasource
 
 - (NSInteger) collectionView: (UICollectionView *) collectionView numberOfItemsInSection: (NSInteger) section
@@ -107,16 +99,6 @@ NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
     }
     
     [cell.image setImage: [self.images objectAtIndex: indexPath.row]];
-    
-    if (indexPath.row == self.images.count - 1)
-    {
-        [cell.addPhotoButton setHidden:NO];
-        [cell.addPhotoButton addTarget: self action: @selector(addImagePressed) forControlEvents: UIControlEventTouchUpInside];
-    }
-    else
-    {
-        [cell.addPhotoButton setHidden:YES];
-    }
     
     return cell;
 }

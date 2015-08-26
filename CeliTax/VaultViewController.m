@@ -69,8 +69,6 @@ typedef enum : NSUInteger
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *deleteButtonHeightBar;
 @property (strong, nonatomic) UIPickerView *taxYearPicker;
 @property (weak, nonatomic) IBOutlet UITextField *invisibleNewTaxYearField;
-@property (strong, nonatomic) UIImage *receiptIconImage;
-
 // sorted from most recent to oldest
 @property (nonatomic, strong) NSArray *existingTaxYears;
 @property (nonatomic, strong) NSMutableArray *possibleTaxYears;
@@ -101,8 +99,6 @@ typedef enum : NSUInteger
 
 - (void) setupUI
 {
-    self.receiptIconImage = [UIImage imageNamed: @"receipt_icon.png"];
-    
     [self.downloadReceiptButton setLookAndFeel:self.lookAndFeel];
 
     [self.selectAllCheckBox.titleLabel setFont: [UIFont latoFontOfSize: 13]];
@@ -168,6 +164,59 @@ typedef enum : NSUInteger
     self.invisibleNewTaxYearField.inputAccessoryView = pickerToolbar;
 }
 
+#pragma mark - Life Cycle Functions
+
+- (void) viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    
+    [self setupUI];
+    
+    self.selectedReceipts = [NSMutableDictionary new];
+    
+    self.uploadHistoryTable.dataSource = self;
+    self.uploadHistoryTable.delegate = self;
+    
+    self.dateFormatter = [[NSDateFormatter alloc] init];
+    
+    UITapGestureRecognizer *taxYearPressedTap =
+    [[UITapGestureRecognizer alloc] initWithTarget: self
+                                            action: @selector(taxYearPressed)];
+    [self.taxYearLabel addGestureRecognizer: taxYearPressedTap];
+    
+    UITapGestureRecognizer *taxYearPressedTap2 =
+    [[UITapGestureRecognizer alloc] initWithTarget: self
+                                            action: @selector(taxYearPressed)];
+    [self.triangleView addGestureRecognizer: taxYearPressedTap2];
+    
+    [self.selectAllCheckBox addTarget: self
+                               action: @selector(selectAllCheckChangedValue:)
+                     forControlEvents: UIControlEventValueChanged];
+    
+    [self.sendReceiptsToViewController setDelegate: self];
+    
+    [self refreshTaxYears];
+}
+
+- (void) viewWillAppear: (BOOL) animated
+{
+    [super viewWillAppear: animated];
+    
+    //if there is no selected tax year saved, select the newest year by default
+    if ([self.configurationManager getCurrentTaxYear])
+    {
+        self.currentlySelectedYear = [NSNumber numberWithInteger:[self.configurationManager getCurrentTaxYear]];
+    }
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
+#pragma mark - View Controller functions
+
 -(void)cancelAddTaxYear
 {
     [self.invisibleNewTaxYearField resignFirstResponder];
@@ -213,97 +262,9 @@ typedef enum : NSUInteger
     [self.taxYearPickerViewController setDelegate: self];
 }
 
-- (void) viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-
-    [self setupUI];
-
-    self.selectedReceipts = [NSMutableDictionary new];
-
-    self.uploadHistoryTable.dataSource = self;
-    self.uploadHistoryTable.delegate = self;
-
-    self.dateFormatter = [[NSDateFormatter alloc] init];
-
-    UITapGestureRecognizer *taxYearPressedTap =
-        [[UITapGestureRecognizer alloc] initWithTarget: self
-                                                action: @selector(taxYearPressed)];
-    [self.taxYearLabel addGestureRecognizer: taxYearPressedTap];
-    
-    UITapGestureRecognizer *taxYearPressedTap2 =
-    [[UITapGestureRecognizer alloc] initWithTarget: self
-                                            action: @selector(taxYearPressed)];
-    [self.triangleView addGestureRecognizer: taxYearPressedTap2];
-
-    [self.selectAllCheckBox addTarget: self
-                               action: @selector(selectAllCheckChangedValue:)
-                     forControlEvents: UIControlEventValueChanged];
-
-    [self.sendReceiptsToViewController setDelegate: self];
-    
-    [self refreshTaxYears];
-}
-
-- (void) viewWillAppear: (BOOL) animated
-{
-    [super viewWillAppear: animated];
-    
-    //if there is no selected tax year saved, select the newest year by default
-    if ([self.configurationManager getCurrentTaxYear])
-    {
-        self.currentlySelectedYear = [NSNumber numberWithInteger:[self.configurationManager getCurrentTaxYear]];
-    }
-}
-
 -(void)displayTutorials
 {
-    NSMutableArray *tutorials = [NSMutableArray new];
     
-    //Each Stage represents a different group of Tutorial pop ups
-    NSInteger currentTutorialStage = [self.tutorialManager getCurrentTutorialStageForViewController:self];
-    
-    if ( currentTutorialStage == 1 )
-    {
-        TutorialStep *tutorialStep1 = [TutorialStep new];
-        
-        tutorialStep1.text = @"Quickly access every receipt image captured.\n\nClick on a receipt to easily review and edit the receipt!";
-        tutorialStep1.size = CGSizeMake(290, 120);
-        tutorialStep1.pointsUp = YES;
-        
-        [tutorials addObject:tutorialStep1];
-        
-        TutorialStep *tutorialStep2 = [TutorialStep new];
-        
-        tutorialStep2.origin = self.downloadReceiptButton.center;
-        
-        tutorialStep2.text = @"Use the download button to receive a ZIP file of all uploaded images for the current tax year directly to your email!";
-        tutorialStep2.size = CGSizeMake(290, 80);
-        tutorialStep2.pointsUp = NO;
-        
-        [tutorials addObject:tutorialStep2];
-        
-        [self.tutorialManager setTutorialDoneForViewController:self];
-    }
-    else
-    {
-        //don't show any tutorial
-        return;
-    }
-    
-    [self.tutorialManager startTutorialInViewController:self andTutorials:tutorials];
-}
-
-- (void) viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    //Create tutorial items if it's ON
-    if ([self.configurationManager isTutorialOn])
-    {
-        [self displayTutorials];
-    }
 }
 
 -(BOOL)thisYearHasNoReceipts
@@ -312,37 +273,6 @@ typedef enum : NSUInteger
             !self.previousMonthReceipts.count  && !self.viewAllReceipts.count);
 }
 
-- (IBAction) downloadReceiptsPressed: (UIButton *) sender
-{
-    if ( [self thisYearHasNoReceipts] )
-    {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                          message:@"This year has no saved receipts"
-                                                         delegate:nil
-                                                cancelButtonTitle:nil
-                                                otherButtonTitles:@"Dismiss",nil];
-        
-        [message show];
-        
-        return;
-    }
-    
-    if (self.selectAllReceipts || self.selectedReceipts.count)
-    {
-        // open up 'Send Receipts To' pop up
-        [self.sendReceiptsPopover presentPopoverFromRect: self.downloadReceiptButton.frame inView: self.view permittedArrowDirections: WYPopoverArrowDirectionDown animated: YES];
-    }
-    else
-    {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                          message:@"Please select all or at least one receipt"
-                                                         delegate:nil
-                                                cancelButtonTitle:nil
-                                                otherButtonTitles:@"Dismiss",nil];
-        
-        [message show];
-    }
-}
 
 -(void)enableTransferButton:(BOOL)enableTransferButton andEnableDeleteButton:(BOOL)enableDeleteButton
 {
@@ -467,31 +397,6 @@ typedef enum : NSUInteger
     [self.uploadHistoryTable reloadData];
 }
 
-- (void) taxYearPressed
-{
-    [self.taxYearSelectionPopover presentPopoverFromRect: self.taxYearLabel.frame inView: self.view permittedArrowDirections: WYPopoverArrowDirectionUp animated: YES];
-}
-
--(void)receiptDetailsPressed:(UIButton *)sender
-{
-    NSDictionary *thisReceiptInfo = [self getReceiptInfoFromTag:sender.tag];
-    
-    NSString *receiptID = [thisReceiptInfo objectForKey: kReceiptIDKey];
-    
-    //push to Receipt Checking view directly if this receipt has no items
-    NSArray *records = [self.dataService fetchRecordsForReceiptID: receiptID];
-    
-    if (!records || records.count == 0)
-    {
-        // push ReceiptCheckingViewController
-        [self.navigationController pushViewController: [self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID: receiptID cameFromReceiptBreakDownViewController: YES] animated: YES];
-    }
-    else
-    {
-        [self.navigationController pushViewController: [self.viewControllerFactory createReceiptBreakDownViewControllerForReceiptID: receiptID cameFromReceiptCheckingViewController: NO] animated: YES];
-    }
-}
-
 - (void) setYearLabelToBe: (NSInteger) year
 {
     [self.taxYearLabel setText: [NSString stringWithFormat: @"%ld Tax Year", (long)year]];
@@ -542,40 +447,6 @@ typedef enum : NSUInteger
     }
 }
 
-- (IBAction)transferButtonPressed:(UIButton *)sender
-{
-    self.transferYearSelections = [NSMutableArray new];
-    
-    for (NSNumber *year in self.existingTaxYears)
-    {
-        if ( year.integerValue != self.currentlySelectedYear.integerValue )
-        {
-            [self.transferYearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", (long)year.integerValue]];
-        }
-    }
-    
-    self.transferSelectionsViewController = [self.viewControllerFactory createTransferSelectionsViewController: self.transferYearSelections];
-    
-    self.transferSelectionsPopover = [[WYPopoverController alloc] initWithContentViewController: self.transferSelectionsViewController];
-    
-    [self.transferSelectionsViewController setDelegate: self];
-    
-    [self.transferSelectionsViewController setHighlightedSelectionIndex: -1];
-    
-    [self.transferSelectionsPopover presentPopoverFromRect: self.transferButton.frame inView: self.view permittedArrowDirections: WYPopoverArrowDirectionDown animated: YES];
-}
-
-- (IBAction)deleteButtonPressed:(UIButton *)sender
-{
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Delete selected receipts"
-                                                      message: @"Are you sure you want delete the selected receipts along with all their items?"
-                                                     delegate: self
-                                            cancelButtonTitle: @"No"
-                                            otherButtonTitles: @"Delete", nil];
-    
-    [message show];
-}
-
 -(void)fetchRecentUploadReceipts
 {
     NSArray *receiptInfos = [self.dataService fetchNewestReceiptInfo : 5
@@ -615,6 +486,99 @@ typedef enum : NSUInteger
                                                               inYear: self.currentlySelectedYear.integerValue];
     
     self.viewAllReceipts = receiptInfos;
+}
+
+#pragma mark - Button press events
+
+- (void) taxYearPressed
+{
+    [self.taxYearSelectionPopover presentPopoverFromRect: self.taxYearLabel.frame inView: self.view permittedArrowDirections: WYPopoverArrowDirectionUp animated: YES];
+}
+
+-(void)receiptDetailsPressed:(UIButton *)sender
+{
+    NSDictionary *thisReceiptInfo = [self getReceiptInfoFromTag:sender.tag];
+    
+    NSString *receiptID = [thisReceiptInfo objectForKey: kReceiptIDKey];
+    
+    //push to Receipt Checking view directly if this receipt has no items
+    NSArray *records = [self.dataService fetchRecordsForReceiptID: receiptID];
+    
+    if (!records || records.count == 0)
+    {
+        // push ReceiptCheckingViewController
+        [self.navigationController pushViewController: [self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID: receiptID cameFromReceiptBreakDownViewController: YES] animated: YES];
+    }
+    else
+    {
+        [self.navigationController pushViewController: [self.viewControllerFactory createReceiptBreakDownViewControllerForReceiptID: receiptID cameFromReceiptCheckingViewController: NO] animated: YES];
+    }
+}
+
+- (IBAction)transferButtonPressed:(UIButton *)sender
+{
+    self.transferYearSelections = [NSMutableArray new];
+    
+    for (NSNumber *year in self.existingTaxYears)
+    {
+        if ( year.integerValue != self.currentlySelectedYear.integerValue )
+        {
+            [self.transferYearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", (long)year.integerValue]];
+        }
+    }
+    
+    self.transferSelectionsViewController = [self.viewControllerFactory createTransferSelectionsViewController: self.transferYearSelections];
+    
+    self.transferSelectionsPopover = [[WYPopoverController alloc] initWithContentViewController: self.transferSelectionsViewController];
+    
+    [self.transferSelectionsViewController setDelegate: self];
+    
+    [self.transferSelectionsViewController setHighlightedSelectionIndex: -1];
+    
+    [self.transferSelectionsPopover presentPopoverFromRect: self.transferButton.frame inView: self.view permittedArrowDirections: WYPopoverArrowDirectionDown animated: YES];
+}
+
+- (IBAction)deleteButtonPressed:(UIButton *)sender
+{
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Delete selected receipts"
+                                                      message: @"Are you sure you want delete the selected receipts along with all their items?"
+                                                     delegate: self
+                                            cancelButtonTitle: @"No"
+                                            otherButtonTitles: @"Delete", nil];
+    
+    [message show];
+}
+
+- (IBAction) downloadReceiptsPressed: (UIButton *) sender
+{
+    if ( [self thisYearHasNoReceipts] )
+    {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                          message:@"This year has no saved receipts"
+                                                         delegate:nil
+                                                cancelButtonTitle:nil
+                                                otherButtonTitles:@"Dismiss",nil];
+        
+        [message show];
+        
+        return;
+    }
+    
+    if (self.selectAllReceipts || self.selectedReceipts.count)
+    {
+        // open up 'Send Receipts To' pop up
+        [self.sendReceiptsPopover presentPopoverFromRect: self.downloadReceiptButton.frame inView: self.view permittedArrowDirections: WYPopoverArrowDirectionDown animated: YES];
+    }
+    else
+    {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                          message:@"Please select all or at least one receipt"
+                                                         delegate:nil
+                                                cancelButtonTitle:nil
+                                                otherButtonTitles:@"Dismiss",nil];
+        
+        [message show];
+    }
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -775,7 +739,7 @@ typedef enum : NSUInteger
     self.taxYearToAdd = self.possibleTaxYears[row];
 }
 
-#pragma mark - SelectionsPickerPopUpDelegate
+#pragma mark - SendReceiptsViewPopUpDelegate
 
 - (void) sendReceiptsToEmailRequested: (NSString *) emailAddress
 {
@@ -1066,6 +1030,8 @@ typedef enum : NSUInteger
             NSInteger numberOfRecords = [[thisReceiptInfo objectForKey:kNumberOfRecordsKey] integerValue];
             
             [cell.receiptCounterView setCounter:numberOfRecords];
+            
+            [cell.receiptCounterView setToGreen];
             
             if (cell.checkBoxView.checkState == M13CheckboxStateChecked)
             {

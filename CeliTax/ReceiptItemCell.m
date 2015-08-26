@@ -45,6 +45,7 @@
         case UnitML:
         case UnitL:
         case UnitG:
+        case Unit100G:
         case UnitKG:
             [self.qtyLabel setText:@"Weight"];
             [self.priceUnitLabel setText:@"Unit"];
@@ -79,6 +80,11 @@
             
         case UnitG:
             [self.priceField setText:@"(g)"];
+            
+            break;
+            
+        case Unit100G:
+            [self.priceField setText:@"(100g)"];
             
             break;
             

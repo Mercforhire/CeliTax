@@ -22,4 +22,6 @@
 
 @property (nonatomic, weak) id <ImageCounterIconViewProtocol> delegate;
 
+-(void)setToGreen;
+
 @end

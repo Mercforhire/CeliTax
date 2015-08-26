@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class ConfigurationManager, UserManager, LookAndFeel;
-@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCatagoryViewController, SidebarViewController, Catagory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager, SyncManager, MyProfileViewController, UnitPickerViewController;
+@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCatagoryViewController, SidebarViewController, Catagory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager, SyncManager, MyProfileViewController, UnitPickerViewController, YearSummaryViewController, YearSavingViewController;
 
 @protocol AuthenticationService, DataService, ManipulationService, SyncService;
 
@@ -70,6 +70,10 @@
 - (MyProfileViewController *) createMyProfileViewController;
 
 - (UnitPickerViewController *) createUnitPickerViewControllerWithDefaultUnit:(NSInteger)defaultUnit;
+
+- (YearSummaryViewController *) createYearSummaryViewController;
+
+- (YearSavingViewController *) createYearSavingViewController;
 
 - (NSArray *) getMenuSelections;
 

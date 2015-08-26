@@ -1,19 +1,80 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+            <string>Lato-Bold</string>
+        </mutableArray>
+        <mutableArray key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </mutableArray>
+    </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TaxYearSummaryViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YearSummaryViewController">
             <connections>
+                <outlet property="exportButton" destination="qWr-fs-TtM" id="8Ch-sI-pDx"/>
+                <outlet property="summaryTableView" destination="86N-Hs-7Qb" id="7nW-1R-rV9"/>
+                <outlet property="titleLabel" destination="g3V-gf-M4G" id="deG-DS-VVe"/>
+                <outlet property="totalSavingsLabel" destination="q31-9y-Vbw" id="5xi-JL-Wmm"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="44" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20XX GF Tax Savings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g3V-gf-M4G">
+                    <rect key="frame" x="72" y="79" width="176.5" height="23"/>
+                    <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="19"/>
+                    <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qWr-fs-TtM" customClass="HollowGreenButton">
+                    <rect key="frame" x="102" y="523" width="116" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="buf-xd-NYe"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
+                    <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                    <state key="normal" title="Export Report">
+                        <color key="titleColor" red="0.55334633690000001" green="0.82171581770000002" blue="0.4125430142" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="exportPressed:" destination="-1" eventType="touchUpInside" id="c9Y-cK-VfX"/>
+                    </connections>
+                </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="86N-Hs-7Qb">
+                    <rect key="frame" x="0.0" y="132" width="320" height="376"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q31-9y-Vbw">
+                    <rect key="frame" x="160" y="117" width="0.0" height="0.0"/>
+                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="35"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="g3V-gf-M4G" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="79" id="510-Ub-cWI"/>
+                <constraint firstAttribute="centerX" secondItem="qWr-fs-TtM" secondAttribute="centerX" id="CwI-ae-x3E"/>
+                <constraint firstAttribute="trailing" secondItem="86N-Hs-7Qb" secondAttribute="trailing" id="GCe-kC-gIp"/>
+                <constraint firstAttribute="centerX" secondItem="q31-9y-Vbw" secondAttribute="centerX" id="GHj-bT-6Kb"/>
+                <constraint firstItem="qWr-fs-TtM" firstAttribute="top" secondItem="86N-Hs-7Qb" secondAttribute="bottom" constant="15" id="UPl-jW-gMh"/>
+                <constraint firstItem="q31-9y-Vbw" firstAttribute="top" secondItem="g3V-gf-M4G" secondAttribute="bottom" constant="15" id="WWg-hX-mnh"/>
+                <constraint firstItem="86N-Hs-7Qb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="i5g-u6-g1c"/>
+                <constraint firstAttribute="centerX" secondItem="g3V-gf-M4G" secondAttribute="centerX" id="nja-HR-nwY"/>
+                <constraint firstAttribute="bottom" secondItem="qWr-fs-TtM" secondAttribute="bottom" constant="15" id="txs-NW-Upw"/>
+                <constraint firstItem="86N-Hs-7Qb" firstAttribute="top" secondItem="q31-9y-Vbw" secondAttribute="bottom" constant="15" id="vPT-ZI-aWA"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <point key="canvasLocation" x="531" y="290"/>
         </view>
     </objects>
 </document>
