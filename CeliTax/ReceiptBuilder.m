@@ -32,7 +32,7 @@
     
     NSArray *filenames = [filenamesString componentsSeparatedByString:@","];
     
-    receipt.fileNames = [filenames mutableCopy];
+    receipt.fileNames = [[NSMutableArray alloc] initWithArray: filenames copyItems: NO];
     
     //Data Created
     NSString *dateString = [json objectForKey: kKeyDateCreated];

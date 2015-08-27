@@ -123,6 +123,24 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
     }
 }
 
+-(void)simulateLongPressedOnFirstButton
+{
+    NSString *clickedName = [self.buttonNames objectAtIndex: 0];
+    
+    UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    
+    CGRect cellRect = attributes.frame;
+    
+    cellRect = [self.collectionView convertRect:cellRect toView:self];
+    
+    CGPoint point = CGPointMake(cellRect.origin.x + cellRect.size.width / 2, 0);
+    
+    if (self.delegate)
+    {
+        [self.delegate buttonLongPressedWithIndex: 0 andName: clickedName atPoint:point];
+    }
+}
+
 #pragma mark - From UICollectionView Delegate / Datasource
 
 - (NSInteger) collectionView: (UICollectionView *) collectionView numberOfItemsInSection: (NSInteger) section

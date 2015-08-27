@@ -34,6 +34,7 @@
 #import "UnitPickerViewController.h"
 #import "YearSummaryViewController.h"
 #import "YearSavingViewController.h"
+#import "BackgroundWorker.h"
 
 @implementation ViewControllerFactory
 {
@@ -48,6 +49,7 @@
     viewController.userManager = self.userManager;
     viewController.lookAndFeel = self.lookAndFeel;
     viewController.navigationBarTitleImageContainer = self.navigationBarTitleImageContainer;
+    viewController.backgroundWorker = self.backgroundWorker;
     
     if (!tutorialManager)
     {

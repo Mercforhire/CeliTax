@@ -76,6 +76,8 @@ typedef enum : NSUInteger
 @property (nonatomic, strong) NSMutableArray *tutorials;
 @property (nonatomic) NSUInteger currentTutorialStep;
 
+@property (nonatomic) BOOL shouldDisplaySecondSetOfTutorials;
+
 @end
 
 @implementation MainViewController
@@ -205,9 +207,21 @@ typedef enum : NSUInteger
         
         if ([self.tutorialManager automaticallyShowTutorialNextTime])
         {
-            [self setupTutorials];
-            
-            [self displayTutorialStep:0];
+            if (!self.shouldDisplaySecondSetOfTutorials)
+            {
+                [self setupTutorials];
+                
+                [self displayTutorialStep:0];
+            }
+            else
+            {
+                self.shouldDisplaySecondSetOfTutorials = NO;
+                
+                [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+                
+                //go to Vault View
+                [super selectedMenuIndex:RootViewControllerVault];
+            }
         }
     }
     else
@@ -627,6 +641,8 @@ typedef enum : NSUInteger
     switch (self.currentTutorialStep)
     {
         case TutorialStep1:
+            [self.tutorialManager setTutorialsAsShown];
+            
             //Close tutorial
             [self.tutorialManager dismissTutorial:^{
                 //
@@ -707,6 +723,8 @@ typedef enum : NSUInteger
             [self.tutorialManager setAutomaticallyShowTutorialNextTime];
             
             [self.tutorialManager dismissTutorial:^{
+                self.shouldDisplaySecondSetOfTutorials = YES;
+                
                 //Go to Camera view
                 [self cameraButtonPressed:self.cameraButton];
             }];

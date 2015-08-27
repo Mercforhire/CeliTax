@@ -99,18 +99,18 @@
 
     [viewControllers removeObject: self.rightSideBar];
 
-    [self.navigationController setViewControllers: viewControllers animated: NO];
+    [self.navigationController setViewControllers: viewControllers animated: YES];
 
     // push the new viewController
-    [self.navigationController pushViewController: viewController animated: YES];
+    [viewControllers addObject:viewController];
 
     // remove self viewController
-    NSMutableArray *viewController2 = [NSMutableArray arrayWithArray: self.navigationController.viewControllers];
+    NSMutableArray *viewController2 = [NSMutableArray arrayWithArray: viewControllers];
 
     [viewController2 removeObject: self];
 
     // Assign the updated stack with animation
-    [self.navigationController setViewControllers: viewController2 animated: NO];
+    [self.navigationController setViewControllers: viewController2 animated: YES];
 }
 
 - (void) popToLoginView

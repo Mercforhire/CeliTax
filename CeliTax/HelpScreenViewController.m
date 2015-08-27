@@ -151,6 +151,8 @@
     }];
 }
 
+#pragma mark - UIKeyboardWillShowNotification / UIKeyboardWillHideNotification events
+
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void) keyboardWillShow: (NSNotification *) aNotification
 {

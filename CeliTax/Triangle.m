@@ -7,7 +7,6 @@
 //
 
 #import "Triangle.h"
-#import "LookAndFeel.h"
 
 @implementation Triangle
 {
@@ -50,19 +49,11 @@
     
     CGContextSaveGState(context); // save state
     
-    [self.lookAndFeel.appGreenColor setFill];
+    [[UIColor colorWithRed:116.0f/255 green:191.0f/255 blue:81.0f/255 alpha:1] setFill];
     [trianglePath fill];
     
     CGContextRestoreGState(context);
 }
-
--(void)setLookAndFeel:(LookAndFeel *)lookAndFeel
-{
-    _lookAndFeel = lookAndFeel;
-    
-    [self setNeedsDisplay];
-}
-
 
 -(void)setPointsUp:(BOOL)pointsUp
 {

@@ -11,6 +11,7 @@
 #import "Utils.h"
 #import "UserDataDAO.h"
 #import "ConfigurationManager.h"
+#import "BackgroundWorker.h"
 
 @implementation UserManager
 {
@@ -46,6 +47,8 @@
         
         //IMPORTANT: set the userKey to userDataDAO
         self.userDataDAO.userKey = self.user.userKey;
+        
+        [self.backgroundWorker activeWorker];
     }
     
     return (self.user != nil);
@@ -81,6 +84,8 @@
     {
         DLog(@"ERROR: Did not save User");
     }
+    
+    [self.backgroundWorker activeWorker];
     
     [self.authenticationService retrieveProfileImage:^(UIImage *profileImage) {
         
@@ -154,6 +159,8 @@
     {
         DLog(@"ERROR: Did not delete saved User");
     }
+    
+    [self.backgroundWorker deactiveWorker];
 }
 
 @end

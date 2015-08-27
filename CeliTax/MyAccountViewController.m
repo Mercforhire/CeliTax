@@ -27,6 +27,8 @@
 #import "MyProfileViewController.h"
 #import "UIView+Helper.h"
 #import "YearSavingViewController.h"
+#import "TutorialManager.h"
+#import "TutorialStep.h"
 
 #define kCatagoryTableRowHeight                     65
 
@@ -36,8 +38,9 @@
 #define kAccountTableViewCellIdentifier             @"AccountTableViewCell"
 #define kUploadsHistoryTableViewCellIdentifier      @"UploadsHistoryTableViewCell"
 
-@interface MyAccountViewController () <UITableViewDataSource, UITableViewDelegate, XYPieChartDelegate, XYPieChartDataSource, UITextFieldDelegate>
+@interface MyAccountViewController () <UITableViewDataSource, UITableViewDelegate, XYPieChartDelegate, XYPieChartDataSource, UITextFieldDelegate, TutorialManagerDelegate>
 
+@property (nonatomic, strong) UIView *pieChartContainer;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) XYPieChart *pieChart;
 @property (weak, nonatomic) IBOutlet UITableView *accountTableView;
@@ -64,6 +67,10 @@
 @property (nonatomic) BOOL previousMonthSelected;
 @property (nonatomic) BOOL viewAllSelected;
 
+//Tutorials
+@property (nonatomic, strong) NSMutableArray *tutorials;
+@property (nonatomic) NSUInteger currentTutorialStep;
+
 @end
 
 @implementation MyAccountViewController
@@ -88,17 +95,17 @@
     [self.accountTableView registerNib: uploadsHistoryTableViewCell forCellReuseIdentifier: kUploadsHistoryTableViewCellIdentifier];
 
     // set up pieChart
-    UIView *pieChartContainer = [[UIView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 250)];
+    self.pieChartContainer = [[UIView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 250)];
     
-    [pieChartContainer addSubview: self.profileBarView];
+    [self.pieChartContainer addSubview: self.profileBarView];
 
     self.pieChart = [[XYPieChart alloc] initWithFrame: CGRectMake(0, 60, 180, 180)];
-    CGPoint pieChartCenter = pieChartContainer.center;
+    CGPoint pieChartCenter = self.pieChartContainer.center;
     pieChartCenter.y = pieChartCenter.y + 30;
     
     [self.pieChart setCenter: pieChartCenter];
 
-    [pieChartContainer addSubview: self.pieChart];
+    [self.pieChartContainer addSubview: self.pieChart];
 
     [self.pieChart setBackgroundColor: [UIColor clearColor]];
     [self.pieChart setDataSource: self];
@@ -115,10 +122,10 @@
     
     // set up the National Average Cost ? button
     
-    self.navHelpButton = [[UIButton alloc] initWithFrame:CGRectMake(pieChartContainer.frame.size.width - 27 - 35,
-                                                                         pieChartContainer.frame.size.height - 27,
-                                                                         27,
-                                                                         27)];
+    self.navHelpButton = [[UIButton alloc] initWithFrame:CGRectMake(self.pieChartContainer.frame.size.width - 27 - 35,
+                                                                    self.pieChartContainer.frame.size.height - 27,
+                                                                    27,
+                                                                    27)];
     
     [self.navHelpButton setTitle:@"?" forState:UIControlStateNormal];
     [self.navHelpButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -130,9 +137,9 @@
     
     [self.navHelpButton addTarget:self action:@selector(avgHelpClicked) forControlEvents:UIControlEventTouchUpInside];
     
-    [pieChartContainer addSubview: self.navHelpButton];
+    [self.pieChartContainer addSubview: self.navHelpButton];
     
-    [self.accountTableView setTableHeaderView: pieChartContainer];
+    [self.accountTableView setTableHeaderView: self.pieChartContainer];
     
     // other set up
     [self.calculateButton setLookAndFeel:self.lookAndFeel];
@@ -340,6 +347,16 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    if (![self.tutorialManager hasTutorialBeenShown])
+    {
+        if ([self.tutorialManager automaticallyShowTutorialNextTime])
+        {
+            [self setupTutorials];
+            
+            [self displayTutorialStep:0];
+        }
+    }
 }
 
 - (void) viewWillDisappear: (BOOL) animated
@@ -388,6 +405,8 @@
     
     return nil;
 }
+
+#pragma mark - UIKeyboardWillShowNotification / UIKeyboardWillHideNotification events
 
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void) keyboardWillShow: (NSNotification *) aNotification
@@ -1100,9 +1119,162 @@
 
 #pragma mark - Tutorial
 
--(void)displayTutorials
+typedef enum : NSUInteger
 {
+    TutorialStep1,
+    TutorialStep2,
+    TutorialStep3,
+    TutorialStep4,
+    TutorialStep5,
+    TutorialStepsCount,
+} TutorialSteps;
 
+-(void)setupTutorials
+{
+    [self.tutorialManager setDelegate:self];
+    
+    self.tutorials = [NSMutableArray new];
+    
+    TutorialStep *tutorialStep1 = [TutorialStep new];
+    
+    tutorialStep1.text = @"In the My Account view, you can see a grand total of all GF purchases allocated to each of your categories. ";
+    tutorialStep1.rightButtonTitle = @"Continue";
+    
+    CGRect tableRowsFrame = self.accountTableView.frame;
+    
+    tableRowsFrame.origin.y += self.pieChartContainer.frame.size.height;
+    tableRowsFrame.size.height -= self.pieChartContainer.frame.size.height;
+    
+    tutorialStep1.highlightedItemRect = tableRowsFrame;
+    tutorialStep1.pointsUp = NO;
+    
+    [self.tutorials addObject:tutorialStep1];
+    
+    TutorialStep *tutorialStep2 = [TutorialStep new];
+    
+    tutorialStep2.text = @"For each GF category, you must input an Average Non-GF Cost per item which represents regular priced items of a similar non-gluten free item. You can click the ? for more information and suggested prices.";
+    tutorialStep2.leftButtonTitle = @"Back";
+    tutorialStep2.rightButtonTitle = @"Continue";
+    tutorialStep2.pointsUp = NO;
+    
+//    tableRowsFrame.origin.y -= self.navHelpButton.frame.size.height;
+//    tableRowsFrame.size.height += self.navHelpButton.frame.size.height;
+    
+    tutorialStep2.highlightedItemRect = tableRowsFrame;
+    
+    [self.tutorials addObject:tutorialStep2];
+    
+    TutorialStep *tutorialStep3 = [TutorialStep new];
+    
+    tutorialStep3.text = @"Once a cost is inputted for each GF category, simply click calculate to automatically determine your GF tax claim for the year!";
+    tutorialStep3.leftButtonTitle = @"Back";
+    tutorialStep3.rightButtonTitle = @"Continue";
+    tutorialStep3.pointsUp = NO;
+    tutorialStep3.highlightedItemRect = [Utils returnRectBiggerThan:self.calculateButton.frame by: 3];
+    
+    [self.tutorials addObject:tutorialStep3];
+    
+    TutorialStep *tutorialStep4 = [TutorialStep new];
+    
+    tutorialStep4.text = @"You can even send your final claim and detailed report of all purchases to your email address in one easy step!";
+    tutorialStep4.leftButtonTitle = @"Back";
+    tutorialStep4.rightButtonTitle = @"Continue";
+    
+    [self.tutorials addObject:tutorialStep4];
+    
+    TutorialStep *tutorialStep5 = [TutorialStep new];
+    
+    tutorialStep5.text = @"That’s it! We realize this was a lot of info but once you upload your first receipt you will see just how easy CeliTax is. You can re-visit the tutorial anytime in Settings.";
+    tutorialStep5.leftButtonTitle = @"Back";
+    tutorialStep5.rightButtonTitle = @"Done";
+    
+    [self.tutorials addObject:tutorialStep5];
+    
+    self.currentTutorialStep = TutorialStep1;
+}
+
+-(void)displayTutorialStep:(NSInteger)step
+{
+    if (self.tutorials.count && step < self.tutorials.count)
+    {
+        TutorialStep *tutorialStep = [self.tutorials objectAtIndex:step];
+        
+        [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
+        
+        self.currentTutorialStep = step;
+    }
+}
+
+- (void) tutorialLeftSideButtonPressed
+{
+    switch (self.currentTutorialStep)
+    {
+        case TutorialStep2:
+            //Go back to Step 1
+            [self displayTutorialStep:TutorialStep1];
+            break;
+            
+        case TutorialStep3:
+            //Go back to Step 2
+            [self displayTutorialStep:TutorialStep2];
+            break;
+            
+        case TutorialStep4:
+            //Go back to Step 3
+            [self displayTutorialStep:TutorialStep3];
+            break;
+            
+        case TutorialStep5:
+            //Go back to Step 4
+            [self displayTutorialStep:TutorialStep4];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void) tutorialRightSideButtonPressed
+{
+    switch (self.currentTutorialStep)
+    {
+        case TutorialStep1:
+            //Go to Step 2
+            [self displayTutorialStep:TutorialStep2];
+            
+            break;
+            
+        case TutorialStep2:
+            //Go to Step 3
+            [self displayTutorialStep:TutorialStep3];
+            
+            break;
+            
+        case TutorialStep3:
+            //Go to Step 4
+            [self displayTutorialStep:TutorialStep4];
+            
+            break;
+            
+        case TutorialStep4:
+            //Go to Step 5
+            [self displayTutorialStep:TutorialStep5];
+            
+            break;
+            
+        case TutorialStep5:
+        {
+            [self.tutorialManager setTutorialsAsShown];
+            
+            [self.tutorialManager dismissTutorial:^{
+                //Go to Main View
+                [super selectedMenuIndex: RootViewControllerHome];
+            }];
+        }
+            
+        default:
+            break;
+    }
 }
 
 @end

@@ -25,7 +25,7 @@
 #import "TutorialManager.h"
 #import "TutorialStep.h"
 
-@interface ReceiptBreakDownViewController () <XYPieChartDelegate, XYPieChartDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, SelectionsPickerPopUpDelegate>
+@interface ReceiptBreakDownViewController () <XYPieChartDelegate, XYPieChartDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, SelectionsPickerPopUpDelegate, TutorialManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *noItemsShield;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
@@ -46,6 +46,10 @@
 @property (nonatomic, strong) NSMutableArray *sliceNames;
 
 @property (nonatomic, strong) Record *currentlySelectedRecord;
+
+//Tutorials
+@property (nonatomic, strong) NSMutableArray *tutorials;
+@property (nonatomic) NSUInteger currentTutorialStep;
 
 @end
 
@@ -96,6 +100,8 @@
     [self.viewReceiptButton setLookAndFeel:self.lookAndFeel];
 }
 
+#pragma mark - Life Cycle Functions
+
 - (void) viewDidLoad
 {
     [super viewDidLoad];
@@ -109,6 +115,55 @@
     self.dateFormatter = [[NSDateFormatter alloc] init];
     [self.dateFormatter setDateFormat: @"dd/MM/yyyy"];
 }
+
+- (void) viewWillAppear: (BOOL) animated
+{
+    [super viewWillAppear: animated];
+    
+    [self loadData];
+    
+    // register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(keyboardWillShow:)
+                                                 name: UIKeyboardWillShowNotification
+                                               object: nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(keyboardWillHide:)
+                                                 name: UIKeyboardWillHideNotification
+                                               object: nil];
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (![self.tutorialManager hasTutorialBeenShown])
+    {
+        if ([self.tutorialManager automaticallyShowTutorialNextTime])
+        {
+            [self setupTutorials];
+            
+            [self displayTutorialStep:0];
+        }
+    }
+}
+
+- (void) viewWillDisappear: (BOOL) animated
+{
+    [super viewWillDisappear: animated];
+    
+    // unregister for keyboard notifications while not visible.
+    [[NSNotificationCenter defaultCenter] removeObserver: self
+                                                    name: UIKeyboardWillShowNotification
+                                                  object: nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver: self
+                                                    name: UIKeyboardWillHideNotification
+                                                  object: nil];
+}
+
+#pragma mark - View Controller functions
 
 - (void) loadData
 {
@@ -202,29 +257,6 @@
     [self.receiptItemsTable reloadData];
 }
 
-- (void) viewWillAppear: (BOOL) animated
-{
-    [super viewWillAppear: animated];
-
-    [self loadData];
-
-    // register for keyboard notifications
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(keyboardWillShow:)
-                                                 name: UIKeyboardWillShowNotification
-                                               object: nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(keyboardWillHide:)
-                                                 name: UIKeyboardWillHideNotification
-                                               object: nil];
-}
-
-- (void) viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
 - (void) refreshPieChart
 {
     self.slicePercentages = [NSMutableArray new];
@@ -261,53 +293,6 @@
     }
 
     [self.pieChart reloadData];
-}
-
-- (void) viewWillDisappear: (BOOL) animated
-{
-    [super viewWillDisappear: animated];
-
-    // unregister for keyboard notifications while not visible.
-    [[NSNotificationCenter defaultCenter] removeObserver: self
-                                                    name: UIKeyboardWillShowNotification
-                                                  object: nil];
-
-    [[NSNotificationCenter defaultCenter] removeObserver: self
-                                                    name: UIKeyboardWillHideNotification
-                                                  object: nil];
-}
-
-- (IBAction) viewReceiptButtonPressed: (UIButton *) sender
-{
-    if (self.cameFromReceiptCheckingViewController)
-    {
-        [self.navigationController popViewControllerAnimated: YES];
-    }
-    else
-    {
-        // push ReceiptCheckingViewController
-        [self.navigationController pushViewController: [self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID: self.receiptID cameFromReceiptBreakDownViewController: YES] animated: YES];
-    }
-}
-
-// Called when the UIKeyboardDidShowNotification is sent.
-- (void) keyboardWillShow: (NSNotification *) aNotification
-{
-    NSDictionary *info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey: UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-
-    [self.view scrollToY: 0 - kbSize.height];
-}
-
-// Called when the UIKeyboardWillHideNotification is sent
-- (void) keyboardWillHide: (NSNotification *) aNotification
-{
-    [self.view scrollToY: 0];
-}
-
-- (void) doneWithKeyboard
-{
-    [self.view endEditing: YES];
 }
 
 - (NSInteger) getTotalNumberOfRecordsFromRecordsDictionary
@@ -398,16 +383,63 @@
     return [catagory firstObject];
 }
 
+- (void) setCurrentlySelectedRecord: (Record *) currentlySelectedRecord
+{
+    if (_currentlySelectedRecord != currentlySelectedRecord)
+    {
+        _currentlySelectedRecord = currentlySelectedRecord;
+
+        [self.receiptItemsTable reloadData];
+    }
+}
+
+- (void) doneWithKeyboard
+{
+    [self.view endEditing: YES];
+}
+
+#pragma mark - UIKeyboardWillShowNotification / UIKeyboardWillHideNotification events
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void) keyboardWillShow: (NSNotification *) aNotification
+{
+    NSDictionary *info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey: UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    [self.view scrollToY: 0 - kbSize.height];
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void) keyboardWillHide: (NSNotification *) aNotification
+{
+    [self.view scrollToY: 0];
+}
+
+#pragma mark - Button press events
+
+- (IBAction) viewReceiptButtonPressed: (UIButton *) sender
+{
+    if (self.cameFromReceiptCheckingViewController)
+    {
+        [self.navigationController popViewControllerAnimated: YES];
+    }
+    else
+    {
+        // push ReceiptCheckingViewController
+        [self.navigationController pushViewController: [self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID: self.receiptID cameFromReceiptBreakDownViewController: YES] animated: YES];
+    }
+}
+
 - (void) transferButtonPressed: (UIButton *) sender
 {
     CGRect rectOfCellInTableView = [self.receiptItemsTable rectForRowAtIndexPath: [NSIndexPath indexPathForRow: sender.tag * 2 + 1 inSection: 0]];
     CGRect rectOfCellInSuperview = [self.receiptItemsTable convertRect: rectOfCellInTableView toView: [self.receiptItemsTable superview]];
-
+    
     CGRect tinyRect = CGRectMake(rectOfCellInSuperview.origin.x + sender.frame.origin.x + sender.frame.size.width / 2,
                                  rectOfCellInSuperview.origin.y +  sender.frame.origin.y + sender.frame.size.height / 2,
                                  1,
                                  1);
-
+    
     [self.selectionPopover presentPopoverFromRect: tinyRect
                                            inView: self.view
                          permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown)
@@ -417,20 +449,10 @@
 - (void) deleteButtonPressed: (UIButton *) sender
 {
     Record *thisRecord = [self getNthRecordFromRecordsDictionary: sender.tag];
-
+    
     if ([self.manipulationService deleteRecord: thisRecord.localID save:YES])
     {
         [self loadData];
-    }
-}
-
-- (void) setCurrentlySelectedRecord: (Record *) currentlySelectedRecord
-{
-    if (_currentlySelectedRecord != currentlySelectedRecord)
-    {
-        _currentlySelectedRecord = currentlySelectedRecord;
-
-        [self.receiptItemsTable reloadData];
     }
 }
 
@@ -767,10 +789,115 @@
 
 #pragma mark - Tutorial
 
--(void)displayTutorials
+typedef enum : NSUInteger
 {
+    TutorialStep1,
+    TutorialStep2,
+    TutorialStep3,
+    TutorialStepsCount,
+} TutorialSteps;
+
+-(void)setupTutorials
+{
+    [self.tutorialManager setDelegate:self];
     
+    self.tutorials = [NSMutableArray new];
+    
+    TutorialStep *tutorialStep1 = [TutorialStep new];
+    
+    tutorialStep1.text = @"Manage items you have allocated to a single receipt. Easily view the breakdown by GF category in the pie chart.";
+    tutorialStep1.rightButtonTitle = @"Continue";
+    tutorialStep1.pointsUp = YES;
+    tutorialStep1.highlightedItemRect = self.pieChart.frame;
+    
+    [self.tutorials addObject:tutorialStep1];
+    
+    TutorialStep *tutorialStep2 = [TutorialStep new];
+    
+    tutorialStep2.text = @"Quickly Transfer, Edit, or Delete items as needed.";
+    tutorialStep2.leftButtonTitle = @"Back";
+    tutorialStep2.rightButtonTitle = @"Continue";
+    tutorialStep2.pointsUp = NO;
+    tutorialStep2.highlightedItemRect = self.receiptItemsTable.frame;
+    
+    [self.tutorials addObject:tutorialStep2];
+    
+    TutorialStep *tutorialStep3 = [TutorialStep new];
+    
+    tutorialStep3.text = @"Click to return to your receipt and keep allocating purchases.";
+    tutorialStep3.leftButtonTitle = @"Back";
+    tutorialStep3.rightButtonTitle = @"Continue";
+    tutorialStep3.pointsUp = YES;
+    tutorialStep3.highlightedItemRect = self.viewReceiptButton.frame;
+    
+    [self.tutorials addObject:tutorialStep3];
+    
+    self.currentTutorialStep = TutorialStep1;
 }
 
+-(void)displayTutorialStep:(NSInteger)step
+{
+    if (self.tutorials.count && step < self.tutorials.count)
+    {
+        TutorialStep *tutorialStep = [self.tutorials objectAtIndex:step];
+        
+        [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
+        
+        self.currentTutorialStep = step;
+    }
+}
+
+- (void) tutorialLeftSideButtonPressed
+{
+    switch (self.currentTutorialStep)
+    {
+        case TutorialStep2:
+            //Go back to Step 1
+            [self displayTutorialStep:TutorialStep1];
+            break;
+            
+        case TutorialStep3:
+            //Go back to Step 2
+            [self displayTutorialStep:TutorialStep2];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void) tutorialRightSideButtonPressed
+{
+    switch (self.currentTutorialStep)
+    {
+        case TutorialStep1:
+        {
+            //select the first item in receiptItemsTable
+            [self tableView:self.receiptItemsTable didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            
+            //Go to Step 2
+            [self displayTutorialStep:TutorialStep2];
+        }
+            break;
+            
+        case TutorialStep2:
+            //Go to Step 3
+            [self displayTutorialStep:TutorialStep3];
+            break;
+            
+        case TutorialStep3:
+        {
+            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+            
+            [self.tutorialManager dismissTutorial:^{
+                //Go to Receipt Breakdown view
+                [self viewReceiptButtonPressed:self.viewReceiptButton];
+            }];
+        }
+            break;
+    
+        default:
+            break;
+    }
+}
 
 @end

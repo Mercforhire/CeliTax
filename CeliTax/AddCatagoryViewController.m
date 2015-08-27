@@ -203,18 +203,6 @@
                                                   object: nil];
 }
 
-// Called when the UIKeyboardDidShowNotification is sent.
-- (void) keyboardWillShow: (NSNotification *) aNotification
-{
-    [self.view scrollToView:self.catagoryNameField];
-}
-
-// Called when the UIKeyboardWillHideNotification is sent
-- (void) keyboardWillHide: (NSNotification *) aNotification
-{
-    [self.view scrollToY: 0];
-}
-
 - (void) refreshCatagories
 {
     self.currentlySelectedCatagory = nil;
@@ -450,6 +438,20 @@
     [message show];
 }
 
+#pragma mark - UIKeyboardWillShowNotification / UIKeyboardWillHideNotification events
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void) keyboardWillShow: (NSNotification *) aNotification
+{
+    [self.view scrollToView:self.catagoryNameField];
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void) keyboardWillHide: (NSNotification *) aNotification
+{
+    [self.view scrollToY: 0];
+}
+
 #pragma mark - PopUpViewControllerProtocol
 
 -(void)requestPopUpToDismiss
@@ -459,10 +461,6 @@
     [self refreshCatagories];
 }
 
--(void)checkCatagoryNameField
-{
-    
-}
 #pragma mark - UITextFieldDelegate
 
 - (BOOL) textFieldShouldReturn: (UITextField *) textField

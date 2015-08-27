@@ -15,7 +15,7 @@
 
 - (void) buttonClickedWithIndex: (NSInteger) index andName: (NSString *) name highlightTextField:(BOOL)highlight;
 
--(void)buttonLongPressedWithIndex:(NSInteger)index andName:(NSString *)name atPoint:(CGPoint)point;
+- (void) buttonLongPressedWithIndex:(NSInteger)index andName:(NSString *)name atPoint:(CGPoint)point;
 
 @end
 
@@ -24,6 +24,8 @@
 -(void)setButtonNames:(NSArray *)buttonNames andColors:(NSArray *)buttonColors;
 
 -(void)deselectAnyCategory;
+
+-(void)simulateLongPressedOnFirstButton;
 
 @property (nonatomic, strong) LookAndFeel *lookAndFeel;
 

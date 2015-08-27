@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AuthenticationService.h"
 
-@class User, UserDataDAO, ConfigurationManager;
+@class User, UserDataDAO, ConfigurationManager, BackgroundWorker;
 
 @interface UserManager : NSObject
 
@@ -18,6 +18,7 @@
 @property (nonatomic, weak) id <AuthenticationService>  authenticationService;
 @property (nonatomic, strong) ConfigurationManager      *configManager;
 @property (nonatomic, strong) UserDataDAO               *userDataDAO;
+@property (nonatomic, weak) BackgroundWorker *backgroundWorker;
 
 -(BOOL)attemptToLoginSavedUser;
 

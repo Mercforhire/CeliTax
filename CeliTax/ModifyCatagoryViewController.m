@@ -91,18 +91,6 @@
                                                   object: nil];
 }
 
-// Called when the UIKeyboardDidShowNotification is sent.
-- (void) keyboardWillShow: (NSNotification *) aNotification
-{
-    [self.colorPickerView setHidden:YES];
-}
-
-// Called when the UIKeyboardWillHideNotification is sent
-- (void) keyboardWillHide: (NSNotification *) aNotification
-{
-    [self.colorPickerView setHidden:NO];
-}
-
 - (void) colorSelected: (UIColor *) newColor
 {
     [self.colorBoxView setBackgroundColor: newColor];
@@ -123,6 +111,20 @@
             [self.delegate requestPopUpToDismiss];
         }
     }
+}
+
+#pragma mark - UIKeyboardWillShowNotification / UIKeyboardWillHideNotification events
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void) keyboardWillShow: (NSNotification *) aNotification
+{
+    [self.colorPickerView setHidden:YES];
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void) keyboardWillHide: (NSNotification *) aNotification
+{
+    [self.colorPickerView setHidden:NO];
 }
 
 #pragma mark - UITextFieldDelegate

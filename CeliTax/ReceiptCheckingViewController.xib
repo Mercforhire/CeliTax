@@ -19,6 +19,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReceiptCheckingViewController">
             <connections>
                 <outlet property="addOrEditItemButton" destination="Y82-bx-l24" id="kLV-8N-t7W"/>
+                <outlet property="addPhotoButton" destination="6NK-Tw-ieb" id="QIT-id-v0s"/>
                 <outlet property="catagoriesBar" destination="wgS-bS-mwy" id="LaD-Oh-Etl"/>
                 <outlet property="currentItemStatusLabel" destination="heh-sd-1ek" id="Zqf-Wm-YS3"/>
                 <outlet property="deleteItemButton" destination="aJk-yM-Edq" id="f3M-Bh-TER"/>

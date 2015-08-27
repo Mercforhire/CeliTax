@@ -74,4 +74,6 @@
 
 + (NSDate *) dateForFirstDayOfPreviousMonth;
 
++ (CGRect) returnRectBiggerThan:(CGRect)originalRect by:(float)points;
+
 @end

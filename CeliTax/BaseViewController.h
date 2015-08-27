@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LookAndFeel.h"
 
-@class ConfigurationManager, ViewControllerFactory, UserManager, LookAndFeel, TutorialManager;
+@class ConfigurationManager, ViewControllerFactory, UserManager, LookAndFeel, TutorialManager, BackgroundWorker;
 
 @interface BaseViewController : UIViewController
 
@@ -24,5 +24,7 @@
 @property (nonatomic, weak) LookAndFeel *lookAndFeel;
 
 @property (nonatomic, strong) TutorialManager *tutorialManager;
+
+@property (nonatomic, weak) BackgroundWorker *backgroundWorker;
 
 @end

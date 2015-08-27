@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class ConfigurationManager, UserManager, LookAndFeel;
-@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCatagoryViewController, SidebarViewController, Catagory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager, SyncManager, MyProfileViewController, UnitPickerViewController, YearSummaryViewController, YearSavingViewController;
+@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCatagoryViewController, SidebarViewController, Catagory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager, SyncManager, MyProfileViewController, UnitPickerViewController, YearSummaryViewController, YearSavingViewController, BackgroundWorker;
 
 @protocol AuthenticationService, DataService, ManipulationService, SyncService;
 
@@ -24,6 +24,7 @@
 @property (nonatomic, weak) id <SyncService> syncService;
 @property (nonatomic, weak) LookAndFeel *lookAndFeel;
 @property (nonatomic, weak) SyncManager *syncManager;
+@property (nonatomic, weak) BackgroundWorker *backgroundWorker;
 
 @property (nonatomic, weak) UIView *navigationBarTitleImageContainer;
 

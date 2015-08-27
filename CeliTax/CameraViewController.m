@@ -612,14 +612,7 @@ typedef enum : NSUInteger
     tutorialStep4.leftButtonTitle = @"Back";
     tutorialStep4.rightButtonTitle = @"Continue";
     tutorialStep4.pointsUp = NO;
-    
-    CGRect continueButtonFrame = self.continueButton.frame;
-    continueButtonFrame.origin.x -= 5;
-    continueButtonFrame.origin.y -= 5;
-    continueButtonFrame.size.height += 10;
-    continueButtonFrame.size.width += 10;
-    
-    tutorialStep4.highlightedItemRect = continueButtonFrame;
+    tutorialStep4.highlightedItemRect = [Utils returnRectBiggerThan:self.continueButton.frame by: 5];
     
     [self.tutorials addObject:tutorialStep4];
     

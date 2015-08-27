@@ -545,4 +545,16 @@
     return firstDayOfPreviousMonth;
 }
 
++ (CGRect) returnRectBiggerThan:(CGRect)originalRect by:(float)points
+{
+    CGRect slightBiggerRect = originalRect;
+    
+    slightBiggerRect.origin.x -= points;
+    slightBiggerRect.origin.y -= points;
+    slightBiggerRect.size.width += points * 2;
+    slightBiggerRect.size.height += points * 2;
+    
+    return slightBiggerRect;
+}
+
 @end

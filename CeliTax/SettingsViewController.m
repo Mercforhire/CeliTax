@@ -17,7 +17,7 @@
 #import "MyProfileViewController.h"
 #import "TutorialManager.h"
 
-@interface SettingsViewController () <SyncManagerDelegate>
+@interface SettingsViewController ()
 
 @property (weak, nonatomic) IBOutlet ProfileBarView *profileBarView;
 @property (weak, nonatomic) IBOutlet SolidGreenButton *showTutorialButton;
@@ -74,8 +74,6 @@
 {
     [super viewWillAppear: animated];
     
-    [self.syncManager setDelegate:self];
-    
     // load user info
     [self.profileBarView.nameLabel setText: [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]];
     
@@ -131,32 +129,7 @@
     [self.tutorialManager setTutorialsAsNotShown];
     
     //go to Main View
-    [self selectedMenuIndex:RootViewControllerHome];
-}
-
-#pragma mark - SyncManagerDelegate
-
--(void)syncManagerSyncCompleteOn:(NSDate *)date manager:(SyncManager *)syncManager
-{
-    //disable the Backup Now Button
-    [self.backupNowButton setEnabled:NO];
-    [self.backupNowButton setTitle:@"Synced" forState:UIControlStateNormal];
-    
-    [self setLastBackUpLabelDate:date];
-}
-
--(void)syncManagerSyncFailedWithMessage:(NSString *)message manager:(SyncManager *)syncManager
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                      message:message
-                                                     delegate:nil
-                                            cancelButtonTitle:nil
-                                            otherButtonTitles:@"Dismiss",nil];
-    
-    [alertView show];
-    
-    [self.backupNowButton setEnabled:YES];
-    [self.backupNowButton setTitle:@"Sync" forState:UIControlStateNormal];
+    [super selectedMenuIndex:RootViewControllerHome];
 }
 
 #define kKeyLastUpdatedDateTime        @"LastUpdatedDateTime"
@@ -166,7 +139,24 @@
     [self.backupNowButton setEnabled:NO];
     [self.backupNowButton setTitle:@"Syncing..." forState:UIControlStateNormal];
     
-    [self.syncManager startSync];
+    [self.syncManager startSync:^(NSDate *syncDate) {
+        //disable the Backup Now Button
+        [self.backupNowButton setEnabled:NO];
+        [self.backupNowButton setTitle:@"Synced" forState:UIControlStateNormal];
+        
+        [self setLastBackUpLabelDate:syncDate];
+    } failure:^(NSString *reason) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                            message:reason
+                                                           delegate:nil
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:@"Dismiss",nil];
+        
+        [alertView show];
+        
+        [self.backupNowButton setEnabled:YES];
+        [self.backupNowButton setTitle:@"Sync" forState:UIControlStateNormal];
+    }];
 }
 
 @end

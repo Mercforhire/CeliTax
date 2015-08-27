@@ -25,15 +25,14 @@
 
 - (void) syncManagerDownloadDataFailed: (SyncManager *) syncManager;
 
-- (void) syncManagerSyncCompleteOn: (NSDate *)date manager:(SyncManager *) syncManager;
-
-- (void) syncManagerSyncFailedWithMessage:(NSString *)message manager:(SyncManager *) syncManager;
-
 - (void) syncManagerDownloadFilesComplete:(SyncManager *) syncManager;
 
 - (void) syncManagerDownloadFilesFailed:(NSArray *)filenamesFailedDownload manager:(SyncManager *) syncManager;
 
 @end
+
+typedef void (^SyncSuccessBlock) (NSDate *syncDate);
+typedef void (^SyncFailureBlock) (NSString *reason);
 
 /**
  Handles all network interactions between the app and server here
@@ -60,17 +59,13 @@
 - (void)checkUpdate;
 
 /*
- Upload any new data to server
- */
-- (void)quickUpdate;
-
-/*
  Upload any new data to server, download newest data from server, merge with local data
  */
-- (void)startSync;
+- (void)startSync: (SyncSuccessBlock) success
+          failure: (SyncFailureBlock) failure;
 
 /*
- Download existing data from server, merge with local data 
+ Download existing data from server, merge with local data
  */
 - (void)downloadAndMerge;
 

@@ -8,40 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum : NSUInteger {
-    TaskRemoveProfileImage,
-    TaskUpdateUserProfile,
-    TaskUpdateProfileImage,
-    TaskQuickUpdate
-} TaskTypes;
-
-@class UserManager, SyncManager;
+@class SyncManager;
 
 /**
  Add tasks to this worker that will be executed when a Internet connection is detected
  */
 @interface BackgroundWorker : NSObject
 
-@property (nonatomic, weak) UserManager *userManager;
-
 @property (nonatomic, weak) SyncManager *syncManager;
 
 /*
- Add a task to be executed on the next cycle
+ This must be called before this Worker does anything
  */
--(void)addTask:(NSInteger)task;
+-(void)activeWorker;
+
+-(void)deactiveWorker;
 
 /*
- Remove all tasks
+ When this is called by the appDelegate,
+ the worker will run all queued tasks if it has been at least 1 hour since last update
  */
--(void)removeAllTasks;
-
-/*
- Has unfinished Tasks
- */
--(BOOL)hasTasks;
-
-///TODO: Add functions
-//...
+-(void)appIsActive;
 
 @end

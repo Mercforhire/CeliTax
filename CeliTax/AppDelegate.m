@@ -65,6 +65,7 @@
     self.viewControllerFactory.lookAndFeel = self.lookAndFeel;
     self.viewControllerFactory.navigationBarTitleImageContainer = self.navigationBarTitleImageContainer;
     self.viewControllerFactory.syncManager = self.syncManager;
+    self.viewControllerFactory.backgroundWorker = self.backgroundWorker;
 }
 
 - (void) initializeUserManager
@@ -99,14 +100,15 @@
     self.builderFactory = [[BuilderFactory alloc] init];
 }
 
--(void)initializeSyncManager
+-(void) initializeSyncManager
 {
     self.syncManager = [[SyncManager alloc] initWithSyncService:[self.serviceFactory createSyncService] andUserManager:self.userManager];
 }
 
--(void)initializeBackgroundWorker
+-(void) initializeBackgroundWorker
 {
     self.backgroundWorker = [[BackgroundWorker alloc] init];
+    self.backgroundWorker.syncManager = self.syncManager;
 }
 
 - (void) customizeGlobalLookAndFeel
@@ -139,9 +141,11 @@
     [self initializeServiceFactory];
     [self initializeUserManager];
     [self initializeSyncManager];
-    [self initializeViewControllerFactory];
     [self initializeBackgroundWorker];
+    [self initializeViewControllerFactory];
 
+    self.userManager.backgroundWorker = self.backgroundWorker;
+    
     self.window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
 
     [self.window makeKeyAndVisible];
@@ -175,6 +179,13 @@
     [self.window makeKeyAndVisible];
 
     return YES;
+}
+
+- (void) applicationDidBecomeActive: (UIApplication *) application
+{
+    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    [self.backgroundWorker appIsActive];
 }
 
 /*

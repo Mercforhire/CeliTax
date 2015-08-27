@@ -73,12 +73,19 @@
                                                   object: nil];
 }
 
+- (IBAction) sendEmailPressed: (UIButton *) sender
+{
+    [self.navigationController pushViewController: [self.viewControllerFactory createPasswordRecoverySentViewController] animated: YES];
+}
+
+#pragma mark - UIKeyboardWillShowNotification / UIKeyboardWillHideNotification events
+
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void) keyboardWillShow: (NSNotification *) aNotification
 {
     NSDictionary *info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey: UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-
+    
     [self.view scrollToY: 0 - kbSize.height / 2];
 }
 
@@ -86,11 +93,6 @@
 - (void) keyboardWillHide: (NSNotification *) aNotification
 {
     [self.view scrollToY: 0];
-}
-
-- (IBAction) sendEmailPressed: (UIButton *) sender
-{
-    [self.navigationController pushViewController: [self.viewControllerFactory createPasswordRecoverySentViewController] animated: YES];
 }
 
 #pragma mark - UITextFieldDelegate

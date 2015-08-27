@@ -46,7 +46,7 @@ typedef enum : NSUInteger
 #define kNoItemsTableViewCellHeight                     40
 #define kNoItemsTableViewCellIdentifier                 @"NoItemsTableViewCell"
 
-@interface VaultViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate, SendReceiptsViewPopUpDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIAlertViewDelegate, TransferSelectionsViewProtocol>
+@interface VaultViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate, SendReceiptsViewPopUpDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIAlertViewDelegate, TransferSelectionsViewProtocol, TutorialManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *triangleView;
 @property (weak, nonatomic) IBOutlet UILabel *taxYearLabel;
@@ -92,6 +92,10 @@ typedef enum : NSUInteger
 
 @property (nonatomic) BOOL selectAllReceipts;
 @property (nonatomic, strong) NSMutableDictionary *selectedReceipts;
+
+//Tutorials
+@property (nonatomic, strong) NSMutableArray *tutorials;
+@property (nonatomic) NSUInteger currentTutorialStep;
 
 @end
 
@@ -213,6 +217,16 @@ typedef enum : NSUInteger
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    if (![self.tutorialManager hasTutorialBeenShown])
+    {
+        if ([self.tutorialManager automaticallyShowTutorialNextTime])
+        {
+            [self setupTutorials];
+            
+            [self displayTutorialStep:0];
+        }
+    }
 }
 
 #pragma mark - View Controller functions
@@ -434,6 +448,7 @@ typedef enum : NSUInteger
     [self fetchViewAllReceipts];
     
     [self.selectAllCheckBox setCheckState:M13CheckboxStateUnchecked];
+    
     [self selectAllCheckChangedValue:self.selectAllCheckBox];
     
     //if this year has no receipts disable the 'Select All' checkbox
@@ -1123,6 +1138,94 @@ typedef enum : NSUInteger
         [tableView scrollToRowAtIndexPath: indexPath
                          atScrollPosition: UITableViewScrollPositionTop
                                  animated: YES];
+    }
+}
+
+#pragma mark - Tutorial
+
+typedef enum : NSUInteger
+{
+    TutorialStep1,
+    TutorialStep2,
+    TutorialStepsCount,
+} TutorialSteps;
+
+-(void)setupTutorials
+{
+    [self.tutorialManager setDelegate:self];
+    
+    self.tutorials = [NSMutableArray new];
+    
+    TutorialStep *tutorialStep1 = [TutorialStep new];
+    
+    tutorialStep1.text = @"In the Vault, you can re-visit any saved receipt to update your GF allocations or even transfer a receipt to a different tax year";
+    tutorialStep1.rightButtonTitle = @"Continue";
+    
+    [self.tutorials addObject:tutorialStep1];
+    
+    TutorialStep *tutorialStep2 = [TutorialStep new];
+    
+    tutorialStep2.text = @"Select and download receipt images to send to your email address for supplemental tax support.";
+    tutorialStep2.leftButtonTitle = @"Back";
+    tutorialStep2.rightButtonTitle = @"Continue";
+    tutorialStep2.pointsUp = NO;
+    tutorialStep2.highlightedItemRect = [Utils returnRectBiggerThan:self.downloadReceiptButton.frame by: 3];
+    
+    [self.tutorials addObject:tutorialStep2];
+    
+    self.currentTutorialStep = TutorialStep1;
+}
+
+-(void)displayTutorialStep:(NSInteger)step
+{
+    if (self.tutorials.count && step < self.tutorials.count)
+    {
+        TutorialStep *tutorialStep = [self.tutorials objectAtIndex:step];
+        
+        [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
+        
+        self.currentTutorialStep = step;
+    }
+}
+
+- (void) tutorialLeftSideButtonPressed
+{
+    switch (self.currentTutorialStep)
+    {
+        case TutorialStep2:
+            //Go back to Step 1
+            [self displayTutorialStep:TutorialStep1];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void) tutorialRightSideButtonPressed
+{
+    switch (self.currentTutorialStep)
+    {
+        case TutorialStep1:
+            //Go to Step 2
+            [self displayTutorialStep:TutorialStep2];
+            
+            break;
+            
+        case TutorialStep2:
+        {
+            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+            
+            [self.tutorialManager dismissTutorial:^{
+                //Go to My Account view
+                [super selectedMenuIndex: RootViewControllerAccount];
+            }];
+        }
+            
+            break;
+            
+        default:
+            break;
     }
 }
 

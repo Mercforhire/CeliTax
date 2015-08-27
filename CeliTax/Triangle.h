@@ -8,11 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class LookAndFeel;
-
 @interface Triangle : UIView
-
-@property (weak, nonatomic) LookAndFeel *lookAndFeel;
 
 @property (nonatomic) BOOL pointsUp;
 

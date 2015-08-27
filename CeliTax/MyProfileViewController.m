@@ -191,21 +191,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-// Called when the UIKeyboardDidShowNotification is sent.
-- (void) keyboardWillShow: (NSNotification *) aNotification
-{
-    NSDictionary *info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey: UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    
-    [self.view scrollToY: 0 - kbSize.height / 2];
-}
-
-// Called when the UIKeyboardWillHideNotification is sent
-- (void) keyboardWillHide: (NSNotification *) aNotification
-{
-    [self.view scrollToY: 0];
-}
-
 -(void)checkIfFieldsAreChanged
 {
     if (![self.firstnameField.text isEqualToString:self.userManager.user.firstname])
@@ -237,6 +222,23 @@
     }
     
     self.dirty = NO;
+}
+
+#pragma mark - UIKeyboardWillShowNotification / UIKeyboardWillHideNotification events
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void) keyboardWillShow: (NSNotification *) aNotification
+{
+    NSDictionary *info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey: UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    [self.view scrollToY: 0 - kbSize.height / 2];
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void) keyboardWillHide: (NSNotification *) aNotification
+{
+    [self.view scrollToY: 0];
 }
 
 #pragma mark - Cropper Delegate 

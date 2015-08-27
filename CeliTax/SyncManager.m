@@ -186,6 +186,8 @@
             [self uploadPhotos];
         }
         
+        self.uploading = NO;
+        
     } failure:^(NSString *reason) {
         
         //ignore
@@ -195,25 +197,8 @@
     }];
 }
 
--(void)quickUpdate
-{
-    //1.Upload local data to server
-    [self.syncService startSyncingUserData:^(NSDate *updateDate) {
-        
-        //2. Silently starts uploading images:
-        [self startUploadingPhotos];
-        
-    } failure:^(NSString *reason) {
-        
-        if (self.delegate && [self.delegate respondsToSelector:@selector(syncManagerSyncFailedWithMessage:manager:)])
-        {
-            [self.delegate syncManagerSyncFailedWithMessage:reason manager:self];
-        }
-        
-    }];
-}
-
-- (void)startSync
+- (void)startSync: (SyncSuccessBlock) success
+          failure: (SyncFailureBlock) failure
 {
     //1.Upload local data to server
     [self.syncService startSyncingUserData:^(NSDate *updateDate) {
@@ -221,31 +206,28 @@
         //2. Download and merge data from server first
         [self.syncService downloadUserData:^{
             
-            if (self.delegate && [self.delegate respondsToSelector:@selector(syncManagerSyncFailedWithMessage:manager:)])
+            if (success)
             {
-                [self.delegate syncManagerSyncCompleteOn:updateDate manager:self];
+                success( updateDate );
             }
             
             //3. Delete Photos no longer attached to any receipts
             [self cleanUpReceiptImages];
             
-            //4. Silently starts uploading images:
-            [self startUploadingPhotos];
-            
         } failure:^(NSString *reason) {
             
-            if (self.delegate && [self.delegate respondsToSelector:@selector(syncManagerSyncFailedWithMessage:manager:)])
+            if (failure)
             {
-                [self.delegate syncManagerSyncFailedWithMessage:reason manager:self];
+                failure(reason);
             }
             
         }];
         
     } failure:^(NSString *reason) {
         
-        if (self.delegate && [self.delegate respondsToSelector:@selector(syncManagerSyncFailedWithMessage:manager:)])
+        if (failure)
         {
-            [self.delegate syncManagerSyncFailedWithMessage:reason manager:self];
+            failure(reason);
         }
         
     }];

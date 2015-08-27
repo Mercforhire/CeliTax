@@ -94,7 +94,6 @@
             [self.bottomArrowView setHidden:YES];
             self.bottomArrowLeftDistance.constant = 0;
             
-            [self.topArrowView setLookAndFeel:self.lookAndFeel];
             [self.topArrowView setPointsUp:YES];
             
             self.topArrowLeftDistance.constant = self.originOfArrow.x - self.topArrowView.frame.size.width / 2;
@@ -106,7 +105,6 @@
             [self.topArrowView setHidden:YES];
             self.topArrowLeftDistance.constant = 0;
             
-            [self.bottomArrowView setLookAndFeel:self.lookAndFeel];
             [self.bottomArrowView setPointsUp:NO];
             
             self.bottomArrowLeftDistance.constant = self.originOfArrow.x - self.bottomArrowView.frame.size.width / 2;

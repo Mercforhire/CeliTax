@@ -7,11 +7,17 @@
 //
 
 #import "BackgroundWorker.h"
-#import "UserManager.h"
+#import "SyncManager.h"
+
+#define kLastTimeDateKey              @"LastTimeDateKey"
 
 @interface BackgroundWorker ()
 
-@property (nonatomic, strong) NSMutableArray *pendingTasks;
+@property (nonatomic,strong) NSUserDefaults *defaults;
+
+@property (nonatomic) BOOL active;
+
+@property (nonatomic, strong) NSDate *lastTimeDate;
 
 @end
 
@@ -21,32 +27,75 @@
 {
     if (self = [super init])
     {
-        //Load pending Tasks from User Defaults
-        ///TODO:
-        //...
+        _defaults = [NSUserDefaults standardUserDefaults];
     }
     
     return self;
 }
 
--(void)addTask:(NSInteger)task
+-(void)activeWorker
 {
-    NSNumber *taskToAdd = [NSNumber numberWithInteger:task];
-    
-    if (![self.pendingTasks containsObject:taskToAdd])
+    self.active = YES;
+}
+
+-(void)deactiveWorker
+{
+    self.active = NO;
+}
+
+-(void)syncIfNeccessary
+{
+    if ([self.syncManager needToBackUp])
     {
-        [self.pendingTasks addObject:taskToAdd];
+        [self.syncManager startSync:^(NSDate *syncDate) {
+            
+            DLog(@"Automatic syncing success!");
+            [self.defaults setValue:syncDate forKey:kLastTimeDateKey];
+            
+            [self.defaults synchronize];
+            
+            [self.syncManager startUploadingPhotos];
+            
+        } failure:^(NSString *reason) {
+            
+            DLog(@"Error: automatic syncing failed. Reason: %@", reason);
+            
+        }];
+    }
+    else
+    {
+        DLog(@"No need to sync, data unchanged.");
+        
+        [self.syncManager startUploadingPhotos];
     }
 }
 
--(void)removeAllTasks
+-(void)appIsActive
 {
-    [self.pendingTasks removeAllObjects];
-}
-
--(BOOL)hasTasks
-{
-    return (self.pendingTasks.count > 0);
+    if (self.active)
+    {
+        DLog(@"Received notification that the app is active");
+        
+        NSDate *lastRefresh = [self.defaults valueForKey:kLastTimeDateKey];
+        
+        if (!lastRefresh)
+        {
+            [self syncIfNeccessary];
+        }
+        else
+        {
+            double minutes = fabs( [lastRefresh timeIntervalSinceNow] / 60 );
+            
+            if (minutes > 5)
+            {
+                [self syncIfNeccessary];
+            }
+            else
+            {
+                DLog(@"Only %ld minutes since last sync, not needed again", (long)minutes);
+            }
+        }
+    }
 }
 
 @end
