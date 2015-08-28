@@ -8,8 +8,12 @@
 
 #import "BackgroundWorker.h"
 #import "SyncManager.h"
+#import "AuthenticationService.h"
+#import "UserManager.h"
+#import "User.h"
 
-#define kLastTimeDateKey              @"LastTimeDateKey"
+#define kLastTimeDateKey                @"LastTimeDateKey"
+#define kQueuedTasksKey                 @"QueuedTasksKey"
 
 @interface BackgroundWorker ()
 
@@ -17,7 +21,11 @@
 
 @property (nonatomic) BOOL active;
 
+//Data that are persistent in User Defaults:
 @property (nonatomic, strong) NSDate *lastTimeDate;
+@property (nonatomic, strong) NSMutableArray *queuedTasks;
+
+@property (nonatomic) NSInteger currentTaskIndex;
 
 @end
 
@@ -28,6 +36,7 @@
     if (self = [super init])
     {
         _defaults = [NSUserDefaults standardUserDefaults];
+        _queuedTasks = [NSMutableArray new];
     }
     
     return self;
@@ -36,37 +45,180 @@
 -(void)activeWorker
 {
     self.active = YES;
+    
+    //load previously queued tasks
+    NSArray *queuedTasks = [self.defaults objectForKey:kQueuedTasksKey];
+    
+    if (queuedTasks)
+    {
+        self.queuedTasks = [[NSMutableArray alloc] initWithArray: queuedTasks copyItems: NO];
+    }
 }
 
 -(void)deactiveWorker
 {
     self.active = NO;
+    
+    //delete any persistent data
+    [self.defaults removeObjectForKey:kLastTimeDateKey];
+    [self.defaults removeObjectForKey:kQueuedTasksKey];
+    
+    [self.defaults synchronize];
 }
 
--(void)syncIfNeccessary
+-(void)executeTasks
 {
-    if ([self.syncManager needToBackUp])
+    if (self.currentTaskIndex < self.queuedTasks.count)
     {
-        [self.syncManager startSync:^(NSDate *syncDate) {
-            
-            DLog(@"Automatic syncing success!");
-            [self.defaults setValue:syncDate forKey:kLastTimeDateKey];
-            
-            [self.defaults synchronize];
-            
-            [self.syncManager startUploadingPhotos];
-            
-        } failure:^(NSString *reason) {
-            
-            DLog(@"Error: automatic syncing failed. Reason: %@", reason);
-            
-        }];
+        NSNumber *currentTask = [self.queuedTasks objectAtIndex:self.currentTaskIndex];
+        
+        switch (currentTask.integerValue)
+        {
+            case QueueTaskUploadData:
+            {
+                if ([self.syncManager needToBackUp])
+                {
+                    [self.syncManager startSync:^(NSDate *syncDate) {
+                        
+                        DLog(@"Automatic syncing success!");
+                        
+                        //Add a upload photos task
+                        [self addTaskToQueue:QueueTaskUploadPhotos];
+                        
+                        //Go on to next task
+                        self.currentTaskIndex++;
+                        
+                        [self executeTasks];
+                        
+                    } failure:^(NSString *reason) {
+                        
+                        DLog(@"Error: Syncing Task failed. Reason: %@", reason);
+                        
+                        //Halting running tasks
+                    }];
+                }
+                else
+                {
+                    DLog(@"No need to sync, data unchanged.");
+                    
+                    //Add a upload photos task
+                    [self addTaskToQueue:QueueTaskUploadPhotos];
+                    
+                    //Go on to next task
+                    self.currentTaskIndex++;
+                    
+                    [self executeTasks];
+                }
+            }
+                break;
+                
+            case QueueTaskUploadPhotos:
+            {
+                [self.syncManager startUploadingPhotos:^{
+                    
+                    //Go on to next task
+                    self.currentTaskIndex++;
+                    
+                    [self executeTasks];
+                    
+                } failure:^(NSString *reason) {
+                    
+                    DLog(@"Error: Uploading Receipt Task failed. Reason: %@", reason);
+                    
+                    //Halting running tasks
+                    
+                }];
+            }
+                break;
+                
+            case QueueTaskUpdateProfileImage:
+            {
+                if ([self.userManager doesUserHaveCustomProfileImage])
+                {
+                    [self.authenticationService updateProfileImage:self.userManager.user.avatarImage success:^{
+                        
+                        //Go on to next task
+                        self.currentTaskIndex++;
+                        
+                        [self executeTasks];
+                        
+                    } failure:^(NSString *reason) {
+                        
+                        DLog(@"Error: Update Profile Image Task failed. Reason: %@", reason);
+                        
+                        //Halting running tasks
+                        
+                    }];
+                }
+                else
+                {
+                    [self.authenticationService deleteProfileImage:^{
+                        
+                        //Go on to next task
+                        self.currentTaskIndex++;
+                        
+                        [self executeTasks];
+                        
+                    } failure:^(NSString *reason) {
+                        
+                        DLog(@"Error: Update Profile Image Task failed. Reason: %@", reason);
+                        
+                        //Halting running tasks
+                        
+                    }];
+                }
+            }
+                break;
+                
+            case QueueTaskUploadProfileData:
+            {
+                if (self.userManager.user)
+                {
+                    [self.authenticationService updateAccountInfo: self.userManager.user.firstname
+                                                     withLastname: self.userManager.user.lastname
+                                                         withCity: self.userManager.user.city
+                                                       withPostal: self.userManager.user.postalCode
+                                                          success:^{
+                                                              
+                                                              //Go on to next task
+                                                              self.currentTaskIndex++;
+                                                              
+                                                              [self executeTasks];
+                                                              
+                                                          } failure:^(NSString *reason) {
+                                                              
+                                                              DLog(@"Error: Uploading Receipt Task failed. Reason: %@",reason);
+                                                              
+                                                              //Halting running tasks
+                                                              
+                                                          }];
+                }
+                else
+                {
+                    DLog(@"Error: Uploading Receipt Task failed. Reason: No current user");
+                    
+                    //Halting running tasks
+                }
+            }
+                break;
+                
+            default:
+                break;
+        }
     }
     else
     {
-        DLog(@"No need to sync, data unchanged.");
+        DLog(@"No more tasks to execute");
         
-        [self.syncManager startUploadingPhotos];
+        self.currentTaskIndex = 0;
+        
+        [self.queuedTasks removeAllObjects];
+        
+        [self.defaults removeObjectForKey:kQueuedTasksKey];
+        
+        [self.defaults setObject:[NSDate date] forKey:kLastTimeDateKey];
+        
+        [self.defaults synchronize];
     }
 }
 
@@ -80,21 +232,35 @@
         
         if (!lastRefresh)
         {
-            [self syncIfNeccessary];
+            [self addTaskToQueue:QueueTaskUploadData];
+            
+            [self executeTasks];
         }
         else
         {
             double minutes = fabs( [lastRefresh timeIntervalSinceNow] / 60 );
             
-            if (minutes > 5)
+            if (minutes > 10)
             {
-                [self syncIfNeccessary];
+                [self addTaskToQueue:QueueTaskUploadData];
+                
+                [self executeTasks];
             }
             else
             {
                 DLog(@"Only %ld minutes since last sync, not needed again", (long)minutes);
             }
         }
+    }
+}
+
+-(void)addTaskToQueue:(NSUInteger)taskType
+{
+    NSNumber *task = [NSNumber numberWithInteger:taskType];
+    
+    if (![self.queuedTasks containsObject:task])
+    {
+        [self.queuedTasks addObject:task];
     }
 }
 

@@ -112,7 +112,7 @@
         DLog(@"ERROR: Did not save User");
     }
     
-    //TODO: Send this task to BackgroundWorker
+    
     [self.authenticationService updateAccountInfo:firstname
                                      withLastname:lastname
                                          withCity:city
@@ -122,7 +122,9 @@
         //nothing left to do
                                               
     } failure:^(NSString *reason) {
-        //TODO: Remember it failed and try again later
+        
+        [self.backgroundWorker addTaskToQueue:QueueTaskUploadProfileData];
+        
     }];
 }
 
@@ -137,8 +139,7 @@
     
     self.user.avatarImage = defaultAvatarImage;
     
-    //TODO: Update the server when possible
-    //...
+    [self.backgroundWorker addTaskToQueue:QueueTaskUpdateProfileImage];
 }
 
 -(void)setNewAvatarImage: (UIImage *)image
@@ -147,8 +148,7 @@
     
     self.user.avatarImage = [Utils readProfileImageForUser:self.user.userKey];
     
-    //TODO: Update the server when possible
-    //...
+    [self.backgroundWorker addTaskToQueue:QueueTaskUpdateProfileImage];
 }
 
 -(void)logOutUser

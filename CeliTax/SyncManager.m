@@ -20,9 +20,8 @@
 
 @property (nonatomic, strong) NSArray *filenamesToUpload;    /** Filenames that we need to upload */
 @property (nonatomic, assign) NSInteger indexOfFileToUpload;
-@property (nonatomic, assign) BOOL uploading;
 
-@property (nonatomic) UIBackgroundTaskIdentifier uploadTask;
+@property (nonatomic) UIBackgroundTaskIdentifier uploadImagesTask;
 
 @property (nonatomic, strong) NSArray *filenamesToDownload;    /** Filenames that we need to download */
 @property (nonatomic, strong) NSMutableArray *filenamesFailedToDownload;
@@ -70,7 +69,7 @@
             if (!batchID)
             {
                 //server has no data
-                DLog(@"Server has no data to donnload.");
+                DLog(@"Server has no data to download.");
             }
             else
             {
@@ -114,7 +113,8 @@
     }
 }
 
--(void)uploadPhotos
+-(void)uploadPhotos: (UploadingPhotosSuccessBlock) success
+            failure: (UploadingPhotosFailureBlock) failure
 {
     if (self.indexOfFileToUpload < self.filenamesToUpload.count)
     {
@@ -129,16 +129,19 @@
                 
                 DLog(@"%@ Uploaded.", filenameToUpload);
                 self.indexOfFileToUpload++;
-                [self uploadPhotos];
+                
+                [self uploadPhotos:success failure:failure];
                 
             } failure:^(NSString *reason) {
                 
                 DLog(@"%@ failed to uploaded, stopping all uploads!", filenameToUpload);
                 
-                //stop uploading
-                self.uploading = NO;
+                [[UIApplication sharedApplication] endBackgroundTask: self.uploadImagesTask];
                 
-                [[UIApplication sharedApplication] endBackgroundTask: self.uploadTask];
+                if (failure)
+                {
+                    failure(reason);
+                }
                 
             }];
         }
@@ -148,27 +151,24 @@
         {
             //Skip this file for now
             self.indexOfFileToUpload++;
-            [self uploadPhotos];
+            
+            [self uploadPhotos:success failure:failure];
         }
-        
     }
     else
     {
-        self.uploading = NO;
+        [[UIApplication sharedApplication] endBackgroundTask: self.uploadImagesTask];
         
-        [[UIApplication sharedApplication] endBackgroundTask: self.uploadTask];
+        if (success)
+        {
+            success();
+        }
     }
 }
 
-- (void)startUploadingPhotos
+- (void)startUploadingPhotos: (UploadingPhotosSuccessBlock) success
+                     failure: (UploadingPhotosFailureBlock) failure
 {
-    if (self.uploading)
-    {
-        return;
-    }
-    
-    self.uploading = YES;
-    
     //Get the list of images the server needs
     [self.syncService getFilesNeedToUpload:^(NSArray *filesnamesToUpload) {
         
@@ -181,19 +181,26 @@
             
             self.indexOfFileToUpload = 0;
             
-            self.uploadTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler: nil];
+            self.uploadImagesTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler: nil];
             
-            [self uploadPhotos];
+            [self uploadPhotos:success failure:failure];
         }
-        
-        self.uploading = NO;
+        else
+        {
+            //Nothing to upload
+            if (success)
+            {
+                success();
+            }
+        }
         
     } failure:^(NSString *reason) {
         
-        //ignore
-        
-        self.uploading = NO;
-        
+        if (failure)
+        {
+            failure(reason);
+        }
+
     }];
 }
 
@@ -206,13 +213,13 @@
         //2. Download and merge data from server first
         [self.syncService downloadUserData:^{
             
+            //3. Delete Photos no longer attached to any receipts
+            [self cleanUpReceiptImages];
+            
             if (success)
             {
                 success( updateDate );
             }
-            
-            //3. Delete Photos no longer attached to any receipts
-            [self cleanUpReceiptImages];
             
         } failure:^(NSString *reason) {
             
@@ -293,7 +300,7 @@
             }
         }
         
-        [[UIApplication sharedApplication] endBackgroundTask: self.uploadTask];
+        [[UIApplication sharedApplication] endBackgroundTask: self.uploadImagesTask];
     }
 }
 

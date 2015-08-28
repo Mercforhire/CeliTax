@@ -306,6 +306,49 @@
     [self.networkCommunicator enqueueOperation:networkOperation];
 }
 
+- (void) deleteProfileImage: (UpdateAccountInfoSuccessBlock) success
+                    failure: (UpdateAccountInfoFailureBlock) failure
+{
+    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:nil path: [WEB_API_FILE stringByAppendingPathComponent:@"delete_profile_photo"] ] ;
+    
+    [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
+    
+    __block UIBackgroundTaskIdentifier bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler: nil];
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (success)
+            {
+                success ( );
+            }
+            
+        });
+        
+        [[UIApplication sharedApplication] endBackgroundTask: bgTask];
+        
+    };
+    
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (failure)
+            {
+                failure ( @"Network Error" );
+            }
+            
+        });
+        
+        [[UIApplication sharedApplication] endBackgroundTask: bgTask];
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+    
+    [self.networkCommunicator enqueueOperation:networkOperation];
+}
+
 - (void) downloadProfileImageFrom: (NSString *)url
                           success: (RetrieveProfileImageSuccessBlock) success
                           failure: (RetrieveProfileImageFailureBlock) failure

@@ -34,6 +34,9 @@
 typedef void (^SyncSuccessBlock) (NSDate *syncDate);
 typedef void (^SyncFailureBlock) (NSString *reason);
 
+typedef void (^UploadingPhotosSuccessBlock) ();
+typedef void (^UploadingPhotosFailureBlock) (NSString *reason);
+
 /**
  Handles all network interactions between the app and server here
  */
@@ -72,7 +75,8 @@ typedef void (^SyncFailureBlock) (NSString *reason);
 /*
  Secretly upload photos to server
  */
-- (void)startUploadingPhotos;
+- (void)startUploadingPhotos: (UploadingPhotosSuccessBlock) success
+                     failure: (UploadingPhotosFailureBlock) failure;
 
 /*
  Try to download the files in filenames from the server to local image storage

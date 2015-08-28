@@ -11,6 +11,7 @@
 #import "ConfigurationManager.h"
 #import "UserManager.h"
 #import "LoginViewController.h"
+#import "MainViewController.h"
 #import "ServiceFactory.h"
 #import "DAOFactory.h"
 #import "LookAndFeel.h"
@@ -109,6 +110,8 @@
 {
     self.backgroundWorker = [[BackgroundWorker alloc] init];
     self.backgroundWorker.syncManager = self.syncManager;
+    self.backgroundWorker.authenticationService = [self.serviceFactory createAuthenticationService];
+    self.backgroundWorker.userManager = self.userManager;
 }
 
 - (void) customizeGlobalLookAndFeel
@@ -172,8 +175,15 @@
 
         self.viewControllerFactory.navigationBarTitleImageContainer = self.navigationBarTitleImageContainer;
 
-        // if not logged in, push login screen. Else push main app screen
-        [self.navigationController pushViewController: [self.viewControllerFactory createLoginViewController] animated: YES];
+        if ([self.userManager attemptToLoginSavedUser])
+        {
+            [self.navigationController pushViewController: [self.viewControllerFactory createMainViewController] animated: YES];
+        }
+        else
+        {
+            [self.navigationController pushViewController: [self.viewControllerFactory createLoginViewController] animated: YES];
+        }
+        
     }
     
     [self.window makeKeyAndVisible];
@@ -204,11 +214,6 @@
    - (void) applicationWillEnterForeground: (UIApplication *) application
    {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-   }
-
-   - (void) applicationDidBecomeActive: (UIApplication *) application
-   {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
    }
 
    - (void) applicationWillTerminate: (UIApplication *) application

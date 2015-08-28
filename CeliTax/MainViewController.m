@@ -276,6 +276,11 @@ typedef enum : NSUInteger
     [self.manipulationService addTaxYear:self.taxYearToAdd.integerValue save:YES];
     
     [self refreshTaxYears];
+    
+    if (!self.currentlySelectedYear)
+    {
+        self.currentlySelectedYear  = [self.existingTaxYears firstObject];
+    }
 }
 
 -(void)refreshTaxYears
@@ -330,9 +335,22 @@ typedef enum : NSUInteger
 
 - (IBAction) cameraButtonPressed: (UIButton *) sender
 {
-    CameraViewController *cameraVC = [self.viewControllerFactory createCameraOverlayViewControllerWithExistingReceiptID:nil];
-
-    [self.navigationController pushViewController: cameraVC animated: YES];
+    if (self.currentlySelectedYear.integerValue)
+    {
+        CameraViewController *cameraVC = [self.viewControllerFactory createCameraOverlayViewControllerWithExistingReceiptID:nil];
+        
+        [self.navigationController pushViewController: cameraVC animated: YES];
+    }
+    else
+    {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Sorry"
+                                                          message:@"A tax year must be created before a receipt can be saved."
+                                                         delegate:nil
+                                                cancelButtonTitle:nil
+                                                otherButtonTitles:@"Ok",nil];
+        
+        [message show];
+    }
 }
 
 - (void) setYearLabelToBe: (NSInteger) year
@@ -377,7 +395,10 @@ typedef enum : NSUInteger
 {
     [self refreshTaxYears];
     
-    self.currentlySelectedYear = [self.existingTaxYears firstObject];
+    if (self.existingTaxYears.count)
+    {
+        self.currentlySelectedYear = [self.existingTaxYears firstObject];
+    }
     
     [self.recentUploadsTable reloadData];
     

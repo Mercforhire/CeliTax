@@ -62,17 +62,10 @@
                            action: @selector(textFieldDidChange:)
                  forControlEvents: UIControlEventEditingChanged];
 
-    if ([self.userManager attemptToLoginSavedUser])
-    {
-        [self.navigationController pushViewController: [self.viewControllerFactory createMainViewController] animated: YES];
-    }
-    else
-    {
-        //TODO: Remove DEMO CODE
-        self.emailField.text = @"leonchn84@gmail.com";
-        self.passwordField.text = @"123456";
-        [self.loginButton setEnabled: YES];
-    }
+    //TODO: Remove DEMO CODE
+    self.emailField.text = @"leonchn84@gmail.com";
+    self.passwordField.text = @"123456";
+    [self.loginButton setEnabled: YES];
 }
 
 - (void) viewWillAppear: (BOOL) animated

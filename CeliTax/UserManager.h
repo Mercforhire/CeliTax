@@ -18,7 +18,7 @@
 @property (nonatomic, weak) id <AuthenticationService>  authenticationService;
 @property (nonatomic, strong) ConfigurationManager      *configManager;
 @property (nonatomic, strong) UserDataDAO               *userDataDAO;
-@property (nonatomic, weak) BackgroundWorker *backgroundWorker;
+@property (nonatomic, weak) BackgroundWorker            *backgroundWorker;
 
 -(BOOL)attemptToLoginSavedUser;
 

@@ -256,6 +256,12 @@ typedef enum : NSUInteger
     [self.manipulationService addTaxYear:self.taxYearToAdd.integerValue save:YES];
     
     [self refreshTaxYears];
+    
+    //if no tax year was available to be selected before, automatically select the first one
+    if (!self.currentlySelectedYear)
+    {
+        self.currentlySelectedYear = [self.existingTaxYears firstObject];
+    }
 }
 
 -(void)refreshTaxYears
@@ -293,8 +299,8 @@ typedef enum : NSUInteger
     if (enableTransferButton || enableDeleteButton)
     {
         //show the buttons
-        self.transferButtonHeightBar.constant = 25;
-        self.deleteButtonHeightBar.constant = 25;
+        self.transferButtonHeightBar.constant = 30;
+        self.deleteButtonHeightBar.constant = 30;
     }
     else
     {

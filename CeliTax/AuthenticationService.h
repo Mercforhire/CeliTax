@@ -60,6 +60,9 @@ typedef void (^RetrieveProfileImageFailureBlock) (NSString *reason);
                     success: (UpdateAccountInfoSuccessBlock) success
                     failure: (UpdateAccountInfoFailureBlock) failure;
 
+- (void) deleteProfileImage: (UpdateAccountInfoSuccessBlock) success
+                    failure: (UpdateAccountInfoFailureBlock) failure;
+
 - (void) retrieveProfileImage: (RetrieveProfileImageSuccessBlock) success
                       failure: (RetrieveProfileImageFailureBlock) failure;
 
