@@ -58,8 +58,6 @@
              andKey:(NSString *)key
        andFirstname:(NSString *)firstname
         andLastname:(NSString *)lastname
-            andCity:(NSString *)city
-      andPostalCode:(NSString *)postalCode
          andCountry:(NSString *)country
 {
     User *newUser = [[User alloc] init];
@@ -68,8 +66,6 @@
     newUser.userKey = key;
     newUser.firstname = firstname;
     newUser.lastname = lastname;
-    newUser.city = city;
-    newUser.postalCode = postalCode;
     newUser.country = country;
     
     //IMPORTANT: set the userKey to userDataDAO
@@ -99,13 +95,11 @@
 
 -(void)changeUserDetails:(NSString *)firstname
              andLastname:(NSString *)lastname
-                 andCity:(NSString *)city
-           andPostalCode:(NSString *)postalCode
+              andCountry:(NSString *)country
 {
     self.user.firstname = firstname;
     self.user.lastname = lastname;
-    self.user.city = city;
-    self.user.postalCode = postalCode;
+    self.user.country = country;
     
     if (![Utils saveUser:self.user])
     {
@@ -115,8 +109,7 @@
     
     [self.authenticationService updateAccountInfo:firstname
                                      withLastname:lastname
-                                         withCity:city
-                                       withPostal:postalCode
+                                      withCountry:country
                                           success:^{
                                               
         //nothing left to do
@@ -154,6 +147,8 @@
 -(void)logOutUser
 {
     self.user = nil;
+    
+    self.userDataDAO.userKey = nil;
     
     if (![Utils deleteSavedUser])
     {

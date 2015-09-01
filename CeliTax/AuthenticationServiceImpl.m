@@ -46,8 +46,6 @@
             returnedResult.userAPIKey = [response objectForKey:@"api_key"];
             returnedResult.firstname = [response objectForKey:@"first_name"];
             returnedResult.lastname = [response objectForKey:@"last_name"];
-            returnedResult.city = [response objectForKey:@"city"];
-            returnedResult.postalCode = [response objectForKey:@"postal_code"];
             returnedResult.country = [response objectForKey:@"country"];
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -94,9 +92,7 @@
             withPassword: (NSString *) password
            withFirstname: (NSString *) firstname
             withLastname: (NSString *) lastname
-                withCity: (NSString *) city
              withCountry: (NSString *) country
-              withPostal: (NSString *) postal
                  success: (RegisterNewUserSuccessBlock) success
                  failure: (RegisterNewUserSuccessBlock) failure
 {
@@ -105,8 +101,6 @@
                                        password,@"password",
                                        firstname,@"first_name",
                                        lastname,@"last_name",
-                                       city,@"city",
-                                       postal,@"postal_code",
                                        country,@"country"
                                        ,nil];
     
@@ -213,16 +207,14 @@
 
 - (void) updateAccountInfo: (NSString *) firstname
               withLastname: (NSString *) lastname
-                  withCity: (NSString *) city
-                withPostal: (NSString *) postal
+               withCountry: (NSString *) country
                    success: (UpdateAccountInfoSuccessBlock) success
                    failure: (UpdateAccountInfoFailureBlock) failure
 {
     NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                        firstname,@"firstname",
                                        lastname,@"lastname",
-                                       city,@"city",
-                                       postal,@"postalcode"
+                                       country,@"country"
                                        ,nil];
     
     MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path: [WEB_API_FILE stringByAppendingPathComponent:@"update_account"] ] ;

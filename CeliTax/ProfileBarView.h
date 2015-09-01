@@ -8,13 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class LookAndFeel, SolidGreenButton;
+
 @interface ProfileBarView : UIView
+
+- (void) setLookAndFeel: (LookAndFeel *) lookAndFeel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 
-@property (weak, nonatomic) IBOutlet UIButton *editButton1;
+@property (weak, nonatomic) IBOutlet SolidGreenButton *editButton1;
 @property (weak, nonatomic) IBOutlet UIButton *editButton2;
 
 

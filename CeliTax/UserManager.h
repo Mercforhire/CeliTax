@@ -26,14 +26,11 @@
              andKey:(NSString *)key
        andFirstname:(NSString *)firstname
         andLastname:(NSString *)lastname
-            andCity:(NSString *)city
-      andPostalCode:(NSString *)postalCode
          andCountry:(NSString *)country;
 
 -(void)changeUserDetails:(NSString *)firstname
              andLastname:(NSString *)lastname
-                 andCity:(NSString *)city
-           andPostalCode:(NSString *)postalCode;
+              andCountry:(NSString *)country;
 
 -(BOOL)doesUserHaveCustomProfileImage;
 

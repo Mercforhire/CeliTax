@@ -39,9 +39,7 @@ typedef void (^RetrieveProfileImageFailureBlock) (NSString *reason);
             withPassword: (NSString *) password
            withFirstname: (NSString *) firstname
             withLastname: (NSString *) lastname
-                withCity: (NSString *) city
              withCountry: (NSString *) country
-              withPostal: (NSString *) postal
                  success: (RegisterNewUserSuccessBlock) success
                  failure: (RegisterNewUserSuccessBlock) failure;
 
@@ -51,8 +49,7 @@ typedef void (^RetrieveProfileImageFailureBlock) (NSString *reason);
 
 - (void) updateAccountInfo: (NSString *) firstname
               withLastname: (NSString *) lastname
-                  withCity: (NSString *) city
-                withPostal: (NSString *) postal
+               withCountry: (NSString *) country
                    success: (UpdateAccountInfoSuccessBlock) success
                    failure: (UpdateAccountInfoFailureBlock) failure;
 

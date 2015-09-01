@@ -43,7 +43,7 @@ typedef enum : NSUInteger
     SectionCount,
 } SectionTitles;
 
-@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate, UIPickerViewDataSource, UIPickerViewDelegate, SyncManagerDelegate, TutorialManagerDelegate>
+@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate, UIPickerViewDataSource, UIPickerViewDelegate, TutorialManagerDelegate>
 
 @property (nonatomic, strong) UIToolbar *pickerToolbar;
 @property (nonatomic, strong) UIBarButtonItem *addCatagoryMenuItem;
@@ -84,18 +84,6 @@ typedef enum : NSUInteger
 
 - (void) setupUI
 {
-    // setup the navigation bar items
-    UIButton *addCatagoryButton = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, 80, 54)];
-    [addCatagoryButton setTitle: @"Categories" forState: UIControlStateNormal];
-    [addCatagoryButton.titleLabel setFont: [UIFont latoBoldFontOfSize: 15]];
-    addCatagoryButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [addCatagoryButton setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
-    [addCatagoryButton addTarget: self action: @selector(addCatagoryPressed:) forControlEvents: UIControlEventTouchUpInside];
-    [addCatagoryButton sizeToFit];
-
-    self.addCatagoryMenuItem = [[UIBarButtonItem alloc] initWithCustomView: addCatagoryButton];
-    self.navigationItem.leftBarButtonItem = self.addCatagoryMenuItem;
-
     [self.navigationItem setHidesBackButton: YES];
 
     UINib *mainTableCell = [UINib nibWithNibName: @"MainViewTableViewCell" bundle: nil];
@@ -179,8 +167,6 @@ typedef enum : NSUInteger
 {
     [super viewWillAppear: animated];
     
-    [self.syncManager setDelegate:self];
-    
     [self refreshTaxYears];
     
     //if there is no selected tax year saved, select the newest year by default
@@ -226,15 +212,19 @@ typedef enum : NSUInteger
     }
     else
     {
-        [self.syncManager checkUpdate];
+        [self.syncManager checkUpdate:^{
+            
+            //ask user if they want to download from server
+            UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Download"
+                                                              message: @"The server contains saved data. Do you want to download the data to the app?"
+                                                             delegate: self
+                                                    cancelButtonTitle: @"No"
+                                                    otherButtonTitles: @"Yes", nil];
+            
+            [message show];
+            
+        }];
     }
-}
-
-- (void) viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear: animated];
-    
-    [self.syncManager setDelegate:nil];
 }
 
 - (void) createAndShowWaitViewForDownload
@@ -279,7 +269,7 @@ typedef enum : NSUInteger
     
     if (!self.currentlySelectedYear)
     {
-        self.currentlySelectedYear  = [self.existingTaxYears firstObject];
+        self.currentlySelectedYear = [self.existingTaxYears firstObject];
     }
 }
 
@@ -377,39 +367,6 @@ typedef enum : NSUInteger
     }
 }
 
-#pragma mark - SyncManagerDelegate
-
--(void)syncManagerNeedsUpdate:(SyncManager *)syncManager
-{
-    //ask user if they want to download from server
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Download"
-                                                      message: @"The server contains saved data. Do you want to download the data to the app?"
-                                                     delegate: self
-                                            cancelButtonTitle: @"No"
-                                            otherButtonTitles: @"Yes", nil];
-    
-    [message show];
-}
-
--(void)syncManagerDownloadAndMergeDataComplete:(SyncManager *)syncManager
-{
-    [self refreshTaxYears];
-    
-    if (self.existingTaxYears.count)
-    {
-        self.currentlySelectedYear = [self.existingTaxYears firstObject];
-    }
-    
-    [self.recentUploadsTable reloadData];
-    
-    [self hideWaitingView];
-}
-
--(void)syncManagerDownloadDataFailed:(SyncManager *)syncManager
-{
-    [self hideWaitingView];
-}
-
 #pragma mark - UIAlertViewDelegate
 
 - (void) alertView: (UIAlertView *) alertView clickedButtonAtIndex: (NSInteger) buttonIndex
@@ -420,7 +377,24 @@ typedef enum : NSUInteger
     {
         [self createAndShowWaitViewForDownload];
         
-        [self.syncManager downloadAndMerge];
+        [self.syncManager downloadAndMerge:^{
+            
+            [self refreshTaxYears];
+            
+            if (self.existingTaxYears.count)
+            {
+                self.currentlySelectedYear = [self.existingTaxYears firstObject];
+            }
+            
+            [self.recentUploadsTable reloadData];
+            
+            [self hideWaitingView];
+            
+        } failure:^(NSString *reason) {
+            
+            [self hideWaitingView];
+            
+        }];
     }
 }
 

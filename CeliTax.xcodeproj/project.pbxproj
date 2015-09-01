@@ -34,7 +34,6 @@
 		854497041AF734EB0068779A /* Record.m in Sources */ = {isa = PBXBuildFile; fileRef = 854497031AF734EB0068779A /* Record.m */; };
 		854497071AF736DE0068779A /* UserData.m in Sources */ = {isa = PBXBuildFile; fileRef = 854497061AF736DE0068779A /* UserData.m */; };
 		854880B81B85471300E89339 /* receipt_green_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 854880B71B85471300E89339 /* receipt_green_icon.png */; };
-		854880BA1B86312D00E89339 /* camera_add_icon_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 854880B91B86312D00E89339 /* camera_add_icon_green.png */; };
 		854880BC1B86550E00E89339 /* xIconWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 854880BB1B86550E00E89339 /* xIconWhite.png */; };
 		854AC6E31B7D6B2700F0D91D /* YearSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 854AC6E11B7D6B2700F0D91D /* YearSummaryViewController.m */; };
 		854AC6E41B7D6B2700F0D91D /* YearSummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 854AC6E21B7D6B2700F0D91D /* YearSummaryViewController.xib */; };
@@ -240,7 +239,6 @@
 		854497051AF736DE0068779A /* UserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserData.h; sourceTree = "<group>"; };
 		854497061AF736DE0068779A /* UserData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserData.m; sourceTree = "<group>"; };
 		854880B71B85471300E89339 /* receipt_green_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = receipt_green_icon.png; sourceTree = "<group>"; };
-		854880B91B86312D00E89339 /* camera_add_icon_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera_add_icon_green.png; sourceTree = "<group>"; };
 		854880BB1B86550E00E89339 /* xIconWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xIconWhite.png; sourceTree = "<group>"; };
 		85491E591B522BAA00C618D9 /* SyncService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncService.h; sourceTree = "<group>"; };
 		854AC6E01B7D6B2700F0D91D /* YearSummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YearSummaryViewController.h; sourceTree = "<group>"; };
@@ -566,7 +564,6 @@
 			isa = PBXGroup;
 			children = (
 				856538421B5FFEF000915A2E /* camera_add_icon.png */,
-				854880B91B86312D00E89339 /* camera_add_icon_green.png */,
 				855CED251B38D2CC0043D20D /* lightning.png */,
 				852FF89A1B7907AA0033A6D9 /* xIcon.png */,
 				854880BB1B86550E00E89339 /* xIconWhite.png */,
@@ -1584,7 +1581,6 @@
 				85ACE41F1B27F55A0041B7C5 /* Lato-Hairline.ttf in Resources */,
 				85A8CAD21AF069EA0023504D /* LaunchScreen.xib in Resources */,
 				85560FE31B019857004D2963 /* ColorPickerViewController.xib in Resources */,
-				854880BA1B86312D00E89339 /* camera_add_icon_green.png in Resources */,
 				855CED241B38D0600043D20D /* FlashButtonView.xib in Resources */,
 				8562739B1B1B782600EECA26 /* PasswordRecoverySentViewController.xib in Resources */,
 				858FD7191B40DEE60008B325 /* TransferConfirmationViewController.xib in Resources */,
@@ -1812,7 +1808,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1855,7 +1852,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Crave N Save Inc (55ZR8NHFYD)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1886,6 +1884,7 @@
 				INFOPLIST_FILE = CeliTax/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1900,6 +1899,7 @@
 				INFOPLIST_FILE = CeliTax/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

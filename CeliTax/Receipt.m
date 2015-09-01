@@ -52,7 +52,7 @@
     {
         copy.localID = [self.localID copy];
         copy.dateCreated = [self.dateCreated copy];
-        copy.fileNames = [self.fileNames copy];
+        copy.fileNames = [self.fileNames mutableCopy];
         copy.taxYear = self.taxYear;
         copy.dataAction = self.dataAction;
     }
@@ -110,7 +110,7 @@
 -(void)copyDataFromReceipt:(Receipt *)thisOne
 {
     self.dateCreated = [thisOne.dateCreated copy];
-    self.fileNames = [thisOne.fileNames copy];
+    self.fileNames = [thisOne.fileNames mutableCopy];
     self.taxYear = self.taxYear;
     self.dataAction = self.dataAction;
 }

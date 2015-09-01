@@ -46,7 +46,7 @@ typedef enum : NSUInteger
 } TextFieldTypes;
 
 @interface ReceiptCheckingViewController ()
-<ImageCounterIconViewProtocol, HorizonalScrollBarViewProtocol, UITextFieldDelegate, UIAlertViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate, SyncManagerDelegate, UnitPickerViewControllerDelegate, WYPopoverControllerDelegate, TutorialManagerDelegate>
+<ImageCounterIconViewProtocol, HorizonalScrollBarViewProtocol, UITextFieldDelegate, UIAlertViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate, UnitPickerViewControllerDelegate, WYPopoverControllerDelegate, TutorialManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet HorizonalScrollBarView *catagoriesBar;
 @property (weak, nonatomic) IBOutlet ImageCounterIconView *recordsCounter;
@@ -68,18 +68,19 @@ typedef enum : NSUInteger
 @property (strong, nonatomic) MBProgressHUD *waitView;
 @property (nonatomic, strong) WYPopoverController *unitPickerPopoverController;
 @property (nonatomic, strong) UnitPickerViewController *unitPickerViewController;
-@property (weak, nonatomic) IBOutlet UIButton *addPhotoButton;
+
+@property (strong, nonatomic) UIButton *addPhotoButton;
 
 @property (strong, nonatomic) NSMutableArray *receiptImages;
 @property (strong, nonatomic) NSArray *catagories;
-@property (nonatomic, strong) Receipt *receipt;
+@property (nonatomic, copy) Receipt *receipt;
 @property (strong, nonatomic) NSMutableDictionary *records; // all Records for this receipt
 @property (nonatomic, strong) Catagory *currentlySelectedCatagory;
 @property (strong, nonatomic) NSMutableArray *recordsOfCurrentlySelectedCatagory; // Records belonging to currentlySelectedCatagory
 @property (nonatomic, strong) Record *currentlySelectedRecord;
 @property (nonatomic) NSInteger currentlySelectedRecordIndex;  // index of the currentlySelectedRecord's position in recordsOfCurrentlySelectedCatagory
 
-@property (nonatomic) BOOL editReceiptMode;
+@property (nonatomic) BOOL editReceiptMode; //True, if user activated the Categories Bar
 @property (nonatomic) BOOL itemControlsContainerActivated;
 
 /*
@@ -105,7 +106,9 @@ typedef enum : NSUInteger
  be saved here. Same when they move to a different category. This data should 
  be saved here.
  */
-@property (strong, nonatomic) NSMutableDictionary *tempSavedDataForUnsavedRecordForEachCatagory;
+@property (strong, nonatomic) NSMutableDictionary *savedDataForUnsavedNewRecordInEachCatagory;
+
+@property (strong, nonatomic) NSMutableDictionary *savedDataForUnsavedExistingRecords;
 
 //Tutorials
 @property (nonatomic, strong) NSMutableArray *tutorials;
@@ -161,7 +164,7 @@ typedef enum : NSUInteger
     // if we are straight from the camera, we show the X, and Complete button while hiding the Back button
     if (!self.cameFromReceiptBreakDownViewController)
     {
-        // initialize the left side Cancel menu button button
+        // initialize the left side Cancel menu button
         self.cancelButton = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, 20, 20)];
         [self.cancelButton setImage:[UIImage imageNamed:@"xIcon.png"] forState:UIControlStateNormal];
         [self.cancelButton addTarget: self action: @selector(cancelPressed) forControlEvents: UIControlEventTouchUpInside];
@@ -171,7 +174,7 @@ typedef enum : NSUInteger
 
         // initialize the right side Complete menu button button
         self.completeButton = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, 90, 25)];
-        [self.completeButton setTitle: @"Complete" forState: UIControlStateNormal];
+        [self.completeButton setTitle: @"Finish" forState: UIControlStateNormal];
         [self.completeButton setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
         self.completeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         [self.completeButton.titleLabel setFont: [UIFont latoBoldFontOfSize: 14]];
@@ -180,6 +183,11 @@ typedef enum : NSUInteger
         self.rightMenuItem = [[UIBarButtonItem alloc] initWithCustomView: self.completeButton];
         self.navigationItem.rightBarButtonItem = self.rightMenuItem;
     }
+    
+    // initialize the right side Add Photo menu button
+    self.addPhotoButton = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, 40, 30)];
+    [self.addPhotoButton setImage:[UIImage imageNamed:@"camera_add_icon.png"] forState:UIControlStateNormal];
+    [self.addPhotoButton addTarget: self action: @selector(addImagePressed:) forControlEvents: UIControlEventTouchUpInside];
 
     self.automaticallyAdjustsScrollViewInsets = YES;
 }
@@ -203,7 +211,8 @@ typedef enum : NSUInteger
     self.editReceiptTable.delegate = self;
     self.editReceiptTable.dataSource = self;
     
-    self.tempSavedDataForUnsavedRecordForEachCatagory = [NSMutableDictionary new];
+    self.savedDataForUnsavedNewRecordInEachCatagory = [NSMutableDictionary new];
+    self.savedDataForUnsavedExistingRecords = [NSMutableDictionary new];
 }
 
 - (void) viewWillAppear: (BOOL) animated
@@ -213,8 +222,6 @@ typedef enum : NSUInteger
     [self hideAddRecordControls];
     
     self.records = [NSMutableDictionary new];
-    
-    self.receiptImages = [NSMutableArray new];
 
     // register for keyboard notifications
     [[NSNotificationCenter defaultCenter] addObserver: self
@@ -246,14 +253,15 @@ typedef enum : NSUInteger
     
     [self refreshRecordsCounter];
     
-    [self.syncManager setDelegate:self];
-    
     NSMutableArray *filenamesToDownload = [NSMutableArray new];
     
     // load images from this receipt
-    for (NSString *filename in self.receipt.fileNames)
+    
+    self.receiptImages = [NSMutableArray new];
+    
+    for (int i = 0; i < self.receipt.fileNames.count; i++)
     {
-        UIImage *image = [Utils readImageWithFileName: filename forUser: self.userManager.user.userKey];
+        UIImage *image = [Utils readImageWithFileName: self.receipt.fileNames[i] forUser: self.userManager.user.userKey];
         
         if (image)
         {
@@ -262,7 +270,7 @@ typedef enum : NSUInteger
         else
         {
             //need to download the image
-            [filenamesToDownload addObject:filename];
+            [filenamesToDownload addObject: self.receipt.fileNames[i]];
         }
     }
     
@@ -271,7 +279,27 @@ typedef enum : NSUInteger
         //start download progress
         [self createAndShowWaitViewForDownload];
         
-        [self.syncManager startDownloadPhotos:filenamesToDownload];
+        [self.syncManager startDownloadPhotos:filenamesToDownload success:^{
+            
+            [self loadReceiptImages];
+            
+            [self.editReceiptTable reloadData];
+            
+            [self hideWaitingView];
+            
+        } failure:^(NSArray *filesnamesFailedToDownload) {
+            
+            [self hideWaitingView];
+            
+            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Sorry"
+                                                              message:@"Failed to download the receipt image(s) for this receipt. Please try again later."
+                                                             delegate:nil
+                                                    cancelButtonTitle:nil
+                                                    otherButtonTitles:@"Dismiss",nil];
+            
+            [message show];
+            
+        }];
     }
     else
     {
@@ -321,11 +349,26 @@ typedef enum : NSUInteger
     [[NSNotificationCenter defaultCenter] removeObserver: self
                                                     name: UIKeyboardWillHideNotification
                                                   object: nil];
-    
-    [self.syncManager setDelegate:nil];
 }
 
 #pragma mark - View Controller functions
+
+-(void)loadReceiptImages
+{
+    self.receiptImages = [NSMutableArray new];
+    
+    for (int i = 0; i < self.receipt.fileNames.count; i++)
+    {
+        UIImage *image = [Utils readImageWithFileName: self.receipt.fileNames[i] forUser: self.userManager.user.userKey];
+        
+        if (image)
+        {
+            [self.receiptImages addObject: image];
+        }
+    }
+    
+    [self.receiptScrollView setImages: self.receiptImages];
+}
 
 - (NSInteger) calculateNumberOfRecords
 {
@@ -426,7 +469,26 @@ typedef enum : NSUInteger
 {
     if (self.tempQuantity > 0 && self.tempPricePerItemOrTotalCost > 0)
     {
-        [self enableAddItemButton];
+        //Editing Item mode
+        if (self.currentlySelectedRecord)
+        {
+            //Only enable button if something is changed
+            if (self.currentlySelectedRecord.quantity != self.tempQuantity ||
+                self.currentlySelectedRecord.amount != self.tempPricePerItemOrTotalCost ||
+                self.currentlySelectedRecord.unitType != self.tempUnitType )
+            {
+                [self enableAddItemButton];
+            }
+            else
+            {
+                [self disableAddItemButton];
+            }
+        }
+        //Adding New Item mode
+        else
+        {
+            [self enableAddItemButton];
+        }
     }
     else
     {
@@ -498,7 +560,6 @@ typedef enum : NSUInteger
     [self.deleteItemButton setAlpha:1];
 }
 
-
 #pragma mark - Setters
 // Use these functions to dynamically manage the UI when data is changed
 
@@ -512,6 +573,11 @@ typedef enum : NSUInteger
         [self.recordsCounter setHidden: YES];
         [self.editReceiptTable setHidden: NO];
         [self.editReceiptTable setEditing: YES animated: YES];
+        
+        [self.editReceiptsButton setTitle: @"Done" forState: UIControlStateNormal];
+        
+        self.rightMenuItem = [[UIBarButtonItem alloc] initWithCustomView: self.addPhotoButton];
+        self.navigationItem.rightBarButtonItem = self.rightMenuItem;
     }
     else
     {
@@ -519,6 +585,19 @@ typedef enum : NSUInteger
         [self.recordsCounter setHidden: NO];
         [self.editReceiptTable setHidden: YES];
         [self.editReceiptTable setEditing: NO animated: NO];
+        
+        [self.editReceiptsButton setTitle: @"Edit" forState: UIControlStateNormal];
+        
+        // if we are straight from the camera, we show the X, and Complete button while hiding the Back button
+        if (!self.cameFromReceiptBreakDownViewController)
+        {
+            self.rightMenuItem = [[UIBarButtonItem alloc] initWithCustomView: self.completeButton];
+            self.navigationItem.rightBarButtonItem = self.rightMenuItem;
+        }
+        else
+        {
+            self.navigationItem.rightBarButtonItem = nil;
+        }
     }
 }
 
@@ -537,9 +616,21 @@ typedef enum : NSUInteger
         // load the record's data to the UI textfields
         self.currentlySelectedRecordIndex = [self.recordsOfCurrentlySelectedCatagory indexOfObject: _currentlySelectedRecord];
 
-        self.tempQuantity = _currentlySelectedRecord.quantity;
-        self.tempPricePerItemOrTotalCost = _currentlySelectedRecord.amount;
-        self.tempUnitType = _currentlySelectedRecord.unitType;
+        //check tempSavedDataForUnsavedRecordForEachCatagory to see if there is a saved value
+        NSMutableDictionary *savedValues = [self.savedDataForUnsavedExistingRecords objectForKey:_currentlySelectedRecord.localID];
+        
+        if (!savedValues)
+        {
+            self.tempQuantity = _currentlySelectedRecord.quantity;
+            self.tempPricePerItemOrTotalCost = _currentlySelectedRecord.amount;
+            self.tempUnitType = _currentlySelectedRecord.unitType;
+        }
+        else
+        {
+            self.tempQuantity = [[savedValues objectForKey:kTempQuantityTypeKey] integerValue];
+            self.tempPricePerItemOrTotalCost = [[savedValues objectForKey:kTempPricePerItemOrTotalCostTypeKey] floatValue];
+            self.tempUnitType = [[savedValues objectForKey:kTempUnitTypeKey] integerValue];
+        }
     }
     else
     {
@@ -553,7 +644,7 @@ typedef enum : NSUInteger
         self.currentlySelectedRecordIndex = -1;
         
         //check tempSavedDataForUnsavedRecordForEachCatagory to see if there is a saved value
-        NSMutableDictionary *savedValues = [self.tempSavedDataForUnsavedRecordForEachCatagory objectForKey:self.currentlySelectedCatagory.localID];
+        NSMutableDictionary *savedValues = [self.savedDataForUnsavedNewRecordInEachCatagory objectForKey:self.currentlySelectedCatagory.localID];
 
         if (!savedValues)
         {
@@ -739,11 +830,21 @@ typedef enum : NSUInteger
     {
         if (self.tempPricePerItemOrTotalCost > 0 && self.tempQuantity > 0)
         {
-            self.currentlySelectedRecord.quantity = self.tempQuantity;
-            self.currentlySelectedRecord.amount = self.tempPricePerItemOrTotalCost;
-            self.currentlySelectedRecord.unitType = self.tempUnitType;
-            
-            [self saveCurrentlySelectedRecord];
+            if (self.currentlySelectedRecord.quantity != self.tempQuantity ||
+                self.currentlySelectedRecord.amount != self.tempPricePerItemOrTotalCost ||
+                self.currentlySelectedRecord.unitType != self.tempUnitType )
+            {
+                self.currentlySelectedRecord.quantity = self.tempQuantity;
+                self.currentlySelectedRecord.amount = self.tempPricePerItemOrTotalCost;
+                self.currentlySelectedRecord.unitType = self.tempUnitType;
+                
+                // delete the saved value for this catagory from savedDataForUnsavedExistingRecords
+                [self.savedDataForUnsavedExistingRecords removeObjectForKey:self.currentlySelectedRecord.localID];
+                
+                [self saveCurrentlySelectedRecord];
+                
+                [self checkToSeeWhetherEnableOrDisableAddEditButton];
+            }
             
             [self.view endEditing: YES];
         }
@@ -783,7 +884,7 @@ typedef enum : NSUInteger
             [self.records setObject: recordsOfThisCatagory forKey: record.catagoryID];
             
             // delete the saved value for this catagory from tempSavedDataForUnsavedRecordForEachCatagory
-            [self.tempSavedDataForUnsavedRecordForEachCatagory removeObjectForKey:self.currentlySelectedCatagory.localID];
+            [self.savedDataForUnsavedNewRecordInEachCatagory removeObjectForKey:self.currentlySelectedCatagory.localID];
             
             // calls the setter to refresh UI
             self.recordsOfCurrentlySelectedCatagory = recordsOfThisCatagory;
@@ -802,15 +903,6 @@ typedef enum : NSUInteger
 - (IBAction) editReceiptsPressed: (UIButton *) sender
 {
     self.editReceiptMode = !self.editReceiptMode;
-    
-    if (self.editReceiptMode)
-    {
-        [self.editReceiptsButton setTitle: @"Done" forState: UIControlStateNormal];
-    }
-    else
-    {
-        [self.editReceiptsButton setTitle: @"Edit" forState: UIControlStateNormal];
-    }
     
     [self hideAddRecordControls];
     
@@ -843,9 +935,7 @@ typedef enum : NSUInteger
     }
 }
 
-#pragma mark - ReceiptScrollViewDelegate
-
-- (IBAction)addImagePressed:(UIButton *)sender
+- (void)addImagePressed:(UIButton *)sender
 {
     [self.navigationController pushViewController:[self.viewControllerFactory createCameraOverlayViewControllerWithExistingReceiptID:self.receiptID] animated:YES];
 }
@@ -885,40 +975,6 @@ typedef enum : NSUInteger
         //Show it again
         [self.itemControlsContainer setHidden: NO];
     }
-}
-
-#pragma mark - SyncManagerDelegate
-
-- (void) syncManagerDownloadFilesComplete:(SyncManager *)syncManager
-{
-    // load images from this receipt
-    for (NSString *filename in self.receipt.fileNames)
-    {
-        UIImage *image = [Utils readImageWithFileName: filename forUser: self.userManager.user.userKey];
-        
-        if (image)
-        {
-            [self.receiptImages addObject: image];
-        }
-    }
-    
-    [self.receiptScrollView setImages: self.receiptImages];
-    [self.editReceiptTable reloadData];
-    
-    [self hideWaitingView];
-}
-
-- (void) syncManagerDownloadFilesFailed:(NSArray *)filenamesFailedDownload manager:(SyncManager *)syncManager
-{
-    [self hideWaitingView];
-    
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Sorry"
-                                                      message:@"Failed to download the receipt image(s) for this receipt. Please try again later."
-                                                     delegate:nil
-                                            cancelButtonTitle:nil
-                                            otherButtonTitles:@"Dismiss",nil];
-    
-    [message show];
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -1079,14 +1135,25 @@ typedef enum : NSUInteger
     
     if (!self.currentlySelectedRecord)
     {
-        //saved the temp values to tempSavedDataForUnsavedRecordForEachCatagory
+        //save the temp values to tempSavedDataForUnsavedRecordForEachCatagory
         NSMutableDictionary *savedValues = [NSMutableDictionary new];
         
         [savedValues setObject:[NSNumber numberWithInteger:self.tempQuantity] forKey:kTempQuantityTypeKey];
         [savedValues setObject:[NSNumber numberWithFloat:self.tempPricePerItemOrTotalCost] forKey:kTempPricePerItemOrTotalCostTypeKey];
         [savedValues setObject:[NSNumber numberWithInteger:self.tempUnitType] forKey:kTempUnitTypeKey];
         
-        [self.tempSavedDataForUnsavedRecordForEachCatagory setObject:savedValues forKey:self.currentlySelectedCatagory.localID];
+        [self.savedDataForUnsavedNewRecordInEachCatagory setObject:savedValues forKey:self.currentlySelectedCatagory.localID];
+    }
+    else
+    {
+        //save the temp values to savedDataForUnsavedExistingRecords
+        NSMutableDictionary *savedValues = [NSMutableDictionary new];
+        
+        [savedValues setObject:[NSNumber numberWithInteger:self.tempQuantity] forKey:kTempQuantityTypeKey];
+        [savedValues setObject:[NSNumber numberWithFloat:self.tempPricePerItemOrTotalCost] forKey:kTempPricePerItemOrTotalCostTypeKey];
+        [savedValues setObject:[NSNumber numberWithInteger:self.tempUnitType] forKey:kTempUnitTypeKey];
+        
+        [self.savedDataForUnsavedExistingRecords setObject:savedValues forKey:self.currentlySelectedRecord.localID];
     }
 }
 
@@ -1202,6 +1269,8 @@ typedef enum : NSUInteger
         [self.itemControlsContainer setHidden:YES];
     }
     
+    [self stopEditing];
+    
     //Show Unit Picker at given point
     CGRect tinyRect = CGRectMake(self.catagoriesBar.frame.origin.x + point.x,
                                  self.catagoriesBar.frame.origin.y + point.y - 5,
@@ -1257,11 +1326,25 @@ typedef enum : NSUInteger
 
 - (void) tableView: (UITableView *) tableView moveRowAtIndexPath: (NSIndexPath *) fromIndexPath toIndexPath: (NSIndexPath *) toIndexPath
 {
-    [self.receiptImages exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];
-    [self.receipt.fileNames exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];
-    [self.manipulationService modifyReceipt:self.receipt save:YES];
+    NSInteger fromIndex = fromIndexPath.row;
+    NSInteger toIndex = toIndexPath.row;
     
-    [self.receiptScrollView setImages:self.receiptImages];
+    if (fromIndex != toIndex)
+    {
+        // fetch the object at the row being moved
+        NSString *filename = [self.receipt.fileNames objectAtIndex:fromIndexPath.row];
+        
+        // remove the original from the data structure
+        [self.receipt.fileNames removeObjectAtIndex:fromIndex];
+        
+        // insert the object at the target row
+        [self.receipt.fileNames insertObject:filename atIndex:toIndex];
+        
+        [self.manipulationService modifyReceipt:self.receipt save:YES];
+        
+        // reload receipt images from self.receipt.fileName
+        [self loadReceiptImages];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -1586,7 +1669,7 @@ typedef enum : NSUInteger
                         [savedValues setObject:[NSNumber numberWithFloat:self.tempPricePerItemOrTotalCost] forKey:kTempPricePerItemOrTotalCostTypeKey];
                         [savedValues setObject:[NSNumber numberWithInteger:self.tempUnitType] forKey:kTempUnitTypeKey];
                         
-                        [self.tempSavedDataForUnsavedRecordForEachCatagory setObject:savedValues forKey:self.currentlySelectedCatagory.localID];
+                        [self.savedDataForUnsavedNewRecordInEachCatagory setObject:savedValues forKey:self.currentlySelectedCatagory.localID];
                     }
                 }
                 

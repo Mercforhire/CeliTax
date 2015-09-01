@@ -32,12 +32,14 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *firstnameField;
 @property (weak, nonatomic) IBOutlet UITextField *lastnameField;
-@property (weak, nonatomic) IBOutlet UITextField *cityField;
-@property (weak, nonatomic) IBOutlet UITextField *postalField;
+@property (weak, nonatomic) IBOutlet UIButton *canadaButton;
+@property (weak, nonatomic) IBOutlet UIButton *usaButton;
 
 @property (weak, nonatomic) IBOutlet HollowGreenButton *saveButton;
 
 @property (nonatomic) BOOL dirty;
+
+@property (strong, nonatomic) NSString *country;
 
 @end
 
@@ -49,10 +51,6 @@
     [self.lookAndFeel addLeftInsetToTextField: self.firstnameField];
     [self.lookAndFeel applyGrayBorderTo:self.lastnameField];
     [self.lookAndFeel addLeftInsetToTextField: self.lastnameField];
-    [self.lookAndFeel applyGrayBorderTo:self.cityField];
-    [self.lookAndFeel addLeftInsetToTextField: self.cityField];
-    [self.lookAndFeel applyGrayBorderTo:self.postalField];
-    [self.lookAndFeel addLeftInsetToTextField: self.postalField];
     
     [self.saveButton setLookAndFeel:self.lookAndFeel];
     
@@ -74,8 +72,17 @@
     
     [self.firstnameField setText:self.userManager.user.firstname];
     [self.lastnameField setText:self.userManager.user.lastname];
-    [self.cityField setText:self.userManager.user.city];
-    [self.postalField setText:self.userManager.user.postalCode];
+    
+    self.country = self.userManager.user.country;
+    
+    if ([self.country isEqualToString:@"Canada"])
+    {
+        [self canadaPressed:self.canadaButton];
+    }
+    else
+    {
+        [self usaPressed:self.usaButton];
+    }
     
     self.dirty = NO;
 }
@@ -96,16 +103,6 @@
     
     [self.lastnameField setDelegate:self];
     [self.lastnameField addTarget: self
-                           action: @selector(textFieldDidChange:)
-                 forControlEvents: UIControlEventEditingChanged];
-    
-    [self.cityField setDelegate:self];
-    [self.cityField addTarget: self
-                           action: @selector(textFieldDidChange:)
-                 forControlEvents: UIControlEventEditingChanged];
-    
-    [self.postalField setDelegate:self];
-    [self.postalField addTarget: self
                            action: @selector(textFieldDidChange:)
                  forControlEvents: UIControlEventEditingChanged];
 }
@@ -185,7 +182,7 @@
 {
     if (self.dirty)
     {
-        [self.userManager changeUserDetails:self.firstnameField.text andLastname:self.lastnameField.text andCity:self.cityField.text andPostalCode:self.postalField.text];
+        [self.userManager changeUserDetails:self.firstnameField.text andLastname:self.lastnameField.text andCountry:self.country];
     }
     
     [self.navigationController popViewControllerAnimated:YES];
@@ -207,14 +204,7 @@
         return;
     }
     
-    if (![self.cityField.text isEqualToString:self.userManager.user.city])
-    {
-        self.dirty = YES;
-        
-        return;
-    }
-    
-    if (![self.postalField.text isEqualToString:self.userManager.user.postalCode])
+    if (![self.country isEqualToString:self.userManager.user.country])
     {
         self.dirty = YES;
         
@@ -223,6 +213,37 @@
     
     self.dirty = NO;
 }
+
+- (IBAction) canadaPressed: (UIButton *) sender
+{
+    self.country = @"Canada";
+    
+    [self checkIfFieldsAreChanged];
+}
+
+- (IBAction) usaPressed: (UIButton *) sender
+{
+    self.country = @"USA";
+    
+    [self checkIfFieldsAreChanged];
+}
+
+- (void) setCountry: (NSString *) country
+{
+    _country = country;
+    
+    if ([_country isEqualToString: @"Canada"])
+    {
+        [self.canadaButton setAlpha: 1];
+        [self.usaButton setAlpha: 0.2];
+    }
+    else
+    {
+        [self.canadaButton setAlpha: 0.2];
+        [self.usaButton setAlpha: 1];
+    }
+}
+
 
 #pragma mark - UIKeyboardWillShowNotification / UIKeyboardWillHideNotification events
 
@@ -373,6 +394,8 @@
 
 - (void) textFieldDidChange: (UITextField *) textfield
 {
+    textfield.text = [textfield.text capitalizedString];
+    
     if (textfield.text.length)
     {
         [self.saveButton setEnabled: YES];

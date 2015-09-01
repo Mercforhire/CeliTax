@@ -20,7 +20,6 @@
 @interface SettingsViewController ()
 
 @property (weak, nonatomic) IBOutlet ProfileBarView *profileBarView;
-@property (weak, nonatomic) IBOutlet SolidGreenButton *showTutorialButton;
 @property (weak, nonatomic) IBOutlet SolidGreenButton *backupNowButton;
 @property (weak, nonatomic) IBOutlet UILabel *lastBackUpLabel;
 @property (weak, nonatomic) IBOutlet SolidGreenButton *insertDemoButton;
@@ -41,7 +40,8 @@
     [self.profileBarView.editButton1 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.profileBarView.editButton2 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.showTutorialButton setLookAndFeel:self.lookAndFeel];
+    [self.profileBarView setLookAndFeel:self.lookAndFeel];
+    
     [self.backupNowButton setLookAndFeel:self.lookAndFeel];
     [self.insertDemoButton setLookAndFeel:self.lookAndFeel];
 }
@@ -83,8 +83,6 @@
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear: animated];
-    
-    [self.syncManager setDelegate:nil];
 }
 
 
@@ -122,14 +120,6 @@
         [self.insertDemoButton setEnabled:YES];
         
     }];
-}
-
-- (IBAction)showTutorialPressed:(SolidGreenButton *)sender
-{
-    [self.tutorialManager setTutorialsAsNotShown];
-    
-    //go to Main View
-    [super selectedMenuIndex:RootViewControllerHome];
 }
 
 #define kKeyLastUpdatedDateTime        @"LastUpdatedDateTime"

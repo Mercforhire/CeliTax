@@ -79,8 +79,17 @@
 -(void) setEditing:(BOOL)editing animated:(BOOL)animated
 {
     [super setEditing:editing animated:animated];
+    
+    UIImageView *burgerImageView;
+    
     if (editing)
     {
+        // add the custom burger image
+        burgerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width - 40, self.frame.size.height / 2 - 10, 25, 20)];
+        burgerImageView.image = [UIImage imageNamed:@"menu.png"];
+        
+        [self addSubview:burgerImageView];
+        
         // find the reorder view here
         // place the previous method either directly in your
         // subclassed UITableViewCell, or in a category
@@ -96,8 +105,8 @@
             {
                 if ([sv isKindOfClass:[UIImageView class]])
                 {
-                    // and replace the image with one that you want
-                    ((UIImageView *)sv).image = [UIImage imageNamed:@"menu.png"];
+                    // hide the original gray burger image
+                    ((UIImageView *)sv).image = nil;
                     // it may be necessary to properly size the image's frame
                     // for your new image - in my experience, this was necessary
                     // the upper left position of the UIImageView's frame

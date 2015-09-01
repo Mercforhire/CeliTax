@@ -135,8 +135,6 @@
                                 andKey: authorizeResult.userAPIKey
                           andFirstname: authorizeResult.firstname
                            andLastname: authorizeResult.lastname
-                               andCity: authorizeResult.city
-                         andPostalCode: authorizeResult.postalCode
                             andCountry: authorizeResult.country];
 
         [self.navigationController pushViewController: [self.viewControllerFactory createMainViewController] animated: YES];

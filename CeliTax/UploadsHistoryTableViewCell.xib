@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -31,46 +31,43 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="greenTrianglePointDown.png" translatesAutoresizingMaskIntoConstraints="NO" id="FUm-pH-NUO" customClass="TriangleView">
-                        <rect key="frame" x="131.5" y="22" width="15" height="10"/>
+                        <rect key="frame" x="133" y="22" width="15" height="10"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="15" id="dda-Yc-f7H"/>
                             <constraint firstAttribute="height" constant="10" id="iFJ-bq-pS8"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recent Uploads" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OLT-Bc-OrU">
-                        <rect key="frame" x="18" y="18" width="103.5" height="18"/>
+                        <rect key="frame" x="18" y="18" width="115" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="115" id="Q9B-Qz-G0K"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="greenTrianglePointDown.png" translatesAutoresizingMaskIntoConstraints="NO" id="0A2-z4-Pok" customClass="TriangleView">
-                        <rect key="frame" x="131.5" y="60" width="15" height="10"/>
+                        <rect key="frame" x="133" y="60" width="15" height="10"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="10" id="M1W-nE-8Kg"/>
                             <constraint firstAttribute="width" constant="15" id="WRM-Wp-JKh"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Previous Week" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JzG-RZ-bHj">
-                        <rect key="frame" x="18" y="56" width="99.5" height="18"/>
-                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="greenTrianglePointDown.png" translatesAutoresizingMaskIntoConstraints="NO" id="UBs-T5-CcR" customClass="TriangleView">
-                        <rect key="frame" x="131.5" y="98" width="15" height="10"/>
+                        <rect key="frame" x="133" y="98" width="15" height="10"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="10" id="8Fs-FP-K3h"/>
                             <constraint firstAttribute="width" constant="15" id="gHy-F9-Gn9"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Previous Month" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ezk-lJ-2uQ">
-                        <rect key="frame" x="18" y="94" width="105" height="18"/>
+                        <rect key="frame" x="18" y="94" width="115" height="18"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="greenTrianglePointDown.png" translatesAutoresizingMaskIntoConstraints="NO" id="uLd-bj-FyD" customClass="TriangleView">
-                        <rect key="frame" x="131.5" y="136" width="15" height="10"/>
+                        <rect key="frame" x="133" y="136" width="15" height="10"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="15" id="YVr-Q0-hd9"/>
                             <constraint firstAttribute="height" constant="10" id="eOp-R8-om2"/>
@@ -159,7 +156,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="View All" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MYs-h4-V1B">
-                        <rect key="frame" x="18" y="132" width="54.5" height="18"/>
+                        <rect key="frame" x="18" y="132" width="115" height="18"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -179,6 +176,12 @@
                             <constraint firstAttribute="width" constant="63" id="4rX-5o-URP"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="13"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Previous Week" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JzG-RZ-bHj">
+                        <rect key="frame" x="18" y="56" width="115" height="18"/>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -211,6 +214,7 @@
                     <constraint firstItem="MYs-h4-V1B" firstAttribute="centerY" secondItem="tSn-ET-KQh" secondAttribute="centerY" id="U69-39-Bbh"/>
                     <constraint firstItem="0A2-z4-Pok" firstAttribute="centerY" secondItem="JzG-RZ-bHj" secondAttribute="centerY" id="V4i-5v-pVM"/>
                     <constraint firstItem="zhH-P3-9cv" firstAttribute="centerY" secondItem="JzG-RZ-bHj" secondAttribute="centerY" id="Vl7-YV-PGL"/>
+                    <constraint firstItem="OLT-Bc-OrU" firstAttribute="width" secondItem="ezk-lJ-2uQ" secondAttribute="width" id="Wla-jD-CuN"/>
                     <constraint firstItem="JzG-RZ-bHj" firstAttribute="top" secondItem="OLT-Bc-OrU" secondAttribute="bottom" constant="20" id="aJS-6W-0o5"/>
                     <constraint firstItem="ezk-lJ-2uQ" firstAttribute="top" secondItem="ppa-Ln-0Ek" secondAttribute="bottom" constant="10" id="avK-gh-t0p"/>
                     <constraint firstItem="OLT-Bc-OrU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="bi4-Aa-3JA"/>
@@ -229,11 +233,13 @@
                     <constraint firstAttribute="trailingMargin" secondItem="jw5-XW-SfX" secondAttribute="trailing" constant="5" id="rrf-f7-nF9"/>
                     <constraint firstItem="4nW-4Z-JUE" firstAttribute="leading" secondItem="MYs-h4-V1B" secondAttribute="trailing" constant="-68.5" id="tNI-TJ-6Ei"/>
                     <constraint firstItem="MYs-h4-V1B" firstAttribute="top" secondItem="ezk-lJ-2uQ" secondAttribute="bottom" constant="20" id="tzR-eL-2Oq"/>
+                    <constraint firstItem="OLT-Bc-OrU" firstAttribute="width" secondItem="JzG-RZ-bHj" secondAttribute="width" id="utl-Pv-nyr"/>
                     <constraint firstItem="OLT-Bc-OrU" firstAttribute="centerY" secondItem="jw5-XW-SfX" secondAttribute="centerY" id="v5m-30-s3R"/>
                     <constraint firstItem="JzG-RZ-bHj" firstAttribute="centerY" secondItem="cns-Di-heh" secondAttribute="centerY" id="v6r-Vc-feE"/>
                     <constraint firstItem="ppa-Ln-0Ek" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="wSm-VI-cc5"/>
-                    <constraint firstItem="FUm-pH-NUO" firstAttribute="leading" secondItem="OLT-Bc-OrU" secondAttribute="trailing" constant="10" id="wxm-yY-g69"/>
+                    <constraint firstItem="FUm-pH-NUO" firstAttribute="leading" secondItem="OLT-Bc-OrU" secondAttribute="trailing" id="wxm-yY-g69"/>
                     <constraint firstItem="UBs-T5-CcR" firstAttribute="leading" secondItem="ezk-lJ-2uQ" secondAttribute="trailing" constant="18" id="xT9-DW-mVe"/>
+                    <constraint firstItem="OLT-Bc-OrU" firstAttribute="width" secondItem="MYs-h4-V1B" secondAttribute="width" id="xtV-pk-vhe"/>
                     <constraint firstItem="YCf-re-M1V" firstAttribute="centerY" secondItem="MYs-h4-V1B" secondAttribute="centerY" id="yC2-p4-Edl"/>
                 </constraints>
                 <variation key="default">

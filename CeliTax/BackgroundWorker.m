@@ -21,11 +21,11 @@
 
 @property (nonatomic) BOOL active;
 
+@property (nonatomic) NSInteger currentTaskIndex;
+
 //Data that are persistent in User Defaults:
 @property (nonatomic, strong) NSDate *lastTimeDate;
 @property (nonatomic, strong) NSMutableArray *queuedTasks;
-
-@property (nonatomic) NSInteger currentTaskIndex;
 
 @end
 
@@ -64,6 +64,9 @@
     [self.defaults removeObjectForKey:kQueuedTasksKey];
     
     [self.defaults synchronize];
+    
+    //stop all network operations
+    [self.syncManager cancelAllOperations];
 }
 
 -(void)executeTasks
@@ -176,8 +179,7 @@
                 {
                     [self.authenticationService updateAccountInfo: self.userManager.user.firstname
                                                      withLastname: self.userManager.user.lastname
-                                                         withCity: self.userManager.user.city
-                                                       withPostal: self.userManager.user.postalCode
+                                                      withCountry:self.userManager.user.country
                                                           success:^{
                                                               
                                                               //Go on to next task
@@ -261,6 +263,8 @@
     if (![self.queuedTasks containsObject:task])
     {
         [self.queuedTasks addObject:task];
+        
+        [self.defaults setObject:self.queuedTasks forKey:kQueuedTasksKey];
     }
 }
 

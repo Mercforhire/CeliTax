@@ -7,10 +7,13 @@
 //
 
 #import "ProfileBarView.h"
+#import "SolidGreenButton.h"
 
 @implementation ProfileBarView
 {
     ProfileBarView *customView;
+    
+    LookAndFeel *myLookAndFeel;
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -46,6 +49,13 @@
         
     }
     return self;
+}
+
+- (void) setLookAndFeel: (LookAndFeel *) lookAndFeel;
+{
+    myLookAndFeel = lookAndFeel;
+    
+    [self.editButton1 setLookAndFeel:myLookAndFeel];
 }
 
 @end

@@ -67,7 +67,7 @@
 {
     NSString *storagePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     
-    NSString *profileFilePath = [storagePath stringByAppendingPathComponent: @"USER.acc"];
+    NSString *profileFilePath = [storagePath stringByAppendingPathComponent: @"CURRENT_USER.acc"];
     
     return profileFilePath;
 }

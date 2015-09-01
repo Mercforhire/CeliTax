@@ -12,6 +12,7 @@
 #import "AlertDialogsProvider.h"
 #import "UIView+Helper.h"
 #import "HollowGreenButton.h"
+#import "TutorialManager.h"
 
 @interface HelpScreenViewController () <UITextViewDelegate>
 {
@@ -97,7 +98,10 @@
 
 - (IBAction)viewTutorialPressed:(UIButton *)sender
 {
-    [AlertDialogsProvider showWorkInProgressDialog];
+    [self.tutorialManager setTutorialsAsNotShown];
+    
+    //go to Main View
+    [super selectedMenuIndex:RootViewControllerHome];
 }
 
 - (void) createAndShowWaitView

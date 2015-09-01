@@ -86,24 +86,17 @@
         return NO;
     }
 
+    self.userData = [Utils unarchiveFile: [self generateUserDataFileName]];
+    
     if (self.userData)
     {
         return YES;
     }
     else
     {
-        self.userData = [Utils unarchiveFile: [self generateUserDataFileName]];
-
-        if (self.userData)
-        {
-            return YES;
-        }
-        else
-        {
-            self.userData = [UserData new];
-
-            return [self saveUserData];
-        }
+        self.userData = [UserData new];
+        
+        return [self saveUserData];
     }
 
     return NO;

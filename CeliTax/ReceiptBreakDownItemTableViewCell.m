@@ -77,7 +77,7 @@
     switch (unitType)
     {
         case UnitML:
-            unitSuffix = @"(ml)";
+            unitSuffix = @"(mL)";
             break;
             
         case UnitL:

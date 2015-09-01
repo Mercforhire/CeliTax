@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -24,29 +24,18 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="John Buck" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ILw-dm-H99">
-                    <rect key="frame" x="86" y="22" width="159" height="19.5"/>
+                    <rect key="frame" x="86" y="22" width="72" height="19.5"/>
                     <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="x2n-ay-fv1">
-                    <rect key="frame" x="16" y="6.5" width="50" height="50"/>
+                    <rect key="frame" x="16" y="6" width="50" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="9ed-r7-UFH"/>
                         <constraint firstAttribute="width" constant="50" id="UQG-Yp-tmy"/>
                     </constraints>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EPr-op-zbf">
-                    <rect key="frame" x="255" y="18" width="30" height="27"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="30" id="vVT-tR-8Gf"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                    <state key="normal" title="Edit">
-                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="myT-Tw-vcp">
                     <rect key="frame" x="285" y="23" width="19" height="17"/>
                     <constraints>
@@ -57,6 +46,25 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EPr-op-zbf" customClass="SolidGreenButton">
+                    <rect key="frame" x="249" y="16.5" width="33" height="30"/>
+                    <color key="backgroundColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="Zyg-O7-p4a"/>
+                        <constraint firstAttribute="width" constant="30" id="vVT-tR-8Gf"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="13"/>
+                    <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                    <state key="normal" title="Edit">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="vVT-tR-8Gf"/>
+                        </mask>
+                    </variation>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -66,12 +74,17 @@
                 <constraint firstItem="ILw-dm-H99" firstAttribute="leading" secondItem="x2n-ay-fv1" secondAttribute="trailing" constant="20" id="G76-Vt-AlF"/>
                 <constraint firstItem="x2n-ay-fv1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="NYw-pt-3SZ"/>
                 <constraint firstItem="EPr-op-zbf" firstAttribute="leading" secondItem="ILw-dm-H99" secondAttribute="trailing" constant="10" id="ScI-8G-PgZ"/>
-                <constraint firstItem="myT-Tw-vcp" firstAttribute="leading" secondItem="EPr-op-zbf" secondAttribute="trailing" id="W77-eo-2KI"/>
+                <constraint firstItem="myT-Tw-vcp" firstAttribute="leading" secondItem="EPr-op-zbf" secondAttribute="trailing" constant="3" id="W77-eo-2KI"/>
                 <constraint firstAttribute="centerY" secondItem="x2n-ay-fv1" secondAttribute="centerY" id="g2c-nd-7An"/>
                 <constraint firstAttribute="trailing" secondItem="myT-Tw-vcp" secondAttribute="trailing" constant="16" id="wZy-IN-auj"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="ScI-8G-PgZ"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="350" y="3.5"/>
         </view>
     </objects>

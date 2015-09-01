@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -16,8 +16,6 @@
             <string>Lato-Regular</string>
             <string>Lato-Regular</string>
             <string>Lato-Regular</string>
-            <string>Lato-Regular</string>
-            <string>Lato-Regular</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -25,7 +23,6 @@
             <connections>
                 <outlet property="agreeCheckBox" destination="5Cz-zv-7eW" id="gLR-0I-3ms"/>
                 <outlet property="canadaButton" destination="6Qf-KT-Eb3" id="fQB-vN-vbp"/>
-                <outlet property="cityField" destination="JAu-vJ-PwW" id="kqi-ZB-UrR"/>
                 <outlet property="doneButton" destination="LxA-sw-eBy" id="aVl-SJ-sTX"/>
                 <outlet property="emailField" destination="Ml5-Fh-98B" id="GvS-9Z-Yw3"/>
                 <outlet property="emailRepeatField" destination="adG-e5-ad9" id="f5O-vb-Ufr"/>
@@ -33,7 +30,6 @@
                 <outlet property="lastnameField" destination="mNQ-F5-y90" id="lFo-kc-6DD"/>
                 <outlet property="passwordField" destination="o2x-ZG-3QV" id="Ve8-jR-tLw"/>
                 <outlet property="passwordRepeatField" destination="jvx-nW-zR6" id="HWf-tb-FwU"/>
-                <outlet property="postalField" destination="yzP-e6-wMF" id="PiX-p3-lKy"/>
                 <outlet property="scrollView" destination="L0H-bi-TpZ" id="RHJ-c8-Wee"/>
                 <outlet property="usaButton" destination="gUs-5p-abZ" id="2wS-IC-EWj"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -54,12 +50,12 @@
                                 <constraint firstAttribute="height" constant="31" id="qeK-f0-qJw"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gUs-5p-abZ">
-                            <rect key="frame" x="84" y="398" width="42" height="20"/>
+                            <rect key="frame" x="84" y="398" width="41" height="20"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="42" id="Fi3-DN-p8C"/>
+                                <constraint firstAttribute="width" constant="41" id="Fi3-DN-p8C"/>
                                 <constraint firstAttribute="height" constant="20" id="cSS-uv-FKT"/>
                             </constraints>
                             <state key="normal" image="USA_flag_small.png">
@@ -91,7 +87,7 @@
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tax Country" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gLl-gh-IMC">
-                            <rect key="frame" x="146" y="399" width="74.5" height="17"/>
+                            <rect key="frame" x="145" y="399" width="74.5" height="17"/>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -103,7 +99,7 @@
                                 <constraint firstAttribute="height" constant="31" id="03E-r0-YJa"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Please re-enter your password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jvx-nW-zR6">
                             <rect key="frame" x="28" y="227" width="266" height="31"/>
@@ -113,21 +109,12 @@
                                 <constraint firstAttribute="height" constant="31" id="rrQ-ks-JRN"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
                             <variation key="default">
                                 <mask key="constraints">
                                     <exclude reference="2X1-fy-NXF"/>
                                 </mask>
                             </variation>
-                        </textField>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="City" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JAu-vJ-PwW">
-                            <rect key="frame" x="28" y="448" width="192.5" height="31"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="31" id="wb7-Re-359"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mNQ-F5-y90">
                             <rect key="frame" x="28" y="337" width="266" height="31"/>
@@ -136,7 +123,7 @@
                                 <constraint firstAttribute="height" constant="31" id="7rN-8T-Vco"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no"/>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="txk-FD-UAb">
                             <rect key="frame" x="28" y="288" width="268" height="31"/>
@@ -145,7 +132,7 @@
                                 <constraint firstAttribute="height" constant="31" id="o7O-ll-Mpe"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no"/>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Please enter your password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o2x-ZG-3QV">
                             <rect key="frame" x="28" y="178" width="266" height="31"/>
@@ -154,33 +141,23 @@
                                 <constraint firstAttribute="height" constant="31" id="JBm-tN-P1T"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
                         </textField>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ANe-dl-pJH">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ANe-dl-pJH">
                             <rect key="frame" x="93" y="15" width="133.5" height="23"/>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="19"/>
                             <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Postal / Zip" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yzP-e6-wMF">
-                            <rect key="frame" x="28" y="497" width="132" height="31"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="31" id="FLe-dA-H7b"/>
-                                <constraint firstAttribute="width" constant="132" id="Skh-y0-2JF"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no"/>
-                        </textField>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Cz-zv-7eW" customClass="M13Checkbox">
-                            <rect key="frame" x="28" y="544" width="268" height="47"/>
+                            <rect key="frame" x="28" y="436" width="268" height="47"/>
                             <color key="backgroundColor" red="0.20649079740000001" green="1" blue="0.48699400129999998" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="47" id="aYG-WC-fpq"/>
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LxA-sw-eBy" customClass="HollowGreenButton">
-                            <rect key="frame" x="92" y="599" width="136" height="32"/>
+                            <rect key="frame" x="92" y="491" width="136" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="42" id="5g1-Mz-tcs"/>
                                 <constraint firstAttribute="width" constant="90" id="9pr-7R-DVD"/>
@@ -204,29 +181,26 @@
                         </button>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="5Cz-zv-7eW" firstAttribute="top" secondItem="yzP-e6-wMF" secondAttribute="bottom" constant="16" id="2BV-TQ-qd7"/>
                         <constraint firstItem="txk-FD-UAb" firstAttribute="leading" secondItem="L0H-bi-TpZ" secondAttribute="leading" constant="28" id="2ix-da-Vci"/>
                         <constraint firstAttribute="trailing" secondItem="adG-e5-ad9" secondAttribute="trailing" constant="26" id="5go-yH-agR"/>
                         <constraint firstAttribute="trailing" secondItem="5Cz-zv-7eW" secondAttribute="trailing" constant="24" id="6YA-c9-y36"/>
                         <constraint firstItem="adG-e5-ad9" firstAttribute="top" secondItem="Ml5-Fh-98B" secondAttribute="bottom" constant="18" id="744-1k-XXw"/>
                         <constraint firstItem="5Cz-zv-7eW" firstAttribute="leading" secondItem="L0H-bi-TpZ" secondAttribute="leading" constant="28" id="BDv-wl-9Vx"/>
-                        <constraint firstItem="5Cz-zv-7eW" firstAttribute="leading" secondItem="yzP-e6-wMF" secondAttribute="trailing" constant="-132" id="C85-Lh-Fb4"/>
                         <constraint firstAttribute="bottom" secondItem="LxA-sw-eBy" secondAttribute="bottom" constant="56" id="Diu-Z2-vSE"/>
                         <constraint firstItem="gLl-gh-IMC" firstAttribute="leading" secondItem="gUs-5p-abZ" secondAttribute="trailing" constant="20" id="E3Z-IC-E2u"/>
                         <constraint firstAttribute="trailing" secondItem="mNQ-F5-y90" secondAttribute="trailing" constant="26" id="G4X-c3-eOE"/>
                         <constraint firstItem="Ml5-Fh-98B" firstAttribute="leading" secondItem="L0H-bi-TpZ" secondAttribute="leading" constant="28" id="GBI-aK-b29"/>
                         <constraint firstItem="ANe-dl-pJH" firstAttribute="top" secondItem="L0H-bi-TpZ" secondAttribute="top" constant="15" id="GlY-ra-gbG"/>
-                        <constraint firstItem="JAu-vJ-PwW" firstAttribute="leading" secondItem="L0H-bi-TpZ" secondAttribute="leading" constant="28" id="JFb-GT-ybE"/>
                         <constraint firstItem="gLl-gh-IMC" firstAttribute="centerY" secondItem="gUs-5p-abZ" secondAttribute="centerY" id="Jsw-9A-Hdy"/>
                         <constraint firstItem="o2x-ZG-3QV" firstAttribute="top" secondItem="adG-e5-ad9" secondAttribute="bottom" constant="30" id="Jua-o7-OrW"/>
                         <constraint firstItem="Rzg-Ql-Kgj" firstAttribute="leading" secondItem="L0H-bi-TpZ" secondAttribute="leading" id="Oon-Fo-5Nv"/>
                         <constraint firstItem="6Qf-KT-Eb3" firstAttribute="top" secondItem="mNQ-F5-y90" secondAttribute="bottom" constant="30" id="Qrq-bq-LRl"/>
                         <constraint firstAttribute="trailing" secondItem="txk-FD-UAb" secondAttribute="trailing" constant="24" id="VQd-P2-7i3"/>
+                        <constraint firstItem="5Cz-zv-7eW" firstAttribute="top" secondItem="gLl-gh-IMC" secondAttribute="bottom" constant="20" id="Wb9-Gm-Nzu"/>
                         <constraint firstItem="adG-e5-ad9" firstAttribute="leading" secondItem="L0H-bi-TpZ" secondAttribute="leading" constant="28" id="WoK-ic-0ug"/>
                         <constraint firstItem="o2x-ZG-3QV" firstAttribute="leading" secondItem="L0H-bi-TpZ" secondAttribute="leading" constant="28" id="ZB9-5W-gsc"/>
                         <constraint firstItem="jvx-nW-zR6" firstAttribute="top" secondItem="o2x-ZG-3QV" secondAttribute="bottom" constant="18" id="aWc-0u-mHz"/>
                         <constraint firstAttribute="trailing" secondItem="jvx-nW-zR6" secondAttribute="trailing" constant="26" id="ado-xe-Kwy"/>
-                        <constraint firstItem="JAu-vJ-PwW" firstAttribute="trailing" secondItem="gLl-gh-IMC" secondAttribute="trailing" id="amZ-8b-3B4"/>
                         <constraint firstItem="gUs-5p-abZ" firstAttribute="leading" secondItem="6Qf-KT-Eb3" secondAttribute="trailing" constant="15" id="amr-cc-EWt"/>
                         <constraint firstItem="Ml5-Fh-98B" firstAttribute="top" secondItem="ANe-dl-pJH" secondAttribute="bottom" constant="30" id="bnh-AG-ViC"/>
                         <constraint firstAttribute="trailing" secondItem="Rzg-Ql-Kgj" secondAttribute="trailing" id="boE-zA-dXn"/>
@@ -236,23 +210,13 @@
                         <constraint firstAttribute="centerX" secondItem="LxA-sw-eBy" secondAttribute="centerX" id="izZ-rL-9DZ"/>
                         <constraint firstItem="6Qf-KT-Eb3" firstAttribute="leading" secondItem="L0H-bi-TpZ" secondAttribute="leading" constant="28" id="mUx-Xv-ShC"/>
                         <constraint firstItem="jvx-nW-zR6" firstAttribute="leading" secondItem="L0H-bi-TpZ" secondAttribute="leading" constant="28" id="oUK-iB-5q1"/>
-                        <constraint firstItem="yzP-e6-wMF" firstAttribute="top" secondItem="JAu-vJ-PwW" secondAttribute="bottom" constant="18" id="oUO-sb-tfW"/>
                         <constraint firstItem="mNQ-F5-y90" firstAttribute="top" secondItem="txk-FD-UAb" secondAttribute="bottom" constant="18" id="sl6-dH-CNf"/>
                         <constraint firstItem="Rzg-Ql-Kgj" firstAttribute="top" secondItem="L0H-bi-TpZ" secondAttribute="top" id="szC-Ae-4GP"/>
                         <constraint firstItem="gUs-5p-abZ" firstAttribute="centerY" secondItem="6Qf-KT-Eb3" secondAttribute="centerY" id="tMO-Fe-kLO"/>
                         <constraint firstAttribute="centerX" secondItem="ANe-dl-pJH" secondAttribute="centerX" id="tWS-zP-8zs"/>
                         <constraint firstItem="LxA-sw-eBy" firstAttribute="top" secondItem="5Cz-zv-7eW" secondAttribute="bottom" constant="8" id="v4I-VZ-sxg"/>
-                        <constraint firstItem="yzP-e6-wMF" firstAttribute="leading" secondItem="L0H-bi-TpZ" secondAttribute="leading" constant="28" id="vci-Ri-afN"/>
-                        <constraint firstItem="LxA-sw-eBy" firstAttribute="top" secondItem="yzP-e6-wMF" secondAttribute="bottom" constant="40" id="vhN-Nx-ugo"/>
                         <constraint firstItem="mNQ-F5-y90" firstAttribute="leading" secondItem="L0H-bi-TpZ" secondAttribute="leading" constant="28" id="w4E-Pe-ZQk"/>
-                        <constraint firstItem="JAu-vJ-PwW" firstAttribute="top" secondItem="6Qf-KT-Eb3" secondAttribute="bottom" constant="30" id="xyM-Yb-9h7"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="C85-Lh-Fb4"/>
-                            <exclude reference="vhN-Nx-ugo"/>
-                        </mask>
-                    </variation>
                 </scrollView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

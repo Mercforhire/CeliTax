@@ -27,6 +27,7 @@
 #import "TutorialStep.h"
 #import "SolidGreenButton.h"
 #import "HollowGreenButton.h"
+#import "Notifications.h"
 
 typedef enum : NSUInteger
 {
@@ -69,8 +70,8 @@ typedef enum : NSUInteger
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *deleteButtonHeightBar;
 @property (strong, nonatomic) UIPickerView *taxYearPicker;
 @property (weak, nonatomic) IBOutlet UITextField *invisibleNewTaxYearField;
-// sorted from most recent to oldest
-@property (nonatomic, strong) NSArray *existingTaxYears;
+
+@property (nonatomic, strong) NSArray *existingTaxYears; // sorted from most recent to oldest
 @property (nonatomic, strong) NSMutableArray *possibleTaxYears;
 @property (nonatomic, strong) NSMutableArray *transferYearSelections;
 @property (nonatomic, copy) NSString *taxYearToAdd;
@@ -201,17 +202,22 @@ typedef enum : NSUInteger
     [self.sendReceiptsToViewController setDelegate: self];
     
     [self refreshTaxYears];
+
+    if ([self.configurationManager getCurrentTaxYear])
+    {
+        // this triggers loading of receipts for this year
+        self.currentlySelectedYear = [NSNumber numberWithInteger:[self.configurationManager getCurrentTaxYear]];
+    }
 }
 
 - (void) viewWillAppear: (BOOL) animated
 {
     [super viewWillAppear: animated];
     
-    //if there is no selected tax year saved, select the newest year by default
-    if ([self.configurationManager getCurrentTaxYear])
-    {
-        self.currentlySelectedYear = [NSNumber numberWithInteger:[self.configurationManager getCurrentTaxYear]];
-    }
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(refreshData)
+                                                 name: kReceiptDatabaseChangedNotification
+                                               object: nil];
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -229,7 +235,23 @@ typedef enum : NSUInteger
     }
 }
 
+- (void) viewWillDisappear: (BOOL) animated
+{
+    [super viewWillDisappear: animated];
+    self.navigationController.navigationBarHidden = NO;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver: self
+                                                    name: kReceiptDatabaseChangedNotification
+                                                  object: nil];
+}
+
 #pragma mark - View Controller functions
+
+-(void)refreshData
+{
+    //refresh UI
+    self.currentlySelectedYear = self.currentlySelectedYear;
+}
 
 -(void)cancelAddTaxYear
 {
@@ -280,11 +302,6 @@ typedef enum : NSUInteger
     self.taxYearPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: yearSelections];
     self.taxYearSelectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.taxYearPickerViewController];
     [self.taxYearPickerViewController setDelegate: self];
-}
-
--(void)displayTutorials
-{
-    
 }
 
 -(BOOL)thisYearHasNoReceipts
@@ -428,7 +445,7 @@ typedef enum : NSUInteger
 
     [self setYearLabelToBe: self.currentlySelectedYear.integerValue];
 
-     [self.configurationManager setCurrentTaxYear:_currentlySelectedYear.integerValue];
+    [self.configurationManager setCurrentTaxYear:_currentlySelectedYear.integerValue];
     
     self.taxYearPickerViewController.highlightedSelectionIndex = [self.existingTaxYears indexOfObject:self.currentlySelectedYear];
     
@@ -439,11 +456,6 @@ typedef enum : NSUInteger
     self.previousWeekReceipts = nil;
     self.previousMonthReceipts = nil;
     self.viewAllReceipts = nil;
-    
-    self.recentUploadSelected = NO;
-    self.previousWeekSelected = NO;
-    self.previousMonthSelected = NO;
-    self.viewAllSelected = NO;
     
     [self fetchRecentUploadReceipts];
     
@@ -654,8 +666,7 @@ typedef enum : NSUInteger
             [self.manipulationService deleteReceiptAndAllItsRecords:receiptID save:YES];
         }
         
-        //refresh UI
-        self.currentlySelectedYear = self.currentlySelectedYear;
+        [self refreshData];
     }
 }
 

@@ -688,9 +688,20 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
 
 - (SliceLayer *) createSliceLayer
 {
+    NSUInteger sliceCount = [_dataSource numberOfSlicesInPieChart: self];
+    
     SliceLayer *pieLayer = [SliceLayer layer];
     [pieLayer setZPosition: 0];
-    [pieLayer setStrokeColor: [UIColor whiteColor].CGColor];
+    
+    if (sliceCount == 1)
+    {
+        [pieLayer setStrokeColor: [UIColor clearColor].CGColor];
+    }
+    else
+    {
+        [pieLayer setStrokeColor: [UIColor whiteColor].CGColor];
+    }
+    
     CATextLayer *textLayer = [CATextLayer layer];
     textLayer.contentsScale = [[UIScreen mainScreen] scale];
     CGFontRef font = nil;

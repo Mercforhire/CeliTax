@@ -12,4 +12,6 @@
 
 NSString *const kReceiptItemsTableReceiptPressedNotification = @"ReceiptItemsTableReceiptPressedNotification";
 
+NSString *const kReceiptDatabaseChangedNotification = @"ReceiptDatabaseChangedNotification";
+
 @end

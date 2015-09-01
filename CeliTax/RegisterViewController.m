@@ -11,7 +11,6 @@
 #import "NSString+Helper.h"
 #import "AuthenticationService.h"
 #import "RegisterResult.h"
-#import "UIView+Helper.h"
 #import "M13Checkbox.h"
 #import "HollowGreenButton.h"
 
@@ -25,9 +24,6 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *firstnameField;
 @property (weak, nonatomic) IBOutlet UITextField *lastnameField;
-
-@property (weak, nonatomic) IBOutlet UITextField *cityField;
-@property (weak, nonatomic) IBOutlet UITextField *postalField;
 
 @property (weak, nonatomic) IBOutlet UIButton *canadaButton;
 @property (weak, nonatomic) IBOutlet UIButton *usaButton;
@@ -64,12 +60,6 @@
 
     [self.lookAndFeel applyGrayBorderTo: self.lastnameField];
     [self.lookAndFeel addLeftInsetToTextField: self.lastnameField];
-
-    [self.lookAndFeel applyGrayBorderTo: self.cityField];
-    [self.lookAndFeel addLeftInsetToTextField: self.cityField];
-
-    [self.lookAndFeel applyGrayBorderTo: self.postalField];
-    [self.lookAndFeel addLeftInsetToTextField: self.postalField];
 
     [self.doneButton setLookAndFeel:self.lookAndFeel];
     
@@ -123,17 +113,6 @@
                            action: @selector(textFieldDidChange:)
                  forControlEvents: UIControlEventEditingChanged];
 
-    self.cityField.delegate = self;
-    [self.cityField addTarget: self
-                       action: @selector(textFieldDidChange:)
-             forControlEvents: UIControlEventEditingChanged];
-
-    self.postalField.delegate = self;
-    [self.postalField addTarget: self
-                         action: @selector(textFieldDidChange:)
-               forControlEvents: UIControlEventEditingChanged];
-
-    
     [self.agreeCheckBox addTarget: self
                            action: @selector(agreeChecked:)
                  forControlEvents: UIControlEventValueChanged];
@@ -169,6 +148,8 @@
         UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"" message: @"Email address in both fields not match" delegate: nil cancelButtonTitle: nil otherButtonTitles: @"Ok", nil];
 
         [message show];
+        
+        [self.doneButton setEnabled: YES];
 
         return;
     }
@@ -180,6 +161,8 @@
         UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"" message: @"Email address not valid" delegate: nil cancelButtonTitle: nil otherButtonTitles: @"Ok", nil];
 
         [message show];
+        
+        [self.doneButton setEnabled: YES];
 
         return;
     }
@@ -191,6 +174,8 @@
         UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"" message: @"Password in both fields not match" delegate: nil cancelButtonTitle: nil otherButtonTitles: @"Ok", nil];
 
         [message show];
+        
+        [self.doneButton setEnabled: YES];
 
         return;
     }
@@ -202,6 +187,8 @@
         UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"" message: @"Password should be at least 6 characters" delegate: nil cancelButtonTitle: nil otherButtonTitles: @"Ok", nil];
 
         [message show];
+        
+        [self.doneButton setEnabled: YES];
 
         return;
     }
@@ -210,9 +197,7 @@
                                    withPassword: self.passwordField.text
                                   withFirstname: self.firstnameField.text
                                    withLastname: self.lastnameField.text
-                                       withCity: self.cityField.text
                                     withCountry: self.country
-                                     withPostal: self.postalField.text
                                         success:^(RegisterResult *registerResult) {
         [self.waitView hide: YES];
 
@@ -239,6 +224,8 @@
                                 otherButtonTitles: @"Ok", nil];
 
         [message show];
+        
+        [self.doneButton setEnabled: YES];
 
         return;
     }];
@@ -284,14 +271,21 @@
 
 #pragma mark - UITextFieldDelegate
 
-- (void) textFieldDidBeginEditing: (UITextField *) textField
+- (void) textFieldDidEndEditing:(UITextField *)textField
 {
-    [self.scrollView scrollToView: textField];
+    if (textField == self.emailField || textField == self.emailRepeatField)
+    {
+        textField.text = [textField.text lowercaseString];
+    }
+    
+    if (textField == self.firstnameField || textField == self.lastnameField)
+    {
+        textField.text = [textField.text capitalizedString];
+    }
 }
 
 - (BOOL) textFieldShouldReturn: (UITextField *) textField
 {
-    [self.scrollView scrollToY: 0];
 
     [textField resignFirstResponder];
 
@@ -300,10 +294,17 @@
 
 - (void) textFieldDidChange: (UITextField *) textfield
 {
-    if (self.emailField.text.length && self.passwordField.text.length &&
-        self.emailRepeatField.text.length && self.passwordRepeatField.text.length &&
-        self.firstnameField.text.length && self.lastnameField && self.country &&
-        self.postalField && self.agreeCheckBox.checkState == M13CheckboxStateChecked)
+    NSString *emailFieldTrimmedString = [self.emailField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *passwordFieldTrimmedString = [self.passwordField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *emailRepeatFieldTrimmedString = [self.emailRepeatField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *passwordRepeatFieldTrimmedString = [self.passwordRepeatField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *firstnameFieldTrimmedString = [self.firstnameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *lastnameFieldTrimmedString = [self.lastnameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    if (emailFieldTrimmedString && passwordFieldTrimmedString &&
+        emailRepeatFieldTrimmedString && passwordRepeatFieldTrimmedString &&
+        firstnameFieldTrimmedString && lastnameFieldTrimmedString && self.country &&
+        self.agreeCheckBox.checkState == M13CheckboxStateChecked)
     {
         [self.doneButton setEnabled: YES];
     }

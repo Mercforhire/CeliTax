@@ -13,6 +13,9 @@
 #import "User.h"
 
 @interface SyncManager ()
+{
+    BOOL cancelOperations;
+}
 
 @property (nonatomic, weak) UserManager *userManager;
 
@@ -55,7 +58,7 @@
     return [self.syncService getLastBackUpDate];
 }
 
-- (void)checkUpdate
+- (void)checkUpdate: (NeedsUpdateBlock) needsUpdate
 {
     NSString *localDataBatchID = [self.syncService getLocalDataBatchID];
     
@@ -66,6 +69,13 @@
         //check the server to see if the server has different data by comparing BatchID
         [self.syncService getLastestServerDataBatchID:^(NSString *batchID) {
             
+            if (cancelOperations)
+            {
+                cancelOperations = NO;
+                
+                return;
+            }
+            
             if (!batchID)
             {
                 //server has no data
@@ -73,9 +83,9 @@
             }
             else
             {
-                if (self.delegate)
+                if (needsUpdate)
                 {
-                    [self.delegate syncManagerNeedsUpdate:self];
+                    needsUpdate();
                 }
             }
             
@@ -90,6 +100,13 @@
         //check the server to see if the server has different data by comparing BatchID
         [self.syncService getLastestServerDataBatchID:^(NSString *batchID) {
             
+            if (cancelOperations)
+            {
+                cancelOperations = NO;
+                
+                return;
+            }
+            
             if (!batchID)
             {
                 //server has no data
@@ -98,9 +115,9 @@
             {
                 if (![localDataBatchID isEqualToString:batchID])
                 {
-                    if (self.delegate && [self.delegate respondsToSelector:@selector(syncManagerNeedsUpdate:)])
+                    if (needsUpdate)
                     {
-                        [self.delegate syncManagerNeedsUpdate:self];
+                        needsUpdate();
                     }
                 }
                 
@@ -210,8 +227,22 @@
     //1.Upload local data to server
     [self.syncService startSyncingUserData:^(NSDate *updateDate) {
         
+        if (cancelOperations)
+        {
+            cancelOperations = NO;
+            
+            return;
+        }
+        
         //2. Download and merge data from server first
         [self.syncService downloadUserData:^{
+            
+            if (cancelOperations)
+            {
+                cancelOperations = NO;
+                
+                return;
+            }
             
             //3. Delete Photos no longer attached to any receipts
             [self cleanUpReceiptImages];
@@ -223,6 +254,13 @@
             
         } failure:^(NSString *reason) {
             
+            if (cancelOperations)
+            {
+                cancelOperations = NO;
+                
+                return;
+            }
+            
             if (failure)
             {
                 failure(reason);
@@ -232,6 +270,13 @@
         
     } failure:^(NSString *reason) {
         
+        if (cancelOperations)
+        {
+            cancelOperations = NO;
+            
+            return;
+        }
+        
         if (failure)
         {
             failure(reason);
@@ -240,29 +285,56 @@
     }];
 }
 
-- (void)downloadAndMerge
+- (void)downloadAndMerge: (DownloadAndMergeDataSuccessBlock) success
+                 failure: (DownloadAndMergeDataFailureBlock) failure
 {
     [self.syncService downloadUserData:^{
         
-        if (self.delegate && [self.delegate respondsToSelector:@selector(syncManagerDownloadAndMergeDataComplete:)])
+        if (cancelOperations)
         {
-            [self.delegate syncManagerDownloadAndMergeDataComplete:self];
+            cancelOperations = NO;
+            
+            return;
         }
         
         [self downloadMissingImages];
         
+        if (success)
+        {
+            success ();
+        }
+        
     } failure:^(NSString *reason) {
         
-        if (self.delegate && [self.delegate respondsToSelector:@selector(syncManagerDownloadDataFailed:)])
+        if (cancelOperations)
         {
-            [self.delegate syncManagerDownloadDataFailed:self];
+            cancelOperations = NO;
+            
+            return;
+        }
+        
+        if (failure)
+        {
+            failure ( reason );
         }
         
     }];
 }
 
--(void)downloadPhotos
+-(void)downloadPhotos:(DownloadFilesSuccessBlock) success
+              failure: (DownloadFileFailureBlock) failure
 {
+    if (cancelOperations)
+    {
+        self.downloading = NO;
+        
+        [[UIApplication sharedApplication] endBackgroundTask: self.downloadTask];
+        
+        cancelOperations = NO;
+        
+        return;
+    }
+    
     if (self.indexOfFileToDownload < self.filenamesToDownload.count)
     {
         NSString *filenameToDownload = [self.filenamesToDownload objectAtIndex:self.indexOfFileToDownload];
@@ -270,14 +342,14 @@
         [self.syncService downloadFile:filenameToDownload success:^{
             
             self.indexOfFileToDownload++;
-            [self downloadPhotos];
+            [self downloadPhotos:success failure: failure];
             
         } failure:^(NSString *reason) {
             
             [self.filenamesFailedToDownload addObject:filenameToDownload];
             
             self.indexOfFileToDownload++;
-            [self downloadPhotos];
+            [self downloadPhotos:success failure: failure];
             
         }];
     }
@@ -287,25 +359,34 @@
         
         if (self.filenamesFailedToDownload.count)
         {
-            if (self.delegate && [self.delegate respondsToSelector:@selector(syncManagerDownloadFilesFailed:manager:)])
+            if (failure)
             {
-                [self.delegate syncManagerDownloadFilesFailed:self.filenamesFailedToDownload manager:self];
+                failure (self.filenamesFailedToDownload);
             }
         }
         else
         {
-            if (self.delegate && [self.delegate respondsToSelector:@selector(syncManagerDownloadFilesComplete:)])
+            if (success)
             {
-                [self.delegate syncManagerDownloadFilesComplete:self];
+                success();
             }
         }
         
-        [[UIApplication sharedApplication] endBackgroundTask: self.uploadImagesTask];
+        [[UIApplication sharedApplication] endBackgroundTask: self.downloadTask];
     }
 }
 
 - (void)startDownloadPhotos:(NSArray *)filenames
+                    success: (DownloadFilesSuccessBlock) success
+                    failure: (DownloadFileFailureBlock) failure
 {
+    if (cancelOperations)
+    {
+        cancelOperations = NO;
+        
+        return;
+    }
+    
     if (!filenames.count)
     {
         return;
@@ -326,7 +407,7 @@
     
     self.downloadTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler: nil];
     
-    [self downloadPhotos];
+    [self downloadPhotos:success failure:failure];
 }
 
 - (NSArray *)getListOfFilesToDownload
@@ -341,13 +422,18 @@
     if (missingImageFiles.count)
     {
         DLog(@"List of images to download: \n %@", missingImageFiles);
-        [self startDownloadPhotos:missingImageFiles];
+        [self startDownloadPhotos:missingImageFiles success:nil failure:nil];
     }
 }
 
 -(void) cleanUpReceiptImages
 {
     [self.syncService cleanUpReceiptImages];
+}
+
+-(void) cancelAllOperations
+{
+    cancelOperations = YES;
 }
 
 @end

@@ -12,8 +12,6 @@
 #define kKeyUserKey             @"userKey"
 #define kKeyFirstname           @"firstname"
 #define kKeyLastname            @"lastname"
-#define kKeyCity                @"city"
-#define kKeyPostalCode          @"postalCode"
 #define kKeyCountry             @"country"
 
 @implementation User
@@ -26,8 +24,6 @@
         self.userKey = [aDecoder decodeObjectForKey: kKeyUserKey];
         self.firstname = [aDecoder decodeObjectForKey: kKeyFirstname];
         self.lastname = [aDecoder decodeObjectForKey: kKeyLastname];
-        self.city = [aDecoder decodeObjectForKey: kKeyCity];
-        self.postalCode = [aDecoder decodeObjectForKey: kKeyPostalCode];
         self.country = [aDecoder decodeObjectForKey: kKeyCountry];
     }
 
@@ -40,8 +36,6 @@
     [aCoder encodeObject: self.userKey forKey: kKeyUserKey];
     [aCoder encodeObject: self.firstname forKey: kKeyFirstname];
     [aCoder encodeObject: self.lastname forKey: kKeyLastname];
-    [aCoder encodeObject: self.city forKey: kKeyCity];
-    [aCoder encodeObject: self.postalCode forKey: kKeyPostalCode];
     [aCoder encodeObject: self.country forKey: kKeyCountry];
 }
 

@@ -138,7 +138,7 @@
     
     if (receiptToModify)
     {
-        receiptToModify.fileNames = [receipt.fileNames mutableCopy];
+        receiptToModify.fileNames = [[NSMutableArray alloc] initWithArray:receipt.fileNames copyItems:YES];
         receiptToModify.taxYear = receipt.taxYear;
         
         if (receiptToModify.dataAction != DataActionInsert)

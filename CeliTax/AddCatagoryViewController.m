@@ -41,12 +41,19 @@
 @property (nonatomic, strong) NSMutableArray *catagories;
 @property (nonatomic, strong) NSMutableArray *catagoryNames;
 
-@property (nonatomic, strong) WYPopoverController *pickerPopover;
-
+@property (nonatomic, strong) WYPopoverController *namesPickerPopover;
 @property (nonatomic, strong) SelectionsPickerViewController *namesPickerViewController;
+
+@property (nonatomic, strong) WYPopoverController *colorPickerPopover;
 @property (nonatomic, strong) ColorPickerViewController *colorPickerViewController;
+
+@property (nonatomic, strong) WYPopoverController *allColorsPickerPopover;
 @property (nonatomic, strong) AllColorsPickerViewController *allColorsPickerViewController;
+
+@property (nonatomic, strong) WYPopoverController *catagoryPickerPopover;
 @property (nonatomic, strong) SelectionsPickerViewController *catagoryPickerViewController;
+
+@property (nonatomic, strong) WYPopoverController *modifyCatagoryPickerPopover;
 @property (nonatomic, strong) ModifyCatagoryViewController *modifyCatagoryViewController;
 
 // set to true when user is actively adding a new catagory
@@ -304,7 +311,22 @@
 {
     NSString *trimmedString = [self.catagoryNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
-    if ([self.manipulationService addCatagoryForName: trimmedString
+    NSString *capitalizedString = [trimmedString capitalizedString];
+    
+    if ([self.catagoryNames containsObject:capitalizedString])
+    {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Sorry"
+                                                          message:@"A existing category already has the same name. Please use a different category name."
+                                                         delegate:nil
+                                                cancelButtonTitle:nil
+                                                otherButtonTitles:@"Ok",nil];
+        
+        [message show];
+        
+        return;
+    }
+    
+    if ([self.manipulationService addCatagoryForName: capitalizedString
                                             forColor: self.colorView.backgroundColor save:YES])
     {
         self.addingCatagoryMode = NO;
@@ -313,65 +335,58 @@
     }
 }
 
-- (void) showColorPickerViewController
+-(void)setupWYPopoverControllerTheme:(WYPopoverController *)wyPopoverController
 {
-    self.pickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.colorPickerViewController];
-    [self.pickerPopover setPopoverContentSize: self.colorPickerViewController.viewSize];
-    [self.pickerPopover setTheme: [WYPopoverTheme theme]];
-
-    WYPopoverTheme *popUpTheme = self.pickerPopover.theme;
+    [wyPopoverController setTheme: [WYPopoverTheme theme]];
+    
+    WYPopoverTheme *popUpTheme = wyPopoverController.theme;
     popUpTheme.fillTopColor = [UIColor whiteColor];
     popUpTheme.fillBottomColor = [UIColor whiteColor];
     popUpTheme.outerShadowColor = [UIColor grayColor];
     popUpTheme.outerShadowBlurRadius = 1;
     popUpTheme.outerShadowOffset = CGSizeMake(0, 2);
-    [self.pickerPopover setTheme: popUpTheme];
+    [wyPopoverController setTheme: popUpTheme];
+}
+
+- (void) showColorPickerViewController
+{
+    self.colorPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.colorPickerViewController];
+    [self.colorPickerPopover setPopoverContentSize: self.colorPickerViewController.viewSize];
+    
+    [self setupWYPopoverControllerTheme:self.colorPickerPopover];
     
     CGRect popoverRect = self.colorView.frame;
     
     popoverRect.origin.y += 10;
 
-    [self.pickerPopover presentPopoverFromRect: popoverRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
+    [self.colorPickerPopover presentPopoverFromRect: popoverRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
 }
 
 - (void) showNamesPickerViewController
 {
-    self.pickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.namesPickerViewController];
+    self.namesPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.namesPickerViewController];
 
-    WYPopoverTheme *popUpTheme = self.pickerPopover.theme;
-    popUpTheme.fillTopColor = [UIColor whiteColor];
-    popUpTheme.fillBottomColor = [UIColor whiteColor];
-    popUpTheme.outerShadowColor = [UIColor grayColor];
-    popUpTheme.outerShadowBlurRadius = 1;
-    popUpTheme.outerShadowOffset = CGSizeMake(0, 2);
-    [self.pickerPopover setTheme: popUpTheme];
+    [self setupWYPopoverControllerTheme:self.namesPickerPopover];
     
     CGRect popoverRect = self.catagoryNameField.frame;
     
     popoverRect.origin.y += 10;
 
-    [self.pickerPopover presentPopoverFromRect: popoverRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
+    [self.namesPickerPopover presentPopoverFromRect: popoverRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
 }
 
 - (void) showAllColorsPickerViewController
 {
-    self.pickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.allColorsPickerViewController];
-    [self.pickerPopover setPopoverContentSize: self.allColorsPickerViewController.viewSize];
+    self.allColorsPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.allColorsPickerViewController];
+    [self.allColorsPickerPopover setPopoverContentSize: self.allColorsPickerViewController.viewSize];
 
-    WYPopoverTheme *popUpTheme = self.pickerPopover.theme;
-    popUpTheme.fillTopColor = [UIColor whiteColor];
-    popUpTheme.fillBottomColor = [UIColor whiteColor];
-    popUpTheme.outerShadowColor = [UIColor grayColor];
-    popUpTheme.outerShadowBlurRadius = 1;
-    popUpTheme.outerShadowOffset = CGSizeMake(0, 2);
-
-    [self.pickerPopover setTheme: popUpTheme];
+    [self setupWYPopoverControllerTheme:self.allColorsPickerPopover];
     
     CGRect popoverRect = self.colorView.frame;
     
     popoverRect.origin.y += 10;
 
-    [self.pickerPopover presentPopoverFromRect: popoverRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
+    [self.allColorsPickerPopover presentPopoverFromRect: popoverRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
 }
 
 -(void)editPressed:(UIButton *)button
@@ -380,16 +395,9 @@
     self.modifyCatagoryViewController = [self.viewControllerFactory createModifyCatagoryViewControllerWith:self.currentlySelectedCatagory];
     self.modifyCatagoryViewController.delegate = self;
     
-    self.pickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.modifyCatagoryViewController];
+    self.modifyCatagoryPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.modifyCatagoryViewController];
     
-    WYPopoverTheme *popUpTheme = self.pickerPopover.theme;
-    popUpTheme.fillTopColor = [UIColor whiteColor];
-    popUpTheme.fillBottomColor = [UIColor whiteColor];
-    popUpTheme.outerShadowColor = [UIColor grayColor];
-    popUpTheme.outerShadowBlurRadius = 1;
-    popUpTheme.outerShadowOffset = CGSizeMake(0, 2);
-    
-    [self.pickerPopover setTheme: popUpTheme];
+    [self setupWYPopoverControllerTheme:self.modifyCatagoryPickerPopover];
     
     CGRect rectOfCellInTableView = [self.catagoriesTable rectForRowAtIndexPath: [NSIndexPath indexPathForRow: button.tag * 2 + 1 inSection: 0]];
     CGRect rectOfCellInSuperview = [self.catagoriesTable convertRect: rectOfCellInTableView toView: [self.catagoriesTable superview]];
@@ -399,7 +407,7 @@
                                  1,
                                  1);
     
-    [self.pickerPopover presentPopoverFromRect: tinyRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
+    [self.modifyCatagoryPickerPopover presentPopoverFromRect: tinyRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
 }
 
 -(void)transferPressed:(UIButton *)button
@@ -412,18 +420,11 @@
                                  1,
                                  1);
     
-    self.pickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.catagoryPickerViewController];
+    self.catagoryPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.catagoryPickerViewController];
     
-    WYPopoverTheme *popUpTheme = self.pickerPopover.theme;
-    popUpTheme.fillTopColor = [UIColor whiteColor];
-    popUpTheme.fillBottomColor = [UIColor whiteColor];
-    popUpTheme.outerShadowColor = [UIColor grayColor];
-    popUpTheme.outerShadowBlurRadius = 1;
-    popUpTheme.outerShadowOffset = CGSizeMake(0, 2);
+    [self setupWYPopoverControllerTheme:self.catagoryPickerPopover];
     
-    [self.pickerPopover setTheme: popUpTheme];
-    
-    [self.pickerPopover presentPopoverFromRect: tinyRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
+    [self.catagoryPickerPopover presentPopoverFromRect: tinyRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
 }
 
 -(void)deletePressed:(UIButton *)button
@@ -456,7 +457,11 @@
 
 -(void)requestPopUpToDismiss
 {
-    [self.pickerPopover dismissPopoverAnimated:YES];
+    [self.namesPickerPopover dismissPopoverAnimated:YES];
+    [self.colorPickerPopover dismissPopoverAnimated:YES];
+    [self.allColorsPickerPopover dismissPopoverAnimated:YES];
+    [self.catagoryPickerPopover dismissPopoverAnimated:YES];
+    [self.modifyCatagoryPickerPopover dismissPopoverAnimated:YES];
     
     [self refreshCatagories];
 }
@@ -490,7 +495,7 @@
 
 - (void) selectedSelectionAtIndex: (NSInteger) index fromPopUp:(SelectionsPickerViewController *)popUpController
 {
-    [self.pickerPopover dismissPopoverAnimated: YES];
+    [self.namesPickerPopover dismissPopoverAnimated: YES];
     
     if (popUpController == self.namesPickerViewController)
     {
@@ -577,18 +582,22 @@
     {
         [self textBoxPressed];
     }
+    else
+    {
+        [self.colorPickerPopover dismissPopoverAnimated: YES];
+    }
 }
 
 - (void) customColorPressed
 {
-    [self.pickerPopover dismissPopoverAnimated: NO];
+    [self.colorPickerPopover dismissPopoverAnimated: NO];
 
     [self showAllColorsPickerViewController];
 }
 
 - (void) doneButtonPressed
 {
-    [self.pickerPopover dismissPopoverAnimated: NO];
+    [self.allColorsPickerPopover dismissPopoverAnimated: YES];
 }
 
 #pragma mark - UITableview DataSource
@@ -738,6 +747,8 @@
         else
         {
             self.currentlySelectedCatagory = thisCatagory;
+            
+            [tableView scrollToRowAtIndexPath: indexPath atScrollPosition: UITableViewScrollPositionTop animated: YES];
         }
     }
 }

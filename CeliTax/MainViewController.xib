@@ -12,6 +12,7 @@
             <string>Lato-Regular</string>
             <string>Lato-Regular</string>
             <string>Lato-Regular</string>
+            <string>Lato-Regular</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -52,29 +53,15 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quick Links" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Xs-w8-O4L">
-                    <rect key="frame" x="110" y="410" width="99" height="23"/>
+                    <rect key="frame" x="110" y="395" width="99" height="23"/>
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="19"/>
                     <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dPP-MN-6ot">
-                    <rect key="frame" x="22" y="478" width="40" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="40" id="7y3-y0-dov"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
-                    <state key="normal" title="Vault">
-                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="vaultPressed:" destination="-1" eventType="touchUpInside" id="KCT-n2-Nam"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="te4-wa-ilJ">
-                    <rect key="frame" x="22" y="443" width="93" height="30"/>
+                    <rect key="frame" x="22" y="453" width="100" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="93" id="WM5-fq-n05"/>
+                        <constraint firstAttribute="width" constant="100" id="WM5-fq-n05"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                     <state key="normal" title="My Account">
@@ -86,7 +73,7 @@
                     </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" style="plain" separatorStyle="none" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="fcU-BM-YHD">
-                    <rect key="frame" x="0.0" y="161" width="320" height="229"/>
+                    <rect key="frame" x="0.0" y="161" width="320" height="224"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Oe-J2-WxF">
@@ -118,10 +105,39 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qzT-3E-69X">
+                    <rect key="frame" x="22" y="418" width="100" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="25J-QS-F6S"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
+                    <state key="normal" title="Categories">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="addCatagoryPressed:" destination="-1" eventType="touchUpInside" id="FkA-xO-rFI"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dPP-MN-6ot">
+                    <rect key="frame" x="22" y="488" width="40" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="7y3-y0-dov"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
+                    <state key="normal" title="Vault">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="vaultPressed:" destination="-1" eventType="touchUpInside" id="KCT-n2-Nam"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="1Xs-w8-O4L" firstAttribute="top" secondItem="fcU-BM-YHD" secondAttribute="bottom" constant="20" id="5un-eB-HNB"/>
+                <constraint firstItem="qzT-3E-69X" firstAttribute="top" secondItem="1Xs-w8-O4L" secondAttribute="bottom" id="1yo-fn-vV8"/>
+                <constraint firstItem="1Xs-w8-O4L" firstAttribute="top" secondItem="fcU-BM-YHD" secondAttribute="bottom" constant="10" id="5un-eB-HNB"/>
                 <constraint firstItem="CIl-yA-Aq2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="22" id="6QI-qi-xP8"/>
                 <constraint firstItem="CIl-yA-Aq2" firstAttribute="centerY" secondItem="PUX-L9-4Oq" secondAttribute="centerY" id="8Kp-jd-UBh"/>
                 <constraint firstItem="fcU-BM-YHD" firstAttribute="top" secondItem="JSJ-GN-Ij8" secondAttribute="bottom" constant="8" id="8MR-O3-uWd"/>
@@ -138,12 +154,14 @@
                 <constraint firstAttribute="trailing" secondItem="fcU-BM-YHD" secondAttribute="trailing" id="b6v-fa-lBm"/>
                 <constraint firstAttribute="bottom" secondItem="7Oe-J2-WxF" secondAttribute="bottom" constant="10" id="fJY-b3-pD2"/>
                 <constraint firstItem="fcU-BM-YHD" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="hrI-hl-WZV"/>
-                <constraint firstItem="7Oe-J2-WxF" firstAttribute="top" secondItem="dPP-MN-6ot" secondAttribute="bottom" constant="10" id="mcP-wh-ant"/>
+                <constraint firstItem="te4-wa-ilJ" firstAttribute="top" secondItem="qzT-3E-69X" secondAttribute="bottom" constant="5" id="iUM-1I-iL1"/>
+                <constraint firstItem="7Oe-J2-WxF" firstAttribute="top" secondItem="dPP-MN-6ot" secondAttribute="bottom" id="mcP-wh-ant"/>
                 <constraint firstItem="te4-wa-ilJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="22" id="pcm-B4-Qjw"/>
                 <constraint firstItem="JSJ-GN-Ij8" firstAttribute="top" secondItem="CIl-yA-Aq2" secondAttribute="bottom" constant="20" id="qfN-uG-EV7"/>
                 <constraint firstItem="PUX-L9-4Oq" firstAttribute="leading" secondItem="CIl-yA-Aq2" secondAttribute="trailing" constant="10" id="sBa-9t-Gq2"/>
                 <constraint firstItem="dPP-MN-6ot" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="22" id="scg-uH-NFG"/>
                 <constraint firstItem="dPP-MN-6ot" firstAttribute="top" secondItem="te4-wa-ilJ" secondAttribute="bottom" constant="5" id="w4X-kU-wUH"/>
+                <constraint firstItem="qzT-3E-69X" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="22" id="yKe-36-wUX"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -151,6 +169,7 @@
                 <mask key="constraints">
                     <exclude reference="8MR-O3-uWd"/>
                     <exclude reference="hrI-hl-WZV"/>
+                    <exclude reference="Tmg-qM-ABc"/>
                     <exclude reference="ACW-pl-Jrx"/>
                 </mask>
             </variation>

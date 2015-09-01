@@ -265,7 +265,7 @@
     }
     else if ([unitTypeString isEqualToString:kUnitMLKey])
     {
-        [cell.catagoryNameLabel setText: [NSString stringWithFormat:@"%@ per (ml)", thisCatagory.name]];
+        [cell.catagoryNameLabel setText: [NSString stringWithFormat:@"%@ per (mL)", thisCatagory.name]];
     }
     
     [cell.totalSpentField setText: [NSString stringWithFormat: @"%.2f", totalSpent]];

@@ -12,4 +12,6 @@
 
     extern NSString *const kReceiptItemsTableReceiptPressedNotification;
 
+    extern NSString *const kReceiptDatabaseChangedNotification;
+
 @end

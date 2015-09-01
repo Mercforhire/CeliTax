@@ -69,7 +69,7 @@
             break;
             
         case UnitML:
-            [self.priceField setText:@"(ml)"];
+            [self.priceField setText:@"(mL)"];
             
             break;
             

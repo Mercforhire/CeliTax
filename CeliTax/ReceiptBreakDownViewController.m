@@ -337,6 +337,21 @@
     return position;
 }
 
+-(void)deleteRecordFromRecordsDictionary:(Record *)recordToDelete
+{
+    for (NSString *catagoryID in self.recordsDictionary.allKeys)
+    {
+        NSMutableArray *records = [[self.recordsDictionary objectForKey: catagoryID] mutableCopy];
+        
+        if ([records containsObject:recordToDelete])
+        {
+            [records removeObject:recordToDelete];
+            
+            [self.recordsDictionary setObject:records forKey:catagoryID];
+        }
+    }
+}
+
 - (Record *) getNthRecordFromRecordsDictionary: (NSInteger) nTh
 {
     for (NSString *catagoryID in self.recordsDictionary.allKeys)
@@ -517,11 +532,12 @@
 
 - (void) textFieldDidEndEditing: (UITextField *) textField
 {
+    BOOL needToRefreshTable = NO;
+    
     // determine if this textField is a quantityField or pricePerItemField
-
     if (textField.tag >= kPricePerItemFieldTagOffset)
     {
-        Record *thisRecord = [self getNthRecordFromRecordsDictionary: (textField.tag - kPricePerItemFieldTagOffset) / 2];
+        Record *thisRecord = [self getNthRecordFromRecordsDictionary: (textField.tag - kPricePerItemFieldTagOffset)];
 
         // this is a pricePerItemField
         DLog(@"pricePerItemField edited");
@@ -533,14 +549,28 @@
 
         thisRecord.amount = [textField.text floatValue];
 
-        if ([self.manipulationService modifyRecord: thisRecord save:YES])
+        if (thisRecord.amount > 0)
         {
-            DLog(@"Record %@ saved", thisRecord.localID);
+            if ([self.manipulationService modifyRecord: thisRecord save:YES])
+            {
+                DLog(@"Record %@ saved", thisRecord.localID);
+            }
+        }
+        else
+        {
+            if ([self.manipulationService deleteRecord: thisRecord.localID save:YES])
+            {
+                DLog(@"Record %@ deleted", thisRecord.localID);
+                
+                [self deleteRecordFromRecordsDictionary:thisRecord];
+                
+                needToRefreshTable = YES;
+            }
         }
     }
     else
     {
-        Record *thisRecord = [self getNthRecordFromRecordsDictionary: textField.tag / 2];
+        Record *thisRecord = [self getNthRecordFromRecordsDictionary: textField.tag];
 
         // this is a quantityField
         DLog(@"quantityField edited");
@@ -552,13 +582,34 @@
 
         thisRecord.quantity = [textField.text integerValue];
 
-        if ([self.manipulationService modifyRecord: thisRecord save:YES])
+        if (thisRecord.quantity > 0)
         {
-            DLog(@"Record %@ saved", thisRecord.localID);
+            if ([self.manipulationService modifyRecord: thisRecord save:YES])
+            {
+                DLog(@"Record %@ saved", thisRecord.localID);
+            }
+        }
+        else
+        {
+            if ([self.manipulationService deleteRecord: thisRecord.localID save:YES])
+            {
+                DLog(@"Record %@ deleted", thisRecord.localID);
+                
+                [self deleteRecordFromRecordsDictionary:thisRecord];
+                
+                needToRefreshTable = YES;
+            }
         }
     }
 
     [self refreshPieChart];
+    
+    if (needToRefreshTable)
+    {
+        self.currentlySelectedRecord = nil;
+        
+        [self.receiptItemsTable reloadData];
+    }
 }
 
 - (BOOL) textFieldShouldReturn: (UITextField *) textField
@@ -653,7 +704,7 @@
                                action: @selector(textFieldDidChange:)
                      forControlEvents: UIControlEventEditingChanged];
 
-        cell.pricePerItemField.tag = kPricePerItemFieldTagOffset + indexPath.row / 2;
+        cell.pricePerItemField.tag = indexPath.row / 2 + kPricePerItemFieldTagOffset;
         [cell.pricePerItemField setDelegate: self];
         [cell.pricePerItemField setText: [NSString stringWithFormat: @"%.2f", thisRecord.amount]];
         [self.lookAndFeel applyGreenBorderTo: cell.pricePerItemField];

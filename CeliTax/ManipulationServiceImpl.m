@@ -12,6 +12,7 @@
 #import "RecordsDAO.h"
 #import "Catagory.h"
 #import "Record.h"
+#import "Notifications.h"
 #import "TaxYearsDAO.h"
 
 @implementation ManipulationServiceImpl
@@ -68,22 +69,19 @@
         return NO;
     }
 
-    NSMutableArray *modifiedRecordsToAdd = [NSMutableArray new];
-
     for (Record *record in fromRecords)
     {
-        record.catagoryID = [toCatagoryID copy];
-        record.dataAction = DataActionInsert;
-
-        [modifiedRecordsToAdd addObject: record];
+        if (record == [fromRecords lastObject])
+        {
+            [self.recordsDAO addRecordForCatagoryID:toItemCatagory.localID andReceiptID:record.receiptID forQuantity:record.quantity orUnit:record.unitType forAmount:record.amount save: YES];
+        }
+        else
+        {
+            [self.recordsDAO addRecordForCatagoryID:toItemCatagory.localID andReceiptID:record.receiptID forQuantity:record.quantity orUnit:record.unitType forAmount:record.amount save: NO];
+        }
     }
 
-    if ([self.recordsDAO addRecords: modifiedRecordsToAdd save:save])
-    {
-        return YES;
-    }
-    
-    return NO;
+    return YES;
 }
 
 -(BOOL)addOrUpdateNationalAverageCostForCatagoryID: (NSString *) catagoryID andUnitType:(NSInteger)unitType amount:(float)amount save: (BOOL)save
@@ -182,6 +180,9 @@
     NSString *newReceiptID = [self.receiptsDAO addReceiptWithFilenames: filenames inTaxYear:taxYear save:save];
     if ( newReceiptID )
     {
+        // send a kReceiptDatabaseChangedNotification notification when a Receipt is added or deleted
+        [[NSNotificationCenter defaultCenter] postNotification: [NSNotification notificationWithName:kReceiptDatabaseChangedNotification object:nil]];
+        
         return ( newReceiptID );
     }
     
@@ -218,6 +219,9 @@
     {
         if ([self.receiptsDAO deleteReceipt: receiptID save:save])
         {
+            // send a kReceiptDatabaseChangedNotification notification when a Receipt is added or deleted
+            [[NSNotificationCenter defaultCenter] postNotification: [NSNotification notificationWithName:kReceiptDatabaseChangedNotification object:nil]];
+            
             return YES;
         }
     }

@@ -19,7 +19,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReceiptCheckingViewController">
             <connections>
                 <outlet property="addOrEditItemButton" destination="Y82-bx-l24" id="kLV-8N-t7W"/>
-                <outlet property="addPhotoButton" destination="6NK-Tw-ieb" id="QIT-id-v0s"/>
                 <outlet property="catagoriesBar" destination="wgS-bS-mwy" id="LaD-Oh-Etl"/>
                 <outlet property="currentItemStatusLabel" destination="heh-sd-1ek" id="Zqf-Wm-YS3"/>
                 <outlet property="deleteItemButton" destination="aJk-yM-Edq" id="f3M-Bh-TER"/>
@@ -64,19 +63,6 @@
                         <action selector="addCatagoryPressed:" destination="-1" eventType="touchUpInside" id="NJV-eZ-Lei"/>
                     </connections>
                 </button>
-                <button opaque="NO" alpha="0.59999999999999964" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6NK-Tw-ieb" userLabel="Add Photo Button">
-                    <rect key="frame" x="10" y="465" width="43" height="33"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="43" id="IHI-PX-O2s"/>
-                        <constraint firstAttribute="height" constant="33" id="uEA-kA-Ohb"/>
-                    </constraints>
-                    <state key="normal" image="camera_add_icon_green.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="addImagePressed:" destination="-1" eventType="touchUpInside" id="ymp-dw-wXP"/>
-                    </connections>
-                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tP5-SY-lVh">
                     <rect key="frame" x="0.0" y="378" width="320" height="130"/>
                     <subviews>
@@ -88,10 +74,10 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y82-bx-l24">
-                            <rect key="frame" x="10" y="83" width="92" height="32"/>
+                            <rect key="frame" x="10" y="83" width="70" height="32"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="92" id="MEn-7A-83Y"/>
+                                <constraint firstAttribute="width" constant="70" id="MEn-7A-83Y"/>
                                 <constraint firstAttribute="height" constant="32" id="nYm-qb-NlR"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
@@ -103,12 +89,12 @@
                                 <action selector="addOrEditRecordPressed:" destination="-1" eventType="touchUpInside" id="ula-EV-eG4"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eqj-wt-6B8">
-                            <rect key="frame" x="117" y="78" width="25" height="42"/>
+                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eqj-wt-6B8">
+                            <rect key="frame" x="112" y="78" width="30" height="42"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="42" id="1rY-eb-fmy"/>
-                                <constraint firstAttribute="width" constant="25" id="9Xk-xe-pnI"/>
+                                <constraint firstAttribute="width" constant="30" id="9Xk-xe-pnI"/>
                                 <constraint firstAttribute="height" constant="65" id="kBL-Mi-Ela"/>
                                 <constraint firstAttribute="width" constant="31" id="sAJ-UL-Qyo"/>
                             </constraints>
@@ -134,12 +120,12 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rXx-C3-jo8">
-                            <rect key="frame" x="177" y="78" width="25" height="42"/>
+                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rXx-C3-jo8">
+                            <rect key="frame" x="177" y="78" width="30" height="42"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="65" id="WUQ-tx-vUr"/>
-                                <constraint firstAttribute="width" constant="25" id="cQ2-G4-Vtn"/>
+                                <constraint firstAttribute="width" constant="30" id="cQ2-G4-Vtn"/>
                                 <constraint firstAttribute="width" constant="31" id="oOf-7a-nN0"/>
                                 <constraint firstAttribute="height" constant="42" id="zMy-SI-So1"/>
                             </constraints>
@@ -169,11 +155,11 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aJk-yM-Edq">
-                            <rect key="frame" x="228" y="83" width="82" height="32"/>
+                            <rect key="frame" x="240" y="83" width="70" height="32"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="hVx-fy-Ro7"/>
-                                <constraint firstAttribute="width" constant="82" id="ixM-bf-1bQ"/>
+                                <constraint firstAttribute="width" constant="70" id="ixM-bf-1bQ"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
                             <state key="normal" title="Delete">
@@ -265,7 +251,6 @@
                 <constraint firstAttribute="bottom" secondItem="F7n-zK-aNw" secondAttribute="bottom" id="BMi-J1-gwP"/>
                 <constraint firstAttribute="bottom" secondItem="wgS-bS-mwy" secondAttribute="bottom" id="CEx-Zd-Ngb"/>
                 <constraint firstItem="wgS-bS-mwy" firstAttribute="top" secondItem="F7n-zK-aNw" secondAttribute="bottom" id="F95-Ex-p4T"/>
-                <constraint firstItem="wgS-bS-mwy" firstAttribute="top" secondItem="6NK-Tw-ieb" secondAttribute="bottom" constant="10" id="IJG-Dn-Xo7"/>
                 <constraint firstItem="wgS-bS-mwy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="JmH-qf-E5H"/>
                 <constraint firstItem="rJV-dd-ujZ" firstAttribute="centerY" secondItem="Dzw-c2-aIg" secondAttribute="centerY" id="O1P-aU-tfL"/>
                 <constraint firstItem="wgS-bS-mwy" firstAttribute="top" secondItem="Dzw-c2-aIg" secondAttribute="bottom" constant="10" id="OOc-qr-404"/>
@@ -280,7 +265,6 @@
                 <constraint firstAttribute="bottom" secondItem="mSN-Eh-8vn" secondAttribute="bottom" id="iJV-T7-iuq"/>
                 <constraint firstItem="E0U-n2-Zu2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="145" id="ijL-zu-D6e"/>
                 <constraint firstItem="Dzw-c2-aIg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="kSG-q4-S8K"/>
-                <constraint firstItem="6NK-Tw-ieb" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="lEc-Fb-4hf"/>
                 <constraint firstAttribute="centerX" secondItem="tP5-SY-lVh" secondAttribute="centerX" id="lpx-PO-7Qg"/>
                 <constraint firstAttribute="trailing" secondItem="tP5-SY-lVh" secondAttribute="trailing" id="oT0-05-GW2"/>
                 <constraint firstItem="F7n-zK-aNw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="pcS-Mg-bSr"/>
@@ -310,7 +294,4 @@
             <point key="canvasLocation" x="563" y="383"/>
         </view>
     </objects>
-    <resources>
-        <image name="camera_add_icon_green.png" width="360" height="270"/>
-    </resources>
 </document>

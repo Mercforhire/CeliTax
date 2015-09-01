@@ -29,6 +29,7 @@
 #import "YearSavingViewController.h"
 #import "TutorialManager.h"
 #import "TutorialStep.h"
+#import "SolidGreenButton.h"
 
 #define kCatagoryTableRowHeight                     65
 
@@ -86,6 +87,8 @@
     
     [self.profileBarView.editButton1 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.profileBarView.editButton2 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.profileBarView setLookAndFeel:self.lookAndFeel];
     
     // set up tableview
     UINib *accountTableCell = [UINib nibWithNibName: @"AccountTableViewCell" bundle: nil];
@@ -263,6 +266,8 @@
                 [[self.currentlySelectedRow objectAtIndex: 1] isEqualToString:kUnitItemKey] )
             {
                 self.currentlySelectedRow = rowArray;
+                
+                [self.accountTableView scrollToRowAtIndexPath: [NSIndexPath indexPathForRow: [self.catagoryRows indexOfObject:self.currentlySelectedRow] * 2 inSection: 0] atScrollPosition: UITableViewScrollPositionTop animated: YES];
             }
         }
         
@@ -308,10 +313,37 @@
                 [[self.currentlySelectedRow objectAtIndex: 1] isEqualToString:key] )
             {
                 self.currentlySelectedRow = rowArray;
+                
+                [self.accountTableView scrollToRowAtIndexPath: [NSIndexPath indexPathForRow: [self.catagoryRows indexOfObject:self.currentlySelectedRow] * 2 inSection: 0] atScrollPosition: UITableViewScrollPositionTop animated: YES];
             }
         }
         
         [categoryTotalAmount setObject:[NSNumber numberWithFloat:totalAmountForCatagory] forKey:catagory.localID];
+    }
+    
+    if ([self.catagoryRows indexOfObject:self.currentlySelectedRow] == NSNotFound)
+    {
+        self.currentlySelectedRow = nil;
+    }
+    
+    if (self.recentUploadsSelected)
+    {
+        [self loadRecentUploads];
+    }
+    
+    if (self.previousWeekSelected)
+    {
+        [self loadPreviousWeekUploads];
+    }
+    
+    if (self.previousMonthSelected)
+    {
+        [self loadPreviousMonthUploads];
+    }
+    
+    if (self.viewAllSelected)
+    {
+        [self loadAllUploadsForTheYear];
     }
     
     [self.accountTableView reloadData];
@@ -369,7 +401,6 @@
                                                     name: kReceiptItemsTableReceiptPressedNotification
                                                   object: nil];
     
-    // unregister for keyboard notifications while not visible.
     [[NSNotificationCenter defaultCenter] removeObserver: self
                                                     name: UIKeyboardWillShowNotification
                                                   object: nil];
@@ -404,6 +435,83 @@
     }
     
     return nil;
+}
+
+-(void)loadRecentUploads
+{
+    // get the last 5 recent uploads
+    if (self.currentlySelectedRow)
+    {
+        NSString *catagoryID = [self.currentlySelectedRow firstObject];
+        NSString *unitTypeString = [self.currentlySelectedRow objectAtIndex:1];
+        
+        NSArray *catagoryInfos =
+        [self.dataService fetchLatestNthCatagoryInfosforCatagory: catagoryID
+                                                     andUnitType: [Record unitTypeStringToUnitTypeInt:unitTypeString]
+                                                          forNth: 5
+                                                       inTaxYear: self.configurationManager.getCurrentTaxYear];
+        
+        self.catagoryInfosToShow = catagoryInfos;
+        
+        [self.accountTableView reloadData];
+    }
+}
+
+-(void)loadPreviousWeekUploads
+{
+    if (self.currentlySelectedRow)
+    {
+        NSDate *mondayOfThisWeek = [Utils dateForMondayOfThisWeek];
+        DLog(@"Monday of this week is %@", mondayOfThisWeek.description);
+        NSDate *mondayOfPreviousWeek = [Utils dateForMondayOfPreviousWeek];
+        DLog(@"Monday of previous week is %@", mondayOfPreviousWeek.description);
+        
+        NSString *catagoryID = [self.currentlySelectedRow firstObject];
+        NSString *unitTypeString = [self.currentlySelectedRow objectAtIndex:1];
+        
+        NSArray *catagoryInfos = [self.dataService fetchCatagoryInfoFromDate:mondayOfPreviousWeek toDate:mondayOfThisWeek inTaxYear:self.configurationManager.getCurrentTaxYear forCatagory:catagoryID forUnitType:[Record unitTypeStringToUnitTypeInt:unitTypeString]];
+        
+        self.catagoryInfosToShow = catagoryInfos;
+        
+        [self.accountTableView reloadData];
+    }
+}
+
+-(void)loadPreviousMonthUploads
+{
+    if (self.currentlySelectedRow)
+    {
+        NSDate *firstDayOfThisMonth = [Utils dateForFirstDayOfThisMonth];
+        DLog(@"First day of this month is %@", firstDayOfThisMonth.description);
+        
+        NSDate *firstDayOfPreviousMonth = [Utils dateForFirstDayOfPreviousMonth];
+        DLog(@"First Day Of Previous Month is %@", firstDayOfPreviousMonth.description);
+        
+        NSString *catagoryID = [self.currentlySelectedRow firstObject];
+        NSString *unitTypeString = [self.currentlySelectedRow objectAtIndex:1];
+        
+        NSArray *catagoryInfos = [self.dataService fetchCatagoryInfoFromDate:firstDayOfPreviousMonth toDate:firstDayOfThisMonth inTaxYear:self.configurationManager.getCurrentTaxYear forCatagory:catagoryID forUnitType:[Record unitTypeStringToUnitTypeInt:unitTypeString]];
+        
+        self.catagoryInfosToShow = catagoryInfos;
+        
+        [self.accountTableView reloadData];
+    }
+}
+
+-(void)loadAllUploadsForTheYear
+{
+    if (self.currentlySelectedRow)
+    {
+        NSString *catagoryID = [self.currentlySelectedRow firstObject];
+        NSString *unitTypeString = [self.currentlySelectedRow objectAtIndex:1];
+        
+        // all receipts from this catagory
+        NSArray *catagoryInfos = [self.dataService fetchLatestNthCatagoryInfosforCatagory:catagoryID andUnitType:[Record unitTypeStringToUnitTypeInt:unitTypeString] forNth:-1 inTaxYear:self.configurationManager.getCurrentTaxYear];
+        
+        self.catagoryInfosToShow = catagoryInfos;
+        
+        [self.accountTableView reloadData];
+    }
 }
 
 #pragma mark - UIKeyboardWillShowNotification / UIKeyboardWillHideNotification events
@@ -633,22 +741,7 @@
     self.previousMonthSelected = NO;
     self.viewAllSelected = NO;
 
-    // get the last 5 recent uploads
-    if (self.currentlySelectedRow)
-    {
-        NSString *catagoryID = [self.currentlySelectedRow firstObject];
-        NSString *unitTypeString = [self.currentlySelectedRow objectAtIndex:1];
-        
-        NSArray *catagoryInfos =
-        [self.dataService fetchLatestNthCatagoryInfosforCatagory: catagoryID
-                                                     andUnitType: [Record unitTypeStringToUnitTypeInt:unitTypeString]
-                                                          forNth: 5
-                                                       inTaxYear: self.configurationManager.getCurrentTaxYear];
-        
-        self.catagoryInfosToShow = catagoryInfos;
-        
-        [self.accountTableView reloadData];
-    }
+    [self loadRecentUploads];
 }
 
 - (void) previousWeekLabelPressed
@@ -670,20 +763,7 @@
     self.previousMonthSelected = NO;
     self.viewAllSelected = NO;
 
-    NSDate *mondayOfThisWeek = [Utils dateForMondayOfThisWeek];
-    DLog(@"Monday of this week is %@", mondayOfThisWeek.description);
-    NSDate *mondayOfPreviousWeek = [Utils dateForMondayOfPreviousWeek];
-    DLog(@"Monday of previous week is %@", mondayOfPreviousWeek.description);
-    
-    NSString *catagoryID = [self.currentlySelectedRow firstObject];
-    NSString *unitTypeString = [self.currentlySelectedRow objectAtIndex:1];
-    
-    NSArray *catagoryInfos = [self.dataService fetchCatagoryInfoFromDate:mondayOfPreviousWeek toDate:mondayOfThisWeek inTaxYear:self.configurationManager.getCurrentTaxYear forCatagory:catagoryID forUnitType:[Record unitTypeStringToUnitTypeInt:unitTypeString]];
-    
-    DLog(@"%@", catagoryInfos);
-    self.catagoryInfosToShow = catagoryInfos;
-    
-    [self.accountTableView reloadData];
+    [self loadPreviousWeekUploads];
 }
 
 - (void) previousMonthLabelPressed
@@ -705,21 +785,7 @@
     self.previousMonthSelected = YES;
     self.viewAllSelected = NO;
 
-    NSDate *firstDayOfThisMonth = [Utils dateForFirstDayOfThisMonth];
-    DLog(@"First day of this month is %@", firstDayOfThisMonth.description);
-
-    NSDate *firstDayOfPreviousMonth = [Utils dateForFirstDayOfPreviousMonth];
-    DLog(@"First Day Of Previous Month is %@", firstDayOfPreviousMonth.description);
-    
-    NSString *catagoryID = [self.currentlySelectedRow firstObject];
-    NSString *unitTypeString = [self.currentlySelectedRow objectAtIndex:1];
-    
-    NSArray *catagoryInfos = [self.dataService fetchCatagoryInfoFromDate:firstDayOfPreviousMonth toDate:firstDayOfThisMonth inTaxYear:self.configurationManager.getCurrentTaxYear forCatagory:catagoryID forUnitType:[Record unitTypeStringToUnitTypeInt:unitTypeString]];
-    
-    DLog(@"%@", catagoryInfos);
-    self.catagoryInfosToShow = catagoryInfos;
-    
-    [self.accountTableView reloadData];
+    [self loadPreviousMonthUploads];
 }
 
 - (void) viewAllLabelPressed
@@ -741,15 +807,7 @@
     self.previousMonthSelected = NO;
     self.viewAllSelected = YES;
     
-    NSString *catagoryID = [self.currentlySelectedRow firstObject];
-    NSString *unitTypeString = [self.currentlySelectedRow objectAtIndex:1];
-
-    // all receipts from this catagory
-    NSArray *catagoryInfos = [self.dataService fetchLatestNthCatagoryInfosforCatagory:catagoryID andUnitType:[Record unitTypeStringToUnitTypeInt:unitTypeString] forNth:-1 inTaxYear:self.configurationManager.getCurrentTaxYear];
-    
-    self.catagoryInfosToShow = catagoryInfos;
-    
-    [self.accountTableView reloadData];
+    [self loadAllUploadsForTheYear];
 }
 
 #pragma mark - UITableview DataSource
@@ -767,9 +825,16 @@
         
         return totalHeight;
     }
+    else if (self.recentUploadsSelected || self.previousWeekSelected ||
+             self.previousMonthSelected || self.viewAllSelected)
+    {
+        float totalHeight = (kMargin + kBiggestLabelHeight + kMargin) * 4 + kNoItemsTableViewCellHeight;
+        
+        return totalHeight;
+    }
     else
     {
-        float totalHeight = (kMargin + kBiggestLabelHeight + kMargin) * 4 + kNoItemsTableViewCellHeight ;
+        float totalHeight = (kMargin + kBiggestLabelHeight + kMargin) * 4;
         
         return totalHeight;
     }
@@ -854,7 +919,7 @@
         }
         else if ([unitTypeString isEqualToString:kUnitMLKey])
         {
-            [cell.catagoryNameLabel setText: @"(ml)"];
+            [cell.catagoryNameLabel setText: @"(mL)"];
         }
         
         [cell.totalQuantityField setText: [NSString stringWithFormat: @"%ld", (long)quantity]];

@@ -12,37 +12,24 @@
 
 @protocol SyncService;
 
-/**
- Objects that want updates on the sync process need to conform to this protocol
- */
-@protocol SyncManagerDelegate <NSObject>
-
-@optional
-
-- (void) syncManagerNeedsUpdate: (SyncManager *) syncManager;
-
-- (void) syncManagerDownloadAndMergeDataComplete: (SyncManager *) syncManager;
-
-- (void) syncManagerDownloadDataFailed: (SyncManager *) syncManager;
-
-- (void) syncManagerDownloadFilesComplete:(SyncManager *) syncManager;
-
-- (void) syncManagerDownloadFilesFailed:(NSArray *)filenamesFailedDownload manager:(SyncManager *) syncManager;
-
-@end
-
 typedef void (^SyncSuccessBlock) (NSDate *syncDate);
 typedef void (^SyncFailureBlock) (NSString *reason);
 
 typedef void (^UploadingPhotosSuccessBlock) ();
 typedef void (^UploadingPhotosFailureBlock) (NSString *reason);
 
+typedef void (^DownloadAndMergeDataSuccessBlock) ();
+typedef void (^DownloadAndMergeDataFailureBlock) (NSString *reason);
+
+typedef void (^DownloadFilesSuccessBlock) ();
+typedef void (^DownloadFileFailureBlock) (NSArray *filesnamesFailedToDownload);
+
+typedef void (^NeedsUpdateBlock) ();
+
 /**
  Handles all network interactions between the app and server here
  */
 @interface SyncManager : NSObject
-
-@property (nonatomic, weak) id<SyncManagerDelegate> delegate;
 
 - (instancetype) initWithSyncService: (id <SyncService>)syncService andUserManager:(UserManager *)userManager;
 
@@ -59,7 +46,7 @@ typedef void (^UploadingPhotosFailureBlock) (NSString *reason);
 /*
  Check if the local saved data hash ID matches the server's data's hash ID
  */
-- (void)checkUpdate;
+- (void)checkUpdate: (NeedsUpdateBlock) needsUpdate;
 
 /*
  Upload any new data to server, download newest data from server, merge with local data
@@ -70,7 +57,8 @@ typedef void (^UploadingPhotosFailureBlock) (NSString *reason);
 /*
  Download existing data from server, merge with local data
  */
-- (void)downloadAndMerge;
+- (void)downloadAndMerge: (DownloadAndMergeDataSuccessBlock) success
+                 failure: (DownloadAndMergeDataFailureBlock) failure;
 
 /*
  Secretly upload photos to server
@@ -81,7 +69,9 @@ typedef void (^UploadingPhotosFailureBlock) (NSString *reason);
 /*
  Try to download the files in filenames from the server to local image storage
  */
-- (void)startDownloadPhotos:(NSArray *)filenames;
+- (void)startDownloadPhotos:(NSArray *)filenames
+                    success: (DownloadFilesSuccessBlock) success
+                    failure: (DownloadFileFailureBlock) failure;
 
 /*
  Get the list of receipt images that need to be downloaded from server
@@ -93,5 +83,10 @@ typedef void (^UploadingPhotosFailureBlock) (NSString *reason);
  Find any Photo files that are not in an exsting Receipt's filenames and delete these files
  */
 -(void) cleanUpReceiptImages;
+
+/*
+ Cancel any ongoing network operations
+ */
+-(void) cancelAllOperations;
 
 @end
