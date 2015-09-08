@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+//fl oz, pt, qt, gal, oz, lb
 typedef enum : NSUInteger
 {
     UnitItem,
@@ -16,6 +17,12 @@ typedef enum : NSUInteger
     UnitG,
     Unit100G,
     UnitKG,
+    UnitFloz,
+    UnitPt,
+    UnitQt,
+    UnitGal,
+    UnitOz,
+    UnitLb,
     UnitCount
 } UnitTypes;
 
@@ -25,6 +32,13 @@ typedef enum : NSUInteger
 #define kUnitGKey               @"UnitG"
 #define kUnit100GKey            @"Unit100G"
 #define kUnitKGKey              @"UnitKG"
+
+#define kUnitFlozKey                @"UnitFloz"
+#define kUnitPtKey                  @"UnitPt"
+#define kUnitQtKey                  @"UnitQt"
+#define kUnitGalKey                 @"UnitGal"
+#define kUnitOzKey                  @"UnitOz"
+#define kUnitLbKey                  @"UnitLb"
 
 @interface Record : NSObject <NSCoding, NSCopying>
 

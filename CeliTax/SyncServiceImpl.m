@@ -199,18 +199,18 @@
     NSString *jsonString = [[NSString alloc] initWithData:dictionaryData encoding:NSUTF8StringEncoding];
     
     //DUMP:
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent: @"Upload.json"];
-    
-    if ([fileManager fileExistsAtPath: filePath])
-    {
-        [fileManager removeItemAtPath: filePath error: nil];
-    }
-
-    [dictionaryData writeToFile: filePath options: 0 error: nil];
-    
-    DLog(@"Dumped upload JSON to : \n %@", filePath);
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    
+//    NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent: @"Upload.json"];
+//    
+//    if ([fileManager fileExistsAtPath: filePath])
+//    {
+//        [fileManager removeItemAtPath: filePath error: nil];
+//    }
+//
+//    [dictionaryData writeToFile: filePath options: 0 error: nil];
+//    
+//    DLog(@"Dumped upload JSON to : \n %@", filePath);
     //END DUMP:
     
     NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -229,39 +229,24 @@
         
         NSDictionary *response = [completedOperation responseJSON];
         
-        if ( [response objectForKey:@"error"] && [[response objectForKey:@"error"] boolValue] == NO )
-        {
-            NSDate *dateUploaded = [NSDate new];
+        NSDate *dateUploaded = [NSDate new];
+        
+        [self.userDataDAO setLastBackUpDate:dateUploaded];
+        
+        [self.userDataDAO setLastestDataHash:[response objectForKey:@"batchID"]];
+        
+        [self.userDataDAO resetAllDataActionsAndClearOutDeletedOnes];
+        
+        [self.userDataDAO saveUserData];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
             
-            [self.userDataDAO setLastBackUpDate:dateUploaded];
+            if (success)
+            {
+                success ( dateUploaded );
+            }
             
-            [self.userDataDAO setLastestDataHash:[response objectForKey:@"batchID"]];
-            
-            [self.userDataDAO resetAllDataActionsAndClearOutDeletedOnes];
-            
-            [self.userDataDAO saveUserData];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                if (success)
-                {
-                    success ( dateUploaded );
-                }
-                
-            });
-            
-        }
-        else
-        {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                if (failure)
-                {
-                    failure ( [response objectForKey:@"message"] );
-                }
-                
-            });
-        }
+        });
         
         [[UIApplication sharedApplication] endBackgroundTask: bgTask];
     };
@@ -271,7 +256,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (failure)
             {
-                failure ( @"Network Error" );
+                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
             }
         });
         
@@ -407,7 +392,7 @@
                 
                 if (failure)
                 {
-                    failure ( [response objectForKey:@"message"] );
+                    failure ( USER_NO_DATA );
                 }
                 
             });
@@ -421,7 +406,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (failure)
             {
-                failure ( @"Network Error" );
+                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
             }
         });
         
@@ -466,7 +451,7 @@
                 
                 if (failure)
                 {
-                    failure ( [response objectForKey:@"message"] );
+                    failure ( USER_NO_DATA );
                 }
                 
             });
@@ -480,7 +465,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (failure)
             {
-                failure ( @"Network Error" );
+                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
             }
         });
         
@@ -524,7 +509,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (failure)
             {
-                failure ( @"Network Error" );
+                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
             }
         });
         
@@ -556,34 +541,17 @@
     
     MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
         
-        NSDictionary *response = [completedOperation responseJSON];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (success)
+            {
+                success ( );
+            }
+            
+        });
         
-        if ( [response objectForKey:@"error"] && [[response objectForKey:@"error"] boolValue] == NO)
-        {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                if (success)
-                {
-                    success ( );
-                }
-                
-            });
-            
-            [[UIApplication sharedApplication] endBackgroundTask: bgTask];
-        }
-        else
-        {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                if (failure)
-                {
-                    failure ( [response objectForKey:@"message"] );
-                }
-                
-            });
-            
-            [[UIApplication sharedApplication] endBackgroundTask: bgTask];
-        }
+        [[UIApplication sharedApplication] endBackgroundTask: bgTask];
+        
     };
     
     MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
@@ -592,7 +560,7 @@
             
             if (failure)
             {
-                failure ( @"Network Error" );
+                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
             }
             
         });
@@ -631,7 +599,7 @@
             if (failure)
             {
                 DLog(@"Failed to download image from %@", url);
-                failure ( @"Network Error" );
+                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
             }
         });
     };
@@ -674,7 +642,7 @@
                 if (failure)
                 {
                     DLog(@"Failed to get URL of image: %@", filename);
-                    failure ( [response objectForKey:@"message"] );
+                    failure ( RECEIPT_IMAGE_FILE_NO_LONGER_EXIST );
                 }
                 
             });
@@ -687,7 +655,7 @@
             
             if (failure)
             {
-                failure ( @"Network Error" );
+                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
             }
             
         });

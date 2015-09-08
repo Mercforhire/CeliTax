@@ -8,16 +8,9 @@
 
 #import "BaseViewController.h"
 #import "Record.h"
+#import "UnitPickerViewControllerDelegate.h"
 
-@protocol UnitPickerViewControllerDelegate <NSObject>
-
-@required
-
-- (void) selectedUnit:(NSInteger)unitType;
-
-@end
-
-@interface UnitPickerViewController : BaseViewController
+@interface MetricUnitPickerViewController : BaseViewController
 
 @property (nonatomic, weak) id <UnitPickerViewControllerDelegate> delegate;
 

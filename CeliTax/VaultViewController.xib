@@ -23,6 +23,7 @@
                 <outlet property="invisibleNewTaxYearField" destination="Vap-hn-eDh" id="2rr-h3-GtN"/>
                 <outlet property="selectAllCheckBox" destination="drV-Ul-2FY" id="q6E-Zj-dWc"/>
                 <outlet property="taxYearLabel" destination="zl1-1s-7jV" id="j1C-hR-qJq"/>
+                <outlet property="titleLabel" destination="cK5-AM-aeb" id="V8r-PG-gsc"/>
                 <outlet property="transferButton" destination="Mlb-Dp-zgz" id="dP3-fA-nwg"/>
                 <outlet property="transferButtonHeightBar" destination="6BE-Kj-R7g" id="h7b-DX-emQ"/>
                 <outlet property="triangleView" destination="INW-9u-4Q2" id="nS7-Er-l6s"/>
@@ -35,14 +36,14 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vault" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cK5-AM-aeb">
-                    <rect key="frame" x="137" y="79" width="46" height="23"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VAULT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cK5-AM-aeb">
+                    <rect key="frame" x="131" y="79" width="58.5" height="23"/>
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="19"/>
                     <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="greenTrianglePointDown.png" translatesAutoresizingMaskIntoConstraints="NO" id="INW-9u-4Q2">
-                    <rect key="frame" x="153.5" y="110" width="17" height="11"/>
+                    <rect key="frame" x="181" y="110" width="17" height="11"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="17" id="fam-wL-Gug"/>
                         <constraint firstAttribute="height" constant="11" id="qCj-PR-xYW"/>
@@ -60,14 +61,14 @@
                     <rect key="frame" x="0.0" y="181" width="320" height="301"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
-                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Tax Year Added" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zl1-1s-7jV">
-                    <rect key="frame" x="20" y="107" width="123.5" height="18"/>
+                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NO TAX YEAR ADDED" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zl1-1s-7jV">
+                    <rect key="frame" x="20" y="107" width="151" height="18"/>
                     <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cCL-ll-sAk" customClass="SolidGreenButton">
-                    <rect key="frame" x="210" y="487" width="80" height="30"/>
+                    <rect key="frame" x="219" y="487" width="71" height="30"/>
                     <color key="backgroundColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="80" id="4L5-9z-DRt"/>
@@ -76,10 +77,15 @@
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                     <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
                     <inset key="titleEdgeInsets" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
-                    <state key="normal" title="Delete">
+                    <state key="normal" title="DELETE">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="4L5-9z-DRt"/>
+                        </mask>
+                    </variation>
                     <connections>
                         <action selector="deleteButtonPressed:" destination="-1" eventType="touchUpInside" id="46S-sM-7II"/>
                     </connections>
@@ -93,7 +99,7 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mlb-Dp-zgz" customClass="SolidGreenButton">
-                    <rect key="frame" x="30" y="487" width="80" height="30"/>
+                    <rect key="frame" x="30" y="487" width="91" height="30"/>
                     <color key="backgroundColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="6BE-Kj-R7g"/>
@@ -102,23 +108,28 @@
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                     <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
                     <inset key="titleEdgeInsets" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
-                    <state key="normal" title="Transfer">
+                    <state key="normal" title="TRANSFER">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="tD6-Ug-qo1"/>
+                        </mask>
+                    </variation>
                     <connections>
                         <action selector="transferButtonPressed:" destination="-1" eventType="touchUpInside" id="fUa-az-YvX"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OKQ-Kv-Od7" customClass="HollowGreenButton">
-                    <rect key="frame" x="110" y="522" width="100" height="31"/>
+                    <rect key="frame" x="99.5" y="522" width="121" height="31"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="31" id="sPb-lD-7GI"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
                     <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
-                    <state key="normal" title="Download">
+                    <state key="normal" title="DOWNLOAD">
                         <color key="titleColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>

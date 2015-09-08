@@ -43,7 +43,7 @@
                                 <constraint firstAttribute="height" constant="35" id="qpZ-7u-vtX"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="16"/>
-                            <state key="normal" title="Back">
+                            <state key="normal" title="BACK">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -56,7 +56,7 @@
                                 <constraint firstAttribute="width" constant="125" id="RvD-Tb-N1C"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="16"/>
-                            <state key="normal" title="Continue">
+                            <state key="normal" title="CONTINUE">
                                 <color key="titleColor" red="0.4549019608" green="0.74901960779999999" blue="0.31764705879999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>

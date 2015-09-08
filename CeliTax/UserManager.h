@@ -16,8 +16,8 @@
 @property (nonatomic, strong) User *user;
 
 @property (nonatomic, weak) id <AuthenticationService>  authenticationService;
-@property (nonatomic, strong) ConfigurationManager      *configManager;
-@property (nonatomic, strong) UserDataDAO               *userDataDAO;
+@property (nonatomic, weak) ConfigurationManager        *configManager;
+@property (nonatomic, weak) UserDataDAO                 *userDataDAO;
 @property (nonatomic, weak) BackgroundWorker            *backgroundWorker;
 
 -(BOOL)attemptToLoginSavedUser;
@@ -31,6 +31,8 @@
 -(void)changeUserDetails:(NSString *)firstname
              andLastname:(NSString *)lastname
               andCountry:(NSString *)country;
+
+-(void)changeEmail:(NSString *)emailToChangeTo;
 
 -(BOOL)doesUserHaveCustomProfileImage;
 

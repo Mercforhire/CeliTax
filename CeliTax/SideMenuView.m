@@ -10,9 +10,7 @@
 #import "MenuSelectionTableViewCell.h"
 
 @interface SideMenuView () <UITableViewDataSource, UITableViewDelegate> {
-    UIImageView *profileImageView;
-    UILabel *usernameLabel;
-
+    NSArray *menuSelections; // of NSString
     UITableView *menuSelectionsTable;
 }
 
@@ -20,60 +18,78 @@
 
 @implementation SideMenuView
 
+-(void)refreshMenuSelections
+{
+    menuSelections = [NSArray arrayWithObjects:
+                      NSLocalizedString(@"Home", nil),
+                      NSLocalizedString(@"Account", nil),
+                      NSLocalizedString(@"Vault", nil),
+                      NSLocalizedString(@"Help", nil),
+                      NSLocalizedString(@"Settings", nil),
+                      NSLocalizedString(@"Logout", nil), nil];
+    
+    [menuSelectionsTable reloadData];
+}
+
 - (void) baseInit
 {
     [self setBackgroundColor: [UIColor clearColor]];
     self.opaque = NO;
 
-    profileImageView = [[UIImageView alloc] initWithFrame: CGRectMake(20, 20, 50, 50)];
-    [profileImageView setBackgroundColor: [UIColor greenColor]];
-    profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2;
-    profileImageView.layer.borderColor = [UIColor colorWithWhite: 187.0f/255.0f alpha: 1].CGColor;
-    profileImageView.layer.borderWidth = 1.0f;
-    [profileImageView setClipsToBounds: YES];
+    self.profileImageView = [[UIImageView alloc] initWithFrame: CGRectMake(20, 20, 50, 50)];
+    [self.profileImageView setBackgroundColor: [UIColor greenColor]];
+    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
+    self.profileImageView.layer.borderColor = [UIColor colorWithWhite: 187.0f/255.0f alpha: 1].CGColor;
+    self.profileImageView.layer.borderWidth = 1.0f;
+    [self.profileImageView setClipsToBounds: YES];
+    [self.profileImageView setUserInteractionEnabled:YES];
 
-    [self addSubview: profileImageView];
-
-    usernameLabel = [[UILabel alloc] initWithFrame: CGRectMake(profileImageView.frame.origin.x + profileImageView.frame.size.width + 15,
-                                                               profileImageView.frame.origin.y,
-                                                               self.frame.size.width - profileImageView.frame.origin.x - profileImageView.frame.size.width - 15 - 15,
+    [self addSubview: self.profileImageView];
+    
+    self.usernameLabel = [[UILabel alloc] initWithFrame: CGRectMake(self.profileImageView.frame.origin.x + self.profileImageView.frame.size.width + 15,
+                                                               self.profileImageView.frame.origin.y,
+                                                               self.frame.size.width - self.profileImageView.frame.origin.x - self.profileImageView.frame.size.width - 15 - 15,
                                                                50)];
-    [usernameLabel setFont: [UIFont latoFontOfSize: 14]];
-    [self addSubview: usernameLabel];
+    [self.usernameLabel setFont: [UIFont latoFontOfSize: 14]];
+    [self.usernameLabel setUserInteractionEnabled:YES];
+    [self addSubview: self.usernameLabel];
 
     menuSelectionsTable = [[UITableView alloc] initWithFrame:
                            CGRectMake(0,
-                                      profileImageView.frame.origin.y + profileImageView.frame.size.height + 28,
+                                      self.profileImageView.frame.origin.y + self.profileImageView.frame.size.height + 28,
                                       self.frame.size.width,
-                                      self.frame.size.height - profileImageView.frame.origin.y - profileImageView.frame.size.height - 28)];
+                                      self.frame.size.height - self.profileImageView.frame.origin.y - self.profileImageView.frame.size.height - 28)];
     menuSelectionsTable.delegate = self;
     menuSelectionsTable.dataSource = self;
     [menuSelectionsTable setAllowsSelection: YES];
     menuSelectionsTable.backgroundColor = [UIColor clearColor];
     [menuSelectionsTable setSeparatorStyle: UITableViewCellSeparatorStyleNone];
+    [menuSelectionsTable setBounces:NO];
 
     UINib *tablecell = [UINib nibWithNibName: @"MenuSelectionTableViewCell" bundle: nil];
 
     [menuSelectionsTable registerNib: tablecell forCellReuseIdentifier: @"MenuCell"];
 
     [self addSubview: menuSelectionsTable];
+    
+    [self refreshMenuSelections];
 }
 
 - (void) layoutSubviews
 {
     [super layoutSubviews];
 
-    [profileImageView setFrame: CGRectMake(20, 20, 50, 50)];
+    [self.profileImageView setFrame: CGRectMake(20, 20, 50, 50)];
 
-    [usernameLabel setFrame: CGRectMake(profileImageView.frame.origin.x + profileImageView.frame.size.width + 10,
-                                        profileImageView.frame.origin.y,
-                                        self.frame.size.width - profileImageView.frame.origin.x - profileImageView.frame.size.width - 10 - 20,
+    [self.usernameLabel setFrame: CGRectMake(self.profileImageView.frame.origin.x + self.profileImageView.frame.size.width + 10,
+                                        self.profileImageView.frame.origin.y,
+                                        self.frame.size.width - self.profileImageView.frame.origin.x - self.profileImageView.frame.size.width - 10 - 20,
                                         50)];
 
     [menuSelectionsTable setFrame: CGRectMake(0,
-                                              profileImageView.frame.origin.y + profileImageView.frame.size.height,
+                                              self.profileImageView.frame.origin.y + self.profileImageView.frame.size.height,
                                               self.frame.size.width,
-                                              self.frame.size.height - profileImageView.frame.origin.y - profileImageView.frame.size.height)];
+                                              self.frame.size.height - self.profileImageView.frame.origin.y - self.profileImageView.frame.size.height)];
 }
 
 - (id) initWithFrame: (CGRect) frame
@@ -112,25 +128,28 @@
     return self;
 }
 
+- (void)didMoveToWindow
+{
+    if (self.window)
+    {
+        // Added to a window, similar to -viewDidLoad.
+        
+        [self refreshMenuSelections];
+    }
+}
+
 - (void) setProfileImage: (UIImage *) profileImage
 {
     _profileImage = profileImage;
 
-    [profileImageView setImage: _profileImage];
+    [self.profileImageView setImage: _profileImage];
 }
 
 - (void) setUserName: (NSString *) userName
 {
     _userName = userName;
 
-    [usernameLabel setText: _userName];
-}
-
-- (void) setMenuSelections: (NSArray *) menuSelections
-{
-    _menuSelections = menuSelections;
-
-    [menuSelectionsTable reloadData];
+    [self.usernameLabel setText: _userName];
 }
 
 - (void) setCurrentlySelectedIndex: (NSInteger) currentlySelectedIndex
@@ -149,7 +168,7 @@
 
 - (NSInteger) tableView: (UITableView *) tableView numberOfRowsInSection: (NSInteger) section
 {
-    return self.menuSelections.count;
+    return menuSelections.count;
 }
 
 - (UITableViewCell *) tableView: (UITableView *) tableView cellForRowAtIndexPath: (NSIndexPath *) indexPath
@@ -172,7 +191,7 @@
         [menuCell.selectionIndicator setHidden: YES];
     }
 
-    [menuCell.selectionName setText: [self.menuSelections objectAtIndex: indexPath.row]];
+    [menuCell.selectionName setText: [menuSelections objectAtIndex: indexPath.row]];
 
     menuCell.backgroundColor = [UIColor clearColor];
 

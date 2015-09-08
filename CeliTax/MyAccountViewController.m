@@ -24,7 +24,7 @@
 #import "TutorialManager.h"
 #import "TutorialStep.h"
 #import "HollowGreenButton.h"
-#import "MyProfileViewController.h"
+#import "ProfileSettingsViewController.h"
 #import "UIView+Helper.h"
 #import "YearSavingViewController.h"
 #import "TutorialManager.h"
@@ -78,8 +78,9 @@
 
 - (void) setupUI
 {
+    [self.titleLabel setText:NSLocalizedString(@"My Account", nil)];
+    
     self.profileBarView = [[ProfileBarView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
-
     self.profileBarView.profileImageView.layer.cornerRadius = self.profileBarView.profileImageView.frame.size.width / 2;
     self.profileBarView.profileImageView.layer.borderColor = [UIColor colorWithWhite: 187.0f/255.0f alpha: 1].CGColor;
     self.profileBarView.profileImageView.layer.borderWidth = 1.0f;
@@ -87,6 +88,16 @@
     
     [self.profileBarView.editButton1 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.profileBarView.editButton2 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UITapGestureRecognizer *profileImageViewTap =
+    [[UITapGestureRecognizer alloc] initWithTarget: self
+                                            action: @selector(editProfilePressed:)];
+    [self.profileBarView.profileImageView addGestureRecognizer: profileImageViewTap];
+    
+    UITapGestureRecognizer *profileImageViewTap2 =
+    [[UITapGestureRecognizer alloc] initWithTarget: self
+                                            action: @selector(editProfilePressed:)];
+    [self.profileBarView.nameLabel addGestureRecognizer: profileImageViewTap2];
     
     [self.profileBarView setLookAndFeel:self.lookAndFeel];
     
@@ -124,7 +135,6 @@
     [self.pieChart setSelectedSliceOffsetRadius: 0];
     
     // set up the National Average Cost ? button
-    
     self.navHelpButton = [[UIButton alloc] initWithFrame:CGRectMake(self.pieChartContainer.frame.size.width - 27 - 35,
                                                                     self.pieChartContainer.frame.size.height - 27,
                                                                     27,
@@ -146,16 +156,21 @@
     
     // other set up
     [self.calculateButton setLookAndFeel:self.lookAndFeel];
+    [self.calculateButton setTitle:NSLocalizedString(@"Calculate", nil) forState:UIControlStateNormal];
     
     if (self.configurationManager.getCurrentTaxYear)
     {
-        [self.titleLabel setText:[NSString stringWithFormat:@"Tax Year for %ld", (long)self.configurationManager.getCurrentTaxYear]];
+        [self.titleLabel setText:[NSString stringWithFormat:NSLocalizedString(@"Tax Year for %ld", nil), (long)self.configurationManager.getCurrentTaxYear.integerValue]];
     }
     
     self.numberToolbar = [[UIToolbar alloc]initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 50)];
     self.numberToolbar.barStyle = UIBarStyleDefault;
     
-    UIBarButtonItem *doneToolbarButton = [[UIBarButtonItem alloc]initWithTitle: @"Done" style: UIBarButtonItemStyleDone target: self action: @selector(doneOnKeyboardPressed)];
+    UIBarButtonItem *doneToolbarButton = [[UIBarButtonItem alloc]initWithTitle: NSLocalizedString(@"Done", nil)
+                                                                         style: UIBarButtonItemStyleDone
+                                                                        target: self
+                                                                        action: @selector(doneOnKeyboardPressed)];
+    
     [doneToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
     
     self.numberToolbar.items = [NSArray arrayWithObjects:
@@ -181,6 +196,12 @@
     NSArray *catagories = [self.dataService fetchCatagories];
     
     self.catagories = catagories;
+    
+    //hide the ? button if no rows exist
+    if (!self.catagories.count)
+    {
+        [self.navHelpButton setHidden:YES];
+    }
 }
 
 - (void) viewWillAppear: (BOOL) animated
@@ -225,7 +246,7 @@
         float totalAmountForCatagory = 0;
         
         NSArray *recordsForThisCatagory = [self.dataService fetchRecordsForCatagoryID: catagory.localID
-                                                                            inTaxYear: self.configurationManager.getCurrentTaxYear];
+                                                                            inTaxYear: self.configurationManager.getCurrentTaxYear.integerValue];
         
         // Separate recordsForThisCatagory into groups of the same Unit Type
         NSMutableDictionary *recordsOfEachType = [NSMutableDictionary new];
@@ -272,7 +293,7 @@
         }
         
         //Process the Unit Types in order: Item, ML, L, G, KG
-        NSArray *orderOfUnitTypesToProcess = [NSArray arrayWithObjects:kUnitItemKey, kUnitMLKey, kUnitLKey, kUnitGKey, kUnit100GKey, kUnitKGKey, nil];
+        NSArray *orderOfUnitTypesToProcess = [NSArray arrayWithObjects:kUnitItemKey, kUnitMLKey, kUnitLKey, kUnitGKey, kUnit100GKey, kUnitKGKey,kUnitFlozKey,kUnitPtKey,kUnitQtKey,kUnitGalKey,kUnitOzKey,kUnitLbKey, nil];
         
         for (NSString *key in orderOfUnitTypesToProcess)
         {
@@ -449,7 +470,7 @@
         [self.dataService fetchLatestNthCatagoryInfosforCatagory: catagoryID
                                                      andUnitType: [Record unitTypeStringToUnitTypeInt:unitTypeString]
                                                           forNth: 5
-                                                       inTaxYear: self.configurationManager.getCurrentTaxYear];
+                                                       inTaxYear: self.configurationManager.getCurrentTaxYear.integerValue];
         
         self.catagoryInfosToShow = catagoryInfos;
         
@@ -469,7 +490,11 @@
         NSString *catagoryID = [self.currentlySelectedRow firstObject];
         NSString *unitTypeString = [self.currentlySelectedRow objectAtIndex:1];
         
-        NSArray *catagoryInfos = [self.dataService fetchCatagoryInfoFromDate:mondayOfPreviousWeek toDate:mondayOfThisWeek inTaxYear:self.configurationManager.getCurrentTaxYear forCatagory:catagoryID forUnitType:[Record unitTypeStringToUnitTypeInt:unitTypeString]];
+        NSArray *catagoryInfos = [self.dataService fetchCatagoryInfoFromDate:mondayOfPreviousWeek
+                                                                      toDate:mondayOfThisWeek
+                                                                   inTaxYear:self.configurationManager.getCurrentTaxYear.integerValue
+                                                                 forCatagory:catagoryID
+                                                                 forUnitType:[Record unitTypeStringToUnitTypeInt:unitTypeString]];
         
         self.catagoryInfosToShow = catagoryInfos;
         
@@ -490,7 +515,11 @@
         NSString *catagoryID = [self.currentlySelectedRow firstObject];
         NSString *unitTypeString = [self.currentlySelectedRow objectAtIndex:1];
         
-        NSArray *catagoryInfos = [self.dataService fetchCatagoryInfoFromDate:firstDayOfPreviousMonth toDate:firstDayOfThisMonth inTaxYear:self.configurationManager.getCurrentTaxYear forCatagory:catagoryID forUnitType:[Record unitTypeStringToUnitTypeInt:unitTypeString]];
+        NSArray *catagoryInfos = [self.dataService fetchCatagoryInfoFromDate:firstDayOfPreviousMonth
+                                                                      toDate:firstDayOfThisMonth
+                                                                   inTaxYear:self.configurationManager.getCurrentTaxYear.integerValue
+                                                                 forCatagory:catagoryID
+                                                                 forUnitType:[Record unitTypeStringToUnitTypeInt:unitTypeString]];
         
         self.catagoryInfosToShow = catagoryInfos;
         
@@ -506,7 +535,10 @@
         NSString *unitTypeString = [self.currentlySelectedRow objectAtIndex:1];
         
         // all receipts from this catagory
-        NSArray *catagoryInfos = [self.dataService fetchLatestNthCatagoryInfosforCatagory:catagoryID andUnitType:[Record unitTypeStringToUnitTypeInt:unitTypeString] forNth:-1 inTaxYear:self.configurationManager.getCurrentTaxYear];
+        NSArray *catagoryInfos = [self.dataService fetchLatestNthCatagoryInfosforCatagory:catagoryID
+                                                                              andUnitType:[Record unitTypeStringToUnitTypeInt:unitTypeString]
+                                                                                   forNth:-1
+                                                                                inTaxYear:self.configurationManager.getCurrentTaxYear.integerValue];
         
         self.catagoryInfosToShow = catagoryInfos;
         
@@ -574,11 +606,11 @@
     
     if (!hasAtLeastOneItem)
     {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Sorry"
-                                                          message:@"This tax year has no recorded items."
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)
+                                                          message:NSLocalizedString(@"This tax year has no recorded items", nil)
                                                          delegate:nil
                                                 cancelButtonTitle:nil
-                                                otherButtonTitles:@"Ok",nil];
+                                                otherButtonTitles:NSLocalizedString(@"Ok", nil),nil];
         
         [message show];
         
@@ -591,11 +623,11 @@
     }
     else
     {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Sorry"
-                                                          message:@"Not all category unit types have its national average cost entered."
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)
+                                                          message:NSLocalizedString(@"Not all category unit types have its national average cost entered", nil)
                                                          delegate:nil
                                                 cancelButtonTitle:nil
-                                                otherButtonTitles:@"Ok",nil];
+                                                otherButtonTitles:NSLocalizedString(@"Ok", nil),nil];
         
         [message show];
         
@@ -605,7 +637,7 @@
 
 - (void) editProfilePressed: (UIButton *) sender
 {
-    [self.navigationController pushViewController: [self.viewControllerFactory createMyProfileViewController] animated: YES];
+    [self.navigationController pushViewController: [self.viewControllerFactory createProfileSettingsViewController] animated: YES];
 }
 
 -(void)avgHelpClicked
@@ -921,6 +953,30 @@
         {
             [cell.catagoryNameLabel setText: @"(mL)"];
         }
+        else if ([unitTypeString isEqualToString:kUnitFlozKey])
+        {
+            [cell.catagoryNameLabel setText: @"(fl oz)"];
+        }
+        else if ([unitTypeString isEqualToString:kUnitPtKey])
+        {
+            [cell.catagoryNameLabel setText: @"(pt)"];
+        }
+        else if ([unitTypeString isEqualToString:kUnitQtKey])
+        {
+            [cell.catagoryNameLabel setText: @"(qt)"];
+        }
+        else if ([unitTypeString isEqualToString:kUnitGalKey])
+        {
+            [cell.catagoryNameLabel setText: @"(gal)"];
+        }
+        else if ([unitTypeString isEqualToString:kUnitOzKey])
+        {
+            [cell.catagoryNameLabel setText: @"(oz)"];
+        }
+        else if ([unitTypeString isEqualToString:kUnitLbKey])
+        {
+            [cell.catagoryNameLabel setText: @"(lb)"];
+        }
         
         [cell.totalQuantityField setText: [NSString stringWithFormat: @"%ld", (long)quantity]];
         [cell.totalAmountField setText: [NSString stringWithFormat: @"%.2f", amount]];
@@ -995,11 +1051,11 @@
         
         if ([unitTypeString isEqualToString:kUnitItemKey])
         {
-            [cell.totalQtyLabel setText:@"Total Qty."];
+            [cell.totalQtyLabel setText:NSLocalizedString(@"Total Qty.", nil)];
         }
         else
         {
-            [cell.totalQtyLabel setText:@"Weight"];
+            [cell.totalQtyLabel setText:NSLocalizedString(@"Weight", nil)];
         }
 
         return cell;
@@ -1202,8 +1258,8 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep1 = [TutorialStep new];
     
-    tutorialStep1.text = @"In the My Account view, you can see a grand total of all GF purchases allocated to each of your categories. ";
-    tutorialStep1.rightButtonTitle = @"Continue";
+    tutorialStep1.text = NSLocalizedString(@"In the My Account view, you can see a grand total of all GF purchases allocated to each of your categories.", nil);
+    tutorialStep1.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
     CGRect tableRowsFrame = self.accountTableView.frame;
     
@@ -1217,13 +1273,10 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep2 = [TutorialStep new];
     
-    tutorialStep2.text = @"For each GF category, you must input an Average Non-GF Cost per item which represents regular priced items of a similar non-gluten free item. You can click the ? for more information and suggested prices.";
-    tutorialStep2.leftButtonTitle = @"Back";
-    tutorialStep2.rightButtonTitle = @"Continue";
+    tutorialStep2.text = NSLocalizedString(@"For each GF category, you must input an Average Non-GF Cost per item which represents regular priced items of a similar non-gluten free item. You can click the ? for more information and suggested prices.", nil);
+    tutorialStep2.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep2.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     tutorialStep2.pointsUp = NO;
-    
-//    tableRowsFrame.origin.y -= self.navHelpButton.frame.size.height;
-//    tableRowsFrame.size.height += self.navHelpButton.frame.size.height;
     
     tutorialStep2.highlightedItemRect = tableRowsFrame;
     
@@ -1231,9 +1284,9 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep3 = [TutorialStep new];
     
-    tutorialStep3.text = @"Once a cost is inputted for each GF category, simply click calculate to automatically determine your GF tax claim for the year!";
-    tutorialStep3.leftButtonTitle = @"Back";
-    tutorialStep3.rightButtonTitle = @"Continue";
+    tutorialStep3.text = NSLocalizedString(@"Once a cost is inputted for each GF category, simply click calculate to automatically determine your GF tax claim for the year!", nil);
+    tutorialStep3.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep3.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     tutorialStep3.pointsUp = NO;
     tutorialStep3.highlightedItemRect = [Utils returnRectBiggerThan:self.calculateButton.frame by: 3];
     
@@ -1241,17 +1294,17 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep4 = [TutorialStep new];
     
-    tutorialStep4.text = @"You can even send your final claim and detailed report of all purchases to your email address in one easy step!";
-    tutorialStep4.leftButtonTitle = @"Back";
-    tutorialStep4.rightButtonTitle = @"Continue";
+    tutorialStep4.text = NSLocalizedString(@"You can even send your final claim and detailed report of all purchases to your email address in one easy step!", nil);
+    tutorialStep4.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep4.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
     [self.tutorials addObject:tutorialStep4];
     
     TutorialStep *tutorialStep5 = [TutorialStep new];
     
-    tutorialStep5.text = @"That’s it! We realize this was a lot of info but once you upload your first receipt you will see just how easy CeliTax is. You can re-visit the tutorial anytime in Settings.";
-    tutorialStep5.leftButtonTitle = @"Back";
-    tutorialStep5.rightButtonTitle = @"Done";
+    tutorialStep5.text = NSLocalizedString(@"That’s it! We realize this was a lot of info but once you upload your first receipt you will see just how easy CeliTax is. You can re-visit the tutorial anytime in Help.", nil);
+    tutorialStep5.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep5.rightButtonTitle = NSLocalizedString(@"Done", nil);
     
     [self.tutorials addObject:tutorialStep5];
     

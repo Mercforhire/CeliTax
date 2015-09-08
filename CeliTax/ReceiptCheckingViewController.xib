@@ -44,25 +44,10 @@
                     <color key="separatorColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                 </tableView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mSN-Eh-8vn" customClass="ReceiptScrollView">
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mSN-Eh-8vn" customClass="ReceiptScrollView">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rJV-dd-ujZ">
-                    <rect key="frame" x="280" y="508" width="40" height="60"/>
-                    <color key="backgroundColor" white="1" alpha="0.70000000000000007" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="60" id="hTl-L8-8hh"/>
-                        <constraint firstAttribute="width" constant="40" id="tku-1I-bak"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                    <state key="normal" title="+">
-                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="addCatagoryPressed:" destination="-1" eventType="touchUpInside" id="NJV-eZ-Lei"/>
-                    </connections>
-                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tP5-SY-lVh">
                     <rect key="frame" x="0.0" y="378" width="320" height="130"/>
                     <subviews>
@@ -74,17 +59,23 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y82-bx-l24">
-                            <rect key="frame" x="10" y="83" width="70" height="32"/>
+                            <rect key="frame" x="10" y="83" width="65" height="32"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="70" id="MEn-7A-83Y"/>
                                 <constraint firstAttribute="height" constant="32" id="nYm-qb-NlR"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
-                            <state key="normal" title="Add">
+                            <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                            <state key="normal" title="ADD">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="MEn-7A-83Y"/>
+                                </mask>
+                            </variation>
                             <connections>
                                 <action selector="addOrEditRecordPressed:" destination="-1" eventType="touchUpInside" id="ula-EV-eG4"/>
                             </connections>
@@ -102,7 +93,7 @@
                             <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="12"/>
                             <state key="normal" title="‹">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <variation key="default">
                                 <mask key="constraints">
@@ -133,7 +124,7 @@
                             <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="12"/>
                             <state key="normal" title="›">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <variation key="default">
                                 <mask key="constraints">
@@ -155,17 +146,23 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aJk-yM-Edq">
-                            <rect key="frame" x="240" y="83" width="70" height="32"/>
+                            <rect key="frame" x="218" y="83" width="92" height="32"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="hVx-fy-Ro7"/>
                                 <constraint firstAttribute="width" constant="70" id="ixM-bf-1bQ"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
-                            <state key="normal" title="Delete">
+                            <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                            <state key="normal" title="DELETE">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="ixM-bf-1bQ"/>
+                                </mask>
+                            </variation>
                             <connections>
                                 <action selector="deleteRecordPressed:" destination="-1" eventType="touchUpInside" id="wXg-gv-xhp"/>
                             </connections>
@@ -236,6 +233,21 @@
                         <action selector="editReceiptsPressed:" destination="-1" eventType="touchUpInside" id="nse-xG-d79"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rJV-dd-ujZ">
+                    <rect key="frame" x="280" y="508" width="40" height="60"/>
+                    <color key="backgroundColor" white="1" alpha="0.70000000000000007" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="hTl-L8-8hh"/>
+                        <constraint firstAttribute="width" constant="40" id="tku-1I-bak"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                    <state key="normal" title="+">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="addCatagoryPressed:" destination="-1" eventType="touchUpInside" id="NJV-eZ-Lei"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
@@ -247,11 +259,14 @@
                 <constraint firstAttribute="trailing" secondItem="wgS-bS-mwy" secondAttribute="trailing" constant="20" id="5NQ-70-Fkl"/>
                 <constraint firstItem="tP5-SY-lVh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="5Oc-py-CeY"/>
                 <constraint firstItem="mSN-Eh-8vn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6UW-pn-X8Y"/>
+                <constraint firstAttribute="bottom" secondItem="mSN-Eh-8vn" secondAttribute="bottom" constant="60" id="6yK-oh-eg9"/>
                 <constraint firstAttribute="trailing" secondItem="E0U-n2-Zu2" secondAttribute="trailing" constant="10" id="8HU-HL-2KO"/>
                 <constraint firstAttribute="bottom" secondItem="F7n-zK-aNw" secondAttribute="bottom" id="BMi-J1-gwP"/>
                 <constraint firstAttribute="bottom" secondItem="wgS-bS-mwy" secondAttribute="bottom" id="CEx-Zd-Ngb"/>
                 <constraint firstItem="wgS-bS-mwy" firstAttribute="top" secondItem="F7n-zK-aNw" secondAttribute="bottom" id="F95-Ex-p4T"/>
+                <constraint firstItem="mSN-Eh-8vn" firstAttribute="bottom" secondItem="tP5-SY-lVh" secondAttribute="bottom" id="Hau-6u-ezH"/>
                 <constraint firstItem="wgS-bS-mwy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="JmH-qf-E5H"/>
+                <constraint firstAttribute="bottom" secondItem="F7n-zK-aNw" secondAttribute="bottom" constant="60" id="JvB-Xi-69N"/>
                 <constraint firstItem="rJV-dd-ujZ" firstAttribute="centerY" secondItem="Dzw-c2-aIg" secondAttribute="centerY" id="O1P-aU-tfL"/>
                 <constraint firstItem="wgS-bS-mwy" firstAttribute="top" secondItem="Dzw-c2-aIg" secondAttribute="bottom" constant="10" id="OOc-qr-404"/>
                 <constraint firstItem="tP5-SY-lVh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Pkq-NX-ZSh"/>
@@ -278,6 +293,7 @@
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="BMi-J1-gwP"/>
+                    <exclude reference="6yK-oh-eg9"/>
                     <exclude reference="iJV-T7-iuq"/>
                     <exclude reference="VOp-rh-x8w"/>
                     <exclude reference="ijL-zu-D6e"/>
@@ -285,7 +301,9 @@
                     <exclude reference="oT0-05-GW2"/>
                     <exclude reference="4aC-JF-ovC"/>
                     <exclude reference="5NQ-70-Fkl"/>
+                    <exclude reference="F95-Ex-p4T"/>
                     <exclude reference="OOc-qr-404"/>
+                    <exclude reference="V22-i3-f98"/>
                     <exclude reference="200-m9-t2O"/>
                     <exclude reference="O1P-aU-tfL"/>
                     <exclude reference="rFb-27-wBk"/>

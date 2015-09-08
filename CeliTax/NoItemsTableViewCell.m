@@ -14,6 +14,8 @@
 {
     // Initialization code
     [self setSelectionStyle: UITableViewCellSelectionStyleNone];
+    
+    [self.label setText:NSLocalizedString(@"No receipt", nil)];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

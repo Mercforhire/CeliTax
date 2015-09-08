@@ -12,6 +12,10 @@
 #define WEBSERVICE_URL @"www.crave-n-save.ca/crave/Celitax-WebAPI/v1"
 #define WEB_API_FILE @"/index.php"
 
+//Common error message enums:
+#define NETWORK_ERROR_NO_CONNECTIVITY       @"NETWORK_ERROR_NO_CONNECTIVITY"
+#define NETWORK_UNKNOWN_ERROR               @"NETWORK_UNKNOWN_ERROR"
+
 @interface NetworkCommunicator : MKNetworkEngine
 
 -(MKNetworkOperation *)postDataToServer:(NSMutableDictionary *)params path:(NSString *)path;

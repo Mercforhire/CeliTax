@@ -13,9 +13,9 @@
 
 @interface ManipulationServiceImpl : NSObject <ManipulationService>
 
-@property (nonatomic, strong) CatagoriesDAO     *catagoriesDAO;
-@property (nonatomic, strong) RecordsDAO        *recordsDAO;
-@property (nonatomic, strong) ReceiptsDAO       *receiptsDAO;
-@property (nonatomic, strong) TaxYearsDAO       *taxYearsDAO;
+@property (nonatomic, weak) CatagoriesDAO     *catagoriesDAO;
+@property (nonatomic, weak) RecordsDAO        *recordsDAO;
+@property (nonatomic, weak) ReceiptsDAO       *receiptsDAO;
+@property (nonatomic, weak) TaxYearsDAO       *taxYearsDAO;
 
 @end

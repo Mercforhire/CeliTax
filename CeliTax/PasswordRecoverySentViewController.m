@@ -11,6 +11,8 @@
 
 @interface PasswordRecoverySentViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *instructionsLabel;
 @property (weak, nonatomic) IBOutlet HollowGreenButton *returnToLoginButton;
 
 @end
@@ -19,7 +21,12 @@
 
 - (void) setupUI
 {
+    [self.titleLabel setText:NSLocalizedString(@"Password Recovery", nil)];
+    
+    [self.instructionsLabel setText:NSLocalizedString(@"Thank you, an email has been sent with recovery options", nil)];
+    
     [self.returnToLoginButton setLookAndFeel:self.lookAndFeel];
+    [self.returnToLoginButton setTitle:NSLocalizedString(@"Return to Login", nil) forState:UIControlStateNormal];
 }
 
 - (void) viewDidLoad
@@ -30,6 +37,7 @@
     [self setupUI];
 
     // delete PasswordRecoveryViewController from navigation controllers stack
+    // TODO: make this less risky by targetting the PasswordRecoveryViewController to delete
     if (self.navigationController.viewControllers.count > 2)
     {
         NSArray *controllers = self.navigationController.viewControllers;

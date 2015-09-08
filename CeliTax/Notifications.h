@@ -14,4 +14,6 @@
 
     extern NSString *const kReceiptDatabaseChangedNotification;
 
+    extern NSString *const kAppLanguageChangedNotification;
+
 @end

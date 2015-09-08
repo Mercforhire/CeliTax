@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
             <string>Lato-Bold</string>
         </mutableArray>
         <mutableArray key="Lato-Regular.ttf">
@@ -30,7 +31,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="znA-HP-Bh7">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="EMAIL_ADDRESS" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="znA-HP-Bh7">
                     <rect key="frame" x="32" y="236" width="256" height="31"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="256" id="7Zp-4L-lwH"/>
@@ -39,39 +40,6 @@
                     <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q4g-qe-ClS">
-                    <rect key="frame" x="51" y="518" width="218" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="199" id="KC7-CR-FQb"/>
-                        <constraint firstAttribute="height" constant="30" id="RAu-se-h8m"/>
-                        <constraint firstAttribute="width" constant="199" id="Zh9-uN-Vfy"/>
-                    </constraints>
-                    <state key="normal">
-                        <attributedString key="attributedTitle">
-                            <fragment content="Don't have account? ">
-                                <attributes>
-                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <font key="NSFont" size="15" name="Lato-Regular"/>
-                                </attributes>
-                            </fragment>
-                            <fragment content="Sign up now!">
-                                <attributes>
-                                    <color key="NSColor" red="0.61960784313725492" green="0.84705882352941175" blue="0.44313725490196076" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <font key="NSFont" size="15" name="Lato-Regular"/>
-                                </attributes>
-                            </fragment>
-                        </attributedString>
-                    </state>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="KC7-CR-FQb"/>
-                            <exclude reference="Zh9-uN-Vfy"/>
-                        </mask>
-                    </variation>
-                    <connections>
-                        <action selector="signupPressed:" destination="-1" eventType="touchUpInside" id="cAb-hA-JQf"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rwv-cx-Dof" customClass="HollowGreenButton">
                     <rect key="frame" x="100" y="333" width="120" height="31"/>
                     <constraints>
@@ -79,7 +47,7 @@
                         <constraint firstAttribute="width" constant="120" id="r9w-N0-qSv"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="18"/>
-                    <state key="normal" title="Login">
+                    <state key="normal" title="LOGIN">
                         <color key="titleColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -94,7 +62,7 @@
                         <constraint firstAttribute="width" constant="146" id="XXN-1l-RoE"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                    <state key="normal" title="Forgot password?">
+                    <state key="normal" title="FORGOT PASSWORD?">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -118,7 +86,7 @@
                         </mask>
                     </variation>
                 </imageView>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8KR-qV-0Yw">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PASSWORD" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8KR-qV-0Yw">
                     <rect key="frame" x="32" y="288" width="256" height="31"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="31" id="NQZ-GB-b4P"/>
@@ -127,6 +95,27 @@
                     <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                 </textField>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q4g-qe-ClS">
+                    <rect key="frame" x="26.5" y="518" width="268" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="199" id="KC7-CR-FQb"/>
+                        <constraint firstAttribute="height" constant="30" id="RAu-se-h8m"/>
+                        <constraint firstAttribute="width" constant="199" id="Zh9-uN-Vfy"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
+                    <state key="normal" title="NEED_AN_ACCOUNT? SIGN_UP_NOW!">
+                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="KC7-CR-FQb"/>
+                            <exclude reference="Zh9-uN-Vfy"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="signupPressed:" destination="-1" eventType="touchUpInside" id="cAb-hA-JQf"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>

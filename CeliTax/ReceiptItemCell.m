@@ -24,6 +24,10 @@
 {
     // Initialization code
     self.backgroundColor = [UIColor clearColor];
+    
+    [self.qtyLabel setText:NSLocalizedString(@"Qty", nil)];
+    [self.priceUnitLabel setText:NSLocalizedString(@"Price/Item", nil)];
+    [self.totalLabel setText:NSLocalizedString(@"Total", nil)];
 }
 
 -(void)setUnitTypeTo:(NSInteger)unitType
@@ -31,9 +35,9 @@
     switch (unitType)
     {
         case UnitItem:
-            [self.qtyLabel setText:@"Qty"];
-            [self.priceUnitLabel setText:@"Price/Item"];
-            [self.totalLabel setText:@"Total"];
+            [self.qtyLabel setText:NSLocalizedString(@"Qty", nil)];
+            [self.priceUnitLabel setText:NSLocalizedString(@"Price/Item", nil)];
+            [self.totalLabel setText:NSLocalizedString(@"Total", nil)];
             
             [self.priceField setUserInteractionEnabled:YES];
             [self.totalField setUserInteractionEnabled:NO];
@@ -42,23 +46,17 @@
             
             break;
             
-        case UnitML:
-        case UnitL:
-        case UnitG:
-        case Unit100G:
-        case UnitKG:
-            [self.qtyLabel setText:@"Weight"];
-            [self.priceUnitLabel setText:@"Unit"];
-            [self.totalLabel setText:@"Total Cost"];
+        default:
+            
+            [self.qtyLabel setText:NSLocalizedString(@"Weight", nil)];
+            [self.priceUnitLabel setText:NSLocalizedString(@"Unit", nil)];
+            [self.totalLabel setText:NSLocalizedString(@"Total Cost", nil)];
             
             [self.priceField setUserInteractionEnabled:NO];
             [self.totalField setUserInteractionEnabled:YES];
             
             [self.priceUnitFieldDollarSign setHidden:YES];
             
-            break;
-            
-        default:
             break;
     }
     
@@ -90,6 +88,36 @@
             
         case UnitKG:
             [self.priceField setText:@"(kg)"];
+            
+            break;
+            
+        case UnitFloz:
+            [self.priceField setText:@"(fl oz)"];
+            
+            break;
+            
+        case UnitPt:
+            [self.priceField setText:@"(pt)"];
+            
+            break;
+        
+        case UnitQt:
+            [self.priceField setText:@"(qt)"];
+            
+            break;
+            
+        case UnitGal:
+            [self.priceField setText:@"(gal)"];
+            
+            break;
+            
+        case UnitOz:
+            [self.priceField setText:@"(oz)"];
+            
+            break;
+            
+        case UnitLb:
+            [self.priceField setText:@"(lb)"];
             
             break;
             

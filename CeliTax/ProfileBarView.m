@@ -56,6 +56,13 @@
     myLookAndFeel = lookAndFeel;
     
     [self.editButton1 setLookAndFeel:myLookAndFeel];
+    [self.editButton1 setTitle:NSLocalizedString(@"Edit", nil) forState:UIControlStateNormal];
+}
+
+- (void) setEditButtonsVisible:(BOOL)visible
+{
+    [self.editButton1 setHidden:!visible];
+    [self.editButton2 setHidden:!visible];
 }
 
 @end

@@ -35,6 +35,7 @@
     // Do any additional setup after loading the view from its nib
     
     [self.doneButton setLookAndFeel:self.lookAndFeel];
+    [self.doneButton setTitle:NSLocalizedString(@"Done", nil) forState:UIControlStateNormal];
     
     NKOColorPickerDidChangeColorBlock colorDidChangeBlock = ^(UIColor *color) {
         //Your code handling a color change in the picker view.

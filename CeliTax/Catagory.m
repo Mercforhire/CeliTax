@@ -182,6 +182,42 @@
             
             break;
             
+        case UnitFloz:
+            
+            [self.nationalAverageCosts setObject:value forKey:kUnitFlozKey];
+            
+            break;
+            
+        case UnitPt:
+            
+            [self.nationalAverageCosts setObject:value forKey:kUnitPtKey];
+            
+            break;
+            
+        case UnitQt:
+            
+            [self.nationalAverageCosts setObject:value forKey:kUnitQtKey];
+            
+            break;
+            
+        case UnitGal:
+            
+            [self.nationalAverageCosts setObject:value forKey:kUnitGalKey];
+            
+            break;
+        
+        case UnitOz:
+            
+            [self.nationalAverageCosts setObject:value forKey:kUnitOzKey];
+            
+            break;
+            
+        case UnitLb:
+            
+            [self.nationalAverageCosts setObject:value forKey:kUnitLbKey];
+            
+            break;
+            
         default:
             
             break;
@@ -225,6 +261,42 @@
         case UnitKG:
             
             [self.nationalAverageCosts removeObjectForKey:kUnitKGKey];
+            
+            break;
+            
+        case UnitFloz:
+            
+            [self.nationalAverageCosts removeObjectForKey:kUnitFlozKey];
+            
+            break;
+            
+        case UnitPt:
+            
+            [self.nationalAverageCosts removeObjectForKey:kUnitPtKey];
+            
+            break;
+            
+        case UnitQt:
+            
+            [self.nationalAverageCosts removeObjectForKey:kUnitQtKey];
+            
+            break;
+            
+        case UnitGal:
+            
+            [self.nationalAverageCosts removeObjectForKey:kUnitGalKey];
+            
+            break;
+            
+        case UnitOz:
+            
+            [self.nationalAverageCosts removeObjectForKey:kUnitOzKey];
+            
+            break;
+            
+        case UnitLb:
+            
+            [self.nationalAverageCosts removeObjectForKey:kUnitLbKey];
             
             break;
             

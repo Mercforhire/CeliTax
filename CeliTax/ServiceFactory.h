@@ -19,7 +19,7 @@
 
 @property (nonatomic, weak) NetworkCommunicator *networkCommunicator;
 
-@property (nonatomic, strong) BuilderFactory *builderFactory;
+@property (nonatomic, weak) BuilderFactory *builderFactory;
 
 - (id<AuthenticationService>) createAuthenticationService;
 

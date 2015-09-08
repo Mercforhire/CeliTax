@@ -58,7 +58,7 @@
 
 //Misc
 
-+ (SideMenuView *) getLeftSideViewUsing: (UIImage *) profileImage andUsername: (NSString *) userName andMenuSelections: (NSArray *) menuSelections;
++ (SideMenuView *) getLeftSideViewUsing: (UIImage *) profileImage andUsername: (NSString *) userName;
 
 + (NSString *) generateUniqueID;
 

@@ -13,8 +13,11 @@
 - (void) awakeFromNib
 {
     // Initialization code
-
     [self setSelectionStyle: UITableViewCellSelectionStyleNone];
+    
+    [self.totalQtyLabel setText:NSLocalizedString(@"Total Qty.", nil)];
+    [self.totalAmountLabel setText:NSLocalizedString(@"Total", nil)];
+    [self.avgPriceLabel setText:NSLocalizedString(@"Avg $ / non-GF", nil)];
 }
 
 - (void) setSelected: (BOOL) selected animated: (BOOL) animated

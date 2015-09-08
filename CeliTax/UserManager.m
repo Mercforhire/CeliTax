@@ -49,6 +49,8 @@
         self.userDataDAO.userKey = self.user.userKey;
         
         [self.backgroundWorker activeWorker];
+        
+        [self.configManager loadSettingsFromPersistence];
     }
     
     return (self.user != nil);
@@ -82,6 +84,8 @@
     }
     
     [self.backgroundWorker activeWorker];
+    
+    [self.configManager loadSettingsFromPersistence];
     
     [self.authenticationService retrieveProfileImage:^(UIImage *profileImage) {
         
@@ -119,6 +123,16 @@
         [self.backgroundWorker addTaskToQueue:QueueTaskUploadProfileData];
         
     }];
+}
+
+-(void)changeEmail:(NSString *)emailToChangeTo
+{
+    self.user.loginName = emailToChangeTo;
+    
+    if (![Utils saveUser:self.user])
+    {
+        DLog(@"ERROR: Did not save User");
+    }
 }
 
 -(BOOL)doesUserHaveCustomProfileImage

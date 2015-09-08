@@ -39,6 +39,7 @@ NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
     [self.collectionView setDataSource: self];
     [self.collectionView setDelegate: self];
     [self.collectionView setBounces: YES];
+    [self.collectionView setAlwaysBounceVertical:YES];
     [self addSubview: self.collectionView];
     
     self.selectedImageIndices = [NSMutableDictionary new];
@@ -66,6 +67,13 @@ NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
     }
 
     return self;
+}
+
+- (void) layoutSubviews
+{
+    [super layoutSubviews];
+    
+    [self.collectionView setFrame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 }
 
 - (void) setImages: (NSArray *) images

@@ -20,6 +20,9 @@
     // Initialization code
 
     [self setSelectionStyle: UITableViewCellSelectionStyleNone];
+    
+    [self.quantityLabel setText:NSLocalizedString(@"Qty.", nil)];
+    [self.pricePerItemLabel setText:NSLocalizedString(@"Price/Item", nil)];
 }
 
 - (void) setSelected: (BOOL) selected animated: (BOOL) animated
@@ -65,9 +68,9 @@
 
 -(void)setToDisplayItem
 {
-    [self.quantityLabel setText:@"Qty."];
+    [self.quantityLabel setText:NSLocalizedString(@"Qty.", nil)];
     
-    [self.pricePerItemLabel setText:@"Price/Item"];
+    [self.pricePerItemLabel setText:NSLocalizedString(@"Price/Item", nil)];
 }
 
 -(void)setToDisplayUnit:(NSInteger)unitType
@@ -96,6 +99,30 @@
             unitSuffix = @"(kg)";
             break;
             
+        case UnitFloz:
+            unitSuffix = @"(lf oz)";
+            break;
+            
+        case UnitQt:
+            unitSuffix = @"(qt)";
+            break;
+            
+        case UnitPt:
+            unitSuffix = @"(pt)";
+            break;
+            
+        case UnitGal:
+            unitSuffix = @"(gal)";
+            break;
+            
+        case UnitOz:
+            unitSuffix = @"(oz)";
+            break;
+            
+        case UnitLb:
+            unitSuffix = @"(lb)";
+            break;
+            
         default:
             break;
     }
@@ -104,20 +131,26 @@
     {
         case UnitML:
         case UnitL:
-            [self.quantityLabel setText:[NSString stringWithFormat:@"Volume-%@", unitSuffix]];
+        case UnitFloz:
+        case UnitPt:
+        case UnitQt:
+        case UnitGal:
+            [self.quantityLabel setText:[NSString stringWithFormat:NSLocalizedString(@"Volume-%@", nil), unitSuffix]];
             break;
             
         case UnitG:
         case Unit100G:
         case UnitKG:
-            [self.quantityLabel setText:[NSString stringWithFormat:@"Weight-%@", unitSuffix]];
+        case UnitOz:
+        case UnitLb:
+            [self.quantityLabel setText:[NSString stringWithFormat:NSLocalizedString(@"Weight-%@", nil), unitSuffix]];
             break;
             
         default:
             break;
     }
     
-    [self.pricePerItemLabel setText:@"Total Price"];
+    [self.pricePerItemLabel setText:NSLocalizedString(@"Total Price", nil)];
 }
 
 @end

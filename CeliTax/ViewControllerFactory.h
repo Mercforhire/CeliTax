@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class ConfigurationManager, UserManager, LookAndFeel;
-@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCatagoryViewController, SidebarViewController, Catagory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager, SyncManager, MyProfileViewController, UnitPickerViewController, YearSummaryViewController, YearSavingViewController, BackgroundWorker;
+@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCatagoryViewController, SidebarViewController, Catagory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager, SyncManager, ProfileSettingsViewController, ImperialUnitPickerViewController, MetricUnitPickerViewController, YearSummaryViewController, YearSavingViewController, BackgroundWorker, LoginSettingsViewController;
 
 @protocol AuthenticationService, DataService, ManipulationService, SyncService;
 
@@ -68,14 +68,16 @@
 
 - (PasswordRecoverySentViewController *) createPasswordRecoverySentViewController;
 
-- (MyProfileViewController *) createMyProfileViewController;
+- (ProfileSettingsViewController *) createProfileSettingsViewController;
 
-- (UnitPickerViewController *) createUnitPickerViewControllerWithDefaultUnit:(NSInteger)defaultUnit;
+- (MetricUnitPickerViewController *) createUnitPickerViewControllerWithDefaultUnit:(NSInteger)defaultUnit;
+
+- (ImperialUnitPickerViewController *) createImperialUnitPickerViewControllerWithDefaultUnit:(NSInteger)defaultUnit;
 
 - (YearSummaryViewController *) createYearSummaryViewController;
 
 - (YearSavingViewController *) createYearSavingViewController;
 
-- (NSArray *) getMenuSelections;
+- (LoginSettingsViewController *) createLoginSettingsViewController;
 
 @end

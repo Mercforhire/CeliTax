@@ -37,13 +37,41 @@
 
 - (void) setupUI
 {
+    [self.emailField setPlaceholder:NSLocalizedString(@"Email Address", nil)];
     [self.lookAndFeel applyGrayBorderTo: self.emailField];
     [self.lookAndFeel addLeftInsetToTextField: self.emailField];
 
+    [self.passwordField setPlaceholder:NSLocalizedString(@"Password", nil)];
     [self.lookAndFeel applyGrayBorderTo: self.passwordField];
     [self.lookAndFeel addLeftInsetToTextField: self.passwordField];
 
     [self.loginButton setLookAndFeel:self.lookAndFeel];
+    [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
+    
+    [self.forgotPasswordButton setTitle:@"Forgot password?" forState:UIControlStateNormal];
+    
+    NSDictionary *boldBlackTextAttributes = @{
+                                NSFontAttributeName:[UIFont latoBoldFontOfSize:15],
+                                NSForegroundColorAttributeName:[UIColor blackColor]
+                                };
+    
+    NSDictionary *boldGreenTextAttributes = @{
+                                               NSFontAttributeName:[UIFont latoBoldFontOfSize:15],
+                                               NSForegroundColorAttributeName:self.lookAndFeel.appGreenColor
+                                               };
+    
+    NSString *titlePart1 = NSLocalizedString(@"Need an account?", nil);
+    NSString *titlePart2 = NSLocalizedString(@"Sign up now!", nil);
+    
+    NSString *titleBothParts = [NSString stringWithFormat:@"%@ %@", titlePart1, titlePart2];
+    
+    NSMutableAttributedString *signupButtonAttributedString = [[NSMutableAttributedString alloc] initWithString:titleBothParts attributes:boldBlackTextAttributes];
+    
+    NSRange rangeOfTextToGreen = [titleBothParts rangeOfString:titlePart2];
+    
+    [signupButtonAttributedString setAttributes:boldGreenTextAttributes range:rangeOfTextToGreen];
+    
+    [self.signupButton setAttributedTitle:signupButtonAttributedString forState:UIControlStateNormal];
 }
 
 - (void) viewDidLoad
@@ -106,8 +134,8 @@
     if (!self.waitView)
     {
         self.waitView = [[MBProgressHUD alloc] initWithView: self.view];
-        self.waitView.labelText = @"Please wait";
-        self.waitView.detailsLabelText = @"Logging in...";
+        self.waitView.labelText = NSLocalizedString(@"Please wait", nil);
+        self.waitView.detailsLabelText = NSLocalizedString(@"Logging in...", nil);
         self.waitView.mode = MBProgressHUDModeIndeterminate;
         [self.view addSubview: self.waitView];
     }
@@ -121,38 +149,63 @@
     {
         [self.waitView hide: YES];
 
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"" message: @"Email address not valid" delegate: nil cancelButtonTitle: nil otherButtonTitles: @"Ok", nil];
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
+                                                          message: NSLocalizedString(@"Email address is not valid", nil)
+                                                         delegate: nil
+                                                cancelButtonTitle: nil
+                                                otherButtonTitles: NSLocalizedString(@"Dismiss", nil), nil];
 
         [message show];
 
         return;
     }
 
-    [self.authenticationService authenticateUser: self.emailField.text withPassword: self.passwordField.text success: ^(AuthorizeResult *authorizeResult) {
-        [self.waitView hide: YES];
-
-        [self.userManager loginUserFor: authorizeResult.userName
-                                andKey: authorizeResult.userAPIKey
-                          andFirstname: authorizeResult.firstname
-                           andLastname: authorizeResult.lastname
-                            andCountry: authorizeResult.country];
-
-        [self.navigationController pushViewController: [self.viewControllerFactory createMainViewController] animated: YES];
-
-        [self.loginButton setEnabled: YES];
-
-        return;
-    } failure: ^(AuthorizeResult *authorizeResult) {
-        [self.waitView hide: YES];
-
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Error" message: authorizeResult.message delegate: nil cancelButtonTitle: nil otherButtonTitles: @"Ok", nil];
-
-        [message show];
-
-        [self.loginButton setEnabled: YES];
-
-        return;
-    }];
+    [self.authenticationService authenticateUser: self.emailField.text
+                                    withPassword: self.passwordField.text
+                                         success: ^(AuthorizeResult *authorizeResult)
+     {
+         
+         [self.waitView hide: YES];
+         
+         [self.userManager loginUserFor: authorizeResult.userName
+                                 andKey: authorizeResult.userAPIKey
+                           andFirstname: authorizeResult.firstname
+                            andLastname: authorizeResult.lastname
+                             andCountry: authorizeResult.country];
+         
+         [self.navigationController pushViewController: [self.viewControllerFactory createMainViewController] animated: YES];
+         
+         [self.loginButton setEnabled: YES];
+         
+     } failure: ^(AuthorizeResult *authorizeResult) {
+         
+         [self.waitView hide: YES];
+         
+         NSString *errorMessage;
+         
+         if ([authorizeResult.message isEqualToString:USER_PASSWORD_WRONG])
+         {
+             errorMessage = NSLocalizedString(@"The password entered for this user is incorrect", nil);
+         }
+         else if ([authorizeResult.message isEqualToString:USER_DOESNT_EXIST])
+         {
+             errorMessage = NSLocalizedString(@"This user does not exist", nil);
+         }
+         else
+         {
+             errorMessage = NSLocalizedString(@"Can not connect to our server, please try again later", nil);
+         }
+         
+         UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
+                                                           message: errorMessage
+                                                          delegate: nil cancelButtonTitle: nil
+                                                 otherButtonTitles: NSLocalizedString(@"Dismiss", nil), nil];
+         
+         [message show];
+         
+         [self.loginButton setEnabled: YES];
+         
+     }];
 }
 
 - (IBAction) loginPressed: (UIButton *) sender

@@ -25,8 +25,9 @@
 
 @property (nonatomic, strong) NSString *userName;
 
-@property (nonatomic, strong) NSArray *menuSelections; // of NSString
-
 @property (nonatomic) NSInteger currentlySelectedIndex; // -1 if none
+
+@property (nonatomic, strong) UIImageView *profileImageView;
+@property (nonatomic, strong) UILabel *usernameLabel;
 
 @end

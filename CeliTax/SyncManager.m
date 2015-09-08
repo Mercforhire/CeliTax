@@ -18,7 +18,6 @@
 }
 
 @property (nonatomic, weak) UserManager *userManager;
-
 @property (nonatomic, weak) id <SyncService> syncService;
 
 @property (nonatomic, strong) NSArray *filenamesToUpload;    /** Filenames that we need to upload */

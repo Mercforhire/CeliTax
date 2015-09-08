@@ -14,6 +14,8 @@
 
 - (void) setLookAndFeel: (LookAndFeel *) lookAndFeel;
 
+- (void) setEditButtonsVisible:(BOOL)visible;
+
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;

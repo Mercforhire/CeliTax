@@ -11,7 +11,7 @@
 
 @interface TaxYearsDAO : NSObject
 
-@property (strong, nonatomic) UserDataDAO *userDataDAO;
+@property (weak, nonatomic) UserDataDAO *userDataDAO;
 
 -(NSArray *)loadAllTaxYears;
 

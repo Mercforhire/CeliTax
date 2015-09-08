@@ -45,7 +45,7 @@
 
 @property (nonatomic) BOOL viewAllSelected;
 
-@property (weak, nonatomic) IBOutlet UILabel *viewAllLabelQtyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *viewAllQtyLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *viewAllTotalLabel;
 @property (weak, nonatomic) IBOutlet UITableView *viewAllTable;
@@ -60,28 +60,39 @@
 - (void) awakeFromNib
 {
     // Initialization code
-
     [self setSelectionStyle: UITableViewCellSelectionStyleNone];
 
     UINib *noItemTableCell = [UINib nibWithNibName: @"NoItemsTableViewCell" bundle: nil];
     
     UINib *receiptTableViewCell = [UINib nibWithNibName: @"ReceiptTableViewCell" bundle: nil];
 
+    [self.recentUploadsLabel setText:NSLocalizedString(@"Recent Uploads", nil)];
+    [self.recentUploadsQtyLabel setText:NSLocalizedString(@"Total Qty.", nil)];
+    [self.recentUploadsTotalLabel setText:NSLocalizedString(@"Total", nil)];
     self.recentUploadsTable.dataSource = self;
     self.recentUploadsTable.delegate = self;
     [self.recentUploadsTable registerNib: receiptTableViewCell forCellReuseIdentifier: kReceiptTableViewCellIdentifier];
     [self.recentUploadsTable registerNib: noItemTableCell forCellReuseIdentifier: kNoItemsTableViewCellIdentifier];
     
+    [self.previousWeekLabel setText:NSLocalizedString(@"Previous Week", nil)];
+    [self.previousWeekQtyLabel setText:NSLocalizedString(@"Total Qty.", nil)];
+    [self.previousWeekTotalLabel setText:NSLocalizedString(@"Total", nil)];
     self.previousWeekTable.dataSource = self;
     self.previousWeekTable.delegate = self;
     [self.previousWeekTable registerNib: receiptTableViewCell forCellReuseIdentifier: kReceiptTableViewCellIdentifier];
     [self.previousWeekTable registerNib: noItemTableCell forCellReuseIdentifier: kNoItemsTableViewCellIdentifier];
     
+    [self.previousMonthLabel setText:NSLocalizedString(@"Previous Month", nil)];
+    [self.previousMonthQtyLabel setText:NSLocalizedString(@"Total Qty.", nil)];
+    [self.previousMonthTotalLabel setText:NSLocalizedString(@"Total", nil)];
     self.previousMonthTable.dataSource = self;
     self.previousMonthTable.delegate = self;
     [self.previousMonthTable registerNib: receiptTableViewCell forCellReuseIdentifier: kReceiptTableViewCellIdentifier];
     [self.previousMonthTable registerNib: noItemTableCell forCellReuseIdentifier: kNoItemsTableViewCellIdentifier];
     
+    [self.viewAllLabel setText:NSLocalizedString(@"View All", nil)];
+    [self.viewAllQtyLabel setText:NSLocalizedString(@"Total Qty.", nil)];
+    [self.viewAllTotalLabel setText:NSLocalizedString(@"Total", nil)];
     self.viewAllTable.dataSource = self;
     self.viewAllTable.delegate = self;
     [self.viewAllTable registerNib: receiptTableViewCell forCellReuseIdentifier: kReceiptTableViewCellIdentifier];
@@ -206,7 +217,7 @@
 
     if (_viewAllSelected)
     {
-        [self.viewAllLabelQtyLabel setHidden: NO];
+        [self.viewAllQtyLabel setHidden: NO];
         [self.viewAllTriangle setGreenArrowUp];
         [self.viewAllTotalLabel setHidden: NO];
         [self.viewAllTable setHidden: NO];
@@ -224,7 +235,7 @@
     }
     else
     {
-        [self.viewAllLabelQtyLabel setHidden: YES];
+        [self.viewAllQtyLabel setHidden: YES];
         [self.viewAllTriangle setGreenArrowDown];
         [self.viewAllTotalLabel setHidden: YES];
         [self.viewAllTable setHidden: YES];
@@ -236,18 +247,18 @@
 
 - (void) setToDisplayItems
 {
-    [self.recentUploadsQtyLabel setText:@"Total Qty"];
-    [self.previousWeekQtyLabel setText:@"Total Qty"];
-    [self.previousMonthQtyLabel setText:@"Total Qty"];
-    [self.viewAllLabelQtyLabel setText:@"Total Qty"];
+    [self.recentUploadsQtyLabel setText:NSLocalizedString(@"Total Qty.", nil)];
+    [self.previousWeekQtyLabel setText:NSLocalizedString(@"Total Qty.", nil)];
+    [self.previousMonthQtyLabel setText:NSLocalizedString(@"Total Qty.", nil)];
+    [self.viewAllQtyLabel setText:NSLocalizedString(@"Total Qty.", nil)];
 }
 
 - (void) setToDisplayWeight
 {
-    [self.recentUploadsQtyLabel setText:@"Weight"];
-    [self.previousWeekQtyLabel setText:@"Weight"];
-    [self.previousMonthQtyLabel setText:@"Weight"];
-    [self.viewAllLabelQtyLabel setText:@"Weight"];
+    [self.recentUploadsQtyLabel setText:NSLocalizedString(@"Weight", nil)];
+    [self.previousWeekQtyLabel setText:NSLocalizedString(@"Weight", nil)];
+    [self.previousMonthQtyLabel setText:NSLocalizedString(@"Weight", nil)];
+    [self.viewAllQtyLabel setText:NSLocalizedString(@"Weight", nil)];
 }
 
 - (void) selectNothing

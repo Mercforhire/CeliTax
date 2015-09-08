@@ -14,7 +14,9 @@
 #import "M13Checkbox.h"
 #import "HollowGreenButton.h"
 
-@interface RegisterViewController () <UITextFieldDelegate, UIScrollViewDelegate>
+@interface RegisterViewController () <UITextFieldDelegate>
+
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 @property (weak, nonatomic) IBOutlet UITextField *emailField;
 @property (weak, nonatomic) IBOutlet UITextField *emailRepeatField;
@@ -27,6 +29,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *canadaButton;
 @property (weak, nonatomic) IBOutlet UIButton *usaButton;
+
+@property (weak, nonatomic) IBOutlet UILabel *taxCountryLabel;
 
 @property (weak, nonatomic) IBOutlet HollowGreenButton *doneButton;
 
@@ -43,32 +47,43 @@
 
 - (void) setupUI
 {
+    [self.titleLabel setText:NSLocalizedString(@"Create Account", nil)];
+    
     [self.lookAndFeel applyGrayBorderTo: self.emailField];
     [self.lookAndFeel addLeftInsetToTextField: self.emailField];
+    [self.emailField setPlaceholder:NSLocalizedString(@"Please enter email address", nil)];
 
     [self.lookAndFeel applyGrayBorderTo: self.emailRepeatField];
     [self.lookAndFeel addLeftInsetToTextField: self.emailRepeatField];
+    [self.emailRepeatField setPlaceholder:NSLocalizedString(@"Please re-enter your email address", nil)];
 
     [self.lookAndFeel applyGrayBorderTo: self.passwordField];
     [self.lookAndFeel addLeftInsetToTextField: self.passwordField];
+    [self.passwordField setPlaceholder:NSLocalizedString(@"Please enter your password", nil)];
 
     [self.lookAndFeel applyGrayBorderTo: self.passwordRepeatField];
     [self.lookAndFeel addLeftInsetToTextField: self.passwordRepeatField];
+    [self.passwordRepeatField setPlaceholder:NSLocalizedString(@"Please re-enter your password", nil)];
 
     [self.lookAndFeel applyGrayBorderTo: self.firstnameField];
     [self.lookAndFeel addLeftInsetToTextField: self.firstnameField];
+    [self.firstnameField setPlaceholder:NSLocalizedString(@"First Name", nil)];
 
     [self.lookAndFeel applyGrayBorderTo: self.lastnameField];
     [self.lookAndFeel addLeftInsetToTextField: self.lastnameField];
+    [self.lastnameField setPlaceholder:NSLocalizedString(@"Last Name", nil)];
 
+    [self.taxCountryLabel setText:NSLocalizedString(@"Tax Country", nil)];
+    
     [self.doneButton setLookAndFeel:self.lookAndFeel];
+    [self.doneButton setTitle:NSLocalizedString(@"Create Account", nil) forState:UIControlStateNormal];
     
     [self.agreeCheckBox.titleLabel setFont: [UIFont latoFontOfSize: 13]];
     [self.agreeCheckBox.titleLabel setTextColor: [UIColor blackColor]];
     [self.agreeCheckBox setStrokeColor: [UIColor grayColor]];
     [self.agreeCheckBox setCheckColor: self.lookAndFeel.appGreenColor];
     [self.agreeCheckBox setCheckAlignment: M13CheckboxAlignmentLeft];
-    [self.agreeCheckBox.titleLabel setText: @"I agree to the terms and conditions"];
+    [self.agreeCheckBox.titleLabel setText: NSLocalizedString(@"I agree to the terms and conditions", nil)];
 }
 
 - (void) viewDidLoad
@@ -130,8 +145,8 @@
     if (!self.waitView)
     {
         self.waitView = [[MBProgressHUD alloc] initWithView: self.view];
-        self.waitView.labelText = @"Please wait";
-        self.waitView.detailsLabelText = @"Registering...";
+        self.waitView.labelText = NSLocalizedString(@"Please wait", nil);
+        self.waitView.detailsLabelText = NSLocalizedString(@"Registering...", nil);
         self.waitView.mode = MBProgressHUDModeIndeterminate;
         [self.view addSubview: self.waitView];
     }
@@ -145,7 +160,11 @@
     {
         [self.waitView hide: YES];
 
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"" message: @"Email address in both fields not match" delegate: nil cancelButtonTitle: nil otherButtonTitles: @"Ok", nil];
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
+                                                          message: NSLocalizedString(@"Email address in both fields do not match", nil)
+                                                         delegate: nil
+                                                cancelButtonTitle: nil
+                                                otherButtonTitles: NSLocalizedString(@"Dismiss", nil), nil];
 
         [message show];
         
@@ -158,7 +177,11 @@
     {
         [self.waitView hide: YES];
 
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"" message: @"Email address not valid" delegate: nil cancelButtonTitle: nil otherButtonTitles: @"Ok", nil];
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
+                                                          message: NSLocalizedString(@"Email address is not valid", nil)
+                                                         delegate: nil
+                                                cancelButtonTitle: nil
+                                                otherButtonTitles: NSLocalizedString(@"Dismiss", nil), nil];
 
         [message show];
         
@@ -171,7 +194,11 @@
     {
         [self.waitView hide: YES];
 
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"" message: @"Password in both fields not match" delegate: nil cancelButtonTitle: nil otherButtonTitles: @"Ok", nil];
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
+                                                          message: NSLocalizedString(@"Password in both fields do not match", nil)
+                                                         delegate: nil
+                                                cancelButtonTitle: nil
+                                                otherButtonTitles: NSLocalizedString(@"Dismiss", nil), nil];
 
         [message show];
         
@@ -184,7 +211,11 @@
     {
         [self.waitView hide: YES];
 
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"" message: @"Password should be at least 6 characters" delegate: nil cancelButtonTitle: nil otherButtonTitles: @"Ok", nil];
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
+                                                          message: NSLocalizedString(@"Password has to be least 6 characters long", nil)
+                                                         delegate: nil
+                                                cancelButtonTitle: nil
+                                                otherButtonTitles: NSLocalizedString(@"Dismiss", nil), nil];
 
         [message show];
         
@@ -198,36 +229,48 @@
                                   withFirstname: self.firstnameField.text
                                    withLastname: self.lastnameField.text
                                     withCountry: self.country
-                                        success:^(RegisterResult *registerResult) {
+                                        success:^(RegisterResult *registerResult)
+    {
+        
         [self.waitView hide: YES];
 
         UIAlertView *message = [[UIAlertView alloc]
-                                    initWithTitle: @"Welcome"
-                                          message: registerResult.message
+                                    initWithTitle: NSLocalizedString(@"Welcome", nil)
+                                          message: NSLocalizedString(@"Please log in with your new account", nil)
                                          delegate: nil
                                 cancelButtonTitle: nil
-                                otherButtonTitles: @"Ok", nil];
+                                otherButtonTitles: NSLocalizedString(@"Ok", nil), nil];
 
         [message show];
 
         [self.navigationController popViewControllerAnimated: YES];
-
-        return;
+        
     } failure:^(RegisterResult *registerResult) {
+        
         [self.waitView hide: YES];
+        
+        NSString *errorMessage;
+        
+        if ([registerResult.message isEqualToString:USER_ALREADY_EXIST])
+        {
+            errorMessage = NSLocalizedString(@"The email address is already used by another account. Please use a different email address", nil);
+        }
+        else
+        {
+            errorMessage = NSLocalizedString(@"Can not connect to our server, please try again later", nil);
+        }
 
         UIAlertView *message = [[UIAlertView alloc]
-                                initWithTitle: @"Error"
-                                          message: registerResult.message
-                                         delegate: nil
+                                initWithTitle: NSLocalizedString(@"Error", nil)
+                                message: errorMessage
+                                delegate: nil
                                 cancelButtonTitle: nil
-                                otherButtonTitles: @"Ok", nil];
+                                otherButtonTitles: NSLocalizedString(@"Dismiss", nil), nil];
 
         [message show];
         
         [self.doneButton setEnabled: YES];
-
-        return;
+        
     }];
 }
 

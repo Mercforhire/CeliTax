@@ -18,6 +18,7 @@
                 <outlet property="catagoriesTable" destination="BwI-BV-ebY" id="MV0-AP-65M"/>
                 <outlet property="catagoryNameField" destination="EDV-Pe-x5f" id="UnT-ce-PcW"/>
                 <outlet property="colorView" destination="yBa-7U-bQ8" id="FdR-DI-Yhr"/>
+                <outlet property="titleLabel" destination="5jO-aO-bye" id="tB4-4i-stL"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -34,8 +35,8 @@
                         <constraint firstAttribute="height" constant="30" id="yQD-ez-A6t"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manage Categories" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5jO-aO-bye">
-                    <rect key="frame" x="78" y="79" width="164.5" height="23"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MANAGE CATEGORIES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5jO-aO-bye">
+                    <rect key="frame" x="59" y="79" width="202.5" height="23"/>
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="19"/>
                     <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
@@ -44,7 +45,7 @@
                     <rect key="frame" x="0.0" y="189" width="320" height="379"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Catagory Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EDV-Pe-x5f">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="ENTER CATAGORY NAME" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EDV-Pe-x5f">
                     <rect key="frame" x="73" y="127" width="221" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="PVF-Q8-qWN"/>

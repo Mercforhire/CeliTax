@@ -17,6 +17,7 @@
 #import "MyAccountViewController.h"
 #import "MainViewController.h"
 #import "LoginViewController.h"
+#import "ProfileSettingsViewController.h"
 
 @interface BaseSideBarViewController () <CDRTranslucentSideBarDelegate, SideMenuViewProtocol>
 
@@ -48,14 +49,25 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.sideMenuView = [Utils getLeftSideViewUsing: self.userManager.user.avatarImage
-                                        andUsername: [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]
-                                  andMenuSelections: [self.viewControllerFactory getMenuSelections]];
+                                        andUsername: [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]];
     self.sideMenuView.delegate = self;
     self.sideMenuView.lookAndFeel = self.lookAndFeel;
 
     self.rightSideBar = [[CDRTranslucentSideBar alloc] initWithDirectionFromRight: YES];
-    [self.rightSideBar setTranslucentAlpha: 0.9];
+    [self.rightSideBar setTranslucentAlpha: 0.98];
     self.rightSideBar.delegate = self;
+    
+    UITapGestureRecognizer *profileImageViewTap =
+    [[UITapGestureRecognizer alloc] initWithTarget: self
+                                            action: @selector(profileSettingsPressed)];
+    
+    [self.sideMenuView.profileImageView addGestureRecognizer: profileImageViewTap];
+    
+    UITapGestureRecognizer *profileImageViewTap2 =
+    [[UITapGestureRecognizer alloc] initWithTarget: self
+                                            action: @selector(profileSettingsPressed)];
+    
+    [self.sideMenuView.usernameLabel addGestureRecognizer: profileImageViewTap2];
 
     if ([self isKindOfClass: [MainViewController class]])
     {
@@ -116,6 +128,20 @@
 - (void) popToLoginView
 {
     [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: 0] animated: YES];
+}
+
+- (void)profileSettingsPressed
+{
+    [self.rightSideBar dismissAnimated: NO];
+    
+    // remove CDRTranslucentSideBar
+    NSMutableArray *viewControllers = [NSMutableArray arrayWithArray: self.navigationController.viewControllers];
+    
+    [viewControllers removeObject: self.rightSideBar];
+    
+    [self.navigationController setViewControllers: viewControllers animated: YES];
+    
+    [self.navigationController pushViewController: [self.viewControllerFactory createProfileSettingsViewController] animated: YES];
 }
 
 #pragma mark - LeftSideMenuViewProtocol

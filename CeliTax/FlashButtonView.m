@@ -11,7 +11,6 @@
 @interface FlashButtonView ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *lightningImageView;
-@property (weak, nonatomic) IBOutlet UILabel *onOrOffLabel;
 
 @end
 
@@ -67,8 +66,6 @@
     self.lightningImageView.image = [self.lightningImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
     [self.lightningImageView setTintColor:[UIColor darkGrayColor]];
-    
-    [self.onOrOffLabel setTextColor:[UIColor darkGrayColor]];
 }
 
 -(void)setOn:(BOOL)on
@@ -80,20 +77,12 @@
         [self.flashButton setBackgroundColor:[UIColor clearColor]];
         
         [self.lightningImageView setTintColor:[UIColor colorWithRed:252.0f/255 green:219.0f/255 blue:65.0f/255 alpha:1]];
-        
-        [self.onOrOffLabel setText:@"On"];
-        
-        [self.onOrOffLabel setTextColor:[UIColor colorWithRed:252.0f/255 green:219.0f/255 blue:65.0f/255 alpha:1]];
     }
     else
     {
         [self.flashButton setBackgroundColor:[UIColor colorWithWhite:220.0f/255 alpha:1]];
         
         [self.lightningImageView setTintColor:[UIColor darkGrayColor]];
-        
-        [self.onOrOffLabel setText:@"Off"];
-        
-        [self.onOrOffLabel setTextColor:[UIColor darkGrayColor]];
     }
     
 }

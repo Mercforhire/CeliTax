@@ -10,6 +10,7 @@
 
 @interface TransferConfirmationViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *transferLabel;
 @property (weak, nonatomic) IBOutlet UIButton *yesButton;
 
 @end
@@ -31,9 +32,11 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self.transferLabel setText:NSLocalizedString(@"Transfer selected?", nil)];
     
     self.yesButton.layer.cornerRadius = 3.0f;
     [self.yesButton setClipsToBounds: YES];
+    [self.yesButton setTitle:NSLocalizedString(@"Yes", nil) forState:UIControlStateNormal];
 }
 
 - (IBAction)yesPressed:(UIButton *)sender

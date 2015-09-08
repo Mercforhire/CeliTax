@@ -14,8 +14,8 @@
 
 @interface RecordsDAO : NSObject
 
-@property (strong, nonatomic) UserDataDAO *userDataDAO;
-@property (strong, nonatomic) CatagoriesDAO *catagoriesDAO;
+@property (weak, nonatomic) UserDataDAO *userDataDAO;
+@property (weak, nonatomic) CatagoriesDAO *catagoriesDAO;
 
 /**
  @return NSArray of Records, nil if user not found

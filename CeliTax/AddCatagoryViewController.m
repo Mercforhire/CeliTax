@@ -27,6 +27,7 @@
 
 @interface AddCatagoryViewController () <SelectionsPickerPopUpDelegate, ColorPickerViewPopUpDelegate, UIPopoverControllerDelegate, AllColorsPickerViewPopUpDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, PopUpViewControllerProtocol>
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIView *colorView;
 @property (weak, nonatomic) IBOutlet UITextField *catagoryNameField;
 @property (nonatomic, strong) UIButton *nameFieldOverlayButton;
@@ -76,15 +77,18 @@
 
 - (void) setupUI
 {
+    [self.titleLabel setText:NSLocalizedString(@"Manage Categories", nil)];
+    [self.catagoryNameField setPlaceholder:NSLocalizedString(@"Enter Catagory Name",nil)];
+    
     self.sampleCatagoryNames = [NSMutableArray new];
 
     // sample names
-    [self.sampleCatagoryNames addObject: @"Bread"];
-    [self.sampleCatagoryNames addObject: @"Rice"];
-    [self.sampleCatagoryNames addObject: @"Cake"];
-    [self.sampleCatagoryNames addObject: @"Meat"];
-    [self.sampleCatagoryNames addObject: @"Pizza"];
-    [self.sampleCatagoryNames addObject: @"Custom"];
+    [self.sampleCatagoryNames addObject: NSLocalizedString(@"Bread", nil)];
+    [self.sampleCatagoryNames addObject: NSLocalizedString(@"Rice", nil)];
+    [self.sampleCatagoryNames addObject: NSLocalizedString(@"Cake", nil)];
+    [self.sampleCatagoryNames addObject: NSLocalizedString(@"Meat", nil)];
+    [self.sampleCatagoryNames addObject: NSLocalizedString(@"Pizza", nil)];
+    [self.sampleCatagoryNames addObject: NSLocalizedString(@"Custom", nil)];
 
     self.colorPickerViewController = [self.viewControllerFactory createColorPickerViewController];
 
@@ -97,7 +101,7 @@
 
     // initialize the Save menu button button
     self.saveButton = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, 50, 25)];
-    [self.saveButton setTitle: @"Save" forState: UIControlStateNormal];
+    [self.saveButton setTitle: NSLocalizedString(@"Save", nil) forState: UIControlStateNormal];
     [self.saveButton.titleLabel setFont: [UIFont latoBoldFontOfSize: 14]];
     [self.saveButton setTitleEdgeInsets: UIEdgeInsetsMake(5, 10, 5, 10)];
     [self.saveButton addTarget: self action: @selector(saveCatagoryPressed:) forControlEvents: UIControlEventTouchUpInside];
@@ -138,15 +142,6 @@
     [self.colorPickerViewController setDelegate: self];
     [self.namesPickerViewController setDelegate: self];
     [self.allColorsPickerViewController setDelegate: self];
-
-    // conditionally check for any version >= iOS 8 using 'isOperatingSystemAtLeastVersion'
-    if ([NSProcessInfo instancesRespondToSelector: @selector(isOperatingSystemAtLeastVersion:)])
-    {
-        // this is purely to fix the crashing problem
-        UIPopoverPresentationController *garbageController = self.popoverPresentationController;
-        [garbageController setSourceRect: self.namesPickerViewController.view.frame];
-        [garbageController setSourceView: self.namesPickerViewController.view];
-    }
 
     UITapGestureRecognizer *colorBoxPressedTap =
         [[UITapGestureRecognizer alloc] initWithTarget: self
@@ -315,11 +310,11 @@
     
     if ([self.catagoryNames containsObject:capitalizedString])
     {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Sorry"
-                                                          message:@"A existing category already has the same name. Please use a different category name."
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)
+                                                          message:NSLocalizedString(@"A existing category already has the same name. Please use a different category name", nil)
                                                          delegate:nil
                                                 cancelButtonTitle:nil
-                                                otherButtonTitles:@"Ok",nil];
+                                                otherButtonTitles:NSLocalizedString(@"Ok", nil),nil];
         
         [message show];
         
@@ -430,11 +425,11 @@
 -(void)deletePressed:(UIButton *)button
 {
     //show a UIAlertView Confirmation
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Delete"
-                                                      message: [NSString stringWithFormat:@"Are you sure you want to delete the category %@?", self.currentlySelectedCatagory.name]
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Delete", nil)
+                                                      message: [NSString stringWithFormat:NSLocalizedString(@"Are you sure you want to delete the category %@?", nil), self.currentlySelectedCatagory.name]
                                                      delegate: self
-                                            cancelButtonTitle: @"No"
-                                            otherButtonTitles: @"Delete", nil];
+                                            cancelButtonTitle: NSLocalizedString(@"No", nil)
+                                            otherButtonTitles: NSLocalizedString(@"Delete", nil), nil];
     
     [message show];
 }
@@ -524,11 +519,11 @@
         else
         {
             //show a UIAlertView Confirmation
-            UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Transfer"
-                                                              message: [NSString stringWithFormat:@"Are you sure you want to transfer all items in %@ to %@?", self.currentlySelectedCatagory.name, self.catagoryToTransferTo.name]
+            UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Transfer", nil)
+                                                              message: [NSString stringWithFormat:NSLocalizedString(@"Are you sure you want to transfer all items in %@ to %@?", nil), self.currentlySelectedCatagory.name, self.catagoryToTransferTo.name]
                                                              delegate: self
-                                                    cancelButtonTitle: @"No"
-                                                    otherButtonTitles: @"Yes", nil];
+                                                    cancelButtonTitle: NSLocalizedString(@"No", nil)
+                                                    otherButtonTitles: NSLocalizedString(@"Yes", nil), nil];
             
             [message show];
         }
@@ -541,7 +536,7 @@
 {
     NSString *title = [alertView buttonTitleAtIndex: buttonIndex];
     
-    if ([title isEqualToString: @"Yes"])
+    if ([title isEqualToString: NSLocalizedString(@"Yes", nil)])
     {
         if ([self.manipulationService transferCatagoryFromCatagoryID:self.currentlySelectedCatagory.localID toCatagoryID:self.catagoryToTransferTo.localID save:YES])
         {
@@ -554,7 +549,7 @@
         }
     }
     
-    else if ([title isEqualToString: @"Delete"])
+    else if ([title isEqualToString: NSLocalizedString(@"Delete", nil)])
     {
         if ([self.manipulationService deleteCatagoryForCatagoryID:self.currentlySelectedCatagory.localID save:YES])
         {

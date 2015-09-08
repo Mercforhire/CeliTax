@@ -10,6 +10,8 @@
 
 @interface ColorPickerViewController ()
 
+@property (weak, nonatomic) IBOutlet UIButton *pickButton;
+
 @end
 
 @implementation ColorPickerViewController
@@ -29,8 +31,9 @@
 {
     [super viewDidLoad];
     
-    // apply gray border to all subviews
+    [self.pickButton setTitle:NSLocalizedString(@"Pick", nil) forState:UIControlStateNormal];
     
+    // apply gray border to all subviews
     for (UIView *subview in [self.view subviews])
     {
         [self.lookAndFeel applySlightlyDarkerBorderTo: subview];

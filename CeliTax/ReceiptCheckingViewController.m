@@ -30,7 +30,8 @@
 #import "SolidGreenButton.h"
 #import "MBProgressHUD.h"
 #import "SyncManager.h"
-#import "UnitPickerViewController.h"
+#import "MetricUnitPickerViewController.h"
+#import "ImperialUnitPickerViewController.h"
 #import "WYPopoverController.h"
 #import "TutorialManager.h"
 #import "TutorialStep.h"
@@ -67,8 +68,8 @@ typedef enum : NSUInteger
 @property (weak, nonatomic) IBOutlet UITableView *editReceiptTable;
 @property (strong, nonatomic) MBProgressHUD *waitView;
 @property (nonatomic, strong) WYPopoverController *unitPickerPopoverController;
-@property (nonatomic, strong) UnitPickerViewController *unitPickerViewController;
-
+@property (nonatomic, strong) MetricUnitPickerViewController *metricUnitPickerViewController;
+@property (nonatomic, strong) ImperialUnitPickerViewController *imperialUnitPickerViewController;
 @property (strong, nonatomic) UIButton *addPhotoButton;
 
 @property (strong, nonatomic) NSMutableArray *receiptImages;
@@ -127,7 +128,7 @@ typedef enum : NSUInteger
     self.numberToolbar = [[UIToolbar alloc]initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 50)];
     self.numberToolbar.barStyle = UIBarStyleDefault;
 
-    UIBarButtonItem *doneToolbarButton = [[UIBarButtonItem alloc]initWithTitle: @"Done" style: UIBarButtonItemStyleDone target: self action: @selector(doneOnKeyboardPressed)];
+    UIBarButtonItem *doneToolbarButton = [[UIBarButtonItem alloc]initWithTitle: NSLocalizedString(@"Done", nil) style: UIBarButtonItemStyleDone target: self action: @selector(doneOnKeyboardPressed)];
     [doneToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
 
     self.numberToolbar.items = [NSArray arrayWithObjects:
@@ -160,6 +161,9 @@ typedef enum : NSUInteger
     [self.editReceiptTable registerNib: receiptEditModeTableViewCell forCellReuseIdentifier: ReceiptEditModeTableViewCellIdentifier];
 
     [self.editReceiptsButton setLookAndFeel:self.lookAndFeel];
+    
+    [self.addOrEditItemButton setTitle:NSLocalizedString(@"Add", nil) forState:UIControlStateNormal];
+    [self.deleteItemButton setTitle:NSLocalizedString(@"Delete", nil) forState:UIControlStateNormal];
 
     // if we are straight from the camera, we show the X, and Complete button while hiding the Back button
     if (!self.cameFromReceiptBreakDownViewController)
@@ -291,11 +295,11 @@ typedef enum : NSUInteger
             
             [self hideWaitingView];
             
-            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Sorry"
-                                                              message:@"Failed to download the receipt image(s) for this receipt. Please try again later."
+            UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)
+                                                              message:NSLocalizedString(@"Failed to download the receipt image(s) for this receipt. Please try again later.", nil)
                                                              delegate:nil
                                                     cancelButtonTitle:nil
-                                                    otherButtonTitles:@"Dismiss",nil];
+                                                    otherButtonTitles:NSLocalizedString(@"Dismiss", nil),nil];
             
             [message show];
             
@@ -312,12 +316,24 @@ typedef enum : NSUInteger
 {
     [super viewDidAppear:animated];
     
-    self.unitPickerViewController = [self.viewControllerFactory createUnitPickerViewControllerWithDefaultUnit:UnitItem];
-    self.unitPickerPopoverController = [[WYPopoverController alloc] initWithContentViewController: self.unitPickerViewController];
-    [self.unitPickerPopoverController setPopoverContentSize: self.unitPickerViewController.viewSize];
-    [self.unitPickerPopoverController setDelegate:self];
+    NSNumber *savedUnitSystem = [self.configurationManager getUnitSystem];
     
-    [self.unitPickerViewController setDelegate: self];
+    if (!savedUnitSystem || savedUnitSystem.integerValue == UnitSystemMetric)
+    {
+        self.metricUnitPickerViewController = [self.viewControllerFactory createUnitPickerViewControllerWithDefaultUnit:UnitItem];
+        self.unitPickerPopoverController = [[WYPopoverController alloc] initWithContentViewController: self.metricUnitPickerViewController];
+        [self.unitPickerPopoverController setPopoverContentSize: self.metricUnitPickerViewController.viewSize];
+        [self.unitPickerPopoverController setDelegate:self];
+        [self.metricUnitPickerViewController setDelegate: self];
+    }
+    else
+    {
+        self.imperialUnitPickerViewController = [self.viewControllerFactory createImperialUnitPickerViewControllerWithDefaultUnit:UnitItem];
+        self.unitPickerPopoverController = [[WYPopoverController alloc] initWithContentViewController: self.imperialUnitPickerViewController];
+        [self.unitPickerPopoverController setPopoverContentSize: self.imperialUnitPickerViewController.viewSize];
+        [self.unitPickerPopoverController setDelegate:self];
+        [self.imperialUnitPickerViewController setDelegate: self];
+    }
     
     if (![self.tutorialManager hasTutorialBeenShown])
     {
@@ -515,25 +531,25 @@ typedef enum : NSUInteger
 - (void) disablePreviousItemButton
 {
     [self.previousItemButton setEnabled: NO];
-    [self.previousItemButton setTitleColor: [UIColor lightGrayColor] forState: UIControlStateNormal];
+    [self.previousItemButton setAlpha:0.5f];
 }
 
 - (void) enablePreviousItemButton
 {
     [self.previousItemButton setEnabled: YES];
-    [self.previousItemButton setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
+    [self.previousItemButton setAlpha:1.0f];
 }
 
 - (void) disableNextItemButton
 {
     [self.nextItemButton setEnabled: NO];
-    [self.nextItemButton setTitleColor: [UIColor lightGrayColor] forState: UIControlStateNormal];
+    [self.nextItemButton setAlpha:0.5f];
 }
 
 - (void) enableNextItemButton
 {
     [self.nextItemButton setEnabled: YES];
-    [self.nextItemButton setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
+    [self.nextItemButton setAlpha:1.0f];
 }
 
 - (void) disableAddItemButton
@@ -574,7 +590,7 @@ typedef enum : NSUInteger
         [self.editReceiptTable setHidden: NO];
         [self.editReceiptTable setEditing: YES animated: YES];
         
-        [self.editReceiptsButton setTitle: @"Done" forState: UIControlStateNormal];
+        [self.editReceiptsButton setTitle: NSLocalizedString(@"Done", nil) forState: UIControlStateNormal];
         
         self.rightMenuItem = [[UIBarButtonItem alloc] initWithCustomView: self.addPhotoButton];
         self.navigationItem.rightBarButtonItem = self.rightMenuItem;
@@ -586,7 +602,7 @@ typedef enum : NSUInteger
         [self.editReceiptTable setHidden: YES];
         [self.editReceiptTable setEditing: NO animated: NO];
         
-        [self.editReceiptsButton setTitle: @"Edit" forState: UIControlStateNormal];
+        [self.editReceiptsButton setTitle: NSLocalizedString(@"Edit", nil) forState: UIControlStateNormal];
         
         // if we are straight from the camera, we show the X, and Complete button while hiding the Back button
         if (!self.cameFromReceiptBreakDownViewController)
@@ -609,7 +625,7 @@ typedef enum : NSUInteger
 
     if (_currentlySelectedRecord)
     {
-        [self.addOrEditItemButton setTitle: @"Save" forState: UIControlStateNormal];
+        [self.addOrEditItemButton setTitle: NSLocalizedString(@"Save", nil) forState: UIControlStateNormal];
         
         [self enableDeleteItemButton];
 
@@ -637,7 +653,7 @@ typedef enum : NSUInteger
         // Clear the Textfields
         [self.currentItemStatusLabel setText: [NSString stringWithFormat: @"%d/%ld", 0, (unsigned long)self.recordsOfCurrentlySelectedCatagory.count]];
 
-        [self.addOrEditItemButton setTitle: @"Add" forState: UIControlStateNormal];
+        [self.addOrEditItemButton setTitle: NSLocalizedString(@"Add", nil) forState: UIControlStateNormal];
     
         [self disableDeleteItemButton];
 
@@ -783,11 +799,11 @@ typedef enum : NSUInteger
     
     if ([self calculateNumberOfRecords] > 0)
     {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Delete this receipt"
-                                                          message: @"Are you sure you want delete this receipt along with all its items?"
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Delete this receipt", nil)
+                                                          message: NSLocalizedString(@"Are you sure you want delete this receipt along with all its items?", nil)
                                                          delegate: self
-                                                cancelButtonTitle: @"No"
-                                                otherButtonTitles: @"Yes", nil];
+                                                cancelButtonTitle: NSLocalizedString(@"No", nil)
+                                                otherButtonTitles: NSLocalizedString(@"Yes", nil), nil];
         
         [message show];
     }
@@ -847,16 +863,6 @@ typedef enum : NSUInteger
             }
             
             [self.view endEditing: YES];
-        }
-        else
-        {
-            UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Missing field"
-                                                              message: @"Please make sure both Quantity and Price Per Item is filled."
-                                                             delegate: nil
-                                                    cancelButtonTitle: @"Dismiss"
-                                                    otherButtonTitles: nil];
-            
-            [message show];
         }
     }
     // Add Mode
@@ -947,8 +953,8 @@ typedef enum : NSUInteger
     if (!self.waitView)
     {
         self.waitView = [[MBProgressHUD alloc] initWithView: self.view];
-        self.waitView.labelText = @"Please wait";
-        self.waitView.detailsLabelText = @"Downloading Images...";
+        self.waitView.labelText = NSLocalizedString(@"Please wait", nil);
+        self.waitView.detailsLabelText = NSLocalizedString(@"Downloading Images...", nil);
         self.waitView.mode = MBProgressHUDModeIndeterminate;
         [self.view addSubview: self.waitView];
     }
@@ -983,7 +989,7 @@ typedef enum : NSUInteger
 {
     NSString *title = [alertView buttonTitleAtIndex: buttonIndex];
 
-    if ([title isEqualToString: @"Yes"])
+    if ([title isEqualToString: NSLocalizedString(@"Yes", nil)])
     {
         [self deleteCurrentReceiptAndQuit];
     }
@@ -1368,11 +1374,11 @@ typedef enum : NSUInteger
         }
         else
         {
-            UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Delete last receipt image"
-                                                              message: @"Are you sure you want delete this receipt along with all its items?"
+            UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Delete last receipt image", nil)
+                                                              message: NSLocalizedString(@"Are you sure you want delete this receipt along with all its items?", nil)
                                                              delegate: self
-                                                    cancelButtonTitle: @"No"
-                                                    otherButtonTitles: @"Yes", nil];
+                                                    cancelButtonTitle: NSLocalizedString(@"No", nil)
+                                                    otherButtonTitles: NSLocalizedString(@"Yes", nil), nil];
             
             [message show];
         }
@@ -1407,9 +1413,9 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep3 = [TutorialStep new];
     
-    tutorialStep3.text = @"Enter the total number of items purchased and the cost of each item for each selected GF category.";
-    tutorialStep3.leftButtonTitle = @"Back";
-    tutorialStep3.rightButtonTitle = @"Continue";
+    tutorialStep3.text = NSLocalizedString(@"Enter the total number of items purchased and the cost of each item for each selected GF category.", nil);
+    tutorialStep3.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep3.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     tutorialStep3.highlightedItemRect = self.itemControlsContainer.frame;
     tutorialStep3.pointsUp = NO;
     
@@ -1417,9 +1423,9 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep4 = [TutorialStep new];
     
-    tutorialStep4.text = @"Click “Add” to add a new purchase to the selected GF category";
-    tutorialStep4.leftButtonTitle = @"Back";
-    tutorialStep4.rightButtonTitle = @"Continue";
+    tutorialStep4.text = NSLocalizedString(@"Click “Add” to add a new purchase to the selected GF category", nil);
+    tutorialStep4.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep4.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
     CGRect addButtonFrame = self.addOrEditItemButton.frame;
     
@@ -1433,9 +1439,9 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep5 = [TutorialStep new];
     
-    tutorialStep5.text = @"Scroll between purchases allocated in a GF category to edit or review an allocation.";
-    tutorialStep5.leftButtonTitle = @"Back";
-    tutorialStep5.rightButtonTitle = @"Continue";
+    tutorialStep5.text = NSLocalizedString(@"Scroll between purchases allocated in a GF category to edit or review an allocation.", nil);
+    tutorialStep5.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep5.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
     CGRect leftAndRightButtonsFrame = self.previousItemButton.frame;
     
@@ -1450,17 +1456,17 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep6 = [TutorialStep new];
     
-    tutorialStep6.text = @"Repeat this process for every GF purchase on your receipt, selecting the appropriate GF category to allocate items to.";
-    tutorialStep6.leftButtonTitle = @"Back";
-    tutorialStep6.rightButtonTitle = @"Continue";
+    tutorialStep6.text = NSLocalizedString(@"Repeat this process for every GF purchase on your receipt, selecting the appropriate GF category to allocate items to.", nil);
+    tutorialStep6.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep6.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
     [self.tutorials addObject:tutorialStep6];
     
     TutorialStep *tutorialStep7 = [TutorialStep new];
     
-    tutorialStep7.text = @"Click the receipt breakdown icon to view items that have been allocated to the receipt. ";
-    tutorialStep7.leftButtonTitle = @"Back";
-    tutorialStep7.rightButtonTitle = @"Continue";
+    tutorialStep7.text = NSLocalizedString(@"Click the receipt breakdown icon to view items that have been allocated to the receipt.", nil);
+    tutorialStep7.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep7.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     tutorialStep7.pointsUp = YES;
     tutorialStep7.highlightedItemRect = [Utils returnRectBiggerThan:self.recordsCounter.frame by: 3];
     
@@ -1475,16 +1481,16 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep1 = [TutorialStep new];
     
-    tutorialStep1.text = @"This is where you will allocate your receipt purchases to your custom GF categories.";
-    tutorialStep1.rightButtonTitle = @"Continue";
+    tutorialStep1.text = NSLocalizedString(@"This is where you will allocate your receipt purchases to your custom GF categories.", nil);
+    tutorialStep1.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
     [self.tutorials addObject:tutorialStep1];
     
     TutorialStep *tutorialStep2 = [TutorialStep new];
     
-    tutorialStep2.text = @"Scroll through your GF categories or click the “+” to add a new one and begin allocating.";
-    tutorialStep2.leftButtonTitle = @"Back";
-    tutorialStep2.rightButtonTitle = @"Continue";
+    tutorialStep2.text = NSLocalizedString(@"Scroll through your GF categories or click the “+” to add a new one and begin allocating.", nil);
+    tutorialStep2.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep2.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     tutorialStep2.pointsUp = NO;
     tutorialStep2.highlightedItemRect = self.catagoriesBar.frame;
     
@@ -1501,26 +1507,24 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep1 = [TutorialStep new];
     
-    tutorialStep1.text = @"Need to allocate a purchase based on weight? Click and hold a GF category to bring up various units to choose from. Allocate purchases as usual. *You can switch between metric/imperial in Settings.";
-    tutorialStep1.rightButtonTitle = @"Continue";
+    tutorialStep1.text = NSLocalizedString(@"Need to allocate a purchase based on weight? Click and hold a GF category to bring up various units to choose from. Allocate purchases as usual. *You can switch between metric/imperial in Settings.", nil);
+    tutorialStep1.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
     [self.tutorials addObject:tutorialStep1];
     
     TutorialStep *tutorialStep2 = [TutorialStep new];
     
-    tutorialStep2.text = @"Forgot to capture the whole receipt? Click to add more photos";
-    tutorialStep2.leftButtonTitle = @"Back";
-    tutorialStep2.rightButtonTitle = @"Continue";
-    tutorialStep2.pointsUp = NO;
-    tutorialStep2.highlightedItemRect = [Utils returnRectBiggerThan:self.addPhotoButton.frame by: 3];
+    tutorialStep2.text = NSLocalizedString(@"Forgot to capture the whole receipt? Click ”Edit” and the Camera Icon to add more photos", nil);
+    tutorialStep2.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep2.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
     [self.tutorials addObject:tutorialStep2];
     
     TutorialStep *tutorialStep3 = [TutorialStep new];
     
-    tutorialStep3.text = @"Click “Edit” to manage each image captured. Delete or re-order images by touching and dragging the ≡ icon.";
-    tutorialStep3.leftButtonTitle = @"Back";
-    tutorialStep3.rightButtonTitle = @"Continue";
+    tutorialStep3.text = NSLocalizedString(@"Click “Edit” to manage each image captured. Delete or re-order images by touching and dragging the ≡ icon.", nil);
+    tutorialStep3.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep3.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     tutorialStep3.pointsUp = YES;
     tutorialStep3.highlightedItemRect = [Utils returnRectBiggerThan:self.editReceiptsButton.frame by: 3];
     
@@ -1528,9 +1532,9 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep4 = [TutorialStep new];
     
-    tutorialStep4.text = @"When you are finished allocating, touch “Complete” to save and store your receipt to The Vault. The Vault is where all of your receipts are saved.";
-    tutorialStep4.leftButtonTitle = @"Back";
-    tutorialStep4.rightButtonTitle = @"Continue";
+    tutorialStep4.text = NSLocalizedString(@"When you are finished allocating, touch “Complete” to save and store your receipt to The Vault. The Vault is where all of your receipts are saved.", nil);
+    tutorialStep4.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep4.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     tutorialStep4.pointsUp = YES;
     
     [self.tutorials addObject:tutorialStep4];

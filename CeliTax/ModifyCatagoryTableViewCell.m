@@ -14,6 +14,10 @@
 {
     // Initialization code
     [self setSelectionStyle: UITableViewCellSelectionStyleNone];
+    
+    [self.editButton setTitle:NSLocalizedString(@"Edit", nil) forState:UIControlStateNormal];
+    [self.transferButton setTitle:NSLocalizedString(@"Transfer", nil) forState:UIControlStateNormal];
+    [self.deleteButton setTitle:NSLocalizedString(@"Delete", nil) forState:UIControlStateNormal];
 }
 
 - (void) setSelected: (BOOL) selected animated: (BOOL) animated

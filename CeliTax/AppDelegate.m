@@ -20,6 +20,7 @@
 #import "BuilderFactory.h"
 #import "SyncManager.h"
 #import "BackgroundWorker.h"
+#import "LocalizationManager.h"
 
 @class SplashViewController, ConfigurationManager, ViewControllerFactory, UserManager;
 
@@ -114,6 +115,12 @@
     self.backgroundWorker.userManager = self.userManager;
 }
 
+- (void) initializeLocalizationManager
+{
+    // Make sure we start off with the right string files
+    [[LocalizationManager sharedInstance] initialize];
+}
+
 - (void) customizeGlobalLookAndFeel
 {
     // Sets the status and nav bar color
@@ -136,6 +143,7 @@
 // do loading here
 - (BOOL) application: (UIApplication *) application didFinishLaunchingWithOptions: (NSDictionary *) launchOptions
 {
+    [self initializeLocalizationManager];
     [self initializeNetworkCommunicator];
     [self initializeBuilderFactory];
     [self initializeLookAndFeel];

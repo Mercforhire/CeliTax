@@ -131,6 +131,30 @@
     {
         return UnitML;
     }
+    else if ([unitTypeString isEqualToString:kUnitFlozKey])
+    {
+        return UnitFloz;
+    }
+    else if ([unitTypeString isEqualToString:kUnitPtKey])
+    {
+        return UnitPt;
+    }
+    else if ([unitTypeString isEqualToString:kUnitQtKey])
+    {
+        return UnitQt;
+    }
+    else if ([unitTypeString isEqualToString:kUnitGalKey])
+    {
+        return UnitGal;
+    }
+    else if ([unitTypeString isEqualToString:kUnitOzKey])
+    {
+        return UnitOz;
+    }
+    else if ([unitTypeString isEqualToString:kUnitLbKey])
+    {
+        return UnitLb;
+    }
     
     return -1;
 }
@@ -166,6 +190,36 @@
             
         case UnitKG:
             return kUnitKGKey;
+            
+            break;
+            
+        case UnitFloz:
+            return kUnitFlozKey;
+            
+            break;
+            
+        case UnitPt:
+            return kUnitPtKey;
+            
+            break;
+            
+        case UnitQt:
+            return kUnitQtKey;
+            
+            break;
+            
+        case UnitGal:
+            return kUnitGalKey;
+            
+            break;
+            
+        case UnitOz:
+            return kUnitOzKey;
+            
+            break;
+            
+        case UnitLb:
+            return kUnitLbKey;
             
             break;
             

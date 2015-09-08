@@ -1,0 +1,256 @@
+//0-9
+"%ld Tax Year" = "%ld Tax Year(es)";
+"%ld Gluten-Free Tax Savings" = "%ld Gluten-Free Tax Savings(es)";
+"%@ per (g)" = "%@ per (g)(es)";
+"%@ per (100g)" = "%@ per (100g)(es)";
+"%@ per (kg)" = "%@ per (kg)(es)";
+"%@ per (L)" = "%@ per (L)(es)";
+"%@ per (mL)" = "%@ per (mL)(es)";
+"%@ per (fl oz)" = "%@ per (fl oz)(es)";
+"%@ per (pt)" = "%@ per (pt)(es)";
+"%@ per (qt)" = "%@ per (qt)(es)";
+"%@ per (gal)" = "%@ per (gal)(es)";
+"%@ per (oz)" = "%@ per (oz)(es)";
+"%@ per (lb)" = "%@ per (lb)(es)";
+
+//A
+"Avg $ / non-GF" = "Avg $ / non-GF(es)";
+"A existing category already has the same name. Please use a different category name" = "A existing category already has the same name. Please use a different category name(es)";
+"Are you sure you want to delete the category %@?" = "Are you sure you want to delete the category %@?(es)";
+"Are you sure you want to transfer all items in %@ to %@?"= "Are you sure you want to transfer all items in %@ to %@?(es)";
+"An error has occured with the camere device, please try taking a picture again" = "An error has occured with the camere device, please try taking a picture again(es)";
+"Are you sure" = "Are you sure(es)";
+"Account email successfully changed" = "Account email successfully changed(es)";
+"Account password successfully changed" = "Account password successfully changed(es)";
+"Account email and password successfully changed" = "Account email and password successfully changed(es)";
+"Add Tax Year" = "Add Tax Year(es)";
+"A tax year must be created before a receipt can be saved" = "A tax year must be created before a receipt can be saved(es)";
+"Add" = "Add(es)";
+"Are you sure you want delete this receipt along with all its items?" = "Are you sure you want delete this receipt along with all its items?(es)";
+"Account" = "Account(es)";
+"Are you sure you want delete the selected receipts along with all their items?" = "Are you sure you want delete the selected receipts along with all their items?(es)";
+"About" = "About(es)";
+
+//B
+"Back" = "Back(es)";
+"Bread" = "Bread(es)";
+"Begin Tutorial" = "Begin Tutorial(es)";
+
+//C
+"Cake" = "Cake(es)";
+"Custom" = "Custom(es)";
+"Cancel" = "Cancel(es)";
+"Continue" = "Continue(es)";
+"Click “Done” when all images have been captured." = "Click “Done” when all images have been captured.(es)";
+"Contact" = "Contact(es)";
+"Comment has been sent" = "Comment has been sent(es)";
+"Confirm" = "Confirm(es)";
+"Can not connect to our server, please try again later" = "Can not connect to our server, please try again later(es)";
+"Categories" = "Categories(es)";
+"Can not add a duplicate tax year" = "Can not add a duplicate tax year(es)";
+"CeliTax is here to simplify your life. You already have enough to worry about, taxes should not be one of them." = "CeliTax is here to simplify your life. You already have enough to worry about, taxes should not be one of them.(es)";
+"CeliTax helps you organize your GF food purchases by allocating each item to a custom GF food category. No need for complex spreadsheets." = "CeliTax helps you organize your GF food purchases by allocating each item to a custom GF food category. No need for complex spreadsheets.(es)";
+"Calculate" = "Calculate(es)";
+"Click to return to your receipt and keep allocating purchases." = "Click to return to your receipt and keep allocating purchases.(es)";
+"Click “Add” to add a new purchase to the selected GF category" = "Click “Add” to add a new purchase to the selected GF category(es)";
+"Click the receipt breakdown icon to view items that have been allocated to the receipt." = "Click the receipt breakdown icon to view items that have been allocated to the receipt.(es)";
+"Click “Edit” to manage each image captured. Delete or re-order images by touching and dragging the ≡ icon." = "Click “Edit” to manage each image captured. Delete or re-order images by touching and dragging the ≡ icon.(es)";
+"Create Account" = "Create Account(es)";
+
+//D
+"Drag the bar up or down to capture the exact part of the receipt you need and crop accordingly." = "Drag the bar up or down to capture the exact part of the receipt you need and crop accordingly.(es)";
+"Delete" = "Delete(es)";
+"Done" = "Done(es)";
+"De-activate Account" = "De-activate Account(es)";
+"Do you really want to delete your account and all data?" = "Do you really want to delete your account and all data?(es)";
+"Dismiss" = "Dismiss(es)";
+"Downloading Data..." = "Downloading Data...(es)";
+"Download" = "Download(es)";
+"Delete this receipt" = "Delete this receipt(es)";
+"Downloading Images..." = "Downloading Images...(es)";
+"Delete last receipt image" = "Delete last receipt image(es)";
+"Delete selected receipts" = "Delete selected receipts(es)";
+
+//E
+"Enter Catagory Name" = "Enter Catagory Name(es)";
+"Error" = "Error(es)";
+"Email Address" = "Email Address(es)";
+"Email address is not valid" = "Email address is not valid(es)";
+"Edit" = "Edit(es)";
+"Enter the total number of items purchased and the cost of each item for each selected GF category." = "Enter the total number of items purchased and the cost of each item for each selected GF category.(es)";
+"Export Report" = "Export Report(es)";
+"English" = "English(es)";
+"Email address in both fields do not match" = "Email address in both fields do not match(es)";
+"Email address is not valid" = "Email address is not valid(es)";
+
+//F
+"Failed to change email, please try again later" = "Failed to change email, please try again later(es)";
+"Forgot password?" = "Forgot password?(es)";
+"For each GF category, you must input an Average Non-GF Cost per item which represents regular priced items of a similar non-gluten free item. You can click the ? for more information and suggested prices." = "For each GF category, you must input an Average Non-GF Cost per item which represents regular priced items of a similar non-gluten free item. You can click the ? for more information and suggested prices.(es)";
+"First Name:" = "First Name:(es)";
+"First Name" = "First Name(es)";
+"Failed to download the receipt image(s) for this receipt. Please try again later." = "Failed to download the receipt image(s) for this receipt. Please try again later.(es)";
+"Forgot to capture the whole receipt? Click ”Edit” and the Camera Icon to add more photos" = "Forgot to capture the whole receipt? Click ”Edit” and the Camera Icon to add more photos(es)";
+"French" = "French(es)";
+"FAQ" = "FAQ(es)";
+
+//G
+"GF Savings" = "GF Savings(es)";
+
+//H
+"Help" = "Help(es)";
+"Home" = "Home(es)";
+
+//I
+"Individuals diagnosed with Celiacs disease are entitled to a government tax claim based on the incremental difference between the cost of GF products and regular food items." = "Individuals diagnosed with Celiacs disease are entitled to a government tax claim based on the incremental difference between the cost of GF products and regular food items.(es)";
+"In the My Account view, you can see a grand total of all GF purchases allocated to each of your categories." = "In the My Account view, you can see a grand total of all GF purchases allocated to each of your categories.(es)";
+"In the Vault, you can re-visit any saved receipt to update your GF allocations or even transfer a receipt to a different tax year" = "In the Vault, you can re-visit any saved receipt to update your GF allocations or even transfer a receipt to a different tax year(es)";
+"Item" = "Item(es)";
+"Imperial" = "Imperial(es)";
+"I agree to the terms and conditions" = "I agree to the terms and conditions(es)";
+
+//L
+"Login Settings" = "Login Settings(es)";
+"Login" = "Login(es)";
+"Logging in..." = "Logging in...(es)";
+"Lets get started!" = "Lets get started!(es)";
+"Last Name:" = "Last Name:(es)";
+"Last Name" = "Last Name(es)";
+"Logout" = "Logout(es)";
+"Language:" = "Language:(es)";
+
+//M
+"Manage Categories" = "Manage Categories(es)";
+"Meat" = "Meat(es)";
+"My Account" = "My Account(es)";
+"Manage items you have allocated to a single receipt. Easily view the breakdown by GF category in the pie chart." = "Manage items you have allocated to a single receipt. Easily view the breakdown by GF category in the pie chart.(es)";
+"Metric" = "Metric(es)";
+
+//N
+"No" = "No(es)";
+"Need an account?" = "Need an account?(es)";
+"No Tax Year Added" = "No Tax Year Added(es)";
+"No Uploads" = "No Uploads(es)";
+"Not all category unit types have its national average cost entered" = "Not all category unit types have its national average cost entered(es)";
+"No receipt" = "No receipt(es)";
+"Need to allocate a purchase based on weight? Click and hold a GF category to bring up various units to choose from. Allocate purchases as usual. *You can switch between metric/imperial in Settings." = "Need to allocate a purchase based on weight? Click and hold a GF category to bring up various units to choose from. Allocate purchases as usual. *You can switch between metric/imperial in Settings.(es)";
+"Notice" = "Notice(es)";
+
+//O
+"Ok" = "Ok(es)";
+"Once you obtain your grocery receipt, simply take a photo of it and start allocating your GF purchases to your categories!" = "Once you obtain your grocery receipt, simply take a photo of it and start allocating your GF purchases to your categories!(es)";
+"Once a cost is inputted for each GF category, simply click calculate to automatically determine your GF tax claim for the year!" = "Once a cost is inputted for each GF category, simply click calculate to automatically determine your GF tax claim for the year!(es)";
+
+//P
+"Pizza" = "Pizza(es)";
+"Pick" = "Pick(es)";
+"Please wait" = "Please wait(es)";
+"Please try sending again" = "Please try sending again(es)";
+"Please enter your new email" = "Please enter your new email(es)";
+"Please enter new password" = "Please enter new password(es)";
+"Please re-enter your email address" = "Please re-enter your email address(es)";
+"Please re-enter new password" = "Please re-enter new password(es)";
+"Please enter old password" = "Please enter old password(es)";
+"Password in both fields do not match" = "Password in both fields do not match(es)";
+"Password should be at least 6 characters" = "Password should be at least 6 characters(es)";
+"Password has to be least 6 characters long" = "Password has to be least 6 characters long(es)";
+"Email address in both fields do not match" = "Email address in both fields do not match(es)";
+"Email address is not valid" = "Email address is not valid(es)";
+"Password" = "Password(es)";
+"Password Change" = "Password Change(es)";
+"Password Recovery" = "Password Recovery(es)";
+"Profile" = "Profile(es)";
+"Price/Item" = "Price/Item(es)";
+"Please select all or at least one receipt" = "Please select all or at least one receipt(es)";
+"Previous Week" = "Previous Week(es)";
+"Previous Month" = "Previous Month(es)";
+"Profile Settings" = "Profile Settings(es)";
+"Please enter email address" = "Please enter email address(es)";
+"Please re-enter your email address" = "Please re-enter your email address(es)";
+"Please enter your password" = "Please enter your password(es)";
+"Please re-enter your password" = "Please re-enter your password(es)";
+"Please log in with your new account" = "Please log in with your new account(es)";
+
+//Q
+"Quick Links" = "Quick Links(es)";
+"Quickly keep track of your GF spending throughout the year and automatically calculate your GF tax claim in one simple click!" = "Quickly keep track of your GF spending throughout the year and automatically calculate your GF tax claim in one simple click!(es)";
+"Qty." = "Qty.(es)";
+"Quickly Transfer, Edit, or Delete items as needed." = "Quickly Transfer, Edit, or Delete items as needed.(es)";
+"Qty" = "Qty(es)";
+
+//R
+"Rice" = "Rice(es)";
+"Receipt too long? Take multiple photos to capture the entire receipt. The last photo taken is saved at the top of your screen. Drag it downward to help find out what is left of the receipt to capture." = "Receipt too long? Take multiple photos to capture the entire receipt. The last photo taken is saved at the top of your screen. Drag it downward to help find out what is left of the receipt to capture.(es)";
+"Recent Uploads" = "Recent Uploads(es)";
+"Return to Login" = "Return to Login(es)";
+"Repeat this process for every GF purchase on your receipt, selecting the appropriate GF category to allocate items to." = "Repeat this process for every GF purchase on your receipt, selecting the appropriate GF category to allocate items to.(es)";
+"Registering..." = "Registering...(es)";
+
+//T
+"Total Qty." = "Total Qty.(es)";
+"Total Cost" = "Total Cost(es)";
+"Total" = "Total(es)";
+"Transfer" = "Transfer(es)";
+"Tax Country" = "Tax Country(es)";
+"Type message" = "Type message(es)";
+"Thank you" = "Thank you(es)";
+"Thank you, an email has been sent with recovery options" = "Thank you, an email has been sent with recovery options(es)";
+"The new email is same as the original email" = "The new email is same as the original email(es)";
+"The old password provided is incorrect" = "The old password provided is incorrect(es)";
+"The password entered for this user is incorrect" = "The password entered for this user is incorrect(es)";
+"This user does not exist" = "This user does not exist(es)";
+"The server contains some saved receipt data. Do you want to download and merge the data to the app?" = "The server contains some saved receipt data. Do you want to download and merge the data to the app?(es)";
+"Tax Year for %ld" = "Tax Year for %ld(es)";
+"This tax year has no recorded items" = "This tax year has no recorded items(es)";
+"That’s it! We realize this was a lot of info but once you upload your first receipt you will see just how easy CeliTax is. You can re-visit the tutorial anytime in Help." = "That’s it! We realize this was a lot of info but once you upload your first receipt you will see just how easy CeliTax is. You can re-visit the tutorial anytime in Help.(es)";
+"To recover your password please type in your email address" = "To recover your password please type in your email address(es)";
+"Total Price" = "Total Price(es)";
+"This is where you will allocate your receipt purchases to your custom GF categories." = "This is where you will allocate your receipt purchases to your custom GF categories.(es)";
+"The total average price should not be higher than the actual total spent, please check to see if the correct average price was entered." = "The total average price should not be higher than the actual total spent, please check to see if the correct average price was entered.(es)";
+"Total Spent" = "Total Spent(es)";
+"Total Avg. Cost" = "Total Avg. Cost(es)";
+"Transfer selected?" = "Transfer selected?(es)";
+"The email address is already used by another account. Please use a different email address" = "The email address is already used by another account. Please use a different email address(es)";
+
+
+//U
+"Use the flash function when you have poor lighting. TIP: images always work better in well-lit environments!" = "Use the flash function when you have poor lighting. TIP: images always work better in well-lit environments!(es)";
+"Updating account info..." = "Updating account info...(es)";
+"Units" = "Units(es)";
+"Units:" = "Units:(es)";
+
+//S
+"Save" = "Save(es)";
+"Settings" = "Settings(es)";
+"Send" = "Send(es)";
+"Sorry" = "Sorry(es)";
+"Send us a message" = "Send us a message(es)";
+"Sending comment..." = "Sending comment...(es)";
+"Sign up now!" = "Sign up now!(es)";
+"Skip" = "Skip(es)";
+"Send Email" = "Send Email(es)";
+"Scroll between purchases allocated in a GF category to edit or review an allocation." = "Scroll between purchases allocated in a GF category to edit or review an allocation.(es)";
+"Scroll through your GF categories or click the “+” to add a new one and begin allocating." = "Scroll through your GF categories or click the “+” to add a new one and begin allocating.(es)";
+"Select All" = "Select All(es)";
+"Select and download receipt images to send to your email address for supplemental tax support." = "Select and download receipt images to send to your email address for supplemental tax support.(es)";
+"Spanish" = "Spanish(es)";
+"Send Receipts To" = "Send Receipts To(es)";
+
+//V
+"View Tutorial" = "View Tutorial(es)";
+"Vault" = "Vault(es)";
+"Volume-%@" = "Volume-%@(es)";
+"View Details" = "View Details(es)";
+"View All" = "View All(es)";
+
+//W
+"We need permission for the camera.\nPlease enable it in your settings." = "We need permission for the camera.\nPlease enable it in your settings.(es)";
+"Welcome to CeliTax, the simple, easy to use tax tool designed specifically for Celiacs.\n\nWe make your Gluten Free (GF) tax claim easy!\n\nNo complicated spreadsheets, no paper receipts, no stress." = "Welcome to CeliTax, the simple, easy to use tax tool designed specifically for Celiacs.\n\nWe make your Gluten Free (GF) tax claim easy!\n\nNo complicated spreadsheets, no paper receipts, no stress.(es)";
+"Weight" = "Weight(es)";
+"Weight-%@"= "Weight-%@(es)";
+"When you are finished allocating, touch “Complete” to save and store your receipt to The Vault. The Vault is where all of your receipts are saved." = "When you are finished allocating, touch “Complete” to save and store your receipt to The Vault. The Vault is where all of your receipts are saved.(es)";
+
+//Y
+"Yes" = "Yes(es)";
+"Your %ld savings:" = "Your %ld savings:(es)";
+"You can even send your final claim and detailed report of all purchases to your email address in one easy step!" = "You can even send your final claim and detailed report of all purchases to your email address in one easy step!(es)";

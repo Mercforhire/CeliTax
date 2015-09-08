@@ -14,12 +14,35 @@
 #import "SolidGreenButton.h"
 #import "SyncManager.h"
 #import "ViewControllerFactory.h"
-#import "MyProfileViewController.h"
+#import "ProfileSettingsViewController.h"
 #import "TutorialManager.h"
+#import "M13Checkbox.h"
+#import "ConfigurationManager.h"
+#import "LoginSettingsViewController.h"
+#import "Notifications.h"
+
+typedef enum : NSUInteger {
+    LanguageEnglish,
+    LanguageFrench,
+    LanguageSpanish
+} Languages;
 
 @interface SettingsViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet ProfileBarView *profileBarView;
+@property (weak, nonatomic) IBOutlet UIButton *profileSettingsButton;
+@property (weak, nonatomic) IBOutlet UIButton *loginSettingsButton;
+@property (weak, nonatomic) IBOutlet UILabel *languageLabel;
+@property (weak, nonatomic) IBOutlet M13Checkbox *englishLanguageCheckBox;
+@property (weak, nonatomic) IBOutlet M13Checkbox *frenchLanguageCheckBox;
+@property (weak, nonatomic) IBOutlet M13Checkbox *spanishLanguageCheckBox;
+@property (weak, nonatomic) IBOutlet UILabel *unitsLabel;
+@property (weak, nonatomic) IBOutlet SolidGreenButton *metricUnitButton;
+@property (weak, nonatomic) IBOutlet SolidGreenButton *imperialUnitButton;
+@property (weak, nonatomic) IBOutlet UIButton *aboutButton;
+@property (weak, nonatomic) IBOutlet UIButton *faqButton;
+
 @property (weak, nonatomic) IBOutlet SolidGreenButton *backupNowButton;
 @property (weak, nonatomic) IBOutlet UILabel *lastBackUpLabel;
 @property (weak, nonatomic) IBOutlet SolidGreenButton *insertDemoButton;
@@ -36,14 +59,73 @@
     self.profileBarView.profileImageView.layer.borderColor = [UIColor colorWithWhite: 187.0f/255.0f alpha: 1].CGColor;
     self.profileBarView.profileImageView.layer.borderWidth = 1.0f;
     [self.profileBarView.profileImageView setClipsToBounds: YES];
-    
-    [self.profileBarView.editButton1 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.profileBarView.editButton2 addTarget:self action:@selector(editProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
-    
     [self.profileBarView setLookAndFeel:self.lookAndFeel];
+    [self.profileBarView setEditButtonsVisible:NO];
+    
+    UITapGestureRecognizer *profileImageViewTap =
+    [[UITapGestureRecognizer alloc] initWithTarget: self
+                                            action: @selector(profileSettingsPressed:)];
+    [self.profileBarView.profileImageView addGestureRecognizer: profileImageViewTap];
+    
+    UITapGestureRecognizer *profileImageViewTap2 =
+    [[UITapGestureRecognizer alloc] initWithTarget: self
+                                            action: @selector(profileSettingsPressed:)];
+    [self.profileBarView.nameLabel addGestureRecognizer: profileImageViewTap2];
+    
+    [self.englishLanguageCheckBox.titleLabel setFont: [UIFont latoFontOfSize: 14]];
+    [self.englishLanguageCheckBox.titleLabel setTextColor: [UIColor darkGrayColor]];
+    [self.englishLanguageCheckBox setStrokeColor: [UIColor grayColor]];
+    [self.englishLanguageCheckBox setCheckColor: [UIColor clearColor]];
+    [self.englishLanguageCheckBox setUncheckedColor:[UIColor clearColor]];
+    [self.englishLanguageCheckBox setTintColor:self.lookAndFeel.appGreenColor];
+    [self.englishLanguageCheckBox setCheckAlignment: M13CheckboxAlignmentLeft];
+    
+    [self.frenchLanguageCheckBox.titleLabel setFont: [UIFont latoFontOfSize: 14]];
+    [self.frenchLanguageCheckBox.titleLabel setTextColor: [UIColor darkGrayColor] ];
+    [self.frenchLanguageCheckBox setStrokeColor: [UIColor grayColor]];
+    [self.frenchLanguageCheckBox setCheckColor: [UIColor clearColor]];
+    [self.frenchLanguageCheckBox setUncheckedColor:[UIColor clearColor]];
+    [self.frenchLanguageCheckBox setTintColor:self.lookAndFeel.appGreenColor];
+    [self.frenchLanguageCheckBox setCheckAlignment: M13CheckboxAlignmentLeft];
+    
+    [self.spanishLanguageCheckBox.titleLabel setFont: [UIFont latoFontOfSize: 14]];
+    [self.spanishLanguageCheckBox.titleLabel setTextColor: [UIColor darkGrayColor] ];
+    [self.spanishLanguageCheckBox setStrokeColor: [UIColor grayColor]];
+    [self.spanishLanguageCheckBox setCheckColor: [UIColor clearColor]];
+    [self.spanishLanguageCheckBox setUncheckedColor:[UIColor clearColor]];
+    [self.spanishLanguageCheckBox setTintColor:self.lookAndFeel.appGreenColor];
+    [self.spanishLanguageCheckBox setCheckAlignment: M13CheckboxAlignmentLeft];
     
     [self.backupNowButton setLookAndFeel:self.lookAndFeel];
     [self.insertDemoButton setLookAndFeel:self.lookAndFeel];
+    
+    [self.metricUnitButton setLookAndFeel:self.lookAndFeel];
+    [self.imperialUnitButton setLookAndFeel:self.lookAndFeel];
+    
+    [self refreshLanguage];
+}
+
+-(void)refreshLanguage
+{
+    [self.titleLabel setText:NSLocalizedString(@"Settings", nil)];
+    
+    [self.englishLanguageCheckBox.titleLabel setText: NSLocalizedString(@"English", nil)];
+    [self.frenchLanguageCheckBox.titleLabel setText: NSLocalizedString(@"French", nil)];
+    [self.spanishLanguageCheckBox.titleLabel setText: NSLocalizedString(@"Spanish", nil)];
+    
+    [self.profileSettingsButton setTitle:NSLocalizedString(@"Profile Settings", nil) forState:UIControlStateNormal];
+    [self.loginSettingsButton setTitle:NSLocalizedString(@"Login Settings", nil) forState:UIControlStateNormal];
+    [self.languageLabel setText:NSLocalizedString(@"Language:", nil)];
+    
+    [self.unitsLabel setText:NSLocalizedString(@"Units:", nil)];
+    [self.metricUnitButton setTitle:NSLocalizedString(@"Metric", nil)
+                           forState:UIControlStateNormal];
+    
+    [self.imperialUnitButton setTitle:NSLocalizedString(@"Imperial", nil)
+                             forState:UIControlStateNormal];
+    
+    [self.aboutButton setTitle:NSLocalizedString(@"About", nil) forState:UIControlStateNormal];
+    [self.faqButton setTitle:NSLocalizedString(@"FAQ", nil) forState:UIControlStateNormal];
 }
 
 - (void)viewDidLoad
@@ -52,6 +134,18 @@
     // Do any additional setup after loading the view from its nib.
     
     [self setupUI];
+    
+    [self.englishLanguageCheckBox addTarget: self
+                                     action: @selector(languageCheckBoxChanged:)
+                           forControlEvents: UIControlEventTouchUpInside];
+    
+    [self.frenchLanguageCheckBox addTarget: self
+                                     action: @selector(languageCheckBoxChanged:)
+                           forControlEvents: UIControlEventTouchUpInside];
+    
+    [self.spanishLanguageCheckBox addTarget: self
+                                     action: @selector(languageCheckBoxChanged:)
+                           forControlEvents: UIControlEventTouchUpInside];
     
     NSDate *lastUploadDate = [self.syncManager getLastBackUpDate];
     
@@ -68,6 +162,27 @@
         [self.backupNowButton setEnabled:NO];
         [self.backupNowButton setTitle:@"Up to Date" forState:UIControlStateNormal];
     }
+    
+    [self selectUnitSystem];
+    
+    Language *currentLanguage = [LocalizationManager sharedInstance].currentLanguage;
+    
+    if (!currentLanguage)
+    {
+        [self setLanguageTo:LanguageEnglish];
+    }
+    if ([currentLanguage.code isEqualToString: @"en"])
+    {
+        [self setLanguageTo:LanguageEnglish];
+    }
+    else if ([currentLanguage.code isEqualToString: @"fr"])
+    {
+        [self setLanguageTo:LanguageFrench];
+    }
+    else if ([currentLanguage.code isEqualToString: @"es"])
+    {
+        [self setLanguageTo:LanguageSpanish];
+    }
 }
 
 - (void) viewWillAppear: (BOOL) animated
@@ -78,19 +193,114 @@
     [self.profileBarView.nameLabel setText: [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]];
     
     [self.profileBarView.profileImageView setImage: self.userManager.user.avatarImage];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(refreshLanguage)
+                                                 name: kAppLanguageChangedNotification
+                                               object: nil];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear: animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver: self
+                                                    name: kAppLanguageChangedNotification
+                                                  object: nil];
 }
 
+-(void)selectUnitSystem
+{
+    NSNumber *savedUnitSystem = [self.configurationManager getUnitSystem];
+    
+    if (!savedUnitSystem)
+    {
+        [self.configurationManager setUnitSystem:UnitSystemMetric];
+    }
+    
+    [self setUnitSystemToType: [self.configurationManager getUnitSystem].integerValue];
+}
+
+-(void)setUnitSystemToType:(NSInteger)unitSystem
+{
+    switch (unitSystem)
+    {
+        case UnitSystemMetric:
+            [self.lookAndFeel applySolidGreenButtonStyleTo:self.metricUnitButton];
+            [self.lookAndFeel applyDisabledButtonStyleTo:self.imperialUnitButton];
+            
+            [self.configurationManager setUnitSystem:UnitSystemMetric];
+            break;
+            
+        case UnitSystemImperial:
+            [self.lookAndFeel applyDisabledButtonStyleTo:self.metricUnitButton];
+            [self.lookAndFeel applySolidGreenButtonStyleTo:self.imperialUnitButton];
+            
+            [self.configurationManager setUnitSystem:UnitSystemImperial];
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self.lookAndFeel applySlightlyDarkerBorderTo:self.metricUnitButton];
+    [self.lookAndFeel applySlightlyDarkerBorderTo:self.imperialUnitButton];
+}
+
+-(void)setLanguageTo:(NSInteger)language
+{
+    switch (language)
+    {
+        case LanguageEnglish:
+            [self.englishLanguageCheckBox setCheckState: M13CheckboxStateChecked];
+            [self.frenchLanguageCheckBox setCheckState: M13CheckboxStateUnchecked];
+            [self.spanishLanguageCheckBox setCheckState: M13CheckboxStateUnchecked];
+            
+            [[LocalizationManager sharedInstance] changeLanguage:@"en"];
+            break;
+            
+        case LanguageFrench:
+            [self.englishLanguageCheckBox setCheckState: M13CheckboxStateUnchecked];
+            [self.frenchLanguageCheckBox setCheckState: M13CheckboxStateChecked];
+            [self.spanishLanguageCheckBox setCheckState: M13CheckboxStateUnchecked];
+            
+            [[LocalizationManager sharedInstance] changeLanguage:@"fr"];
+            break;
+            
+        case LanguageSpanish:
+            [self.englishLanguageCheckBox setCheckState: M13CheckboxStateUnchecked];
+            [self.frenchLanguageCheckBox setCheckState: M13CheckboxStateUnchecked];
+            [self.spanishLanguageCheckBox setCheckState: M13CheckboxStateChecked];
+            
+            [[LocalizationManager sharedInstance] changeLanguage:@"es"];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+-(void)languageCheckBoxChanged:(M13Checkbox *)checkbox
+{
+    if (checkbox == self.englishLanguageCheckBox)
+    {
+        [self setLanguageTo:LanguageEnglish];
+    }
+    else if (checkbox == self.frenchLanguageCheckBox)
+    {
+        [self setLanguageTo:LanguageFrench];
+    }
+    else if (checkbox == self.spanishLanguageCheckBox)
+    {
+        [self setLanguageTo:LanguageSpanish];
+    }
+}
 
 -(void)setLastBackUpLabelDate:(NSDate *)date
 {
     if (!date)
     {
-        [self.lastBackUpLabel setText:[NSString stringWithFormat:@"Last Sync: Never"]];
+        [self.lastBackUpLabel setText:[NSString stringWithFormat:@"Never"]];
         
         return;
     }
@@ -100,12 +310,37 @@
     gmtDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSString *dateStringFromUploadDate = [gmtDateFormatter stringFromDate:date];
     
-    [self.lastBackUpLabel setText:[NSString stringWithFormat:@"Last Sync: %@", dateStringFromUploadDate]];
+    [self.lastBackUpLabel setText:[NSString stringWithFormat:@"%@", dateStringFromUploadDate]];
 }
 
-- (void) editProfilePressed: (UIButton *) sender
+- (IBAction)profileSettingsPressed:(id)sender
 {
-    [self.navigationController pushViewController: [self.viewControllerFactory createMyProfileViewController] animated: YES];
+    [self.navigationController pushViewController: [self.viewControllerFactory createProfileSettingsViewController] animated: YES];
+}
+
+- (IBAction)loginSettingsPressed:(UIButton *)sender
+{
+    [self.navigationController pushViewController: [self.viewControllerFactory createLoginSettingsViewController] animated: YES];
+}
+
+- (IBAction)metricPressed:(SolidGreenButton *)sender
+{
+    [self setUnitSystemToType:UnitSystemMetric];
+}
+
+- (IBAction)imperialPressed:(SolidGreenButton *)sender
+{
+    [self setUnitSystemToType:UnitSystemImperial];
+}
+
+- (IBAction)aboutPressed:(UIButton *)sender
+{
+    [AlertDialogsProvider showWorkInProgressDialog];
+}
+
+- (IBAction)faqPressed:(UIButton *)sender
+{
+    [AlertDialogsProvider showWorkInProgressDialog];
 }
 
 - (IBAction)insertDemoDataPressed:(UIButton *)sender
@@ -129,13 +364,16 @@
     [self.backupNowButton setEnabled:NO];
     [self.backupNowButton setTitle:@"Syncing..." forState:UIControlStateNormal];
     
-    [self.syncManager startSync:^(NSDate *syncDate) {
+    [self.syncManager startSync:^(NSDate *syncDate)
+    {
         //disable the Backup Now Button
         [self.backupNowButton setEnabled:NO];
         [self.backupNowButton setTitle:@"Synced" forState:UIControlStateNormal];
         
         [self setLastBackUpLabelDate:syncDate];
+        
     } failure:^(NSString *reason) {
+        
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
                                                             message:reason
                                                            delegate:nil
@@ -146,6 +384,7 @@
         
         [self.backupNowButton setEnabled:YES];
         [self.backupNowButton setTitle:@"Sync" forState:UIControlStateNormal];
+        
     }];
 }
 

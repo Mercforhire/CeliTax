@@ -10,12 +10,21 @@
 
 @interface ConfigurationManager : NSObject
 
+typedef enum : NSUInteger {
+    UnitSystemMetric,
+    UnitSystemImperial
+} UnitSystems;
+
 -(void)loadSettingsFromPersistence;
 
--(void)setNewSettings:(NSDictionary *)settings;
-
--(NSInteger)getCurrentTaxYear;
+//Tax Year
+-(NSNumber *)getCurrentTaxYear;
 
 -(void)setCurrentTaxYear:(NSInteger)taxYear;
+
+//Unit
+-(NSNumber *)getUnitSystem;
+
+-(void)setUnitSystem:(NSInteger)unitSystem;
 
 @end

@@ -30,11 +30,13 @@
 #import "PasswordRecoverySentViewController.h"
 #import "TransferSelectionsViewController.h"
 #import "TutorialManager.h"
-#import "MyProfileViewController.h"
-#import "UnitPickerViewController.h"
+#import "ProfileSettingsViewController.h"
+#import "MetricUnitPickerViewController.h"
 #import "YearSummaryViewController.h"
 #import "YearSavingViewController.h"
 #import "BackgroundWorker.h"
+#import "LoginSettingsViewController.h"
+#import "ImperialUnitPickerViewController.h"
 
 @implementation ViewControllerFactory
 {
@@ -282,9 +284,9 @@
     return passwordRecoverySentViewController;
 }
 
-- (MyProfileViewController *) createMyProfileViewController
+- (ProfileSettingsViewController *) createProfileSettingsViewController
 {
-    MyProfileViewController *myProfileViewController = [[MyProfileViewController alloc] initWithNibName: @"MyProfileViewController" bundle: nil];
+    ProfileSettingsViewController *myProfileViewController = [[ProfileSettingsViewController alloc] initWithNibName: @"ProfileSettingsViewController" bundle: nil];
     
     [self initializeViewController: myProfileViewController];
     
@@ -294,9 +296,21 @@
     return myProfileViewController;
 }
 
-- (UnitPickerViewController *) createUnitPickerViewControllerWithDefaultUnit:(NSInteger)defaultUnit
+- (MetricUnitPickerViewController *) createUnitPickerViewControllerWithDefaultUnit:(NSInteger)defaultUnit
 {
-    UnitPickerViewController *unitPickerViewController = [[UnitPickerViewController alloc] initWithNibName: @"UnitPickerViewController" bundle: nil];
+    MetricUnitPickerViewController *unitPickerViewController = [[MetricUnitPickerViewController alloc] initWithNibName: @"MetricUnitPickerViewController" bundle: nil];
+    
+    [self initializeViewController: unitPickerViewController];
+    
+    unitPickerViewController.lookAndFeel = self.lookAndFeel;
+    unitPickerViewController.defaultSelectedUnit = defaultUnit;
+    
+    return unitPickerViewController;
+}
+
+- (ImperialUnitPickerViewController *) createImperialUnitPickerViewControllerWithDefaultUnit:(NSInteger)defaultUnit
+{
+    ImperialUnitPickerViewController *unitPickerViewController = [[ImperialUnitPickerViewController alloc] initWithNibName: @"ImperialUnitPickerViewController" bundle: nil];
     
     [self initializeViewController: unitPickerViewController];
     
@@ -330,14 +344,16 @@
     return yearSavingViewController;
 }
 
-- (NSArray *) getMenuSelections
+- (LoginSettingsViewController *) createLoginSettingsViewController
 {
-    if (!menuSelections)
-    {
-        menuSelections = [NSArray arrayWithObjects: @"Home", @"Account", @"Vault", @"Help", @"Settings", @"Logout", nil];
-    }
-
-    return menuSelections;
+    LoginSettingsViewController *loginSettingsViewController = [[LoginSettingsViewController alloc] initWithNibName: @"LoginSettingsViewController" bundle: nil];
+    
+    [self initializeViewController: loginSettingsViewController];
+    
+    loginSettingsViewController.lookAndFeel = self.lookAndFeel;
+    loginSettingsViewController.authenticationService = self.authenticationService;
+    
+    return loginSettingsViewController;
 }
 
 @end

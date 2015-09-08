@@ -11,7 +11,7 @@
 
 @interface AuthenticationServiceImpl : NSObject <AuthenticationService>
 
-@property (nonatomic, strong) UserDataDAO               *userDataDAO;
-@property (nonatomic, strong) NetworkCommunicator       *networkCommunicator;
+@property (nonatomic, weak) UserDataDAO               *userDataDAO;
+@property (nonatomic, weak) NetworkCommunicator       *networkCommunicator;
 
 @end

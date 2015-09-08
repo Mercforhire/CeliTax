@@ -12,9 +12,12 @@
 #import "ViewControllerFactory.h"
 #import "PasswordRecoverySentViewController.h"
 #import "HollowGreenButton.h"
+#import "AlertDialogsProvider.h"
 
 @interface PasswordRecoveryViewController () <UITextFieldDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *instructionsLabel;
 @property (weak, nonatomic) IBOutlet UITextField *emailAddressField;
 @property (weak, nonatomic) IBOutlet HollowGreenButton *sendEmailButton;
 
@@ -24,17 +27,22 @@
 
 - (void) setupUI
 {
+    [self.titleLabel setText:NSLocalizedString(@"Password Recovery", nil)];
+    
+    [self.instructionsLabel setText:NSLocalizedString(@"To recover your password please type in your email address", nil)];
+    
+    [self.emailAddressField setPlaceholder:NSLocalizedString(@"Email Address", nil)];
     [self.lookAndFeel applyGrayBorderTo: self.emailAddressField];
     [self.lookAndFeel addLeftInsetToTextField: self.emailAddressField];
 
     [self.sendEmailButton setLookAndFeel:self.lookAndFeel];
+    [self.sendEmailButton setTitle:NSLocalizedString(@"Send Email", nil) forState:UIControlStateNormal];
 }
 
 - (void) viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-
     [self setupUI];
 
     self.emailAddressField.delegate = self;
@@ -75,6 +83,8 @@
 
 - (IBAction) sendEmailPressed: (UIButton *) sender
 {
+    [AlertDialogsProvider showWorkInProgressDialog];
+    
     [self.navigationController pushViewController: [self.viewControllerFactory createPasswordRecoverySentViewController] animated: YES];
 }
 

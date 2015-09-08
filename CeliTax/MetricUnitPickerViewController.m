@@ -6,13 +6,14 @@
 //  Copyright (c) 2015 CraveNSave. All rights reserved.
 //
 
-#import "UnitPickerViewController.h"
+#import "MetricUnitPickerViewController.h"
 
-@interface UnitPickerViewController ()
+@interface MetricUnitPickerViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *topContainer;
 @property (weak, nonatomic) IBOutlet UIButton *unitItemButton;
 
+@property (weak, nonatomic) IBOutlet UILabel *unitsLabel;
 @property (weak, nonatomic) IBOutlet UIView *bottomContainer;
 @property (weak, nonatomic) IBOutlet UIButton *unitMLButton;
 @property (weak, nonatomic) IBOutlet UIButton *unitLButton;
@@ -22,14 +23,14 @@
 
 @end
 
-@implementation UnitPickerViewController
+@implementation MetricUnitPickerViewController
 
 - (id) initWithNibName: (NSString *) nibNameOrNil bundle: (NSBundle *) nibBundleOrNil
 {
     if (self = [super initWithNibName: nibNameOrNil bundle: nibBundleOrNil])
     {
         // Custom initialization
-        self.viewSize = CGSizeMake(60, 237);
+        self.viewSize = CGSizeMake(60, 230);
     }
     
     return self;
@@ -127,6 +128,9 @@
 {
     [self.topContainer setBackgroundColor:[UIColor whiteColor]];
     [self.bottomContainer setBackgroundColor:[UIColor whiteColor]];
+    
+    [self.unitItemButton setTitle:NSLocalizedString(@"Item", nil) forState:UIControlStateNormal];
+    [self.unitsLabel setText:NSLocalizedString(@"Units", nil)];
     
     [self highlightUnitButton:self.defaultSelectedUnit];
     

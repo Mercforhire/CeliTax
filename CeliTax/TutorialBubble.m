@@ -125,6 +125,7 @@
     }
     else
     {
+        [self.leftButton setTitle:NSLocalizedString(@"Back", nil) forState:UIControlStateNormal];
         [self.leftButton setEnabled:NO];
         [self.lookAndFeel applyDisabledButtonStyleTo:self.leftButton];
     }
@@ -135,6 +136,7 @@
     }
     else
     {
+        [self.rightButton setTitle:NSLocalizedString(@"Continue", nil) forState:UIControlStateNormal];
         [self.rightButton setEnabled:NO];
         [self.lookAndFeel applyDisabledButtonStyleTo:self.rightButton];
     }

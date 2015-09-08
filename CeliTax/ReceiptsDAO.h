@@ -12,7 +12,7 @@
 
 @interface ReceiptsDAO : NSObject
 
-@property (strong, nonatomic) UserDataDAO *userDataDAO;
+@property (weak, nonatomic) UserDataDAO *userDataDAO;
 
 /*
    @param filenames NSArray of NSString filenames for this receipt
@@ -63,6 +63,6 @@
  */
 - (BOOL) deleteReceipt: (NSString *) receiptID save:(BOOL) save;
 
--(BOOL)mergeWith:(NSArray *)receipts save:(BOOL)save;
+- (BOOL) mergeWith:(NSArray *)receipts save:(BOOL)save;
 
 @end

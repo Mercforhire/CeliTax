@@ -45,6 +45,8 @@ typedef enum : NSUInteger
 
 @interface MainViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate, UIPickerViewDataSource, UIPickerViewDelegate, TutorialManagerDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *recentUploadsTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *quickLinksTitleLabel;
 @property (nonatomic, strong) UIToolbar *pickerToolbar;
 @property (nonatomic, strong) UIBarButtonItem *addCatagoryMenuItem;
 @property (weak, nonatomic) IBOutlet UITableView *recentUploadsTable;
@@ -53,6 +55,7 @@ typedef enum : NSUInteger
 @property (weak, nonatomic) IBOutlet TriangleView *taxYearTriangle;
 @property (strong, nonatomic) UIPickerView *taxYearPicker;
 @property (weak, nonatomic) IBOutlet UITextField *invisibleNewTaxYearField;
+@property (weak, nonatomic) IBOutlet UIButton *categoriesButton;
 @property (weak, nonatomic) IBOutlet UIButton *myAccountButton;
 @property (weak, nonatomic) IBOutlet UIButton *vaultButton;
 @property (strong, nonatomic) MBProgressHUD *waitView;
@@ -85,6 +88,8 @@ typedef enum : NSUInteger
 - (void) setupUI
 {
     [self.navigationItem setHidesBackButton: YES];
+    
+    [self.taxYearLabel setText:NSLocalizedString(@"No Tax Year Added", nil)];
 
     UINib *mainTableCell = [UINib nibWithNibName: @"MainViewTableViewCell" bundle: nil];
     [self.recentUploadsTable registerNib: mainTableCell forCellReuseIdentifier: @"MainTableCell"];
@@ -124,22 +129,34 @@ typedef enum : NSUInteger
     self.pickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
     self.pickerToolbar.barStyle = UIBarStyleDefault;
     
-    UIBarButtonItem *cancelToolbarButton = [[UIBarButtonItem alloc]initWithTitle: @"Cancel" style: UIBarButtonItemStylePlain target: self action: @selector(cancelAddTaxYear)];
+    UIBarButtonItem *cancelToolbarButton = [[UIBarButtonItem alloc]initWithTitle: NSLocalizedString(@"Cancel", nil)
+                                                                           style: UIBarButtonItemStylePlain
+                                                                          target: self
+                                                                          action: @selector(cancelAddTaxYear)];
     [cancelToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
     
-    UIBarButtonItem *addToolbarButton = [[UIBarButtonItem alloc]initWithTitle: @"Done" style: UIBarButtonItemStylePlain target: self action: @selector(addTaxYear)];
+    UIBarButtonItem *addToolbarButton = [[UIBarButtonItem alloc]initWithTitle: NSLocalizedString(@"Done", nil)
+                                                                        style: UIBarButtonItemStylePlain
+                                                                       target: self
+                                                                       action: @selector(addTaxYear)];
     [addToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
-    
     
     self.pickerToolbar.items = [NSArray arrayWithObjects:
                                 cancelToolbarButton,
-                           [[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil],
-                           addToolbarButton, nil];
+                                [[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil],
+                                addToolbarButton, nil];
     [self.pickerToolbar sizeToFit];
 
     
     self.invisibleNewTaxYearField.inputAccessoryView = self.pickerToolbar;
+    
+    [self.recentUploadsTitleLabel setText:NSLocalizedString(@"Recent Uploads", nil)];
+    [self.quickLinksTitleLabel setText:NSLocalizedString(@"Quick Links", nil)];
+    [self.categoriesButton setTitle:NSLocalizedString(@"Categories", nil) forState:UIControlStateNormal];
+    [self.myAccountButton setTitle:NSLocalizedString(@"My Account", nil) forState:UIControlStateNormal];
+    [self.vaultButton setTitle:NSLocalizedString(@"Vault", nil) forState:UIControlStateNormal];
 }
+
 
 - (void) viewDidLoad
 {
@@ -169,17 +186,14 @@ typedef enum : NSUInteger
     
     [self refreshTaxYears];
     
-    //if there is no selected tax year saved, select the newest year by default
-    if (![self.configurationManager getCurrentTaxYear])
+    if ([self.configurationManager getCurrentTaxYear] &&
+        [self.existingTaxYears containsObject: [self.configurationManager getCurrentTaxYear]] )
     {
-        if (self.existingTaxYears.count)
-        {
-            self.currentlySelectedYear = [self.existingTaxYears firstObject];
-        }
+        self.currentlySelectedYear = [self.configurationManager getCurrentTaxYear];
     }
-    else
+    else if (self.existingTaxYears.count)
     {
-        self.currentlySelectedYear = [NSNumber numberWithInteger:[self.configurationManager getCurrentTaxYear]];
+        self.currentlySelectedYear = [self.existingTaxYears firstObject];
     }
 }
 
@@ -212,18 +226,7 @@ typedef enum : NSUInteger
     }
     else
     {
-        [self.syncManager checkUpdate:^{
-            
-            //ask user if they want to download from server
-            UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Download"
-                                                              message: @"The server contains saved data. Do you want to download the data to the app?"
-                                                             delegate: self
-                                                    cancelButtonTitle: @"No"
-                                                    otherButtonTitles: @"Yes", nil];
-            
-            [message show];
-            
-        }];
+        [self checkUpdate];
     }
 }
 
@@ -232,8 +235,8 @@ typedef enum : NSUInteger
     if (!self.waitView)
     {
         self.waitView = [[MBProgressHUD alloc] initWithView: self.view];
-        self.waitView.labelText = @"Please wait";
-        self.waitView.detailsLabelText = @"Downloading Data...";
+        self.waitView.labelText = NSLocalizedString(@"Please wait", nil);
+        self.waitView.detailsLabelText = NSLocalizedString(@"Downloading Data...", nil);
         self.waitView.mode = MBProgressHUDModeIndeterminate;
         [self.view addSubview: self.waitView];
     }
@@ -250,11 +253,11 @@ typedef enum : NSUInteger
 {
     if ([self.existingTaxYears containsObject:self.taxYearToAdd])
     {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@""
-                                                          message:@"You can not add a duplicate tax year."
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)
+                                                          message:NSLocalizedString(@"Can not add a duplicate tax year", nil)
                                                          delegate:nil
                                                 cancelButtonTitle:nil
-                                                otherButtonTitles:@"Dimiss",nil];
+                                                otherButtonTitles:NSLocalizedString(@"Dismiss", nil),nil];
         
         [message show];
         
@@ -281,10 +284,10 @@ typedef enum : NSUInteger
     
     for (NSNumber *year in self.existingTaxYears )
     {
-        [yearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", (long)year.integerValue]];
+        [yearSelections addObject: [NSString stringWithFormat: NSLocalizedString(@"%ld Tax Year", nil), (long)year.integerValue]];
     }
     
-    [yearSelections addObject:@"Add Tax Year"];
+    [yearSelections addObject:NSLocalizedString(@"Add Tax Year", nil)];
     
     self.taxYearPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: yearSelections];
     self.selectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.taxYearPickerViewController];
@@ -333,11 +336,11 @@ typedef enum : NSUInteger
     }
     else
     {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Sorry"
-                                                          message:@"A tax year must be created before a receipt can be saved."
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)
+                                                          message:NSLocalizedString(@"A tax year must be created before a receipt can be saved", nil)
                                                          delegate:nil
                                                 cancelButtonTitle:nil
-                                                otherButtonTitles:@"Ok",nil];
+                                                otherButtonTitles:NSLocalizedString(@"Ok", nil),nil];
         
         [message show];
     }
@@ -345,7 +348,7 @@ typedef enum : NSUInteger
 
 - (void) setYearLabelToBe: (NSInteger) year
 {
-    [self.taxYearLabel setText: [NSString stringWithFormat: @"%ld Tax Year", (long)year]];
+    [self.taxYearLabel setText: [NSString stringWithFormat: NSLocalizedString(@"%ld Tax Year", nil), (long)year]];
 }
 
 - (IBAction) myAccountPressed: (UIButton *) sender
@@ -367,13 +370,29 @@ typedef enum : NSUInteger
     }
 }
 
+-(void)checkUpdate
+{
+    [self.syncManager checkUpdate:^{
+        
+        // ask user if they want to download data from server
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Download", nil)
+                                                          message: NSLocalizedString(@"The server contains some saved receipt data. Do you want to download and merge the data to the app?", nil)
+                                                         delegate: self
+                                                cancelButtonTitle: NSLocalizedString(@"No", nil)
+                                                otherButtonTitles: NSLocalizedString(@"Yes", nil), nil];
+        
+        [message show];
+        
+    }];
+}
+
 #pragma mark - UIAlertViewDelegate
 
 - (void) alertView: (UIAlertView *) alertView clickedButtonAtIndex: (NSInteger) buttonIndex
 {
     NSString *title = [alertView buttonTitleAtIndex: buttonIndex];
     
-    if ([title isEqualToString: @"Yes"])
+    if ([title isEqualToString: NSLocalizedString(@"Yes", nil)])
     {
         [self createAndShowWaitViewForDownload];
         
@@ -403,7 +422,6 @@ typedef enum : NSUInteger
 {
     return 1;
 }
-
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
@@ -473,7 +491,7 @@ typedef enum : NSUInteger
             cell = [[NoItemsTableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: cellId2];
         }
         
-        [cell.label setText:@"No Uploads"];
+        [cell.label setText:NSLocalizedString(@"No Uploads", nil)];
         
         return cell;
     }
@@ -559,57 +577,57 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep1 = [TutorialStep new];
     
-    tutorialStep1.text = @"Welcome to CeliTax, the simple, easy to use tax tool designed specifically for Celiacs.\n\nWe make your Gluten Free (GF) tax claim easy!\n\nNo complicated spreadsheets, no paper receipts, no stress.";
-    tutorialStep1.leftButtonTitle = @"Skip";
-    tutorialStep1.rightButtonTitle = @"Begin Tutorial";
+    tutorialStep1.text = NSLocalizedString(@"Welcome to CeliTax, the simple, easy to use tax tool designed specifically for Celiacs.\n\nWe make your Gluten Free (GF) tax claim easy!\n\nNo complicated spreadsheets, no paper receipts, no stress.", nil);
+    tutorialStep1.leftButtonTitle = NSLocalizedString(@"Skip", nil);
+    tutorialStep1.rightButtonTitle = NSLocalizedString(@"Begin Tutorial", nil);
     
     [self.tutorials addObject:tutorialStep1];
     
     TutorialStep *tutorialStep2 = [TutorialStep new];
     
-    tutorialStep2.text = @"Individuals diagnosed with Celiacs disease are entitled to a government tax claim based on the incremental difference between the cost of GF products and regular food items.";
-    tutorialStep2.leftButtonTitle = @"Back";
-    tutorialStep2.rightButtonTitle = @"Continue";
+    tutorialStep2.text = NSLocalizedString(@"Individuals diagnosed with Celiacs disease are entitled to a government tax claim based on the incremental difference between the cost of GF products and regular food items.", nil);
+    tutorialStep2.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep2.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
     [self.tutorials addObject:tutorialStep2];
     
     TutorialStep *tutorialStep3 = [TutorialStep new];
     
-    tutorialStep3.text = @"CeliTax is here to simplify your life. You already have enough to worry about, taxes should not be one of them.";
-    tutorialStep3.leftButtonTitle = @"Back";
-    tutorialStep3.rightButtonTitle = @"Continue";
+    tutorialStep3.text = NSLocalizedString(@"CeliTax is here to simplify your life. You already have enough to worry about, taxes should not be one of them.", nil);
+    tutorialStep3.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep3.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
     [self.tutorials addObject:tutorialStep3];
     
     TutorialStep *tutorialStep4 = [TutorialStep new];
     
-    tutorialStep4.text = @"Lets get started!";
-    tutorialStep4.leftButtonTitle = @"Back";
-    tutorialStep4.rightButtonTitle = @"Continue";
+    tutorialStep4.text = NSLocalizedString(@"Lets get started!", nil);
+    tutorialStep4.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep4.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
     [self.tutorials addObject:tutorialStep4];
     
     TutorialStep *tutorialStep5 = [TutorialStep new];
     
-    tutorialStep5.text = @"CeliTax helps you organize your GF food purchases by allocating each item to a custom GF food category. No need for complex spreadsheets.";
-    tutorialStep5.leftButtonTitle = @"Back";
-    tutorialStep5.rightButtonTitle = @"Continue";
+    tutorialStep5.text = NSLocalizedString(@"CeliTax helps you organize your GF food purchases by allocating each item to a custom GF food category. No need for complex spreadsheets.", nil);
+    tutorialStep5.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep5.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
     [self.tutorials addObject:tutorialStep5];
     
     TutorialStep *tutorialStep6 = [TutorialStep new];
     
-    tutorialStep6.text = @"Quickly keep track of your GF spending throughout the year and automatically calculate your GF tax claim in one simple click!";
-    tutorialStep6.leftButtonTitle = @"Back";
-    tutorialStep6.rightButtonTitle = @"Continue";
+    tutorialStep6.text = NSLocalizedString(@"Quickly keep track of your GF spending throughout the year and automatically calculate your GF tax claim in one simple click!", nil);
+    tutorialStep6.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep6.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
     [self.tutorials addObject:tutorialStep6];
     
     TutorialStep *tutorialStep7 = [TutorialStep new];
     
-    tutorialStep7.text = @"Once you obtain your grocery receipt, simply take a photo of it and start allocating your GF purchases to your categories!";
-    tutorialStep7.leftButtonTitle = @"Back";
-    tutorialStep7.rightButtonTitle = @"Continue";
+    tutorialStep7.text = NSLocalizedString(@"Once you obtain your grocery receipt, simply take a photo of it and start allocating your GF purchases to your categories!", nil);
+    tutorialStep7.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep7.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
     tutorialStep7.highlightedItemRect = self.cameraButton.frame;
     tutorialStep7.pointsUp = NO;
@@ -636,12 +654,16 @@ typedef enum : NSUInteger
     switch (self.currentTutorialStep)
     {
         case TutorialStep1:
+        {
             [self.tutorialManager setTutorialsAsShown];
             
             //Close tutorial
             [self.tutorialManager dismissTutorial:^{
-                //
+                
+                [self checkUpdate];
+                
             }];
+        }
             break;
             
         case TutorialStep2:
@@ -718,10 +740,12 @@ typedef enum : NSUInteger
             [self.tutorialManager setAutomaticallyShowTutorialNextTime];
             
             [self.tutorialManager dismissTutorial:^{
+                
                 self.shouldDisplaySecondSetOfTutorials = YES;
                 
                 //Go to Camera view
                 [self cameraButtonPressed:self.cameraButton];
+                
             }];
         }
             break;

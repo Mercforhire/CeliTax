@@ -416,13 +416,12 @@
     return filenames;
 }
 
-+ (SideMenuView *) getLeftSideViewUsing: (UIImage *) profileImage andUsername: (NSString *) userName andMenuSelections: (NSArray *) menuSelections
++ (SideMenuView *) getLeftSideViewUsing: (UIImage *) profileImage andUsername: (NSString *) userName
 {
     SideMenuView *leftSideMenuView = [[SideMenuView alloc] init];
 
     leftSideMenuView.profileImage = profileImage;
     leftSideMenuView.userName = userName;
-    leftSideMenuView.menuSelections = menuSelections;
 
     return leftSideMenuView;
 }

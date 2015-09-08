@@ -8,10 +8,14 @@
 
 #import "ConfigurationManager.h"
 
+#define kKeyAppSettings             @"AppSettings"
 #define kKeyTaxYear                 @"TaxYear"
+#define kKeyLanguage                @"Language"
+#define kKeyUnitSystem              @"UnitSystem"
 
 @interface ConfigurationManager ()
 
+@property (nonatomic,strong) NSUserDefaults *defaults;
 @property (nonatomic, strong) NSMutableDictionary *settings;
 
 @end
@@ -20,42 +24,59 @@
 
 - (instancetype) init
 {
-    self = [super init];
-    
-    self.settings = [[NSMutableDictionary alloc] init];
+    if (self = [super init])
+    {
+        _defaults = [NSUserDefaults standardUserDefaults];
+        _settings = [[NSMutableDictionary alloc] init];
+    }
     
     return self;
 }
 
 -(void)loadSettingsFromPersistence
 {
-    ///TODO:
-    //...
+    //load previous Settings
+    NSDictionary *settings = [self.defaults objectForKey:kKeyAppSettings];
+    
+    if (settings)
+    {
+        self.settings = [[NSMutableDictionary alloc] initWithDictionary:settings copyItems:NO];
+    }
 }
 
--(void)setNewSettings:(NSDictionary *)settings
+-(void)saveSettings
 {
-    ///TODO:
-    //...
+    [self.defaults setObject:self.settings forKey:kKeyAppSettings];
+    
+    [self.defaults synchronize];
 }
 
--(NSInteger)getCurrentTaxYear
+-(NSNumber *)getCurrentTaxYear
 {
     NSNumber *taxYear = [self.settings objectForKey:kKeyTaxYear];
     
-    if (taxYear)
-    {
-        return [taxYear integerValue];
-    }
-    else
-    {
-        return 0;
-    }
+    return taxYear;
 }
 
 -(void)setCurrentTaxYear:(NSInteger)taxYear
 {
     [self.settings setObject:[NSNumber numberWithInteger:taxYear] forKey:kKeyTaxYear];
+    
+    [self saveSettings];
+}
+
+-(NSNumber *)getUnitSystem
+{
+    NSNumber *unitSystemSelection = [self.settings objectForKey:kKeyUnitSystem];
+    
+    return unitSystemSelection;
+}
+
+-(void)setUnitSystem:(NSInteger)unitSystem
+{
+    [self.settings setObject:[NSNumber numberWithInteger:unitSystem] forKey:kKeyUnitSystem];
+    
+    [self saveSettings];
 }
 
 @end

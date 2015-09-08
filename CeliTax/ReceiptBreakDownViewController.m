@@ -65,8 +65,8 @@
 - (void) setupUI
 {
     // set up pieChart
-    // get rid of the visual aid backgrounds
-    [self.pieChart setBackgroundColor: [UIColor clearColor]];
+    
+    [self.pieChart setBackgroundColor: [UIColor clearColor]]; // get rid of the visual aid background
     [self.pieChart setDataSource: self];
     [self.pieChart setDelegate: self];
     [self.pieChart setStartPieAngle: M_PI_2];
@@ -90,7 +90,10 @@
     self.numberToolbar = [[UIToolbar alloc]initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 50)];
     self.numberToolbar.barStyle = UIBarStyleDefault;
 
-    UIBarButtonItem *doneToolbarButton = [[UIBarButtonItem alloc]initWithTitle: @"Done" style: UIBarButtonItemStyleDone target: self action: @selector(doneWithKeyboard)];
+    UIBarButtonItem *doneToolbarButton = [[UIBarButtonItem alloc]initWithTitle: NSLocalizedString(@"Done", nil)
+                                                                         style: UIBarButtonItemStyleDone
+                                                                        target: self
+                                                                        action: @selector(doneWithKeyboard)];
     [doneToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
 
     self.numberToolbar.items = [NSArray arrayWithObjects:
@@ -856,8 +859,8 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep1 = [TutorialStep new];
     
-    tutorialStep1.text = @"Manage items you have allocated to a single receipt. Easily view the breakdown by GF category in the pie chart.";
-    tutorialStep1.rightButtonTitle = @"Continue";
+    tutorialStep1.text = NSLocalizedString(@"Manage items you have allocated to a single receipt. Easily view the breakdown by GF category in the pie chart.", nil);
+    tutorialStep1.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     tutorialStep1.pointsUp = YES;
     tutorialStep1.highlightedItemRect = self.pieChart.frame;
     
@@ -865,9 +868,9 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep2 = [TutorialStep new];
     
-    tutorialStep2.text = @"Quickly Transfer, Edit, or Delete items as needed.";
-    tutorialStep2.leftButtonTitle = @"Back";
-    tutorialStep2.rightButtonTitle = @"Continue";
+    tutorialStep2.text = NSLocalizedString(@"Quickly Transfer, Edit, or Delete items as needed.", nil);
+    tutorialStep2.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep2.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     tutorialStep2.pointsUp = NO;
     tutorialStep2.highlightedItemRect = self.receiptItemsTable.frame;
     
@@ -875,9 +878,9 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep3 = [TutorialStep new];
     
-    tutorialStep3.text = @"Click to return to your receipt and keep allocating purchases.";
-    tutorialStep3.leftButtonTitle = @"Back";
-    tutorialStep3.rightButtonTitle = @"Continue";
+    tutorialStep3.text = NSLocalizedString(@"Click to return to your receipt and keep allocating purchases.", nil);
+    tutorialStep3.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep3.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     tutorialStep3.pointsUp = YES;
     tutorialStep3.highlightedItemRect = self.viewReceiptButton.frame;
     

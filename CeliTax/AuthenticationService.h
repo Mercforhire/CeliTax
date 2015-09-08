@@ -12,6 +12,12 @@
 
 @protocol AuthenticationService <NSObject>
 
+#define USER_ALREADY_EXIST                      @"USER_ALREADY_EXIST"
+#define USER_DOESNT_EXIST                       @"USER_DOESNT_EXIST"
+#define USER_PASSWORD_WRONG                     @"USER_PASSWORD_WRONG"
+#define PROFILE_IMAGE_FILE_DOESNT_EXIST         @"PROFILE_IMAGE_FILE_DOESNT_EXIST"
+#define USER_CHANGE_EMAIL_ALREADY_EXIST         @"USER_CHANGE_EMAIL_ALREADY_EXIST"
+
 typedef void (^AuthenticateUserSuccessBlock) (AuthorizeResult *authorizeResult);
 typedef void (^AuthenticateUserFailureBlock) (AuthorizeResult *authorizeResult);
 
@@ -27,8 +33,8 @@ typedef void (^UpdateAccountInfoFailureBlock) (NSString *reason);
 typedef void (^RetrieveProfileImageSuccessBlock) (UIImage *profileImage);
 typedef void (^RetrieveProfileImageFailureBlock) (NSString *reason);
 
-@property (nonatomic, strong) UserDataDAO               *userDataDAO;
-@property (nonatomic, strong) NetworkCommunicator       *networkCommunicator;
+@property (nonatomic, weak) UserDataDAO               *userDataDAO;
+@property (nonatomic, weak) NetworkCommunicator       *networkCommunicator;
 
 - (void) authenticateUser: (NSString *) userName
              withPassword: (NSString *) password
@@ -62,5 +68,18 @@ typedef void (^RetrieveProfileImageFailureBlock) (NSString *reason);
 
 - (void) retrieveProfileImage: (RetrieveProfileImageSuccessBlock) success
                       failure: (RetrieveProfileImageFailureBlock) failure;
+
+- (void) updateEmailTo: (NSString *)emailToChangeTo
+               success: (UpdateAccountInfoSuccessBlock) success
+               failure: (UpdateAccountInfoFailureBlock) failure;
+
+- (void) updatePassword: (NSString *)oldPassword
+     passwordToChangeTo: (NSString *)passwordToChangeTo
+                success: (UpdateAccountInfoSuccessBlock) success
+                failure: (UpdateAccountInfoFailureBlock) failure;
+
+- (void) killAccount: (NSString *)password
+             success: (UpdateAccountInfoSuccessBlock) success
+             failure: (UpdateAccountInfoFailureBlock) failure;
 
 @end

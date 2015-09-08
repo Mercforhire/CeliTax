@@ -18,15 +18,18 @@
         </mutableArray>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyProfileViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileSettingsViewController">
             <connections>
                 <outlet property="canadaButton" destination="awF-lG-Pg0" id="IhF-f6-mBL"/>
                 <outlet property="editProfileImageButton" destination="kzS-kr-Ivr" id="7JR-Go-xBw"/>
+                <outlet property="firstNameLabel" destination="PsI-PJ-Luq" id="zqM-zX-k5S"/>
                 <outlet property="firstnameField" destination="x5i-Y3-Ind" id="9Zk-ZC-2Je"/>
+                <outlet property="lastNameLabel" destination="m4g-dK-zC6" id="Oc7-Tx-iFV"/>
                 <outlet property="lastnameField" destination="Jtm-rt-Igc" id="6OT-s5-6cg"/>
                 <outlet property="profileImageView" destination="bxX-x8-Hub" id="uRw-jL-gFl"/>
                 <outlet property="saveButton" destination="qh1-uV-NR8" id="ywf-MR-7wK"/>
-                <outlet property="scrollView" destination="ti1-xI-Y4g" id="MjW-Ca-31h"/>
+                <outlet property="taxCountryLabel" destination="T39-T8-N4m" id="5Qq-mc-MNh"/>
+                <outlet property="titleLabel" destination="diK-hS-IUa" id="64y-Gy-KMm"/>
                 <outlet property="usaButton" destination="Eg5-6R-BUp" id="RP8-hu-is1"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -39,8 +42,8 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ti1-xI-Y4g">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="525"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="diK-hS-IUa">
-                            <rect key="frame" x="131" y="15" width="57.5" height="23"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PROFILE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="diK-hS-IUa">
+                            <rect key="frame" x="121.5" y="15" width="76.5" height="23"/>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="19"/>
                             <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -59,7 +62,7 @@
                                 <constraint firstAttribute="width" constant="30" id="KNg-MY-r4c"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
-                            <state key="normal" title="Edit">
+                            <state key="normal" title="EDIT">
                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -74,14 +77,14 @@
                                 <constraint firstAttribute="height" constant="50" id="w5A-GD-MK9"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m4g-dK-zC6">
-                            <rect key="frame" x="23" y="202" width="65" height="16"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LAST NAME:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m4g-dK-zC6">
+                            <rect key="frame" x="23" y="202" width="75.5" height="16"/>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="13"/>
                             <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="x5i-Y3-Ind">
-                            <rect key="frame" x="112" y="150" width="185" height="32"/>
+                            <rect key="frame" x="124" y="150" width="173" height="32"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="RgJ-ZQ-cT4"/>
@@ -90,7 +93,7 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jtm-rt-Igc">
-                            <rect key="frame" x="111" y="194" width="186" height="32"/>
+                            <rect key="frame" x="121.5" y="194" width="175.5" height="32"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="3xN-ej-FeK"/>
@@ -124,20 +127,14 @@
                                 <action selector="canadaPressed:" destination="-1" eventType="touchUpInside" id="cfY-O5-b4A"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tax Country" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T39-T8-N4m">
-                            <rect key="frame" x="140" y="247" width="74.5" height="17"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TAX COUNTRY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T39-T8-N4m">
+                            <rect key="frame" x="140" y="247" width="96.5" height="17"/>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PsI-PJ-Luq">
-                            <rect key="frame" x="23" y="158" width="67.5" height="16"/>
-                            <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="13"/>
-                            <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qh1-uV-NR8" customClass="HollowGreenButton">
-                            <rect key="frame" x="129" y="294" width="62" height="32"/>
+                            <rect key="frame" x="126.5" y="444" width="67" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="UHF-Ph-xwf"/>
                                 <constraint firstAttribute="height" constant="42" id="dOW-q2-Dcb"/>
@@ -145,7 +142,7 @@
                             </constraints>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
                             <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
-                            <state key="normal" title="Save">
+                            <state key="normal" title="SAVE">
                                 <color key="titleColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -159,11 +156,17 @@
                                 <action selector="savePressed:" destination="-1" eventType="touchUpInside" id="jhL-p4-2CK"/>
                             </connections>
                         </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FIRST NAME:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PsI-PJ-Luq">
+                            <rect key="frame" x="23" y="158" width="79.5" height="16"/>
+                            <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="13"/>
+                            <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <constraints>
                         <constraint firstItem="PsI-PJ-Luq" firstAttribute="top" secondItem="kzS-kr-Ivr" secondAttribute="bottom" constant="23" id="1Bm-EY-O9F"/>
                         <constraint firstAttribute="bottom" secondItem="qh1-uV-NR8" secondAttribute="bottom" constant="30" id="1Jf-kM-nb9"/>
-                        <constraint firstItem="qh1-uV-NR8" firstAttribute="top" secondItem="T39-T8-N4m" secondAttribute="bottom" constant="30" id="3aK-gI-Z7L"/>
+                        <constraint firstItem="qh1-uV-NR8" firstAttribute="top" secondItem="T39-T8-N4m" secondAttribute="bottom" constant="180" id="3aK-gI-Z7L"/>
                         <constraint firstItem="x5i-Y3-Ind" firstAttribute="leading" secondItem="PsI-PJ-Luq" secondAttribute="trailing" constant="21.5" id="3od-io-eal"/>
                         <constraint firstItem="Jtm-rt-Igc" firstAttribute="leading" secondItem="m4g-dK-zC6" secondAttribute="trailing" constant="23" id="4Ds-qy-x5y"/>
                         <constraint firstItem="awF-lG-Pg0" firstAttribute="top" secondItem="Jtm-rt-Igc" secondAttribute="bottom" constant="20" id="6qM-J3-82e"/>

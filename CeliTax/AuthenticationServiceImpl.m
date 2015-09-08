@@ -73,7 +73,7 @@
         AuthorizeResult *returnedResult = [AuthorizeResult new];
         
         returnedResult.success = NO;
-        returnedResult.message = @"network error";
+        returnedResult.message = NETWORK_ERROR_NO_CONNECTIVITY;
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (failure)
@@ -137,7 +137,7 @@
         RegisterResult *registerResult = [RegisterResult new];
         
         registerResult.success = NO;
-        registerResult.message = @"Network Error";
+        registerResult.message = NETWORK_ERROR_NO_CONNECTIVITY;
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (failure)
@@ -166,27 +166,12 @@
     
     MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
         
-        NSDictionary *response = [completedOperation responseJSON];
-        
-        if ( [[response objectForKey:@"error"] boolValue] == NO )
-        {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (success)
-                {
-                    success ( );
-                }
-            });
-            
-        }
-        else
-        {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (failure)
-                {
-                    failure ( [response objectForKey:@"message"] );
-                }
-            });
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (success)
+            {
+                success ( );
+            }
+        });
         
     };
     
@@ -195,7 +180,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (failure)
             {
-                failure ( @"Network Error" );
+                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
             }
         });
     };
@@ -237,7 +222,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (failure)
             {
-                failure ( @"Network Error" );
+                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
             }
         });
     };
@@ -285,7 +270,7 @@
             
             if (failure)
             {
-                failure ( @"Network Error" );
+                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
             }
             
         });
@@ -328,7 +313,7 @@
             
             if (failure)
             {
-                failure ( @"Network Error" );
+                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
             }
             
         });
@@ -368,7 +353,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (failure)
             {
-                failure ( @"Network Error" );
+                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
             }
         });
     };
@@ -414,11 +399,165 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (failure)
             {
-                failure ( @"Network Error" );
+                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
             }
         });
         
         [[UIApplication sharedApplication] endBackgroundTask: bgTask];
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+    
+    [self.networkCommunicator enqueueOperation:networkOperation];
+}
+
+- (void) updateEmailTo: (NSString *)emailToChangeTo
+               success: (UpdateAccountInfoSuccessBlock) success
+               failure: (UpdateAccountInfoFailureBlock) failure
+{
+    NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       emailToChangeTo,@"new_email"
+                                       ,nil];
+    
+    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path: [WEB_API_FILE stringByAppendingPathComponent:@"change_email"] ] ;
+    
+    [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
+        
+        NSDictionary *response = [completedOperation responseJSON];
+        
+        if ( [[response objectForKey:@"error"] boolValue] == NO )
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                success (  );
+            });
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                failure ( [response objectForKey:@"message"] );
+            });
+        }
+        
+    };
+    
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (failure)
+            {
+                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
+            }
+        });
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+    
+    [self.networkCommunicator enqueueOperation:networkOperation];
+}
+
+- (void) updatePassword: (NSString *)oldPassword
+     passwordToChangeTo: (NSString *)passwordToChangeTo
+                success: (UpdateAccountInfoSuccessBlock) success
+                failure: (UpdateAccountInfoFailureBlock) failure
+{
+    NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       oldPassword,@"old_password",
+                                       passwordToChangeTo,@"new_password"
+                                       ,nil];
+    
+    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path: [WEB_API_FILE stringByAppendingPathComponent:@"change_password"] ] ;
+    
+    [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
+        
+        NSDictionary *response = [completedOperation responseJSON];
+        
+        if ( [[response objectForKey:@"error"] boolValue] == NO )
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (success)
+                {
+                    success ( );
+                }
+            });
+            
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (failure)
+                {
+                    failure ( USER_PASSWORD_WRONG );
+                }
+            });
+        }
+        
+    };
+    
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (failure)
+            {
+                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
+            }
+        });
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+    
+    [self.networkCommunicator enqueueOperation:networkOperation];
+}
+
+- (void) killAccount: (NSString *)password
+             success: (UpdateAccountInfoSuccessBlock) success
+             failure: (UpdateAccountInfoFailureBlock) failure
+{
+    NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       password,@"password"
+                                       ,nil];
+    
+    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path: [WEB_API_FILE stringByAppendingPathComponent:@"kill_account"] ] ;
+    
+    [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
+        
+        NSDictionary *response = [completedOperation responseJSON];
+        
+        if ( [[response objectForKey:@"error"] boolValue] == NO )
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (success)
+                {
+                    success ( );
+                }
+            });
+            
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (failure)
+                {
+                    failure ( [response objectForKey:@"message"] );
+                }
+            });
+        }
+        
+    };
+    
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (failure)
+            {
+                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
+            }
+        });
     };
     
     [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];

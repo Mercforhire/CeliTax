@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 CraveNSave. All rights reserved.
 //
 
-#import "MyProfileViewController.h"
+#import "ProfileSettingsViewController.h"
 #import "HollowGreenButton.h"
 #import "UIView+Helper.h"
 #import "UserManager.h"
@@ -22,16 +22,19 @@
 #define kOther2Title                @"Pick from Library"
 #define kCancelTitle                @"Cancel"
 
-@interface MyProfileViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, TOCropViewControllerDelegate, UIActionSheetDelegate>
+@interface ProfileSettingsViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, TOCropViewControllerDelegate, UIActionSheetDelegate>
 
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UIButton *editProfileImageButton;
 @property (strong, nonatomic) UIActionSheet *photoActions;
 @property (strong, nonatomic) UIImagePickerController *imagePicker;
 
+@property (weak, nonatomic) IBOutlet UILabel *firstNameLabel;
 @property (weak, nonatomic) IBOutlet UITextField *firstnameField;
+@property (weak, nonatomic) IBOutlet UILabel *lastNameLabel;
 @property (weak, nonatomic) IBOutlet UITextField *lastnameField;
+@property (weak, nonatomic) IBOutlet UILabel *taxCountryLabel;
 @property (weak, nonatomic) IBOutlet UIButton *canadaButton;
 @property (weak, nonatomic) IBOutlet UIButton *usaButton;
 
@@ -43,16 +46,23 @@
 
 @end
 
-@implementation MyProfileViewController
+@implementation ProfileSettingsViewController
 
 -(void)setupUI
 {
+    [self.titleLabel setText:NSLocalizedString(@"Profile", nil)];
+    
+    [self.firstNameLabel setText:NSLocalizedString(@"First Name:", nil)];
+    [self.lastNameLabel setText:NSLocalizedString(@"Last Name:", nil)];
+    [self.taxCountryLabel setText:NSLocalizedString(@"Tax Country", nil)];
+    
     [self.lookAndFeel applyGrayBorderTo:self.firstnameField];
     [self.lookAndFeel addLeftInsetToTextField: self.firstnameField];
     [self.lookAndFeel applyGrayBorderTo:self.lastnameField];
     [self.lookAndFeel addLeftInsetToTextField: self.lastnameField];
     
     [self.saveButton setLookAndFeel:self.lookAndFeel];
+    [self.saveButton setTitle:NSLocalizedString(@"Save", nil) forState:UIControlStateNormal];
     
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
     self.profileImageView.layer.borderColor = [UIColor colorWithWhite: 187.0f/255.0f alpha: 1].CGColor;
@@ -64,6 +74,8 @@
                                             action: @selector(editProfilePressed:)];
     
     [self.profileImageView addGestureRecognizer: profileImageViewTap];
+    
+    [self.editProfileImageButton setTitle:NSLocalizedString(@"Edit", nil) forState:UIControlStateNormal];
 }
 
 -(void)loadUserData
@@ -152,7 +164,7 @@
     self.imagePicker = [[UIImagePickerController alloc] init];
 }
 
-- (IBAction)editProfilePressed:(UIButton *)sender
+- (IBAction)editProfilePressed:(id)sender
 {
     //If user has profile image, display ActionSheet with Delete button
     if ([self.userManager doesUserHaveCustomProfileImage])

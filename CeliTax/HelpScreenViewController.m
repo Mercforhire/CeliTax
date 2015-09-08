@@ -13,12 +13,17 @@
 #import "UIView+Helper.h"
 #import "HollowGreenButton.h"
 #import "TutorialManager.h"
+#import "SolidGreenButton.h"
 
 @interface HelpScreenViewController () <UITextViewDelegate>
 {
     BOOL justStartedEditing;
 }
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *contactLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sendUsMessageLabel;
+@property (weak, nonatomic) IBOutlet SolidGreenButton *viewTutorialButton;
 @property (weak, nonatomic) IBOutlet UITextView *commentField;
 @property (weak, nonatomic) IBOutlet HollowGreenButton *sendButton;
 @property (nonatomic, strong) UIToolbar *keyboardToolbar;
@@ -30,15 +35,23 @@
 
 -(void)setupUI
 {
+    [self.titleLabel setText:NSLocalizedString(@"Help", nil)];
+    [self.contactLabel setText:NSLocalizedString(@"Contact", nil)];
+    [self.sendUsMessageLabel setText:NSLocalizedString(@"Send us a message", nil)];
+    
     [self.sendButton setLookAndFeel:self.lookAndFeel];
     [self.sendButton setEnabled:NO];
+    [self.sendButton setTitle:NSLocalizedString(@"Send", nil) forState:UIControlStateNormal];
     
     [self.lookAndFeel applyGrayBorderTo:self.commentField];
+    
+    [self.viewTutorialButton setLookAndFeel:self.lookAndFeel];
+    [self.viewTutorialButton setTitle:NSLocalizedString(@"View Tutorial", nil) forState:UIControlStateNormal];
     
     self.keyboardToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
     self.keyboardToolbar.barStyle = UIBarStyleDefault;
     
-    UIBarButtonItem *doneToolbarButton = [[UIBarButtonItem alloc]initWithTitle: @"Done" style: UIBarButtonItemStylePlain target: self action: @selector(doneClicked)];
+    UIBarButtonItem *doneToolbarButton = [[UIBarButtonItem alloc]initWithTitle: NSLocalizedString(@"Done", nil) style: UIBarButtonItemStylePlain target: self action: @selector(doneClicked)];
     [doneToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
     
     self.keyboardToolbar.items = [NSArray arrayWithObjects:
@@ -47,6 +60,7 @@
     [self.keyboardToolbar sizeToFit];
     
     self.commentField.inputAccessoryView = self.keyboardToolbar;
+    [self.commentField setText:NSLocalizedString(@"Type message", nil)];
 }
 
 - (void)viewDidLoad
@@ -109,8 +123,8 @@
     if (!self.waitView)
     {
         self.waitView = [[MBProgressHUD alloc] initWithView: self.view];
-        self.waitView.labelText = @"Please wait";
-        self.waitView.detailsLabelText = @"Sending comment...";
+        self.waitView.labelText = NSLocalizedString(@"Please wait", nil);
+        self.waitView.detailsLabelText = NSLocalizedString(@"Sending comment...", nil);
         self.waitView.mode = MBProgressHUDModeIndeterminate;
         [self.view addSubview: self.waitView];
     }
@@ -128,11 +142,11 @@
     [self.authenticationService sendComment:self.commentField.text
                                     success:^
     {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Thank you"
-                                                          message:@"Comment has been sent"
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Thank you", nil)
+                                                          message:NSLocalizedString(@"Comment has been sent", nil)
                                                          delegate:nil
                                                 cancelButtonTitle:nil
-                                                otherButtonTitles:@"Ok",nil];
+                                                otherButtonTitles:NSLocalizedString(@"Ok", nil),nil];
         
         [message show];
         
@@ -141,11 +155,11 @@
         [self.waitView hide: YES];
         
     } failure:^(NSString *reason) {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Sorry"
-                                                          message:@"Please try sending again"
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)
+                                                          message:NSLocalizedString(@"Please try sending again", nil)
                                                          delegate:nil
                                                 cancelButtonTitle:nil
-                                                otherButtonTitles:@"Ok",nil];
+                                                otherButtonTitles:NSLocalizedString(@"Ok", nil),nil];
         
         [message show];
         

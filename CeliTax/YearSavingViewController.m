@@ -29,8 +29,9 @@
     [self.view setBackgroundColor:self.lookAndFeel.appGreenColor];
     
     [self.viewDetailsButton setLookAndFeel:self.lookAndFeel];
+    [self.viewDetailsButton setTitle:NSLocalizedString(@"View Details", nil) forState:UIControlStateNormal];
     
-    [self.yearSavingsTitle setText:[NSString stringWithFormat:@"Your %ld savings:", (long)self.configurationManager.getCurrentTaxYear]];
+    [self.yearSavingsTitle setText:[NSString stringWithFormat:NSLocalizedString(@"Your %ld savings:", nil), (long)self.configurationManager.getCurrentTaxYear.integerValue]];
 }
 
 - (void)viewDidLoad
@@ -53,7 +54,7 @@
     for (Catagory *catagory in catagories)
     {
         NSArray *recordsForThisCatagory = [self.dataService fetchRecordsForCatagoryID: catagory.localID
-                                                                            inTaxYear: self.configurationManager.getCurrentTaxYear];
+                                                                            inTaxYear: self.configurationManager.getCurrentTaxYear.integerValue];
         
         // Separate recordsForThisCatagory into groups of the same Unit Type
         NSMutableDictionary *recordsOfEachType = [NSMutableDictionary new];
@@ -75,7 +76,7 @@
         }
         
         //Process the Unit Types in order: Item, ML, L, G, KG
-        NSArray *orderOfUnitTypesToProcess = [NSArray arrayWithObjects:kUnitItemKey, kUnitMLKey, kUnitLKey, kUnitGKey, kUnit100GKey, kUnitKGKey, nil];
+        NSArray *orderOfUnitTypesToProcess = [NSArray arrayWithObjects:kUnitItemKey, kUnitMLKey, kUnitLKey, kUnitGKey, kUnit100GKey, kUnitKGKey,kUnitFlozKey,kUnitPtKey,kUnitQtKey,kUnitGalKey,kUnitOzKey,kUnitLbKey, nil];
         
         for (NSString *key in orderOfUnitTypesToProcess)
         {

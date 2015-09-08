@@ -49,6 +49,7 @@ typedef enum : NSUInteger
 
 @interface VaultViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate, SendReceiptsViewPopUpDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIAlertViewDelegate, TransferSelectionsViewProtocol, TutorialManagerDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *triangleView;
 @property (weak, nonatomic) IBOutlet UILabel *taxYearLabel;
 @property (weak, nonatomic) IBOutlet M13Checkbox *selectAllCheckBox;
@@ -104,14 +105,19 @@ typedef enum : NSUInteger
 
 - (void) setupUI
 {
+    [self.titleLabel setText:NSLocalizedString(@"Vault", nil)];
+    
+    [self.taxYearLabel setText:NSLocalizedString(@"No Tax Year Added", nil)];
+    
     [self.downloadReceiptButton setLookAndFeel:self.lookAndFeel];
+    [self.downloadReceiptButton setTitle:NSLocalizedString(@"Download", nil) forState:UIControlStateNormal];
 
     [self.selectAllCheckBox.titleLabel setFont: [UIFont latoFontOfSize: 13]];
     [self.selectAllCheckBox.titleLabel setTextColor: [UIColor blackColor]];
     [self.selectAllCheckBox setStrokeColor: [UIColor grayColor]];
     [self.selectAllCheckBox setCheckColor: self.lookAndFeel.appGreenColor];
     [self.selectAllCheckBox setCheckAlignment: M13CheckboxAlignmentLeft];
-    [self.selectAllCheckBox.titleLabel setText: @"Select All"];
+    [self.selectAllCheckBox.titleLabel setText: NSLocalizedString(@"Select All", nil)];
 
     UINib *timePeriodSelectionTableViewCell = [UINib nibWithNibName: @"TimePeriodSelectionTableViewCell" bundle: nil];
     UINib *receiptTimeTableViewCellTableViewCell = [UINib nibWithNibName: @"ReceiptTimeTableViewCell" bundle: nil];
@@ -132,7 +138,10 @@ typedef enum : NSUInteger
     [self.sendReceiptsPopover setTheme: popUpTheme];
     
     [self.transferButton setLookAndFeel:self.lookAndFeel];
+    [self.transferButton setTitle:NSLocalizedString(@"Transfer", nil) forState:UIControlStateNormal];
+    
     [self.deleteButton setLookAndFeel:self.lookAndFeel];
+    [self.deleteButton setTitle:NSLocalizedString(@"Delete", nil) forState:UIControlStateNormal];
     
     self.possibleTaxYears = [NSMutableArray new];
     
@@ -152,12 +161,11 @@ typedef enum : NSUInteger
     UIToolbar *pickerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
     pickerToolbar.barStyle = UIBarStyleDefault;
     
-    UIBarButtonItem *cancelToolbarButton = [[UIBarButtonItem alloc]initWithTitle: @"Cancel" style: UIBarButtonItemStylePlain target: self action: @selector(cancelAddTaxYear)];
+    UIBarButtonItem *cancelToolbarButton = [[UIBarButtonItem alloc]initWithTitle: NSLocalizedString(@"Cancel", nil) style: UIBarButtonItemStylePlain target: self action: @selector(cancelAddTaxYear)];
     [cancelToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
     
-    UIBarButtonItem *addToolbarButton = [[UIBarButtonItem alloc]initWithTitle: @"Done" style: UIBarButtonItemStylePlain target: self action: @selector(addTaxYear)];
+    UIBarButtonItem *addToolbarButton = [[UIBarButtonItem alloc]initWithTitle: NSLocalizedString(@"Done", nil) style: UIBarButtonItemStylePlain target: self action: @selector(addTaxYear)];
     [addToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
-    
     
     pickerToolbar.items = [NSArray arrayWithObjects:
                            cancelToolbarButton,
@@ -206,7 +214,7 @@ typedef enum : NSUInteger
     if ([self.configurationManager getCurrentTaxYear])
     {
         // this triggers loading of receipts for this year
-        self.currentlySelectedYear = [NSNumber numberWithInteger:[self.configurationManager getCurrentTaxYear]];
+        self.currentlySelectedYear = [self.configurationManager getCurrentTaxYear];
     }
 }
 
@@ -262,11 +270,11 @@ typedef enum : NSUInteger
 {
     if ([self.existingTaxYears containsObject:self.taxYearToAdd])
     {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@""
-                                                          message:@"You can not add a duplicate tax year."
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)
+                                                          message:NSLocalizedString(@"Can not add a duplicate tax year", nil)
                                                          delegate:nil
                                                 cancelButtonTitle:nil
-                                                otherButtonTitles:@"Dimiss",nil];
+                                                otherButtonTitles:NSLocalizedString(@"Dismiss", nil),nil];
         
         [message show];
         
@@ -294,10 +302,10 @@ typedef enum : NSUInteger
     
     for (NSNumber *year in self.existingTaxYears )
     {
-        [yearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", (long)year.integerValue]];
+        [yearSelections addObject: [NSString stringWithFormat: NSLocalizedString(@"%ld Tax Year", nil), (long)year.integerValue]];
     }
     
-    [yearSelections addObject:@"Add Tax Year"];
+    [yearSelections addObject:NSLocalizedString(@"Add Tax Year", nil)];
     
     self.taxYearPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: yearSelections];
     self.taxYearSelectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.taxYearPickerViewController];
@@ -436,7 +444,7 @@ typedef enum : NSUInteger
 
 - (void) setYearLabelToBe: (NSInteger) year
 {
-    [self.taxYearLabel setText: [NSString stringWithFormat: @"%ld Tax Year", (long)year]];
+    [self.taxYearLabel setText: [NSString stringWithFormat: NSLocalizedString(@"%ld Tax Year", nil), (long)year]];
 }
 
 - (void) setCurrentlySelectedYear: (NSNumber *) currentlySelectedYear
@@ -556,7 +564,7 @@ typedef enum : NSUInteger
     {
         if ( year.integerValue != self.currentlySelectedYear.integerValue )
         {
-            [self.transferYearSelections addObject: [NSString stringWithFormat: @"%ld Tax Year", (long)year.integerValue]];
+            [self.transferYearSelections addObject: [NSString stringWithFormat: NSLocalizedString(@"%ld Tax Year", nil), (long)year.integerValue]];
         }
     }
     
@@ -573,11 +581,11 @@ typedef enum : NSUInteger
 
 - (IBAction)deleteButtonPressed:(UIButton *)sender
 {
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle: @"Delete selected receipts"
-                                                      message: @"Are you sure you want delete the selected receipts along with all their items?"
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Delete selected receipts", nil)
+                                                      message: NSLocalizedString(@"Are you sure you want delete the selected receipts along with all their items?", nil)
                                                      delegate: self
-                                            cancelButtonTitle: @"No"
-                                            otherButtonTitles: @"Delete", nil];
+                                            cancelButtonTitle: NSLocalizedString(@"No", nil)
+                                            otherButtonTitles: NSLocalizedString(@"Delete", nil), nil];
     
     [message show];
 }
@@ -604,11 +612,11 @@ typedef enum : NSUInteger
     }
     else
     {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                          message:@"Please select all or at least one receipt"
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                          message:NSLocalizedString(@"Please select all or at least one receipt", nil)
                                                          delegate:nil
                                                 cancelButtonTitle:nil
-                                                otherButtonTitles:@"Dismiss",nil];
+                                                otherButtonTitles:NSLocalizedString(@"Dismiss", nil),nil];
         
         [message show];
     }
@@ -620,7 +628,7 @@ typedef enum : NSUInteger
 {
     NSString *title = [alertView buttonTitleAtIndex: buttonIndex];
     
-    if ([title isEqualToString: @"Delete"])
+    if ([title isEqualToString: NSLocalizedString(@"Delete", nil)])
     {
         NSMutableArray *receiptIDsToDelete = [[NSMutableArray alloc] init];
         
@@ -902,7 +910,7 @@ typedef enum : NSUInteger
         switch (indexPath.section)
         {
             case TimePeriodRecent:
-                [cell.periodLabel setText: @"Recent Uploads"];
+                [cell.periodLabel setText: NSLocalizedString(@"Recent Uploads", nil)];
                 
                 if (self.recentUploadSelected)
                 {
@@ -916,7 +924,7 @@ typedef enum : NSUInteger
                 break;
 
             case TimePeriodPreviousWeek:
-                [cell.periodLabel setText: @"Previous Week"];
+                [cell.periodLabel setText: NSLocalizedString(@"Previous Week", nil)];
                 
                 if (self.previousWeekSelected)
                 {
@@ -930,7 +938,7 @@ typedef enum : NSUInteger
                 break;
 
             case TimePeriodPreviousMonth:
-                [cell.periodLabel setText: @"Previous Month"];
+                [cell.periodLabel setText: NSLocalizedString(@"Previous Month", nil)];
                 
                 if (self.previousMonthSelected)
                 {
@@ -944,7 +952,7 @@ typedef enum : NSUInteger
                 break;
 
             case TimePeriodViewAll:
-                [cell.periodLabel setText: @"View All"];
+                [cell.periodLabel setText: NSLocalizedString(@"View All", nil)];
                 
                 if (self.viewAllSelected)
                 {
@@ -1098,12 +1106,9 @@ typedef enum : NSUInteger
 {
     if (indexPath.row == 0)
     {
-        NSString *period;
-
         switch (indexPath.section)
         {
             case TimePeriodRecent:
-                period = @"Recent Uploads";
                 self.recentUploadSelected = !self.recentUploadSelected;
                 
                 if (!self.recentUploadReceipts)
@@ -1114,7 +1119,6 @@ typedef enum : NSUInteger
                 break;
 
             case TimePeriodPreviousWeek:
-                period = @"Previous Week";
                 self.previousWeekSelected = !self.previousWeekSelected;
 
                 if (!self.previousWeekReceipts)
@@ -1125,7 +1129,6 @@ typedef enum : NSUInteger
                 break;
 
             case TimePeriodPreviousMonth:
-                period = @"Previous Month";
                 self.previousMonthSelected = !self.previousMonthSelected;
 
                 if ( !self.previousMonthReceipts )
@@ -1136,7 +1139,6 @@ typedef enum : NSUInteger
                 break;
 
             case TimePeriodViewAll:
-                period = @"View All";
                 self.viewAllSelected = !self.viewAllSelected;
                 
                 if (!self.viewAllReceipts)
@@ -1175,16 +1177,16 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep1 = [TutorialStep new];
     
-    tutorialStep1.text = @"In the Vault, you can re-visit any saved receipt to update your GF allocations or even transfer a receipt to a different tax year";
-    tutorialStep1.rightButtonTitle = @"Continue";
+    tutorialStep1.text = NSLocalizedString(@"In the Vault, you can re-visit any saved receipt to update your GF allocations or even transfer a receipt to a different tax year", nil);
+    tutorialStep1.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
     [self.tutorials addObject:tutorialStep1];
     
     TutorialStep *tutorialStep2 = [TutorialStep new];
     
-    tutorialStep2.text = @"Select and download receipt images to send to your email address for supplemental tax support.";
-    tutorialStep2.leftButtonTitle = @"Back";
-    tutorialStep2.rightButtonTitle = @"Continue";
+    tutorialStep2.text = NSLocalizedString(@"Select and download receipt images to send to your email address for supplemental tax support.", nil);
+    tutorialStep2.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep2.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     tutorialStep2.pointsUp = NO;
     tutorialStep2.highlightedItemRect = [Utils returnRectBiggerThan:self.downloadReceiptButton.frame by: 3];
     

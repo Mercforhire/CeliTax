@@ -40,6 +40,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
+    [self.catagoryNameField setPlaceholder:NSLocalizedString(@"Enter Catagory Name", nil)];
+    
+    [self.confirmButton setTitle:NSLocalizedString(@"Confirm", nil) forState:UIControlStateNormal];
+    
     [self.colorPickerView setColor: self.catagoryToModify.color];
     [self.colorBoxView setBackgroundColor: self.catagoryToModify.color];
 

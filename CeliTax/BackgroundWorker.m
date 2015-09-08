@@ -17,7 +17,7 @@
 
 @interface BackgroundWorker ()
 
-@property (nonatomic,strong) NSUserDefaults *defaults;
+@property (nonatomic, strong) NSUserDefaults *defaults;
 
 @property (nonatomic) BOOL active;
 
@@ -265,6 +265,8 @@
         [self.queuedTasks addObject:task];
         
         [self.defaults setObject:self.queuedTasks forKey:kQueuedTasksKey];
+        
+        [self.defaults synchronize];
     }
 }
 

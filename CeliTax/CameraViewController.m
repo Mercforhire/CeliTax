@@ -126,6 +126,8 @@
     [self refreshCropEdgeRatio];
     
     [self.cancelButton setLookAndFeel:self.lookAndFeel];
+    [self.cancelButton setTitle:NSLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];
+    [self.continueButton setTitle:NSLocalizedString(@"Done", nil) forState:UIControlStateNormal];
     [self.continueButton setLookAndFeel:self.lookAndFeel];
     
     // snap button to capture image
@@ -182,7 +184,13 @@
             if (error.code == LLSimpleCameraErrorCodeCameraPermission ||
                 error.code == LLSimpleCameraErrorCodeMicrophonePermission)
             {
-                NSLog(@"We need permission for the camera.\nPlease go to your settings.");
+                UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                                  message:NSLocalizedString(@"We need permission for the camera.\nPlease enable it in your settings.", nil)
+                                                                 delegate:nil
+                                                        cancelButtonTitle:nil
+                                                        otherButtonTitles:NSLocalizedString(@"Ok", nil),nil];
+                
+                [message show];
             }
         }
     }];
@@ -355,11 +363,11 @@
         }
         else
         {
-            UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                              message:@"An error has occured with the camere device, please try taking a picture again."
+            UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                              message:NSLocalizedString(@"An error has occured with the camere device, please try taking a picture again", nil)
                                                              delegate:nil
                                                     cancelButtonTitle:nil
-                                                    otherButtonTitles:@"Ok",nil];
+                                                    otherButtonTitles:NSLocalizedString(@"Ok", nil),nil];
             
             [message show];
             
@@ -452,10 +460,8 @@
     //saving a new receipt
     if (!self.existingReceiptID)
     {
-        NSInteger taxYear = [self.configurationManager getCurrentTaxYear];
-        
-        NSString *newestReceiptID = [self.manipulationService addReceiptForFilenames: self.takenImageFilenames
-                                                                          andTaxYear: taxYear
+       NSString *newestReceiptID = [self.manipulationService addReceiptForFilenames: self.takenImageFilenames
+                                                                          andTaxYear: [self.configurationManager getCurrentTaxYear].integerValue
                                                                                 save:YES];
         
         if (newestReceiptID)
@@ -583,24 +589,24 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep1 = [TutorialStep new];
     
-    tutorialStep1.text = @"Use the flash function when you have poor lighting. TIP: images always work better in well-lit environments!";
-    tutorialStep1.rightButtonTitle = @"Continue";
+    tutorialStep1.text = NSLocalizedString(@"Use the flash function when you have poor lighting. TIP: images always work better in well-lit environments!", nil);
+    tutorialStep1.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
     [self.tutorials addObject:tutorialStep1];
     
     TutorialStep *tutorialStep2 = [TutorialStep new];
     
-    tutorialStep2.text = @"Receipt too long? Take multiple photos to capture the entire receipt. The last photo taken is saved at the top of your screen. Drag it downward to help find out what is left of the receipt to capture.";
-    tutorialStep2.leftButtonTitle = @"Back";
-    tutorialStep2.rightButtonTitle = @"Continue";
+    tutorialStep2.text = NSLocalizedString(@"Receipt too long? Take multiple photos to capture the entire receipt. The last photo taken is saved at the top of your screen. Drag it downward to help find out what is left of the receipt to capture.", nil);
+    tutorialStep2.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep2.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
     [self.tutorials addObject:tutorialStep2];
     
     TutorialStep *tutorialStep3 = [TutorialStep new];
     
-    tutorialStep3.text = @"Drag the bar up or down to capture the exact part of the receipt you need and crop accordingly";
-    tutorialStep3.leftButtonTitle = @"Back";
-    tutorialStep3.rightButtonTitle = @"Continue";
+    tutorialStep3.text = NSLocalizedString(@"Drag the bar up or down to capture the exact part of the receipt you need and crop accordingly.", nil);
+    tutorialStep3.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep3.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     tutorialStep3.highlightedItemRect = self.dragBarContainer.frame;
     tutorialStep3.pointsUp = NO;
     
@@ -608,9 +614,9 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep4 = [TutorialStep new];
     
-    tutorialStep4.text = @"Click “Continue” when all images have been captured.";
-    tutorialStep4.leftButtonTitle = @"Back";
-    tutorialStep4.rightButtonTitle = @"Continue";
+    tutorialStep4.text = NSLocalizedString(@"Click “Done” when all images have been captured.", nil);
+    tutorialStep4.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep4.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     tutorialStep4.pointsUp = NO;
     tutorialStep4.highlightedItemRect = [Utils returnRectBiggerThan:self.continueButton.frame by: 5];
     

@@ -15,6 +15,7 @@
 #ifdef __OBJC__
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
+#import "LocalizationManager.h"
 #endif
 
 #ifdef DEBUG
@@ -22,5 +23,8 @@
 #else
 #define DLog(...)
 #endif
+
+#undef NSLocalizedString
+#define NSLocalizedString(key,comment) [[LocalizationManager sharedInstance] localizedStringForKey: key value: comment table: nil]
 
 #endif

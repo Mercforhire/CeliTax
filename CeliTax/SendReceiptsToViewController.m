@@ -12,6 +12,7 @@
 
 @interface SendReceiptsToViewController () <UITextFieldDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITextField *emailField;
 @property (weak, nonatomic) IBOutlet HollowGreenButton *sendButton;
 
@@ -30,15 +31,24 @@
     return self;
 }
 
+-(void)setupUI
+{
+    // Set the property to tell the popover container how big this view will be.
+    self.preferredContentSize = self.viewSize;
+    
+    [self.titleLabel setText:NSLocalizedString(@"Send Receipts To", nil)];
+    
+    [self.emailField setPlaceholder:NSLocalizedString(@"Email Address", nil)];
+    
+    [self.sendButton setLookAndFeel:self.lookAndFeel];
+    [self.sendButton setTitle:NSLocalizedString(@"Send", nil) forState:UIControlStateNormal];
+}
+
 - (void) viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-
-    [self.sendButton setLookAndFeel:self.lookAndFeel];
-
-    // Set the property to tell the popover container how big this view will be.
-    self.preferredContentSize = self.viewSize;
+    [self setupUI];
 
     self.emailField.delegate = self;
     [self.emailField addTarget: self

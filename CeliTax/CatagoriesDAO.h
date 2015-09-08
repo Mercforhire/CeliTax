@@ -12,7 +12,7 @@
 
 @interface CatagoriesDAO : NSObject
 
-@property (strong, nonatomic) UserDataDAO *userDataDAO;
+@property (weak, nonatomic) UserDataDAO *userDataDAO;
 
 /**
  @return NSArray of Catagory, nil if user not found

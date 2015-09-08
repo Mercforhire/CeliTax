@@ -131,6 +131,8 @@
     button.layer.cornerRadius = 3.0f;
     [button setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
     [button setClipsToBounds: YES];
+    
+    [self applySlightlyDarkerBorderTo:button];
 }
 
 @end

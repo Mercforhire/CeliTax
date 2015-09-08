@@ -43,7 +43,7 @@
 {
     [self.exportButton setLookAndFeel:self.lookAndFeel];
     
-    [self.titleLabel setText:[NSString stringWithFormat:@"%ld Gluten-Free Tax Savings", (long)self.configurationManager.getCurrentTaxYear]];
+    [self.titleLabel setText:[NSString stringWithFormat:NSLocalizedString(@"%ld Gluten-Free Tax Savings", nil), (long)self.configurationManager.getCurrentTaxYear.integerValue]];
     
     // set up tableview
     UINib *yearSummaryTableViewCell = [UINib nibWithNibName: @"YearSummaryTableViewCell" bundle: nil];
@@ -58,6 +58,8 @@
     popUpTheme.fillBottomColor = self.lookAndFeel.appGreenColor;
     
     [self.sendReceiptsPopover setTheme: popUpTheme];
+    
+    [self.exportButton setTitle:NSLocalizedString(@"Export Report", nil) forState:UIControlStateNormal];
 }
 
 - (void)viewDidLoad
@@ -92,7 +94,7 @@
     for (Catagory *catagory in self.catagories)
     {
         NSArray *recordsForThisCatagory = [self.dataService fetchRecordsForCatagoryID: catagory.localID
-                                                                            inTaxYear: self.configurationManager.getCurrentTaxYear];
+                                                                            inTaxYear: self.configurationManager.getCurrentTaxYear.integerValue];
         
         // Separate recordsForThisCatagory into groups of the same Unit Type
         NSMutableDictionary *recordsOfEachType = [NSMutableDictionary new];
@@ -114,7 +116,7 @@
         }
         
         //Process the Unit Types in order: Item, ML, L, G, KG
-        NSArray *orderOfUnitTypesToProcess = [NSArray arrayWithObjects:kUnitItemKey, kUnitMLKey, kUnitLKey, kUnitGKey, kUnit100GKey, kUnitKGKey, nil];
+        NSArray *orderOfUnitTypesToProcess = [NSArray arrayWithObjects:kUnitItemKey, kUnitMLKey, kUnitLKey, kUnitGKey, kUnit100GKey, kUnitKGKey,kUnitFlozKey,kUnitPtKey,kUnitQtKey,kUnitGalKey,kUnitOzKey,kUnitLbKey, nil];
         
         for (NSString *key in orderOfUnitTypesToProcess)
         {
@@ -185,11 +187,11 @@
 
 -(void)showSavingWarningDialog
 {
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Notice"
-                                                      message:@"The total average price should not be higher than the actual total spent, please check to see if the correct average price was entered."
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Notice", nil)
+                                                      message:NSLocalizedString(@"The total average price should not be higher than the actual total spent, please check to see if the correct average price was entered.", nil)
                                                      delegate:nil
                                             cancelButtonTitle:nil
-                                            otherButtonTitles:@"Ok",nil];
+                                            otherButtonTitles:NSLocalizedString(@"Ok", nil),nil];
     
     [message show];
 }
@@ -249,23 +251,47 @@
     }
     else if ([unitTypeString isEqualToString:kUnitGKey])
     {
-        [cell.catagoryNameLabel setText: [NSString stringWithFormat:@"%@ per (g)", thisCatagory.name]];
+        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (g)", nil), thisCatagory.name]];
     }
     else if ([unitTypeString isEqualToString:kUnit100GKey])
     {
-        [cell.catagoryNameLabel setText: [NSString stringWithFormat:@"%@ per (100g)", thisCatagory.name]];
+        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (100g)", nil), thisCatagory.name]];
     }
     else if ([unitTypeString isEqualToString:kUnitKGKey])
     {
-        [cell.catagoryNameLabel setText: [NSString stringWithFormat:@"%@ per (kg)", thisCatagory.name]];
+        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (kg)", nil), thisCatagory.name]];
     }
     else if ([unitTypeString isEqualToString:kUnitLKey])
     {
-        [cell.catagoryNameLabel setText: [NSString stringWithFormat:@"%@ per (L)", thisCatagory.name]];
+        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (L)", nil), thisCatagory.name]];
     }
     else if ([unitTypeString isEqualToString:kUnitMLKey])
     {
-        [cell.catagoryNameLabel setText: [NSString stringWithFormat:@"%@ per (mL)", thisCatagory.name]];
+        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (mL)", nil), thisCatagory.name]];
+    }
+    else if ([unitTypeString isEqualToString:kUnitFlozKey])
+    {
+        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (fl oz)", nil), thisCatagory.name]];
+    }
+    else if ([unitTypeString isEqualToString:kUnitPtKey])
+    {
+        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (pt)", nil), thisCatagory.name]];
+    }
+    else if ([unitTypeString isEqualToString:kUnitQtKey])
+    {
+        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (qt)", nil), thisCatagory.name]];
+    }
+    else if ([unitTypeString isEqualToString:kUnitGalKey])
+    {
+        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (gal)", nil), thisCatagory.name]];
+    }
+    else if ([unitTypeString isEqualToString:kUnitOzKey])
+    {
+        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (oz)", nil), thisCatagory.name]];
+    }
+    else if ([unitTypeString isEqualToString:kUnitLbKey])
+    {
+        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (lb)", nil), thisCatagory.name]];
     }
     
     [cell.totalSpentField setText: [NSString stringWithFormat: @"%.2f", totalSpent]];
@@ -312,11 +338,6 @@
 - (CGFloat) tableView: (UITableView *) tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath
 {
     return kYearSummaryTableViewCellHeight;
-}
-
-- (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath
-{
-    //
 }
 
 @end
