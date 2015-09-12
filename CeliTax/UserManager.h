@@ -40,6 +40,8 @@
 
 -(void)setNewAvatarImage: (UIImage *)image;
 
+-(void)deleteAllLocalUserData;
+
 -(void)logOutUser;
 
 @end

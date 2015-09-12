@@ -28,7 +28,6 @@
 @interface LocalizationManager ()
 
 @property (nonatomic, strong) NSDictionary *baseStrings;
-@property (nonatomic, strong) NSDictionary *plStrings;
 @property (nonatomic, strong) NSMutableArray *supportedLanguages;
 @property (nonatomic, strong) Language *currentLanguage;
 
@@ -78,7 +77,7 @@
         }
         else
         {
-            // Not supported, fallback to the first language in the PL's list...
+            // Not supported, fallback to the first language
             DLog(@"Using user default language: %@", @"en");
             
             [self changeLanguage: ((Language *) [self.supportedLanguages firstObject]).code];
@@ -107,17 +106,17 @@
     if ([code isEqualToString: @"en"])
     {
         language.code = @"en";
-        language.display = NSLocalizedString(@"English", nil);
+        language.display = @"English";
     }
     else if ([code isEqualToString: @"fr"])
     {
         language.code = @"fr";
-        language.display = NSLocalizedString(@"French", nil);
+        language.display = @"French";
     }
     else if ([code isEqualToString: @"es"])
     {
         language.code = @"es";
-        language.display = NSLocalizedString(@"Spanish", nil);
+        language.display = @"Spanish";
     }
 }
 
@@ -127,11 +126,6 @@
     {
         [self initializeLanguage: language forCode: language.code];
     }
-}
-
-- (NSArray *) languages
-{
-    return self.supportedLanguages;
 }
 
 - (BOOL) isLanguageSupported: (NSString *) language
@@ -218,25 +212,15 @@
 
 - (NSString *) localizedStringForKey: (NSString *) key value: (NSString *) value table: (NSString *) tableName
 {
-    // First we check in the PL's string file
-    NSString *string = [self.plStrings objectForKey: key];
+    // we check the base string file
+    NSString *string = [self.baseStrings objectForKey: key];
     
     if (string)
     {
         return string;
     }
     
-    // Next we check the base string file
-    string = [self.baseStrings objectForKey: key];
-    
-    if (string)
-    {
-        return string;
-    }
-    
-    DLog(@"***********************************************************************************************************************");
     DLog(@"Missing translation key: '%@'. Please add it to the all of the strings files.", key);
-    DLog(@"***********************************************************************************************************************");
     
     // If we didn't find anything, just return the key
     return key;

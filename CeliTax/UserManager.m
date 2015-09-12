@@ -158,6 +158,18 @@
     [self.backgroundWorker addTaskToQueue:QueueTaskUpdateProfileImage];
 }
 
+-(void)deleteAllLocalUserData
+{
+    // Delete user profile image
+    [Utils deleteProfileImageForUser:self.user.userKey];
+    
+    // Delete user receipt images
+    [Utils deleteAllPhotosforUser:self.user.userKey];
+    
+    // Delete user local data
+    [self.userDataDAO deleteUserData];
+}
+
 -(void)logOutUser
 {
     self.user = nil;

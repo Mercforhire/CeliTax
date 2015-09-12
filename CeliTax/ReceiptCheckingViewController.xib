@@ -19,7 +19,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReceiptCheckingViewController">
             <connections>
                 <outlet property="addOrEditItemButton" destination="Y82-bx-l24" id="kLV-8N-t7W"/>
-                <outlet property="catagoriesBar" destination="wgS-bS-mwy" id="LaD-Oh-Etl"/>
+                <outlet property="categoriesBar" destination="wgS-bS-mwy" id="RuO-Yd-LFQ"/>
                 <outlet property="currentItemStatusLabel" destination="heh-sd-1ek" id="Zqf-Wm-YS3"/>
                 <outlet property="deleteItemButton" destination="aJk-yM-Edq" id="f3M-Bh-TER"/>
                 <outlet property="editReceiptTable" destination="F7n-zK-aNw" id="l9o-Cn-fQa"/>
@@ -220,7 +220,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E0U-n2-Zu2" customClass="SolidGreenButton">
-                    <rect key="frame" x="264" y="75" width="46" height="27"/>
+                    <rect key="frame" x="259" y="75" width="46" height="27"/>
                     <color key="backgroundColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
                     <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
@@ -241,6 +241,7 @@
                         <constraint firstAttribute="width" constant="40" id="tku-1I-bak"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                    <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="5" maxY="0.0"/>
                     <state key="normal" title="+">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -260,7 +261,7 @@
                 <constraint firstItem="tP5-SY-lVh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="5Oc-py-CeY"/>
                 <constraint firstItem="mSN-Eh-8vn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6UW-pn-X8Y"/>
                 <constraint firstAttribute="bottom" secondItem="mSN-Eh-8vn" secondAttribute="bottom" constant="60" id="6yK-oh-eg9"/>
-                <constraint firstAttribute="trailing" secondItem="E0U-n2-Zu2" secondAttribute="trailing" constant="10" id="8HU-HL-2KO"/>
+                <constraint firstAttribute="trailing" secondItem="E0U-n2-Zu2" secondAttribute="trailing" constant="15" id="8HU-HL-2KO"/>
                 <constraint firstAttribute="bottom" secondItem="F7n-zK-aNw" secondAttribute="bottom" id="BMi-J1-gwP"/>
                 <constraint firstAttribute="bottom" secondItem="wgS-bS-mwy" secondAttribute="bottom" id="CEx-Zd-Ngb"/>
                 <constraint firstItem="wgS-bS-mwy" firstAttribute="top" secondItem="F7n-zK-aNw" secondAttribute="bottom" id="F95-Ex-p4T"/>

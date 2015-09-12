@@ -89,7 +89,7 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Aoy-Gh-cv4">
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Aoy-Gh-cv4">
                             <rect key="frame" x="65" y="158" width="202" height="130"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
@@ -117,7 +117,7 @@
                                 </fragment>
                                 <fragment>
                                     <string key="content">Toronto ON Canada
-L7J41Y  </string>
+L7J41Y </string>
                                     <attributes>
                                         <color key="NSColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.32941176470588235" alpha="1" colorSpace="calibratedRGB"/>
                                         <font key="NSFont" size="16" name="Lato-Regular"/>

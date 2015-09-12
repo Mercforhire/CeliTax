@@ -118,6 +118,19 @@
             
             break;
             
+        case UnitLb:
+            //highlight unitKGButton and un-highlight the rest
+            [self.lookAndFeel applySolidGreenButtonStyleTo:self.unitlbButton];
+            
+            [self.lookAndFeel applyNormalButtonStyleTo:self.unitItemButton];
+            [self.lookAndFeel applyNormalButtonStyleTo:self.unitflOZButton];
+            [self.lookAndFeel applyNormalButtonStyleTo:self.unitptButton];
+            [self.lookAndFeel applyNormalButtonStyleTo:self.unitqtButton];
+            [self.lookAndFeel applyNormalButtonStyleTo:self.unitgalButton];
+            [self.lookAndFeel applyNormalButtonStyleTo:self.unitozButton];
+            
+            break;
+            
         default:
             //un-highlight all buttons
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitItemButton];

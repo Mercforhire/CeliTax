@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="accountTableView" destination="J80-ck-6nT" id="xb8-PG-Isg"/>
                 <outlet property="calculateButton" destination="rR6-6D-WTS" id="ScX-Z2-4Gw"/>
+                <outlet property="categoriesBar" destination="Sbg-3J-A3E" id="185-Ly-He6"/>
                 <outlet property="titleLabel" destination="ABk-hm-JW1" id="AUk-PA-CLj"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -23,8 +24,8 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rR6-6D-WTS" customClass="HollowGreenButton">
-                    <rect key="frame" x="98" y="518" width="124" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rR6-6D-WTS" customClass="HollowGreenButton">
+                    <rect key="frame" x="98" y="468" width="124" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="fnK-97-C4N"/>
                     </constraints>
@@ -38,22 +39,32 @@
                         <action selector="calculateButtonPressed:" destination="-1" eventType="touchUpInside" id="fcA-lr-qGS"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MY ACCOUNT" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ABk-hm-JW1">
-                    <rect key="frame" x="96" y="79" width="127" height="23"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tax Year for 20XX" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ABk-hm-JW1">
+                    <rect key="frame" x="83" y="79" width="152.5" height="23"/>
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="19"/>
                     <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="J80-ck-6nT">
-                    <rect key="frame" x="0.0" y="110" width="320" height="398"/>
+                    <rect key="frame" x="0.0" y="110" width="320" height="348"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
+                <view opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sbg-3J-A3E" customClass="HorizonalScrollBarView">
+                    <rect key="frame" x="0.0" y="508" width="320" height="60"/>
+                    <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="N9i-je-BWq"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="Sbg-3J-A3E" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9iO-SQ-fTq"/>
                 <constraint firstItem="J80-ck-6nT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="LER-fk-pnA"/>
+                <constraint firstAttribute="bottom" secondItem="Sbg-3J-A3E" secondAttribute="bottom" id="Lo2-de-RGn"/>
+                <constraint firstItem="Sbg-3J-A3E" firstAttribute="top" secondItem="rR6-6D-WTS" secondAttribute="bottom" constant="10" id="NKf-Cx-Mw6"/>
                 <constraint firstItem="J80-ck-6nT" firstAttribute="top" secondItem="ABk-hm-JW1" secondAttribute="bottom" constant="8" id="RGI-k4-ZZk"/>
-                <constraint firstAttribute="bottom" secondItem="rR6-6D-WTS" secondAttribute="bottom" constant="20" id="VZE-Fy-g99"/>
+                <constraint firstAttribute="trailing" secondItem="Sbg-3J-A3E" secondAttribute="trailing" id="a6J-jd-FO0"/>
                 <constraint firstItem="rR6-6D-WTS" firstAttribute="top" secondItem="J80-ck-6nT" secondAttribute="bottom" constant="10" id="bkv-he-ov2"/>
                 <constraint firstAttribute="trailing" secondItem="J80-ck-6nT" secondAttribute="trailing" id="q1F-HX-cMu"/>
                 <constraint firstItem="ABk-hm-JW1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="79" id="vva-AU-Vd2"/>

@@ -11,9 +11,11 @@
 
 @protocol HorizonalScrollBarViewProtocol <NSObject>
 
--(void)buttonUnselected;
+@optional
 
-- (void) buttonClickedWithIndex: (NSInteger) index andName: (NSString *) name highlightTextField:(BOOL)highlight;
+- (void) buttonUnselected;
+
+- (void) buttonClickedWithIndex: (NSInteger) index andName: (NSString *) name;
 
 - (void) buttonLongPressedWithIndex:(NSInteger)index andName:(NSString *)name atPoint:(CGPoint)point;
 
@@ -27,8 +29,12 @@
 
 -(void)simulateLongPressedOnFirstButton;
 
+-(void)simulateNormalPressOnButton: (NSInteger) index;
+
 @property (nonatomic, strong) LookAndFeel *lookAndFeel;
 
 @property (nonatomic, weak) id <HorizonalScrollBarViewProtocol> delegate;
+
+@property BOOL unselectable;
 
 @end

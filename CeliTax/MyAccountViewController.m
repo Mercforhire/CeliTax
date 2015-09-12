@@ -30,6 +30,11 @@
 #import "TutorialManager.h"
 #import "TutorialStep.h"
 #import "SolidGreenButton.h"
+#import "HorizonalScrollBarView.h"
+
+@implementation CategoryRow
+
+@end
 
 #define kCatagoryTableRowHeight                     65
 
@@ -39,7 +44,7 @@
 #define kAccountTableViewCellIdentifier             @"AccountTableViewCell"
 #define kUploadsHistoryTableViewCellIdentifier      @"UploadsHistoryTableViewCell"
 
-@interface MyAccountViewController () <UITableViewDataSource, UITableViewDelegate, XYPieChartDelegate, XYPieChartDataSource, UITextFieldDelegate, TutorialManagerDelegate>
+@interface MyAccountViewController () <UITableViewDataSource, UITableViewDelegate, XYPieChartDelegate, XYPieChartDataSource, UITextFieldDelegate, TutorialManagerDelegate, HorizonalScrollBarViewProtocol>
 
 @property (nonatomic, strong) UIView *pieChartContainer;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -49,18 +54,18 @@
 @property (strong, nonatomic) ProfileBarView *profileBarView;
 @property (strong, nonatomic) UIButton *navHelpButton;
 @property (nonatomic, strong) UIToolbar *numberToolbar;
+@property (weak, nonatomic) IBOutlet HorizonalScrollBarView *categoriesBar;
 
 @property (nonatomic, strong) NSArray *catagories; // of Catagory
+@property (nonatomic, strong) Catagory *currentlySelectedCategory;
 
-// NSMutableArray of NSArray of a fixed size 4:
-// (CatagoryID, UnitTypeString, Total Qty/Total Weight, Total $ amount, national average cost)
-@property (strong, nonatomic) NSMutableArray *catagoryRows;
+@property (strong, nonatomic) NSMutableDictionary *categoryRowsForEachCategory;
 
 @property (nonatomic, strong) NSMutableArray *slicePercentages;
 @property (nonatomic, strong) NSMutableArray *sliceColors;
 @property (nonatomic, strong) NSMutableArray *sliceNames;
 
-@property (nonatomic, strong) NSArray *currentlySelectedRow;
+@property (nonatomic, strong) CategoryRow *currentlySelectedRow;
 @property (nonatomic, strong) NSArray *catagoryInfosToShow;
 
 @property (nonatomic) BOOL recentUploadsSelected;
@@ -115,7 +120,7 @@
 
     self.pieChart = [[XYPieChart alloc] initWithFrame: CGRectMake(0, 60, 180, 180)];
     CGPoint pieChartCenter = self.pieChartContainer.center;
-    pieChartCenter.y = pieChartCenter.y + 30;
+    pieChartCenter.y = pieChartCenter.y + 20;
     
     [self.pieChart setCenter: pieChartCenter];
 
@@ -136,7 +141,7 @@
     
     // set up the National Average Cost ? button
     self.navHelpButton = [[UIButton alloc] initWithFrame:CGRectMake(self.pieChartContainer.frame.size.width - 27 - 35,
-                                                                    self.pieChartContainer.frame.size.height - 27,
+                                                                    self.pieChartContainer.frame.size.height - 27 - 10,
                                                                     27,
                                                                     27)];
     
@@ -179,6 +184,9 @@
                                 nil];
     
     [self.numberToolbar sizeToFit];
+    
+    self.categoriesBar.lookAndFeel = self.lookAndFeel;
+    self.categoriesBar.backgroundColor = [UIColor clearColor];
 }
 
 #pragma mark - Life Cycle Functions
@@ -188,7 +196,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self setupUI];
-
+    
+    self.categoriesBar.delegate = self;
+    self.categoriesBar.unselectable = NO;
+    
     self.accountTableView.dataSource = self;
     self.accountTableView.delegate = self;
     
@@ -196,6 +207,8 @@
     NSArray *catagories = [self.dataService fetchCatagories];
     
     self.catagories = catagories;
+    
+    [self refreshButtonBar];
     
     //hide the ? button if no rows exist
     if (!self.catagories.count)
@@ -229,7 +242,7 @@
     [self.profileBarView.profileImageView setImage: self.userManager.user.avatarImage];
     
     // reset all state values
-    self.catagoryRows = [NSMutableArray new];
+    self.categoryRowsForEachCategory = [NSMutableDictionary new];
     self.slicePercentages = [NSMutableArray new];
     self.sliceColors = [NSMutableArray new];
     self.sliceNames = [NSMutableArray new];
@@ -270,25 +283,45 @@
         //Always have a row for kUnitItemKey
         if (![recordsOfEachType objectForKey:kUnitItemKey])
         {
-            NSNumber *nationalAverageCost = [catagory.nationalAverageCosts objectForKey:kUnitItemKey];
+            float nationalAverageCost = 0;
             
-            if (!nationalAverageCost)
+            if (![catagory.nationalAverageCosts objectForKey:kUnitItemKey])
             {
-                nationalAverageCost = [NSNumber numberWithFloat:-1];
+                nationalAverageCost = -1;
+            }
+            else
+            {
+                nationalAverageCost = [[catagory.nationalAverageCosts objectForKey:kUnitItemKey] floatValue];
             }
             
-            NSMutableArray *rowArray = [NSMutableArray arrayWithObjects:catagory.localID, kUnitItemKey, [NSNumber numberWithInteger:0], [NSNumber numberWithFloat:0], nationalAverageCost, nil];
+            CategoryRow *categoryRow = [CategoryRow new];
             
-            [self.catagoryRows addObject:rowArray];
+            categoryRow.categoryID = catagory.localID;
+            categoryRow.unitTypeString = kUnitItemKey;
+            categoryRow.totalQtyOrWeight = 0;
+            categoryRow.totalAmount = 0;
+            categoryRow.nationalAverageCost = nationalAverageCost;
+            
+            if ([self.categoryRowsForEachCategory objectForKey:catagory.localID])
+            {
+                [[self.categoryRowsForEachCategory objectForKey:catagory.localID] addObject: categoryRow];
+            }
+            else
+            {
+                NSMutableArray *categoryRows = [NSMutableArray new];
+                [categoryRows addObject:categoryRow];
+                
+                [self.categoryRowsForEachCategory setObject:categoryRows forKey:catagory.localID];
+            }
             
             //if we are coming back to this View and self.currentlySelectedRow already exist, we need to update self.currentlySelectedRow to point to the new object in self.catagoryRows
             if (self.currentlySelectedRow &&
-                [[self.currentlySelectedRow firstObject] isEqualToString:catagory.localID] &&
-                [[self.currentlySelectedRow objectAtIndex: 1] isEqualToString:kUnitItemKey] )
+                [self.currentlySelectedRow.categoryID isEqualToString:catagory.localID] &&
+                [self.currentlySelectedRow.unitTypeString isEqualToString:kUnitItemKey] )
             {
-                self.currentlySelectedRow = rowArray;
+                self.currentlySelectedRow = categoryRow;
                 
-                [self.accountTableView scrollToRowAtIndexPath: [NSIndexPath indexPathForRow: [self.catagoryRows indexOfObject:self.currentlySelectedRow] * 2 inSection: 0] atScrollPosition: UITableViewScrollPositionTop animated: YES];
+                [self.accountTableView scrollToRowAtIndexPath: [NSIndexPath indexPathForRow: 0 inSection: 0] atScrollPosition: UITableViewScrollPositionTop animated: YES];
             }
         }
         
@@ -317,32 +350,62 @@
             
             totalAmountForCatagory += totalAmountSpentOnThisCatagoryAndUnitType;
             
-            NSNumber *nationalAverageCost = [catagory.nationalAverageCosts objectForKey:key];
+            float nationalAverageCost = 0;
             
-            if (!nationalAverageCost)
+            if (![catagory.nationalAverageCosts objectForKey:kUnitItemKey])
             {
-                nationalAverageCost = [NSNumber numberWithFloat:-1];
+                nationalAverageCost = -1;
+            }
+            else
+            {
+                nationalAverageCost = [[catagory.nationalAverageCosts objectForKey:kUnitItemKey] floatValue];
             }
             
-            NSMutableArray *rowArray = [NSMutableArray arrayWithObjects:catagory.localID, key, [NSNumber numberWithInteger: totalQuantityForThisCatagoryAndUnitType], [NSNumber numberWithFloat: totalAmountSpentOnThisCatagoryAndUnitType], nationalAverageCost, nil];
+            CategoryRow *categoryRow = [CategoryRow new];
             
-            [self.catagoryRows addObject:rowArray];
+            categoryRow.categoryID = catagory.localID;
+            categoryRow.unitTypeString = key;
+            categoryRow.totalQtyOrWeight = totalQuantityForThisCatagoryAndUnitType;
+            categoryRow.totalAmount = totalAmountSpentOnThisCatagoryAndUnitType;
+            categoryRow.nationalAverageCost = nationalAverageCost;
+            
+            if ([self.categoryRowsForEachCategory objectForKey:catagory.localID])
+            {
+                [[self.categoryRowsForEachCategory objectForKey:catagory.localID] addObject: categoryRow];
+            }
+            else
+            {
+                NSMutableArray *categoryRows = [NSMutableArray new];
+                [categoryRows addObject:categoryRow];
+                
+                [self.categoryRowsForEachCategory setObject:categoryRows forKey:catagory.localID];
+            }
             
             //if we are coming back to this View and self.currentlySelectedRow already exist, we need to update self.currentlySelectedRow to point to the new object in self.catagoryRows
             if (self.currentlySelectedRow &&
-                [[self.currentlySelectedRow firstObject] isEqualToString:catagory.localID] &&
-                [[self.currentlySelectedRow objectAtIndex: 1] isEqualToString:key] )
+                [self.currentlySelectedRow.categoryID isEqualToString:catagory.localID] &&
+                [self.currentlySelectedRow.unitTypeString isEqualToString:kUnitItemKey] )
             {
-                self.currentlySelectedRow = rowArray;
+                self.currentlySelectedRow = categoryRow;
                 
-                [self.accountTableView scrollToRowAtIndexPath: [NSIndexPath indexPathForRow: [self.catagoryRows indexOfObject:self.currentlySelectedRow] * 2 inSection: 0] atScrollPosition: UITableViewScrollPositionTop animated: YES];
+                [self.accountTableView scrollToRowAtIndexPath:
+                 [NSIndexPath indexPathForRow: [[self.categoryRowsForEachCategory objectForKey:catagory.localID] indexOfObject:self.currentlySelectedRow] * 2 inSection: 0]
+                                             atScrollPosition: UITableViewScrollPositionTop
+                                                     animated: YES];
             }
         }
         
         [categoryTotalAmount setObject:[NSNumber numberWithFloat:totalAmountForCatagory] forKey:catagory.localID];
     }
     
-    if ([self.catagoryRows indexOfObject:self.currentlySelectedRow] == NSNotFound)
+    if ([self.categoryRowsForEachCategory objectForKey:self.currentlySelectedCategory.localID])
+    {
+        if ([[self.categoryRowsForEachCategory objectForKey:self.currentlySelectedCategory.localID] indexOfObject:self.currentlySelectedRow] == NSNotFound)
+        {
+            self.currentlySelectedRow = nil;
+        }
+    }
+    else
     {
         self.currentlySelectedRow = nil;
     }
@@ -395,6 +458,12 @@
     }
     
     [self.pieChart reloadData];
+    
+    //select the first category by default
+    if (self.catagories.count)
+    {
+        [self.categoriesBar simulateNormalPressOnButton:0];
+    }
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -443,28 +512,13 @@
     [self.navigationController pushViewController: [self.viewControllerFactory createReceiptBreakDownViewControllerForReceiptID: receiptID cameFromReceiptCheckingViewController: NO] animated: YES];
 }
 
--(NSArray *)getFirstRowForCatagory:(Catagory *)catagory
-{
-    for (NSArray *row in self.catagoryRows)
-    {
-        NSString *catagoryID = [row firstObject];
-        
-        if ([catagoryID isEqualToString:catagory.localID])
-        {
-            return row;
-        }
-    }
-    
-    return nil;
-}
-
 -(void)loadRecentUploads
 {
     // get the last 5 recent uploads
     if (self.currentlySelectedRow)
     {
-        NSString *catagoryID = [self.currentlySelectedRow firstObject];
-        NSString *unitTypeString = [self.currentlySelectedRow objectAtIndex:1];
+        NSString *catagoryID = self.currentlySelectedRow.categoryID;
+        NSString *unitTypeString = self.currentlySelectedRow.unitTypeString;
         
         NSArray *catagoryInfos =
         [self.dataService fetchLatestNthCatagoryInfosforCatagory: catagoryID
@@ -487,8 +541,8 @@
         NSDate *mondayOfPreviousWeek = [Utils dateForMondayOfPreviousWeek];
         DLog(@"Monday of previous week is %@", mondayOfPreviousWeek.description);
         
-        NSString *catagoryID = [self.currentlySelectedRow firstObject];
-        NSString *unitTypeString = [self.currentlySelectedRow objectAtIndex:1];
+        NSString *catagoryID = self.currentlySelectedRow.categoryID;
+        NSString *unitTypeString = self.currentlySelectedRow.unitTypeString;
         
         NSArray *catagoryInfos = [self.dataService fetchCatagoryInfoFromDate:mondayOfPreviousWeek
                                                                       toDate:mondayOfThisWeek
@@ -512,8 +566,8 @@
         NSDate *firstDayOfPreviousMonth = [Utils dateForFirstDayOfPreviousMonth];
         DLog(@"First Day Of Previous Month is %@", firstDayOfPreviousMonth.description);
         
-        NSString *catagoryID = [self.currentlySelectedRow firstObject];
-        NSString *unitTypeString = [self.currentlySelectedRow objectAtIndex:1];
+        NSString *catagoryID = self.currentlySelectedRow.categoryID;
+        NSString *unitTypeString = self.currentlySelectedRow.unitTypeString;
         
         NSArray *catagoryInfos = [self.dataService fetchCatagoryInfoFromDate:firstDayOfPreviousMonth
                                                                       toDate:firstDayOfThisMonth
@@ -531,8 +585,8 @@
 {
     if (self.currentlySelectedRow)
     {
-        NSString *catagoryID = [self.currentlySelectedRow firstObject];
-        NSString *unitTypeString = [self.currentlySelectedRow objectAtIndex:1];
+        NSString *catagoryID = self.currentlySelectedRow.categoryID;
+        NSString *unitTypeString = self.currentlySelectedRow.unitTypeString;
         
         // all receipts from this catagory
         NSArray *catagoryInfos = [self.dataService fetchLatestNthCatagoryInfosforCatagory:catagoryID
@@ -544,6 +598,32 @@
         
         [self.accountTableView reloadData];
     }
+}
+
+- (void) refreshButtonBar
+{
+    NSMutableArray *catagoryNames = [NSMutableArray new];
+    NSMutableArray *catagoryColors = [NSMutableArray new];
+    
+    for (Catagory *catagory in self.catagories)
+    {
+        [catagoryNames addObject: catagory.name];
+        [catagoryColors addObject: catagory.color];
+    }
+    
+    [self.categoriesBar setButtonNames: catagoryNames andColors: catagoryColors];
+}
+
+-(void)setCurrentlySelectedCategory:(Catagory *)currentlySelectedCategory
+{
+    _currentlySelectedCategory = currentlySelectedCategory;
+    
+    [self.accountTableView reloadData];
+    
+    //scroll to bottom
+    NSInteger rowNumbers = [self.accountTableView numberOfRowsInSection:0] / 2;
+    
+    [self.accountTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:rowNumbers inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 #pragma mark - UIKeyboardWillShowNotification / UIKeyboardWillHideNotification events
@@ -580,27 +660,39 @@
     
     BOOL hasAtLeastOneItem = NO;
     
+    NSString *nameOfCategoryNotEntered;
+    
     // Check if all rows containing Records have national average entered
-    for (NSMutableArray *catagoryRow in self.catagoryRows)
+    for (NSString *categoryIDKey in self.categoryRowsForEachCategory.allKeys)
     {
-        // (CatagoryID, UnitTypeString, Total Qty/Total Weight, Total $ amount, national average cost)
+        NSMutableArray *categoryRows = [self.categoryRowsForEachCategory objectForKey:categoryIDKey];
         
-        NSInteger quantityOrWeight = [[catagoryRow objectAtIndex:2] integerValue];
-        
-        float amountPerItemOrAllWeight = [[catagoryRow objectAtIndex:3] floatValue];
-        
-        float nationalAverageCost = [[catagoryRow objectAtIndex:4] floatValue];
-        
-        if (quantityOrWeight > 0 && amountPerItemOrAllWeight > 0)
+        if (!allNationalAverageCostsEntered)
         {
-            hasAtLeastOneItem = YES;
+            break;
         }
         
-        if (quantityOrWeight > 0 && amountPerItemOrAllWeight > 0 && nationalAverageCost < 0)
+        for (CategoryRow *categoryRow in categoryRows)
         {
-            allNationalAverageCostsEntered = NO;
+            NSInteger quantityOrWeight = categoryRow.totalQtyOrWeight;
             
-            break;
+            float amountPerItemOrAllWeight = categoryRow.totalAmount;
+            
+            float nationalAverageCost = categoryRow.nationalAverageCost;
+            
+            if (quantityOrWeight > 0 && amountPerItemOrAllWeight > 0)
+            {
+                hasAtLeastOneItem = YES;
+            }
+            
+            if (quantityOrWeight > 0 && amountPerItemOrAllWeight > 0 && nationalAverageCost < 0)
+            {
+                allNationalAverageCostsEntered = NO;
+                
+                nameOfCategoryNotEntered = [self.dataService fetchCatagory:categoryIDKey].name;
+                
+                break;
+            }
         }
     }
     
@@ -624,7 +716,7 @@
     else
     {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)
-                                                          message:NSLocalizedString(@"Not all category unit types have its national average cost entered", nil)
+                                                          message:[NSString stringWithFormat:NSLocalizedString(@"Category %@ has one of its national average cost not entered", nil), nameOfCategoryNotEntered]
                                                          delegate:nil
                                                 cancelButtonTitle:nil
                                                 otherButtonTitles:NSLocalizedString(@"Ok", nil),nil];
@@ -643,6 +735,13 @@
 -(void)avgHelpClicked
 {
     [AlertDialogsProvider showWorkInProgressDialog];
+}
+
+#pragma mark - HorizonalScrollBarViewProtocol
+
+- (void) buttonClickedWithIndex: (NSInteger) index andName: (NSString *) name
+{
+    self.currentlySelectedCategory = [self.catagories objectAtIndex: index];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -666,11 +765,13 @@
 
 - (void) textFieldDidEndEditing: (UITextField *) textField
 {
-    NSMutableArray *dataForThisRow = [self.catagoryRows objectAtIndex: textField.tag];
+    NSMutableArray *categoryRows = [self.categoryRowsForEachCategory objectForKey:self.currentlySelectedCategory.localID];
     
-    NSString *catagoryID = [dataForThisRow firstObject];
+    CategoryRow *dataForThisRow = [categoryRows objectAtIndex: textField.tag];
     
-    NSString *unitTypeString = [dataForThisRow objectAtIndex:1];
+    NSString *catagoryID = dataForThisRow.categoryID;
+    
+    NSString *unitTypeString = dataForThisRow.unitTypeString;
     
     NSInteger unitType = [Record unitTypeStringToUnitTypeInt:unitTypeString];
     
@@ -681,9 +782,9 @@
         
         [self.manipulationService deleteNationalAverageCostForCatagoryID:catagoryID andUnitType:unitType save:YES];
         
-        [dataForThisRow setObject:[NSNumber numberWithFloat:-1] atIndexedSubscript:4];
+        dataForThisRow.nationalAverageCost = -1;
         
-        [self.catagoryRows setObject:dataForThisRow atIndexedSubscript:textField.tag];
+        [categoryRows setObject:dataForThisRow atIndexedSubscript:textField.tag];
     }
     else
     {
@@ -691,9 +792,9 @@
         
         [self.manipulationService addOrUpdateNationalAverageCostForCatagoryID:catagoryID andUnitType:unitType amount:textField.text.floatValue save:YES];
         
-        [dataForThisRow setObject:[NSNumber numberWithFloat:textField.text.floatValue] atIndexedSubscript:4];
+        dataForThisRow.nationalAverageCost = textField.text.floatValue;
         
-        [self.catagoryRows setObject:dataForThisRow atIndexedSubscript:textField.tag];
+        [categoryRows setObject:dataForThisRow atIndexedSubscript:textField.tag];
     }
 }
 
@@ -732,20 +833,8 @@
 
 - (void) pieChart: (XYPieChart *) pieChart didSelectSliceAtIndex: (NSUInteger) index
 {
-    Catagory *thisCatagory = [self.catagories objectAtIndex: index];
-
-    self.currentlySelectedRow = [self getFirstRowForCatagory:thisCatagory];
-
-    self.catagoryInfosToShow = nil;
-
-    [self.accountTableView reloadData];
+    [self.categoriesBar simulateNormalPressOnButton:index];
     
-    NSInteger indexToScrollTo = [self.catagoryRows indexOfObject:self.currentlySelectedRow];
-    
-    indexToScrollTo = indexToScrollTo * 2;
-
-    [self.accountTableView scrollToRowAtIndexPath: [NSIndexPath indexPathForRow: indexToScrollTo inSection: 0] atScrollPosition: UITableViewScrollPositionTop animated: YES];
-
     self.recentUploadsSelected = NO;
     self.previousWeekSelected = NO;
     self.previousMonthSelected = NO;
@@ -879,7 +968,16 @@
 
 - (NSInteger) tableView: (UITableView *) tableView numberOfRowsInSection: (NSInteger) section
 {
-    return self.catagoryRows.count * 2;
+    if (self.currentlySelectedCategory)
+    {
+        NSMutableArray *categoryRows = [self.categoryRowsForEachCategory objectForKey:self.currentlySelectedCategory.localID];
+        
+        return categoryRows.count * 2;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 - (UITableViewCell *) tableView: (UITableView *) tableView cellForRowAtIndexPath: (NSIndexPath *) indexPath
@@ -896,31 +994,28 @@
             cell.clipsToBounds = YES;
         }
 
-        // (CatagoryID, UnitTypeString, Total Qty/Total Weight, Total $ amount, national average cost)
-        NSArray *dataForPreviousRow;
+        NSMutableArray *categoryRows = [self.categoryRowsForEachCategory objectForKey:self.currentlySelectedCategory.localID];
+        
+        CategoryRow *dataForPreviousRow;
         
         if (indexPath.row >= 2)
         {
-            dataForPreviousRow = [self.catagoryRows objectAtIndex:(indexPath.row - 2) / 2];
+            dataForPreviousRow = [categoryRows objectAtIndex:(indexPath.row - 2) / 2];
         }
         
-        NSArray *dataForThisRow = [self.catagoryRows objectAtIndex:indexPath.row / 2];
+        CategoryRow *dataForThisRow = [categoryRows objectAtIndex:indexPath.row / 2];
         
-        NSString *catagoryID = [dataForThisRow firstObject];
+        NSString *unitTypeString = dataForThisRow.unitTypeString;
         
-        Catagory *thisCatagory = [self.dataService fetchCatagory:catagoryID];
+        NSInteger quantity = dataForThisRow.totalQtyOrWeight;
         
-        NSString *unitTypeString = [dataForThisRow objectAtIndex:1];
-        
-        NSInteger quantity = [[dataForThisRow objectAtIndex:2] integerValue];
-        
-        float amount = [[dataForThisRow objectAtIndex:3] floatValue];
+        float amount = dataForThisRow.totalAmount;
 
         if ( [unitTypeString isEqualToString:kUnitItemKey] )
         {
-            cell.colorBoxColor = thisCatagory.color;
+            cell.colorBoxColor = self.currentlySelectedCategory.color;
             
-            cell.colorBox.backgroundColor = thisCatagory.color;
+            cell.colorBox.backgroundColor = self.currentlySelectedCategory.color;
         }
         else
         {
@@ -931,51 +1026,51 @@
 
         if ([unitTypeString isEqualToString:kUnitItemKey])
         {
-            [cell.catagoryNameLabel setText: thisCatagory.name];
+            [cell.categoryNameLabel setText: self.currentlySelectedCategory.name];
         }
         else if ([unitTypeString isEqualToString:kUnitGKey])
         {
-            [cell.catagoryNameLabel setText: @"(g)"];
+            [cell.categoryNameLabel setText: @"(g)"];
         }
         else if ([unitTypeString isEqualToString:kUnit100GKey])
         {
-            [cell.catagoryNameLabel setText: @"(100g)"];
+            [cell.categoryNameLabel setText: @"(100g)"];
         }
         else if ([unitTypeString isEqualToString:kUnitKGKey])
         {
-            [cell.catagoryNameLabel setText: @"(kg)"];
+            [cell.categoryNameLabel setText: @"(kg)"];
         }
         else if ([unitTypeString isEqualToString:kUnitLKey])
         {
-            [cell.catagoryNameLabel setText: @"(L)"];
+            [cell.categoryNameLabel setText: @"(L)"];
         }
         else if ([unitTypeString isEqualToString:kUnitMLKey])
         {
-            [cell.catagoryNameLabel setText: @"(mL)"];
+            [cell.categoryNameLabel setText: @"(mL)"];
         }
         else if ([unitTypeString isEqualToString:kUnitFlozKey])
         {
-            [cell.catagoryNameLabel setText: @"(fl oz)"];
+            [cell.categoryNameLabel setText: @"(fl oz)"];
         }
         else if ([unitTypeString isEqualToString:kUnitPtKey])
         {
-            [cell.catagoryNameLabel setText: @"(pt)"];
+            [cell.categoryNameLabel setText: @"(pt)"];
         }
         else if ([unitTypeString isEqualToString:kUnitQtKey])
         {
-            [cell.catagoryNameLabel setText: @"(qt)"];
+            [cell.categoryNameLabel setText: @"(qt)"];
         }
         else if ([unitTypeString isEqualToString:kUnitGalKey])
         {
-            [cell.catagoryNameLabel setText: @"(gal)"];
+            [cell.categoryNameLabel setText: @"(gal)"];
         }
         else if ([unitTypeString isEqualToString:kUnitOzKey])
         {
-            [cell.catagoryNameLabel setText: @"(oz)"];
+            [cell.categoryNameLabel setText: @"(oz)"];
         }
         else if ([unitTypeString isEqualToString:kUnitLbKey])
         {
-            [cell.catagoryNameLabel setText: @"(lb)"];
+            [cell.categoryNameLabel setText: @"(lb)"];
         }
         
         [cell.totalQuantityField setText: [NSString stringWithFormat: @"%ld", (long)quantity]];
@@ -984,7 +1079,7 @@
         [self.lookAndFeel applyGrayBorderTo: cell.totalQuantityField];
         [self.lookAndFeel applyGrayBorderTo: cell.totalAmountField];
 
-        float nationalAverageCost = [[dataForThisRow objectAtIndex:4] floatValue];
+        float nationalAverageCost = dataForThisRow.nationalAverageCost;
         
         if (nationalAverageCost >= 0)
         {
@@ -1023,7 +1118,7 @@
             if (dataForPreviousRow)
             {
                 // hide cell labels if the previous cell is same type
-                NSString *unitTypeStringPreviousRow = [dataForPreviousRow objectAtIndex:1];
+                NSString *unitTypeStringPreviousRow = dataForPreviousRow.unitTypeString;
                 
                 BOOL isCurrentRowAItem = [unitTypeString isEqualToString:kUnitItemKey];
                 
@@ -1125,15 +1220,13 @@
         [cell.viewAllTriangle setUserInteractionEnabled:YES];
         [cell.viewAllTriangle addGestureRecognizer: viewAllLabelTap2];
 
-        NSArray *dataForThisRow = [self.catagoryRows objectAtIndex:(indexPath.row - 1) / 2];
+        NSMutableArray *categoryRows = [self.categoryRowsForEachCategory objectForKey:self.currentlySelectedCategory.localID];
         
-        NSString *catagoryID = [dataForThisRow firstObject];
+        CategoryRow *dataForThisRow = [categoryRows objectAtIndex:(indexPath.row - 1) / 2];
         
-        NSString *unitTypeString = [dataForThisRow objectAtIndex:1];
+        NSString *unitTypeString = dataForThisRow.unitTypeString;
         
-        Catagory *thisCatagory = [self.dataService fetchCatagory:catagoryID];
-        
-        cell.catagoryColor = thisCatagory.color;
+        cell.catagoryColor = self.currentlySelectedCategory.color;
 
         if ([unitTypeString isEqualToString:kUnitItemKey])
         {
@@ -1193,7 +1286,9 @@
     // display a UploadsHistoryTableViewCell
     else
     {
-        NSArray *dataForThisRow = [self.catagoryRows objectAtIndex:(indexPath.row - 1) / 2];
+        NSMutableArray *categoryRows = [self.categoryRowsForEachCategory objectForKey:self.currentlySelectedCategory.localID];
+        
+        CategoryRow *dataForThisRow = [categoryRows objectAtIndex:(indexPath.row - 1) / 2];
         
         if (self.currentlySelectedRow && self.currentlySelectedRow == dataForThisRow)
         {
@@ -1208,7 +1303,9 @@
 {
     if (indexPath.row % 2 == 0)
     {
-        NSArray *dataForThisRow = [self.catagoryRows objectAtIndex:indexPath.row / 2];
+        NSMutableArray *categoryRows = [self.categoryRowsForEachCategory objectForKey:self.currentlySelectedCategory.localID];
+        
+        CategoryRow *dataForThisRow = [categoryRows objectAtIndex:indexPath.row / 2];
         
         // Deselect
         if ( dataForThisRow == self.currentlySelectedRow )

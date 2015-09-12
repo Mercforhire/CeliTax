@@ -19,7 +19,7 @@
 "Are you sure you want to delete the category %@?" = "Are you sure you want to delete the category %@?";
 "Are you sure you want to transfer all items in %@ to %@?"= "Are you sure you want to transfer all items in %@ to %@?";
 "An error has occured with the camere device, please try taking a picture again" = "An error has occured with the camere device, please try taking a picture again";
-"Are you sure" = "Are you sure";
+"Are you sure?" = "Are you sure?";
 "Account email successfully changed" = "Account email successfully changed";
 "Account password successfully changed" = "Account password successfully changed";
 "Account email and password successfully changed" = "Account email and password successfully changed";
@@ -56,6 +56,7 @@
 "Click the receipt breakdown icon to view items that have been allocated to the receipt." = "Click the receipt breakdown icon to view items that have been allocated to the receipt.";
 "Click “Edit” to manage each image captured. Delete or re-order images by touching and dragging the ≡ icon." = "Click “Edit” to manage each image captured. Delete or re-order images by touching and dragging the ≡ icon.";
 "Create Account" = "Create Account";
+"Category %@ has one of its national average cost not entered" = "Category %@ has one of its national average cost not entered";
 
 //D
 "Drag the bar up or down to capture the exact part of the receipt you need and crop accordingly." = "Drag the bar up or down to capture the exact part of the receipt you need and crop accordingly.";
@@ -82,6 +83,7 @@
 "English" = "English";
 "Email address in both fields do not match" = "Email address in both fields do not match";
 "Email address is not valid" = "Email address is not valid";
+"Email: %@" = "Email: %@";
 
 //F
 "Failed to change email, please try again later" = "Failed to change email, please try again later";
@@ -131,7 +133,6 @@
 "Need an account?" = "Need an account?";
 "No Tax Year Added" = "No Tax Year Added";
 "No Uploads" = "No Uploads";
-"Not all category unit types have its national average cost entered" = "Not all category unit types have its national average cost entered";
 "No receipt" = "No receipt";
 "Need to allocate a purchase based on weight? Click and hold a GF category to bring up various units to choose from. Allocate purchases as usual. *You can switch between metric/imperial in Settings." = "Need to allocate a purchase based on weight? Click and hold a GF category to bring up various units to choose from. Allocate purchases as usual. *You can switch between metric/imperial in Settings.";
 "Notice" = "Notice";

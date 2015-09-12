@@ -131,7 +131,7 @@
                 [self.receiptsDAO addReceipt: newReceipt save:NO];
                 
                 // add random items for each receipt
-                int numberOfItems = [Utils randomNumberBetween: 1 maxNumber: 5];
+                int numberOfItems = [Utils randomNumberBetween: 1 maxNumber: 10];
                 
                 for (int itemNumber = 0; itemNumber < numberOfItems; itemNumber++)
                 {
@@ -139,7 +139,7 @@
                     
                     NSInteger recordQuantity = [Utils randomNumberBetween: 1 maxNumber: 20];
                     
-                    NSInteger recordUnitType = [Utils randomNumberBetween: UnitItem maxNumber: UnitKG];
+                    NSInteger recordUnitType = [Utils randomNumberBetween: UnitItem maxNumber: UnitLb];
                     
                     float recordAmount = [Utils randomNumberBetween: 10 maxNumber: 100] / 10.0f;
                     

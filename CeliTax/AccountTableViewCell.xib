@@ -29,7 +29,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Catagory Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5yw-iu-ich">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5yw-iu-ich">
                         <rect key="frame" x="33" y="20" width="60" height="36.5"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="36" id="2VK-kY-t2E"/>
@@ -39,8 +39,8 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="999.99" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gj8-1V-E3q">
-                        <rect key="frame" x="260" y="30" width="42" height="25"/>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="999.99" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gj8-1V-E3q">
+                        <rect key="frame" x="261.5" y="30" width="42" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="Bzh-QQ-A2D"/>
                             <constraint firstAttribute="width" constant="42" id="eHy-72-95a"/>
@@ -55,19 +55,19 @@
                             </mask>
                         </variation>
                     </textField>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ed-xP-LZv">
-                        <rect key="frame" x="248" y="36" width="7" height="14"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ed-xP-LZv">
+                        <rect key="frame" x="249.5" y="36" width="7" height="14.5"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <color key="textColor" red="0.55334633690000001" green="0.82171581770000002" blue="0.4125430142" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="swA-ir-McF">
-                        <rect key="frame" x="162" y="36" width="7" height="14"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="swA-ir-McF">
+                        <rect key="frame" x="163.5" y="36" width="7" height="14.5"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sJY-Bq-77x">
-                        <rect key="frame" x="156" y="51" width="91" height="5"/>
+                    <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sJY-Bq-77x">
+                        <rect key="frame" x="156" y="51" width="94" height="5"/>
                         <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="cM9-Go-FXq"/>
@@ -94,8 +94,8 @@
                             </mask>
                         </variation>
                     </textField>
-                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="99999.99" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G5D-tW-JSA">
-                        <rect key="frame" x="174" y="30" width="56" height="25"/>
+                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="99999.99" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G5D-tW-JSA">
+                        <rect key="frame" x="175.5" y="30" width="56" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="56" id="90b-tr-E0M"/>
                             <constraint firstAttribute="width" constant="60" id="Dvh-7r-ryq"/>
@@ -109,8 +109,8 @@
                             </mask>
                         </variation>
                     </textField>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Avg $ / non-GF" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="shH-Mu-v4d">
-                        <rect key="frame" x="247" y="12.5" width="68.5" height="12"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Avg $ / non-GF" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="shH-Mu-v4d">
+                        <rect key="frame" x="250" y="12.5" width="65.5" height="12"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -132,8 +132,8 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="TOTAL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mTZ-8z-oaO">
-                        <rect key="frame" x="186" y="13" width="30.5" height="12"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TOTAL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mTZ-8z-oaO">
+                        <rect key="frame" x="187.5" y="13" width="30.5" height="12"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -215,7 +215,7 @@
                 <outlet property="averageNationalPriceField" destination="Gj8-1V-E3q" id="rjf-03-kgR"/>
                 <outlet property="avgPriceDollarSign" destination="5ed-xP-LZv" id="3Mr-Re-cqD"/>
                 <outlet property="avgPriceLabel" destination="shH-Mu-v4d" id="sJu-dA-3fA"/>
-                <outlet property="catagoryNameLabel" destination="5yw-iu-ich" id="14p-H5-agN"/>
+                <outlet property="categoryNameLabel" destination="5yw-iu-ich" id="mXq-dT-Yaj"/>
                 <outlet property="colorBox" destination="pXK-rx-xgU" id="UDb-RI-zh9"/>
                 <outlet property="totalAmountDollarSign" destination="swA-ir-McF" id="xP5-9F-aIq"/>
                 <outlet property="totalAmountField" destination="G5D-tW-JSA" id="5rm-ao-581"/>

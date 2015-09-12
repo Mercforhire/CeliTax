@@ -10,6 +10,17 @@
 #import "DataService.h"
 #import "ManipulationService.h"
 
+@interface CategoryRow : NSObject
+
+@property (nonatomic, copy) NSString *categoryID;
+@property (nonatomic, copy) NSString *unitTypeString;
+
+@property (nonatomic) NSInteger totalQtyOrWeight;
+@property (nonatomic) float totalAmount;
+@property (nonatomic) float nationalAverageCost;
+
+@end
+
 @interface MyAccountViewController : BaseSideBarViewController
 
 @property (nonatomic, weak) id <DataService> dataService;

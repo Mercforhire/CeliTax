@@ -29,8 +29,6 @@
 
 /**
  Initializes the localization manager
- 
- @param privateLabelId int that represents the current private label id
  */
 - (void) initialize;
 
@@ -40,11 +38,6 @@
  @param language NSString that represents the language to switch to
  */
 - (void) changeLanguage: (NSString *) language;
-
-/**
- Supported languages
- */
-- (NSArray *) languages;
 
 /**
  Used to retrieve a localized string

@@ -23,6 +23,8 @@ typedef enum : NSUInteger {
 
 -(BOOL)saveUserData;
 
+-(BOOL)deleteUserData;
+
 -(NSMutableArray *)getCatagories;
 
 -(NSMutableArray *)getRecords;

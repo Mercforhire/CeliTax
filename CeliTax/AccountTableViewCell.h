@@ -14,7 +14,7 @@
 
 @property (strong, nonatomic) UIColor *colorBoxColor;
 @property (weak, nonatomic) IBOutlet UIView *colorBox;
-@property (weak, nonatomic) IBOutlet UILabel *catagoryNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *categoryNameLabel;
 @property (weak, nonatomic) IBOutlet UITextField *totalQuantityField;
 @property (weak, nonatomic) IBOutlet UITextField *totalAmountField;
 @property (weak, nonatomic) IBOutlet UITextField *averageNationalPriceField;

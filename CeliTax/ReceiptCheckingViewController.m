@@ -49,7 +49,7 @@ typedef enum : NSUInteger
 @interface ReceiptCheckingViewController ()
 <ImageCounterIconViewProtocol, HorizonalScrollBarViewProtocol, UITextFieldDelegate, UIAlertViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate, UnitPickerViewControllerDelegate, WYPopoverControllerDelegate, TutorialManagerDelegate>
 
-@property (weak, nonatomic) IBOutlet HorizonalScrollBarView *catagoriesBar;
+@property (weak, nonatomic) IBOutlet HorizonalScrollBarView *categoriesBar;
 @property (weak, nonatomic) IBOutlet ImageCounterIconView *recordsCounter;
 @property (weak, nonatomic) IBOutlet UIButton *previousItemButton;
 @property (weak, nonatomic) IBOutlet UIButton *nextItemButton;
@@ -120,10 +120,13 @@ typedef enum : NSUInteger
 @end
 
 @implementation ReceiptCheckingViewController
+{
+    BOOL shouldHighlight;
+}
 
 - (void) setupUI
 {
-    self.catagoriesBar.lookAndFeel = self.lookAndFeel;
+    self.categoriesBar.lookAndFeel = self.lookAndFeel;
 
     self.numberToolbar = [[UIToolbar alloc]initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 50)];
     self.numberToolbar.barStyle = UIBarStyleDefault;
@@ -205,7 +208,7 @@ typedef enum : NSUInteger
 
     [self setupUI];
 
-    self.catagoriesBar.delegate = self;
+    self.categoriesBar.delegate = self;
 
     [self.recordsCounter setDelegate: self];
 
@@ -442,7 +445,7 @@ typedef enum : NSUInteger
         [catagoryColors addObject: catagory.color];
     }
 
-    [self.catagoriesBar setButtonNames: catagoryNames andColors: catagoryColors];
+    [self.categoriesBar setButtonNames: catagoryNames andColors: catagoryColors];
 }
 
 - (void) deleteCurrentReceiptAndQuit
@@ -912,7 +915,7 @@ typedef enum : NSUInteger
     
     [self hideAddRecordControls];
     
-    [self.catagoriesBar deselectAnyCategory];
+    [self.categoriesBar deselectAnyCategory];
 }
 
 - (IBAction) addCatagoryPressed: (UIButton *) sender
@@ -1234,8 +1237,10 @@ typedef enum : NSUInteger
         //If no record was selected
         if (!self.currentlySelectedRecord && !self.itemControlsContainerActivated)
         {
+            shouldHighlight = YES;
+            
             //Press on the catagoriesBar button that spawned theunitPickerPopoverController
-            [self buttonClickedWithIndex:self.categoryIndexLongPressed andName:self.categoryNameLongPressed highlightTextField:YES];
+            [self buttonClickedWithIndex:self.categoryIndexLongPressed andName:self.categoryNameLongPressed];
         }
         
         [self popoverControllerDidDismissPopover:self.unitPickerPopoverController];
@@ -1245,7 +1250,7 @@ typedef enum : NSUInteger
 
 #pragma mark - HorizonalScrollBarViewProtocol
 
-- (void) buttonClickedWithIndex: (NSInteger) index andName: (NSString *) name highlightTextField:(BOOL)highlight
+- (void) buttonClickedWithIndex: (NSInteger) index andName: (NSString *) name
 {
     self.currentlySelectedCatagory = [self.catagories objectAtIndex: index];
 
@@ -1255,11 +1260,13 @@ typedef enum : NSUInteger
     
     [self.view layoutIfNeeded];
    
-    if (highlight)
+    if (shouldHighlight)
     {
         ReceiptItemCell *itemCell = (ReceiptItemCell *)[self.receiptItemCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
         
         [self highlightTheFirstIncompleteTextFieldInCell:itemCell];
+        
+        shouldHighlight = NO;
     }
 }
 
@@ -1277,9 +1284,19 @@ typedef enum : NSUInteger
     
     [self stopEditing];
     
+    // set the correct default unit
+    if (self.metricUnitPickerViewController)
+    {
+        [self.metricUnitPickerViewController setDefaultSelectedUnit:self.tempUnitType];
+    }
+    else if (self.imperialUnitPickerViewController)
+    {
+        [self.imperialUnitPickerViewController setDefaultSelectedUnit:self.tempUnitType];
+    }
+    
     //Show Unit Picker at given point
-    CGRect tinyRect = CGRectMake(self.catagoriesBar.frame.origin.x + point.x,
-                                 self.catagoriesBar.frame.origin.y + point.y - 5,
+    CGRect tinyRect = CGRectMake(self.categoriesBar.frame.origin.x + point.x,
+                                 self.categoriesBar.frame.origin.y + point.y - 5,
                                  1,
                                  1);
     
@@ -1492,7 +1509,7 @@ typedef enum : NSUInteger
     tutorialStep2.leftButtonTitle = NSLocalizedString(@"Back", nil);
     tutorialStep2.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     tutorialStep2.pointsUp = NO;
-    tutorialStep2.highlightedItemRect = self.catagoriesBar.frame;
+    tutorialStep2.highlightedItemRect = self.categoriesBar.frame;
     
     [self.tutorials addObject:tutorialStep2];
     

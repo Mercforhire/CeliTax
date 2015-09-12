@@ -50,6 +50,8 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
     self.longPress.minimumPressDuration = 0.5; //seconds
     self.longPress.delegate = self;
     [self.collectionView addGestureRecognizer:self.longPress];
+    
+    self.unselectable = YES;
 }
 
 - (id) initWithFrame: (CGRect) frame;
@@ -88,9 +90,12 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
 
 -(void)deselectAnyCategory
 {
-    self.selectedButtonIndex = -1;
-    
-    [self.collectionView reloadData];
+    if (self.unselectable)
+    {
+        self.selectedButtonIndex = -1;
+        
+        [self.collectionView reloadData];
+    }
 }
 
 -(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
@@ -115,7 +120,7 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
             
             point.y = 0;
             
-            if (self.delegate)
+            if (self.delegate && [self.delegate respondsToSelector:@selector(buttonClickedWithIndex:andName:)])
             {
                 [self.delegate buttonLongPressedWithIndex: indexPath.row andName: clickedName atPoint:point];
             }
@@ -135,10 +140,15 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
     
     CGPoint point = CGPointMake(cellRect.origin.x + cellRect.size.width / 2, 0);
     
-    if (self.delegate)
+    if (self.delegate && [self.delegate respondsToSelector:@selector(buttonLongPressedWithIndex:andName:atPoint:)])
     {
         [self.delegate buttonLongPressedWithIndex: 0 andName: clickedName atPoint:point];
     }
+}
+
+-(void)simulateNormalPressOnButton: (NSInteger) index
+{
+    [self collectionView:self.collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
 }
 
 #pragma mark - From UICollectionView Delegate / Datasource
@@ -179,31 +189,61 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
 
 - (void) collectionView: (UICollectionView *) collectionView didSelectItemAtIndexPath: (NSIndexPath *) indexPath
 {
-    if (indexPath.row == self.selectedButtonIndex)
+    if (self.unselectable)
     {
-        if (self.delegate)
+        if (indexPath.row == self.selectedButtonIndex)
         {
-            [self.delegate buttonUnselected];
+            if (self.delegate && [self.delegate respondsToSelector:@selector(buttonUnselected)])
+            {
+                [self.delegate buttonUnselected];
+            }
+            
+            self.selectedButtonIndex = -1;
         }
-
-        self.selectedButtonIndex = -1;
+        // deselect the previously selected and select the new one
+        else
+        {
+            NSString *clickedName = [self.buttonNames objectAtIndex: indexPath.row];
+            
+            if (self.delegate && [self.delegate respondsToSelector:@selector(buttonClickedWithIndex:andName:)])
+            {
+                [self.delegate buttonClickedWithIndex: indexPath.row andName: clickedName];
+            }
+            
+            self.selectedButtonIndex = indexPath.row;
+        }
+        
+        [collectionView reloadData];
+        
+        [collectionView selectItemAtIndexPath:indexPath
+                                     animated:YES
+                               scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
     }
-    // deselect the previously selected and select the new one
     else
     {
-        NSString *clickedName = [self.buttonNames objectAtIndex: indexPath.row];
-
-        if (self.delegate)
+        if (indexPath.row == self.selectedButtonIndex)
         {
-            [self.delegate buttonClickedWithIndex: indexPath.row andName: clickedName highlightTextField:YES];
+            //do nothing
         }
-
-        self.selectedButtonIndex = indexPath.row;
+        // deselect the previously selected and select the new one
+        else
+        {
+            NSString *clickedName = [self.buttonNames objectAtIndex: indexPath.row];
+            
+            if (self.delegate && [self.delegate respondsToSelector:@selector(buttonClickedWithIndex:andName:)])
+            {
+                [self.delegate buttonClickedWithIndex: indexPath.row andName: clickedName];
+            }
+            
+            self.selectedButtonIndex = indexPath.row;
+            
+            [collectionView reloadData];
+            
+            [collectionView selectItemAtIndexPath:indexPath
+                                         animated:YES
+                                   scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
+        }
     }
-    
-    [collectionView reloadData];
-    
-    [collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
 }
 
 @end

@@ -256,6 +256,19 @@
     }
 }
 
+-(void)setDirty:(BOOL)dirty
+{
+    _dirty = dirty;
+    
+    if (_dirty)
+    {
+        [self.saveButton setEnabled:YES];
+    }
+    else
+    {
+        [self.saveButton setEnabled:NO];
+    }
+}
 
 #pragma mark - UIKeyboardWillShowNotification / UIKeyboardWillHideNotification events
 

@@ -119,6 +119,27 @@
     }
 }
 
+-(BOOL)deleteUserData
+{
+    if (!self.userKey)
+    {
+        return NO;
+    }
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSString *userDataPath = [self generateUserDataFileName];
+    
+    if ([fileManager fileExistsAtPath: userDataPath])
+    {
+        [fileManager removeItemAtPath: userDataPath error: nil];
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
 -(NSDictionary *)generateJSONToUploadToServer
 {
     return [self.userData generateJSONToUploadToServer];
