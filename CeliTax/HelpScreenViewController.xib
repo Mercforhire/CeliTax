@@ -19,6 +19,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HelpScreenViewController">
             <connections>
                 <outlet property="commentField" destination="57p-ex-MG5" id="kKW-fQ-mKE"/>
+                <outlet property="contactInfoTextView" destination="Aoy-Gh-cv4" id="vYJ-nE-eQO"/>
                 <outlet property="contactLabel" destination="FNa-gc-fNN" id="NXM-H8-OkI"/>
                 <outlet property="sendButton" destination="CYY-Lx-iO3" id="FNf-s5-aEc"/>
                 <outlet property="sendUsMessageLabel" destination="dPo-pl-QYd" id="qBL-Kf-bxF"/>

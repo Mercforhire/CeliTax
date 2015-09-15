@@ -16,6 +16,7 @@
 #import "User.h"
 #import "SolidGreenButton.h"
 #import "LoginViewController.h"
+#import "ViewControllerFactory.h"
 
 @interface LoginSettingsViewController () <UITextFieldDelegate, UIAlertViewDelegate>
 
@@ -475,20 +476,13 @@
             
             [self.userManager logOutUser];
             
-            //pop to the LoginViewController
-            NSMutableArray *viewControllers = [NSMutableArray arrayWithArray: self.navigationController.viewControllers];
+            LoginViewController *loginViewController = [self.viewControllerFactory createLoginViewController];
             
-            LoginViewController *loginViewController;
+            NSMutableArray *viewControllers = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
             
-            for (UIViewController *viewController in viewControllers)
-            {
-                if ([viewController isKindOfClass:[LoginViewController class]])
-                {
-                    loginViewController = (LoginViewController *)viewController;
-                    
-                    break;
-                }
-            }
+            [viewControllers insertObject:loginViewController atIndex:0];
+            
+            [self.navigationController setViewControllers:viewControllers animated:NO];
             
             [self.navigationController popToViewController:loginViewController animated:YES];
             

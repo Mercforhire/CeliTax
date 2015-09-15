@@ -46,6 +46,9 @@
     
     [self.colorPickerView setColor: self.catagoryToModify.color];
     [self.colorBoxView setBackgroundColor: self.catagoryToModify.color];
+    
+    self.catagoryNameField.text = self.catagoryToModify.name;
+    [self.colorPickerView setColor: self.catagoryToModify.color];
 
     NKOColorPickerDidChangeColorBlock colorDidChangeBlock = ^(UIColor *color) {
         // Your code handling a color change in the picker view.
@@ -53,10 +56,12 @@
     };
 
     [self.colorPickerView setDidChangeColorBlock: colorDidChangeBlock];
-    [self.colorPickerView setColor: self.catagoryToModify.color];
+    
 
     self.catagoryNameField.delegate = self;
-    self.catagoryNameField.text = self.catagoryToModify.name;
+    [self.catagoryNameField addTarget: self
+                               action: @selector(textFieldDidChange:)
+                     forControlEvents: UIControlEventEditingChanged];
     
     [self.lookAndFeel applySlightlyDarkerBorderTo:self.colorBoxView];
     [self.lookAndFeel applyGrayBorderTo:self.catagoryNameField];
@@ -101,10 +106,21 @@
     [self.lookAndFeel applySlightlyDarkerBorderTo:self.colorBoxView];
 
     self.catagoryToModify.color = newColor;
+    
+    if (self.catagoryNameField.text.length)
+    {
+        [self.confirmButton setEnabled: YES];
+    }
+    else
+    {
+        [self.confirmButton setEnabled: NO];
+    }
 }
 
 - (IBAction) confirmPressed: (UIButton *) sender
 {
+    self.catagoryToModify.name = self.catagoryNameField.text;
+    
     if ([self.manipulationService modifyCatagoryForCatagoryID:self.catagoryToModify.localID
                                                       newName:self.catagoryToModify.name
                                                      newColor:self.catagoryToModify.color
@@ -142,17 +158,6 @@
 {
     [self.view scrollToY: 0];
 
-    self.catagoryToModify.name = self.catagoryNameField.text;
-
-    if (self.catagoryNameField.text.length)
-    {
-        [self.confirmButton setEnabled: YES];
-    }
-    else
-    {
-        [self.confirmButton setEnabled: NO];
-    }
-
     [textField resignFirstResponder];
 }
 
@@ -161,6 +166,18 @@
     [textField resignFirstResponder];
 
     return NO;
+}
+
+- (void) textFieldDidChange: (UITextField *) textField
+{
+    if (textField.text.length && ![self.catagoryToModify.name isEqualToString:textField.text])
+    {
+        [self.confirmButton setEnabled: YES];
+    }
+    else
+    {
+        [self.confirmButton setEnabled: NO];
+    }
 }
 
 @end

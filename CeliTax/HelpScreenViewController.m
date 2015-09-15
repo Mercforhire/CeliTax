@@ -15,6 +15,8 @@
 #import "TutorialManager.h"
 #import "SolidGreenButton.h"
 
+#define KTelephoneNumber        @"905-583-5353"
+
 @interface HelpScreenViewController () <UITextViewDelegate>
 {
     BOOL justStartedEditing;
@@ -25,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *sendUsMessageLabel;
 @property (weak, nonatomic) IBOutlet SolidGreenButton *viewTutorialButton;
 @property (weak, nonatomic) IBOutlet UITextView *commentField;
+@property (weak, nonatomic) IBOutlet UITextView *contactInfoTextView;
 @property (weak, nonatomic) IBOutlet HollowGreenButton *sendButton;
 @property (nonatomic, strong) UIToolbar *keyboardToolbar;
 @property (strong, nonatomic) MBProgressHUD *waitView;

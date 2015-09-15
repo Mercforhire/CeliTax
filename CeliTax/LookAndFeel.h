@@ -17,6 +17,10 @@
 
 - (void) addLeftInsetToTextField: (UITextField *) textField;
 
+- (void) removeBorderFor: (UIView *) view;
+
+- (void) applyWhiteBorderTo: (UIView *) view;
+
 - (void) applyGrayBorderTo: (UIView *) view;
 
 - (void) applyGreenBorderTo: (UIView *) view;

@@ -159,6 +159,8 @@ typedef enum : NSUInteger
 
     UINib *receiptItemCell = [UINib nibWithNibName: @"ReceiptItemCell" bundle: nil];
     [self.receiptItemCollectionView registerNib: receiptItemCell forCellWithReuseIdentifier: ReceiptItemCellIdentifier];
+    
+    [self.receiptItemCollectionView setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.2]];
 
     UINib *receiptEditModeTableViewCell = [UINib nibWithNibName: @"ReceiptEditModeTableViewCell" bundle: nil];
     [self.editReceiptTable registerNib: receiptEditModeTableViewCell forCellReuseIdentifier: ReceiptEditModeTableViewCellIdentifier];

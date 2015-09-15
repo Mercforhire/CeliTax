@@ -100,13 +100,13 @@
                         <constraint firstAttribute="width" constant="25" id="VGv-58-fXo"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qhk-pL-Cfy" userLabel="Close Button">
-                    <rect key="frame" x="292" y="0.0" width="20" height="20"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qhk-pL-Cfy" userLabel="Close Button">
+                    <rect key="frame" x="290" y="3" width="25" height="25"/>
                     <color key="backgroundColor" red="0.4549019608" green="0.74901960779999999" blue="0.31764705879999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <accessibility key="accessibilityConfiguration" label=""/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="20" id="3MX-Jx-uVn"/>
-                        <constraint firstAttribute="height" constant="20" id="Wel-O6-GEf"/>
+                        <constraint firstAttribute="width" constant="25" id="3MX-Jx-uVn"/>
+                        <constraint firstAttribute="height" constant="25" id="Wel-O6-GEf"/>
                     </constraints>
                     <inset key="imageEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
                     <state key="normal" image="xIconWhite.png">

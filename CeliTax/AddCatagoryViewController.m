@@ -31,7 +31,7 @@
 @property (weak, nonatomic) IBOutlet UIView *colorView;
 @property (weak, nonatomic) IBOutlet UITextField *catagoryNameField;
 @property (nonatomic, strong) UIButton *nameFieldOverlayButton;
-@property (nonatomic, strong) UIButton *saveButton;
+@property (nonatomic, strong) SolidGreenButton *saveButton;
 @property (nonatomic, strong) UIBarButtonItem *rightMenuItem;
 @property (weak, nonatomic) IBOutlet UIButton *addCatagoryButton;
 @property (weak, nonatomic) IBOutlet UITableView *catagoriesTable;
@@ -64,6 +64,9 @@
 
 @property (nonatomic, strong) Catagory *catagoryToTransferTo;
 
+@property (nonatomic, strong) UIColor *colorBeingAddedOrEdited;
+
+@property (nonatomic, strong) NSString *nameOfCategoryBeingAddedOrEdited;
 
 @end
 
@@ -100,12 +103,12 @@
     [self.view addSubview: self.nameFieldOverlayButton];
 
     // initialize the Save menu button button
-    self.saveButton = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, 50, 25)];
+    self.saveButton = [[SolidGreenButton alloc] initWithFrame: CGRectMake(0, 0, 50, 25)];
     [self.saveButton setTitle: NSLocalizedString(@"Save", nil) forState: UIControlStateNormal];
     [self.saveButton.titleLabel setFont: [UIFont latoBoldFontOfSize: 14]];
     [self.saveButton setTitleEdgeInsets: UIEdgeInsetsMake(5, 10, 5, 10)];
     [self.saveButton addTarget: self action: @selector(saveCatagoryPressed:) forControlEvents: UIControlEventTouchUpInside];
-    [self.lookAndFeel applyDisabledButtonStyleTo: self.saveButton];
+    [self.saveButton setLookAndFeel:self.lookAndFeel];
 
     self.rightMenuItem = [[UIBarButtonItem alloc] initWithCustomView: self.saveButton];
     self.navigationItem.rightBarButtonItem = self.rightMenuItem;
@@ -181,11 +184,6 @@
                                                object: nil];
 }
 
--(void)displayTutorials
-{
-    
-}
-
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -235,6 +233,27 @@
         _currentlySelectedCatagory = currentlySelectedCatagory;
 
         [self.catagoriesTable reloadData];
+        
+        if (!_currentlySelectedCatagory)
+        {
+            self.colorBeingAddedOrEdited = nil;
+            
+            self.nameOfCategoryBeingAddedOrEdited = nil;
+        }
+    }
+}
+
+-(void)setColorBeingAddedOrEdited:(UIColor *)colorBeingAddedOrEdited
+{
+    _colorBeingAddedOrEdited = colorBeingAddedOrEdited;
+    
+    if (_colorBeingAddedOrEdited)
+    {
+        self.colorView.backgroundColor = _colorBeingAddedOrEdited;
+    }
+    else
+    {
+        self.colorView.backgroundColor = [UIColor whiteColor];
     }
 }
 
@@ -277,6 +296,7 @@
     self.addingCatagoryMode = NO;
     
     self.catagoryNameField.text = @"";
+    self.nameOfCategoryBeingAddedOrEdited = nil;
     [self.catagoryNameField resignFirstResponder];
 }
 
@@ -326,6 +346,7 @@
     {
         self.addingCatagoryMode = NO;
         self.catagoryNameField.text = @"";
+        self.nameOfCategoryBeingAddedOrEdited = nil;
         [self refreshCatagories];
     }
 }
@@ -434,6 +455,18 @@
     [message show];
 }
 
+-(void)enableOrDisableSaveButton
+{
+    if (self.nameOfCategoryBeingAddedOrEdited.length && self.colorBeingAddedOrEdited)
+    {
+        [self.rightMenuItem setEnabled:YES];
+    }
+    else
+    {
+        [self.rightMenuItem setEnabled:NO];
+    }
+}
+
 #pragma mark - UIKeyboardWillShowNotification / UIKeyboardWillHideNotification events
 
 // Called when the UIKeyboardDidShowNotification is sent.
@@ -466,6 +499,8 @@
 - (BOOL) textFieldShouldReturn: (UITextField *) textField
 {
     [textField resignFirstResponder];
+    
+    [self enableOrDisableSaveButton];
 
     return NO;
 }
@@ -476,13 +511,11 @@
     
     if (trimmedString.length)
     {
-        [self.rightMenuItem setEnabled: YES];
-        [self.lookAndFeel applyTransperantWhiteTextButtonStyleTo:self.saveButton];
+        self.nameOfCategoryBeingAddedOrEdited = trimmedString;
     }
     else
     {
-        [self.rightMenuItem setEnabled: NO];
-        [self.lookAndFeel applyDisabledButtonStyleTo:self.saveButton];
+        self.nameOfCategoryBeingAddedOrEdited = nil;
     }
 }
 
@@ -490,7 +523,11 @@
 
 - (void) selectedSelectionAtIndex: (NSInteger) index fromPopUp:(SelectionsPickerViewController *)popUpController
 {
-    [self.namesPickerPopover dismissPopoverAnimated: YES];
+    [self.namesPickerPopover dismissPopoverAnimated:YES];
+    [self.colorPickerPopover dismissPopoverAnimated:YES];
+    [self.allColorsPickerPopover dismissPopoverAnimated:YES];
+    [self.catagoryPickerPopover dismissPopoverAnimated:YES];
+    [self.modifyCatagoryPickerPopover dismissPopoverAnimated:YES];
     
     if (popUpController == self.namesPickerViewController)
     {
@@ -542,10 +579,7 @@
         {
             self.catagoryToTransferTo = nil;
             
-            if ([self.manipulationService deleteCatagoryForCatagoryID:self.currentlySelectedCatagory.localID save:YES])
-            {
-                [self refreshCatagories];
-            }
+            [self refreshCatagories];
         }
     }
     
@@ -559,28 +593,29 @@
 }
 
 #pragma mark - ColorPickerViewController
-
 #pragma mark - AllColorsPickerViewPopUpDelegate
 
 -(void)pickedColor:(UIColor *)color
 {
-    self.colorView.backgroundColor = color;
+    self.colorBeingAddedOrEdited = color;
     [self.lookAndFeel applySlightlyDarkerBorderTo: self.colorView];
+    
+    [self enableOrDisableSaveButton];
 }
 
 - (void) selectedColor: (UIColor *) color
 {
-    self.colorView.backgroundColor = color;
+    self.colorBeingAddedOrEdited = color;
     [self.lookAndFeel applySlightlyDarkerBorderTo: self.colorView];
     
     if (!self.catagoryNameField.text.length)
     {
         [self textBoxPressed];
     }
-    else
-    {
-        [self.colorPickerPopover dismissPopoverAnimated: YES];
-    }
+    
+    [self.colorPickerPopover dismissPopoverAnimated: YES];
+    
+    [self enableOrDisableSaveButton];
 }
 
 - (void) customColorPressed
@@ -741,9 +776,17 @@
         }
         else
         {
-            self.currentlySelectedCatagory = thisCatagory;
-            
-            [tableView scrollToRowAtIndexPath: indexPath atScrollPosition: UITableViewScrollPositionTop animated: YES];
+            if (!self.currentlySelectedCatagory)
+            {
+                self.currentlySelectedCatagory = thisCatagory;
+                
+                [tableView scrollToRowAtIndexPath: indexPath atScrollPosition: UITableViewScrollPositionTop animated: YES];
+            }
+            else
+            {
+                // deselect
+                self.currentlySelectedCatagory = nil;
+            }
         }
     }
 }

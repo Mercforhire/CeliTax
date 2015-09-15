@@ -352,13 +352,13 @@
             
             float nationalAverageCost = 0;
             
-            if (![catagory.nationalAverageCosts objectForKey:kUnitItemKey])
+            if (![catagory.nationalAverageCosts objectForKey:key])
             {
                 nationalAverageCost = -1;
             }
             else
             {
-                nationalAverageCost = [[catagory.nationalAverageCosts objectForKey:kUnitItemKey] floatValue];
+                nationalAverageCost = [[catagory.nationalAverageCosts objectForKey:key] floatValue];
             }
             
             CategoryRow *categoryRow = [CategoryRow new];
@@ -619,11 +619,6 @@
     _currentlySelectedCategory = currentlySelectedCategory;
     
     [self.accountTableView reloadData];
-    
-    //scroll to bottom
-    NSInteger rowNumbers = [self.accountTableView numberOfRowsInSection:0] / 2;
-    
-    [self.accountTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:rowNumbers inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 #pragma mark - UIKeyboardWillShowNotification / UIKeyboardWillHideNotification events

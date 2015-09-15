@@ -32,6 +32,7 @@
 #import "ManipulationService.h"
 #import "MBProgressHUD.h"
 #import "SyncManager.h"
+#import "Utils.h"
 
 #define kRecentUploadTableRowHeight                     40
 #define kNoItemsTableViewCellIdentifier                 @"NoItemsTableViewCell"

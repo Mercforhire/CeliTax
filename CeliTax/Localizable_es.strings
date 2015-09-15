@@ -57,6 +57,8 @@
 "Click “Edit” to manage each image captured. Delete or re-order images by touching and dragging the ≡ icon." = "Click “Edit” to manage each image captured. Delete or re-order images by touching and dragging the ≡ icon.(es)";
 "Create Account" = "Create Account(es)";
 "Category %@ has one of its national average cost not entered" = "Category %@ has one of its national average cost not entered(es)";
+"Celiacs are entitled to claim the incremental cost between GF and regular food products as a medical expense." = "Celiacs are entitled to claim the incremental cost between GF and regular food products as a medical expense.(es)";
+"CeliTax will help you organize all of your GF purchases during the year and calculate your tax claim for you!" = "CeliTax will help you organize all of your GF purchases during the year and calculate your tax claim for you!(es)";
 
 //D
 "Drag the bar up or down to capture the exact part of the receipt you need and crop accordingly." = "Drag the bar up or down to capture the exact part of the receipt you need and crop accordingly.(es)";
@@ -104,7 +106,6 @@
 "Home" = "Home(es)";
 
 //I
-"Individuals diagnosed with Celiacs disease are entitled to a government tax claim based on the incremental difference between the cost of GF products and regular food items." = "Individuals diagnosed with Celiacs disease are entitled to a government tax claim based on the incremental difference between the cost of GF products and regular food items.(es)";
 "In the My Account view, you can see a grand total of all GF purchases allocated to each of your categories." = "In the My Account view, you can see a grand total of all GF purchases allocated to each of your categories.(es)";
 "In the Vault, you can re-visit any saved receipt to update your GF allocations or even transfer a receipt to a different tax year" = "In the Vault, you can re-visit any saved receipt to update your GF allocations or even transfer a receipt to a different tax year(es)";
 "Item" = "Item(es)";
@@ -246,10 +247,10 @@
 
 //W
 "We need permission for the camera.\nPlease enable it in your settings." = "We need permission for the camera.\nPlease enable it in your settings.(es)";
-"Welcome to CeliTax, the simple, easy to use tax tool designed specifically for Celiacs.\n\nWe make your Gluten Free (GF) tax claim easy!\n\nNo complicated spreadsheets, no paper receipts, no stress." = "Welcome to CeliTax, the simple, easy to use tax tool designed specifically for Celiacs.\n\nWe make your Gluten Free (GF) tax claim easy!\n\nNo complicated spreadsheets, no paper receipts, no stress.(es)";
 "Weight" = "Weight(es)";
 "Weight-%@"= "Weight-%@(es)";
 "When you are finished allocating, touch “Complete” to save and store your receipt to The Vault. The Vault is where all of your receipts are saved." = "When you are finished allocating, touch “Complete” to save and store your receipt to The Vault. The Vault is where all of your receipts are saved.(es)";
+"We make claiming your Gluten Free (GF) tax claim easy!" = "We make claiming your Gluten Free (GF) tax claim easy!(es)";
 
 //Y
 "Yes" = "Yes(es)";

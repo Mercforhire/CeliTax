@@ -29,6 +29,20 @@
     [textField setLeftView: paddingView];
 }
 
+- (void) removeBorderFor: (UIView *) view
+{
+    view.layer.borderWidth = 0;
+    [view setClipsToBounds: YES];
+}
+
+- (void) applyWhiteBorderTo: (UIView *) view
+{
+    view.layer.cornerRadius = 2.0f;
+    view.layer.borderColor = [UIColor whiteColor].CGColor;
+    view.layer.borderWidth = 1.0f;
+    [view setClipsToBounds: YES];
+}
+
 - (void) applyGrayBorderTo: (UIView *) view
 {
     view.layer.cornerRadius = 2.0f;
@@ -115,6 +129,7 @@
     button.layer.cornerRadius = 3.0f;
     [button setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
     [button setClipsToBounds: YES];
+    button.layer.borderWidth = 0;
 }
 
 - (void) applyTransperantWhiteTextButtonStyleTo: (UIButton *) button
