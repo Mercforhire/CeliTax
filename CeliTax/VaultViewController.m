@@ -97,7 +97,6 @@ typedef enum : NSUInteger
 
 //Tutorials
 @property (nonatomic, strong) NSMutableArray *tutorials;
-@property (nonatomic) NSUInteger currentTutorialStep;
 
 @end
 
@@ -232,13 +231,35 @@ typedef enum : NSUInteger
 {
     [super viewDidAppear:animated];
     
-    if (![self.tutorialManager hasTutorialBeenShown])
+    if (![self.tutorialManager hasTutorialBeenShown] && [self.tutorialManager automaticallyShowTutorialNextTime])
     {
-        if ([self.tutorialManager automaticallyShowTutorialNextTime])
+        [self setupTutorials];
+        
+        if (self.tutorialManager.currentStep == 18)
         {
-            [self setupTutorials];
+            // create some fake receipts and automatically check mark first, then the 2 and 3 receipt
+            self.recentUploadSelected = YES;
             
-            [self displayTutorialStep:0];
+            NSMutableDictionary *fakeReceiptInfo1 = [NSMutableDictionary new];
+            
+            [fakeReceiptInfo1 setObject:[NSNumber numberWithInteger:4] forKey:kNumberOfRecordsKey];
+            [fakeReceiptInfo1 setObject:[NSDate date] forKey:kUploadTimeKey];
+            
+            NSMutableDictionary *fakeReceiptInfo2 = [NSMutableDictionary new];
+            
+            [fakeReceiptInfo2 setObject:[NSNumber numberWithInteger:2] forKey:kNumberOfRecordsKey];
+            [fakeReceiptInfo2 setObject:[NSDate date] forKey:kUploadTimeKey];
+            
+            NSMutableDictionary *fakeReceiptInfo3 = [NSMutableDictionary new];
+            
+            [fakeReceiptInfo3 setObject:[NSNumber numberWithInteger:8] forKey:kNumberOfRecordsKey];
+            [fakeReceiptInfo3 setObject:[NSDate date] forKey:kUploadTimeKey];
+            
+            self.recentUploadReceipts = [NSArray arrayWithObjects:fakeReceiptInfo1, fakeReceiptInfo2, fakeReceiptInfo3, nil];
+            
+            [self.uploadHistoryTable reloadData];
+            
+            [self displayTutorialStep:TutorialStep18];
         }
     }
 }
@@ -246,6 +267,7 @@ typedef enum : NSUInteger
 - (void) viewWillDisappear: (BOOL) animated
 {
     [super viewWillDisappear: animated];
+    
     self.navigationController.navigationBarHidden = NO;
     
     [[NSNotificationCenter defaultCenter] removeObserver: self
@@ -1164,9 +1186,7 @@ typedef enum : NSUInteger
 
 typedef enum : NSUInteger
 {
-    TutorialStep1,
-    TutorialStep2,
-    TutorialStepsCount,
+    TutorialStep18,
 } TutorialSteps;
 
 -(void)setupTutorials
@@ -1175,24 +1195,16 @@ typedef enum : NSUInteger
     
     self.tutorials = [NSMutableArray new];
     
-    TutorialStep *tutorialStep1 = [TutorialStep new];
+    TutorialStep *tutorialStep18 = [TutorialStep new];
     
-    tutorialStep1.text = NSLocalizedString(@"In the Vault, you can re-visit any saved receipt to update your GF allocations or even transfer a receipt to a different tax year", nil);
-    tutorialStep1.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    tutorialStep18.text = NSLocalizedString(@"Select receipts to send the images directly to your email for tax/audit evidence.", nil);
     
-    [self.tutorials addObject:tutorialStep1];
+    tutorialStep18.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep18.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    tutorialStep18.pointsUp = NO;
+    tutorialStep18.highlightedItemRect = self.downloadReceiptButton.frame;
     
-    TutorialStep *tutorialStep2 = [TutorialStep new];
-    
-    tutorialStep2.text = NSLocalizedString(@"Select and download receipt images to send to your email address for supplemental tax support.", nil);
-    tutorialStep2.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep2.rightButtonTitle = NSLocalizedString(@"Continue", nil);
-    tutorialStep2.pointsUp = NO;
-    tutorialStep2.highlightedItemRect = [Utils returnRectBiggerThan:self.downloadReceiptButton.frame by: 3];
-    
-    [self.tutorials addObject:tutorialStep2];
-    
-    self.currentTutorialStep = TutorialStep1;
+    [self.tutorials addObject:tutorialStep18];
 }
 
 -(void)displayTutorialStep:(NSInteger)step
@@ -1202,18 +1214,26 @@ typedef enum : NSUInteger
         TutorialStep *tutorialStep = [self.tutorials objectAtIndex:step];
         
         [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
-        
-        self.currentTutorialStep = step;
     }
 }
 
 - (void) tutorialLeftSideButtonPressed
 {
-    switch (self.currentTutorialStep)
+    switch (self.tutorialManager.currentStep)
     {
-        case TutorialStep2:
-            //Go back to Step 1
-            [self displayTutorialStep:TutorialStep1];
+        case 18:
+        {
+            //Go back to Step 11 in Receipt Overlay view
+            self.tutorialManager.currentStep = 11;
+            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+            
+            ReceiptCheckingViewController *receiptCheckingViewController = [self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID:nil cameFromReceiptBreakDownViewController:NO];
+            
+            [self.tutorialManager dismissTutorial:^{
+                // push the new viewController
+                [self.navigationController pushViewController: receiptCheckingViewController animated: YES];
+            }];
+        }
             break;
             
         default:
@@ -1223,24 +1243,17 @@ typedef enum : NSUInteger
 
 - (void) tutorialRightSideButtonPressed
 {
-    switch (self.currentTutorialStep)
+    switch (self.tutorialManager.currentStep)
     {
-        case TutorialStep1:
-            //Go to Step 2
-            [self displayTutorialStep:TutorialStep2];
-            
-            break;
-            
-        case TutorialStep2:
+        case 18:
         {
+            //Go to Step 19 in My Account
+            self.tutorialManager.currentStep = 19;
             [self.tutorialManager setAutomaticallyShowTutorialNextTime];
-            
             [self.tutorialManager dismissTutorial:^{
-                //Go to My Account view
-                [super selectedMenuIndex: RootViewControllerAccount];
+                [self selectedMenuIndex:RootViewControllerAccount];
             }];
         }
-            
             break;
             
         default:

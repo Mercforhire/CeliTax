@@ -18,14 +18,10 @@
 #import "ReceiptCheckingViewController.h"
 #import "WYPopoverController.h"
 #import "SelectionsPickerViewController.h"
-#import "TutorialManager.h"
-#import "TutorialStep.h"
 #import "ConfigurationManager.h"
 #import "HollowGreenButton.h"
-#import "TutorialManager.h"
-#import "TutorialStep.h"
 
-@interface ReceiptBreakDownViewController () <XYPieChartDelegate, XYPieChartDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, SelectionsPickerPopUpDelegate, TutorialManagerDelegate>
+@interface ReceiptBreakDownViewController () <XYPieChartDelegate, XYPieChartDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, SelectionsPickerPopUpDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *noItemsShield;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
@@ -46,10 +42,6 @@
 @property (nonatomic, strong) NSMutableArray *sliceNames;
 
 @property (nonatomic, strong) Record *currentlySelectedRecord;
-
-//Tutorials
-@property (nonatomic, strong) NSMutableArray *tutorials;
-@property (nonatomic) NSUInteger currentTutorialStep;
 
 @end
 
@@ -140,16 +132,6 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    if (![self.tutorialManager hasTutorialBeenShown])
-    {
-        if ([self.tutorialManager automaticallyShowTutorialNextTime])
-        {
-            [self setupTutorials];
-            
-            [self displayTutorialStep:0];
-        }
-    }
 }
 
 - (void) viewWillDisappear: (BOOL) animated
@@ -838,119 +820,6 @@
 
             [tableView scrollToRowAtIndexPath: indexPath atScrollPosition: UITableViewScrollPositionTop animated: YES];
         }
-    }
-}
-
-#pragma mark - Tutorial
-
-typedef enum : NSUInteger
-{
-    TutorialStep1,
-    TutorialStep2,
-    TutorialStep3,
-    TutorialStepsCount,
-} TutorialSteps;
-
--(void)setupTutorials
-{
-    [self.tutorialManager setDelegate:self];
-    
-    self.tutorials = [NSMutableArray new];
-    
-    TutorialStep *tutorialStep1 = [TutorialStep new];
-    
-    tutorialStep1.text = NSLocalizedString(@"Manage items you have allocated to a single receipt. Easily view the breakdown by GF category in the pie chart.", nil);
-    tutorialStep1.rightButtonTitle = NSLocalizedString(@"Continue", nil);
-    tutorialStep1.pointsUp = YES;
-    tutorialStep1.highlightedItemRect = self.pieChart.frame;
-    
-    [self.tutorials addObject:tutorialStep1];
-    
-    TutorialStep *tutorialStep2 = [TutorialStep new];
-    
-    tutorialStep2.text = NSLocalizedString(@"Quickly Transfer, Edit, or Delete items as needed.", nil);
-    tutorialStep2.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep2.rightButtonTitle = NSLocalizedString(@"Continue", nil);
-    tutorialStep2.pointsUp = NO;
-    tutorialStep2.highlightedItemRect = self.receiptItemsTable.frame;
-    
-    [self.tutorials addObject:tutorialStep2];
-    
-    TutorialStep *tutorialStep3 = [TutorialStep new];
-    
-    tutorialStep3.text = NSLocalizedString(@"Click to return to your receipt and keep allocating purchases.", nil);
-    tutorialStep3.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep3.rightButtonTitle = NSLocalizedString(@"Continue", nil);
-    tutorialStep3.pointsUp = YES;
-    tutorialStep3.highlightedItemRect = self.viewReceiptButton.frame;
-    
-    [self.tutorials addObject:tutorialStep3];
-    
-    self.currentTutorialStep = TutorialStep1;
-}
-
--(void)displayTutorialStep:(NSInteger)step
-{
-    if (self.tutorials.count && step < self.tutorials.count)
-    {
-        TutorialStep *tutorialStep = [self.tutorials objectAtIndex:step];
-        
-        [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
-        
-        self.currentTutorialStep = step;
-    }
-}
-
-- (void) tutorialLeftSideButtonPressed
-{
-    switch (self.currentTutorialStep)
-    {
-        case TutorialStep2:
-            //Go back to Step 1
-            [self displayTutorialStep:TutorialStep1];
-            break;
-            
-        case TutorialStep3:
-            //Go back to Step 2
-            [self displayTutorialStep:TutorialStep2];
-            break;
-        default:
-            break;
-    }
-}
-
-- (void) tutorialRightSideButtonPressed
-{
-    switch (self.currentTutorialStep)
-    {
-        case TutorialStep1:
-        {
-            //select the first item in receiptItemsTable
-            [self tableView:self.receiptItemsTable didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-            
-            //Go to Step 2
-            [self displayTutorialStep:TutorialStep2];
-        }
-            break;
-            
-        case TutorialStep2:
-            //Go to Step 3
-            [self displayTutorialStep:TutorialStep3];
-            break;
-            
-        case TutorialStep3:
-        {
-            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
-            
-            [self.tutorialManager dismissTutorial:^{
-                //Go to Receipt Breakdown view
-                [self viewReceiptButtonPressed:self.viewReceiptButton];
-            }];
-        }
-            break;
-    
-        default:
-            break;
     }
 }
 

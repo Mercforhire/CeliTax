@@ -8,6 +8,7 @@
 
 #import "HorizonalScrollBarView.h"
 #import "SelectionCollectionViewCell.h"
+#import "YIInnerShadowView.h"
 
 NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionViewCell";
 
@@ -169,19 +170,23 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
 
     UIColor *cellColor = [self.buttonColors objectAtIndex: indexPath.row];
 
-    [cell.selectionColorBox setBackgroundColor: cellColor];
-    [self.lookAndFeel applySlightlyDarkerBorderTo: cell.selectionColorBox];
-
     [cell.selectionLabel setText: [self.buttonNames objectAtIndex: indexPath.row]];
 
     if (indexPath.row == self.selectedButtonIndex)
     {
-        [self.lookAndFeel applyGrayBorderTo: cell.contentView];
-        cell.contentView.layer.borderWidth = 2;
+        [cell.shadowbackground setShadowMask:YIInnerShadowMaskAll];
+        [cell.shadowbackground setBackgroundColor:cellColor];
+        [cell.selectionColorBox setBackgroundColor: [UIColor whiteColor]];
+        [self.lookAndFeel applySlightlyDarkerBorderTo: cell.selectionColorBox];
+        [cell.selectionLabel setTextColor:[UIColor whiteColor]];
     }
     else
     {
-        cell.contentView.layer.borderWidth = 0;
+        [cell.shadowbackground setShadowMask:YIInnerShadowMaskNone];
+        [cell.shadowbackground setBackgroundColor:[UIColor whiteColor]];
+        [cell.selectionColorBox setBackgroundColor: cellColor];
+        [self.lookAndFeel applySlightlyDarkerBorderTo: cell.selectionColorBox];
+        [cell.selectionLabel setTextColor:[UIColor blackColor]];
     }
 
     return cell;

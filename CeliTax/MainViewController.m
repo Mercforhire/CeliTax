@@ -78,9 +78,6 @@ typedef enum : NSUInteger
 
 //Tutorials
 @property (nonatomic, strong) NSMutableArray *tutorials;
-@property (nonatomic) NSUInteger currentTutorialStep;
-
-@property (nonatomic) BOOL shouldDisplaySecondSetOfTutorials;
 
 @end
 
@@ -196,6 +193,12 @@ typedef enum : NSUInteger
     {
         self.currentlySelectedYear = [self.existingTaxYears firstObject];
     }
+    else
+    {
+        self.taxYearToAdd = @"2015";
+        
+        [self addTaxYear];
+    }
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -204,25 +207,25 @@ typedef enum : NSUInteger
     
     if (![self.tutorialManager hasTutorialBeenShown])
     {
-        [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+        [self setupTutorials];
         
-        if ([self.tutorialManager automaticallyShowTutorialNextTime])
+        // decide which set of tutorials to show based on self.tutorialManager.currentStep
+        if (self.tutorialManager.currentStep == 1)
         {
-            if (!self.shouldDisplaySecondSetOfTutorials)
-            {
-                [self setupTutorials];
-                
-                [self displayTutorialStep:0];
-            }
-            else
-            {
-                self.shouldDisplaySecondSetOfTutorials = NO;
-                
-                [self.tutorialManager setAutomaticallyShowTutorialNextTime];
-                
-                //go to Vault View
-                [super selectedMenuIndex:RootViewControllerVault];
-            }
+            [self displayTutorialStep:TutorialStep1];
+        }
+        else if (self.tutorialManager.currentStep == 8)
+        {
+            [self displayTutorialStep:TutorialStep8];
+        }
+        else if (self.tutorialManager.currentStep == 18)
+        {
+            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+            [self selectedMenuIndex:RootViewControllerVault];
+        }
+        else if (self.tutorialManager.currentStep == 21)
+        {
+            [self displayTutorialStep:TutorialStep21];
         }
     }
     else
@@ -566,8 +569,8 @@ typedef enum : NSUInteger
     TutorialStep4,
     TutorialStep5,
     TutorialStep6,
-    TutorialStep7,
-    TutorialStepsCount,
+    TutorialStep8,
+    TutorialStep21,
 } TutorialSteps;
 
 -(void)setupTutorials
@@ -578,7 +581,7 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep1 = [TutorialStep new];
     
-    tutorialStep1.text = NSLocalizedString(@"Welcome to CeliTax, the simple, easy to use tax tool designed specifically for Celiacs.\n\nWe make your Gluten Free (GF) tax claim easy!\n\nNo complicated spreadsheets, no paper receipts, no stress.", nil);
+    tutorialStep1.text = NSLocalizedString(@"Welcome to CeliTax, the simple, easy-to-use tax tool designed specifically for Celiacs.\n\nWe make claiming your Gluten Free (GF) tax claim easy!", nil);
     tutorialStep1.leftButtonTitle = NSLocalizedString(@"Skip", nil);
     tutorialStep1.rightButtonTitle = NSLocalizedString(@"Begin Tutorial", nil);
     
@@ -586,7 +589,7 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep2 = [TutorialStep new];
     
-    tutorialStep2.text = NSLocalizedString(@"Individuals diagnosed with Celiacs disease are entitled to a government tax claim based on the incremental difference between the cost of GF products and regular food items.", nil);
+    tutorialStep2.text = NSLocalizedString(@"Celiacs are entitled to claim the incremental cost difference between GF and regular food products as a medical expense.", nil);
     tutorialStep2.leftButtonTitle = NSLocalizedString(@"Back", nil);
     tutorialStep2.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
@@ -594,7 +597,7 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep3 = [TutorialStep new];
     
-    tutorialStep3.text = NSLocalizedString(@"CeliTax is here to simplify your life. You already have enough to worry about, taxes should not be one of them.", nil);
+    tutorialStep3.text = NSLocalizedString(@"CeliTax will help you organize all of your GF purchases during the year and calculate your tax claim for you!", nil);
     tutorialStep3.leftButtonTitle = NSLocalizedString(@"Back", nil);
     tutorialStep3.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
@@ -602,7 +605,7 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep4 = [TutorialStep new];
     
-    tutorialStep4.text = NSLocalizedString(@"Lets get started!", nil);
+    tutorialStep4.text = NSLocalizedString(@"Easily keep track of all your GF purchases throughout the year and automatically calculate your tax claim with one click!", nil);
     tutorialStep4.leftButtonTitle = NSLocalizedString(@"Back", nil);
     tutorialStep4.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
@@ -610,7 +613,7 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep5 = [TutorialStep new];
     
-    tutorialStep5.text = NSLocalizedString(@"CeliTax helps you organize your GF food purchases by allocating each item to a custom GF food category. No need for complex spreadsheets.", nil);
+    tutorialStep5.text = NSLocalizedString(@"Let's get started!", nil);
     tutorialStep5.leftButtonTitle = NSLocalizedString(@"Back", nil);
     tutorialStep5.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
@@ -618,24 +621,31 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep6 = [TutorialStep new];
     
-    tutorialStep6.text = NSLocalizedString(@"Quickly keep track of your GF spending throughout the year and automatically calculate your GF tax claim in one simple click!", nil);
+    tutorialStep6.text = NSLocalizedString(@"Categories will keep all of your GF purchases organized.", nil);
     tutorialStep6.leftButtonTitle = NSLocalizedString(@"Back", nil);
     tutorialStep6.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    tutorialStep6.pointsUp = NO;
+    tutorialStep6.highlightedItemRect = self.categoriesButton.frame;
     
     [self.tutorials addObject:tutorialStep6];
     
-    TutorialStep *tutorialStep7 = [TutorialStep new];
+    TutorialStep *tutorialStep8 = [TutorialStep new];
     
-    tutorialStep7.text = NSLocalizedString(@"Once you obtain your grocery receipt, simply take a photo of it and start allocating your GF purchases to your categories!", nil);
-    tutorialStep7.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep7.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    tutorialStep8.text = NSLocalizedString(@"After you shop, keep your receipt and take a photo with the app!", nil);
+    tutorialStep8.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep8.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    tutorialStep8.highlightedItemRect = self.cameraButton.frame;
+    tutorialStep8.pointsUp = NO;
     
-    tutorialStep7.highlightedItemRect = self.cameraButton.frame;
-    tutorialStep7.pointsUp = NO;
+    [self.tutorials addObject:tutorialStep8];
     
-    [self.tutorials addObject:tutorialStep7];
+    TutorialStep *tutorialStep21 = [TutorialStep new];
     
-    self.currentTutorialStep = TutorialStep1;
+    tutorialStep21.text = NSLocalizedString(@"That's all! Now you are ready to use CeliTax to stay organized all year long. The GF tax claim has never been so easy!", nil);
+    tutorialStep21.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep21.rightButtonTitle = NSLocalizedString(@"Done", nil);
+    
+    [self.tutorials addObject:tutorialStep21];
 }
 
 -(void)displayTutorialStep:(NSInteger)step
@@ -645,56 +655,71 @@ typedef enum : NSUInteger
         TutorialStep *tutorialStep = [self.tutorials objectAtIndex:step];
         
         [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
-        
-        self.currentTutorialStep = step;
     }
 }
 
 - (void) tutorialLeftSideButtonPressed
 {
-    switch (self.currentTutorialStep)
+    switch (self.tutorialManager.currentStep)
     {
-        case TutorialStep1:
-        {
-            [self.tutorialManager setTutorialsAsShown];
-            
-            //Close tutorial
-            [self.tutorialManager dismissTutorial:^{
-                
-                [self checkUpdate];
-                
-            }];
-        }
+        case 1:
+            self.tutorialManager.currentStep = 1;
+            [self.tutorialManager endTutorial];
+            [self checkUpdate];
             break;
             
-        case TutorialStep2:
+        case 2:
             //Go back to Step 1
+            self.tutorialManager.currentStep = 1;
             [self displayTutorialStep:TutorialStep1];
             break;
             
-        case TutorialStep3:
+        case 3:
             //Go back to Step 2
+            self.tutorialManager.currentStep = 2;
             [self displayTutorialStep:TutorialStep2];
             break;
             
-        case TutorialStep4:
+        case 4:
             //Go back to Step 3
+            self.tutorialManager.currentStep = 3;
             [self displayTutorialStep:TutorialStep3];
             break;
             
-        case TutorialStep5:
+        case 5:
             //Go back to Step 4
+            self.tutorialManager.currentStep = 4;
             [self displayTutorialStep:TutorialStep4];
             break;
             
-        case TutorialStep6:
+        case 6:
             //Go back to Step 5
+            self.tutorialManager.currentStep = 5;
             [self displayTutorialStep:TutorialStep5];
             break;
             
-        case TutorialStep7:
-            //Go back to Step 6
-            [self displayTutorialStep:TutorialStep6];
+        case 8:
+        {
+            //Go back to Step 7 in Add Category view
+            self.tutorialManager.currentStep = 7;
+            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+            [self.tutorialManager dismissTutorial:^{
+                [self addCatagoryPressed:nil];
+            }];
+        }
+            
+            break;
+            
+        case 21:
+        {
+            //Go back to Step 19 from My Account view
+            self.tutorialManager.currentStep = 19;
+            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+            [self.tutorialManager dismissTutorial:^{
+                [super selectedMenuIndex: RootViewControllerAccount];
+            }];
+        }
+            
             break;
             
         default:
@@ -704,50 +729,69 @@ typedef enum : NSUInteger
 
 - (void) tutorialRightSideButtonPressed
 {
-    switch (self.currentTutorialStep)
+    switch (self.tutorialManager.currentStep)
     {
-        case TutorialStep1:
+        case 1:
             //Go to Step 2
+            self.tutorialManager.currentStep = 2;
             [self displayTutorialStep:TutorialStep2];
             break;
             
-        case TutorialStep2:
+        case 2:
             //Go to Step 3
+            self.tutorialManager.currentStep = 3;
             [self displayTutorialStep:TutorialStep3];
             break;
             
-        case TutorialStep3:
+        case 3:
             //Go to Step 4
+            self.tutorialManager.currentStep = 4;
             [self displayTutorialStep:TutorialStep4];
             break;
             
-        case TutorialStep4:
+        case 4:
             //Go to Step 5
+            self.tutorialManager.currentStep = 5;
             [self displayTutorialStep:TutorialStep5];
             break;
             
-        case TutorialStep5:
+        case 5:
             //Go to Step 6
+            self.tutorialManager.currentStep = 6;
             [self displayTutorialStep:TutorialStep6];
             break;
             
-        case TutorialStep6:
-            //Go to Step 7
-            [self displayTutorialStep:TutorialStep7];
+        case 6:
+        {
+            //Go to Step 7 in a different View
+            self.tutorialManager.currentStep = 7;
+            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+            [self.tutorialManager dismissTutorial:^{
+                [self addCatagoryPressed:nil];
+            }];
+        }
+            
             break;
             
-        case TutorialStep7:
+        case 8:
         {
+            //Go to Step 9 in a Camera view
+            self.tutorialManager.currentStep = 9;
             [self.tutorialManager setAutomaticallyShowTutorialNextTime];
-            
             [self.tutorialManager dismissTutorial:^{
-                
-                self.shouldDisplaySecondSetOfTutorials = YES;
-                
-                //Go to Camera view
-                [self cameraButtonPressed:self.cameraButton];
-                
+                [self cameraButtonPressed:nil];
             }];
+        }
+            
+            break;
+            
+        case 21:
+        {
+            //Completes tutorial
+            self.tutorialManager.currentStep = 1;
+            
+            [self.tutorialManager endTutorial];
+            [self checkUpdate];
         }
             break;
             

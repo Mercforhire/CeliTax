@@ -11,8 +11,12 @@
 #import "LookAndFeel.h"
 #import "ViewControllerFactory.h"
 #import "TutorialBubble.h"
+#import "MainViewController.h"
+#import "CDRTranslucentSideBar.h"
 
 #define kTutorialsShownKey              @"TutorialsShown"
+
+#define kTransparancy                   0.0f
 
 @interface TutorialManager ()
 
@@ -48,6 +52,8 @@
         _lookAndFeel = lookAndFeel;
         
         _defaults = [NSUserDefaults standardUserDefaults];
+        
+        _currentStep = 1;
     }
     
     return self;
@@ -73,7 +79,7 @@
     self.tutorialBubbleView.leftButtonTitle = _currentTutorial.leftButtonTitle;
     self.tutorialBubbleView.rightButtonTitle =_currentTutorial.rightButtonTitle;
     
-    [self.tutorialBubbleView.closeButton addTarget:self action:@selector(exitTutorialPressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.tutorialBubbleView.closeButton addTarget:self action:@selector(endTutorial) forControlEvents:UIControlEventTouchUpInside];
     [self.tutorialBubbleView.leftButton addTarget:self action:@selector(leftSideButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.tutorialBubbleView.rightButton addTarget:self action:@selector(rightSideButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
@@ -251,7 +257,7 @@
             [self.maskView setUserInteractionEnabled:YES]; //blocks out interactions on self.viewController
             self.maskView.backgroundColor = [UIColor whiteColor];
             [self.maskView setOpaque:NO];
-            [self.maskView setAlpha:self.maskViewTop.alpha]; //fade to 0.8 later
+            [self.maskView setAlpha:self.maskViewTop.alpha]; //fade to kTransparancy later
             
             [currentWindow addSubview:self.maskView];
         }
@@ -271,14 +277,14 @@
                          
                          if (self.currentTutorial.highlightedItemRect.origin.x || self.currentTutorial.highlightedItemRect.origin.y)
                          {
-                             [self.maskViewBottom setAlpha:0.8];
-                             [self.maskViewLeft setAlpha:0.8];
-                             [self.maskViewRight setAlpha:0.8];
-                             [self.maskViewTop setAlpha:0.8];
+                             [self.maskViewBottom setAlpha:kTransparancy];
+                             [self.maskViewLeft setAlpha:kTransparancy];
+                             [self.maskViewRight setAlpha:kTransparancy];
+                             [self.maskViewTop setAlpha:kTransparancy];
                          }
                          else
                          {
-                             [self.maskView setAlpha:0.8];
+                             [self.maskView setAlpha:kTransparancy];
                          }
                      }
                      completion:^(BOOL finished)
@@ -320,8 +326,6 @@
 {
     if (self.automaticallyShowTutorial)
     {
-        self.automaticallyShowTutorial = NO;
-        
         return YES;
     }
     else
@@ -366,11 +370,26 @@
      }];
 }
 
--(void)exitTutorialPressed
+-(void)endTutorial
 {
     [self setTutorialsAsShown];
     
+    self.currentStep = 1;
+    
     [self dismissTutorial:nil];
+    
+    NSArray *viewControllersStack = self.navigationController.viewControllers;
+
+    id lastViewController = [viewControllersStack lastObject];
+    
+    // Already at Main View, do nothing
+    if ([lastViewController isKindOfClass:[MainViewController class]])
+    {
+        return;
+    }
+    
+    //Replace self.navigationController.viewControllers stack with a new MainViewController
+    [self.navigationController setViewControllers:[NSArray arrayWithObject:[self.factory createMainViewController]] animated:YES];
 }
 
 - (void) leftSideButtonPressed
@@ -388,6 +407,5 @@
         [self.delegate tutorialRightSideButtonPressed];
     }
 }
-
 
 @end

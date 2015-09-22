@@ -7,6 +7,7 @@
 //
 
 #import "BaseViewController.h"
+#import "TutorialManager.h"
 
 @interface BaseViewController ()
 
@@ -22,6 +23,11 @@
     UIBarButtonItem *item = [[UIBarButtonItem alloc] init];
     item.title = @"";
     self.navigationItem.backBarButtonItem = item;
+    
+    if (!self.tutorialManager.navigationController)
+    {
+        self.tutorialManager.navigationController = self.navigationController;
+    }
 }
 
 @end

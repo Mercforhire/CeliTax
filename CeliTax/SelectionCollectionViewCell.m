@@ -13,6 +13,8 @@
 - (void) awakeFromNib
 {
     // Initialization code
+    self.shadowbackground.shadowRadius = 2;
+    self.shadowbackground.shadowMask = YIInnerShadowMaskNone;
 }
 
 @end

@@ -29,7 +29,7 @@
     if (self = [super initWithNibName: nibNameOrNil bundle: nibBundleOrNil])
     {
         // Custom initialization
-        self.viewSize = CGSizeMake(272, 280);
+        self.viewSize = CGSizeMake(272, 160);
     }
 
     return self;

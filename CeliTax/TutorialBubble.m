@@ -142,6 +142,7 @@
     }
     
     self.bubbleView.layer.cornerRadius = 3.0f;
+    [self.bubbleView setBackgroundColor:[UIColor colorWithRed:116.0f/255 green:191.0f/255 blue:81.0f/255 alpha:1]];
     
     self.leftButton.layer.cornerRadius = 2.0f;
     self.rightButton.layer.cornerRadius = 2.0f;

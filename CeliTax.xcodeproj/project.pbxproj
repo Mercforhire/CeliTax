@@ -172,6 +172,8 @@
 		85ACE4231B27F55A0041B7C5 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4151B27F55A0041B7C5 /* Lato-LightItalic.ttf */; };
 		85ACE4241B27F55A0041B7C5 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4161B27F55A0041B7C5 /* Lato-Regular.ttf */; };
 		85ACE4291B2801AD0041B7C5 /* USA_flag_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4271B2801AD0041B7C5 /* USA_flag_small.png */; };
+		85AF7E771BB11724000D73F9 /* YIInnerShadowLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AF7E741BB11724000D73F9 /* YIInnerShadowLayer.m */; };
+		85AF7E781BB11724000D73F9 /* YIInnerShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AF7E761BB11724000D73F9 /* YIInnerShadowView.m */; };
 		85B114FF1B5CAE9C00C01DC3 /* CatagoryBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B114FE1B5CAE9C00C01DC3 /* CatagoryBuilder.m */; };
 		85B115021B5CAEA700C01DC3 /* RecordBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B115011B5CAEA700C01DC3 /* RecordBuilder.m */; };
 		85B115051B5CAEB200C01DC3 /* ReceiptBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B115041B5CAEB200C01DC3 /* ReceiptBuilder.m */; };
@@ -470,6 +472,10 @@
 		85ACE4151B27F55A0041B7C5 /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
 		85ACE4161B27F55A0041B7C5 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
 		85ACE4271B2801AD0041B7C5 /* USA_flag_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = USA_flag_small.png; sourceTree = "<group>"; };
+		85AF7E731BB11724000D73F9 /* YIInnerShadowLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YIInnerShadowLayer.h; sourceTree = "<group>"; };
+		85AF7E741BB11724000D73F9 /* YIInnerShadowLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YIInnerShadowLayer.m; sourceTree = "<group>"; };
+		85AF7E751BB11724000D73F9 /* YIInnerShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YIInnerShadowView.h; sourceTree = "<group>"; };
+		85AF7E761BB11724000D73F9 /* YIInnerShadowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YIInnerShadowView.m; sourceTree = "<group>"; };
 		85B114FD1B5CAE9C00C01DC3 /* CatagoryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatagoryBuilder.h; sourceTree = "<group>"; };
 		85B114FE1B5CAE9C00C01DC3 /* CatagoryBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CatagoryBuilder.m; sourceTree = "<group>"; };
 		85B115001B5CAEA700C01DC3 /* RecordBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordBuilder.h; sourceTree = "<group>"; };
@@ -1255,6 +1261,7 @@
 		85A8CAEB1AF071FC0023504D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				85AF7E721BB11717000D73F9 /* YIInnerShadowView */,
 				854AC6E51B7D94B700F0D91D /* Year Summary Table Cell */,
 				85C54B861B6736D300120961 /* ProfileBar View */,
 				856538441B608AAB00915A2E /* Button */,
@@ -1423,6 +1430,17 @@
 			);
 			name = Fonts;
 			path = LatoFont/Source/Fonts;
+			sourceTree = "<group>";
+		};
+		85AF7E721BB11717000D73F9 /* YIInnerShadowView */ = {
+			isa = PBXGroup;
+			children = (
+				85AF7E731BB11724000D73F9 /* YIInnerShadowLayer.h */,
+				85AF7E741BB11724000D73F9 /* YIInnerShadowLayer.m */,
+				85AF7E751BB11724000D73F9 /* YIInnerShadowView.h */,
+				85AF7E761BB11724000D73F9 /* YIInnerShadowView.m */,
+			);
+			name = YIInnerShadowView;
 			sourceTree = "<group>";
 		};
 		85B114FC1B5CADF500C01DC3 /* Builders */ = {
@@ -1765,6 +1783,7 @@
 				85FD2BE51B575C95006E907C /* TaxYear.m in Sources */,
 				85A8CAC71AF069EA0023504D /* AppDelegate.m in Sources */,
 				8562739A1B1B782600EECA26 /* PasswordRecoverySentViewController.m in Sources */,
+				85AF7E771BB11724000D73F9 /* YIInnerShadowLayer.m in Sources */,
 				85547BF71AF2FB0500D9E1CE /* ViewControllerFactory.m in Sources */,
 				8581E2921B2E6AD3006CB6F6 /* SelectionsPickerTableViewCell.m in Sources */,
 				85C54B851B65A82500120961 /* ProfileBarView.m in Sources */,
@@ -1782,6 +1801,7 @@
 				8539F5E91B2C89AB0077F49C /* SelectionCollectionViewCell.m in Sources */,
 				85560FE81B01B82A004D2963 /* SelectionsPickerViewController.m in Sources */,
 				8555E0CE1B080DAD00B91138 /* ImageCounterIconView.m in Sources */,
+				85AF7E781BB11724000D73F9 /* YIInnerShadowView.m in Sources */,
 				8556E3271AF41BFA003CCDD2 /* MainViewController.m in Sources */,
 				855BD2CB1B267029001ACBB2 /* SendReceiptsToViewController.m in Sources */,
 				85BE69C71B7E6F4A004C24A2 /* YearSavingViewController.m in Sources */,

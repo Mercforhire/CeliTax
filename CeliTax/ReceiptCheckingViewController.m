@@ -35,6 +35,7 @@
 #import "WYPopoverController.h"
 #import "TutorialManager.h"
 #import "TutorialStep.h"
+#import "MainViewController.h"
 
 NSString *ReceiptItemCellIdentifier = @"ReceiptItemCellIdentifier";
 NSString *ReceiptEditModeTableViewCellIdentifier = @"ReceiptEditModeTableViewCellIdentifier";
@@ -113,9 +114,6 @@ typedef enum : NSUInteger
 
 //Tutorials
 @property (nonatomic, strong) NSMutableArray *tutorials;
-@property (nonatomic) NSUInteger currentTutorialStep;
-
-@property (nonatomic) BOOL shouldDisplaySecondSetOfTutorials;
 
 @end
 
@@ -243,77 +241,127 @@ typedef enum : NSUInteger
                                                  name: UIKeyboardWillHideNotification
                                                object: nil];
 
-    // load the receipt images for this receipt
-    Receipt *receipt = [self.dataService fetchReceiptForReceiptID: self.receiptID];
-    
-    self.receipt = receipt;
-
-    // load all the catagories
-    NSArray *catagories = [self.dataService fetchCatagories];
-    
-    self.catagories = catagories;
-    
-    [self refreshButtonBar];
-
-    // load catagory records for this receipt
-    NSArray *records = [self.dataService fetchRecordsForReceiptID: self.receiptID];
-    
-    [self populateRecordsDictionaryUsing: records];
-    
-    [self refreshRecordsCounter];
-    
-    NSMutableArray *filenamesToDownload = [NSMutableArray new];
-    
-    // load images from this receipt
-    
-    self.receiptImages = [NSMutableArray new];
-    
-    for (int i = 0; i < self.receipt.fileNames.count; i++)
+    if (self.receiptID)
     {
-        UIImage *image = [Utils readImageWithFileName: self.receipt.fileNames[i] forUser: self.userManager.user.userKey];
+        // load the receipt images for this receipt
+        Receipt *receipt = [self.dataService fetchReceiptForReceiptID: self.receiptID];
         
-        if (image)
+        self.receipt = receipt;
+        
+        // load all the catagories
+        NSArray *catagories = [self.dataService fetchCatagories];
+        
+        self.catagories = catagories;
+        
+        [self refreshButtonBar];
+        
+        // load catagory records for this receipt
+        NSArray *records = [self.dataService fetchRecordsForReceiptID: self.receiptID];
+        
+        [self populateRecordsDictionaryUsing: records];
+        
+        [self refreshRecordsCounter];
+        
+        NSMutableArray *filenamesToDownload = [NSMutableArray new];
+        
+        // load images from this receipt
+        
+        self.receiptImages = [NSMutableArray new];
+        
+        for (int i = 0; i < self.receipt.fileNames.count; i++)
         {
-            [self.receiptImages addObject: image];
+            UIImage *image = [Utils readImageWithFileName: self.receipt.fileNames[i] forUser: self.userManager.user.userKey];
+            
+            if (image)
+            {
+                [self.receiptImages addObject: image];
+            }
+            else
+            {
+                //need to download the image
+                [filenamesToDownload addObject: self.receipt.fileNames[i]];
+            }
+        }
+        
+        if (filenamesToDownload.count)
+        {
+            //start download progress
+            [self createAndShowWaitViewForDownload];
+            
+            [self.syncManager startDownloadPhotos:filenamesToDownload success:^{
+                
+                [self loadReceiptImages];
+                
+                [self.editReceiptTable reloadData];
+                
+                [self hideWaitingView];
+                
+            } failure:^(NSArray *filesnamesFailedToDownload) {
+                
+                [self hideWaitingView];
+                
+                UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)
+                                                                  message:NSLocalizedString(@"Failed to download the receipt image(s) for this receipt. Please try again later.", nil)
+                                                                 delegate:nil
+                                                        cancelButtonTitle:nil
+                                                        otherButtonTitles:NSLocalizedString(@"Dismiss", nil),nil];
+                
+                [message show];
+                
+            }];
         }
         else
         {
-            //need to download the image
-            [filenamesToDownload addObject: self.receipt.fileNames[i]];
+            [self.receiptScrollView setImages: self.receiptImages];
+            [self.editReceiptTable reloadData];
         }
     }
-    
-    if (filenamesToDownload.count)
-    {
-        //start download progress
-        [self createAndShowWaitViewForDownload];
-        
-        [self.syncManager startDownloadPhotos:filenamesToDownload success:^{
-            
-            [self loadReceiptImages];
-            
-            [self.editReceiptTable reloadData];
-            
-            [self hideWaitingView];
-            
-        } failure:^(NSArray *filesnamesFailedToDownload) {
-            
-            [self hideWaitingView];
-            
-            UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)
-                                                              message:NSLocalizedString(@"Failed to download the receipt image(s) for this receipt. Please try again later.", nil)
-                                                             delegate:nil
-                                                    cancelButtonTitle:nil
-                                                    otherButtonTitles:NSLocalizedString(@"Dismiss", nil),nil];
-            
-            [message show];
-            
-        }];
-    }
+    // demo mode
     else
     {
+        // add fake categories
+        Catagory *sampleCategory1 = [Catagory new];
+        sampleCategory1.name = @"Rice";
+        sampleCategory1.color = [UIColor yellowColor];
+        sampleCategory1.localID = @"1";
+        
+        Catagory *sampleCategory2 = [Catagory new];
+        sampleCategory2.name = @"Bread";
+        sampleCategory2.color = [UIColor orangeColor];
+        sampleCategory2.localID = @"2";
+        
+        Catagory *sampleCategory3 = [Catagory new];
+        sampleCategory3.name = @"Meat";
+        sampleCategory3.color = [UIColor redColor];
+        sampleCategory3.localID = @"3";
+        
+        Catagory *sampleCategory4 = [Catagory new];
+        sampleCategory4.name = @"Flour";
+        sampleCategory4.color = [UIColor lightGrayColor];
+        sampleCategory4.localID = @"4";
+        
+        Catagory *sampleCategory5 = [Catagory new];
+        sampleCategory5.name = @"Cake";
+        sampleCategory5.color = [UIColor purpleColor];
+        sampleCategory5.localID = @"5";
+        
+        self.catagories = [[NSArray alloc] initWithObjects:sampleCategory1, sampleCategory2, sampleCategory3, sampleCategory4, sampleCategory5, nil];
+        
+        [self refreshButtonBar];
+        
+        // add fake receipt images
+        
+        UIImage *testImage1 = [UIImage imageNamed: @"ReceiptPic-1.jpg"];
+        UIImage *testImage2 = [UIImage imageNamed: @"ReceiptPic-2.jpg"];
+        
+        self.receiptImages = [[NSMutableArray alloc] initWithObjects:testImage1, testImage2, nil];
+        
         [self.receiptScrollView setImages: self.receiptImages];
         [self.editReceiptTable reloadData];
+        
+        // add fake records (not yet)
+        
+        [self refreshRecordsCounter];
     }
 }
 
@@ -340,20 +388,14 @@ typedef enum : NSUInteger
         [self.imperialUnitPickerViewController setDelegate: self];
     }
     
-    if (![self.tutorialManager hasTutorialBeenShown])
+    if (![self.tutorialManager hasTutorialBeenShown] && [self.tutorialManager automaticallyShowTutorialNextTime])
     {
-        if ([self.tutorialManager automaticallyShowTutorialNextTime])
+        [self setupTutorials];
+        
+        // decide which set of tutorials to show based on self.tutorialManager.currentStep
+        if (self.tutorialManager.currentStep == 11)
         {
-            if (!self.shouldDisplaySecondSetOfTutorials)
-            {
-                [self setupTutorials];
-            }
-            else
-            {
-                [self setupTutorialsForSecondSet];
-            }
-            
-            [self displayTutorialStep:0];
+            [self displayTutorialStep:TutorialStep11];
         }
     }
 }
@@ -1413,84 +1455,14 @@ typedef enum : NSUInteger
 
 typedef enum : NSUInteger
 {
-    TutorialStep1,
-    TutorialStep2,
-    TutorialStep3,
-    TutorialStep4,
-    TutorialStep5,
-    TutorialStep6,
-    TutorialStep7,
-    TutorialStepsCount,
+    TutorialStep11,
+    TutorialStep12,
+    TutorialStep13,
+    TutorialStep14,
+    TutorialStep15,
+    TutorialStep16,
+    TutorialStep17
 } TutorialSteps;
-
--(void)setupTutorialsForItemControlsContainer
-{
-    if (self.tutorials.count > 2)
-    {
-        return;
-    }
-    
-    TutorialStep *tutorialStep3 = [TutorialStep new];
-    
-    tutorialStep3.text = NSLocalizedString(@"Enter the total number of items purchased and the cost of each item for each selected GF category.", nil);
-    tutorialStep3.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep3.rightButtonTitle = NSLocalizedString(@"Continue", nil);
-    tutorialStep3.highlightedItemRect = self.itemControlsContainer.frame;
-    tutorialStep3.pointsUp = NO;
-    
-    [self.tutorials addObject:tutorialStep3];
-    
-    TutorialStep *tutorialStep4 = [TutorialStep new];
-    
-    tutorialStep4.text = NSLocalizedString(@"Click “Add” to add a new purchase to the selected GF category", nil);
-    tutorialStep4.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep4.rightButtonTitle = NSLocalizedString(@"Continue", nil);
-    
-    CGRect addButtonFrame = self.addOrEditItemButton.frame;
-    
-    addButtonFrame.origin.x += self.itemControlsContainer.frame.origin.x;
-    addButtonFrame.origin.y += self.itemControlsContainer.frame.origin.y;
-    
-    tutorialStep4.highlightedItemRect = addButtonFrame;
-    tutorialStep4.pointsUp = NO;
-    
-    [self.tutorials addObject:tutorialStep4];
-    
-    TutorialStep *tutorialStep5 = [TutorialStep new];
-    
-    tutorialStep5.text = NSLocalizedString(@"Scroll between purchases allocated in a GF category to edit or review an allocation.", nil);
-    tutorialStep5.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep5.rightButtonTitle = NSLocalizedString(@"Continue", nil);
-    
-    CGRect leftAndRightButtonsFrame = self.previousItemButton.frame;
-    
-    leftAndRightButtonsFrame.origin.x += self.itemControlsContainer.frame.origin.x;
-    leftAndRightButtonsFrame.origin.y += self.itemControlsContainer.frame.origin.y;
-    leftAndRightButtonsFrame.size.width += self.nextItemButton.frame.origin.x - self.previousItemButton.frame.origin.x ;
-    
-    tutorialStep5.highlightedItemRect = leftAndRightButtonsFrame;
-    tutorialStep5.pointsUp = NO;
-    
-    [self.tutorials addObject:tutorialStep5];
-    
-    TutorialStep *tutorialStep6 = [TutorialStep new];
-    
-    tutorialStep6.text = NSLocalizedString(@"Repeat this process for every GF purchase on your receipt, selecting the appropriate GF category to allocate items to.", nil);
-    tutorialStep6.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep6.rightButtonTitle = NSLocalizedString(@"Continue", nil);
-    
-    [self.tutorials addObject:tutorialStep6];
-    
-    TutorialStep *tutorialStep7 = [TutorialStep new];
-    
-    tutorialStep7.text = NSLocalizedString(@"Click the receipt breakdown icon to view items that have been allocated to the receipt.", nil);
-    tutorialStep7.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep7.rightButtonTitle = NSLocalizedString(@"Continue", nil);
-    tutorialStep7.pointsUp = YES;
-    tutorialStep7.highlightedItemRect = [Utils returnRectBiggerThan:self.recordsCounter.frame by: 3];
-    
-    [self.tutorials addObject:tutorialStep7];
-}
 
 -(void)setupTutorials
 {
@@ -1498,67 +1470,93 @@ typedef enum : NSUInteger
     
     self.tutorials = [NSMutableArray new];
     
-    TutorialStep *tutorialStep1 = [TutorialStep new];
+    TutorialStep *tutorialStep11 = [TutorialStep new];
     
-    tutorialStep1.text = NSLocalizedString(@"This is where you will allocate your receipt purchases to your custom GF categories.", nil);
-    tutorialStep1.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    tutorialStep11.text = NSLocalizedString(@"To allocate your GF purchases, scroll through your GF categories or click \"+\" to create one.", nil);
+    tutorialStep11.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep11.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    tutorialStep11.pointsUp = NO;
+    tutorialStep11.highlightedItemRect = self.categoriesBar.frame;
     
-    [self.tutorials addObject:tutorialStep1];
+    [self.tutorials addObject:tutorialStep11];
     
-    TutorialStep *tutorialStep2 = [TutorialStep new];
+    TutorialStep *tutorialStep12 = [TutorialStep new];
     
-    tutorialStep2.text = NSLocalizedString(@"Scroll through your GF categories or click the “+” to add a new one and begin allocating.", nil);
-    tutorialStep2.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep2.rightButtonTitle = NSLocalizedString(@"Continue", nil);
-    tutorialStep2.pointsUp = NO;
-    tutorialStep2.highlightedItemRect = self.categoriesBar.frame;
+    tutorialStep12.text = NSLocalizedString(@"Enter the total number and cost of each GF item purchased for each GF category.", nil);
+    tutorialStep12.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep12.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    tutorialStep12.pointsUp = NO;
+    tutorialStep12.highlightedItemRect = self.itemControlsContainer.frame;
     
-    [self.tutorials addObject:tutorialStep2];
+    [self.tutorials addObject:tutorialStep12];
     
-    self.currentTutorialStep = TutorialStep1;
-}
-
--(void)setupTutorialsForSecondSet
-{
-    [self.tutorialManager setDelegate:self];
+    TutorialStep *tutorialStep13 = [TutorialStep new];
     
-    self.tutorials = [NSMutableArray new];
+    tutorialStep13.text = NSLocalizedString(@"After you add an item, use the \"< >\" to navigate between items allocated to that category.", nil);
+    tutorialStep13.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep13.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    tutorialStep13.pointsUp = NO;
     
-    TutorialStep *tutorialStep1 = [TutorialStep new];
+    CGRect leftAndRightButtonsFrame = self.previousItemButton.frame;
     
-    tutorialStep1.text = NSLocalizedString(@"Need to allocate a purchase based on weight? Click and hold a GF category to bring up various units to choose from. Allocate purchases as usual. *You can switch between metric/imperial in Settings.", nil);
-    tutorialStep1.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    leftAndRightButtonsFrame.origin.x += self.itemControlsContainer.frame.origin.x;
+    leftAndRightButtonsFrame.origin.y += self.itemControlsContainer.frame.origin.y;
+    leftAndRightButtonsFrame.size.width += self.nextItemButton.frame.origin.x - self.previousItemButton.frame.origin.x ;
     
-    [self.tutorials addObject:tutorialStep1];
+    tutorialStep13.highlightedItemRect = leftAndRightButtonsFrame;
     
-    TutorialStep *tutorialStep2 = [TutorialStep new];
+    [self.tutorials addObject:tutorialStep13];
     
-    tutorialStep2.text = NSLocalizedString(@"Forgot to capture the whole receipt? Click ”Edit” and the Camera Icon to add more photos", nil);
-    tutorialStep2.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep2.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    TutorialStep *tutorialStep14 = [TutorialStep new];
     
-    [self.tutorials addObject:tutorialStep2];
+    tutorialStep14.text = NSLocalizedString(@"Need to allocate a GF purchase based on weight/volume? Simply click and hold a category to view various units.", nil);
+    tutorialStep14.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep14.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    tutorialStep14.pointsUp = NO;
     
-    TutorialStep *tutorialStep3 = [TutorialStep new];
+    NSNumber *savedUnitSystem = [self.configurationManager getUnitSystem];
     
-    tutorialStep3.text = NSLocalizedString(@"Click “Edit” to manage each image captured. Delete or re-order images by touching and dragging the ≡ icon.", nil);
-    tutorialStep3.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep3.rightButtonTitle = NSLocalizedString(@"Continue", nil);
-    tutorialStep3.pointsUp = YES;
-    tutorialStep3.highlightedItemRect = [Utils returnRectBiggerThan:self.editReceiptsButton.frame by: 3];
+    if (!savedUnitSystem || savedUnitSystem.integerValue == UnitSystemMetric)
+    {
+        tutorialStep14.highlightedItemRect = CGRectMake(0, self.categoriesBar.frame.origin.y - self.metricUnitPickerViewController.viewSize.height - 30, 60, self.metricUnitPickerViewController.viewSize.height + 30);
+    }
+    else
+    {
+        tutorialStep14.highlightedItemRect = CGRectMake(0, self.categoriesBar.frame.origin.y - self.imperialUnitPickerViewController.viewSize.height - 30, 60, self.imperialUnitPickerViewController.viewSize.height + 30);
+    }
     
-    [self.tutorials addObject:tutorialStep3];
+    [self.tutorials addObject:tutorialStep14];
     
-    TutorialStep *tutorialStep4 = [TutorialStep new];
+    TutorialStep *tutorialStep15 = [TutorialStep new];
     
-    tutorialStep4.text = NSLocalizedString(@"When you are finished allocating, touch “Complete” to save and store your receipt to The Vault. The Vault is where all of your receipts are saved.", nil);
-    tutorialStep4.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep4.rightButtonTitle = NSLocalizedString(@"Continue", nil);
-    tutorialStep4.pointsUp = YES;
+    tutorialStep15.text = NSLocalizedString(@"Repeat this process until all of your GF purchases have been allocated from your receipt.", nil);
+    tutorialStep15.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep15.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
-    [self.tutorials addObject:tutorialStep4];
+    [self.tutorials addObject:tutorialStep15];
     
-    self.currentTutorialStep = TutorialStep1;
+    TutorialStep *tutorialStep16 = [TutorialStep new];
+    
+    tutorialStep16.text = NSLocalizedString(@"Click this icon to see a detailed breakdown of all items allocated to a receipt.", nil);
+    tutorialStep16.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep16.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    tutorialStep16.pointsUp = YES;
+    tutorialStep16.highlightedItemRect = CGRectMake(self.recordsCounter.frame.origin.x + 10,
+                                                    self.recordsCounter.frame.origin.y,
+                                                    self.recordsCounter.frame.size.width,
+                                                    self.recordsCounter.frame.size.height);
+    
+    [self.tutorials addObject:tutorialStep16];
+    
+    TutorialStep *tutorialStep17 = [TutorialStep new];
+    
+    tutorialStep17.text = NSLocalizedString(@"Once you complete your receipt, it is saved in the Vault.", nil);
+    tutorialStep17.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep17.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    tutorialStep17.pointsUp = YES;
+    tutorialStep17.highlightedItemRect = CGRectMake(self.view.frame.size.width - 80, 40, self.completeButton.frame.size.width, self.completeButton.frame.size.height);
+    
+    [self.tutorials addObject:tutorialStep17];
 }
 
 -(void)displayTutorialStep:(NSInteger)step
@@ -1568,255 +1566,247 @@ typedef enum : NSUInteger
         TutorialStep *tutorialStep = [self.tutorials objectAtIndex:step];
         
         [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
-        
-        self.currentTutorialStep = step;
     }
 }
 
 - (void) tutorialLeftSideButtonPressed
 {
-    if (!self.shouldDisplaySecondSetOfTutorials)
+    switch (self.tutorialManager.currentStep)
     {
-        switch (self.currentTutorialStep)
+        case 11:
         {
-            case TutorialStep2:
-                //Go back to Step 1
-                [self displayTutorialStep:TutorialStep1];
-                break;
-                
-            case TutorialStep3:
-                //Go back to Step 2
-                [self displayTutorialStep:TutorialStep2];
-                break;
-                
-            case TutorialStep4:
-                //Go back to Step 3
-                [self displayTutorialStep:TutorialStep3];
-                break;
-                
-            case TutorialStep5:
-                //Go back to Step 4
-                [self displayTutorialStep:TutorialStep4];
-                break;
-                
-            case TutorialStep6:
-                //Go back to Step 5
-                [self displayTutorialStep:TutorialStep5];
-                break;
-                
-            case TutorialStep7:
-                //Go back to Step 6
-                [self displayTutorialStep:TutorialStep6];
-                break;
-                
-            default:
-                break;
+            //Go back to Step 9 in Camera view
+            self.tutorialManager.currentStep = 9;
+            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+            [self.tutorialManager dismissTutorial:^{
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
         }
-    }
-    else
-    {
-        switch (self.currentTutorialStep)
+            
+            break;
+            
+        case 12:
+            //Go back to Step 11
+            self.tutorialManager.currentStep = 11;
+            [self hideAddRecordControls];
+            [self displayTutorialStep:TutorialStep11];
+            break;
+            
+        case 13:
+            [self showAddRecordControls];
+            //Go back to Step 12
+            self.tutorialManager.currentStep = 12;
+            [self displayTutorialStep:TutorialStep12];
+            break;
+            
+        case 14:
         {
-            case TutorialStep2:
-                //Go back to Step 1
-                [self displayTutorialStep:TutorialStep1];
-                break;
+            //Go back to Step 13
+            [self.unitPickerPopoverController dismissPopoverAnimated:YES completion:^{
+                [self showAddRecordControls];
+                self.tutorialManager.currentStep = 13;
+                [self displayTutorialStep:TutorialStep13];
                 
-            case TutorialStep3:
-                //Go back to Step 2
-                [self displayTutorialStep:TutorialStep2];
-                break;
-                
-            case TutorialStep4:
-                //Go back to Step 3
-                [self displayTutorialStep:TutorialStep3];
-                break;
-                
-            default:
-                break;
+            }];
         }
+            break;
+            
+        case 15:
+        {
+            CGRect tinyRect = CGRectMake(self.categoriesBar.frame.origin.x + 20,
+                                         self.categoriesBar.frame.origin.y + 20 - 5,
+                                         1,
+                                         1);
+            
+            [self.unitPickerPopoverController presentPopoverFromRect: tinyRect
+                                                              inView: self.view
+                                            permittedArrowDirections: WYPopoverArrowDirectionDown
+                                                            animated: YES];
+            //Go back to Step 14
+            self.tutorialManager.currentStep = 14;
+            [self displayTutorialStep:TutorialStep14];
+        }
+            break;
+            
+        case 16:
+            //Go back to Step 15
+            self.tutorialManager.currentStep = 15;
+            [self displayTutorialStep:TutorialStep15];
+            break;
+            
+        case 17:
+            //Go back to Step 16
+            self.tutorialManager.currentStep = 16;
+            [self displayTutorialStep:TutorialStep15];
+            break;
+            
+        default:
+            break;
     }
 }
 
 - (void) tutorialRightSideButtonPressed
 {
-    if (!self.shouldDisplaySecondSetOfTutorials)
+    switch (self.tutorialManager.currentStep)
     {
-        switch (self.currentTutorialStep)
-        {
-            case TutorialStep1:
-                //Go to Step 2
-                [self displayTutorialStep:TutorialStep2];
-                
-                break;
-                
-            case TutorialStep2:
+        case 11:
+            // press on the first Category, add a sample Record, and go to Step 12
+            self.currentlySelectedCatagory = [self.catagories objectAtIndex: 0];
+            
+            self.currentlySelectedRecord = nil;
+            
+            [self showAddRecordControls];
+            
+            [self.view layoutIfNeeded];
+            
+            if (self.records.count == 0)
             {
-                self.currentlySelectedCatagory = [self.catagories objectAtIndex: 0];
+                //add one sample item to the Quantity and Price fields
+                ReceiptItemCell *itemCell = (ReceiptItemCell *)[self.receiptItemCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
                 
-                self.currentlySelectedRecord = nil;
+                [itemCell.qtyField setText:@"2"];
+                [itemCell.priceField setText:@"2.5"];
                 
-                [self showAddRecordControls];
+                self.tempQuantity = [itemCell.qtyField.text integerValue];
                 
-                [self.view layoutIfNeeded];
+                self.tempPricePerItemOrTotalCost = [itemCell.priceField.text floatValue];
                 
-                [self setupTutorialsForItemControlsContainer];
-                
-                //Go to Step 3
-                [self displayTutorialStep:TutorialStep3];
-            }
-                
-                break;
-                
-            case TutorialStep3:
-            {
-                // only add if there are currently none
-                if (self.records.count == 0)
+                if (!self.currentlySelectedRecord)
                 {
-                    //add one sample item to the Quantity and Price fields
-                    ReceiptItemCell *itemCell = (ReceiptItemCell *)[self.receiptItemCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+                    //saved the temp values to tempSavedDataForUnsavedRecordForEachCatagory
+                    NSMutableDictionary *savedValues = [NSMutableDictionary new];
                     
-                    [itemCell.qtyField setText:@"2"];
-                    [itemCell.priceField setText:@"2.5"];
+                    [savedValues setObject:[NSNumber numberWithInteger:self.tempQuantity] forKey:kTempQuantityTypeKey];
+                    [savedValues setObject:[NSNumber numberWithFloat:self.tempPricePerItemOrTotalCost] forKey:kTempPricePerItemOrTotalCostTypeKey];
+                    [savedValues setObject:[NSNumber numberWithInteger:self.tempUnitType] forKey:kTempUnitTypeKey];
                     
-                    self.tempQuantity = [itemCell.qtyField.text integerValue];
-                    
-                    self.tempPricePerItemOrTotalCost = [itemCell.priceField.text floatValue];
-                    
-                    if (!self.currentlySelectedRecord)
+                    [self.savedDataForUnsavedNewRecordInEachCatagory setObject:savedValues forKey:self.currentlySelectedCatagory.localID];
+                }
+            }
+            
+            self.tutorialManager.currentStep = 12;
+            [self displayTutorialStep:TutorialStep12];
+            
+            break;
+            
+        case 12:
+            //Add the previously entered fields and then go to Step 13
+            if (self.records.count == 0)
+            {
+                // add a fake record
+                Record *record = [Record new];
+                record.catagoryID = self.currentlySelectedCatagory.localID;
+                record.quantity = self.tempQuantity;
+                record.amount = self.tempPricePerItemOrTotalCost;
+                record.unitType = self.tempUnitType;
+                
+                // add that to self.records
+                NSMutableArray *recordsOfThisCatagory = [self.records objectForKey: self.currentlySelectedCatagory.localID];
+                
+                if (!recordsOfThisCatagory)
+                {
+                    recordsOfThisCatagory = [NSMutableArray new];
+                }
+                
+                [recordsOfThisCatagory addObject: record];
+                
+                [self.records setObject: recordsOfThisCatagory forKey: record.catagoryID];
+                
+                // delete the saved value for this catagory from tempSavedDataForUnsavedRecordForEachCatagory
+                [self.savedDataForUnsavedNewRecordInEachCatagory removeObjectForKey:self.currentlySelectedCatagory.localID];
+                
+                // calls the setter to refresh UI
+                self.recordsOfCurrentlySelectedCatagory = recordsOfThisCatagory;
+                
+                [self.receiptItemCollectionView reloadData];
+                
+                [self.receiptItemCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.recordsOfCurrentlySelectedCatagory.count inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+                
+                [self refreshRecordsCounter];
+                
+                self.currentlySelectedRecord = 0;
+            }
+            
+            self.tutorialManager.currentStep = 13;
+            [self displayTutorialStep:TutorialStep13];
+            break;
+            
+        case 13:
+            //Simulate a long hold press on first Category and go to Step 14
+            [self hideAddRecordControls];
+            
+            CGRect tinyRect = CGRectMake(self.categoriesBar.frame.origin.x + 20,
+                                         self.categoriesBar.frame.origin.y + 20 - 5,
+                                         1,
+                                         1);
+            
+            [self.unitPickerPopoverController presentPopoverFromRect: tinyRect
+                                                              inView: self.view
+                                            permittedArrowDirections: WYPopoverArrowDirectionDown
+                                                            animated: YES];
+            self.tutorialManager.currentStep = 14;
+            [self displayTutorialStep:TutorialStep14];
+            break;
+            
+        case 14:
+        {
+            // dismiss the previous pop up, add 2 more items to other catagories, and go to step 15
+            [self.unitPickerPopoverController dismissPopoverAnimated:YES completion:^{
+                
+                self.tutorialManager.currentStep = 15;
+                [self displayTutorialStep:TutorialStep15];
+                
+            }];
+        }
+            
+            break;
+            
+        case 15:
+            //Go to Step 16
+            self.tutorialManager.currentStep = 16;
+            [self displayTutorialStep:TutorialStep16];
+            break;
+            
+        case 16:
+            //Go to Step 17
+            self.tutorialManager.currentStep = 17;
+            [self displayTutorialStep:TutorialStep17];
+            break;
+            
+        case 17:
+        {
+            self.tutorialManager.currentStep = 18;
+            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+            [self.tutorialManager dismissTutorial:^{
+                
+                NSArray *viewControllersStack = self.navigationController.viewControllers;
+                
+                id mainViewController;
+                
+                for (UIViewController *viewController in viewControllersStack)
+                {
+                    if ([viewController isKindOfClass:[MainViewController class]])
                     {
-                        //saved the temp values to tempSavedDataForUnsavedRecordForEachCatagory
-                        NSMutableDictionary *savedValues = [NSMutableDictionary new];
+                        mainViewController = viewController;
                         
-                        [savedValues setObject:[NSNumber numberWithInteger:self.tempQuantity] forKey:kTempQuantityTypeKey];
-                        [savedValues setObject:[NSNumber numberWithFloat:self.tempPricePerItemOrTotalCost] forKey:kTempPricePerItemOrTotalCostTypeKey];
-                        [savedValues setObject:[NSNumber numberWithInteger:self.tempUnitType] forKey:kTempUnitTypeKey];
-                        
-                        [self.savedDataForUnsavedNewRecordInEachCatagory setObject:savedValues forKey:self.currentlySelectedCatagory.localID];
+                        break;
                     }
                 }
                 
-                //Go to Step 4
-                [self displayTutorialStep:TutorialStep4];
-            }
-                break;
-                
-            case TutorialStep4:
-                // only add if there are currently none
-                if (self.records.count == 0)
+                if (mainViewController)
                 {
-                    //press the Add Button for the user
-                    [self addOrEditRecordPressed:self.addOrEditItemButton];
+                    [self.navigationController popToViewController:mainViewController animated:YES];
                 }
-                
-                //Go to Step 5
-                [self displayTutorialStep:TutorialStep5];
-                break;
-                
-            case TutorialStep5:
-                //Go to Step 6
-                [self displayTutorialStep:TutorialStep6];
-                break;
-                
-            case TutorialStep6:
-            {
-                // add 2 more items to other catagories
-                if (self.records.count < 3 && self.catagories.count >= 3)
+                else
                 {
-                    Catagory *catagory1 = [self.catagories objectAtIndex:1];
-                    Catagory *catagory2 = [self.catagories objectAtIndex:2];
-                    
-                    NSArray *catagories = [NSArray arrayWithObjects:catagory1, catagory2, nil];
-                    
-                    for (Catagory *catagory in catagories)
-                    {
-                        NSString *newestRecordID = [self.manipulationService addRecordForCatagoryID:catagory.localID
-                                                                                       andReceiptID:self.receipt.localID
-                                                                                        forQuantity:2
-                                                                                             orUnit:UnitItem
-                                                                                          forAmount:2.5f
-                                                                                               save:YES];
-                        if (newestRecordID)
-                        {
-                            Record *record = [self.dataService fetchRecordForID: newestRecordID];
-                            
-                            // add that to self.records
-                            NSMutableArray *recordsOfThisCatagory = [self.records objectForKey: record.catagoryID];
-                            
-                            if (!recordsOfThisCatagory)
-                            {
-                                recordsOfThisCatagory = [NSMutableArray new];
-                            }
-                            
-                            [recordsOfThisCatagory addObject: record];
-                            
-                            [self.records setObject: recordsOfThisCatagory forKey: record.catagoryID];
-                            
-                            [self refreshRecordsCounter];
-                        }
-                    }
+                    [self.navigationController setViewControllers:[NSArray arrayWithObject:[self.viewControllerFactory createMainViewController]] animated:YES];
                 }
-                
-                //Go to Step 7
-                [self displayTutorialStep:TutorialStep7];
-            }
-                
-                break;
-                
-            case TutorialStep7:
-            {
-                [self.tutorialManager setAutomaticallyShowTutorialNextTime];
-                
-                [self.tutorialManager dismissTutorial:^{
-                    self.shouldDisplaySecondSetOfTutorials = YES;
-                    
-                    //Go to Receipt Breakdown view
-                    [self imageCounterIconClicked];
-                }];
-            }
-                break;
-                
-            default:
-                break;
+            }];
         }
-    }
-    else
-    {
-        switch (self.currentTutorialStep)
-        {
-            case TutorialStep1:
-                //Go to Step 2
-                [self displayTutorialStep:TutorialStep2];
-                
-                break;
-                
-            case TutorialStep2:
-                //Go to Step 3
-                [self displayTutorialStep:TutorialStep3];
-                
-                break;
-                
-            case TutorialStep3:
-                //Go to Step 4
-                [self displayTutorialStep:TutorialStep4];
-                
-                break;
-                
-            case TutorialStep4:
-            {
-                [self.tutorialManager setAutomaticallyShowTutorialNextTime];
-                
-                [self.tutorialManager dismissTutorial:^{
-                    //Go back to Main Screen and then Vault
-                    [self.navigationController popViewControllerAnimated: YES];
-                }];
-            }
-                
-                break;
-                
-            default:
-                break;
-        }
+            break;
+            
+        default:
+            break;
     }
 }
 

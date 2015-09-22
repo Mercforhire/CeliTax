@@ -23,12 +23,12 @@
 //NKOColorPickerView
 #import "NKOColorPickerView.h"
 
-CGFloat const NKOPickerViewGradientViewHeight           = 40.f;
-CGFloat const NKOPickerViewGradientTopMargin            = 20.f;
-CGFloat const NKOPickerViewDefaultMargin                = 10.f;
-CGFloat const NKOPickerViewBrightnessIndicatorWidth     = 16.f;
-CGFloat const NKOPickerViewBrightnessIndicatorHeight    = 48.f;
-CGFloat const NKOPickerViewCrossHairshWidthAndHeight    = 38.f;
+CGFloat const NKOPickerViewGradientViewHeight           = 0;
+CGFloat const NKOPickerViewGradientTopMargin            = 0;
+CGFloat const NKOPickerViewDefaultMargin                = 0;
+CGFloat const NKOPickerViewBrightnessIndicatorWidth     = 20.f;
+CGFloat const NKOPickerViewBrightnessIndicatorHeight    = 20.f;
+CGFloat const NKOPickerViewCrossHairshWidthAndHeight    = 30.f;
 
 @interface NKOColorPickerView() {
 	CGFloat currentBrightness;
@@ -92,6 +92,9 @@ CGFloat const NKOPickerViewCrossHairshWidthAndHeight    = 38.f;
     
     [self _updateBrightnessPosition];
     [self _updateCrosshairPosition];
+    
+    [self.gradientView setHidden:YES];
+    [self.brightnessIndicator setHidden:YES];
 }
 
 #pragma mark - Public methods
@@ -176,7 +179,8 @@ CGFloat const NKOPickerViewCrossHairshWidthAndHeight    = 38.f;
 - (void)_updateHueSatWithMovement:(CGPoint)position
 {
 	currentHue = (position.x - self.hueSatImage.frame.origin.x) / self.hueSatImage.frame.size.width;
-	currentSaturation = 1.0 -  (position.y - self.hueSatImage.frame.origin.y) / self.hueSatImage.frame.size.height;
+//	currentSaturation = 1.0 -  (position.y - self.hueSatImage.frame.origin.y) / self.hueSatImage.frame.size.height;
+    currentSaturation = 1.0;
     
 	UIColor *_tcolor = [UIColor colorWithHue:currentHue
                                   saturation:currentSaturation
@@ -231,10 +235,10 @@ CGFloat const NKOPickerViewCrossHairshWidthAndHeight    = 38.f;
         self.crossHairs.center = position;
 		[self _updateHueSatWithMovement:position];
 	}
-    else if (CGRectContainsPoint(self.gradientView.frame, position)) {
-        self.brightnessIndicator.center = CGPointMake(position.x, self.gradientView.center.y);
-		[self _updateBrightnessWithMovement:position];
-	}
+//    else if (CGRectContainsPoint(self.gradientView.frame, position)) {
+//        self.brightnessIndicator.center = CGPointMake(position.x, self.gradientView.center.y);
+//		[self _updateBrightnessWithMovement:position];
+//	}
 }
 
 #pragma mark - Lazy loading

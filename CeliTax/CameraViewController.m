@@ -72,7 +72,6 @@
 
 //Tutorials
 @property (nonatomic, strong) NSMutableArray *tutorials;
-@property (nonatomic) NSUInteger currentTutorialStep;
 
 @end
 
@@ -228,6 +227,14 @@
 {
     [super viewWillAppear: animated];
     
+    [self.navigationBarTitleImageContainer setHidden:YES];
+    
+    // Set white status bar
+    [self setNeedsStatusBarAppearanceUpdate];
+    
+    [self.navigationController.navigationBar setHidden: YES];
+    self.navigationItem.hidesBackButton = YES;
+    
     // start the camera
     [self.camera start];
     
@@ -256,13 +263,13 @@
 {
     [super viewDidAppear:animated];
     
-    if (![self.tutorialManager hasTutorialBeenShown])
+    if (![self.tutorialManager hasTutorialBeenShown] && [self.tutorialManager automaticallyShowTutorialNextTime])
     {
-        if ([self.tutorialManager automaticallyShowTutorialNextTime])
+        [self setupTutorials];
+        
+        if (self.tutorialManager.currentStep == 9)
         {
-            [self setupTutorials];
-            
-            [self displayTutorialStep:0];
+            [self displayTutorialStep:TutorialStep9];
         }
     }
 }
@@ -574,11 +581,8 @@
 
 typedef enum : NSUInteger
 {
-    TutorialStep1,
-    TutorialStep2,
-    TutorialStep3,
-    TutorialStep4,
-    TutorialStepsCount,
+    TutorialStep9,
+    TutorialStep10
 } TutorialSteps;
 
 -(void)setupTutorials
@@ -587,42 +591,25 @@ typedef enum : NSUInteger
     
     self.tutorials = [NSMutableArray new];
     
-    TutorialStep *tutorialStep1 = [TutorialStep new];
+    TutorialStep *tutorialStep9 = [TutorialStep new];
     
-    tutorialStep1.text = NSLocalizedString(@"Use the flash function when you have poor lighting. TIP: images always work better in well-lit environments!", nil);
-    tutorialStep1.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    tutorialStep9.text = NSLocalizedString(@"Use the crop feature to custom fit the photo to the size of your receipt.", nil);
+    tutorialStep9.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep9.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    tutorialStep9.pointsUp = NO;
+    tutorialStep9.highlightedItemRect = self.dragBarContainer.frame;
     
-    [self.tutorials addObject:tutorialStep1];
+    [self.tutorials addObject:tutorialStep9];
     
-    TutorialStep *tutorialStep2 = [TutorialStep new];
+    TutorialStep *tutorialStep10 = [TutorialStep new];
     
-    tutorialStep2.text = NSLocalizedString(@"Receipt too long? Take multiple photos to capture the entire receipt. The last photo taken is saved at the top of your screen. Drag it downward to help find out what is left of the receipt to capture.", nil);
-    tutorialStep2.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep2.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    tutorialStep10.text = NSLocalizedString(@"Receipt too long? Take multiple photos to capture the entire receipt. After a photo is taken, it can be used as a guide for your next photo by simply pulling down the green bar.", nil);
+    tutorialStep10.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep10.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    tutorialStep10.pointsUp = YES;
+    tutorialStep10.highlightedItemRect = self.dragBarContainer2.frame;
     
-    [self.tutorials addObject:tutorialStep2];
-    
-    TutorialStep *tutorialStep3 = [TutorialStep new];
-    
-    tutorialStep3.text = NSLocalizedString(@"Drag the bar up or down to capture the exact part of the receipt you need and crop accordingly.", nil);
-    tutorialStep3.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep3.rightButtonTitle = NSLocalizedString(@"Continue", nil);
-    tutorialStep3.highlightedItemRect = self.dragBarContainer.frame;
-    tutorialStep3.pointsUp = NO;
-    
-    [self.tutorials addObject:tutorialStep3];
-    
-    TutorialStep *tutorialStep4 = [TutorialStep new];
-    
-    tutorialStep4.text = NSLocalizedString(@"Click “Done” when all images have been captured.", nil);
-    tutorialStep4.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep4.rightButtonTitle = NSLocalizedString(@"Continue", nil);
-    tutorialStep4.pointsUp = NO;
-    tutorialStep4.highlightedItemRect = [Utils returnRectBiggerThan:self.continueButton.frame by: 5];
-    
-    [self.tutorials addObject:tutorialStep4];
-    
-    self.currentTutorialStep = TutorialStep1;
+    [self.tutorials addObject:tutorialStep10];
 }
 
 -(void)displayTutorialStep:(NSInteger)step
@@ -632,28 +619,30 @@ typedef enum : NSUInteger
         TutorialStep *tutorialStep = [self.tutorials objectAtIndex:step];
         
         [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
-        
-        self.currentTutorialStep = step;
     }
 }
 
 - (void) tutorialLeftSideButtonPressed
 {
-    switch (self.currentTutorialStep)
+    switch (self.tutorialManager.currentStep)
     {
-        case TutorialStep2:
-            //Go back to Step 1
-            [self displayTutorialStep:TutorialStep1];
+        case 9:
+        {
+            //Go back to Step 8 in Main view
+            self.tutorialManager.currentStep = 8;
+            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+            [self.tutorialManager dismissTutorial:^{
+                [self.navigationController.navigationBar setHidden: NO];
+                
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
+        }
             break;
             
-        case TutorialStep3:
-            //Go back to Step 2
-            [self displayTutorialStep:TutorialStep2];
-            break;
-            
-        case TutorialStep4:
-            //Go back to Step 3
-            [self displayTutorialStep:TutorialStep3];
+        case 10:
+            //Go back to Step 9
+            self.tutorialManager.currentStep = 9;
+            [self displayTutorialStep:TutorialStep9];
             break;
             
         default:
@@ -663,62 +652,48 @@ typedef enum : NSUInteger
 
 - (void) tutorialRightSideButtonPressed
 {
-    switch (self.currentTutorialStep)
+    switch (self.tutorialManager.currentStep)
     {
-        case TutorialStep1:
+        case 9:
         {
-            //Go to Step 2
-            [self displayTutorialStep:TutorialStep2];
+            //Go to Step 10
+            self.tutorialManager.currentStep = 10;
+            
+            if (!self.takenImageFilenames.count)
+            {
+                //Add some sample image
+                UIImage *testImage2 = [UIImage imageNamed: @"ReceiptPic-2.jpg"];
+                
+                [self.takenImageFilenames addObject: @"demo.jpg"];
+                
+                [self addImageToPreviousImageView:testImage2];
+                
+                [self.continueButton setEnabled:YES];
+                
+                [self.view setNeedsUpdateConstraints];
+            }
+            
+            [self displayTutorialStep:TutorialStep10];
         }
             break;
             
-        case TutorialStep2:
+        case 10:
         {
-            //Add some sample images
-            UIImage *testImage1 = [UIImage imageNamed: @"ReceiptPic-1.jpg"];
-            UIImage *testImage2 = [UIImage imageNamed: @"ReceiptPic-2.jpg"];
-            
-            NSString *fileName1 = [NSString stringWithFormat: @"Receipt-%@-%d", [Utils generateUniqueID], 1];
-            NSString *fileName2 = [NSString stringWithFormat: @"Receipt-%@-%d", [Utils generateUniqueID], 2];
-            
-            NSString *savedFilePath1 = [Utils saveImage: testImage1 withFilename: fileName1 forUser: self.userManager.user.userKey];
-            NSString *savedFilePath2 = [Utils saveImage: testImage2 withFilename: fileName2 forUser: self.userManager.user.userKey];
-            
-            DLog(@"Image saved to %@", savedFilePath1);
-            DLog(@"Image saved to %@", savedFilePath2);
-            
-            [self.takenImageFilenames addObject: fileName1];
-            [self.takenImageFilenames addObject: fileName2];
-            
-            [self addImageToPreviousImageView:testImage2];
-            
-            [self.continueButton setEnabled:YES];
-            
-            [self.view setNeedsUpdateConstraints];
-            
-            //Go to Step 3
-            [self displayTutorialStep:TutorialStep3];
-        }
-            break;
-            
-        case TutorialStep3:
-        {
-            //Go to Step 4
-            [self displayTutorialStep:TutorialStep4];
-        }
-            
-            break;
-            
-        case TutorialStep4:
-        {
+            //Go to Step 11 in Receipt Checking view without actually saving a receipt
+            self.tutorialManager.currentStep = 11;
             [self.tutorialManager setAutomaticallyShowTutorialNextTime];
             
+            [self.camera updateFlashMode: CameraFlashOff];
+            
+            ReceiptCheckingViewController *receiptCheckingViewController = [self.viewControllerFactory createReceiptCheckingViewControllerForReceiptID:nil cameFromReceiptBreakDownViewController:NO];
+            
             [self.tutorialManager dismissTutorial:^{
-                //Go to Receipt Overlay
-                [self continuePressed:self.continueButton];
+                [self.navigationController.navigationBar setHidden: NO];
+                
+                // push the new viewController
+                [self.navigationController pushViewController: receiptCheckingViewController animated: YES];
             }];
         }
-            
             break;
             
         default:

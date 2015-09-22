@@ -75,7 +75,6 @@
 
 //Tutorials
 @property (nonatomic, strong) NSMutableArray *tutorials;
-@property (nonatomic) NSUInteger currentTutorialStep;
 
 @end
 
@@ -203,10 +202,44 @@
     self.accountTableView.dataSource = self;
     self.accountTableView.delegate = self;
     
-    // load all Catagory
-    NSArray *catagories = [self.dataService fetchCatagories];
-    
-    self.catagories = catagories;
+    if (![self.tutorialManager hasTutorialBeenShown] && [self.tutorialManager automaticallyShowTutorialNextTime] )
+    {
+        //Create fake data
+        // add fake categories
+        Catagory *sampleCategory1 = [Catagory new];
+        sampleCategory1.name = @"Rice";
+        sampleCategory1.color = [UIColor yellowColor];
+        sampleCategory1.localID = @"1";
+        
+        Catagory *sampleCategory2 = [Catagory new];
+        sampleCategory2.name = @"Bread";
+        sampleCategory2.color = [UIColor orangeColor];
+        sampleCategory2.localID = @"2";
+        
+        Catagory *sampleCategory3 = [Catagory new];
+        sampleCategory3.name = @"Meat";
+        sampleCategory3.color = [UIColor redColor];
+        sampleCategory3.localID = @"3";
+        
+        Catagory *sampleCategory4 = [Catagory new];
+        sampleCategory4.name = @"Flour";
+        sampleCategory4.color = [UIColor lightGrayColor];
+        sampleCategory4.localID = @"4";
+        
+        Catagory *sampleCategory5 = [Catagory new];
+        sampleCategory5.name = @"Cake";
+        sampleCategory5.color = [UIColor purpleColor];
+        sampleCategory5.localID = @"5";
+        
+        self.catagories = [[NSArray alloc] initWithObjects:sampleCategory1, sampleCategory2, sampleCategory3, sampleCategory4, sampleCategory5, nil];
+    }
+    else
+    {
+        // load all Catagory
+        NSArray *catagories = [self.dataService fetchCatagories];
+        
+        self.catagories = catagories;
+    }
     
     [self refreshButtonBar];
     
@@ -470,13 +503,13 @@
 {
     [super viewDidAppear:animated];
     
-    if (![self.tutorialManager hasTutorialBeenShown])
+    if (![self.tutorialManager hasTutorialBeenShown] && [self.tutorialManager automaticallyShowTutorialNextTime] )
     {
-        if ([self.tutorialManager automaticallyShowTutorialNextTime])
+        [self setupTutorials];
+        
+        if (self.tutorialManager.currentStep == 19)
         {
-            [self setupTutorials];
-            
-            [self displayTutorialStep:0];
+            [self displayTutorialStep:TutorialStep19];
         }
     }
 }
@@ -1334,12 +1367,8 @@
 
 typedef enum : NSUInteger
 {
-    TutorialStep1,
-    TutorialStep2,
-    TutorialStep3,
-    TutorialStep4,
-    TutorialStep5,
-    TutorialStepsCount,
+    TutorialStep19,
+    TutorialStep20
 } TutorialSteps;
 
 -(void)setupTutorials
@@ -1348,59 +1377,32 @@ typedef enum : NSUInteger
     
     self.tutorials = [NSMutableArray new];
     
-    TutorialStep *tutorialStep1 = [TutorialStep new];
+    TutorialStep *tutorialStep19 = [TutorialStep new];
     
-    tutorialStep1.text = NSLocalizedString(@"In the My Account view, you can see a grand total of all GF purchases allocated to each of your categories.", nil);
-    tutorialStep1.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    tutorialStep19.text = NSLocalizedString(@"Calculating your GF tax claim is easy, just be sure to enter an average non-GF cost equivelant first for each category.", nil);
+    tutorialStep19.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep19.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
     CGRect tableRowsFrame = self.accountTableView.frame;
     
     tableRowsFrame.origin.y += self.pieChartContainer.frame.size.height;
     tableRowsFrame.size.height -= self.pieChartContainer.frame.size.height;
     
-    tutorialStep1.highlightedItemRect = tableRowsFrame;
-    tutorialStep1.pointsUp = NO;
+    tutorialStep19.highlightedItemRect = tableRowsFrame;
+    tutorialStep19.pointsUp = NO;
     
-    [self.tutorials addObject:tutorialStep1];
+    [self.tutorials addObject:tutorialStep19];
     
-    TutorialStep *tutorialStep2 = [TutorialStep new];
+    TutorialStep *tutorialStep20 = [TutorialStep new];
     
-    tutorialStep2.text = NSLocalizedString(@"For each GF category, you must input an Average Non-GF Cost per item which represents regular priced items of a similar non-gluten free item. You can click the ? for more information and suggested prices.", nil);
-    tutorialStep2.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep2.rightButtonTitle = NSLocalizedString(@"Continue", nil);
-    tutorialStep2.pointsUp = NO;
+    tutorialStep20.text = NSLocalizedString(@"Click calculate and we'll do the work for you!", nil);
+    tutorialStep20.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep20.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    tutorialStep20.pointsUp = NO;
     
-    tutorialStep2.highlightedItemRect = tableRowsFrame;
+    tutorialStep20.highlightedItemRect = [Utils returnRectBiggerThan:self.calculateButton.frame by: 3];;
     
-    [self.tutorials addObject:tutorialStep2];
-    
-    TutorialStep *tutorialStep3 = [TutorialStep new];
-    
-    tutorialStep3.text = NSLocalizedString(@"Once a cost is inputted for each GF category, simply click calculate to automatically determine your GF tax claim for the year!", nil);
-    tutorialStep3.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep3.rightButtonTitle = NSLocalizedString(@"Continue", nil);
-    tutorialStep3.pointsUp = NO;
-    tutorialStep3.highlightedItemRect = [Utils returnRectBiggerThan:self.calculateButton.frame by: 3];
-    
-    [self.tutorials addObject:tutorialStep3];
-    
-    TutorialStep *tutorialStep4 = [TutorialStep new];
-    
-    tutorialStep4.text = NSLocalizedString(@"You can even send your final claim and detailed report of all purchases to your email address in one easy step!", nil);
-    tutorialStep4.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep4.rightButtonTitle = NSLocalizedString(@"Continue", nil);
-    
-    [self.tutorials addObject:tutorialStep4];
-    
-    TutorialStep *tutorialStep5 = [TutorialStep new];
-    
-    tutorialStep5.text = NSLocalizedString(@"That’s it! We realize this was a lot of info but once you upload your first receipt you will see just how easy CeliTax is. You can re-visit the tutorial anytime in Help.", nil);
-    tutorialStep5.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep5.rightButtonTitle = NSLocalizedString(@"Done", nil);
-    
-    [self.tutorials addObject:tutorialStep5];
-    
-    self.currentTutorialStep = TutorialStep1;
+    [self.tutorials addObject:tutorialStep20];
 }
 
 -(void)displayTutorialStep:(NSInteger)step
@@ -1410,33 +1412,29 @@ typedef enum : NSUInteger
         TutorialStep *tutorialStep = [self.tutorials objectAtIndex:step];
         
         [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
-        
-        self.currentTutorialStep = step;
     }
 }
 
 - (void) tutorialLeftSideButtonPressed
 {
-    switch (self.currentTutorialStep)
+    switch (self.tutorialManager.currentStep)
     {
-        case TutorialStep2:
-            //Go back to Step 1
-            [self displayTutorialStep:TutorialStep1];
+        case 19:
+        {
+            //Go back to Step 18 in Vault
+            self.tutorialManager.currentStep = 18;
+            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+            [self.tutorialManager dismissTutorial:^{
+                [self selectedMenuIndex:RootViewControllerVault];
+            }];
+        }
+            
             break;
             
-        case TutorialStep3:
-            //Go back to Step 2
-            [self displayTutorialStep:TutorialStep2];
-            break;
-            
-        case TutorialStep4:
-            //Go back to Step 3
-            [self displayTutorialStep:TutorialStep3];
-            break;
-            
-        case TutorialStep5:
-            //Go back to Step 4
-            [self displayTutorialStep:TutorialStep4];
+        case 20:
+            //Go back to Step 19
+            self.tutorialManager.currentStep = 19;
+            [self displayTutorialStep:TutorialStep19];
             break;
             
         default:
@@ -1446,41 +1444,24 @@ typedef enum : NSUInteger
 
 - (void) tutorialRightSideButtonPressed
 {
-    switch (self.currentTutorialStep)
+    switch (self.tutorialManager.currentStep)
     {
-        case TutorialStep1:
-            //Go to Step 2
-            [self displayTutorialStep:TutorialStep2];
-            
+        case 19:
+            //Go to Step 20
+            self.tutorialManager.currentStep = 20;
+            [self displayTutorialStep:TutorialStep20];
             break;
             
-        case TutorialStep2:
-            //Go to Step 3
-            [self displayTutorialStep:TutorialStep3];
-            
-            break;
-            
-        case TutorialStep3:
-            //Go to Step 4
-            [self displayTutorialStep:TutorialStep4];
-            
-            break;
-            
-        case TutorialStep4:
-            //Go to Step 5
-            [self displayTutorialStep:TutorialStep5];
-            
-            break;
-            
-        case TutorialStep5:
+        case 20:
         {
-            [self.tutorialManager setTutorialsAsShown];
-            
+            //Go back to Main view
+            self.tutorialManager.currentStep = 21;
+            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
             [self.tutorialManager dismissTutorial:^{
-                //Go to Main View
-                [super selectedMenuIndex: RootViewControllerHome];
+                [self selectedMenuIndex:RootViewControllerHome];
             }];
         }
+            break;
             
         default:
             break;

@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YIInnerShadowView.h"
 
 @interface SelectionCollectionViewCell : UICollectionViewCell
 
+@property (weak, nonatomic) IBOutlet YIInnerShadowView *shadowbackground;
 @property (weak, nonatomic) IBOutlet UILabel *selectionLabel;
 @property (weak, nonatomic) IBOutlet UIView *selectionColorBox;
 

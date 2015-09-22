@@ -391,11 +391,6 @@
         return;
     }
     
-    if (self.downloading)
-    {
-        return;
-    }
-    
     self.downloading = YES;
     
     self.filenamesToDownload = filenames;

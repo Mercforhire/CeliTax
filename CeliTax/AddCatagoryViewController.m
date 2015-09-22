@@ -25,7 +25,7 @@
 #import "ConfigurationManager.h"
 #import "SolidGreenButton.h"
 
-@interface AddCatagoryViewController () <SelectionsPickerPopUpDelegate, ColorPickerViewPopUpDelegate, UIPopoverControllerDelegate, AllColorsPickerViewPopUpDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, PopUpViewControllerProtocol>
+@interface AddCatagoryViewController () <SelectionsPickerPopUpDelegate, ColorPickerViewPopUpDelegate, UIPopoverControllerDelegate, AllColorsPickerViewPopUpDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, PopUpViewControllerProtocol, TutorialManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIView *colorView;
@@ -67,6 +67,9 @@
 @property (nonatomic, strong) UIColor *colorBeingAddedOrEdited;
 
 @property (nonatomic, strong) NSString *nameOfCategoryBeingAddedOrEdited;
+
+//Tutorials
+@property (nonatomic, strong) NSMutableArray *tutorials;
 
 @end
 
@@ -164,8 +167,60 @@
     self.catagoriesTable.dataSource = self;
     self.catagoriesTable.delegate = self;
 
-    // load catagories
-    [self refreshCatagories];
+    if (![self.tutorialManager hasTutorialBeenShown] && [self.tutorialManager automaticallyShowTutorialNextTime])
+    {
+        self.catagories = [NSMutableArray new];
+        
+        Catagory *sampleCategory1 = [Catagory new];
+        sampleCategory1.name = @"Rice";
+        sampleCategory1.color = [UIColor yellowColor];
+        
+        [self.catagories addObject:sampleCategory1];
+        
+        Catagory *sampleCategory2 = [Catagory new];
+        sampleCategory2.name = @"Bread";
+        sampleCategory2.color = [UIColor orangeColor];
+        
+        [self.catagories addObject:sampleCategory2];
+        
+        Catagory *sampleCategory3 = [Catagory new];
+        sampleCategory3.name = @"Meat";
+        sampleCategory3.color = [UIColor redColor];
+        
+        [self.catagories addObject:sampleCategory3];
+        
+        Catagory *sampleCategory4 = [Catagory new];
+        sampleCategory4.name = @"Flour";
+        sampleCategory4.color = [UIColor lightGrayColor];
+        
+        [self.catagories addObject:sampleCategory4];
+        
+        Catagory *sampleCategory5 = [Catagory new];
+        sampleCategory5.name = @"Cake";
+        sampleCategory5.color = [UIColor purpleColor];
+        
+        [self.catagories addObject:sampleCategory5];
+        
+        for (Catagory *catagory in self.catagories)
+        {
+            [self.catagoryNames addObject:catagory.name];
+        }
+        
+        [self.catagoriesTable reloadData];
+        
+        [self setupTutorials];
+        
+        // decide which set of tutorials to show based on self.tutorialManager.currentStep
+        if (self.tutorialManager.currentStep == 7)
+        {
+            [self displayTutorialStep:TutorialStep7];
+        }
+    }
+    else
+    {
+        // load catagories
+        [self refreshCatagories];
+    }
 }
 
 - (void) viewWillAppear: (BOOL) animated
@@ -187,6 +242,17 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    if (![self.tutorialManager hasTutorialBeenShown] && [self.tutorialManager automaticallyShowTutorialNextTime])
+    {
+        [self setupTutorials];
+        
+        // decide which set of tutorials to show based on self.tutorialManager.currentStep
+        if (self.tutorialManager.currentStep == 7)
+        {
+            [self displayTutorialStep:TutorialStep7];
+        }
+    }
 }
 
 - (void) viewWillDisappear: (BOOL) animated
@@ -412,6 +478,7 @@
     self.modifyCatagoryViewController.delegate = self;
     
     self.modifyCatagoryPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.modifyCatagoryViewController];
+    [self.modifyCatagoryPickerPopover setPopoverContentSize: self.modifyCatagoryViewController.viewSize];
     
     [self setupWYPopoverControllerTheme:self.modifyCatagoryPickerPopover];
     
@@ -790,5 +857,78 @@
         }
     }
 }
+
+#pragma mark - Tutorial
+
+typedef enum : NSUInteger
+{
+    TutorialStep7
+} TutorialSteps;
+
+-(void)setupTutorials
+{
+    [self.tutorialManager setDelegate:self];
+    
+    self.tutorials = [NSMutableArray new];
+    
+    TutorialStep *tutorialStep7 = [TutorialStep new];
+    
+    tutorialStep7.text = NSLocalizedString(@"Select from pre-made GF \"categories\" or create your own!", nil);
+    tutorialStep7.leftButtonTitle = NSLocalizedString(@"Back", nil);
+    tutorialStep7.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    
+    [self.tutorials addObject:tutorialStep7];
+}
+
+-(void)displayTutorialStep:(NSInteger)step
+{
+    if (self.tutorials.count && step < self.tutorials.count)
+    {
+        TutorialStep *tutorialStep = [self.tutorials objectAtIndex:step];
+        
+        [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
+    }
+}
+
+- (void) tutorialLeftSideButtonPressed
+{
+    switch (self.tutorialManager.currentStep)
+    {
+        case 7:
+        {
+            //Go back to Step 1 in Main view
+            self.tutorialManager.currentStep = 1;
+            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+            [self.tutorialManager dismissTutorial:^{
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void) tutorialRightSideButtonPressed
+{
+    switch (self.tutorialManager.currentStep)
+    {
+        case 7:
+        {
+            //Go to Step 8 in Main view
+            self.tutorialManager.currentStep = 8;
+            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+            [self.tutorialManager dismissTutorial:^{
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
 
 @end

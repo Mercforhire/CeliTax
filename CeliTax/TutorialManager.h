@@ -24,12 +24,18 @@ typedef void (^TutorialDismissedBlock) ();
 
 @property (nonatomic, weak) id<TutorialManagerDelegate> delegate;
 
+@property (nonatomic, weak) UINavigationController *navigationController;
+
+@property (nonatomic) NSInteger currentStep;
+
 - (instancetype) initWithViewControllerFactory: (ViewControllerFactory *)factory
                                 andLookAndFeel: (LookAndFeel *)lookAndFeel;
 
 -(void)displayTutorialInViewController: (UIViewController *) viewController andTutorial:(TutorialStep *)tutorial;
 
 -(void)dismissTutorial:(TutorialDismissedBlock) dismissBlock;
+
+-(void)endTutorial;
 
 // after all Tutorials has been show, or skip was clicked, call this function
 -(void)setTutorialsAsShown;
