@@ -9,7 +9,6 @@
 #import "HelpScreenViewController.h"
 #import "AuthenticationService.h"
 #import "MBProgressHUD.h"
-#import "AlertDialogsProvider.h"
 #import "UIView+Helper.h"
 #import "HollowGreenButton.h"
 #import "TutorialManager.h"

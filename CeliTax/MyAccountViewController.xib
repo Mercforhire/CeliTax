@@ -50,17 +50,42 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <view opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sbg-3J-A3E" customClass="HorizonalScrollBarView">
-                    <rect key="frame" x="0.0" y="508" width="320" height="60"/>
+                    <rect key="frame" x="0.0" y="508" width="280" height="60"/>
                     <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="N9i-je-BWq"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fzd-vk-0wW">
+                    <rect key="frame" x="280" y="508" width="40" height="60"/>
+                    <color key="backgroundColor" white="1" alpha="0.69999999999999996" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="Vam-Cw-WIY"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="sp0-Xr-2iA"/>
+                        <constraint firstAttribute="width" constant="40" id="zdb-bZ-QWd"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                    <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="5" maxY="0.0"/>
+                    <state key="normal" title="+">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="sp0-Xr-2iA"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="addCatagoryPressed:" destination="-1" eventType="touchUpInside" id="FNl-9g-Jau"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="Sbg-3J-A3E" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9iO-SQ-fTq"/>
+                <constraint firstAttribute="bottom" secondItem="Fzd-vk-0wW" secondAttribute="bottom" id="AlQ-x7-RRo"/>
+                <constraint firstItem="Fzd-vk-0wW" firstAttribute="leading" secondItem="Sbg-3J-A3E" secondAttribute="trailing" id="JAL-ao-Z7S"/>
                 <constraint firstItem="J80-ck-6nT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="LER-fk-pnA"/>
+                <constraint firstAttribute="trailing" secondItem="Fzd-vk-0wW" secondAttribute="trailing" id="Lda-G9-cA0"/>
                 <constraint firstAttribute="bottom" secondItem="Sbg-3J-A3E" secondAttribute="bottom" id="Lo2-de-RGn"/>
                 <constraint firstItem="Sbg-3J-A3E" firstAttribute="top" secondItem="rR6-6D-WTS" secondAttribute="bottom" constant="10" id="NKf-Cx-Mw6"/>
                 <constraint firstItem="J80-ck-6nT" firstAttribute="top" secondItem="ABk-hm-JW1" secondAttribute="bottom" constant="8" id="RGI-k4-ZZk"/>
@@ -73,6 +98,11 @@
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="a6J-jd-FO0"/>
+                </mask>
+            </variation>
         </view>
     </objects>
 </document>

@@ -19,7 +19,7 @@
     @try {
         archive = [NSKeyedUnarchiver unarchiveObjectWithFile: path];
 
-        DLog(@"File read from path %@", path);
+//        DLog(@"File read from path %@", path);
     }
     @catch (NSException *exception)
     {
@@ -46,7 +46,7 @@
 
         [NSKeyedArchiver archiveRootObject: objectToArchive toFile: path];
 
-        DLog(@"File saved to %@", path);
+//        DLog(@"File saved to %@", path);
 
         return YES;
     }
@@ -171,7 +171,7 @@
     // get the NSData from UIIMage
     NSData *imageData = UIImageJPEGRepresentation(image, 0.9f);
     
-    DLog(@"Saving to file: %@", profileImageFilePath);
+//    DLog(@"Saving to file: %@", profileImageFilePath);
     
     [imageData writeToFile: profileImageFilePath atomically: YES];
 }
@@ -245,7 +245,7 @@
     NSData *imageData = UIImageJPEGRepresentation(image, 0.9f);
     [imageData writeToFile: imageFilePath atomically: YES];
 
-    DLog(@"Saving to file: %@", imageFilePath);
+//    DLog(@"Saving to file: %@", imageFilePath);
     
     return imageFilePath;
 }
@@ -348,7 +348,7 @@
 
 + (UIImage *) getCroppedImageUsingRect: (CGRect) cropRect forImage: (UIImage *) originalImage
 {
-    NSLog(@"original image orientation:%ld", (long)originalImage.imageOrientation);
+    DLog(@"Original image orientation:%ld", (long)originalImage.imageOrientation);
 
     CGAffineTransform rectTransform;
 
@@ -554,6 +554,15 @@
     slightBiggerRect.size.height += points * 2;
     
     return slightBiggerRect;
+}
+
++ (NSDate *) dateFromDateString:(NSString *)dateString
+{
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd"];
+    NSDate *expirationDate = [df dateFromString: dateString];
+    
+    return expirationDate;
 }
 
 @end

@@ -15,7 +15,6 @@
 #import "AuthorizeResult.h"
 #import "UserManager.h"
 #import "UIView+Helper.h"
-#import "AlertDialogsProvider.h"
 #import "User.h"
 #import "MainViewController.h"
 #import "PasswordRecoveryViewController.h"
@@ -81,19 +80,11 @@
     [self setupUI];
 
     self.emailField.delegate = self;
-    [self.emailField addTarget: self
-                        action: @selector(textFieldDidChange:)
-              forControlEvents: UIControlEventEditingChanged];
-
     self.passwordField.delegate = self;
-    [self.passwordField addTarget: self
-                           action: @selector(textFieldDidChange:)
-                 forControlEvents: UIControlEventEditingChanged];
 
     //TODO: Remove DEMO CODE
     self.emailField.text = @"leonchn84@gmail.com";
     self.passwordField.text = @"123456";
-    [self.loginButton setEnabled: YES];
 }
 
 - (void) viewWillAppear: (BOOL) animated
@@ -173,9 +164,28 @@
                             andLastname: authorizeResult.lastname
                              andCountry: authorizeResult.country];
          
-         [self.navigationController pushViewController: [self.viewControllerFactory createMainViewController] animated: YES];
-         
-         [self.loginButton setEnabled: YES];
+         [self.userManager updateUserSubscriptionExpiryDate:^{
+             
+             [self.navigationController pushViewController: [self.viewControllerFactory createMainViewController] animated: YES];
+             
+             [self.loginButton setEnabled: YES];
+             
+         } failure:^(NSString *reason) {
+             
+             [self.waitView hide: YES];
+             
+             NSString *errorMessage = NSLocalizedString(@"Can not connect to our server, please try again later", nil);
+             
+             UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
+                                                               message: errorMessage
+                                                              delegate: nil cancelButtonTitle: nil
+                                                     otherButtonTitles: NSLocalizedString(@"Dismiss", nil), nil];
+             
+             [message show];
+             
+             [self.loginButton setEnabled: YES];
+             
+         }];
          
      } failure: ^(AuthorizeResult *authorizeResult) {
          
@@ -210,12 +220,26 @@
 
 - (IBAction) loginPressed: (UIButton *) sender
 {
-    [self.loginButton setEnabled: NO];
-    [self.emailField resignFirstResponder];
-    [self.passwordField resignFirstResponder];
-
-    [self createAndShowWaitViewForLogin];
-    [self checkLogin];
+    if (self.emailField.text.length && self.passwordField.text.length)
+    {
+        [self.loginButton setEnabled: NO];
+        [self.emailField resignFirstResponder];
+        [self.passwordField resignFirstResponder];
+        
+        [self createAndShowWaitViewForLogin];
+        [self checkLogin];
+    }
+    else
+    {
+        NSString *errorMessage = NSLocalizedString(@"Please enter your account's email's address and password to log in", nil);
+        
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
+                                                          message: errorMessage
+                                                         delegate: nil cancelButtonTitle: nil
+                                                otherButtonTitles: NSLocalizedString(@"Dismiss", nil), nil];
+        
+        [message show];
+    }
 }
 
 - (IBAction) forgotPressed: (UIButton *) sender
@@ -261,18 +285,6 @@
     }
 
     return NO;
-}
-
-- (void) textFieldDidChange: (UITextField *) textfield
-{
-    if (self.emailField.text.length && self.passwordField.text.length)
-    {
-        [self.loginButton setEnabled: YES];
-    }
-    else
-    {
-        [self.loginButton setEnabled: NO];
-    }
 }
 
 @end

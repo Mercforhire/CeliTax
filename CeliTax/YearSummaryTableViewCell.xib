@@ -80,14 +80,8 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TOTAL AVG. COST" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCu-Hn-zDc">
-                        <rect key="frame" x="173" y="10" width="82.5" height="12"/>
-                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GF SAVINGS" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fcc-xD-lCU">
-                        <rect key="frame" x="260.5" y="10" width="56.5" height="12"/>
+                        <rect key="frame" x="260" y="10" width="56.5" height="12"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -116,7 +110,7 @@
                         </variation>
                     </textField>
                     <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="999.99" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r6g-gI-o6M">
-                        <rect key="frame" x="110.5" y="27" width="50" height="25"/>
+                        <rect key="frame" x="110" y="27" width="50" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="9pn-P6-NKu"/>
                             <constraint firstAttribute="width" constant="60" id="bfH-Et-en3"/>
@@ -131,7 +125,7 @@
                         </variation>
                     </textField>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oPr-Il-HTn">
-                        <rect key="frame" x="103.5" y="33" width="6" height="12"/>
+                        <rect key="frame" x="103" y="33" width="6" height="12"/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -158,9 +152,18 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TOTAL AVG.  NGF COST" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCu-Hn-zDc">
+                        <rect key="frame" x="173" y="3" width="82.5" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="82.5" id="YCj-hW-lPt"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="sBo-b2-uoC" firstAttribute="top" secondItem="GCu-Hn-zDc" secondAttribute="bottom" constant="5" id="2cx-e5-cJY"/>
+                    <constraint firstItem="sBo-b2-uoC" firstAttribute="top" secondItem="GCu-Hn-zDc" secondAttribute="bottom" id="2cx-e5-cJY"/>
                     <constraint firstItem="r6g-gI-o6M" firstAttribute="leading" secondItem="oPr-Il-HTn" secondAttribute="trailing" constant="1" id="6PK-Gb-1d7"/>
                     <constraint firstItem="xia-fJ-aFS" firstAttribute="leading" secondItem="lbP-q4-nir" secondAttribute="trailing" constant="10" id="7N6-BH-H86"/>
                     <constraint firstItem="r6g-gI-o6M" firstAttribute="centerX" secondItem="xia-fJ-aFS" secondAttribute="centerX" id="7Sl-Bf-Zmj"/>

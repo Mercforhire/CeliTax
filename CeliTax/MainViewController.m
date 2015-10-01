@@ -12,7 +12,6 @@
 #import "UserManager.h"
 #import "User.h"
 #import "AddCatagoryViewController.h"
-#import "AlertDialogsProvider.h"
 #import "ReceiptCheckingViewController.h"
 #import "CameraViewController.h"
 #import "ViewControllerFactory.h"
@@ -33,6 +32,7 @@
 #import "MBProgressHUD.h"
 #import "SyncManager.h"
 #import "Utils.h"
+#import "SubscriptionManager.h"
 
 #define kRecentUploadTableRowHeight                     40
 #define kNoItemsTableViewCellIdentifier                 @"NoItemsTableViewCell"
@@ -176,6 +176,21 @@ typedef enum : NSUInteger
                                             action: @selector(taxYearPressed)];
     [self.taxYearLabel addGestureRecognizer: taxYearPressedTap];
     [self.taxYearTriangle addGestureRecognizer: taxYearPressedTap2];
+    
+    if (!self.userManager.subscriptionActive)
+    {
+        [self.cameraButton setEnabled: NO];
+        
+        [self.userManager updateUserSubscriptionExpiryDate:^{
+            
+            [self.cameraButton setEnabled: YES];
+            
+        } failure:^(NSString *reason) {
+            
+            [self.cameraButton setEnabled: YES];
+            
+        }];
+    }
 }
 
 - (void) viewWillAppear: (BOOL) animated
@@ -230,6 +245,19 @@ typedef enum : NSUInteger
     }
     else
     {
+        if (!self.userManager.doNotShowDisclaimer)
+        {
+            NSString *message = NSLocalizedString(@"CeliTax is to be used as a resource tool only! CeliTax is in no way responsible for the accuracy of your tax return. Consult your accountant for all tax related inquiries. Cheers!", nil);
+            
+            UIAlertView *messageBox = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Notice", nil)
+                                                                 message: message
+                                                                delegate: self
+                                                       cancelButtonTitle: NSLocalizedString(@"Dismiss", nil)
+                                                       otherButtonTitles: NSLocalizedString(@"Never show again", nil), nil];
+            
+            [messageBox show];
+        }
+        
         [self checkUpdate];
     }
 }
@@ -332,6 +360,19 @@ typedef enum : NSUInteger
 
 - (IBAction) cameraButtonPressed: (UIButton *) sender
 {
+    if (!self.userManager.subscriptionActive)
+    {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)
+                                                          message:NSLocalizedString(@"The subscription for this account has expired. Would you like to purchases a new subscription?", nil)
+                                                         delegate:self
+                                                cancelButtonTitle:NSLocalizedString(@"No", nil)
+                                                otherButtonTitles:NSLocalizedString(@"Purchase", nil),nil];
+        
+        [message show];
+        
+        return;
+    }
+    
     if (self.currentlySelectedYear.integerValue)
     {
         CameraViewController *cameraVC = [self.viewControllerFactory createCameraOverlayViewControllerWithExistingReceiptID:nil];
@@ -418,6 +459,10 @@ typedef enum : NSUInteger
             [self hideWaitingView];
             
         }];
+    }
+    else if ([title isEqualToString:NSLocalizedString(@"Never show again", nil)])
+    {
+        [self.userManager doNotShowDisclaimerAgain];
     }
 }
 

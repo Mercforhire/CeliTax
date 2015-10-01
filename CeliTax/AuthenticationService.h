@@ -17,6 +17,7 @@
 #define USER_PASSWORD_WRONG                     @"USER_PASSWORD_WRONG"
 #define PROFILE_IMAGE_FILE_DOESNT_EXIST         @"PROFILE_IMAGE_FILE_DOESNT_EXIST"
 #define USER_CHANGE_EMAIL_ALREADY_EXIST         @"USER_CHANGE_EMAIL_ALREADY_EXIST"
+#define NO_EXPIRATION_DATE_EXIST                @"NO_EXPIRATION_DATE_EXIST"
 
 typedef void (^AuthenticateUserSuccessBlock) (AuthorizeResult *authorizeResult);
 typedef void (^AuthenticateUserFailureBlock) (AuthorizeResult *authorizeResult);
@@ -32,6 +33,12 @@ typedef void (^UpdateAccountInfoFailureBlock) (NSString *reason);
 
 typedef void (^RetrieveProfileImageSuccessBlock) (UIImage *profileImage);
 typedef void (^RetrieveProfileImageFailureBlock) (NSString *reason);
+
+typedef void (^SubscriptionUpdateSuccessBlock) (NSString *expiryDateString);
+typedef void (^SubscriptionUpdateFailureBlock) (NSString *reason);
+
+typedef void (^GetSubscriptionExpiryDateSuccessBlock) (NSString *expiryDateString);
+typedef void (^GetSubscriptionExpiryDateFailureBlock) (NSString *reason);
 
 @property (nonatomic, weak) UserDataDAO               *userDataDAO;
 @property (nonatomic, weak) NetworkCommunicator       *networkCommunicator;
@@ -81,5 +88,12 @@ typedef void (^RetrieveProfileImageFailureBlock) (NSString *reason);
 - (void) killAccount: (NSString *)password
              success: (UpdateAccountInfoSuccessBlock) success
              failure: (UpdateAccountInfoFailureBlock) failure;
+
+- (void) getSubscriptionExpiryDate: (GetSubscriptionExpiryDateSuccessBlock) success
+                           failure: (GetSubscriptionExpiryDateFailureBlock) failure;
+
+- (void) addNumberOfMonthToUserSubscription: (NSInteger) numberOfMonth
+                                    success: (SubscriptionUpdateSuccessBlock) success
+                                    failure: (SubscriptionUpdateFailureBlock) failure;
 
 @end

@@ -37,6 +37,8 @@
 #import "BackgroundWorker.h"
 #import "LoginSettingsViewController.h"
 #import "ImperialUnitPickerViewController.h"
+#import "SubscriptionManager.h"
+#import "SubscriptionViewController.h"
 
 @implementation ViewControllerFactory
 {
@@ -52,6 +54,7 @@
     viewController.lookAndFeel = self.lookAndFeel;
     viewController.navigationBarTitleImageContainer = self.navigationBarTitleImageContainer;
     viewController.backgroundWorker = self.backgroundWorker;
+    viewController.subscriptionManager = self.subscriptionManager;
     
     if (!tutorialManager)
     {
@@ -354,6 +357,17 @@
     loginSettingsViewController.authenticationService = self.authenticationService;
     
     return loginSettingsViewController;
+}
+
+- (SubscriptionViewController *) createSubscriptionViewController
+{
+    SubscriptionViewController *subscriptionViewController = [[SubscriptionViewController alloc] initWithNibName: @"SubscriptionViewController" bundle: nil];
+    
+    [self initializeViewController: subscriptionViewController];
+    
+    subscriptionViewController.lookAndFeel = self.lookAndFeel;
+    
+    return subscriptionViewController;
 }
 
 @end

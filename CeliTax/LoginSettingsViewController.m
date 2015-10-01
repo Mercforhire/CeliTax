@@ -8,7 +8,6 @@
 
 #import "LoginSettingsViewController.h"
 #import "HollowGreenButton.h"
-#import "AlertDialogsProvider.h"
 #import "MBProgressHUD.h"
 #import "NSString+Helper.h"
 #import "AuthenticationService.h"
@@ -125,6 +124,22 @@
     self.deactivateContainerHeightBar.constant = self.deactivateContainerHeightBarOriginalHeight;
 }
 
+-(void)setDeactivateAccountButtonActivated:(BOOL)active
+{
+    if (active)
+    {
+        [self.deactivateConfirmationButton setEnabled:YES];
+        [self.deactivateConfirmationButton setBackgroundColor:[UIColor colorWithRed:255.0f/255.0f green:83.0f/255.0f blue:72.0f/255.0f alpha:1]];
+    }
+    else
+    {
+        [self.deactivateConfirmationButton setEnabled:NO];
+        [self.deactivateConfirmationButton setBackgroundColor: [UIColor lightGrayColor]];
+    }
+    
+    [self.lookAndFeel applySlightlyDarkerBorderTo:self.deactivateConfirmationButton];
+}
+
 - (void) setupUI
 {
     [self.titleLabel setText:NSLocalizedString(@"Login Settings", nil)];
@@ -136,11 +151,11 @@
     
     [self.lookAndFeel applyGrayBorderTo: self.emailField1];
     [self.lookAndFeel addLeftInsetToTextField: self.emailField1];
-    [self.emailField1 setPlaceholder:NSLocalizedString(@"Please enter your new email", nil)];
+    [self.emailField1 setPlaceholder:NSLocalizedString(@"Please enter new email address", nil)];
     
     [self.lookAndFeel applyGrayBorderTo: self.emailField2];
     [self.lookAndFeel addLeftInsetToTextField: self.emailField2];
-    [self.emailField2 setPlaceholder:NSLocalizedString(@"Please re-enter your email address", nil)];
+    [self.emailField2 setPlaceholder:NSLocalizedString(@"Please re-enter new email address", nil)];
     
     [self.saveEmailButton setLookAndFeel:self.lookAndFeel];
     [self.saveEmailButton setTitle:NSLocalizedString(@"Save", nil) forState:UIControlStateNormal];
@@ -163,12 +178,11 @@
     [self.savePasswordButton setTitle:NSLocalizedString(@"Save", nil) forState:UIControlStateNormal];
     
     [self.deactivateAccountButton setTitle:NSLocalizedString(@"De-activate Account", nil) forState:UIControlStateNormal];
+    [self setDeactivateAccountButtonActivated:NO];
     
     [self.lookAndFeel applyGrayBorderTo: self.confirmPasswordField];
     [self.lookAndFeel addLeftInsetToTextField: self.confirmPasswordField];
     [self.confirmPasswordField setPlaceholder:NSLocalizedString(@"Please enter your password", nil)];
-    
-    [self.lookAndFeel applySlightlyDarkerBorderTo:self.deactivateConfirmationButton];
     
     self.emailContainerHeightBarOriginalHeight = self.emailContainerHeightBar.constant;
     self.emailContainerHeightBar.constant = 0;
@@ -549,7 +563,6 @@
             [self.saveEmailButton setEnabled: NO];
         }
     }
-    
     else if (self.passwordContainerActivated)
     {
         if (self.oldPasswordField.text.length && self.password1Field.text.length && self.password2Field.text.length)
@@ -561,16 +574,15 @@
             [self.savePasswordButton setEnabled: NO];
         }
     }
-    
     else if (self.deactivateContainerActivated)
     {
         if (self.confirmPasswordField.text.length)
         {
-            [self.deactivateConfirmationButton setEnabled: YES];
+            [self setDeactivateAccountButtonActivated:YES];
         }
         else
         {
-            [self.deactivateConfirmationButton setEnabled: NO];
+            [self setDeactivateAccountButtonActivated:NO];
         }
     }
 }

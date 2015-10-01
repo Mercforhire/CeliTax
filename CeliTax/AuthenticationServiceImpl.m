@@ -156,6 +156,11 @@
              success: (SendCommentSuccessBlock) success
              failure: (SendCommentFailureBlock) failure
 {
+    if (!self.userDataDAO.userKey)
+    {
+        NSAssert(NO, @"self.userDataDAO.userKey not set");
+    }
+    
     NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                        comment,@"feedback_text"
                                        ,nil];
@@ -196,6 +201,11 @@
                    success: (UpdateAccountInfoSuccessBlock) success
                    failure: (UpdateAccountInfoFailureBlock) failure
 {
+    if (!self.userDataDAO.userKey)
+    {
+        NSAssert(NO, @"self.userDataDAO.userKey not set");
+    }
+    
     NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                        firstname,@"firstname",
                                        lastname,@"lastname",
@@ -236,6 +246,11 @@
                     success: (UpdateAccountInfoSuccessBlock) success
                     failure: (UpdateAccountInfoFailureBlock) failure
 {
+    if (!self.userDataDAO.userKey)
+    {
+        NSAssert(NO, @"self.userDataDAO.userKey not set");
+    }
+    
     MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:nil path: [WEB_API_FILE stringByAppendingPathComponent:@"update_profile_photo"] ] ;
     
     [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
@@ -286,6 +301,11 @@
 - (void) deleteProfileImage: (UpdateAccountInfoSuccessBlock) success
                     failure: (UpdateAccountInfoFailureBlock) failure
 {
+    if (!self.userDataDAO.userKey)
+    {
+        NSAssert(NO, @"self.userDataDAO.userKey not set");
+    }
+    
     MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:nil path: [WEB_API_FILE stringByAppendingPathComponent:@"delete_profile_photo"] ] ;
     
     [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
@@ -330,6 +350,11 @@
                           success: (RetrieveProfileImageSuccessBlock) success
                           failure: (RetrieveProfileImageFailureBlock) failure
 {
+    if (!self.userDataDAO.userKey)
+    {
+        NSAssert(NO, @"self.userDataDAO.userKey not set");
+    }
+    
     NSString *profileImagePath = [Utils getProfileImagePathForUser:self.userDataDAO.userKey];
     
     MKNetworkOperation *networkOperation = [self.networkCommunicator downloadFileFrom:url toFile:profileImagePath];
@@ -364,6 +389,11 @@
 - (void) retrieveProfileImage: (RetrieveProfileImageSuccessBlock) success
                       failure: (RetrieveProfileImageFailureBlock) failure
 {
+    if (!self.userDataDAO.userKey)
+    {
+        NSAssert(NO, @"self.userDataDAO.userKey not set");
+    }
+    
     MKNetworkOperation *networkOperation = [self.networkCommunicator getRequestToServer:[WEB_API_FILE stringByAppendingPathComponent:@"get_profile_image"]];
     
     [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
@@ -415,6 +445,11 @@
                success: (UpdateAccountInfoSuccessBlock) success
                failure: (UpdateAccountInfoFailureBlock) failure
 {
+    if (!self.userDataDAO.userKey)
+    {
+        NSAssert(NO, @"self.userDataDAO.userKey not set");
+    }
+    
     NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                        emailToChangeTo,@"new_email"
                                        ,nil];
@@ -462,6 +497,11 @@
                 success: (UpdateAccountInfoSuccessBlock) success
                 failure: (UpdateAccountInfoFailureBlock) failure
 {
+    if (!self.userDataDAO.userKey)
+    {
+        NSAssert(NO, @"self.userDataDAO.userKey not set");
+    }
+    
     NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                        oldPassword,@"old_password",
                                        passwordToChangeTo,@"new_password"
@@ -516,6 +556,11 @@
              success: (UpdateAccountInfoSuccessBlock) success
              failure: (UpdateAccountInfoFailureBlock) failure
 {
+    if (!self.userDataDAO.userKey)
+    {
+        NSAssert(NO, @"self.userDataDAO.userKey not set");
+    }
+    
     NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                        password,@"password"
                                        ,nil];
@@ -547,6 +592,107 @@
                 }
             });
         }
+        
+    };
+    
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (failure)
+            {
+                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
+            }
+        });
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+    
+    [self.networkCommunicator enqueueOperation:networkOperation];
+}
+
+- (void) getSubscriptionExpiryDate: (GetSubscriptionExpiryDateSuccessBlock) success
+                           failure: (GetSubscriptionExpiryDateFailureBlock) failure
+{
+    if (!self.userDataDAO.userKey)
+    {
+        NSAssert(NO, @"self.userDataDAO.userKey not set");
+    }
+    
+    MKNetworkOperation *networkOperation = [self.networkCommunicator getRequestToServer:[WEB_API_FILE stringByAppendingPathComponent:@"get_expiration_date"]];
+    
+    [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
+        
+        NSDictionary *response = [completedOperation responseJSON];
+        
+        if ( [response objectForKey:@"error"] && [[response objectForKey:@"error"] boolValue] == NO)
+        {
+            NSString *expirationDateString = [response objectForKey:@"expiration_date"];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if (success)
+                {
+                    success ( expirationDateString );
+                }
+                
+            });
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if (failure)
+                {
+                    failure ( NO_EXPIRATION_DATE_EXIST );
+                }
+                
+            });
+        }
+    };
+    
+    MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (failure)
+            {
+                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
+            }
+        });
+    };
+    
+    [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
+    
+    [self.networkCommunicator enqueueOperation:networkOperation];
+}
+
+- (void) addNumberOfMonthToUserSubscription: (NSInteger) numberOfMonth
+                                    success: (SubscriptionUpdateSuccessBlock) success
+                                    failure: (SubscriptionUpdateFailureBlock) failure
+{
+    if (!self.userDataDAO.userKey)
+    {
+        NSAssert(NO, @"self.userDataDAO.userKey not set");
+    }
+    
+    NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       [NSNumber numberWithInteger:numberOfMonth],@"number_of_month"
+                                       ,nil];
+    
+    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path: [WEB_API_FILE stringByAppendingPathComponent:@"add_new_expiration_date"] ] ;
+    
+    [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
+    
+    MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
+        
+        NSDictionary *response = [completedOperation responseJSON];
+        
+        NSString *expirationDateString = [response objectForKey:@"expiration_date"];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            success ( expirationDateString );
+        });
         
     };
     

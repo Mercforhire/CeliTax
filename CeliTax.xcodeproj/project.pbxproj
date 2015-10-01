@@ -94,6 +94,9 @@
 		855973921AFD2BF800DFC176 /* MainViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 855973901AFD2BF800DFC176 /* MainViewTableViewCell.xib */; };
 		8559EA221B9E62D500FCC823 /* ImperialUnitPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8559EA201B9E62D500FCC823 /* ImperialUnitPickerViewController.m */; };
 		8559EA231B9E62D500FCC823 /* ImperialUnitPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8559EA211B9E62D500FCC823 /* ImperialUnitPickerViewController.xib */; };
+		855A75EC1BB8D24A0019956E /* SubscriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 855A75EA1BB8D24A0019956E /* SubscriptionViewController.m */; };
+		855A75ED1BB8D24A0019956E /* SubscriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 855A75EB1BB8D24A0019956E /* SubscriptionViewController.xib */; };
+		855A75F01BBA622B0019956E /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 855A75EF1BBA622B0019956E /* Crashlytics.framework */; };
 		855A9AA21B7259FE00455291 /* MetricUnitPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 855A9AA01B7259FE00455291 /* MetricUnitPickerViewController.m */; };
 		855A9AA31B7259FE00455291 /* MetricUnitPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 855A9AA11B7259FE00455291 /* MetricUnitPickerViewController.xib */; };
 		855B6FB51B279E4700864E0B /* LookAndFeel.m in Sources */ = {isa = PBXBuildFile; fileRef = 855B6FB41B279E4700864E0B /* LookAndFeel.m */; };
@@ -115,6 +118,8 @@
 		856024CD1AFA9E6F004C1254 /* ReceiptPic-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 856024CB1AFA9E6F004C1254 /* ReceiptPic-1.jpg */; };
 		856024CE1AFA9E6F004C1254 /* ReceiptPic-2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 856024CC1AFA9E6F004C1254 /* ReceiptPic-2.jpg */; };
 		856024D11AFAB9ED004C1254 /* Receipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 856024D01AFAB9ED004C1254 /* Receipt.m */; };
+		856048B91BB5D16F002F9454 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 856048B81BB5D16F002F9454 /* StoreKit.framework */; };
+		856048BD1BB5E66F002F9454 /* SubscriptionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 856048BC1BB5E66F002F9454 /* SubscriptionManager.m */; };
 		856273851B17E30400EECA26 /* BaseSideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 856273841B17E30400EECA26 /* BaseSideBarViewController.m */; };
 		856273901B1A8ECF00EECA26 /* greenTrianglePointDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 8562738E1B1A8ECF00EECA26 /* greenTrianglePointDown.png */; };
 		856273911B1A8ECF00EECA26 /* greenTrianglePointUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 8562738F1B1A8ECF00EECA26 /* greenTrianglePointUp.png */; };
@@ -355,6 +360,10 @@
 		8559EA241B9F361E00FCC823 /* UnitPickerViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitPickerViewControllerDelegate.h; sourceTree = "<group>"; };
 		8559EA2E1B9F45D100FCC823 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		8559EA2F1B9F45E300FCC823 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		855A75E91BB8D24A0019956E /* SubscriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscriptionViewController.h; sourceTree = "<group>"; };
+		855A75EA1BB8D24A0019956E /* SubscriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscriptionViewController.m; sourceTree = "<group>"; };
+		855A75EB1BB8D24A0019956E /* SubscriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubscriptionViewController.xib; sourceTree = "<group>"; };
+		855A75EF1BBA622B0019956E /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		855A9A9F1B7259FE00455291 /* MetricUnitPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetricUnitPickerViewController.h; sourceTree = "<group>"; };
 		855A9AA01B7259FE00455291 /* MetricUnitPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetricUnitPickerViewController.m; sourceTree = "<group>"; };
 		855A9AA11B7259FE00455291 /* MetricUnitPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MetricUnitPickerViewController.xib; sourceTree = "<group>"; };
@@ -385,6 +394,9 @@
 		856024CC1AFA9E6F004C1254 /* ReceiptPic-2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ReceiptPic-2.jpg"; sourceTree = "<group>"; };
 		856024CF1AFAB9ED004C1254 /* Receipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Receipt.h; sourceTree = "<group>"; };
 		856024D01AFAB9ED004C1254 /* Receipt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Receipt.m; sourceTree = "<group>"; };
+		856048B81BB5D16F002F9454 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		856048BB1BB5E66F002F9454 /* SubscriptionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscriptionManager.h; sourceTree = "<group>"; };
+		856048BC1BB5E66F002F9454 /* SubscriptionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscriptionManager.m; sourceTree = "<group>"; };
 		856273831B17E30400EECA26 /* BaseSideBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSideBarViewController.h; sourceTree = "<group>"; };
 		856273841B17E30400EECA26 /* BaseSideBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseSideBarViewController.m; sourceTree = "<group>"; };
 		8562738E1B1A8ECF00EECA26 /* greenTrianglePointDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenTrianglePointDown.png; sourceTree = "<group>"; };
@@ -526,7 +538,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				856048B91BB5D16F002F9454 /* StoreKit.framework in Frameworks */,
 				85F977391B0ACEC6002B3DF3 /* AVFoundation.framework in Frameworks */,
+				855A75F01BBA622B0019956E /* Crashlytics.framework in Frameworks */,
 				D35569FF52BBBBF1A5EB521A /* libPods-CeliTax.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -544,6 +558,8 @@
 		47196815B0BA054AA1348B8D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				855A75EF1BBA622B0019956E /* Crashlytics.framework */,
+				856048B81BB5D16F002F9454 /* StoreKit.framework */,
 				85F977381B0ACEC6002B3DF3 /* AVFoundation.framework */,
 				AB7CA2B0039977CAFAA11122 /* libPods-CeliTax.a */,
 			);
@@ -960,6 +976,16 @@
 			name = "Imperial Unit Picker Pop Up";
 			sourceTree = "<group>";
 		};
+		855A75E81BB8CCED0019956E /* Subscriptions */ = {
+			isa = PBXGroup;
+			children = (
+				855A75E91BB8D24A0019956E /* SubscriptionViewController.h */,
+				855A75EA1BB8D24A0019956E /* SubscriptionViewController.m */,
+				855A75EB1BB8D24A0019956E /* SubscriptionViewController.xib */,
+			);
+			name = Subscriptions;
+			sourceTree = "<group>";
+		};
 		855A9A9E1B7258A800455291 /* Metric Unit Picker Pop Up */ = {
 			isa = PBXGroup;
 			children = (
@@ -1028,6 +1054,15 @@
 				856024CC1AFA9E6F004C1254 /* ReceiptPic-2.jpg */,
 			);
 			name = "Sample Receipt";
+			sourceTree = "<group>";
+		};
+		856048BA1BB5E5D5002F9454 /* Subscription Manager */ = {
+			isa = PBXGroup;
+			children = (
+				856048BB1BB5E66F002F9454 /* SubscriptionManager.h */,
+				856048BC1BB5E66F002F9454 /* SubscriptionManager.m */,
+			);
+			name = "Subscription Manager";
 			sourceTree = "<group>";
 		};
 		8562739C1B1B7FCC00EECA26 /* Receipt Break Down */ = {
@@ -1161,11 +1196,11 @@
 		85A8CAC01AF069EA0023504D /* CeliTax */ = {
 			isa = PBXGroup;
 			children = (
+				856048BA1BB5E5D5002F9454 /* Subscription Manager */,
 				855B6FB21B279E2E00864E0B /* LookAndFeel */,
 				8537FFC41B989F3400F7802E /* Localization */,
 				8559191D1B6AE3A8001F712C /* Background Worker */,
 				8565384B1B60A7C500915A2E /* Sync Manager */,
-				85FD2BE61B599071006E907C /* Network Communicator */,
 				859AEF741B4851190085AC6D /* Tutorial Manager */,
 				8556E3081AF3E5A1003CCDD2 /* Categories */,
 				85A8CAE71AF071110023504D /* Session */,
@@ -1288,6 +1323,7 @@
 		85A8CAEC1AF072060023504D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				855A75E81BB8CCED0019956E /* Subscriptions */,
 				85547BF41AF2FAE600D9E1CE /* Factory */,
 				8582A4711AF176730048DCD6 /* Base */,
 				85552E961B02F65E005D9FB1 /* Pop Up */,
@@ -1339,6 +1375,7 @@
 		85A8CAEE1AF078E70023504D /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				85FD2BE61B599071006E907C /* Network Communicator */,
 				85491E581B51B94800C618D9 /* Syncing Service */,
 				85D8D8581AF9210000197D85 /* Data Manipulation Service */,
 				8556E3671AF56C96003CCDD2 /* Data Fetching Service */,
@@ -1539,6 +1576,7 @@
 				85A8CABB1AF069EA0023504D /* Frameworks */,
 				85A8CABC1AF069EA0023504D /* Resources */,
 				A64BC6BB22F33561EADEB2BC /* Copy Pods Resources */,
+				855A75EE1BBA61760019956E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1579,6 +1617,11 @@
 					85A8CABD1AF069EA0023504D = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 55ZR8NHFYD;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 					85A8CAD61AF069EA0023504D = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -1623,6 +1666,7 @@
 				856024B91AFA5E2C004C1254 /* ReceiptCheckingViewController.xib in Resources */,
 				855A9AA31B7259FE00455291 /* MetricUnitPickerViewController.xib in Resources */,
 				850212811B0A925D00170785 /* CameraViewController.xib in Resources */,
+				855A75ED1BB8D24A0019956E /* SubscriptionViewController.xib in Resources */,
 				856273A71B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.xib in Resources */,
 				85552B461B35191900AE77CE /* ReceiptItemCell.xib in Resources */,
 				85665DD61B20EFD200848D36 /* ReceiptTableViewCell.xib in Resources */,
@@ -1721,6 +1765,19 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		855A75EE1BBA61760019956E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run eb922476ab6e34282030b166efc4805103d4a498 2d6be7e975145fc28352ec6bd3f210fb38a00eb7e4725312777bfbca6797b469";
+		};
 		A64BC6BB22F33561EADEB2BC /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1749,6 +1806,7 @@
 				854497071AF736DE0068779A /* UserData.m in Sources */,
 				855D0B7F1B177B4400BD5EB4 /* MenuSelectionTableViewCell.m in Sources */,
 				856024B81AFA5E2C004C1254 /* ReceiptCheckingViewController.m in Sources */,
+				855A75EC1BB8D24A0019956E /* SubscriptionViewController.m in Sources */,
 				85D8D8521AF873AA00197D85 /* AccountTableViewCell.m in Sources */,
 				85BE69CB1B7E754E004C24A2 /* HollowWhiteButton.m in Sources */,
 				8557E1881AF84218003E2880 /* DAOFactory.m in Sources */,
@@ -1823,6 +1881,7 @@
 				855CED291B38D3420043D20D /* FlashButtonView.m in Sources */,
 				8537FFC71B989F6200F7802E /* LocalizationManager.m in Sources */,
 				855919201B6AE3BE001F712C /* BackgroundWorker.m in Sources */,
+				856048BD1BB5E66F002F9454 /* SubscriptionManager.m in Sources */,
 				855303DB1B0FE953006B3D5F /* RecordsDAO.m in Sources */,
 				8582A4691AF15BC20048DCD6 /* ConfigurationManager.m in Sources */,
 				856538511B60A7F800915A2E /* SyncManager.m in Sources */,
@@ -1974,12 +2033,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ian chen (QFN76WWZWH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/CeliTax/CeliTax-Prefix.pch";
 				INFOPLIST_FILE = CeliTax/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "eaddbdd8-9443-46fc-9576-26b2f00f55ed";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1990,12 +2053,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ian chen (QFN76WWZWH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/CeliTax/CeliTax-Prefix.pch";
 				INFOPLIST_FILE = CeliTax/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "eaddbdd8-9443-46fc-9576-26b2f00f55ed";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

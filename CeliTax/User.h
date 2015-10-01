@@ -20,4 +20,6 @@
 
 @property (nonatomic, strong) UIImage *avatarImage;
 
+@property (nonatomic, strong) NSString *subscriptionExpirationDate;
+
 @end

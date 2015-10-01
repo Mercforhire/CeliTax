@@ -76,4 +76,6 @@
 
 + (CGRect) returnRectBiggerThan:(CGRect)originalRect by:(float)points;
 
++ (NSDate *) dateFromDateString:(NSString *)dateString;
+
 @end

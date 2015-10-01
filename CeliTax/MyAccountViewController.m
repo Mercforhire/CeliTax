@@ -31,6 +31,7 @@
 #import "TutorialStep.h"
 #import "SolidGreenButton.h"
 #import "HorizonalScrollBarView.h"
+#import "AddCatagoryViewController.h"
 
 @implementation CategoryRow
 
@@ -201,7 +202,39 @@
     
     self.accountTableView.dataSource = self;
     self.accountTableView.delegate = self;
+}
+
+- (void) viewWillAppear: (BOOL) animated
+{
+    [super viewWillAppear: animated];
+
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(openReceiptBreakDownView:)
+                                                 name: kReceiptItemsTableReceiptPressedNotification
+                                               object: nil];
     
+    // register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(keyboardWillShow:)
+                                                 name: UIKeyboardWillShowNotification
+                                               object: nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(keyboardWillHide:)
+                                                 name: UIKeyboardWillHideNotification
+                                               object: nil];
+
+    // load user info
+    [self.profileBarView.nameLabel setText: [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]];
+    [self.profileBarView.profileImageView setImage: self.userManager.user.avatarImage];
+    
+    // reset all state values
+    self.categoryRowsForEachCategory = [NSMutableDictionary new];
+    self.slicePercentages = [NSMutableArray new];
+    self.sliceColors = [NSMutableArray new];
+    self.sliceNames = [NSMutableArray new];
+    
+    // load Categories
     if (![self.tutorialManager hasTutorialBeenShown] && [self.tutorialManager automaticallyShowTutorialNextTime] )
     {
         //Create fake data
@@ -248,37 +281,6 @@
     {
         [self.navHelpButton setHidden:YES];
     }
-}
-
-- (void) viewWillAppear: (BOOL) animated
-{
-    [super viewWillAppear: animated];
-
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(openReceiptBreakDownView:)
-                                                 name: kReceiptItemsTableReceiptPressedNotification
-                                               object: nil];
-    
-    // register for keyboard notifications
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(keyboardWillShow:)
-                                                 name: UIKeyboardWillShowNotification
-                                               object: nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(keyboardWillHide:)
-                                                 name: UIKeyboardWillHideNotification
-                                               object: nil];
-
-    // load user info
-    [self.profileBarView.nameLabel setText: [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]];
-    [self.profileBarView.profileImageView setImage: self.userManager.user.avatarImage];
-    
-    // reset all state values
-    self.categoryRowsForEachCategory = [NSMutableDictionary new];
-    self.slicePercentages = [NSMutableArray new];
-    self.sliceColors = [NSMutableArray new];
-    self.sliceNames = [NSMutableArray new];
     
     float totalTaxYearAmount = 0;
     
@@ -763,6 +765,12 @@
 -(void)avgHelpClicked
 {
     [AlertDialogsProvider showWorkInProgressDialog];
+}
+
+- (IBAction) addCatagoryPressed: (UIButton *) sender
+{
+    // open up the AddCatagoryViewController
+    [self.navigationController pushViewController: [self.viewControllerFactory createAddCatagoryViewController] animated: YES];
 }
 
 #pragma mark - HorizonalScrollBarViewProtocol
@@ -1383,10 +1391,7 @@ typedef enum : NSUInteger
     tutorialStep19.leftButtonTitle = NSLocalizedString(@"Back", nil);
     tutorialStep19.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     
-    CGRect tableRowsFrame = self.accountTableView.frame;
-    
-    tableRowsFrame.origin.y += self.pieChartContainer.frame.size.height;
-    tableRowsFrame.size.height -= self.pieChartContainer.frame.size.height;
+    CGRect tableRowsFrame = CGRectMake(self.view.frame.size.width - 75, self.accountTableView.frame.origin.y + self.pieChartContainer.frame.size.height + 10, 66, 66);
     
     tutorialStep19.highlightedItemRect = tableRowsFrame;
     tutorialStep19.pointsUp = NO;

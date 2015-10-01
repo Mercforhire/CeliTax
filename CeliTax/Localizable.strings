@@ -50,7 +50,7 @@
 "Can not add a duplicate tax year" = "Can not add a duplicate tax year";
 "Calculate" = "Calculate";
 "Create Account" = "Create Account";
-
+"CeliTax is to be used as a resource tool only! CeliTax is in no way responsible for the accuracy of your tax return. Consult your accountant for all tax related inquiries. Cheers!" = "CeliTax is to be used as a resource tool only! CeliTax is in no way responsible for the accuracy of your tax return. Consult your accountant for all tax related inquiries. Cheers!";
 //D
 "Delete" = "Delete";
 "Done" = "Done";
@@ -75,6 +75,8 @@
 "Email address in both fields do not match" = "Email address in both fields do not match";
 "Email address is not valid" = "Email address is not valid";
 "Email: %@" = "Email: %@";
+"Expiry Date: %@" = "Expiry Date: %@";
+"Expired on: %@" = "Expired on: %@";
 
 //F
 "Failed to change email, please try again later" = "Failed to change email, please try again later";
@@ -106,6 +108,7 @@
 "Last Name" = "Last Name";
 "Logout" = "Logout";
 "Language:" = "Language:";
+"Loading subscriptions..." = "Loading subscriptions...";
 
 //M
 "Manage Categories" = "Manage Categories";
@@ -120,6 +123,8 @@
 "No Uploads" = "No Uploads";
 "No receipt" = "No receipt";
 "Notice" = "Notice";
+"No subscriptions loaded" = "No subscriptions loaded";
+"Never show again" = "Never show again";
 
 //O
 "Ok" = "Ok";
@@ -129,9 +134,9 @@
 "Pick" = "Pick";
 "Please wait" = "Please wait";
 "Please try sending again" = "Please try sending again";
-"Please enter your new email" = "Please enter your new email";
+"Please enter new email address" = "Please enter new email address";
 "Please enter new password" = "Please enter new password";
-"Please re-enter your email address" = "Please re-enter your email address";
+"Please re-enter new email address" = "Please re-enter new email address";
 "Please re-enter new password" = "Please re-enter new password";
 "Please enter old password" = "Please enter old password";
 "Password in both fields do not match" = "Password in both fields do not match";
@@ -153,6 +158,9 @@
 "Please enter your password" = "Please enter your password";
 "Please re-enter your password" = "Please re-enter your password";
 "Please log in with your new account" = "Please log in with your new account";
+"Purchase" = "Purchase";
+"Purchase Subscriptions" = "Purchase Subscriptions";
+"Please enter your account's email's address and password to log in" = "Please enter your account's email's address and password to log in";
 
 //Q
 "Quick Links" = "Quick Links";
@@ -188,7 +196,7 @@
 "Total Avg. Cost" = "Total Avg. Cost";
 "Transfer selected?" = "Transfer selected?";
 "The email address is already used by another account. Please use a different email address" = "The email address is already used by another account. Please use a different email address";
-
+"Total Avg.\nNGF Cost" = "Total Avg.\nNGF Cost";
 
 //U
 "Updating account info..." = "Updating account info...";
@@ -208,6 +216,7 @@
 "Select All" = "Select All";
 "Spanish" = "Spanish";
 "Send Receipts To" = "Send Receipts To";
+"Subscription:" = "Subscription:";
 
 //V
 "View Tutorial" = "View Tutorial";
@@ -226,4 +235,52 @@
 "Your %ld savings:" = "Your %ld savings:";
 
 
-//Tutorial Text
+//Tutorial Text:
+
+//Add Category
+"Select from pre-made GF \"categories\" or create your own!" = "Select from pre-made GF \"categories\" or create your own!";
+
+//Camera View
+"Use the crop feature to custom fit the photo to the size of your receipt." = "Use the crop feature to custom fit the photo to the size of your receipt.";
+
+"Receipt too long? Take multiple photos to capture the entire receipt. After a photo is taken, it can be used as a guide for your next photo by simply pulling down the green bar." = "Receipt too long? Take multiple photos to capture the entire receipt. After a photo is taken, it can be used as a guide for your next photo by simply pulling down the green bar.";
+
+//Main View
+"Welcome to CeliTax, the simple, easy-to-use tax tool designed specifically for Celiacs.\n\nWe make claiming your Gluten Free (GF) tax claim easy!" = "Welcome to CeliTax, the simple, easy-to-use tax tool designed specifically for Celiacs.\n\nWe make claiming your Gluten Free (GF) tax claim easy!";
+
+"Celiacs are entitled to claim the incremental cost difference between GF and regular food products as a medical expense." = "Celiacs are entitled to claim the incremental cost difference between GF and regular food products as a medical expense.";
+
+"CeliTax will help you organize all of your GF purchases during the year and calculate your tax claim for you!" = "CeliTax will help you organize all of your GF purchases during the year and calculate your tax claim for you!";
+
+"Easily keep track of all your GF purchases throughout the year and automatically calculate your tax claim with one click!" = "Easily keep track of all your GF purchases throughout the year and automatically calculate your tax claim with one click!";
+
+"Let's get started!" = "Let's get started!";
+
+"Categories will keep all of your GF purchases organized." = "Categories will keep all of your GF purchases organized.";
+
+"After you shop, keep your receipt and take a photo with the app!"="After you shop, keep your receipt and take a photo with the app!";
+
+"That's all! Now you are ready to use CeliTax to stay organized all year long. The GF tax claim has never been so easy!" = "That's all! Now you are ready to use CeliTax to stay organized all year long. The GF tax claim has never been so easy!";
+
+//My Account View
+"Calculating your GF tax claim is easy, just be sure to enter an average non-GF cost equivelant first for each category." = "Calculating your GF tax claim is easy, just be sure to enter an average non-GF cost equivelant first for each category.";
+
+"Click calculate and we'll do the work for you!" = "Click calculate and we'll do the work for you!";
+
+//Receipt Checking View
+"To allocate your GF purchases, scroll through your GF categories or click \"+\" to create one." = "To allocate your GF purchases, scroll through your GF categories or click \"+\" to create one.";
+
+"Enter the total number and cost of each GF item purchased for each GF category." = "Enter the total number and cost of each GF item purchased for each GF category.";
+
+"After you add an item, use the \"< >\" buttons to navigate between items allocated to that category." = "After you add an item, use the \"< >\" buttons to navigate between items allocated to that category.";
+
+"Need to allocate a GF purchase based on weight/volume? Simply click and hold a category to view various units." = "Need to allocate a GF purchase based on weight/volume? Simply click and hold a category to view various units.";
+
+"Repeat this process until all of your GF purchases have been allocated from your receipt." = "Repeat this process until all of your GF purchases have been allocated from your receipt.";
+
+"Click this icon to see a detailed breakdown of all items allocated to a receipt." = "Click this icon to see a detailed breakdown of all items allocated to a receipt.";
+
+"Once you complete your receipt, it is saved in the Vault." = "Once you complete your receipt, it is saved in the Vault.";
+
+//Vault View
+"Select receipts to send the images directly to your email for tax/audit evidence." = "Select receipts to send the images directly to your email for tax/audit evidence.";

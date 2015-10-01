@@ -20,6 +20,7 @@
 #import "ConfigurationManager.h"
 #import "LoginSettingsViewController.h"
 #import "Notifications.h"
+#import "SubscriptionViewController.h"
 
 typedef enum : NSUInteger {
     LanguageEnglish,
@@ -42,6 +43,9 @@ typedef enum : NSUInteger {
 @property (weak, nonatomic) IBOutlet SolidGreenButton *imperialUnitButton;
 @property (weak, nonatomic) IBOutlet UIButton *aboutButton;
 @property (weak, nonatomic) IBOutlet UIButton *faqButton;
+@property (weak, nonatomic) IBOutlet UILabel *subscriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *subscriptionStatusLabel;
+@property (weak, nonatomic) IBOutlet SolidGreenButton *purchaseButton;
 
 @property (weak, nonatomic) IBOutlet SolidGreenButton *backupNowButton;
 @property (weak, nonatomic) IBOutlet UILabel *lastBackUpLabel;
@@ -96,6 +100,7 @@ typedef enum : NSUInteger {
     [self.spanishLanguageCheckBox setTintColor:self.lookAndFeel.appGreenColor];
     [self.spanishLanguageCheckBox setCheckAlignment: M13CheckboxAlignmentLeft];
     
+    [self.purchaseButton setLookAndFeel:self.lookAndFeel];
     [self.backupNowButton setLookAndFeel:self.lookAndFeel];
     [self.insertDemoButton setLookAndFeel:self.lookAndFeel];
     
@@ -126,6 +131,9 @@ typedef enum : NSUInteger {
     
     [self.aboutButton setTitle:NSLocalizedString(@"About", nil) forState:UIControlStateNormal];
     [self.faqButton setTitle:NSLocalizedString(@"FAQ", nil) forState:UIControlStateNormal];
+    
+    [self.subscriptionLabel setText:NSLocalizedString(@"Subscription:", nil)];
+    [self.purchaseButton setTitle:NSLocalizedString(@"Purchase", nil) forState:UIControlStateNormal];
 }
 
 - (void)viewDidLoad
@@ -198,6 +206,15 @@ typedef enum : NSUInteger {
                                              selector: @selector(refreshLanguage)
                                                  name: kAppLanguageChangedNotification
                                                object: nil];
+    
+    if (self.userManager.subscriptionActive)
+    {
+        [self.subscriptionStatusLabel setText:[NSString stringWithFormat:NSLocalizedString(@"Expiry Date: %@", nil), self.userManager.user.subscriptionExpirationDate]];
+    }
+    else
+    {
+        [self.subscriptionStatusLabel setText:[NSString stringWithFormat:NSLocalizedString(@"Expired on: %@", nil), self.userManager.user.subscriptionExpirationDate]];
+    }
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -341,6 +358,11 @@ typedef enum : NSUInteger {
 - (IBAction)faqPressed:(UIButton *)sender
 {
     [AlertDialogsProvider showWorkInProgressDialog];
+}
+
+- (IBAction)purchasePressed:(SolidGreenButton *)sender
+{
+    [self.navigationController pushViewController: [self.viewControllerFactory createSubscriptionViewController] animated: YES];
 }
 
 - (IBAction)insertDemoDataPressed:(UIButton *)sender

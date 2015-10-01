@@ -68,10 +68,11 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cCL-ll-sAk" customClass="SolidGreenButton">
-                    <rect key="frame" x="219" y="487" width="71" height="30"/>
+                    <rect key="frame" x="199" y="487" width="91" height="30"/>
                     <color key="backgroundColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="80" id="4L5-9z-DRt"/>
+                        <constraint firstAttribute="width" constant="91" id="K7H-F5-euR"/>
                         <constraint firstAttribute="height" constant="30" id="b3k-JR-Pby"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
@@ -98,11 +99,28 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OKQ-Kv-Od7" customClass="HollowGreenButton">
+                    <rect key="frame" x="99.5" y="522" width="121" height="31"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="31" id="sPb-lD-7GI"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
+                    <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
+                    <state key="normal" title="DOWNLOAD">
+                        <color key="titleColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="downloadReceiptsPressed:" destination="-1" eventType="touchUpInside" id="Q60-Oe-Dew"/>
+                    </connections>
+                </button>
                 <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mlb-Dp-zgz" customClass="SolidGreenButton">
                     <rect key="frame" x="30" y="487" width="91" height="30"/>
                     <color key="backgroundColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="6BE-Kj-R7g"/>
+                        <constraint firstAttribute="width" constant="91" id="ScG-kQ-16K"/>
                         <constraint firstAttribute="width" constant="80" id="tD6-Ug-qo1"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="14"/>
@@ -119,22 +137,6 @@
                     </variation>
                     <connections>
                         <action selector="transferButtonPressed:" destination="-1" eventType="touchUpInside" id="fUa-az-YvX"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OKQ-Kv-Od7" customClass="HollowGreenButton">
-                    <rect key="frame" x="99.5" y="522" width="121" height="31"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="31" id="sPb-lD-7GI"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
-                    <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
-                    <state key="normal" title="DOWNLOAD">
-                        <color key="titleColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="downloadReceiptsPressed:" destination="-1" eventType="touchUpInside" id="Q60-Oe-Dew"/>
                     </connections>
                 </button>
             </subviews>

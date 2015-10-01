@@ -354,14 +354,14 @@
                 if (![self.catagoriesDAO loadCatagory:record.catagoryID])
                 {
                     DLog(@"ERROR: Record has an invalid catagoryID");
-                    continue;
+                    record.dataAction = DataActionDelete;
                 }
                 
                 //check if receiptID is valid
                 if (![self.receiptsDAO loadReceipt:record.receiptID])
                 {
                     DLog(@"ERROR: Record has an invalid receiptID");
-                    continue;
+                    record.dataAction = DataActionDelete;
                 }
                 
                 if (record)

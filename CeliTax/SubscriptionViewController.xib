@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SubscriptionViewController">
+            <connections>
+                <outlet property="subscriptionsTableView" destination="25P-XH-XYu" id="mMj-Yd-cRP"/>
+                <outlet property="titleLabel" destination="8aJ-LV-Fkq" id="DJT-nD-xwa"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Purchase Subscriptions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8aJ-LV-Fkq">
+                    <rect key="frame" x="61.5" y="79" width="198" height="23"/>
+                    <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="19"/>
+                    <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="25P-XH-XYu">
+                    <rect key="frame" x="0.0" y="122" width="320" height="446"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="8aJ-LV-Fkq" secondAttribute="centerX" id="H7L-dg-DF9"/>
+                <constraint firstItem="8aJ-LV-Fkq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="79" id="IZ8-bs-6YA"/>
+                <constraint firstItem="25P-XH-XYu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="LrD-bN-lQO"/>
+                <constraint firstItem="25P-XH-XYu" firstAttribute="top" secondItem="8aJ-LV-Fkq" secondAttribute="bottom" constant="20" id="cH0-LZ-rf4"/>
+                <constraint firstAttribute="bottom" secondItem="25P-XH-XYu" secondAttribute="bottom" id="fV6-VU-Zyo"/>
+                <constraint firstAttribute="trailing" secondItem="25P-XH-XYu" secondAttribute="trailing" id="kcF-eQ-SpP"/>
+                <constraint firstItem="25P-XH-XYu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="pd3-yD-ZFd"/>
+            </constraints>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="LrD-bN-lQO"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="420" y="371"/>
+        </view>
+    </objects>
+</document>

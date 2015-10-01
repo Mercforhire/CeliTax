@@ -92,6 +92,9 @@ typedef enum : NSUInteger
 @property (nonatomic) NSInteger categoryIndexLongPressed;
 @property (nonatomic, strong) NSString *categoryNameLongPressed;
 
+//tempUnitType will default to this. This is set after user explictly selects a Unit Type
+@property (nonatomic) NSInteger userSelectedUnitType;
+
 @property (nonatomic) NSInteger tempUnitType;
 @property (nonatomic) NSInteger tempQuantity;
 @property (nonatomic) float tempPricePerItemOrTotalCost;
@@ -713,7 +716,7 @@ typedef enum : NSUInteger
         {
             self.tempQuantity = 0;
             self.tempPricePerItemOrTotalCost = 0;
-            self.tempUnitType = 0;
+            self.tempUnitType = self.userSelectedUnitType;
         }
         else
         {
@@ -1272,6 +1275,8 @@ typedef enum : NSUInteger
 
 -(void)selectedUnit:(NSInteger)unitType
 {
+    self.userSelectedUnitType = unitType;
+    
     self.tempUnitType = unitType;
     
     [self.receiptItemCollectionView reloadData];
@@ -1492,7 +1497,7 @@ typedef enum : NSUInteger
     
     TutorialStep *tutorialStep13 = [TutorialStep new];
     
-    tutorialStep13.text = NSLocalizedString(@"After you add an item, use the \"< >\" to navigate between items allocated to that category.", nil);
+    tutorialStep13.text = NSLocalizedString(@"After you add an item, use the \"< >\" buttons to navigate between items allocated to that category.", nil);
     tutorialStep13.leftButtonTitle = NSLocalizedString(@"Back", nil);
     tutorialStep13.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     tutorialStep13.pointsUp = NO;
@@ -1518,11 +1523,11 @@ typedef enum : NSUInteger
     
     if (!savedUnitSystem || savedUnitSystem.integerValue == UnitSystemMetric)
     {
-        tutorialStep14.highlightedItemRect = CGRectMake(0, self.categoriesBar.frame.origin.y - self.metricUnitPickerViewController.viewSize.height - 30, 60, self.metricUnitPickerViewController.viewSize.height + 30);
+        tutorialStep14.highlightedItemRect = CGRectMake(0, self.categoriesBar.frame.origin.y - self.metricUnitPickerViewController.viewSize.height - 20, 80, self.metricUnitPickerViewController.viewSize.height);
     }
     else
     {
-        tutorialStep14.highlightedItemRect = CGRectMake(0, self.categoriesBar.frame.origin.y - self.imperialUnitPickerViewController.viewSize.height - 30, 60, self.imperialUnitPickerViewController.viewSize.height + 30);
+        tutorialStep14.highlightedItemRect = CGRectMake(0, self.categoriesBar.frame.origin.y - self.imperialUnitPickerViewController.viewSize.height - 20, 80, self.imperialUnitPickerViewController.viewSize.height);
     }
     
     [self.tutorials addObject:tutorialStep14];
@@ -1613,8 +1618,8 @@ typedef enum : NSUInteger
             
         case 15:
         {
-            CGRect tinyRect = CGRectMake(self.categoriesBar.frame.origin.x + 20,
-                                         self.categoriesBar.frame.origin.y + 20 - 5,
+            CGRect tinyRect = CGRectMake(self.categoriesBar.frame.origin.x + 40,
+                                         self.categoriesBar.frame.origin.y - 5,
                                          1,
                                          1);
             
@@ -1735,8 +1740,8 @@ typedef enum : NSUInteger
             //Simulate a long hold press on first Category and go to Step 14
             [self hideAddRecordControls];
             
-            CGRect tinyRect = CGRectMake(self.categoriesBar.frame.origin.x + 20,
-                                         self.categoriesBar.frame.origin.y + 20 - 5,
+            CGRect tinyRect = CGRectMake(self.categoriesBar.frame.origin.x + 40,
+                                         self.categoriesBar.frame.origin.y - 5,
                                          1,
                                          1);
             

@@ -12,6 +12,13 @@
 #import "UserDataDAO.h"
 #import "ConfigurationManager.h"
 #import "BackgroundWorker.h"
+#import "SubscriptionManager.h"
+
+#define kDoNotShowDisclaimerAgainKey               @"DoNotShowDisclaimerAgain"
+
+@interface UserManager ()
+
+@end
 
 @implementation UserManager
 {
@@ -23,9 +30,42 @@
     if (self = [super init])
     {
         defaultAvatarImage = [UIImage imageNamed: @"userIcon.png"];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        if ([defaults objectForKey:kDoNotShowDisclaimerAgainKey])
+        {
+            _doNotShowDisclaimer = YES;
+        }
     }
     
     return self;
+}
+
+//check to see if self.subscriptionExpirationDate is today or after today. If yes, mark subscriptionActive to be TRUE
+-(void)checkAccountSubscriptionActivity
+{
+    if (!self.user.subscriptionExpirationDate)
+    {
+        return;
+    }
+    
+    NSDate *expirationDate = [Utils dateFromDateString:self.user.subscriptionExpirationDate];
+    
+    NSTimeInterval timeInt = [expirationDate timeIntervalSinceDate:[NSDate date]];
+    
+    NSInteger days = timeInt / 60 / 60 / 24;
+    
+    if (days >= 0)
+    {
+        self.subscriptionActive = YES;
+        
+        DLog(@"Subscription active");
+    }
+    else
+    {
+        DLog(@"Subscription expired");
+    }
 }
 
 -(BOOL)attemptToLoginSavedUser
@@ -51,6 +91,12 @@
         [self.backgroundWorker activeWorker];
         
         [self.configManager loadSettingsFromPersistence];
+
+        // check for user subscription
+        if (self.user.subscriptionExpirationDate)
+        {
+            [self checkAccountSubscriptionActivity];
+        }
     }
     
     return (self.user != nil);
@@ -94,7 +140,33 @@
     } failure:^(NSString *reason) {
         //ignore failure
     }];
-    
+}
+
+-(void)updateUserSubscriptionExpiryDate: (UpdateUserSubscriptionExpiryDateSuccessBlock) success
+                                failure: (UpdateUserSubscriptionExpiryDateFailureBlock) failure;
+{
+    [self.authenticationService getSubscriptionExpiryDate:^(NSString *expiryDateString) {
+        
+        [self setExpiryDate:expiryDateString];
+        
+        [self checkAccountSubscriptionActivity];
+        
+        if (success)
+        {
+            success ();
+        }
+        
+    } failure:^(NSString *reason) {
+        
+        // ignore failure, can only happen when internet is down.
+        // there should always be an expiry date for any account
+        
+        if (failure)
+        {
+            failure ( reason );
+        }
+        
+    }];
 }
 
 -(void)changeUserDetails:(NSString *)firstname
@@ -176,12 +248,32 @@
     
     self.userDataDAO.userKey = nil;
     
+    self.subscriptionActive = NO;
+    
     if (![Utils deleteSavedUser])
     {
         DLog(@"ERROR: Did not delete saved User");
     }
     
     [self.backgroundWorker deactiveWorker];
+}
+
+-(void)setExpiryDate: (NSString *)expiryDateString
+{
+    self.user.subscriptionExpirationDate = expiryDateString;
+    
+    [Utils saveUser:self.user];
+}
+
+-(void)doNotShowDisclaimerAgain
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [defaults setObject:[NSNumber numberWithBool:YES] forKey:kDoNotShowDisclaimerAgainKey];
+    
+    [defaults synchronize];
+    
+    self.doNotShowDisclaimer = YES;
 }
 
 @end

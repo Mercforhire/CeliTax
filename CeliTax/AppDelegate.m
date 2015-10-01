@@ -21,6 +21,8 @@
 #import "SyncManager.h"
 #import "BackgroundWorker.h"
 #import "LocalizationManager.h"
+#import "SubscriptionManager.h"
+#import <Crashlytics/Crashlytics.h>
 
 @class SplashViewController, ConfigurationManager, ViewControllerFactory, UserManager;
 
@@ -36,6 +38,7 @@
 @property (nonatomic, strong) NetworkCommunicator *networkCommunicator;
 @property (nonatomic, strong) SyncManager *syncManager;
 @property (nonatomic, strong) BackgroundWorker *backgroundWorker;
+@property (nonatomic, strong) SubscriptionManager *subscriptionManager;
 
 @property (nonatomic, strong) UINavigationController *navigationController;
 @property (nonatomic, strong) UIView *navigationBarTitleImageContainer;
@@ -68,6 +71,7 @@
     self.viewControllerFactory.navigationBarTitleImageContainer = self.navigationBarTitleImageContainer;
     self.viewControllerFactory.syncManager = self.syncManager;
     self.viewControllerFactory.backgroundWorker = self.backgroundWorker;
+    self.viewControllerFactory.subscriptionManager = self.subscriptionManager;
 }
 
 - (void) initializeUserManager
@@ -115,6 +119,18 @@
     self.backgroundWorker.userManager = self.userManager;
 }
 
+-(void) initializeSubscriptionManager
+{
+    NSSet *productIdentifiers = [NSSet setWithObjects:
+                                 k3MonthServiceProductID,
+                                 k6MonthServiceProductID,
+                                 nil];
+    
+    self.subscriptionManager = [[SubscriptionManager alloc] initWithProductIdentifiers:productIdentifiers];
+    self.subscriptionManager.userManager = self.userManager;
+    self.subscriptionManager.authenticationService = [self.serviceFactory createAuthenticationService];
+}
+
 - (void) initializeLocalizationManager
 {
     // Make sure we start off with the right string files
@@ -143,6 +159,8 @@
 // do loading here
 - (BOOL) application: (UIApplication *) application didFinishLaunchingWithOptions: (NSDictionary *) launchOptions
 {
+    [Crashlytics startWithAPIKey:@"eb922476ab6e34282030b166efc4805103d4a498"];
+    
     [self initializeLocalizationManager];
     [self initializeNetworkCommunicator];
     [self initializeBuilderFactory];
@@ -151,6 +169,8 @@
     [self initializeDAOFactory];
     [self initializeServiceFactory];
     [self initializeUserManager];
+    [self initializeSubscriptionManager];
+    self.userManager.subscriptionManager = self.subscriptionManager;
     [self initializeSyncManager];
     [self initializeBackgroundWorker];
     [self initializeViewControllerFactory];

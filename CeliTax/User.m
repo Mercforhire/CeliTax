@@ -8,11 +8,12 @@
 
 #import "User.h"
 
-#define kKeyLoginName           @"loginName"
-#define kKeyUserKey             @"userKey"
-#define kKeyFirstname           @"firstname"
-#define kKeyLastname            @"lastname"
-#define kKeyCountry             @"country"
+#define kKeyLoginName                   @"loginName"
+#define kKeyUserKey                     @"userKey"
+#define kKeyFirstname                   @"firstname"
+#define kKeyLastname                    @"lastname"
+#define kKeyCountry                     @"country"
+#define kSubscriptionExpirationDate     @"subscriptionExpirationDate"
 
 @implementation User
 
@@ -25,6 +26,7 @@
         self.firstname = [aDecoder decodeObjectForKey: kKeyFirstname];
         self.lastname = [aDecoder decodeObjectForKey: kKeyLastname];
         self.country = [aDecoder decodeObjectForKey: kKeyCountry];
+        self.subscriptionExpirationDate = [aDecoder decodeObjectForKey: kSubscriptionExpirationDate];
     }
 
     return self;
@@ -37,6 +39,7 @@
     [aCoder encodeObject: self.firstname forKey: kKeyFirstname];
     [aCoder encodeObject: self.lastname forKey: kKeyLastname];
     [aCoder encodeObject: self.country forKey: kKeyCountry];
+    [aCoder encodeObject: self.subscriptionExpirationDate forKey: kSubscriptionExpirationDate];
 }
 
 @end

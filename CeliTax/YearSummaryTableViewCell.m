@@ -24,7 +24,7 @@
     self.exclaimationButton.layer.cornerRadius = self.exclaimationButton.frame.size.height / 2;
     
     [self.totalSpentLabel setText:NSLocalizedString(@"Total Spent", nil)];
-    [self.totalAvgCostLabel setText:NSLocalizedString(@"Total Avg. Cost", nil)];
+    [self.totalAvgCostLabel setText:NSLocalizedString(@"Total Avg.\nNGF Cost", nil)];
     [self.gfSavingsLabel setText:NSLocalizedString(@"GF Savings", nil)];
 }
 
