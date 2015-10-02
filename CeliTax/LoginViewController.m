@@ -172,16 +172,7 @@
              
          } failure:^(NSString *reason) {
              
-             [self.waitView hide: YES];
-             
-             NSString *errorMessage = NSLocalizedString(@"Can not connect to our server, please try again later", nil);
-             
-             UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
-                                                               message: errorMessage
-                                                              delegate: nil cancelButtonTitle: nil
-                                                     otherButtonTitles: NSLocalizedString(@"Dismiss", nil), nil];
-             
-             [message show];
+             [self.navigationController pushViewController: [self.viewControllerFactory createMainViewController] animated: YES];
              
              [self.loginButton setEnabled: YES];
              
