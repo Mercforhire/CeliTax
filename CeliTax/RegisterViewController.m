@@ -136,36 +136,6 @@
     [self canadaPressed: nil];
 }
 
-- (void) viewWillAppear: (BOOL) animated
-{
-    [super viewWillAppear: animated];
-    
-    // register for keyboard notifications
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(keyboardWillShow:)
-                                                 name: UIKeyboardWillShowNotification
-                                               object: nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(keyboardWillHide:)
-                                                 name: UIKeyboardWillHideNotification
-                                               object: nil];
-}
-
-- (void) viewWillDisappear: (BOOL) animated
-{
-    [super viewWillDisappear: animated];
-    
-    // unregister for keyboard notifications while not visible.
-    [[NSNotificationCenter defaultCenter] removeObserver: self
-                                                    name: UIKeyboardWillShowNotification
-                                                  object: nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver: self
-                                                    name: UIKeyboardWillHideNotification
-                                                  object: nil];
-}
-
 - (void) agreeChecked: (M13Checkbox *) checkBox
 {
     [self textFieldDidChange:nil];
@@ -343,24 +313,12 @@
     }
 }
 
-#pragma mark - UIKeyboardWillShowNotification / UIKeyboardWillHideNotification events
-
-// Called when the UIKeyboardDidShowNotification is sent.
-- (void) keyboardWillShow: (NSNotification *) aNotification
-{
-    NSDictionary *info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey: UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    
-    [self.view scrollToY: 0 - kbSize.height / 2];
-}
-
-// Called when the UIKeyboardWillHideNotification is sent
-- (void) keyboardWillHide: (NSNotification *) aNotification
-{
-    [self.view scrollToY: 0];
-}
-
 #pragma mark - UITextFieldDelegate
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self.scrollView scrollToView:textField];
+}
 
 - (void) textFieldDidEndEditing:(UITextField *)textField
 {
@@ -373,11 +331,12 @@
     {
         textField.text = [textField.text capitalizedString];
     }
+    
+    [self.scrollView scrollToY:0];
 }
 
 - (BOOL) textFieldShouldReturn: (UITextField *) textField
 {
-
     [textField resignFirstResponder];
 
     return NO;
