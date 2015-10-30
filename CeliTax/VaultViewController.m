@@ -29,14 +29,14 @@
 #import "HollowGreenButton.h"
 #import "Notifications.h"
 
-typedef enum : NSUInteger
+typedef NS_ENUM(NSUInteger, TimePeriodSelections)
 {
     TimePeriodRecent,
     TimePeriodPreviousWeek,
     TimePeriodPreviousMonth,
     TimePeriodViewAll,
     TimePeriodCount
-} TimePeriodSelections;
+};
 
 #define kTimePeriodSelectionTableViewCellHeight         44
 #define kTimePeriodSelectionTableViewCellIdentifier     @"TimePeriodSelectionTableViewCell"
@@ -111,11 +111,11 @@ typedef enum : NSUInteger
     [self.downloadReceiptButton setLookAndFeel:self.lookAndFeel];
     [self.downloadReceiptButton setTitle:NSLocalizedString(@"Download", nil) forState:UIControlStateNormal];
 
-    [self.selectAllCheckBox.titleLabel setFont: [UIFont latoFontOfSize: 13]];
-    [self.selectAllCheckBox.titleLabel setTextColor: [UIColor blackColor]];
-    [self.selectAllCheckBox setStrokeColor: [UIColor grayColor]];
-    [self.selectAllCheckBox setCheckColor: self.lookAndFeel.appGreenColor];
-    [self.selectAllCheckBox setCheckAlignment: M13CheckboxAlignmentLeft];
+    (self.selectAllCheckBox.titleLabel).font = [UIFont latoFontOfSize: 13];
+    (self.selectAllCheckBox.titleLabel).textColor = [UIColor blackColor];
+    (self.selectAllCheckBox).strokeColor = [UIColor grayColor];
+    (self.selectAllCheckBox).checkColor = self.lookAndFeel.appGreenColor;
+    (self.selectAllCheckBox).checkAlignment = M13CheckboxAlignmentLeft;
     [self.selectAllCheckBox.titleLabel setText: NSLocalizedString(@"Select All", nil)];
 
     UINib *timePeriodSelectionTableViewCell = [UINib nibWithNibName: @"TimePeriodSelectionTableViewCell" bundle: nil];
@@ -128,13 +128,13 @@ typedef enum : NSUInteger
 
     self.sendReceiptsToViewController = [self.viewControllerFactory createSendReceiptsToViewController];
     self.sendReceiptsPopover = [[WYPopoverController alloc] initWithContentViewController: self.sendReceiptsToViewController];
-    [self.sendReceiptsPopover setTheme: [WYPopoverTheme theme]];
+    (self.sendReceiptsPopover).theme = [WYPopoverTheme theme];
 
     WYPopoverTheme *popUpTheme = self.sendReceiptsPopover.theme;
     popUpTheme.fillTopColor = self.lookAndFeel.appGreenColor;
     popUpTheme.fillBottomColor = self.lookAndFeel.appGreenColor;
 
-    [self.sendReceiptsPopover setTheme: popUpTheme];
+    (self.sendReceiptsPopover).theme = popUpTheme;
     
     [self.transferButton setLookAndFeel:self.lookAndFeel];
     [self.transferButton setTitle:NSLocalizedString(@"Transfer", nil) forState:UIControlStateNormal];
@@ -146,7 +146,7 @@ typedef enum : NSUInteger
     
     for (int year = 2010; year < 2016; year++)
     {
-        [self.possibleTaxYears addObject:[NSNumber numberWithInteger:year]];
+        [self.possibleTaxYears addObject:@(year)];
     }
     
     self.taxYearPicker = [[UIPickerView alloc] init];
@@ -161,15 +161,14 @@ typedef enum : NSUInteger
     pickerToolbar.barStyle = UIBarStyleDefault;
     
     UIBarButtonItem *cancelToolbarButton = [[UIBarButtonItem alloc]initWithTitle: NSLocalizedString(@"Cancel", nil) style: UIBarButtonItemStylePlain target: self action: @selector(cancelAddTaxYear)];
-    [cancelToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
+    [cancelToolbarButton setTitleTextAttributes: @{NSFontAttributeName: [UIFont latoBoldFontOfSize: 15], NSForegroundColorAttributeName: self.lookAndFeel.appGreenColor} forState: UIControlStateNormal];
     
     UIBarButtonItem *addToolbarButton = [[UIBarButtonItem alloc]initWithTitle: NSLocalizedString(@"Done", nil) style: UIBarButtonItemStylePlain target: self action: @selector(addTaxYear)];
-    [addToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
+    [addToolbarButton setTitleTextAttributes: @{NSFontAttributeName: [UIFont latoBoldFontOfSize: 15], NSForegroundColorAttributeName: self.lookAndFeel.appGreenColor} forState: UIControlStateNormal];
     
-    pickerToolbar.items = [NSArray arrayWithObjects:
-                           cancelToolbarButton,
+    pickerToolbar.items = @[cancelToolbarButton,
                            [[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil],
-                           addToolbarButton, nil];
+                           addToolbarButton];
     [pickerToolbar sizeToFit];
     
     
@@ -206,7 +205,7 @@ typedef enum : NSUInteger
                                action: @selector(selectAllCheckChangedValue:)
                      forControlEvents: UIControlEventValueChanged];
     
-    [self.sendReceiptsToViewController setDelegate: self];
+    (self.sendReceiptsToViewController).delegate = self;
     
     [self refreshTaxYears];
 
@@ -242,20 +241,20 @@ typedef enum : NSUInteger
             
             NSMutableDictionary *fakeReceiptInfo1 = [NSMutableDictionary new];
             
-            [fakeReceiptInfo1 setObject:[NSNumber numberWithInteger:4] forKey:kNumberOfRecordsKey];
-            [fakeReceiptInfo1 setObject:[NSDate date] forKey:kUploadTimeKey];
+            fakeReceiptInfo1[kNumberOfRecordsKey] = @4;
+            fakeReceiptInfo1[kUploadTimeKey] = [NSDate date];
             
             NSMutableDictionary *fakeReceiptInfo2 = [NSMutableDictionary new];
             
-            [fakeReceiptInfo2 setObject:[NSNumber numberWithInteger:2] forKey:kNumberOfRecordsKey];
-            [fakeReceiptInfo2 setObject:[NSDate date] forKey:kUploadTimeKey];
+            fakeReceiptInfo2[kNumberOfRecordsKey] = @2;
+            fakeReceiptInfo2[kUploadTimeKey] = [NSDate date];
             
             NSMutableDictionary *fakeReceiptInfo3 = [NSMutableDictionary new];
             
-            [fakeReceiptInfo3 setObject:[NSNumber numberWithInteger:8] forKey:kNumberOfRecordsKey];
-            [fakeReceiptInfo3 setObject:[NSDate date] forKey:kUploadTimeKey];
+            fakeReceiptInfo3[kNumberOfRecordsKey] = @8;
+            fakeReceiptInfo3[kUploadTimeKey] = [NSDate date];
             
-            self.recentUploadReceipts = [NSArray arrayWithObjects:fakeReceiptInfo1, fakeReceiptInfo2, fakeReceiptInfo3, nil];
+            self.recentUploadReceipts = @[fakeReceiptInfo1, fakeReceiptInfo2, fakeReceiptInfo3];
             
             [self.uploadHistoryTable reloadData];
             
@@ -312,7 +311,7 @@ typedef enum : NSUInteger
     //if no tax year was available to be selected before, automatically select the first one
     if (!self.currentlySelectedYear)
     {
-        self.currentlySelectedYear = [self.existingTaxYears firstObject];
+        self.currentlySelectedYear = (self.existingTaxYears).firstObject;
     }
 }
 
@@ -331,7 +330,7 @@ typedef enum : NSUInteger
     
     self.taxYearPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: yearSelections];
     self.taxYearSelectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.taxYearPickerViewController];
-    [self.taxYearPickerViewController setDelegate: self];
+    (self.taxYearPickerViewController).delegate = self;
 }
 
 -(BOOL)thisYearHasNoReceipts
@@ -415,19 +414,19 @@ typedef enum : NSUInteger
     switch (timePeriodSelection)
     {
         case TimePeriodRecent:
-            receiptInfo = [self.recentUploadReceipts objectAtIndex: receiptIndex];
+            receiptInfo = (self.recentUploadReceipts)[receiptIndex];
             break;
             
         case TimePeriodPreviousWeek:
-            receiptInfo = [self.previousWeekReceipts objectAtIndex: receiptIndex];
+            receiptInfo = (self.previousWeekReceipts)[receiptIndex];
             break;
             
         case TimePeriodPreviousMonth:
-            receiptInfo = [self.previousMonthReceipts objectAtIndex: receiptIndex];
+            receiptInfo = (self.previousMonthReceipts)[receiptIndex];
             break;
             
         case TimePeriodViewAll:
-            receiptInfo = [self.viewAllReceipts objectAtIndex: receiptIndex];
+            receiptInfo = (self.viewAllReceipts)[receiptIndex];
             break;
             
         default:
@@ -441,11 +440,11 @@ typedef enum : NSUInteger
 {
     NSDictionary *thisReceiptInfo = [self getReceiptInfoFromTag:checkBox.tag];
 
-    NSString *receiptID = [thisReceiptInfo objectForKey: kReceiptIDKey];
+    NSString *receiptID = thisReceiptInfo[kReceiptIDKey];
 
     if (checkBox.checkState == M13CheckboxStateChecked)
     {
-        [self.selectedReceipts setObject: @"GARBAGE" forKey: receiptID];
+        (self.selectedReceipts)[receiptID] = @"GARBAGE";
     }
     else
     {
@@ -466,7 +465,7 @@ typedef enum : NSUInteger
 
 - (void) setYearLabelToBe: (NSInteger) year
 {
-    [self.taxYearLabel setText: [NSString stringWithFormat: NSLocalizedString(@"%ld Tax Year", nil), (long)year]];
+    (self.taxYearLabel).text = [NSString stringWithFormat: NSLocalizedString(@"%ld Tax Year", nil), (long)year];
 }
 
 - (void) setCurrentlySelectedYear: (NSNumber *) currentlySelectedYear
@@ -495,7 +494,7 @@ typedef enum : NSUInteger
     
     [self fetchViewAllReceipts];
     
-    [self.selectAllCheckBox setCheckState:M13CheckboxStateUnchecked];
+    (self.selectAllCheckBox).checkState = M13CheckboxStateUnchecked;
     
     [self selectAllCheckChangedValue:self.selectAllCheckBox];
     
@@ -562,7 +561,7 @@ typedef enum : NSUInteger
 {
     NSDictionary *thisReceiptInfo = [self getReceiptInfoFromTag:sender.tag];
     
-    NSString *receiptID = [thisReceiptInfo objectForKey: kReceiptIDKey];
+    NSString *receiptID = thisReceiptInfo[kReceiptIDKey];
     
     //push to Receipt Checking view directly if this receipt has no items
     NSArray *records = [self.dataService fetchRecordsForReceiptID: receiptID];
@@ -594,9 +593,9 @@ typedef enum : NSUInteger
     
     self.transferSelectionsPopover = [[WYPopoverController alloc] initWithContentViewController: self.transferSelectionsViewController];
     
-    [self.transferSelectionsViewController setDelegate: self];
+    (self.transferSelectionsViewController).delegate = self;
     
-    [self.transferSelectionsViewController setHighlightedSelectionIndex: -1];
+    (self.transferSelectionsViewController).highlightedSelectionIndex = -1;
     
     [self.transferSelectionsPopover presentPopoverFromRect: self.transferButton.frame inView: self.view permittedArrowDirections: WYPopoverArrowDirectionDown animated: YES];
 }
@@ -658,28 +657,28 @@ typedef enum : NSUInteger
         {
             for (NSDictionary *receiptInfo in self.recentUploadReceipts)
             {
-                NSString *receiptID = [receiptInfo objectForKey: kReceiptIDKey];
+                NSString *receiptID = receiptInfo[kReceiptIDKey];
                 
                 [receiptIDsToDelete addObject:receiptID];
             }
             
             for (NSDictionary *receiptInfo in self.previousWeekReceipts)
             {
-                NSString *receiptID = [receiptInfo objectForKey: kReceiptIDKey];
+                NSString *receiptID = receiptInfo[kReceiptIDKey];
                 
                 [receiptIDsToDelete addObject:receiptID];
             }
             
             for (NSDictionary *receiptInfo in self.previousMonthReceipts)
             {
-                NSString *receiptID = [receiptInfo objectForKey: kReceiptIDKey];
+                NSString *receiptID = receiptInfo[kReceiptIDKey];
                 
                 [receiptIDsToDelete addObject:receiptID];
             }
             
             for (NSDictionary *receiptInfo in self.viewAllReceipts)
             {
-                NSString *receiptID = [receiptInfo objectForKey: kReceiptIDKey];
+                NSString *receiptID = receiptInfo[kReceiptIDKey];
                 
                 [receiptIDsToDelete addObject:receiptID];
             }
@@ -734,28 +733,28 @@ typedef enum : NSUInteger
         
         for (NSDictionary *receiptInfo in self.recentUploadReceipts)
         {
-            NSString *receiptID = [receiptInfo objectForKey: kReceiptIDKey];
+            NSString *receiptID = receiptInfo[kReceiptIDKey];
             
             [receiptIDsToTransfer addObject:receiptID];
         }
         
         for (NSDictionary *receiptInfo in self.previousWeekReceipts)
         {
-            NSString *receiptID = [receiptInfo objectForKey: kReceiptIDKey];
+            NSString *receiptID = receiptInfo[kReceiptIDKey];
             
             [receiptIDsToTransfer addObject:receiptID];
         }
         
         for (NSDictionary *receiptInfo in self.previousMonthReceipts)
         {
-            NSString *receiptID = [receiptInfo objectForKey: kReceiptIDKey];
+            NSString *receiptID = receiptInfo[kReceiptIDKey];
             
             [receiptIDsToTransfer addObject:receiptID];
         }
         
         for (NSDictionary *receiptInfo in self.viewAllReceipts)
         {
-            NSString *receiptID = [receiptInfo objectForKey: kReceiptIDKey];
+            NSString *receiptID = receiptInfo[kReceiptIDKey];
             
             [receiptIDsToTransfer addObject:receiptID];
         }
@@ -826,7 +825,7 @@ typedef enum : NSUInteger
         }
         else
         {
-            self.taxYearToAdd = [self.possibleTaxYears firstObject];
+            self.taxYearToAdd = (self.possibleTaxYears).firstObject;
             
             [self.invisibleNewTaxYearField becomeFirstResponder];
         }
@@ -1005,21 +1004,21 @@ typedef enum : NSUInteger
             case TimePeriodRecent:
                 if (self.recentUploadReceipts.count)
                 {
-                    thisReceiptInfo = [self.recentUploadReceipts objectAtIndex: indexPath.row - 1];
+                    thisReceiptInfo = (self.recentUploadReceipts)[indexPath.row - 1];
                 }
                 break;
 
             case TimePeriodPreviousWeek:
                 if (self.previousWeekReceipts.count)
                 {
-                    thisReceiptInfo = [self.previousWeekReceipts objectAtIndex: indexPath.row - 1];
+                    thisReceiptInfo = (self.previousWeekReceipts)[indexPath.row - 1];
                 }
                 break;
 
             case TimePeriodPreviousMonth:
                 if (self.previousMonthReceipts.count)
                 {
-                    thisReceiptInfo = [self.previousMonthReceipts objectAtIndex: indexPath.row - 1];
+                    thisReceiptInfo = (self.previousMonthReceipts)[indexPath.row - 1];
 
                 }
                 break;
@@ -1027,7 +1026,7 @@ typedef enum : NSUInteger
             case TimePeriodViewAll:
                 if (self.viewAllReceipts.count)
                 {
-                    thisReceiptInfo = [self.viewAllReceipts objectAtIndex: indexPath.row - 1];
+                    thisReceiptInfo = (self.viewAllReceipts)[indexPath.row - 1];
                 }
                 break;
 
@@ -1059,39 +1058,39 @@ typedef enum : NSUInteger
                 cell = [[ReceiptTimeTableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: cellId2];
             }
             
-            [cell.checkBoxView.titleLabel setFont: [UIFont latoFontOfSize: 13]];
-            [cell.checkBoxView.titleLabel setTextColor: [UIColor blackColor]];
-            [cell.checkBoxView setStrokeColor: [UIColor grayColor]];
-            [cell.checkBoxView setCheckColor: self.lookAndFeel.appGreenColor];
-            [cell.checkBoxView setCheckAlignment: M13CheckboxAlignmentLeft];
-            [cell.checkBoxView setTag: (checkBoxTagOffset + indexPath.row - 1)];
+            (cell.checkBoxView.titleLabel).font = [UIFont latoFontOfSize: 13];
+            (cell.checkBoxView.titleLabel).textColor = [UIColor blackColor];
+            (cell.checkBoxView).strokeColor = [UIColor grayColor];
+            (cell.checkBoxView).checkColor = self.lookAndFeel.appGreenColor;
+            (cell.checkBoxView).checkAlignment = M13CheckboxAlignmentLeft;
+            (cell.checkBoxView).tag = (checkBoxTagOffset + indexPath.row - 1);
             [cell.checkBoxView addTarget: self action: @selector(singleReceiptCheckChangedValue:) forControlEvents: UIControlEventValueChanged];
             
-            NSString *receiptID = [thisReceiptInfo objectForKey: kReceiptIDKey];
+            NSString *receiptID = thisReceiptInfo[kReceiptIDKey];
             
-            if (self.selectAllReceipts || [self.selectedReceipts objectForKey: receiptID])
+            if (self.selectAllReceipts || (self.selectedReceipts)[receiptID])
             {
-                [cell.checkBoxView setCheckState: M13CheckboxStateChecked];
+                (cell.checkBoxView).checkState = M13CheckboxStateChecked;
             }
             else
             {
-                [cell.checkBoxView setCheckState: M13CheckboxStateUnchecked];
+                (cell.checkBoxView).checkState = M13CheckboxStateUnchecked;
             }
             
-            NSDate *receiptDate = [thisReceiptInfo objectForKey: kUploadTimeKey];
+            NSDate *receiptDate = thisReceiptInfo[kUploadTimeKey];
             
-            [self.dateFormatter setDateFormat: @"dd/MM/yyyy"];
+            (self.dateFormatter).dateFormat = @"dd/MM/yyyy";
             
-            [cell.dateLabel setText: [self.dateFormatter stringFromDate: receiptDate]];
+            (cell.dateLabel).text = [self.dateFormatter stringFromDate: receiptDate];
             
-            [self.dateFormatter setDateFormat: @"hh:mm a"];
+            (self.dateFormatter).dateFormat = @"hh:mm a";
             
             cell.receiptCounterView.imageButton.tag = (checkBoxTagOffset + indexPath.row - 1);
             [cell.receiptCounterView.imageButton addTarget:self action:@selector(receiptDetailsPressed:) forControlEvents:UIControlEventTouchUpInside];
             
-            NSInteger numberOfRecords = [[thisReceiptInfo objectForKey:kNumberOfRecordsKey] integerValue];
+            NSInteger numberOfRecords = [thisReceiptInfo[kNumberOfRecordsKey] integerValue];
             
-            [cell.receiptCounterView setCounter:numberOfRecords];
+            (cell.receiptCounterView).counter = numberOfRecords;
             
             [cell.receiptCounterView setToGreen];
             
@@ -1184,14 +1183,14 @@ typedef enum : NSUInteger
 
 #pragma mark - Tutorial
 
-typedef enum : NSUInteger
+typedef NS_ENUM(NSUInteger, TutorialSteps)
 {
     TutorialStep18,
-} TutorialSteps;
+};
 
 -(void)setupTutorials
 {
-    [self.tutorialManager setDelegate:self];
+    (self.tutorialManager).delegate = self;
     
     self.tutorials = [NSMutableArray new];
     
@@ -1211,7 +1210,7 @@ typedef enum : NSUInteger
 {
     if (self.tutorials.count && step < self.tutorials.count)
     {
-        TutorialStep *tutorialStep = [self.tutorials objectAtIndex:step];
+        TutorialStep *tutorialStep = (self.tutorials)[step];
         
         [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
     }

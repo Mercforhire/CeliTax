@@ -80,10 +80,10 @@
 
 -(void)loadUserData
 {
-    [self.profileImageView setImage: self.userManager.user.avatarImage];
+    (self.profileImageView).image = self.userManager.user.avatarImage;
     
-    [self.firstnameField setText:self.userManager.user.firstname];
-    [self.lastnameField setText:self.userManager.user.lastname];
+    (self.firstnameField).text = self.userManager.user.firstname;
+    (self.lastnameField).text = self.userManager.user.lastname;
     
     self.country = self.userManager.user.country;
     
@@ -108,12 +108,12 @@
  
     [self loadUserData];
     
-    [self.firstnameField setDelegate:self];
+    (self.firstnameField).delegate = self;
     [self.firstnameField addTarget: self
                            action: @selector(textFieldDidChange:)
                  forControlEvents: UIControlEventEditingChanged];
     
-    [self.lastnameField setDelegate:self];
+    (self.lastnameField).delegate = self;
     [self.lastnameField addTarget: self
                            action: @selector(textFieldDidChange:)
                  forControlEvents: UIControlEventEditingChanged];
@@ -246,13 +246,13 @@
     
     if ([_country isEqualToString: @"Canada"])
     {
-        [self.canadaButton setAlpha: 1];
-        [self.usaButton setAlpha: 0.2];
+        (self.canadaButton).alpha = 1;
+        (self.usaButton).alpha = 0.2;
     }
     else
     {
-        [self.canadaButton setAlpha: 0.2];
-        [self.usaButton setAlpha: 1];
+        (self.canadaButton).alpha = 0.2;
+        (self.usaButton).alpha = 1;
     }
 }
 
@@ -275,8 +275,8 @@
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void) keyboardWillShow: (NSNotification *) aNotification
 {
-    NSDictionary *info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey: UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    NSDictionary *info = aNotification.userInfo;
+    CGSize kbSize = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
     [self.view scrollToY: 0 - kbSize.height / 2];
 }
@@ -315,7 +315,7 @@
         [self.userManager deleteUsersAvatar];
         
         //Reload the image
-        [self.profileImageView setImage: self.userManager.user.avatarImage];
+        (self.profileImageView).image = self.userManager.user.avatarImage;
     }
     else if ([buttonTitle isEqualToString:kOther1Title])
     {
@@ -327,8 +327,8 @@
                 [self loadcamera];
             }
             
-            [self.imagePicker setSourceType: UIImagePickerControllerSourceTypeCamera];
-            [self.imagePicker setDelegate: self];
+            (self.imagePicker).sourceType = UIImagePickerControllerSourceTypeCamera;
+            (self.imagePicker).delegate = self;
             
             self.imagePicker.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
             self.imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
@@ -351,8 +351,8 @@
                 self.imagePicker = [[UIImagePickerController alloc] init];
             }
             
-            [self.imagePicker setSourceType: UIImagePickerControllerSourceTypePhotoLibrary];
-            [self.imagePicker setDelegate: self];
+            (self.imagePicker).sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            (self.imagePicker).delegate = self;
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
@@ -370,8 +370,8 @@
             self.imagePicker = [[UIImagePickerController alloc] init];
         }
         
-        [self.imagePicker setSourceType: UIImagePickerControllerSourceTypePhotoLibrary];
-        [self.imagePicker setDelegate: self];
+        (self.imagePicker).sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        (self.imagePicker).delegate = self;
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -419,7 +419,7 @@
 
 - (void) textFieldDidChange: (UITextField *) textfield
 {
-    textfield.text = [textfield.text capitalizedString];
+    textfield.text = (textfield.text).capitalizedString;
     
     if (textfield.text.length)
     {

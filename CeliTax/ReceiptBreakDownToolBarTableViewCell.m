@@ -14,7 +14,7 @@
 {
     // Initialization code
 
-    [self setSelectionStyle: UITableViewCellSelectionStyleNone];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     
     [self.transferButton setTitle:NSLocalizedString(@"Transfer", nil) forState:UIControlStateNormal];
     [self.deleteButton setTitle:NSLocalizedString(@"Delete", nil) forState:UIControlStateNormal];

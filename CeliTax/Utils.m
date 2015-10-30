@@ -37,7 +37,7 @@
 + (BOOL) archiveFile: (id) objectToArchive toFile: (NSString *) path
 {
     @try {
-        NSString *pathOnly = [path stringByDeletingLastPathComponent];
+        NSString *pathOnly = path.stringByDeletingLastPathComponent;
 
         if (![[NSFileManager defaultManager] fileExistsAtPath: pathOnly])
         {
@@ -65,7 +65,7 @@
 
 + (NSString *) getSavedProfilePath
 {
-    NSString *storagePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *storagePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).lastObject;
     
     NSString *profileFilePath = [storagePath stringByAppendingPathComponent: @"CURRENT_USER.acc"];
     
@@ -125,9 +125,9 @@
 
 + (NSString *) getProfileImagePathForUser: (NSString *) userKey
 {
-    NSString *storagePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *storagePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).lastObject;
     
-    NSString *imageFilePath = [storagePath stringByAppendingPathComponent: [NSString stringWithFormat: @"PROFILE_IMAGE-%ld.jpg",(unsigned long)[userKey hash]]];
+    NSString *imageFilePath = [storagePath stringByAppendingPathComponent: [NSString stringWithFormat: @"PROFILE_IMAGE-%ld.jpg",(unsigned long)userKey.hash]];
     
     return imageFilePath;
 }
@@ -192,9 +192,9 @@
 
 + (NSString *) getImageStorageFolderPathForUser: (NSString *) userKey
 {
-    NSString *storagePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *storagePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).lastObject;
 
-    NSString *imageFolderName = [NSString stringWithFormat: @"/Images-%ld", (unsigned long)[userKey hash]];
+    NSString *imageFolderName = [NSString stringWithFormat: @"/Images-%ld", (unsigned long)userKey.hash];
 
     NSString *imageFolderPath = [storagePath stringByAppendingString: imageFolderName];
 
@@ -372,7 +372,7 @@
 
     rectTransform = CGAffineTransformScale(rectTransform, originalImage.scale, originalImage.scale);
 
-    CGImageRef imageRef = CGImageCreateWithImageInRect([originalImage CGImage], CGRectApplyAffineTransform(cropRect, rectTransform));
+    CGImageRef imageRef = CGImageCreateWithImageInRect(originalImage.CGImage, CGRectApplyAffineTransform(cropRect, rectTransform));
     UIImage *result = [UIImage imageWithCGImage: imageRef scale: originalImage.scale orientation: originalImage.imageOrientation];
     CGImageRelease(imageRef);
     // return result;
@@ -404,11 +404,11 @@
     {
         NSArray *filePathComponents = [filePath componentsSeparatedByString:@"/"];
         
-        NSString *wholeFilename = [filePathComponents lastObject];
+        NSString *wholeFilename = filePathComponents.lastObject;
         
         NSArray *filenameComponents = [wholeFilename componentsSeparatedByString:@"."];
         
-        NSString *filename = [filenameComponents firstObject];
+        NSString *filename = filenameComponents.firstObject;
         
         [filenames addObject:filename];
     }
@@ -428,7 +428,7 @@
 
 + (NSString *) generateUniqueID
 {
-    return [[NSUUID UUID] UUIDString];
+    return [NSUUID UUID].UUIDString;
 }
 
 + (int) randomNumberBetween: (int) min maxNumber: (int) max
@@ -441,7 +441,7 @@
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *calendarComponents = [calendar components: NSCalendarUnitYear fromDate: [NSDate date]];
 
-    NSInteger currentYear = [calendarComponents year];
+    NSInteger currentYear = calendarComponents.year;
 
     return currentYear;
 }
@@ -451,7 +451,7 @@
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *calendarComponents = [calendar components: (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay |  NSCalendarUnitWeekday) fromDate: [NSDate date]];
 
-    NSInteger weekDayOfToday = [calendarComponents weekday]; // 1 = Sunday, 2 = Monday, etc.
+    NSInteger weekDayOfToday = calendarComponents.weekday; // 1 = Sunday, 2 = Monday, etc.
 
     NSInteger numberOfDaysSinceMonday = 0;
 
@@ -464,11 +464,11 @@
         numberOfDaysSinceMonday =  weekDayOfToday - 2;
     }
 
-    [calendarComponents setDay: (calendarComponents.day - numberOfDaysSinceMonday)];
+    calendarComponents.day = (calendarComponents.day - numberOfDaysSinceMonday);
 
-    [calendarComponents setCalendar: calendar];  // Must do this before calling [NSDateComponents date]
+    calendarComponents.calendar = calendar;  // Must do this before calling [NSDateComponents date]
 
-    NSDate *mondayOfThisWeek = [calendarComponents date];
+    NSDate *mondayOfThisWeek = calendarComponents.date;
 
     return mondayOfThisWeek;
 }
@@ -478,7 +478,7 @@
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *calendarComponents = [calendar components: (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay |  NSCalendarUnitWeekday) fromDate: [NSDate date]];
 
-    NSInteger weekDayOfToday = [calendarComponents weekday]; // 1 = Sunday, 2 = Monday, etc.
+    NSInteger weekDayOfToday = calendarComponents.weekday; // 1 = Sunday, 2 = Monday, etc.
 
     NSInteger numberOfDaysSinceMonday = 0;
 
@@ -491,13 +491,13 @@
         numberOfDaysSinceMonday =  weekDayOfToday - 2;
     }
 
-    [calendarComponents setDay: (calendarComponents.day - numberOfDaysSinceMonday)];
+    calendarComponents.day = (calendarComponents.day - numberOfDaysSinceMonday);
 
-    [calendarComponents setDay: (calendarComponents.day - 7)];
+    calendarComponents.day = (calendarComponents.day - 7);
 
-    [calendarComponents setCalendar: calendar];  // Must do this before calling [NSDateComponents date]
+    calendarComponents.calendar = calendar;  // Must do this before calling [NSDateComponents date]
 
-    NSDate *mondayOfPreviousWeek = [calendarComponents date];
+    NSDate *mondayOfPreviousWeek = calendarComponents.date;
 
     return mondayOfPreviousWeek;
 }
@@ -507,11 +507,11 @@
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *calendarComponents = [calendar components: (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay |  NSCalendarUnitWeekday) fromDate: [NSDate date]];
 
-    [calendarComponents setDay: 1];
+    calendarComponents.day = 1;
 
-    [calendarComponents setCalendar: calendar];  // Must do this before calling [NSDateComponents date]
+    calendarComponents.calendar = calendar;  // Must do this before calling [NSDateComponents date]
 
-    NSDate *firstDayOfThisMonth = [calendarComponents date];
+    NSDate *firstDayOfThisMonth = calendarComponents.date;
 
     return firstDayOfThisMonth;
 }
@@ -521,25 +521,25 @@
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *calendarComponents = [calendar components: (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay |  NSCalendarUnitWeekday) fromDate: [NSDate date]];
 
-    [calendarComponents setDay: 1];
+    calendarComponents.day = 1;
 
-    NSInteger currentMonth = [calendarComponents month];
+    NSInteger currentMonth = calendarComponents.month;
 
     // if current month is January, we want to set the month to December of last year
     if (currentMonth == 1)
     {
-        [calendarComponents setYear: calendarComponents.year - 1];
+        calendarComponents.year = calendarComponents.year - 1;
 
-        [calendarComponents setMonth: 12];
+        calendarComponents.month = 12;
     }
     else
     {
-        [calendarComponents setMonth: calendarComponents.month - 1];
+        calendarComponents.month = calendarComponents.month - 1;
     }
 
-    [calendarComponents setCalendar: calendar];  // Must do this before calling [NSDateComponents date]
+    calendarComponents.calendar = calendar;  // Must do this before calling [NSDateComponents date]
 
-    NSDate *firstDayOfPreviousMonth = [calendarComponents date];
+    NSDate *firstDayOfPreviousMonth = calendarComponents.date;
 
     return firstDayOfPreviousMonth;
 }
@@ -559,7 +559,7 @@
 + (NSDate *) dateFromDateString:(NSString *)dateString
 {
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"yyyy-MM-dd"];
+    df.dateFormat = @"yyyy-MM-dd";
     NSDate *expirationDate = [df dateFromString: dateString];
     
     return expirationDate;

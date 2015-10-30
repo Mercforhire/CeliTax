@@ -122,22 +122,22 @@
     CGPoint pieChartCenter = self.pieChartContainer.center;
     pieChartCenter.y = pieChartCenter.y + 20;
     
-    [self.pieChart setCenter: pieChartCenter];
+    (self.pieChart).center = pieChartCenter;
 
     [self.pieChartContainer addSubview: self.pieChart];
 
-    [self.pieChart setBackgroundColor: [UIColor clearColor]];
-    [self.pieChart setDataSource: self];
-    [self.pieChart setDelegate: self];
+    (self.pieChart).backgroundColor = [UIColor clearColor];
+    (self.pieChart).dataSource = self;
+    (self.pieChart).delegate = self;
     [self.pieChart setStartPieAngle: M_PI_2];
-    [self.pieChart setAnimationSpeed: 1.0];
-    [self.pieChart setLabelFont: [UIFont latoFontOfSize: 10]];
-    [self.pieChart setLabelRadius: self.pieChart.frame.size.width / 4];
+    (self.pieChart).animationSpeed = 1.0;
+    (self.pieChart).labelFont = [UIFont latoFontOfSize: 10];
+    (self.pieChart).labelRadius = self.pieChart.frame.size.width / 4;
     [self.pieChart setShowPercentage: NO];
     [self.pieChart setPieBackgroundColor: [UIColor clearColor]];
     [self.pieChart setUserInteractionEnabled: YES];
-    [self.pieChart setLabelShadowColor: [UIColor blackColor]];
-    [self.pieChart setSelectedSliceOffsetRadius: 0];
+    (self.pieChart).labelShadowColor = [UIColor blackColor];
+    (self.pieChart).selectedSliceOffsetRadius = 0;
     
     // set up the National Average Cost ? button
     self.navHelpButton = [[UIButton alloc] initWithFrame:CGRectMake(self.pieChartContainer.frame.size.width - 27 - 35,
@@ -147,8 +147,8 @@
     
     [self.navHelpButton setTitle:@"?" forState:UIControlStateNormal];
     [self.navHelpButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.navHelpButton.titleLabel setFont:[UIFont latoFontOfSize:15]];
-    [self.navHelpButton setBackgroundColor:self.lookAndFeel.appGreenColor];
+    (self.navHelpButton.titleLabel).font = [UIFont latoFontOfSize:15];
+    (self.navHelpButton).backgroundColor = self.lookAndFeel.appGreenColor;
     
     self.navHelpButton.layer.cornerRadius = self.navHelpButton.frame.size.width / 2;
     [self.navHelpButton setClipsToBounds: YES];
@@ -157,7 +157,7 @@
     
     [self.pieChartContainer addSubview: self.navHelpButton];
     
-    [self.accountTableView setTableHeaderView: self.pieChartContainer];
+    (self.accountTableView).tableHeaderView = self.pieChartContainer;
     
     // other set up
     [self.calculateButton setLookAndFeel:self.lookAndFeel];
@@ -165,7 +165,7 @@
     
     if (self.configurationManager.getCurrentTaxYear)
     {
-        [self.titleLabel setText:[NSString stringWithFormat:NSLocalizedString(@"Tax Year for %ld", nil), (long)self.configurationManager.getCurrentTaxYear.integerValue]];
+        (self.titleLabel).text = [NSString stringWithFormat:NSLocalizedString(@"Tax Year for %ld", nil), (long)self.configurationManager.getCurrentTaxYear.integerValue];
     }
     
     self.numberToolbar = [[UIToolbar alloc]initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 50)];
@@ -176,12 +176,10 @@
                                                                         target: self
                                                                         action: @selector(doneOnKeyboardPressed)];
     
-    [doneToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
+    [doneToolbarButton setTitleTextAttributes: @{NSFontAttributeName: [UIFont latoBoldFontOfSize: 15], NSForegroundColorAttributeName: [UIColor blackColor]} forState: UIControlStateNormal];
     
-    self.numberToolbar.items = [NSArray arrayWithObjects:
-                                [[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil],
-                                doneToolbarButton,
-                                nil];
+    self.numberToolbar.items = @[[[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil],
+                                doneToolbarButton];
     
     [self.numberToolbar sizeToFit];
     
@@ -225,8 +223,8 @@
                                                object: nil];
 
     // load user info
-    [self.profileBarView.nameLabel setText: [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]];
-    [self.profileBarView.profileImageView setImage: self.userManager.user.avatarImage];
+    (self.profileBarView.nameLabel).text = [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname];
+    (self.profileBarView.profileImageView).image = self.userManager.user.avatarImage;
     
     // reset all state values
     self.categoryRowsForEachCategory = [NSMutableDictionary new];
@@ -264,7 +262,7 @@
         sampleCategory5.color = [UIColor purpleColor];
         sampleCategory5.localID = @"5";
         
-        self.catagories = [[NSArray alloc] initWithObjects:sampleCategory1, sampleCategory2, sampleCategory3, sampleCategory4, sampleCategory5, nil];
+        self.catagories = @[sampleCategory1, sampleCategory2, sampleCategory3, sampleCategory4, sampleCategory5];
     }
     else
     {
@@ -303,7 +301,7 @@
         {
             NSString *key = [Record unitTypeIntToUnitTypeString:record.unitType];
             
-            NSMutableArray *recordsOfSameType = [recordsOfEachType objectForKey:key];
+            NSMutableArray *recordsOfSameType = recordsOfEachType[key];
             
             if (!recordsOfSameType)
             {
@@ -312,21 +310,21 @@
             
             [recordsOfSameType addObject:record];
             
-            [recordsOfEachType setObject:recordsOfSameType forKey:key];
+            recordsOfEachType[key] = recordsOfSameType;
         }
         
         //Always have a row for kUnitItemKey
-        if (![recordsOfEachType objectForKey:kUnitItemKey])
+        if (!recordsOfEachType[kUnitItemKey])
         {
             float nationalAverageCost = 0;
             
-            if (![catagory.nationalAverageCosts objectForKey:kUnitItemKey])
+            if (!(catagory.nationalAverageCosts)[kUnitItemKey])
             {
                 nationalAverageCost = -1;
             }
             else
             {
-                nationalAverageCost = [[catagory.nationalAverageCosts objectForKey:kUnitItemKey] floatValue];
+                nationalAverageCost = [(catagory.nationalAverageCosts)[kUnitItemKey] floatValue];
             }
             
             CategoryRow *categoryRow = [CategoryRow new];
@@ -337,16 +335,16 @@
             categoryRow.totalAmount = 0;
             categoryRow.nationalAverageCost = nationalAverageCost;
             
-            if ([self.categoryRowsForEachCategory objectForKey:catagory.localID])
+            if ((self.categoryRowsForEachCategory)[catagory.localID])
             {
-                [[self.categoryRowsForEachCategory objectForKey:catagory.localID] addObject: categoryRow];
+                [(self.categoryRowsForEachCategory)[catagory.localID] addObject: categoryRow];
             }
             else
             {
                 NSMutableArray *categoryRows = [NSMutableArray new];
                 [categoryRows addObject:categoryRow];
                 
-                [self.categoryRowsForEachCategory setObject:categoryRows forKey:catagory.localID];
+                (self.categoryRowsForEachCategory)[catagory.localID] = categoryRows;
             }
             
             //if we are coming back to this View and self.currentlySelectedRow already exist, we need to update self.currentlySelectedRow to point to the new object in self.catagoryRows
@@ -361,11 +359,11 @@
         }
         
         //Process the Unit Types in order: Item, ML, L, G, KG
-        NSArray *orderOfUnitTypesToProcess = [NSArray arrayWithObjects:kUnitItemKey, kUnitMLKey, kUnitLKey, kUnitGKey, kUnit100GKey, kUnitKGKey,kUnitFlozKey,kUnitPtKey,kUnitQtKey,kUnitGalKey,kUnitOzKey,kUnitLbKey, nil];
+        NSArray *orderOfUnitTypesToProcess = @[kUnitItemKey, kUnitMLKey, kUnitLKey, kUnitGKey, kUnit100GKey, kUnitKGKey,kUnitFlozKey,kUnitPtKey,kUnitQtKey,kUnitGalKey,kUnitOzKey,kUnitLbKey];
         
         for (NSString *key in orderOfUnitTypesToProcess)
         {
-            NSMutableArray *recordsOfSameType = [recordsOfEachType objectForKey:key];
+            NSMutableArray *recordsOfSameType = recordsOfEachType[key];
             
             if (!recordsOfSameType.count)
             {
@@ -387,13 +385,13 @@
             
             float nationalAverageCost = 0;
             
-            if (![catagory.nationalAverageCosts objectForKey:key])
+            if (!(catagory.nationalAverageCosts)[key])
             {
                 nationalAverageCost = -1;
             }
             else
             {
-                nationalAverageCost = [[catagory.nationalAverageCosts objectForKey:key] floatValue];
+                nationalAverageCost = [(catagory.nationalAverageCosts)[key] floatValue];
             }
             
             CategoryRow *categoryRow = [CategoryRow new];
@@ -404,16 +402,16 @@
             categoryRow.totalAmount = totalAmountSpentOnThisCatagoryAndUnitType;
             categoryRow.nationalAverageCost = nationalAverageCost;
             
-            if ([self.categoryRowsForEachCategory objectForKey:catagory.localID])
+            if ((self.categoryRowsForEachCategory)[catagory.localID])
             {
-                [[self.categoryRowsForEachCategory objectForKey:catagory.localID] addObject: categoryRow];
+                [(self.categoryRowsForEachCategory)[catagory.localID] addObject: categoryRow];
             }
             else
             {
                 NSMutableArray *categoryRows = [NSMutableArray new];
                 [categoryRows addObject:categoryRow];
                 
-                [self.categoryRowsForEachCategory setObject:categoryRows forKey:catagory.localID];
+                (self.categoryRowsForEachCategory)[catagory.localID] = categoryRows;
             }
             
             //if we are coming back to this View and self.currentlySelectedRow already exist, we need to update self.currentlySelectedRow to point to the new object in self.catagoryRows
@@ -424,18 +422,18 @@
                 self.currentlySelectedRow = categoryRow;
                 
                 [self.accountTableView scrollToRowAtIndexPath:
-                 [NSIndexPath indexPathForRow: [[self.categoryRowsForEachCategory objectForKey:catagory.localID] indexOfObject:self.currentlySelectedRow] * 2 inSection: 0]
+                 [NSIndexPath indexPathForRow: [(self.categoryRowsForEachCategory)[catagory.localID] indexOfObject:self.currentlySelectedRow] * 2 inSection: 0]
                                              atScrollPosition: UITableViewScrollPositionTop
                                                      animated: YES];
             }
         }
         
-        [categoryTotalAmount setObject:[NSNumber numberWithFloat:totalAmountForCatagory] forKey:catagory.localID];
+        categoryTotalAmount[catagory.localID] = @(totalAmountForCatagory);
     }
     
-    if ([self.categoryRowsForEachCategory objectForKey:self.currentlySelectedCategory.localID])
+    if ((self.categoryRowsForEachCategory)[self.currentlySelectedCategory.localID])
     {
-        if ([[self.categoryRowsForEachCategory objectForKey:self.currentlySelectedCategory.localID] indexOfObject:self.currentlySelectedRow] == NSNotFound)
+        if ([(self.categoryRowsForEachCategory)[self.currentlySelectedCategory.localID] indexOfObject:self.currentlySelectedRow] == NSNotFound)
         {
             self.currentlySelectedRow = nil;
         }
@@ -473,18 +471,18 @@
         [self.sliceColors addObject: catagory.color];
         [self.sliceNames addObject: catagory.name];
         
-        NSNumber *totalForCategory = [categoryTotalAmount objectForKey:catagory.localID];
+        NSNumber *totalForCategory = categoryTotalAmount[catagory.localID];
         
         float sumAmount = 0;
         
         if (totalForCategory)
         {
-            sumAmount = [totalForCategory floatValue];
+            sumAmount = totalForCategory.floatValue;
         }
         
         if (totalTaxYearAmount == 0)
         {
-            [self.slicePercentages addObject: [NSNumber numberWithInt: 0]];
+            [self.slicePercentages addObject: @0];
         }
         else
         {
@@ -540,9 +538,9 @@
 //Called when receive a kReceiptItemsTableReceiptPressedNotification Notification
 - (void) openReceiptBreakDownView: (NSNotification *) notification
 {
-    NSDictionary *notificationDictionary = [notification userInfo];
+    NSDictionary *notificationDictionary = notification.userInfo;
 
-    NSString *receiptID = [notificationDictionary objectForKey: kReceiptIDKey];
+    NSString *receiptID = notificationDictionary[kReceiptIDKey];
 
     [self.navigationController pushViewController: [self.viewControllerFactory createReceiptBreakDownViewControllerForReceiptID: receiptID cameFromReceiptCheckingViewController: NO] animated: YES];
 }
@@ -663,8 +661,8 @@
 {
     if (!self.currentlySelectedRow)
     {
-        NSDictionary *info = [aNotification userInfo];
-        CGSize kbSize = [[info objectForKey: UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+        NSDictionary *info = aNotification.userInfo;
+        CGSize kbSize = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
         
         [self.view scrollToY: 0 - kbSize.height];
 
@@ -695,7 +693,7 @@
     // Check if all rows containing Records have national average entered
     for (NSString *categoryIDKey in self.categoryRowsForEachCategory.allKeys)
     {
-        NSMutableArray *categoryRows = [self.categoryRowsForEachCategory objectForKey:categoryIDKey];
+        NSMutableArray *categoryRows = (self.categoryRowsForEachCategory)[categoryIDKey];
         
         if (!allNationalAverageCostsEntered)
         {
@@ -777,7 +775,7 @@
 
 - (void) buttonClickedWithIndex: (NSInteger) index andName: (NSString *) name
 {
-    self.currentlySelectedCategory = [self.catagories objectAtIndex: index];
+    self.currentlySelectedCategory = (self.catagories)[index];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -801,9 +799,9 @@
 
 - (void) textFieldDidEndEditing: (UITextField *) textField
 {
-    NSMutableArray *categoryRows = [self.categoryRowsForEachCategory objectForKey:self.currentlySelectedCategory.localID];
+    NSMutableArray *categoryRows = (self.categoryRowsForEachCategory)[self.currentlySelectedCategory.localID];
     
-    CategoryRow *dataForThisRow = [categoryRows objectAtIndex: textField.tag];
+    CategoryRow *dataForThisRow = categoryRows[textField.tag];
     
     NSString *catagoryID = dataForThisRow.categoryID;
     
@@ -824,7 +822,7 @@
     }
     else
     {
-        [textField setText: [NSString stringWithFormat: @"%.2f", textField.text.floatValue]];
+        textField.text = [NSString stringWithFormat: @"%.2f", textField.text.floatValue];
         
         [self.manipulationService addOrUpdateNationalAverageCostForCatagoryID:catagoryID andUnitType:unitType amount:textField.text.floatValue save:YES];
         
@@ -843,19 +841,19 @@
 
 - (CGFloat) pieChart: (XYPieChart *) pieChart valueForSliceAtIndex: (NSUInteger) index
 {
-    return [[self.slicePercentages objectAtIndex: index] intValue];
+    return [(self.slicePercentages)[index] intValue];
 }
 
 - (UIColor *) pieChart: (XYPieChart *) pieChart colorForSliceAtIndex: (NSUInteger) index
 {
-    return [self.sliceColors objectAtIndex: (index % self.sliceColors.count)];
+    return (self.sliceColors)[(index % self.sliceColors.count)];
 }
 
 - (NSString *) pieChart: (XYPieChart *) pieChart textForSliceAtIndex: (NSUInteger) index
 {
     NSString *sliceText = [NSString stringWithFormat: @"%@\n%d%%",
-                           [self.sliceNames objectAtIndex: (index % self.sliceNames.count)],
-                           [[self.slicePercentages objectAtIndex: index] intValue]];
+                           (self.sliceNames)[(index % self.sliceNames.count)],
+                           [(self.slicePercentages)[index] intValue]];
 
     return sliceText;
 }
@@ -1006,7 +1004,7 @@
 {
     if (self.currentlySelectedCategory)
     {
-        NSMutableArray *categoryRows = [self.categoryRowsForEachCategory objectForKey:self.currentlySelectedCategory.localID];
+        NSMutableArray *categoryRows = (self.categoryRowsForEachCategory)[self.currentlySelectedCategory.localID];
         
         return categoryRows.count * 2;
     }
@@ -1030,16 +1028,16 @@
             cell.clipsToBounds = YES;
         }
 
-        NSMutableArray *categoryRows = [self.categoryRowsForEachCategory objectForKey:self.currentlySelectedCategory.localID];
+        NSMutableArray *categoryRows = (self.categoryRowsForEachCategory)[self.currentlySelectedCategory.localID];
         
         CategoryRow *dataForPreviousRow;
         
         if (indexPath.row >= 2)
         {
-            dataForPreviousRow = [categoryRows objectAtIndex:(indexPath.row - 2) / 2];
+            dataForPreviousRow = categoryRows[(indexPath.row - 2) / 2];
         }
         
-        CategoryRow *dataForThisRow = [categoryRows objectAtIndex:indexPath.row / 2];
+        CategoryRow *dataForThisRow = categoryRows[indexPath.row / 2];
         
         NSString *unitTypeString = dataForThisRow.unitTypeString;
         
@@ -1062,55 +1060,55 @@
 
         if ([unitTypeString isEqualToString:kUnitItemKey])
         {
-            [cell.categoryNameLabel setText: self.currentlySelectedCategory.name];
+            (cell.categoryNameLabel).text = self.currentlySelectedCategory.name;
         }
         else if ([unitTypeString isEqualToString:kUnitGKey])
         {
-            [cell.categoryNameLabel setText: @"(g)"];
+            (cell.categoryNameLabel).text = @"(g)";
         }
         else if ([unitTypeString isEqualToString:kUnit100GKey])
         {
-            [cell.categoryNameLabel setText: @"(100g)"];
+            (cell.categoryNameLabel).text = @"(100g)";
         }
         else if ([unitTypeString isEqualToString:kUnitKGKey])
         {
-            [cell.categoryNameLabel setText: @"(kg)"];
+            (cell.categoryNameLabel).text = @"(kg)";
         }
         else if ([unitTypeString isEqualToString:kUnitLKey])
         {
-            [cell.categoryNameLabel setText: @"(L)"];
+            (cell.categoryNameLabel).text = @"(L)";
         }
         else if ([unitTypeString isEqualToString:kUnitMLKey])
         {
-            [cell.categoryNameLabel setText: @"(mL)"];
+            (cell.categoryNameLabel).text = @"(mL)";
         }
         else if ([unitTypeString isEqualToString:kUnitFlozKey])
         {
-            [cell.categoryNameLabel setText: @"(fl oz)"];
+            (cell.categoryNameLabel).text = @"(fl oz)";
         }
         else if ([unitTypeString isEqualToString:kUnitPtKey])
         {
-            [cell.categoryNameLabel setText: @"(pt)"];
+            (cell.categoryNameLabel).text = @"(pt)";
         }
         else if ([unitTypeString isEqualToString:kUnitQtKey])
         {
-            [cell.categoryNameLabel setText: @"(qt)"];
+            (cell.categoryNameLabel).text = @"(qt)";
         }
         else if ([unitTypeString isEqualToString:kUnitGalKey])
         {
-            [cell.categoryNameLabel setText: @"(gal)"];
+            (cell.categoryNameLabel).text = @"(gal)";
         }
         else if ([unitTypeString isEqualToString:kUnitOzKey])
         {
-            [cell.categoryNameLabel setText: @"(oz)"];
+            (cell.categoryNameLabel).text = @"(oz)";
         }
         else if ([unitTypeString isEqualToString:kUnitLbKey])
         {
-            [cell.categoryNameLabel setText: @"(lb)"];
+            (cell.categoryNameLabel).text = @"(lb)";
         }
         
-        [cell.totalQuantityField setText: [NSString stringWithFormat: @"%ld", (long)quantity]];
-        [cell.totalAmountField setText: [NSString stringWithFormat: @"%.2f", amount]];
+        (cell.totalQuantityField).text = [NSString stringWithFormat: @"%ld", (long)quantity];
+        (cell.totalAmountField).text = [NSString stringWithFormat: @"%.2f", amount];
         
         [self.lookAndFeel applyGrayBorderTo: cell.totalQuantityField];
         [self.lookAndFeel applyGrayBorderTo: cell.totalAmountField];
@@ -1119,17 +1117,17 @@
         
         if (nationalAverageCost >= 0)
         {
-            [cell.averageNationalPriceField setText: [NSString stringWithFormat: @"%.2f", nationalAverageCost]];
+            (cell.averageNationalPriceField).text = [NSString stringWithFormat: @"%.2f", nationalAverageCost];
         }
         else
         {
-            [cell.averageNationalPriceField setText: @"--"];
+            (cell.averageNationalPriceField).text = @"--";
         }
         
-        [cell.averageNationalPriceField setDelegate: self];
+        (cell.averageNationalPriceField).delegate = self;
         
         //set the tag to be the index of the data for this row in respect to self.catagoryRows
-        [cell.averageNationalPriceField setTag: indexPath.row / 2];
+        (cell.averageNationalPriceField).tag = indexPath.row / 2;
         
         cell.averageNationalPriceField.inputAccessoryView = self.numberToolbar;
 
@@ -1204,7 +1202,7 @@
 
         cell.lookAndFeel = self.lookAndFeel;
 
-        [cell setSelectionStyle: UITableViewCellSelectionStyleNone];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         cell.clipsToBounds = YES;
 
@@ -1256,9 +1254,9 @@
         [cell.viewAllTriangle setUserInteractionEnabled:YES];
         [cell.viewAllTriangle addGestureRecognizer: viewAllLabelTap2];
 
-        NSMutableArray *categoryRows = [self.categoryRowsForEachCategory objectForKey:self.currentlySelectedCategory.localID];
+        NSMutableArray *categoryRows = (self.categoryRowsForEachCategory)[self.currentlySelectedCategory.localID];
         
-        CategoryRow *dataForThisRow = [categoryRows objectAtIndex:(indexPath.row - 1) / 2];
+        CategoryRow *dataForThisRow = categoryRows[(indexPath.row - 1) / 2];
         
         NSString *unitTypeString = dataForThisRow.unitTypeString;
         
@@ -1322,9 +1320,9 @@
     // display a UploadsHistoryTableViewCell
     else
     {
-        NSMutableArray *categoryRows = [self.categoryRowsForEachCategory objectForKey:self.currentlySelectedCategory.localID];
+        NSMutableArray *categoryRows = (self.categoryRowsForEachCategory)[self.currentlySelectedCategory.localID];
         
-        CategoryRow *dataForThisRow = [categoryRows objectAtIndex:(indexPath.row - 1) / 2];
+        CategoryRow *dataForThisRow = categoryRows[(indexPath.row - 1) / 2];
         
         if (self.currentlySelectedRow && self.currentlySelectedRow == dataForThisRow)
         {
@@ -1339,9 +1337,9 @@
 {
     if (indexPath.row % 2 == 0)
     {
-        NSMutableArray *categoryRows = [self.categoryRowsForEachCategory objectForKey:self.currentlySelectedCategory.localID];
+        NSMutableArray *categoryRows = (self.categoryRowsForEachCategory)[self.currentlySelectedCategory.localID];
         
-        CategoryRow *dataForThisRow = [categoryRows objectAtIndex:indexPath.row / 2];
+        CategoryRow *dataForThisRow = categoryRows[indexPath.row / 2];
         
         // Deselect
         if ( dataForThisRow == self.currentlySelectedRow )
@@ -1373,15 +1371,15 @@
 
 #pragma mark - Tutorial
 
-typedef enum : NSUInteger
+typedef NS_ENUM(NSUInteger, TutorialSteps)
 {
     TutorialStep19,
     TutorialStep20
-} TutorialSteps;
+};
 
 -(void)setupTutorials
 {
-    [self.tutorialManager setDelegate:self];
+    (self.tutorialManager).delegate = self;
     
     self.tutorials = [NSMutableArray new];
     
@@ -1414,7 +1412,7 @@ typedef enum : NSUInteger
 {
     if (self.tutorials.count && step < self.tutorials.count)
     {
-        TutorialStep *tutorialStep = [self.tutorials objectAtIndex:step];
+        TutorialStep *tutorialStep = (self.tutorials)[step];
         
         [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
     }

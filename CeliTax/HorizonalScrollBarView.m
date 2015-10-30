@@ -31,19 +31,19 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
     self.selectedButtonIndex = -1;
 
     UICollectionViewFlowLayout *collectionLayout = [[UICollectionViewFlowLayout alloc] init];
-    [collectionLayout setItemSize: CGSizeMake(87, 60)];
-    [collectionLayout setScrollDirection: UICollectionViewScrollDirectionHorizontal];
+    collectionLayout.itemSize = CGSizeMake(87, 60);
+    collectionLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
 
     CGRect frame = self.frame;
 
     self.collectionView = [[UICollectionView alloc] initWithFrame: CGRectMake(0, 0, frame.size.width, frame.size.height) collectionViewLayout: collectionLayout];
-    [self.collectionView setBackgroundColor: [UIColor clearColor]];
+    (self.collectionView).backgroundColor = [UIColor clearColor];
 
     UINib *selectionCollectionViewCell = [UINib nibWithNibName: @"SelectionCollectionViewCell" bundle: nil];
     [self.collectionView registerNib: selectionCollectionViewCell forCellWithReuseIdentifier: SelectionCollectionViewCellReuseIdentifier];
 
-    [self.collectionView setDataSource: self];
-    [self.collectionView setDelegate: self];
+    (self.collectionView).dataSource = self;
+    (self.collectionView).delegate = self;
     [self.collectionView setBounces: NO];
     [self addSubview: self.collectionView];
     
@@ -55,7 +55,7 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
     self.unselectable = YES;
 }
 
-- (id) initWithFrame: (CGRect) frame;
+- (instancetype) initWithFrame: (CGRect) frame;
 {
     self = [super initWithFrame: frame];
 
@@ -67,7 +67,7 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
     return self;
 }
 
-- (id) initWithCoder: (NSCoder *) aDecoder;
+- (instancetype) initWithCoder: (NSCoder *) aDecoder;
 {
     self = [super initWithCoder: aDecoder];
 
@@ -84,7 +84,7 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
     self.buttonNames = buttonNames;
     self.buttonColors = buttonColors;
 
-    [self.collectionView setContentSize: CGSizeMake(self.collectionView.contentSize.width + 10, self.collectionView.contentSize.height)];
+    (self.collectionView).contentSize = CGSizeMake(self.collectionView.contentSize.width + 10, self.collectionView.contentSize.height);
 
     [self.collectionView reloadData];
 }
@@ -109,7 +109,7 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
     {
         if (indexPath)
         {
-            NSString *clickedName = [self.buttonNames objectAtIndex: indexPath.row];
+            NSString *clickedName = (self.buttonNames)[indexPath.row];
             
             UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
             
@@ -131,7 +131,7 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
 
 -(void)simulateLongPressedOnFirstButton
 {
-    NSString *clickedName = [self.buttonNames objectAtIndex: 0];
+    NSString *clickedName = (self.buttonNames)[0];
     
     UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     
@@ -168,25 +168,25 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
         cell = [[SelectionCollectionViewCell alloc] initWithFrame: CGRectMake(0, 0, 87, 60)];
     }
 
-    UIColor *cellColor = [self.buttonColors objectAtIndex: indexPath.row];
+    UIColor *cellColor = (self.buttonColors)[indexPath.row];
 
-    [cell.selectionLabel setText: [self.buttonNames objectAtIndex: indexPath.row]];
+    (cell.selectionLabel).text = (self.buttonNames)[indexPath.row];
 
     if (indexPath.row == self.selectedButtonIndex)
     {
-        [cell.shadowbackground setShadowMask:YIInnerShadowMaskAll];
-        [cell.shadowbackground setBackgroundColor:cellColor];
-        [cell.selectionColorBox setBackgroundColor: [UIColor whiteColor]];
+        (cell.shadowbackground).shadowMask = YIInnerShadowMaskAll;
+        (cell.shadowbackground).backgroundColor = cellColor;
+        (cell.selectionColorBox).backgroundColor = [UIColor whiteColor];
         [self.lookAndFeel applySlightlyDarkerBorderTo: cell.selectionColorBox];
-        [cell.selectionLabel setTextColor:[UIColor whiteColor]];
+        (cell.selectionLabel).textColor = [UIColor whiteColor];
     }
     else
     {
-        [cell.shadowbackground setShadowMask:YIInnerShadowMaskNone];
-        [cell.shadowbackground setBackgroundColor:[UIColor whiteColor]];
-        [cell.selectionColorBox setBackgroundColor: cellColor];
+        (cell.shadowbackground).shadowMask = YIInnerShadowMaskNone;
+        (cell.shadowbackground).backgroundColor = [UIColor whiteColor];
+        (cell.selectionColorBox).backgroundColor = cellColor;
         [self.lookAndFeel applySlightlyDarkerBorderTo: cell.selectionColorBox];
-        [cell.selectionLabel setTextColor:[UIColor blackColor]];
+        (cell.selectionLabel).textColor = [UIColor blackColor];
     }
 
     return cell;
@@ -208,7 +208,7 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
         // deselect the previously selected and select the new one
         else
         {
-            NSString *clickedName = [self.buttonNames objectAtIndex: indexPath.row];
+            NSString *clickedName = (self.buttonNames)[indexPath.row];
             
             if (self.delegate && [self.delegate respondsToSelector:@selector(buttonClickedWithIndex:andName:)])
             {
@@ -233,7 +233,7 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
         // deselect the previously selected and select the new one
         else
         {
-            NSString *clickedName = [self.buttonNames objectAtIndex: indexPath.row];
+            NSString *clickedName = (self.buttonNames)[indexPath.row];
             
             if (self.delegate && [self.delegate respondsToSelector:@selector(buttonClickedWithIndex:andName:)])
             {

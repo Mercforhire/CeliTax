@@ -9,7 +9,7 @@
 #import "LocalizationManager.h"
 #import "Notifications.h"
 
-#define kKeyLanguage                @"Language"
+#define kKeyLanguage                        @"Language"
 
 @implementation Language
 
@@ -50,7 +50,6 @@
 
 - (void) initialize
 {
-    // Grab the languages from the PL and build what we need...
     [self initSupportedLanguages];
     
     // Get the last set language
@@ -66,7 +65,7 @@
     else
     {
         // Didn't find one, let's check the device settings then...
-        NSString *systemLang = [[NSLocale preferredLanguages] objectAtIndex: 0];
+        NSString *systemLang = [NSLocale preferredLanguages][0];
         
         if ([self isLanguageSupported: systemLang])
         {
@@ -80,14 +79,14 @@
             // Not supported, fallback to the first language
             DLog(@"Using user default language: %@", @"en");
             
-            [self changeLanguage: ((Language *) [self.supportedLanguages firstObject]).code];
+            [self changeLanguage: ((Language *) (self.supportedLanguages).firstObject).code];
         }
     }
 }
 
 - (void) initSupportedLanguages
 {
-    NSArray *supportedLanguageCodes = [[NSArray alloc] initWithObjects:@"en", @"fr", @"es", nil];
+    NSArray *supportedLanguageCodes = @[@"en", @"fr", @"es"];
     
     self.supportedLanguages = [NSMutableArray array];
     
@@ -151,7 +150,7 @@
         }
     }
     
-    return [self.supportedLanguages firstObject];
+    return (self.supportedLanguages).firstObject;
 }
 
 - (void) changeLanguage: (NSString *) language
@@ -183,7 +182,7 @@
     
     DLog(@"Setting language to %@", language);
     
-    // Save this as the last set language for the pl...
+    // Save this as the last set language
     [[NSUserDefaults standardUserDefaults] setObject: language forKey: kKeyLanguage];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
@@ -213,7 +212,7 @@
 - (NSString *) localizedStringForKey: (NSString *) key value: (NSString *) value table: (NSString *) tableName
 {
     // we check the base string file
-    NSString *string = [self.baseStrings objectForKey: key];
+    NSString *string = (self.baseStrings)[key];
     
     if (string)
     {

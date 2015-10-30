@@ -19,13 +19,14 @@
     [coder encodeInteger:self.dataAction forKey:kKeyDataAction];
 }
 
-- (id) initWithCoder: (NSCoder *) coder
+- (instancetype) initWithCoder: (NSCoder *) coder
 {
-    self = [self init];
-    
-    self.taxYear = [coder decodeIntegerForKey: kKeyTaxYear];
-    
-    self.dataAction = [coder decodeIntegerForKey:kKeyDataAction];
+    if (self = [self init])
+    {
+        self.taxYear = [coder decodeIntegerForKey: kKeyTaxYear];
+        
+        self.dataAction = [coder decodeIntegerForKey:kKeyDataAction];
+    }
     
     return self;
 }
@@ -47,9 +48,9 @@
 {
     NSMutableDictionary *json = [NSMutableDictionary dictionary];
     
-    [json setObject:[NSNumber numberWithInteger:self.taxYear] forKey:kKeyTaxYear];
+    json[kKeyTaxYear] = @(self.taxYear);
     
-    [json setObject:[NSNumber numberWithInteger:self.dataAction] forKey:kKeyDataAction];
+    json[kKeyDataAction] = @(self.dataAction);
     
     return json;
 }

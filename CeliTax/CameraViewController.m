@@ -91,36 +91,36 @@
     
     [self.previousImageView setHidden: YES];
     
-    [self.dragBarContainer setBackgroundColor:[UIColor clearColor]];
-    [self.dragBarContainer2 setBackgroundColor:[UIColor clearColor]];
+    (self.dragBarContainer).backgroundColor = [UIColor clearColor];
+    (self.dragBarContainer2).backgroundColor = [UIColor clearColor];
     
     self.dragBarView.layer.cornerRadius = 4.0f;
     self.dragBarView2.layer.cornerRadius = 4.0f;
     
     [self.topLeftCornerView setRightBorder: NO];
     [self.topLeftCornerView setBottomBorder: NO];
-    [self.topLeftCornerView setBorderThickness: 2];
-    [self.topLeftCornerView setMargin:7.5f];
-    [self.topLeftCornerView setBackgroundColor: [UIColor clearColor]];
+    (self.topLeftCornerView).borderThickness = 2;
+    (self.topLeftCornerView).margin = 7.5f;
+    (self.topLeftCornerView).backgroundColor = [UIColor clearColor];
     
     [self.topRightCornerView setLeftBorder: NO];
     [self.topRightCornerView setBottomBorder: NO];
-    [self.topRightCornerView setBorderThickness: 2];
-    [self.topRightCornerView setMargin:7.5f];
-    [self.topRightCornerView setBackgroundColor: [UIColor clearColor]];
+    (self.topRightCornerView).borderThickness = 2;
+    (self.topRightCornerView).margin = 7.5f;
+    (self.topRightCornerView).backgroundColor = [UIColor clearColor];
     
     [self.bottomLeftCornerView setTopBorder: NO];
     [self.bottomLeftCornerView setRightBorder: NO];
-    [self.bottomLeftCornerView setBorderThickness: 2];
-    [self.bottomLeftCornerView setMargin:7.5f];
-    [self.bottomLeftCornerView setBackgroundColor: [UIColor clearColor]];
+    (self.bottomLeftCornerView).borderThickness = 2;
+    (self.bottomLeftCornerView).margin = 7.5f;
+    (self.bottomLeftCornerView).backgroundColor = [UIColor clearColor];
     self.buttomCornersOriginalYCoordinate = self.bottomLeftCornerView.frame.origin.y;
     
     [self.bottomRightCornerView setTopBorder: NO];
     [self.bottomRightCornerView setLeftBorder: NO];
-    [self.bottomRightCornerView setBorderThickness: 2];
-    [self.bottomRightCornerView setMargin:7.5f];
-    [self.bottomRightCornerView setBackgroundColor: [UIColor clearColor]];
+    (self.bottomRightCornerView).borderThickness = 2;
+    (self.bottomRightCornerView).margin = 7.5f;
+    (self.bottomRightCornerView).backgroundColor = [UIColor clearColor];
 
     [self refreshCropEdgeRatio];
     
@@ -152,7 +152,7 @@
     // take the required actions on a device change
     __weak typeof(self) weakSelf = self;
     
-    [self.camera setOnDeviceChange: ^(LLSimpleCamera *camera, AVCaptureDevice *device)
+    (self.camera).onDeviceChange = ^(LLSimpleCamera *camera, AVCaptureDevice *device)
     {
         // device changed, check if flash is available
         if ([camera isFlashAvailable])
@@ -172,9 +172,9 @@
         {
             weakSelf.flashButtonView.hidden = YES;
         }
-    }];
+    };
     
-    [self.camera setOnError: ^(LLSimpleCamera *camera, NSError *error)
+    (self.camera).onError = ^(LLSimpleCamera *camera, NSError *error)
     {
         NSLog(@"Camera error: %@", error);
         
@@ -192,11 +192,11 @@
                 [message show];
             }
         }
-    }];
+    };
     
     self.shutterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.shutterView setOpaque:NO];
-    [self.shutterView setBackgroundColor:[UIColor whiteColor]];
+    (self.shutterView).backgroundColor = [UIColor whiteColor];
     [self.shutterView setUserInteractionEnabled:NO];
     [self.shutterView setHidden:YES];
     
@@ -304,7 +304,7 @@
     self.bottomMaskHeight.constant = self.bottomMaskHeightDefaultConstant;
     self.distanceFromTopToGreenBar.constant = self.distanceFromTopToGreenBarDefaultConstant;
     
-    [self.previousImageView setImage: image];
+    (self.previousImageView).image = image;
     [self.previousImageView setHidden: NO];
     [self.greenBar setHidden: NO];
     [self.dragBarContainer2 setHidden:NO];
@@ -313,15 +313,15 @@
     [self.bottomLeftCornerView setBottomBorder: YES];
     [self.bottomRightCornerView setBottomBorder: YES];
     
-    [self.bottomLeftCornerView setFrame: CGRectMake(self.bottomLeftCornerView.frame.origin.x,
+    (self.bottomLeftCornerView).frame = CGRectMake(self.bottomLeftCornerView.frame.origin.x,
                                                     self.buttomCornersOriginalYCoordinate,
                                                     self.bottomLeftCornerView.frame.size.width,
-                                                    self.bottomLeftCornerView.frame.size.height)];
+                                                    self.bottomLeftCornerView.frame.size.height);
     
-    [self.bottomRightCornerView setFrame: CGRectMake(self.bottomRightCornerView.frame.origin.x,
+    (self.bottomRightCornerView).frame = CGRectMake(self.bottomRightCornerView.frame.origin.x,
                                                      self.buttomCornersOriginalYCoordinate,
                                                      self.bottomRightCornerView.frame.size.width,
-                                                     self.bottomRightCornerView.frame.size.height)];
+                                                     self.bottomRightCornerView.frame.size.height);
 }
 
 -(void)captureCamera
@@ -415,19 +415,19 @@
 - (void) snapButtonPressed: (UIButton *) button
 {
     [self.shutterView setHidden:NO];
-    [self.shutterView setAlpha:0.0f];
+    (self.shutterView).alpha = 0.0f;
     
     //fade in
     [UIView animateWithDuration:0.1f animations:^{
         
-        [self.shutterView setAlpha:0.8f];
+        (self.shutterView).alpha = 0.8f;
         
     } completion:^(BOOL finished) {
         
         //fade out
         [UIView animateWithDuration:0.1f animations:^{
             
-            [self.shutterView setAlpha:0.0f];
+            (self.shutterView).alpha = 0.0f;
             
         } completion:^(BOOL finished) {
             
@@ -508,12 +508,12 @@
 {
     CGPoint translation = [recognizer translationInView: self.view];
     
-    switch ([recognizer state])
+    switch (recognizer.state)
     {
         case UIGestureRecognizerStateBegan:
             //DLog(@"Dragging started with translation of X: %.1f, YL %.1f", translation.x, translation.y);
             self.bottomMaskHeightStartingConstant = self.bottomMaskHeight.constant;
-            [self.dragBarView setBackgroundColor:self.lookAndFeel.appGreenColor];
+            (self.dragBarView).backgroundColor = self.lookAndFeel.appGreenColor;
             break;
             
         case UIGestureRecognizerStateChanged:
@@ -533,7 +533,7 @@
         case UIGestureRecognizerStateEnded:
             //DLog(@"Dragging completed with translation of X: %.1f, YL %.1f", translation.x, translation.y);
             [self refreshCropEdgeRatio];
-            [self.dragBarView setBackgroundColor:[UIColor whiteColor]];
+            (self.dragBarView).backgroundColor = [UIColor whiteColor];
             break;
             
         default:
@@ -545,12 +545,12 @@
 {
     CGPoint translation = [recognizer translationInView: self.view];
     
-    switch ([recognizer state])
+    switch (recognizer.state)
     {
         case UIGestureRecognizerStateBegan:
             //DLog(@"Dragging started with translation of X: %.1f, YL %.1f", translation.x, translation.y);
             self.distanceFromTopToGreenBarStartingConstant = self.distanceFromTopToGreenBar.constant;
-            [self.dragBarView2 setBackgroundColor:self.lookAndFeel.appGreenColor];
+            (self.dragBarView2).backgroundColor = self.lookAndFeel.appGreenColor;
             break;
             
         case UIGestureRecognizerStateChanged:
@@ -569,7 +569,7 @@
         case UIGestureRecognizerStateEnded:
             //DLog(@"Dragging completed with translation of X: %.1f, YL %.1f", translation.x, translation.y);
             [self refreshCropEdgeRatio];
-            [self.dragBarView2 setBackgroundColor:[UIColor whiteColor]];
+            (self.dragBarView2).backgroundColor = [UIColor whiteColor];
             break;
             
         default:
@@ -579,15 +579,15 @@
 
 #pragma mark - Tutorial
 
-typedef enum : NSUInteger
+typedef NS_ENUM(NSUInteger, TutorialSteps)
 {
     TutorialStep9,
     TutorialStep10
-} TutorialSteps;
+};
 
 -(void)setupTutorials
 {
-    [self.tutorialManager setDelegate:self];
+    (self.tutorialManager).delegate = self;
     
     self.tutorials = [NSMutableArray new];
     
@@ -616,7 +616,7 @@ typedef enum : NSUInteger
 {
     if (self.tutorials.count && step < self.tutorials.count)
     {
-        TutorialStep *tutorialStep = [self.tutorials objectAtIndex:step];
+        TutorialStep *tutorialStep = (self.tutorials)[step];
         
         [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
     }

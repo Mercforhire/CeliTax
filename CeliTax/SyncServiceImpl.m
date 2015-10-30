@@ -58,7 +58,7 @@
             
             while (i < 2)
             {
-                NSNumber *randomIndex = [NSNumber numberWithInteger:[Utils randomNumberBetween: 0 maxNumber: (int)allCategories.count - 1]];
+                NSNumber *randomIndex = @([Utils randomNumberBetween: 0 maxNumber: (int)allCategories.count - 1]);
                 
                 if (![indexesOf3ChoosenCategories containsObject:randomIndex])
                 {
@@ -86,70 +86,67 @@
             }
         }
         
-        if ( ![self.receiptsDAO loadAllReceipts].count && ![self.recordsDAO loadRecords].count )
+        UIImage *testImage1 = [UIImage imageNamed: @"ReceiptPic-1.jpg"];
+        UIImage *testImage2 = [UIImage imageNamed: @"ReceiptPic-2.jpg"];
+        
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDateComponents *components = [[NSDateComponents alloc] init];
+        
+        NSInteger numberOfCatagories = [self.catagoriesDAO loadCatagories].count;
+        
+        NSDate *currentTime = [[NSDate alloc] init];
+        
+        // add random receipts
+        for (int receiptNumber = 0; receiptNumber < 10; receiptNumber++)
         {
-            UIImage *testImage1 = [UIImage imageNamed: @"ReceiptPic-1.jpg"];
-            UIImage *testImage2 = [UIImage imageNamed: @"ReceiptPic-2.jpg"];
+            NSString *fileName1 = [NSString stringWithFormat: @"Receipt-%@-%d", [Utils generateUniqueID], 1];
+            NSString *fileName2 = [NSString stringWithFormat: @"Receipt-%@-%d", [Utils generateUniqueID], 2];
             
-            NSCalendar *calendar = [NSCalendar currentCalendar];
-            NSDateComponents *components = [[NSDateComponents alloc] init];
+            [Utils saveImage: testImage1 withFilename: fileName1 forUser: self.userDataDAO.userKey];
+            [Utils saveImage: testImage2 withFilename: fileName2 forUser: self.userDataDAO.userKey];
             
-            NSInteger numberOfCatagories = [self.catagoriesDAO loadCatagories].count;
+            components.day = [Utils randomNumberBetween: 1 maxNumber: 28];
+            components.month = [Utils randomNumberBetween: 1 maxNumber: 12];
+            components.year = [Utils randomNumberBetween: 2013 maxNumber: 2015];
+            components.hour = [Utils randomNumberBetween: 0 maxNumber: 23];
+            components.minute = [Utils randomNumberBetween: 0 maxNumber: 59];
             
-            NSDate *currentTime = [[NSDate alloc] init];
+            NSDate *date = [calendar dateFromComponents: components];
             
-            // add random receipts
-            for (int receiptNumber = 0; receiptNumber < 10; receiptNumber++)
+            if ([date laterDate: currentTime] == date)
             {
-                NSString *fileName1 = [NSString stringWithFormat: @"Receipt-%@-%d", [Utils generateUniqueID], 1];
-                NSString *fileName2 = [NSString stringWithFormat: @"Receipt-%@-%d", [Utils generateUniqueID], 2];
+                continue;
+            }
+            
+            Receipt *newReceipt = [Receipt new];
+            
+            newReceipt.localID = [Utils generateUniqueID];
+            newReceipt.fileNames = [NSMutableArray arrayWithObjects: fileName1, fileName2, nil];
+            newReceipt.dateCreated = date;
+            newReceipt.taxYear = [Utils randomNumberBetween: 2013 maxNumber: 2015];
+            newReceipt.dataAction = DataActionInsert;
+            
+            [self.receiptsDAO addReceipt: newReceipt save:NO];
+            
+            // add random items for each receipt
+            int numberOfItems = [Utils randomNumberBetween: 1 maxNumber: 10];
+            
+            for (int itemNumber = 0; itemNumber < numberOfItems; itemNumber++)
+            {
+                Catagory *recordCatagory = [self.catagoriesDAO loadCatagories][[Utils randomNumberBetween: 0 maxNumber: (int)numberOfCatagories - 1]];
                 
-                [Utils saveImage: testImage1 withFilename: fileName1 forUser: self.userDataDAO.userKey];
-                [Utils saveImage: testImage2 withFilename: fileName2 forUser: self.userDataDAO.userKey];
+                NSInteger recordQuantity = [Utils randomNumberBetween: 1 maxNumber: 20];
                 
-                [components setDay: [Utils randomNumberBetween: 1 maxNumber: 28]];
-                [components setMonth: [Utils randomNumberBetween: 1 maxNumber: 12]];
-                [components setYear: [Utils randomNumberBetween: 2013 maxNumber: 2015]];
-                [components setHour: [Utils randomNumberBetween: 0 maxNumber: 23]];
-                [components setMinute: [Utils randomNumberBetween: 0 maxNumber: 59]];
+                NSInteger recordUnitType = [Utils randomNumberBetween: UnitItem maxNumber: UnitLb];
                 
-                NSDate *date = [calendar dateFromComponents: components];
+                float recordAmount = [Utils randomNumberBetween: 10 maxNumber: 100] / 10.0f;
                 
-                if ([date laterDate: currentTime] == date)
-                {
-                    continue;
-                }
-                
-                Receipt *newReceipt = [Receipt new];
-                
-                newReceipt.localID = [Utils generateUniqueID];
-                newReceipt.fileNames = [NSMutableArray arrayWithObjects: fileName1, fileName2, nil];
-                newReceipt.dateCreated = date;
-                newReceipt.taxYear = [Utils randomNumberBetween: 2013 maxNumber: 2015];
-                newReceipt.dataAction = DataActionInsert;
-                
-                [self.receiptsDAO addReceipt: newReceipt save:NO];
-                
-                // add random items for each receipt
-                int numberOfItems = [Utils randomNumberBetween: 1 maxNumber: 10];
-                
-                for (int itemNumber = 0; itemNumber < numberOfItems; itemNumber++)
-                {
-                    Catagory *recordCatagory = [[self.catagoriesDAO loadCatagories] objectAtIndex: [Utils randomNumberBetween: 0 maxNumber: (int)numberOfCatagories - 1]];
-                    
-                    NSInteger recordQuantity = [Utils randomNumberBetween: 1 maxNumber: 20];
-                    
-                    NSInteger recordUnitType = [Utils randomNumberBetween: UnitItem maxNumber: UnitLb];
-                    
-                    float recordAmount = [Utils randomNumberBetween: 10 maxNumber: 100] / 10.0f;
-                    
-                    [self.recordsDAO addRecordForCatagory: recordCatagory
-                                               andReceipt: newReceipt
-                                              forQuantity: recordQuantity
-                                                   orUnit: recordUnitType
-                                                forAmount: recordAmount
-                                                     save: NO];
-                }
+                [self.recordsDAO addRecordForCatagory: recordCatagory
+                                           andReceipt: newReceipt
+                                          forQuantity: recordQuantity
+                                               orUnit: recordUnitType
+                                            forAmount: recordAmount
+                                                 save: NO];
             }
         }
         
@@ -221,7 +218,7 @@
     
     [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
     
-    [networkOperation setPostDataEncoding:MKNKPostDataEncodingTypeURL];
+    networkOperation.postDataEncoding = MKNKPostDataEncodingTypeURL;
     
     __block UIBackgroundTaskIdentifier bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler: nil];
     
@@ -233,7 +230,7 @@
         
         [self.userDataDAO setLastBackUpDate:dateUploaded];
         
-        [self.userDataDAO setLastestDataHash:[response objectForKey:@"batchID"]];
+        [self.userDataDAO setLastestDataHash:response[@"batchID"]];
         
         [self.userDataDAO resetAllDataActionsAndClearOutDeletedOnes];
         
@@ -281,13 +278,13 @@
         
         NSDictionary *response = [completedOperation responseJSON];
         
-        if ( [response objectForKey:@"error"] && [[response objectForKey:@"error"] boolValue] == NO )
+        if ( response[@"error"] && [response[@"error"] boolValue] == NO )
         {
-            NSDictionary *dataDictionary = [response objectForKey:@"data"];
+            NSDictionary *dataDictionary = response[@"data"];
             
             //First merge the Tax Years
             
-            NSArray *taxYearNumbers = [dataDictionary objectForKey:@"TaxYears"];
+            NSArray *taxYearNumbers = dataDictionary[@"TaxYears"];
             
             NSMutableArray *taxYears = [NSMutableArray new];
             
@@ -305,7 +302,7 @@
             
             //Second merge the Catagories
             
-            NSArray *catagoryDictionaries = [dataDictionary objectForKey:@"Catagories"];
+            NSArray *catagoryDictionaries = dataDictionary[@"Catagories"];
             
             NSMutableArray *catagories = [NSMutableArray new];
             
@@ -323,7 +320,7 @@
             
             //Third the receipts
             
-            NSArray *receiptDictionaries = [dataDictionary objectForKey:@"Receipts"];
+            NSArray *receiptDictionaries = dataDictionary[@"Receipts"];
             
             NSMutableArray *receipts = [NSMutableArray new];
             
@@ -341,7 +338,7 @@
             
             //Lastly, the records
             
-            NSArray *recordDictionaries = [dataDictionary objectForKey:@"Records"];
+            NSArray *recordDictionaries = dataDictionary[@"Records"];
             
             NSMutableArray *records = [NSMutableArray new];
             
@@ -372,7 +369,7 @@
             
             [self.recordsDAO mergeWith:records save:NO];
             
-            [self.userDataDAO setLastestDataHash:[response objectForKey:@"batchID"]];
+            [self.userDataDAO setLastestDataHash:response[@"batchID"]];
             
             [self.userDataDAO saveUserData];
             
@@ -431,9 +428,9 @@
         
         NSDictionary *response = [completedOperation responseJSON];
         
-        NSString *batchID = [response objectForKey:@"batchID"];
+        NSString *batchID = response[@"batchID"];
         
-        if ( [response objectForKey:@"error"] && [[response objectForKey:@"error"] boolValue] == NO)
+        if ( response[@"error"] && [response[@"error"] boolValue] == NO)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
                 
@@ -490,7 +487,7 @@
         
         NSDictionary *response = [completedOperation responseJSON];
         
-        NSArray *filesnamesToUpload = [response objectForKey:@"files_need_upload"];
+        NSArray *filesnamesToUpload = response[@"files_need_upload"];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -627,9 +624,9 @@
         
         NSDictionary *response = [completedOperation responseJSON];
         
-        NSString *url = [response objectForKey:@"url"];
+        NSString *url = response[@"url"];
         
-        if ( [response objectForKey:@"error"] && [[response objectForKey:@"error"] boolValue] == NO && url)
+        if ( response[@"error"] && [response[@"error"] boolValue] == NO && url)
         {
             // 2.start downloading the image from the url
             DLog(@"Received URL of image: %@", url);

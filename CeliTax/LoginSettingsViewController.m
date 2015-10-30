@@ -129,12 +129,12 @@
     if (active)
     {
         [self.deactivateConfirmationButton setEnabled:YES];
-        [self.deactivateConfirmationButton setBackgroundColor:[UIColor colorWithRed:255.0f/255.0f green:83.0f/255.0f blue:72.0f/255.0f alpha:1]];
+        (self.deactivateConfirmationButton).backgroundColor = [UIColor colorWithRed:255.0f/255.0f green:83.0f/255.0f blue:72.0f/255.0f alpha:1];
     }
     else
     {
         [self.deactivateConfirmationButton setEnabled:NO];
-        [self.deactivateConfirmationButton setBackgroundColor: [UIColor lightGrayColor]];
+        (self.deactivateConfirmationButton).backgroundColor = [UIColor lightGrayColor];
     }
     
     [self.lookAndFeel applySlightlyDarkerBorderTo:self.deactivateConfirmationButton];
@@ -147,7 +147,7 @@
     [self.editEmailButton1 setLookAndFeel:self.lookAndFeel];
     [self.editPasswordButton1 setLookAndFeel:self.lookAndFeel];
     
-    [self.emailLabel setText:[NSString stringWithFormat:NSLocalizedString(@"Email: %@", nil), self.userManager.user.loginName]];
+    (self.emailLabel).text = [NSString stringWithFormat:NSLocalizedString(@"Email: %@", nil), self.userManager.user.loginName];
     
     [self.lookAndFeel applyGrayBorderTo: self.emailField1];
     [self.lookAndFeel addLeftInsetToTextField: self.emailField1];
@@ -439,7 +439,7 @@
              
              if ([reason isEqualToString:USER_PASSWORD_WRONG])
              {
-                 errorMessage = NSLocalizedString(@"The old password provided is incorrect", nil);
+                 errorMessage = NSLocalizedString(@"The password provided is incorrect", nil);
              }
              else
              {
@@ -466,7 +466,7 @@
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Are you sure?", nil)
                                                       message:NSLocalizedString(@"Do you really want to delete your account and all data?", nil)
                                                      delegate:self
-                                            cancelButtonTitle:nil
+                                            cancelButtonTitle:NSLocalizedString(@"No", nil)
                                             otherButtonTitles:NSLocalizedString(@"Confirm", nil),nil];
     
     [message show];
@@ -508,7 +508,7 @@
             
             if ([reason isEqualToString:USER_PASSWORD_WRONG])
             {
-                errorMessage = NSLocalizedString(@"The old password provided is incorrect", nil);
+                errorMessage = NSLocalizedString(@"The password provided is incorrect", nil);
             }
             else
             {
@@ -536,7 +536,7 @@
 {
     if (textField == self.emailField1 || textField == self.emailField2 || textField == self.emailField2)
     {
-        textField.text = [textField.text lowercaseString];
+        textField.text = (textField.text).lowercaseString;
     }
 }
 

@@ -140,18 +140,20 @@
 - (void) customizeGlobalLookAndFeel
 {
     // Sets the status and nav bar color
-    [[UINavigationBar appearance] setBarTintColor: self.lookAndFeel.navBarColor];
+    [UINavigationBar appearance].barTintColor = self.lookAndFeel.navBarColor;
     
     // White elements in the status bar works with our branding
-    [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     
     // We want white buttons in the nav bar
-    [[UINavigationBar appearance] setTintColor: [UIColor whiteColor]];
+    [UINavigationBar appearance].tintColor = [UIColor whiteColor];
     
     // We want a white title in the nav bar
-    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIColor whiteColor], NSForegroundColorAttributeName, nil]];
+    [UINavigationBar appearance].titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     
-    [[UIBarButtonItem appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIColor whiteColor], NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
+    [[UIBarButtonItem appearance] setTitleTextAttributes: @{NSForegroundColorAttributeName: [UIColor whiteColor]} forState: UIControlStateNormal];
+    
+    self.window.backgroundColor = [UIColor whiteColor];
 }
 
 #pragma mark App lifecycle
@@ -177,7 +179,7 @@
 
     self.userManager.backgroundWorker = self.backgroundWorker;
     
-    self.window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
+    self.window = [[UIWindow alloc] initWithFrame: [UIScreen mainScreen].bounds];
 
     [self.window makeKeyAndVisible];
     
@@ -193,8 +195,8 @@
         [self.navigationBarTitleImageContainer setUserInteractionEnabled: NO];
 
         UIImageView *titleImage = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"CelitaxNavBarLogo.png"]];
-        [titleImage setFrame: CGRectMake(0, 10, self.navigationController.navigationBar.frame.size.width, 30)];
-        [titleImage setContentMode: UIViewContentModeScaleAspectFit];
+        titleImage.frame = CGRectMake(0, 10, self.navigationController.navigationBar.frame.size.width, 30);
+        titleImage.contentMode = UIViewContentModeScaleAspectFit;
         [titleImage setUserInteractionEnabled: NO];
 
         [self.navigationBarTitleImageContainer addSubview: titleImage];

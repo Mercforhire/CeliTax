@@ -269,7 +269,7 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    [defaults setObject:[NSNumber numberWithBool:YES] forKey:kDoNotShowDisclaimerAgainKey];
+    [defaults setObject:@YES forKey:kDoNotShowDisclaimerAgainKey];
     
     [defaults synchronize];
     

@@ -73,7 +73,7 @@
 {
     if (self.currentTaskIndex < self.queuedTasks.count)
     {
-        NSNumber *currentTask = [self.queuedTasks objectAtIndex:self.currentTaskIndex];
+        NSNumber *currentTask = (self.queuedTasks)[self.currentTaskIndex];
         
         switch (currentTask.integerValue)
         {
@@ -240,7 +240,7 @@
         }
         else
         {
-            double minutes = fabs( [lastRefresh timeIntervalSinceNow] / 60 );
+            double minutes = fabs( lastRefresh.timeIntervalSinceNow / 60 );
             
             if (minutes > 10)
             {

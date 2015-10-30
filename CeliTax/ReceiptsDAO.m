@@ -129,7 +129,7 @@
     NSPredicate *findReceipt = [NSPredicate predicateWithFormat: @"localID == %@", receiptID];
     NSArray *receipt = [[self loadAllReceipts] filteredArrayUsingPredicate: findReceipt];
 
-    return [receipt firstObject];
+    return receipt.firstObject;
 }
 
 - (BOOL)modifyReceipt: (Receipt *)receipt save:(BOOL) save
@@ -196,7 +196,7 @@
         
         if (existingReceipt.count)
         {
-            Receipt *existing = [existingReceipt firstObject];
+            Receipt *existing = existingReceipt.firstObject;
             
             [existing copyDataFromReceipt:receipt];
             

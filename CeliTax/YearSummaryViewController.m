@@ -43,7 +43,7 @@
 {
     [self.exportButton setLookAndFeel:self.lookAndFeel];
     
-    [self.titleLabel setText:[NSString stringWithFormat:NSLocalizedString(@"%ld Gluten-Free Tax Savings", nil), (long)self.configurationManager.getCurrentTaxYear.integerValue]];
+    (self.titleLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%ld Gluten-Free Tax Savings", nil), (long)self.configurationManager.getCurrentTaxYear.integerValue];
     
     // set up tableview
     UINib *yearSummaryTableViewCell = [UINib nibWithNibName: @"YearSummaryTableViewCell" bundle: nil];
@@ -51,13 +51,13 @@
     
     self.sendReceiptsToViewController = [self.viewControllerFactory createSendReceiptsToViewController];
     self.sendReceiptsPopover = [[WYPopoverController alloc] initWithContentViewController: self.sendReceiptsToViewController];
-    [self.sendReceiptsPopover setTheme: [WYPopoverTheme theme]];
+    (self.sendReceiptsPopover).theme = [WYPopoverTheme theme];
     
     WYPopoverTheme *popUpTheme = self.sendReceiptsPopover.theme;
     popUpTheme.fillTopColor = self.lookAndFeel.appGreenColor;
     popUpTheme.fillBottomColor = self.lookAndFeel.appGreenColor;
     
-    [self.sendReceiptsPopover setTheme: popUpTheme];
+    (self.sendReceiptsPopover).theme = popUpTheme;
     
     [self.exportButton setTitle:NSLocalizedString(@"Export Report", nil) forState:UIControlStateNormal];
 }
@@ -77,7 +77,7 @@
     self.summaryTableView.dataSource = self;
     self.summaryTableView.delegate = self;
     
-    [self.sendReceiptsToViewController setDelegate: self];
+    (self.sendReceiptsToViewController).delegate = self;
 }
 
 - (void) viewWillAppear: (BOOL) animated
@@ -103,7 +103,7 @@
         {
             NSString *key = [Record unitTypeIntToUnitTypeString:record.unitType];
             
-            NSMutableArray *recordsOfSameType = [recordsOfEachType objectForKey:key];
+            NSMutableArray *recordsOfSameType = recordsOfEachType[key];
             
             if (!recordsOfSameType)
             {
@@ -112,15 +112,15 @@
             
             [recordsOfSameType addObject:record];
             
-            [recordsOfEachType setObject:recordsOfSameType forKey:key];
+            recordsOfEachType[key] = recordsOfSameType;
         }
         
         //Process the Unit Types in order: Item, ML, L, G, KG
-        NSArray *orderOfUnitTypesToProcess = [NSArray arrayWithObjects:kUnitItemKey, kUnitMLKey, kUnitLKey, kUnitGKey, kUnit100GKey, kUnitKGKey,kUnitFlozKey,kUnitPtKey,kUnitQtKey,kUnitGalKey,kUnitOzKey,kUnitLbKey, nil];
+        NSArray *orderOfUnitTypesToProcess = @[kUnitItemKey, kUnitMLKey, kUnitLKey, kUnitGKey, kUnit100GKey, kUnitKGKey,kUnitFlozKey,kUnitPtKey,kUnitQtKey,kUnitGalKey,kUnitOzKey,kUnitLbKey];
         
         for (NSString *key in orderOfUnitTypesToProcess)
         {
-            NSMutableArray *recordsOfSameType = [recordsOfEachType objectForKey:key];
+            NSMutableArray *recordsOfSameType = recordsOfEachType[key];
             
             if (!recordsOfSameType.count)
             {
@@ -136,13 +136,13 @@
                 totalAmountSpentOnThisCatagoryAndUnitType += [record calculateTotal];
             }
             
-            NSNumber *nationalAverageCost = [catagory.nationalAverageCosts objectForKey:key];
+            NSNumber *nationalAverageCost = (catagory.nationalAverageCosts)[key];
             
             float totalAvgCost = 0;
             
             if (!nationalAverageCost)
             {
-                nationalAverageCost = [NSNumber numberWithFloat: -1];
+                nationalAverageCost = @-1.0f;
                 
                 totalAvgCost = -1;
             }
@@ -168,7 +168,7 @@
             }
             
             // (CatagoryID, UnitTypeString, Total Spent, Total average cost, Total GF savings)
-            NSMutableArray *rowArray = [NSMutableArray arrayWithObjects:catagory.localID, key, [NSNumber numberWithFloat:totalAmountSpentOnThisCatagoryAndUnitType], [NSNumber numberWithFloat: totalAvgCost], [NSNumber numberWithFloat: gfSavings], nil];
+            NSMutableArray *rowArray = [NSMutableArray arrayWithObjects:catagory.localID, key, @(totalAmountSpentOnThisCatagoryAndUnitType), @(totalAvgCost), @(gfSavings), nil];
             
             [self.catagoryRows addObject:rowArray];
         }
@@ -176,7 +176,7 @@
     
     [self.summaryTableView reloadData];
     
-    [self.totalSavingsLabel setText: [NSString stringWithFormat: @"$%.2f", totalSavingsAmount]];
+    (self.totalSavingsLabel).text = [NSString stringWithFormat: @"$%.2f", totalSavingsAmount];
 }
 
 - (IBAction)exportPressed:(HollowGreenButton *)sender
@@ -229,84 +229,84 @@
     }
     
     // (CatagoryID, UnitTypeString, Total Spent, Total average cost, Total GF savings)
-    NSArray *dataForThisRow = [self.catagoryRows objectAtIndex:indexPath.row];
+    NSArray *dataForThisRow = (self.catagoryRows)[indexPath.row];
     
-    NSString *catagoryID = [dataForThisRow firstObject];
+    NSString *catagoryID = dataForThisRow.firstObject;
     
     Catagory *thisCatagory = [self.dataService fetchCatagory:catagoryID];
     
-    NSString *unitTypeString = [dataForThisRow objectAtIndex:1];
+    NSString *unitTypeString = dataForThisRow[1];
     
-    float totalSpent = [[dataForThisRow objectAtIndex:2] floatValue];
+    float totalSpent = [dataForThisRow[2] floatValue];
     
-    float totalAvgCost = [[dataForThisRow objectAtIndex:3] floatValue];
+    float totalAvgCost = [dataForThisRow[3] floatValue];
     
-    float totalSavings = [[dataForThisRow objectAtIndex:4] floatValue];
+    float totalSavings = [dataForThisRow[4] floatValue];
     
     cell.colorView.backgroundColor = thisCatagory.color;
     
     if ([unitTypeString isEqualToString:kUnitItemKey])
     {
-        [cell.catagoryNameLabel setText: thisCatagory.name];
+        (cell.catagoryNameLabel).text = thisCatagory.name;
     }
     else if ([unitTypeString isEqualToString:kUnitGKey])
     {
-        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (g)", nil), thisCatagory.name]];
+        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (g)", nil), thisCatagory.name];
     }
     else if ([unitTypeString isEqualToString:kUnit100GKey])
     {
-        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (100g)", nil), thisCatagory.name]];
+        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (100g)", nil), thisCatagory.name];
     }
     else if ([unitTypeString isEqualToString:kUnitKGKey])
     {
-        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (kg)", nil), thisCatagory.name]];
+        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (kg)", nil), thisCatagory.name];
     }
     else if ([unitTypeString isEqualToString:kUnitLKey])
     {
-        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (L)", nil), thisCatagory.name]];
+        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (L)", nil), thisCatagory.name];
     }
     else if ([unitTypeString isEqualToString:kUnitMLKey])
     {
-        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (mL)", nil), thisCatagory.name]];
+        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (mL)", nil), thisCatagory.name];
     }
     else if ([unitTypeString isEqualToString:kUnitFlozKey])
     {
-        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (fl oz)", nil), thisCatagory.name]];
+        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (fl oz)", nil), thisCatagory.name];
     }
     else if ([unitTypeString isEqualToString:kUnitPtKey])
     {
-        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (pt)", nil), thisCatagory.name]];
+        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (pt)", nil), thisCatagory.name];
     }
     else if ([unitTypeString isEqualToString:kUnitQtKey])
     {
-        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (qt)", nil), thisCatagory.name]];
+        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (qt)", nil), thisCatagory.name];
     }
     else if ([unitTypeString isEqualToString:kUnitGalKey])
     {
-        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (gal)", nil), thisCatagory.name]];
+        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (gal)", nil), thisCatagory.name];
     }
     else if ([unitTypeString isEqualToString:kUnitOzKey])
     {
-        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (oz)", nil), thisCatagory.name]];
+        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (oz)", nil), thisCatagory.name];
     }
     else if ([unitTypeString isEqualToString:kUnitLbKey])
     {
-        [cell.catagoryNameLabel setText: [NSString stringWithFormat:NSLocalizedString(@"%@ per (lb)", nil), thisCatagory.name]];
+        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (lb)", nil), thisCatagory.name];
     }
     
-    [cell.totalSpentField setText: [NSString stringWithFormat: @"%.2f", totalSpent]];
-    [cell.totalAvgCostField setText: [NSString stringWithFormat: @"%.2f", totalAvgCost]];
+    (cell.totalSpentField).text = [NSString stringWithFormat: @"%.2f", totalSpent];
+    (cell.totalAvgCostField).text = [NSString stringWithFormat: @"%.2f", totalAvgCost];
     
     if (totalSavings >= 0)
     {
-        [cell.gfSavingsField setText: [NSString stringWithFormat: @"%.2f", totalSavings]];
-        [cell.gfSavingsField setTextColor:self.lookAndFeel.appGreenColor];
+        (cell.gfSavingsField).text = [NSString stringWithFormat: @"%.2f", totalSavings];
+        (cell.gfSavingsField).textColor = self.lookAndFeel.appGreenColor;
         [cell.gfSavingsField setEnabled:YES];
         [cell.exclaimationButton setHidden:YES];
     }
     else
     {
-        [cell.gfSavingsField setText: @""];
+        (cell.gfSavingsField).text = @"";
         [cell.gfSavingsField setEnabled:NO];
         [cell.exclaimationButton setHidden:NO];
         

@@ -30,7 +30,7 @@
     NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"localID == %@ AND dataAction != %ld", catagoryID, DataActionDelete];
     NSArray *catagory = [[self.userDataDAO getCatagories] filteredArrayUsingPredicate: findCatagories];
     
-    return [catagory firstObject];
+    return catagory.firstObject;
 }
 
 -(BOOL)addCatagoryForName:(NSString *)name andColor:(UIColor *)color save:(BOOL)save
@@ -66,7 +66,7 @@
     
     if (catagory && catagory.count)
     {
-        Catagory *catagoryToModify = [catagory firstObject];
+        Catagory *catagoryToModify = catagory.firstObject;
         
         catagoryToModify.name = name;
         catagoryToModify.color = color;
@@ -138,7 +138,7 @@
         
         if (existingCatagory.count)
         {
-            Catagory *existing = [existingCatagory firstObject];
+            Catagory *existing = existingCatagory.firstObject;
             
             [existing copyDataFromCatagory:catagory];
             
@@ -177,7 +177,7 @@
     
     if (catagory && catagory.count)
     {
-        Catagory *catagoryToModify = [catagory firstObject];
+        Catagory *catagoryToModify = catagory.firstObject;
         
         // Do modifying here
         [catagoryToModify addOrUpdateNationalAverageCostForUnitType:unitType amount:amount];
@@ -209,7 +209,7 @@
     
     if (catagory && catagory.count)
     {
-        Catagory *catagoryToModify = [catagory firstObject];
+        Catagory *catagoryToModify = catagory.firstObject;
         
         // Do modifying here
         [catagoryToModify deleteNationalAverageCostForUnitType:unitType];

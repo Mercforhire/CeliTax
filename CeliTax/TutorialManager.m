@@ -156,7 +156,7 @@
         CGFloat previousAlpha = self.maskViewTop.alpha;
         
         self.maskViewTop = [[UIView alloc] init];
-        [self.maskViewTop setFrame: CGRectMake(0, 0, currentWindow.frame.size.width, tutorial.highlightedItemRect.origin.y)];
+        (self.maskViewTop).frame = CGRectMake(0, 0, currentWindow.frame.size.width, tutorial.highlightedItemRect.origin.y);
         
         [self.maskViewTop setUserInteractionEnabled: YES]; //blocks out interactions on self.viewController
         self.maskViewTop.backgroundColor = [UIColor whiteColor];
@@ -164,78 +164,78 @@
         
         if (self.maskView)
         {
-            [self.maskViewTop setAlpha: self.maskView.alpha];
+            (self.maskViewTop).alpha = self.maskView.alpha;
         }
         else if (self.maskViewTop)
         {
-            [self.maskViewTop setAlpha: previousAlpha];
+            (self.maskViewTop).alpha = previousAlpha;
         }
         else
         {
-            [self.maskViewTop setAlpha: 0];
+            (self.maskViewTop).alpha = 0;
         }
         
         [currentWindow addSubview:self.maskViewTop];
         
         self.maskViewLeft = [[UIView alloc] init];
-        [self.maskViewLeft setFrame: CGRectMake(0, tutorial.highlightedItemRect.origin.y, tutorial.highlightedItemRect.origin.x, tutorial.highlightedItemRect.size.height)];
+        (self.maskViewLeft).frame = CGRectMake(0, tutorial.highlightedItemRect.origin.y, tutorial.highlightedItemRect.origin.x, tutorial.highlightedItemRect.size.height);
         
         [self.maskViewLeft setUserInteractionEnabled:YES]; //blocks out interactions on self.viewController
         self.maskViewLeft.backgroundColor = [UIColor whiteColor];
         [self.maskViewLeft setOpaque:NO];
         if (self.maskView)
         {
-            [self.maskViewLeft setAlpha: self.maskView.alpha];
+            (self.maskViewLeft).alpha = self.maskView.alpha;
         }
         else if (self.maskViewLeft)
         {
-            [self.maskViewLeft setAlpha: previousAlpha];
+            (self.maskViewLeft).alpha = previousAlpha;
         }
         else
         {
-            [self.maskViewLeft setAlpha: 0];
+            (self.maskViewLeft).alpha = 0;
         }
         
         [currentWindow addSubview:self.maskViewLeft];
         
         self.maskViewRight = [[UIView alloc] init];
-        [self.maskViewRight setFrame: CGRectMake(tutorial.highlightedItemRect.origin.x + tutorial.highlightedItemRect.size.width, tutorial.highlightedItemRect.origin.y, currentWindow.frame.size.width - tutorial.highlightedItemRect.origin.x + tutorial.highlightedItemRect.size.width, tutorial.highlightedItemRect.size.height)];
+        (self.maskViewRight).frame = CGRectMake(tutorial.highlightedItemRect.origin.x + tutorial.highlightedItemRect.size.width, tutorial.highlightedItemRect.origin.y, currentWindow.frame.size.width - tutorial.highlightedItemRect.origin.x + tutorial.highlightedItemRect.size.width, tutorial.highlightedItemRect.size.height);
         
         [self.maskViewRight setUserInteractionEnabled:YES]; //blocks out interactions on self.viewController
         self.maskViewRight.backgroundColor = [UIColor whiteColor];
         [self.maskViewRight setOpaque:NO];
         if (self.maskView)
         {
-            [self.maskViewRight setAlpha: self.maskView.alpha];
+            (self.maskViewRight).alpha = self.maskView.alpha;
         }
         else if (self.maskViewRight)
         {
-            [self.maskViewRight setAlpha: previousAlpha];
+            (self.maskViewRight).alpha = previousAlpha;
         }
         else
         {
-            [self.maskViewRight setAlpha: 0];
+            (self.maskViewRight).alpha = 0;
         }
         
         [currentWindow addSubview:self.maskViewRight];
         
         self.maskViewBottom = [[UIView alloc] init];
-        [self.maskViewBottom setFrame: CGRectMake(0, tutorial.highlightedItemRect.origin.y + tutorial.highlightedItemRect.size.height, currentWindow.frame.size.width, currentWindow.frame.size.height - tutorial.highlightedItemRect.origin.y - tutorial.highlightedItemRect.size.height)];
+        (self.maskViewBottom).frame = CGRectMake(0, tutorial.highlightedItemRect.origin.y + tutorial.highlightedItemRect.size.height, currentWindow.frame.size.width, currentWindow.frame.size.height - tutorial.highlightedItemRect.origin.y - tutorial.highlightedItemRect.size.height);
         
         [self.maskViewBottom setUserInteractionEnabled:YES]; //blocks out interactions on self.viewController
         self.maskViewBottom.backgroundColor = [UIColor whiteColor];
         [self.maskViewBottom setOpaque:NO];
         if (self.maskView)
         {
-            [self.maskViewBottom setAlpha: self.maskView.alpha];
+            (self.maskViewBottom).alpha = self.maskView.alpha;
         }
         else if (self.maskViewBottom)
         {
-            [self.maskViewBottom setAlpha: previousAlpha];
+            (self.maskViewBottom).alpha = previousAlpha;
         }
         else
         {
-            [self.maskViewBottom setAlpha: 0];
+            (self.maskViewBottom).alpha = 0;
         }
         
         [currentWindow addSubview:self.maskViewBottom];
@@ -252,12 +252,12 @@
         if (!self.maskView)
         {
             self.maskView = [[UIView alloc] init];
-            [self.maskView setFrame: currentWindow.frame];
+            (self.maskView).frame = currentWindow.frame;
             
             [self.maskView setUserInteractionEnabled:YES]; //blocks out interactions on self.viewController
             self.maskView.backgroundColor = [UIColor whiteColor];
             [self.maskView setOpaque:NO];
-            [self.maskView setAlpha:self.maskViewTop.alpha]; //fade to kTransparancy later
+            (self.maskView).alpha = self.maskViewTop.alpha; //fade to kTransparancy later
             
             [currentWindow addSubview:self.maskView];
         }
@@ -295,7 +295,7 @@
 
 -(void)setTutorialsAsShown
 {
-    [self.defaults setValue:[NSNumber numberWithBool:YES] forKey:kTutorialsShownKey];
+    [self.defaults setValue:@YES forKey:kTutorialsShownKey];
     
     [self.defaults synchronize];
 }
@@ -380,7 +380,7 @@
     
     NSArray *viewControllersStack = self.navigationController.viewControllers;
 
-    id lastViewController = [viewControllersStack lastObject];
+    id lastViewController = viewControllersStack.lastObject;
     
     // Already at Main View, do nothing
     if ([lastViewController isKindOfClass:[MainViewController class]])
@@ -389,7 +389,7 @@
     }
     
     //Replace self.navigationController.viewControllers stack with a new MainViewController
-    [self.navigationController setViewControllers:[NSArray arrayWithObject:[self.factory createMainViewController]] animated:YES];
+    [self.navigationController setViewControllers:@[[self.factory createMainViewController]] animated:YES];
 }
 
 - (void) leftSideButtonPressed

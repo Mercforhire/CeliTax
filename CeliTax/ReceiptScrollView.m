@@ -24,20 +24,20 @@ NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
 - (void) baseInit
 {
     UICollectionViewFlowLayout *collectionLayout = [[UICollectionViewFlowLayout alloc] init];
-    [collectionLayout setScrollDirection: UICollectionViewScrollDirectionVertical];
+    collectionLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
 
     CGRect frame = self.frame;
     
     self.collectionView = [[UICollectionView alloc] initWithFrame: CGRectMake(0, 0, frame.size.width, frame.size.height) collectionViewLayout: collectionLayout];
-    [self.collectionView setBackgroundColor: [UIColor whiteColor]];
+    (self.collectionView).backgroundColor = [UIColor whiteColor];
 
     UINib *receiptCollectionViewCell = [UINib nibWithNibName: @"ReceiptCollectionViewCell"
                                                       bundle: nil];
     [self.collectionView registerNib: receiptCollectionViewCell
           forCellWithReuseIdentifier: ReceiptCollectionViewCellIdentifier];
     
-    [self.collectionView setDataSource: self];
-    [self.collectionView setDelegate: self];
+    (self.collectionView).dataSource = self;
+    (self.collectionView).delegate = self;
     [self.collectionView setBounces: YES];
     [self.collectionView setAlwaysBounceVertical:YES];
     [self addSubview: self.collectionView];
@@ -45,7 +45,7 @@ NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
     self.selectedImageIndices = [NSMutableDictionary new];
 }
 
-- (id) initWithFrame: (CGRect) frame;
+- (instancetype) initWithFrame: (CGRect) frame;
 {
     self = [super initWithFrame: frame];
 
@@ -57,7 +57,7 @@ NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
     return self;
 }
 
-- (id) initWithCoder: (NSCoder *) aDecoder;
+- (instancetype) initWithCoder: (NSCoder *) aDecoder;
 {
     self = [super initWithCoder: aDecoder];
 
@@ -73,7 +73,7 @@ NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
 {
     [super layoutSubviews];
     
-    [self.collectionView setFrame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    (self.collectionView).frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
 }
 
 - (void) setImages: (NSArray *) images
@@ -87,7 +87,7 @@ NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
 {
     _insets = insets;
     
-    [self.collectionView setContentInset:_insets];
+    (self.collectionView).contentInset = _insets;
 }
 
 #pragma mark - From UICollectionView Delegate/Datasource
@@ -106,7 +106,7 @@ NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
         cell = [[ReceiptCollectionViewCell alloc] init];
     }
     
-    [cell.image setImage: [self.images objectAtIndex: indexPath.row]];
+    (cell.image).image = (self.images)[indexPath.row];
     
     return cell;
 }

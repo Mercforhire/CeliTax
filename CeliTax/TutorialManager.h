@@ -29,7 +29,7 @@ typedef void (^TutorialDismissedBlock) ();
 @property (nonatomic) NSInteger currentStep;
 
 - (instancetype) initWithViewControllerFactory: (ViewControllerFactory *)factory
-                                andLookAndFeel: (LookAndFeel *)lookAndFeel;
+                                andLookAndFeel: (LookAndFeel *)lookAndFeel NS_DESIGNATED_INITIALIZER;
 
 -(void)displayTutorialInViewController: (UIViewController *) viewController andTutorial:(TutorialStep *)tutorial;
 
@@ -44,12 +44,12 @@ typedef void (^TutorialDismissedBlock) ();
 -(void)setTutorialsAsNotShown;
 
 // returns True if tutorials have been shown, false otherwise
--(BOOL)hasTutorialBeenShown;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasTutorialBeenShown;
 
 // before we push a new view to continue the tutorial, we want to set this,
 // so when the next view is pushed, it will know to automatically start its tutorial
 -(void)setAutomaticallyShowTutorialNextTime;
 
--(BOOL)automaticallyShowTutorialNextTime;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL automaticallyShowTutorialNextTime;
 
 @end

@@ -26,20 +26,21 @@
     [coder encodeInteger:self.dataAction forKey:kKeyDataAction];
 }
 
-- (id) initWithCoder: (NSCoder *) coder
+- (instancetype) initWithCoder: (NSCoder *) coder
 {
-    self = [self init];
-    
-    self.localID = [coder decodeObjectForKey: kKeyIdentifer];
-
-    NSArray *fileNames = [coder decodeObjectForKey: kKeyFileNames];
-    self.fileNames = [[NSMutableArray alloc] initWithArray: fileNames copyItems: NO];
-
-    self.dateCreated = [coder decodeObjectForKey: kKeyDateCreated];
-    
-    self.taxYear = [coder decodeIntegerForKey: kKeyTaxYear];
-    
-    self.dataAction = [coder decodeIntegerForKey:kKeyDataAction];
+    if (self = [self init])
+    {
+        self.localID = [coder decodeObjectForKey: kKeyIdentifer];
+        
+        NSArray *fileNames = [coder decodeObjectForKey: kKeyFileNames];
+        self.fileNames = [[NSMutableArray alloc] initWithArray: fileNames copyItems: NO];
+        
+        self.dateCreated = [coder decodeObjectForKey: kKeyDateCreated];
+        
+        self.taxYear = [coder decodeIntegerForKey: kKeyTaxYear];
+        
+        self.dataAction = [coder decodeIntegerForKey:kKeyDataAction];
+    }
 
     return self;
 }
@@ -84,25 +85,25 @@
 {
     NSMutableDictionary *json = [NSMutableDictionary dictionary];
     
-    [json setObject:self.localID forKey:kKeyIdentifer];
+    json[kKeyIdentifer] = self.localID;
     
     NSMutableArray *filenamesJSONs = [NSMutableArray new];
     for (NSString *filename in self.fileNames)
     {
         [filenamesJSONs addObject:filename];
     }
-    [json setObject:filenamesJSONs forKey:kKeyFileNames];
+    json[kKeyFileNames] = filenamesJSONs;
     
     //convert self.dateCreated to string
     NSDateFormatter *gmtDateFormatter = [[NSDateFormatter alloc] init];
     gmtDateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
     gmtDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSString *dateString = [gmtDateFormatter stringFromDate:self.dateCreated];
-    [json setObject:dateString forKey:kKeyDateCreated];
+    json[kKeyDateCreated] = dateString;
     
-    [json setObject:[NSNumber numberWithInteger:self.taxYear] forKey:kKeyTaxYear];
+    json[kKeyTaxYear] = @(self.taxYear);
     
-    [json setObject:[NSNumber numberWithInteger:self.dataAction] forKey:kKeyDataAction];
+    json[kKeyDataAction] = @(self.dataAction);
     
     return json;
 }

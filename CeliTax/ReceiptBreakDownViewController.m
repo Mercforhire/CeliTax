@@ -58,18 +58,18 @@
 {
     // set up pieChart
     
-    [self.pieChart setBackgroundColor: [UIColor clearColor]]; // get rid of the visual aid background
-    [self.pieChart setDataSource: self];
-    [self.pieChart setDelegate: self];
+    (self.pieChart).backgroundColor = [UIColor clearColor]; // get rid of the visual aid background
+    (self.pieChart).dataSource = self;
+    (self.pieChart).delegate = self;
     [self.pieChart setStartPieAngle: M_PI_2];
-    [self.pieChart setAnimationSpeed: 1.0];
-    [self.pieChart setLabelFont: [UIFont latoFontOfSize: 10]];
-    [self.pieChart setLabelRadius: self.pieChart.frame.size.width / 4];
+    (self.pieChart).animationSpeed = 1.0;
+    (self.pieChart).labelFont = [UIFont latoFontOfSize: 10];
+    (self.pieChart).labelRadius = self.pieChart.frame.size.width / 4;
     [self.pieChart setShowPercentage: NO];
     [self.pieChart setPieBackgroundColor: [UIColor clearColor]];
     [self.pieChart setUserInteractionEnabled: YES];
-    [self.pieChart setLabelShadowColor: [UIColor blackColor]];
-    [self.pieChart setSelectedSliceOffsetRadius: 0];
+    (self.pieChart).labelShadowColor = [UIColor blackColor];
+    (self.pieChart).selectedSliceOffsetRadius = 0;
 
     // set up receiptItemsTable
     UINib *receiptBreakDownItemTableViewCell = [UINib nibWithNibName: @"ReceiptBreakDownItemTableViewCell" bundle: nil];
@@ -86,10 +86,9 @@
                                                                          style: UIBarButtonItemStyleDone
                                                                         target: self
                                                                         action: @selector(doneWithKeyboard)];
-    [doneToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
+    [doneToolbarButton setTitleTextAttributes: @{NSFontAttributeName: [UIFont latoBoldFontOfSize: 15], NSForegroundColorAttributeName: self.lookAndFeel.appGreenColor} forState: UIControlStateNormal];
 
-    self.numberToolbar.items = [NSArray arrayWithObjects:
-                                [[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil], doneToolbarButton, nil];
+    self.numberToolbar.items = @[[[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil], doneToolbarButton];
     [self.numberToolbar sizeToFit];
 
     [self.viewReceiptButton setLookAndFeel:self.lookAndFeel];
@@ -104,11 +103,11 @@
 
     [self setupUI];
 
-    [self.receiptItemsTable setDelegate: self];
-    [self.receiptItemsTable setDataSource: self];
+    (self.receiptItemsTable).delegate = self;
+    (self.receiptItemsTable).dataSource = self;
 
     self.dateFormatter = [[NSDateFormatter alloc] init];
-    [self.dateFormatter setDateFormat: @"dd/MM/yyyy"];
+    (self.dateFormatter).dateFormat = @"dd/MM/yyyy";
 }
 
 - (void) viewWillAppear: (BOOL) animated
@@ -156,7 +155,7 @@
     
     if (receipt)
     {
-        [self.dateLabel setText: [self.dateFormatter stringFromDate: receipt.dateCreated]];
+        (self.dateLabel).text = [self.dateFormatter stringFromDate: receipt.dateCreated];
     }
     else
     {
@@ -177,7 +176,7 @@
     self.catagoryPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: catagorySelections];
     self.catagoryPickerViewController.highlightedSelectionIndex = -1;
     self.selectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.catagoryPickerViewController];
-    [self.catagoryPickerViewController setDelegate: self];
+    (self.catagoryPickerViewController).delegate = self;
 
     self.currentlySelectedRecord = nil;
 
@@ -210,7 +209,7 @@
             [self.catagoriesUsedByThisReceipt addObject: catagory];
         }
         
-        NSMutableArray *recordsOfThisCatagory = [self.recordsDictionary objectForKey: catagory.localID];
+        NSMutableArray *recordsOfThisCatagory = (self.recordsDictionary)[catagory.localID];
         
         if (!recordsOfThisCatagory)
         {
@@ -219,13 +218,13 @@
         
         [recordsOfThisCatagory addObject: record];
         
-        [self.recordsDictionary setObject: recordsOfThisCatagory forKey: catagory.localID];
+        (self.recordsDictionary)[catagory.localID] = recordsOfThisCatagory;
     }
     
     // Sort each recordsOfThisCatagory by Unit Type order: Item, ML, L, G, KG
     for (NSString *catagoryIDKey in self.recordsDictionary.allKeys)
     {
-        NSMutableArray *unsortedRecordsOfThisCatagory = [self.recordsDictionary objectForKey:catagoryIDKey];
+        NSMutableArray *unsortedRecordsOfThisCatagory = (self.recordsDictionary)[catagoryIDKey];
         
         NSArray *sortedRecordsOfThisCatagory = [unsortedRecordsOfThisCatagory sortedArrayUsingComparator: ^NSComparisonResult (Record *a, Record *b)
         {
@@ -234,7 +233,7 @@
             
         }];
         
-        [self.recordsDictionary setObject: sortedRecordsOfThisCatagory forKey: catagoryIDKey];
+        (self.recordsDictionary)[catagoryIDKey] = sortedRecordsOfThisCatagory;
     }
 
     [self refreshPieChart];
@@ -265,7 +264,7 @@
         [self.sliceColors addObject: catagory.color];
         [self.sliceNames addObject: catagory.name];
 
-        NSMutableArray *recordsOfThisCatagory = [self.recordsDictionary objectForKey: catagory.localID];
+        NSMutableArray *recordsOfThisCatagory = (self.recordsDictionary)[catagory.localID];
 
         float totalForThisCatagory = 0;
 
@@ -305,7 +304,7 @@
             break;
         }
 
-        NSMutableArray *records = [self.recordsDictionary objectForKey: catagoryID];
+        NSMutableArray *records = (self.recordsDictionary)[catagoryID];
 
         for (Record *record in records)
         {
@@ -326,13 +325,13 @@
 {
     for (NSString *catagoryID in self.recordsDictionary.allKeys)
     {
-        NSMutableArray *records = [[self.recordsDictionary objectForKey: catagoryID] mutableCopy];
+        NSMutableArray *records = [(self.recordsDictionary)[catagoryID] mutableCopy];
         
         if ([records containsObject:recordToDelete])
         {
             [records removeObject:recordToDelete];
             
-            [self.recordsDictionary setObject:records forKey:catagoryID];
+            (self.recordsDictionary)[catagoryID] = records;
         }
     }
 }
@@ -341,11 +340,11 @@
 {
     for (NSString *catagoryID in self.recordsDictionary.allKeys)
     {
-        NSMutableArray *records = [self.recordsDictionary objectForKey: catagoryID];
+        NSMutableArray *records = (self.recordsDictionary)[catagoryID];
 
         if (nTh < records.count)
         {
-            return [records objectAtIndex: nTh];
+            return records[nTh];
         }
         else
         {
@@ -360,7 +359,7 @@
 {
     for (NSString *catagoryID in self.recordsDictionary.allKeys)
     {
-        NSMutableArray *records = [self.recordsDictionary objectForKey: catagoryID];
+        NSMutableArray *records = (self.recordsDictionary)[catagoryID];
 
         if (nTh < records.count)
         {
@@ -380,7 +379,7 @@
     NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"localID == %@", catagoryID];
     NSArray *catagory = [self.catagoriesUsedByThisReceipt filteredArrayUsingPredicate: findCatagories];
 
-    return [catagory firstObject];
+    return catagory.firstObject;
 }
 
 - (void) setCurrentlySelectedRecord: (Record *) currentlySelectedRecord
@@ -403,8 +402,8 @@
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void) keyboardWillShow: (NSNotification *) aNotification
 {
-    NSDictionary *info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey: UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    NSDictionary *info = aNotification.userInfo;
+    CGSize kbSize = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
     [self.view scrollToY: 0 - kbSize.height];
 }
@@ -433,7 +432,7 @@
 - (void) transferButtonPressed: (UIButton *) sender
 {
     CGRect rectOfCellInTableView = [self.receiptItemsTable rectForRowAtIndexPath: [NSIndexPath indexPathForRow: sender.tag * 2 + 1 inSection: 0]];
-    CGRect rectOfCellInSuperview = [self.receiptItemsTable convertRect: rectOfCellInTableView toView: [self.receiptItemsTable superview]];
+    CGRect rectOfCellInSuperview = [self.receiptItemsTable convertRect: rectOfCellInTableView toView: (self.receiptItemsTable).superview];
     
     CGRect tinyRect = CGRectMake(rectOfCellInSuperview.origin.x + sender.frame.origin.x + sender.frame.size.width / 2,
                                  rectOfCellInSuperview.origin.y +  sender.frame.origin.y + sender.frame.size.height / 2,
@@ -463,7 +462,7 @@
     [self.selectionPopover dismissPopoverAnimated: YES];
 
     // change the current selected record to this new catagory
-    Catagory *chosenCatagory = [self.allCatagories objectAtIndex: index];
+    Catagory *chosenCatagory = (self.allCatagories)[index];
 
     if ([self.currentlySelectedRecord.catagoryID isEqualToString: chosenCatagory.localID])
     {
@@ -487,19 +486,19 @@
 
 - (CGFloat) pieChart: (XYPieChart *) pieChart valueForSliceAtIndex: (NSUInteger) index
 {
-    return [[self.slicePercentages objectAtIndex: index] intValue];
+    return [(self.slicePercentages)[index] intValue];
 }
 
 - (UIColor *) pieChart: (XYPieChart *) pieChart colorForSliceAtIndex: (NSUInteger) index
 {
-    return [self.sliceColors objectAtIndex: (index % self.sliceColors.count)];
+    return (self.sliceColors)[(index % self.sliceColors.count)];
 }
 
 - (NSString *) pieChart: (XYPieChart *) pieChart textForSliceAtIndex: (NSUInteger) index
 {
     NSString *sliceText = [NSString stringWithFormat: @"%@\n%d%%",
-                           [self.sliceNames objectAtIndex: (index % self.sliceNames.count)],
-                           [[self.slicePercentages objectAtIndex: index] intValue]];
+                           (self.sliceNames)[(index % self.sliceNames.count)],
+                           [(self.slicePercentages)[index] intValue]];
 
     return sliceText;
 }
@@ -532,7 +531,7 @@
             textField.text = @"0.00";
         }
 
-        thisRecord.amount = [textField.text floatValue];
+        thisRecord.amount = (textField.text).floatValue;
 
         if (thisRecord.amount > 0)
         {
@@ -565,7 +564,7 @@
             textField.text = @"0";
         }
 
-        thisRecord.quantity = [textField.text integerValue];
+        thisRecord.quantity = (textField.text).integerValue;
 
         if (thisRecord.quantity > 0)
         {
@@ -624,15 +623,15 @@
 
 - (void) pieChart: (XYPieChart *) pieChart didSelectSliceAtIndex: (NSUInteger) index
 {
-    Catagory *thisCatagory = [self.catagoriesUsedByThisReceipt objectAtIndex: index];
+    Catagory *thisCatagory = (self.catagoriesUsedByThisReceipt)[index];
 
     DLog(@"Catagory %@ clicked", thisCatagory.name);
 
-    NSMutableArray *recordsOfThisCatagory = [self.recordsDictionary objectForKey: thisCatagory.localID];
+    NSMutableArray *recordsOfThisCatagory = (self.recordsDictionary)[thisCatagory.localID];
 
-    if (self.currentlySelectedRecord != [recordsOfThisCatagory firstObject])
+    if (self.currentlySelectedRecord != recordsOfThisCatagory.firstObject)
     {
-        self.currentlySelectedRecord = [recordsOfThisCatagory firstObject];
+        self.currentlySelectedRecord = recordsOfThisCatagory.firstObject;
 
         // scroll the table to the row that shows self.currentlySelectedRecord
         [self.receiptItemsTable scrollToRowAtIndexPath: [NSIndexPath indexPathForRow: [self getRecordPosition: self.currentlySelectedRecord] * 2 inSection: 0] atScrollPosition: UITableViewScrollPositionTop animated: YES];
@@ -681,8 +680,8 @@
         cell.catagoryName.text = thisCatagory.name;
 
         cell.quantityField.tag = indexPath.row / 2;
-        [cell.quantityField setDelegate: self];
-        [cell.quantityField setText: [NSString stringWithFormat: @"%ld", (long)thisRecord.quantity]];
+        (cell.quantityField).delegate = self;
+        (cell.quantityField).text = [NSString stringWithFormat: @"%ld", (long)thisRecord.quantity];
         [self.lookAndFeel applyGrayBorderTo: cell.quantityField];
         cell.quantityField.inputAccessoryView = self.numberToolbar;
         [cell.quantityField addTarget: self
@@ -690,8 +689,8 @@
                      forControlEvents: UIControlEventEditingChanged];
 
         cell.pricePerItemField.tag = indexPath.row / 2 + kPricePerItemFieldTagOffset;
-        [cell.pricePerItemField setDelegate: self];
-        [cell.pricePerItemField setText: [NSString stringWithFormat: @"%.2f", thisRecord.amount]];
+        (cell.pricePerItemField).delegate = self;
+        (cell.pricePerItemField).text = [NSString stringWithFormat: @"%.2f", thisRecord.amount];
         [self.lookAndFeel applyGreenBorderTo: cell.pricePerItemField];
         cell.pricePerItemField.inputAccessoryView = self.numberToolbar;
         [cell.pricePerItemField addTarget: self

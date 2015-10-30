@@ -71,7 +71,7 @@
 
     for (Record *record in fromRecords)
     {
-        if (record == [fromRecords lastObject])
+        if (record == fromRecords.lastObject)
         {
             [self.recordsDAO addRecordForCatagoryID:toItemCatagory.localID andReceiptID:record.receiptID forQuantity:record.quantity orUnit:record.unitType forAmount:record.amount save: YES];
         }
@@ -148,7 +148,7 @@
 
 - (BOOL) deleteRecord: (NSString *) recordID save:(BOOL)save
 {
-    NSArray *arrayWithSingleNumber = [NSArray arrayWithObject: recordID];
+    NSArray *arrayWithSingleNumber = @[recordID];
 
     if ([self.recordsDAO deleteRecordsForRecordIDs: arrayWithSingleNumber save:save])
     {

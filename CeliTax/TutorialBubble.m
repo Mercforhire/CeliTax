@@ -43,7 +43,7 @@
     {
         // 1. Load the .xib file .xib file must match classname
         NSString *className = NSStringFromClass([self class]);
-        customView = [[[NSBundle mainBundle] loadNibNamed:className owner:self options:nil] firstObject];
+        customView = [[NSBundle mainBundle] loadNibNamed:className owner:self options:nil].firstObject;
         
         // 2. Add as a subview
         [self addSubview:customView];
@@ -59,7 +59,7 @@
     {
         // 1. Load .xib file
         NSString *className = NSStringFromClass([self class]);
-        customView = [[[NSBundle mainBundle] loadNibNamed:className owner:self options:nil] firstObject];
+        customView = [[NSBundle mainBundle] loadNibNamed:className owner:self options:nil].firstObject;
         
         // 2. Add as a subview
         [self addSubview:customView];
@@ -117,7 +117,7 @@
     
     self.textViewFont = [UIFont latoLightFontOfSize:14];
     
-    [self.tutorialTextView setText:self.tutorialText];
+    (self.tutorialTextView).text = self.tutorialText;
     
     if (self.leftButtonTitle)
     {
@@ -142,7 +142,7 @@
     }
     
     self.bubbleView.layer.cornerRadius = 3.0f;
-    [self.bubbleView setBackgroundColor:[UIColor colorWithRed:116.0f/255 green:191.0f/255 blue:81.0f/255 alpha:1]];
+    (self.bubbleView).backgroundColor = [UIColor colorWithRed:116.0f/255 green:191.0f/255 blue:81.0f/255 alpha:1];
     
     self.leftButton.layer.cornerRadius = 2.0f;
     self.rightButton.layer.cornerRadius = 2.0f;
@@ -159,8 +159,8 @@
     newFrame.size = CGSizeMake(fmaxf(newSize.width, fixedWidth), newSize.height);
     
     // set the correct textViewHeightBar and bubbleViewHeightBar
-    [self.textViewHeightBar setConstant:newFrame.size.height];
-    [self.bubbleViewHeightBar setConstant:newFrame.size.height + 80];
+    (self.textViewHeightBar).constant = newFrame.size.height;
+    (self.bubbleViewHeightBar).constant = newFrame.size.height + 80;
     
     if (self.originOfArrow.x || self.originOfArrow.y)
     {

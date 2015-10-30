@@ -35,6 +35,7 @@
 "Back" = "Back";
 "Bread" = "Bread";
 "Begin Tutorial" = "Begin Tutorial";
+"Buy" = "Buy";
 
 //C
 "Cake" = "Cake";
@@ -161,6 +162,7 @@
 "Purchase" = "Purchase";
 "Purchase Subscriptions" = "Purchase Subscriptions";
 "Please enter your account's email's address and password to log in" = "Please enter your account's email's address and password to log in";
+"Purchase failed" = "Purchase failed";
 
 //Q
 "Quick Links" = "Quick Links";
@@ -184,7 +186,7 @@
 "Thank you" = "Thank you";
 "Thank you, an email has been sent with recovery options" = "Thank you, an email has been sent with recovery options";
 "The new email is same as the original email" = "The new email is same as the original email";
-"The old password provided is incorrect" = "The old password provided is incorrect";
+"The password provided is incorrect" = "The password provided is incorrect";
 "The password entered for this user is incorrect" = "The password entered for this user is incorrect";
 "This user does not exist" = "This user does not exist";
 "The server contains some saved receipt data. Do you want to download and merge the data to the app?" = "The server contains some saved receipt data. Do you want to download and merge the data to the app?";

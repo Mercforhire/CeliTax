@@ -19,7 +19,7 @@
     FlashButtonView *customView;
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     
@@ -27,7 +27,7 @@
     {
         // 1. Load the .xib file .xib file must match classname
         NSString *className = NSStringFromClass([self class]);
-        customView = [[[NSBundle mainBundle] loadNibNamed:className owner:self options:nil] firstObject];
+        customView = [[NSBundle mainBundle] loadNibNamed:className owner:self options:nil].firstObject;
         
         // 2. Add as a subview
         [self addSubview:customView];
@@ -37,7 +37,7 @@
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     
@@ -45,7 +45,7 @@
     {
         // 1. Load .xib file
         NSString *className = NSStringFromClass([self class]);
-        customView = [[[NSBundle mainBundle] loadNibNamed:className owner:self options:nil] firstObject];
+        customView = [[NSBundle mainBundle] loadNibNamed:className owner:self options:nil].firstObject;
         
         // 2. Add as a subview
         [self addSubview:customView];
@@ -57,15 +57,15 @@
 
 - (void) baseInit
 {
-    [self setBackgroundColor: [UIColor clearColor]];
+    self.backgroundColor = [UIColor clearColor];
     
-    [self.flashButton setBackgroundColor:[UIColor whiteColor]];
+    (self.flashButton).backgroundColor = [UIColor whiteColor];
     
     self.flashButton.layer.cornerRadius = 5.0f;
     
     self.lightningImageView.image = [self.lightningImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
-    [self.lightningImageView setTintColor:[UIColor darkGrayColor]];
+    (self.lightningImageView).tintColor = [UIColor darkGrayColor];
 }
 
 -(void)setOn:(BOOL)on
@@ -74,15 +74,15 @@
     
     if (_on)
     {
-        [self.flashButton setBackgroundColor:[UIColor clearColor]];
+        (self.flashButton).backgroundColor = [UIColor clearColor];
         
-        [self.lightningImageView setTintColor:[UIColor colorWithRed:252.0f/255 green:219.0f/255 blue:65.0f/255 alpha:1]];
+        (self.lightningImageView).tintColor = [UIColor colorWithRed:252.0f/255 green:219.0f/255 blue:65.0f/255 alpha:1];
     }
     else
     {
-        [self.flashButton setBackgroundColor:[UIColor colorWithWhite:220.0f/255 alpha:1]];
+        (self.flashButton).backgroundColor = [UIColor colorWithWhite:220.0f/255 alpha:1];
         
-        [self.lightningImageView setTintColor:[UIColor darkGrayColor]];
+        (self.lightningImageView).tintColor = [UIColor darkGrayColor];
     }
     
 }

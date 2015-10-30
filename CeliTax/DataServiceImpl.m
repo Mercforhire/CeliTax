@@ -131,14 +131,14 @@
         // get all catagories for this receipt
         NSArray *records = [self.recordsDAO loadRecordsforReceipt: receipt.localID];
         
-        [receiptInfo setObject:[NSNumber numberWithInteger:records.count] forKey:kNumberOfRecordsKey];
+        receiptInfo[kNumberOfRecordsKey] = [NSNumber numberWithInteger:records.count];
 
         for (Record *record in records)
         {
             totalAmountForReceipt = totalAmountForReceipt + [record calculateTotal];
         }
 
-        [receiptInfo setObject: [NSNumber numberWithFloat: totalAmountForReceipt] forKey: kTotalAmountKey];
+        receiptInfo[kTotalAmountKey] = @(totalAmountForReceipt);
 
         [receiptInfos addObject: receiptInfo];
     }
@@ -175,14 +175,14 @@
         // get all catagories for this receipt
         NSArray *records = [self.recordsDAO loadRecordsforReceipt: receipt.localID];
         
-        [receiptInfo setObject:[NSNumber numberWithInteger:records.count] forKey:kNumberOfRecordsKey];
+        receiptInfo[kNumberOfRecordsKey] = [NSNumber numberWithInteger:records.count];
         
         for (Record *record in records)
         {
             totalAmountForReceipt = totalAmountForReceipt + [record calculateTotal];
         }
         
-        [receiptInfo setObject: [NSNumber numberWithFloat: totalAmountForReceipt] forKey: kTotalAmountKey];
+        receiptInfo[kTotalAmountKey] = @(totalAmountForReceipt);
         
         [receiptInfos addObject: receiptInfo];
     }
@@ -236,10 +236,10 @@
 
             NSMutableDictionary *catagoryInfo = [NSMutableDictionary new];
 
-            [catagoryInfo setObject: receipt.localID forKey: kReceiptIDKey];
-            [catagoryInfo setObject: receipt.dateCreated forKey: kReceiptTimeKey];
-            [catagoryInfo setObject: [NSNumber numberWithInteger: totalQty] forKey: kTotalQtyKey];
-            [catagoryInfo setObject: [NSNumber numberWithFloat: totalAmount] forKey: kTotalAmountKey];
+            catagoryInfo[kReceiptIDKey] = receipt.localID;
+            catagoryInfo[kReceiptTimeKey] = receipt.dateCreated;
+            catagoryInfo[kTotalQtyKey] = @(totalQty);
+            catagoryInfo[kTotalAmountKey] = @(totalAmount);
 
             [catagoryInfos addObject: catagoryInfo];
         }
@@ -294,10 +294,10 @@
 
             NSMutableDictionary *catagoryInfo = [NSMutableDictionary new];
 
-            [catagoryInfo setObject: receipt.localID forKey: kReceiptIDKey];
-            [catagoryInfo setObject: receipt.dateCreated forKey: kReceiptTimeKey];
-            [catagoryInfo setObject: [NSNumber numberWithInteger: totalQty] forKey: kTotalQtyKey];
-            [catagoryInfo setObject: [NSNumber numberWithFloat: totalAmount] forKey: kTotalAmountKey];
+            catagoryInfo[kReceiptIDKey] = receipt.localID;
+            catagoryInfo[kReceiptTimeKey] = receipt.dateCreated;
+            catagoryInfo[kTotalQtyKey] = @(totalQty);
+            catagoryInfo[kTotalAmountKey] = @(totalAmount);
 
             [catagoryInfos addObject: catagoryInfo];
 

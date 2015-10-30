@@ -19,7 +19,7 @@
 {
     // Initialization code
 
-    [self setSelectionStyle: UITableViewCellSelectionStyleNone];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     
     [self.quantityLabel setText:NSLocalizedString(@"Qty.", nil)];
     [self.pricePerItemLabel setText:NSLocalizedString(@"Price/Item", nil)];
@@ -34,8 +34,8 @@
 
 -(void)makeCellAppearInactive
 {
-    [self.colorBoxView setBackgroundColor:[UIColor lightGrayColor]];
-    [self.catagoryName setTextColor:[UIColor lightGrayColor]];
+    (self.colorBoxView).backgroundColor = [UIColor lightGrayColor];
+    (self.catagoryName).textColor = [UIColor lightGrayColor];
     
     [self hideLabels];
     [self.quantityField setHidden:YES];
@@ -44,8 +44,8 @@
 
 -(void)makeCellAppearActive
 {
-    [self.colorBoxView setBackgroundColor:self.catagoryColor];
-    [self.catagoryName setTextColor:[UIColor blackColor]];
+    (self.colorBoxView).backgroundColor = self.catagoryColor;
+    (self.catagoryName).textColor = [UIColor blackColor];
     
     [self showLabels];
     [self.quantityField setHidden:NO];
@@ -135,7 +135,7 @@
         case UnitPt:
         case UnitQt:
         case UnitGal:
-            [self.quantityLabel setText:[NSString stringWithFormat:NSLocalizedString(@"Volume-%@", nil), unitSuffix]];
+            (self.quantityLabel).text = [NSString stringWithFormat:NSLocalizedString(@"Volume-%@", nil), unitSuffix];
             break;
             
         case UnitG:
@@ -143,7 +143,7 @@
         case UnitKG:
         case UnitOz:
         case UnitLb:
-            [self.quantityLabel setText:[NSString stringWithFormat:NSLocalizedString(@"Weight-%@", nil), unitSuffix]];
+            (self.quantityLabel).text = [NSString stringWithFormat:NSLocalizedString(@"Weight-%@", nil), unitSuffix];
             break;
             
         default:

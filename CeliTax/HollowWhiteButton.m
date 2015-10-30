@@ -16,7 +16,7 @@
 
 - (void) applyDefaults
 {
-    [self setEnabled:self.enabled];
+    self.enabled = self.enabled;
 }
 
 - (void) setLookAndFeel: (LookAndFeel *) lookAndFeel;
@@ -28,24 +28,24 @@
 
 - (void)setHighlighted:(BOOL)highlighted
 {
-    [super setHighlighted:highlighted];
+    super.highlighted = highlighted;
     
     if (highlighted)
     {
         self.backgroundColor = [UIColor whiteColor];
-        [self.titleLabel setTextColor:myLookAndFeel.appGreenColor];
+        (self.titleLabel).textColor = myLookAndFeel.appGreenColor;
     }
     else
     {
         self.backgroundColor = myLookAndFeel.appGreenColor;
-        [self.titleLabel setTextColor:[UIColor whiteColor]];
+        (self.titleLabel).textColor = [UIColor whiteColor];
         
     }
 }
 
 - (void) setEnabled: (BOOL) enabled
 {
-    [super setEnabled: enabled];
+    super.enabled = enabled;
     
     if (enabled)
     {

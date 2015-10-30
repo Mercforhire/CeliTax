@@ -13,7 +13,7 @@
 - (void) awakeFromNib
 {
     // Initialization code
-    [self setSelectionStyle: UITableViewCellSelectionStyleNone];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     
     [self.totalQtyLabel setText:NSLocalizedString(@"Total Qty.", nil)];
     [self.totalAmountLabel setText:NSLocalizedString(@"Total", nil)];
@@ -29,8 +29,8 @@
 
 -(void)makeCellAppearInactive
 {
-    [self.colorBox setBackgroundColor:[UIColor lightGrayColor]];
-    [self.categoryNameLabel setTextColor:[UIColor lightGrayColor]];
+    (self.colorBox).backgroundColor = [UIColor lightGrayColor];
+    (self.categoryNameLabel).textColor = [UIColor lightGrayColor];
     
     [self hideLabels];
     
@@ -41,8 +41,8 @@
 
 -(void)makeCellAppearActive
 {
-    [self.colorBox setBackgroundColor:self.colorBoxColor];
-    [self.categoryNameLabel setTextColor:[UIColor blackColor]];
+    (self.colorBox).backgroundColor = self.colorBoxColor;
+    (self.categoryNameLabel).textColor = [UIColor blackColor];
     
     [self showLabels];
     

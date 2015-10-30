@@ -18,19 +18,20 @@
 
 -(MKNetworkOperation *)postDataToServer:(NSMutableDictionary *)params path:(NSString *)path
 {
-    MKNetworkOperation *op = [self operationWithPath:path params:params httpMethod:@"POST" ssl:NO];
+    MKNetworkOperation *op = [self operationWithPath:path params:params httpMethod:@"POST" ssl:YES];
     return op;
 }
 
 -(MKNetworkOperation *)getRequestToServer:(NSString *)path
 {
-    MKNetworkOperation *op = [self operationWithPath:path];
+    MKNetworkOperation *op = [self operationWithPath:path params:nil httpMethod:@"GET" ssl:YES];
     return op;
 }
 
 -(MKNetworkOperation*) downloadFileFrom:(NSString*) remoteURL toFile:(NSString*) filePath
 {
     MKNetworkOperation *op = [self operationWithURLString:remoteURL];
+    
     
     [op addDownloadStream:[NSOutputStream outputStreamToFileAtPath:filePath
                                                             append:NO]];

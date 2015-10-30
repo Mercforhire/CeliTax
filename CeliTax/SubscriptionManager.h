@@ -15,11 +15,12 @@
 #define k3MonthServiceProductID     @"com.cravensave.celitax.3monthservice"
 #define k6MonthServiceProductID     @"com.cravensave.celitax.6monthservice"
 
-UIKIT_EXTERN NSString *const SubscriptionManagerProductPurchasedNotification;
-
 @interface SubscriptionManager : NSObject
 
 typedef void (^RequestProductsCompletionHandler)(BOOL success, NSArray * products);
+
+typedef void (^PurchaseSubscriptionSuccessHandler)();
+typedef void (^PurchaseSubscriptionFailureHandler)(NSInteger errorCode);
 
 @property (nonatomic, weak) id <AuthenticationService> authenticationService;
 @property (nonatomic, weak) UserManager *userManager;
@@ -28,11 +29,11 @@ typedef void (^RequestProductsCompletionHandler)(BOOL success, NSArray * product
 
 - (void)requestProductsWithCompletionHandler:(RequestProductsCompletionHandler)completionHandler;
 
-- (void)buyProduct:(SKProduct *)product;
+- (void)buyProduct:(SKProduct *)product
+           success:(PurchaseSubscriptionSuccessHandler)completionHandler
+           failure:(PurchaseSubscriptionFailureHandler)failureHandler;
 
 - (BOOL)productPurchased:(NSString *)productIdentifier;
-
-- (void)restoreCompletedTransactions;
 
 - (NSInteger)daysRemainingOnSubscription;
 

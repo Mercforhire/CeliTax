@@ -37,12 +37,12 @@
 #define kRecentUploadTableRowHeight                     40
 #define kNoItemsTableViewCellIdentifier                 @"NoItemsTableViewCell"
 
-typedef enum : NSUInteger
+typedef NS_ENUM(NSUInteger, SectionTitles)
 {
     SectionReceiptsUploads,
     SectionQuickLinks,
     SectionCount,
-} SectionTitles;
+};
 
 @interface MainViewController () <UITableViewDelegate, UITableViewDataSource, SelectionsPickerPopUpDelegate, UIPickerViewDataSource, UIPickerViewDelegate, TutorialManagerDelegate>
 
@@ -96,7 +96,7 @@ typedef enum : NSUInteger
     [self.recentUploadsTable registerNib: noItemTableCell forCellReuseIdentifier: kNoItemsTableViewCellIdentifier];
 
     // remove loginViewController from stack
-    NSMutableArray *viewControllers = [[self.navigationController viewControllers] mutableCopy];
+    NSMutableArray *viewControllers = [(self.navigationController).viewControllers mutableCopy];
 
     for (UIViewController *viewController in viewControllers)
     {
@@ -107,12 +107,12 @@ typedef enum : NSUInteger
         }
     }
 
-    [self.navigationController setViewControllers: viewControllers];
+    (self.navigationController).viewControllers = viewControllers;
     
     self.possibleTaxYears = [NSMutableArray new];
     for (int year = 2010; year < 2016; year++)
     {
-        [self.possibleTaxYears addObject:[NSNumber numberWithInteger:year]];
+        [self.possibleTaxYears addObject:@(year)];
     }
     
     self.taxYearPicker = [[UIPickerView alloc] init];
@@ -131,18 +131,17 @@ typedef enum : NSUInteger
                                                                            style: UIBarButtonItemStylePlain
                                                                           target: self
                                                                           action: @selector(cancelAddTaxYear)];
-    [cancelToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
+    [cancelToolbarButton setTitleTextAttributes: @{NSFontAttributeName: [UIFont latoBoldFontOfSize: 15], NSForegroundColorAttributeName: self.lookAndFeel.appGreenColor} forState: UIControlStateNormal];
     
     UIBarButtonItem *addToolbarButton = [[UIBarButtonItem alloc]initWithTitle: NSLocalizedString(@"Done", nil)
                                                                         style: UIBarButtonItemStylePlain
                                                                        target: self
                                                                        action: @selector(addTaxYear)];
-    [addToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
+    [addToolbarButton setTitleTextAttributes: @{NSFontAttributeName: [UIFont latoBoldFontOfSize: 15], NSForegroundColorAttributeName: self.lookAndFeel.appGreenColor} forState: UIControlStateNormal];
     
-    self.pickerToolbar.items = [NSArray arrayWithObjects:
-                                cancelToolbarButton,
+    self.pickerToolbar.items = @[cancelToolbarButton,
                                 [[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil],
-                                addToolbarButton, nil];
+                                addToolbarButton];
     [self.pickerToolbar sizeToFit];
 
     
@@ -206,7 +205,7 @@ typedef enum : NSUInteger
     }
     else if (self.existingTaxYears.count)
     {
-        self.currentlySelectedYear = [self.existingTaxYears firstObject];
+        self.currentlySelectedYear = (self.existingTaxYears).firstObject;
     }
     else
     {
@@ -304,7 +303,7 @@ typedef enum : NSUInteger
     
     if (!self.currentlySelectedYear)
     {
-        self.currentlySelectedYear = [self.existingTaxYears firstObject];
+        self.currentlySelectedYear = (self.existingTaxYears).firstObject;
     }
 }
 
@@ -323,7 +322,7 @@ typedef enum : NSUInteger
     
     self.taxYearPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: yearSelections];
     self.selectionPopover = [[WYPopoverController alloc] initWithContentViewController: self.taxYearPickerViewController];
-    [self.taxYearPickerViewController setDelegate: self];
+    (self.taxYearPickerViewController).delegate = self;
 }
 
 - (void) reloadReceiptInfo
@@ -393,7 +392,7 @@ typedef enum : NSUInteger
 
 - (void) setYearLabelToBe: (NSInteger) year
 {
-    [self.taxYearLabel setText: [NSString stringWithFormat: NSLocalizedString(@"%ld Tax Year", nil), (long)year]];
+    (self.taxYearLabel).text = [NSString stringWithFormat: NSLocalizedString(@"%ld Tax Year", nil), (long)year];
 }
 
 - (IBAction) myAccountPressed: (UIButton *) sender
@@ -447,7 +446,7 @@ typedef enum : NSUInteger
             
             if (self.existingTaxYears.count)
             {
-                self.currentlySelectedYear = [self.existingTaxYears firstObject];
+                self.currentlySelectedYear = (self.existingTaxYears).firstObject;
             }
             
             [self.recentUploadsTable reloadData];
@@ -463,6 +462,11 @@ typedef enum : NSUInteger
     else if ([title isEqualToString:NSLocalizedString(@"Never show again", nil)])
     {
         [self.userManager doNotShowDisclaimerAgain];
+    }
+    else if ([title isEqualToString:NSLocalizedString(@"Purchase", nil)])
+    {
+        // go to Settings Page
+        [self selectedMenuIndex:RootViewControllerSettings];
     }
 }
 
@@ -501,7 +505,7 @@ typedef enum : NSUInteger
     }
     else
     {
-        self.taxYearToAdd = [self.possibleTaxYears firstObject];
+        self.taxYearToAdd = (self.possibleTaxYears).firstObject;
         
         [self.invisibleNewTaxYearField becomeFirstResponder];
     }
@@ -559,15 +563,15 @@ typedef enum : NSUInteger
 
     [self.lookAndFeel applyGrayBorderTo: cell.colorBoxView];
 
-    NSDate *uploadDate = [uploadInfoDictionary objectForKey: kUploadTimeKey];
+    NSDate *uploadDate = uploadInfoDictionary[kUploadTimeKey];
 
-    [self.dateFormatter setDateFormat: @"dd/MM/yyyy"];
+    (self.dateFormatter).dateFormat = @"dd/MM/yyyy";
 
-    [cell.calenderDateLabel setText: [self.dateFormatter stringFromDate: uploadDate]];
+    (cell.calenderDateLabel).text = [self.dateFormatter stringFromDate: uploadDate];
 
-    [self.dateFormatter setDateFormat: @"hh:mm a"];
+    (self.dateFormatter).dateFormat = @"hh:mm a";
 
-    [cell.timeOfDayLabel setText: [[self.dateFormatter stringFromDate: uploadDate] lowercaseString]];
+    (cell.timeOfDayLabel).text = [self.dateFormatter stringFromDate: uploadDate].lowercaseString;
 
     return cell;
 }
@@ -588,7 +592,7 @@ typedef enum : NSUInteger
     
     NSDictionary *uploadInfoDictionary = self.receiptInfos [indexPath.row];
 
-    NSString *clickedReceiptID = [uploadInfoDictionary objectForKey: kReceiptIDKey];
+    NSString *clickedReceiptID = uploadInfoDictionary[kReceiptIDKey];
     
     //push to Receipt Checking view directly if this receipt has no items
     NSArray *records = [self.dataService fetchRecordsForReceiptID: clickedReceiptID];
@@ -606,7 +610,7 @@ typedef enum : NSUInteger
 
 #pragma mark - Tutorial
 
-typedef enum : NSUInteger
+typedef NS_ENUM(NSUInteger, TutorialSteps)
 {
     TutorialStep1,
     TutorialStep2,
@@ -616,11 +620,11 @@ typedef enum : NSUInteger
     TutorialStep6,
     TutorialStep8,
     TutorialStep21,
-} TutorialSteps;
+};
 
 -(void)setupTutorials
 {
-    [self.tutorialManager setDelegate:self];
+    (self.tutorialManager).delegate = self;
     
     self.tutorials = [NSMutableArray new];
     
@@ -697,7 +701,7 @@ typedef enum : NSUInteger
 {
     if (self.tutorials.count && step < self.tutorials.count)
     {
-        TutorialStep *tutorialStep = [self.tutorials objectAtIndex:step];
+        TutorialStep *tutorialStep = (self.tutorials)[step];
         
         [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
     }

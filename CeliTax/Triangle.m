@@ -18,7 +18,7 @@
     self.backgroundColor = [UIColor clearColor];
 }
 
-- (id) initWithFrame: (CGRect) frame
+- (instancetype) initWithFrame: (CGRect) frame
 {
     self = [super initWithFrame: frame];
     
@@ -30,7 +30,7 @@
     return self;
 }
 
-- (id) initWithCoder: (NSCoder *) aDecoder
+- (instancetype) initWithCoder: (NSCoder *) aDecoder
 {
     self = [super initWithCoder: aDecoder];
     

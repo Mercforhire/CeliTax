@@ -24,18 +24,18 @@
     
     Receipt *receipt = [[Receipt alloc] init];
     
-    receipt.localID = [json objectForKey: kKeyIdentifer];
-    receipt.taxYear = [[json objectForKey: kKeyTaxYear] integerValue];
+    receipt.localID = json[kKeyIdentifer];
+    receipt.taxYear = [json[kKeyTaxYear] integerValue];
     
     //Filenames
-    NSString *filenamesString = [json objectForKey: kKeyFileNames];
+    NSString *filenamesString = json[kKeyFileNames];
     
     NSArray *filenames = [filenamesString componentsSeparatedByString:@","];
     
     receipt.fileNames = [[NSMutableArray alloc] initWithArray: filenames copyItems: NO];
     
     //Data Created
-    NSString *dateString = [json objectForKey: kKeyDateCreated];
+    NSString *dateString = json[kKeyDateCreated];
     
     if (dateString.length)
     {

@@ -40,12 +40,12 @@
 NSString *ReceiptItemCellIdentifier = @"ReceiptItemCellIdentifier";
 NSString *ReceiptEditModeTableViewCellIdentifier = @"ReceiptEditModeTableViewCellIdentifier";
 
-typedef enum : NSUInteger
+typedef NS_ENUM(NSUInteger, TextFieldTypes)
 {
     TextFieldTypeQuantity,
     TextFieldTypePricePerItem,
     TextFieldTypeTotalCost,
-} TextFieldTypes;
+};
 
 @interface ReceiptCheckingViewController ()
 <ImageCounterIconViewProtocol, HorizonalScrollBarViewProtocol, UITextFieldDelegate, UIAlertViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITableViewDataSource, UITableViewDelegate, UnitPickerViewControllerDelegate, WYPopoverControllerDelegate, TutorialManagerDelegate>
@@ -133,24 +133,22 @@ typedef enum : NSUInteger
     self.numberToolbar.barStyle = UIBarStyleDefault;
 
     UIBarButtonItem *doneToolbarButton = [[UIBarButtonItem alloc]initWithTitle: NSLocalizedString(@"Done", nil) style: UIBarButtonItemStyleDone target: self action: @selector(doneOnKeyboardPressed)];
-    [doneToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
+    [doneToolbarButton setTitleTextAttributes: @{NSFontAttributeName: [UIFont latoBoldFontOfSize: 15], NSForegroundColorAttributeName: [UIColor blackColor]} forState: UIControlStateNormal];
 
-    self.numberToolbar.items = [NSArray arrayWithObjects:
-                                [[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil],
-                                doneToolbarButton,
-                                nil];
+    self.numberToolbar.items = @[[[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil],
+                                doneToolbarButton];
 
     [self.numberToolbar sizeToFit];
 
     self.receiptScrollView.lookAndFeel = self.lookAndFeel;
-    [self.receiptScrollView setBackgroundColor: [UIColor blackColor]];
-    [self.receiptScrollView setInsets:UIEdgeInsetsMake(64, 0, 0, 0)];
+    (self.receiptScrollView).backgroundColor = [UIColor blackColor];
+    (self.receiptScrollView).insets = UIEdgeInsetsMake(64, 0, 0, 0);
 
     UICollectionViewFlowLayout *collectionLayout = [[UICollectionViewFlowLayout alloc] init];
-    [collectionLayout setItemSize: CGSizeMake(self.view.frame.size.width, 53)];
-    [collectionLayout setScrollDirection: UICollectionViewScrollDirectionHorizontal];
-    [self.receiptItemCollectionView setCollectionViewLayout: collectionLayout];
-    [self.receiptItemCollectionView setBackgroundColor: [UIColor clearColor]];
+    collectionLayout.itemSize = CGSizeMake(self.view.frame.size.width, 53);
+    collectionLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    (self.receiptItemCollectionView).collectionViewLayout = collectionLayout;
+    (self.receiptItemCollectionView).backgroundColor = [UIColor clearColor];
     
     UITapGestureRecognizer *receiptScrollViewTap =
     [[UITapGestureRecognizer alloc] initWithTarget: self
@@ -161,7 +159,7 @@ typedef enum : NSUInteger
     UINib *receiptItemCell = [UINib nibWithNibName: @"ReceiptItemCell" bundle: nil];
     [self.receiptItemCollectionView registerNib: receiptItemCell forCellWithReuseIdentifier: ReceiptItemCellIdentifier];
     
-    [self.receiptItemCollectionView setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.2]];
+    (self.receiptItemCollectionView).backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];
 
     UINib *receiptEditModeTableViewCell = [UINib nibWithNibName: @"ReceiptEditModeTableViewCell" bundle: nil];
     [self.editReceiptTable registerNib: receiptEditModeTableViewCell forCellReuseIdentifier: ReceiptEditModeTableViewCellIdentifier];
@@ -187,7 +185,7 @@ typedef enum : NSUInteger
         [self.completeButton setTitle: @"Finish" forState: UIControlStateNormal];
         [self.completeButton setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
         self.completeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-        [self.completeButton.titleLabel setFont: [UIFont latoBoldFontOfSize: 14]];
+        (self.completeButton.titleLabel).font = [UIFont latoBoldFontOfSize: 14];
         [self.completeButton addTarget: self action: @selector(completePressed) forControlEvents: UIControlEventTouchUpInside];
 
         self.rightMenuItem = [[UIBarButtonItem alloc] initWithCustomView: self.completeButton];
@@ -213,7 +211,7 @@ typedef enum : NSUInteger
 
     self.categoriesBar.delegate = self;
 
-    [self.recordsCounter setDelegate: self];
+    (self.recordsCounter).delegate = self;
 
     self.receiptItemCollectionView.delegate = self;
     self.receiptItemCollectionView.dataSource = self;
@@ -315,7 +313,7 @@ typedef enum : NSUInteger
         }
         else
         {
-            [self.receiptScrollView setImages: self.receiptImages];
+            (self.receiptScrollView).images = self.receiptImages;
             [self.editReceiptTable reloadData];
         }
     }
@@ -348,7 +346,7 @@ typedef enum : NSUInteger
         sampleCategory5.color = [UIColor purpleColor];
         sampleCategory5.localID = @"5";
         
-        self.catagories = [[NSArray alloc] initWithObjects:sampleCategory1, sampleCategory2, sampleCategory3, sampleCategory4, sampleCategory5, nil];
+        self.catagories = @[sampleCategory1, sampleCategory2, sampleCategory3, sampleCategory4, sampleCategory5];
         
         [self refreshButtonBar];
         
@@ -359,7 +357,7 @@ typedef enum : NSUInteger
         
         self.receiptImages = [[NSMutableArray alloc] initWithObjects:testImage1, testImage2, nil];
         
-        [self.receiptScrollView setImages: self.receiptImages];
+        (self.receiptScrollView).images = self.receiptImages;
         [self.editReceiptTable reloadData];
         
         // add fake records (not yet)
@@ -378,17 +376,17 @@ typedef enum : NSUInteger
     {
         self.metricUnitPickerViewController = [self.viewControllerFactory createUnitPickerViewControllerWithDefaultUnit:UnitItem];
         self.unitPickerPopoverController = [[WYPopoverController alloc] initWithContentViewController: self.metricUnitPickerViewController];
-        [self.unitPickerPopoverController setPopoverContentSize: self.metricUnitPickerViewController.viewSize];
-        [self.unitPickerPopoverController setDelegate:self];
-        [self.metricUnitPickerViewController setDelegate: self];
+        (self.unitPickerPopoverController).popoverContentSize = self.metricUnitPickerViewController.viewSize;
+        (self.unitPickerPopoverController).delegate = self;
+        (self.metricUnitPickerViewController).delegate = self;
     }
     else
     {
         self.imperialUnitPickerViewController = [self.viewControllerFactory createImperialUnitPickerViewControllerWithDefaultUnit:UnitItem];
         self.unitPickerPopoverController = [[WYPopoverController alloc] initWithContentViewController: self.imperialUnitPickerViewController];
-        [self.unitPickerPopoverController setPopoverContentSize: self.imperialUnitPickerViewController.viewSize];
-        [self.unitPickerPopoverController setDelegate:self];
-        [self.imperialUnitPickerViewController setDelegate: self];
+        (self.unitPickerPopoverController).popoverContentSize = self.imperialUnitPickerViewController.viewSize;
+        (self.unitPickerPopoverController).delegate = self;
+        (self.imperialUnitPickerViewController).delegate = self;
     }
     
     if (![self.tutorialManager hasTutorialBeenShown] && [self.tutorialManager automaticallyShowTutorialNextTime])
@@ -433,7 +431,7 @@ typedef enum : NSUInteger
         }
     }
     
-    [self.receiptScrollView setImages: self.receiptImages];
+    (self.receiptScrollView).images = self.receiptImages;
 }
 
 - (NSInteger) calculateNumberOfRecords
@@ -450,16 +448,16 @@ typedef enum : NSUInteger
 
 - (void) refreshRecordsCounter
 {
-    [self.recordsCounter setCounter: [self calculateNumberOfRecords]];
+    (self.recordsCounter).counter = [self calculateNumberOfRecords];
 
     if ([self calculateNumberOfRecords] == 0)
     {
-        [self.recordsCounter setAlpha: 0.5];
+        (self.recordsCounter).alpha = 0.5;
         [self.recordsCounter setUserInteractionEnabled: NO];
     }
     else
     {
-        [self.recordsCounter setAlpha: 1];
+        (self.recordsCounter).alpha = 1;
         [self.recordsCounter setUserInteractionEnabled: YES];
     }
 }
@@ -477,7 +475,7 @@ typedef enum : NSUInteger
 
         [recordsOfThisCatagory addObject: record];
 
-        [self.records setObject: recordsOfThisCatagory forKey: record.catagoryID];
+        (self.records)[record.catagoryID] = recordsOfThisCatagory;
     }
 }
 
@@ -511,11 +509,11 @@ typedef enum : NSUInteger
 
 - (void) loadFirstRecordFromCurrentlySelectedCatagory
 {
-    self.recordsOfCurrentlySelectedCatagory = [self.records objectForKey: self.currentlySelectedCatagory.localID];
+    self.recordsOfCurrentlySelectedCatagory = (self.records)[self.currentlySelectedCatagory.localID];
 
     if (self.recordsOfCurrentlySelectedCatagory.count)
     {
-        self.currentlySelectedRecord = [self.recordsOfCurrentlySelectedCatagory firstObject];
+        self.currentlySelectedRecord = (self.recordsOfCurrentlySelectedCatagory).firstObject;
     }
     else
     {
@@ -581,49 +579,49 @@ typedef enum : NSUInteger
 - (void) disablePreviousItemButton
 {
     [self.previousItemButton setEnabled: NO];
-    [self.previousItemButton setAlpha:0.5f];
+    (self.previousItemButton).alpha = 0.5f;
 }
 
 - (void) enablePreviousItemButton
 {
     [self.previousItemButton setEnabled: YES];
-    [self.previousItemButton setAlpha:1.0f];
+    (self.previousItemButton).alpha = 1.0f;
 }
 
 - (void) disableNextItemButton
 {
     [self.nextItemButton setEnabled: NO];
-    [self.nextItemButton setAlpha:0.5f];
+    (self.nextItemButton).alpha = 0.5f;
 }
 
 - (void) enableNextItemButton
 {
     [self.nextItemButton setEnabled: YES];
-    [self.nextItemButton setAlpha:1.0f];
+    (self.nextItemButton).alpha = 1.0f;
 }
 
 - (void) disableAddItemButton
 {
     [self.addOrEditItemButton setEnabled: NO];
-    [self.addOrEditItemButton setAlpha:0.5f];
+    (self.addOrEditItemButton).alpha = 0.5f;
 }
 
 - (void) enableAddItemButton
 {
     [self.addOrEditItemButton setEnabled: YES];
-    [self.addOrEditItemButton setAlpha:1];
+    (self.addOrEditItemButton).alpha = 1;
 }
 
 - (void) disableDeleteItemButton
 {
     [self.deleteItemButton setEnabled: NO];
-    [self.deleteItemButton setAlpha:0.5f];
+    (self.deleteItemButton).alpha = 0.5f;
 }
 
 - (void) enableDeleteItemButton
 {
     [self.deleteItemButton setEnabled: YES];
-    [self.deleteItemButton setAlpha:1];
+    (self.deleteItemButton).alpha = 1;
 }
 
 #pragma mark - Setters
@@ -683,7 +681,7 @@ typedef enum : NSUInteger
         self.currentlySelectedRecordIndex = [self.recordsOfCurrentlySelectedCatagory indexOfObject: _currentlySelectedRecord];
 
         //check tempSavedDataForUnsavedRecordForEachCatagory to see if there is a saved value
-        NSMutableDictionary *savedValues = [self.savedDataForUnsavedExistingRecords objectForKey:_currentlySelectedRecord.localID];
+        NSMutableDictionary *savedValues = (self.savedDataForUnsavedExistingRecords)[_currentlySelectedRecord.localID];
         
         if (!savedValues)
         {
@@ -693,15 +691,15 @@ typedef enum : NSUInteger
         }
         else
         {
-            self.tempQuantity = [[savedValues objectForKey:kTempQuantityTypeKey] integerValue];
-            self.tempPricePerItemOrTotalCost = [[savedValues objectForKey:kTempPricePerItemOrTotalCostTypeKey] floatValue];
-            self.tempUnitType = [[savedValues objectForKey:kTempUnitTypeKey] integerValue];
+            self.tempQuantity = [savedValues[kTempQuantityTypeKey] integerValue];
+            self.tempPricePerItemOrTotalCost = [savedValues[kTempPricePerItemOrTotalCostTypeKey] floatValue];
+            self.tempUnitType = [savedValues[kTempUnitTypeKey] integerValue];
         }
     }
     else
     {
         // Clear the Textfields
-        [self.currentItemStatusLabel setText: [NSString stringWithFormat: @"%d/%ld", 0, (unsigned long)self.recordsOfCurrentlySelectedCatagory.count]];
+        (self.currentItemStatusLabel).text = [NSString stringWithFormat: @"%d/%ld", 0, (unsigned long)self.recordsOfCurrentlySelectedCatagory.count];
 
         [self.addOrEditItemButton setTitle: NSLocalizedString(@"Add", nil) forState: UIControlStateNormal];
     
@@ -710,7 +708,7 @@ typedef enum : NSUInteger
         self.currentlySelectedRecordIndex = -1;
         
         //check tempSavedDataForUnsavedRecordForEachCatagory to see if there is a saved value
-        NSMutableDictionary *savedValues = [self.savedDataForUnsavedNewRecordInEachCatagory objectForKey:self.currentlySelectedCatagory.localID];
+        NSMutableDictionary *savedValues = (self.savedDataForUnsavedNewRecordInEachCatagory)[self.currentlySelectedCatagory.localID];
 
         if (!savedValues)
         {
@@ -720,9 +718,9 @@ typedef enum : NSUInteger
         }
         else
         {
-            self.tempQuantity = [[savedValues objectForKey:kTempQuantityTypeKey] integerValue];
-            self.tempPricePerItemOrTotalCost = [[savedValues objectForKey:kTempPricePerItemOrTotalCostTypeKey] floatValue];
-            self.tempUnitType = [[savedValues objectForKey:kTempUnitTypeKey] integerValue];
+            self.tempQuantity = [savedValues[kTempQuantityTypeKey] integerValue];
+            self.tempPricePerItemOrTotalCost = [savedValues[kTempPricePerItemOrTotalCostTypeKey] floatValue];
+            self.tempUnitType = [savedValues[kTempUnitTypeKey] integerValue];
         }
     }
 
@@ -735,7 +733,7 @@ typedef enum : NSUInteger
 {
     _currentlySelectedRecordIndex = currentlySelectedRecordIndex;
 
-    [self.currentItemStatusLabel setText: [NSString stringWithFormat: @"%ld/%ld", (long)(currentlySelectedRecordIndex + 1), (unsigned long)self.recordsOfCurrentlySelectedCatagory.count]];
+    (self.currentItemStatusLabel).text = [NSString stringWithFormat: @"%ld/%ld", (long)(currentlySelectedRecordIndex + 1), (unsigned long)self.recordsOfCurrentlySelectedCatagory.count];
 
     if (currentlySelectedRecordIndex == -1)
     {
@@ -817,8 +815,8 @@ typedef enum : NSUInteger
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void) keyboardWillShow: (NSNotification *) aNotification
 {
-    NSDictionary *info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey: UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    NSDictionary *info = aNotification.userInfo;
+    CGSize kbSize = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
 
     [self.view scrollToY: 0 - kbSize.height];
 }
@@ -873,11 +871,11 @@ typedef enum : NSUInteger
     if ([self.manipulationService deleteRecord: self.currentlySelectedRecord.localID save:YES])
     {
         // delete the record from self.records
-        NSMutableArray *recordsOfThisCatagory = [self.records objectForKey: self.currentlySelectedRecord.catagoryID];
+        NSMutableArray *recordsOfThisCatagory = (self.records)[self.currentlySelectedRecord.catagoryID];
         
         [recordsOfThisCatagory removeObject: self.currentlySelectedRecord];
         
-        [self.records setObject: recordsOfThisCatagory forKey: self.currentlySelectedRecord.catagoryID];
+        (self.records)[self.currentlySelectedRecord.catagoryID] = recordsOfThisCatagory;
         
         // calls the setter to refresh UI
         self.recordsOfCurrentlySelectedCatagory = recordsOfThisCatagory;
@@ -928,7 +926,7 @@ typedef enum : NSUInteger
             Record *record = [self.dataService fetchRecordForID: newestRecordID];
             
             // add that to self.records
-            NSMutableArray *recordsOfThisCatagory = [self.records objectForKey: record.catagoryID];
+            NSMutableArray *recordsOfThisCatagory = (self.records)[record.catagoryID];
             
             if (!recordsOfThisCatagory)
             {
@@ -937,7 +935,7 @@ typedef enum : NSUInteger
             
             [recordsOfThisCatagory addObject: record];
             
-            [self.records setObject: recordsOfThisCatagory forKey: record.catagoryID];
+            (self.records)[record.catagoryID] = recordsOfThisCatagory;
             
             // delete the saved value for this catagory from tempSavedDataForUnsavedRecordForEachCatagory
             [self.savedDataForUnsavedNewRecordInEachCatagory removeObjectForKey:self.currentlySelectedCatagory.localID];
@@ -975,7 +973,7 @@ typedef enum : NSUInteger
 {
     if (self.currentlySelectedRecordIndex - 1 >= 0)
     {
-        self.currentlySelectedRecord = [self.recordsOfCurrentlySelectedCatagory objectAtIndex: self.currentlySelectedRecordIndex - 1];
+        self.currentlySelectedRecord = (self.recordsOfCurrentlySelectedCatagory)[self.currentlySelectedRecordIndex - 1];
     }
     else
     {
@@ -987,7 +985,7 @@ typedef enum : NSUInteger
 {
     if (self.currentlySelectedRecordIndex + 1 < self.recordsOfCurrentlySelectedCatagory.count)
     {
-        self.currentlySelectedRecord = [self.recordsOfCurrentlySelectedCatagory objectAtIndex: self.currentlySelectedRecordIndex + 1];
+        self.currentlySelectedRecord = (self.recordsOfCurrentlySelectedCatagory)[self.currentlySelectedRecordIndex + 1];
     }
 }
 
@@ -1026,7 +1024,7 @@ typedef enum : NSUInteger
 - (void)popoverControllerDidDismissPopover:(WYPopoverController *)controller
 {
     //If we were temporarily hiding the itemControlsContainer
-    if (self.itemControlsContainerActivated && [self.itemControlsContainer isHidden])
+    if (self.itemControlsContainerActivated && (self.itemControlsContainer).hidden)
     {
         //Show it again
         [self.itemControlsContainer setHidden: NO];
@@ -1104,24 +1102,24 @@ typedef enum : NSUInteger
         cell = [[ReceiptItemCell alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 60)];
     }
     
-    [cell.qtyField setDelegate: self];
-    [cell.qtyField setTag: TextFieldTypeQuantity];
+    (cell.qtyField).delegate = self;
+    (cell.qtyField).tag = TextFieldTypeQuantity;
     [cell.qtyField addTarget: self
                       action: @selector(textFieldDidChange:)
             forControlEvents: UIControlEventEditingChanged];
     cell.qtyField.inputAccessoryView = self.numberToolbar;
     [self.lookAndFeel applyGrayBorderTo:cell.qtyField];
     
-    [cell.priceField setDelegate: self];
-    [cell.priceField setTag: TextFieldTypePricePerItem];
+    (cell.priceField).delegate = self;
+    (cell.priceField).tag = TextFieldTypePricePerItem;
     [cell.priceField addTarget: self
                         action: @selector(textFieldDidChange:)
               forControlEvents: UIControlEventEditingChanged];
     cell.priceField.inputAccessoryView = self.numberToolbar;
     [self.lookAndFeel applyGrayBorderTo:cell.priceField];
 
-    [cell.totalField setDelegate: self];
-    [cell.totalField setTag: TextFieldTypeTotalCost];
+    (cell.totalField).delegate = self;
+    (cell.totalField).tag = TextFieldTypeTotalCost;
     [cell.totalField addTarget: self
                         action: @selector(textFieldDidChange:)
               forControlEvents: UIControlEventEditingChanged];
@@ -1171,17 +1169,17 @@ typedef enum : NSUInteger
     switch (textField.tag)
     {
         case TextFieldTypeQuantity:
-            self.tempQuantity = [textField.text integerValue];
+            self.tempQuantity = (textField.text).integerValue;
             
             break;
 
         case TextFieldTypePricePerItem:
-            self.tempPricePerItemOrTotalCost = [textField.text floatValue];
+            self.tempPricePerItemOrTotalCost = (textField.text).floatValue;
             
             break;
             
         case TextFieldTypeTotalCost:
-            self.tempPricePerItemOrTotalCost = [textField.text floatValue];
+            self.tempPricePerItemOrTotalCost = (textField.text).floatValue;
             
             break;
 
@@ -1194,22 +1192,22 @@ typedef enum : NSUInteger
         //save the temp values to tempSavedDataForUnsavedRecordForEachCatagory
         NSMutableDictionary *savedValues = [NSMutableDictionary new];
         
-        [savedValues setObject:[NSNumber numberWithInteger:self.tempQuantity] forKey:kTempQuantityTypeKey];
-        [savedValues setObject:[NSNumber numberWithFloat:self.tempPricePerItemOrTotalCost] forKey:kTempPricePerItemOrTotalCostTypeKey];
-        [savedValues setObject:[NSNumber numberWithInteger:self.tempUnitType] forKey:kTempUnitTypeKey];
+        savedValues[kTempQuantityTypeKey] = @(self.tempQuantity);
+        savedValues[kTempPricePerItemOrTotalCostTypeKey] = @(self.tempPricePerItemOrTotalCost);
+        savedValues[kTempUnitTypeKey] = @(self.tempUnitType);
         
-        [self.savedDataForUnsavedNewRecordInEachCatagory setObject:savedValues forKey:self.currentlySelectedCatagory.localID];
+        (self.savedDataForUnsavedNewRecordInEachCatagory)[self.currentlySelectedCatagory.localID] = savedValues;
     }
     else
     {
         //save the temp values to savedDataForUnsavedExistingRecords
         NSMutableDictionary *savedValues = [NSMutableDictionary new];
         
-        [savedValues setObject:[NSNumber numberWithInteger:self.tempQuantity] forKey:kTempQuantityTypeKey];
-        [savedValues setObject:[NSNumber numberWithFloat:self.tempPricePerItemOrTotalCost] forKey:kTempPricePerItemOrTotalCostTypeKey];
-        [savedValues setObject:[NSNumber numberWithInteger:self.tempUnitType] forKey:kTempUnitTypeKey];
+        savedValues[kTempQuantityTypeKey] = @(self.tempQuantity);
+        savedValues[kTempPricePerItemOrTotalCostTypeKey] = @(self.tempPricePerItemOrTotalCost);
+        savedValues[kTempUnitTypeKey] = @(self.tempUnitType);
         
-        [self.savedDataForUnsavedExistingRecords setObject:savedValues forKey:self.currentlySelectedRecord.localID];
+        (self.savedDataForUnsavedExistingRecords)[self.currentlySelectedRecord.localID] = savedValues;
     }
 }
 
@@ -1301,7 +1299,7 @@ typedef enum : NSUInteger
 
 - (void) buttonClickedWithIndex: (NSInteger) index andName: (NSString *) name
 {
-    self.currentlySelectedCatagory = [self.catagories objectAtIndex: index];
+    self.currentlySelectedCatagory = (self.catagories)[index];
 
     self.currentlySelectedRecord = nil;
 
@@ -1326,7 +1324,7 @@ typedef enum : NSUInteger
 
 - (void) buttonLongPressedWithIndex:(NSInteger)index andName:(NSString *)name atPoint:(CGPoint)point
 {
-    if (![self.itemControlsContainer isHidden])
+    if (!(self.itemControlsContainer).hidden)
     {
         [self.itemControlsContainer setHidden:YES];
     }
@@ -1336,11 +1334,11 @@ typedef enum : NSUInteger
     // set the correct default unit
     if (self.metricUnitPickerViewController)
     {
-        [self.metricUnitPickerViewController setDefaultSelectedUnit:self.tempUnitType];
+        (self.metricUnitPickerViewController).defaultSelectedUnit = self.tempUnitType;
     }
     else if (self.imperialUnitPickerViewController)
     {
-        [self.imperialUnitPickerViewController setDefaultSelectedUnit:self.tempUnitType];
+        (self.imperialUnitPickerViewController).defaultSelectedUnit = self.tempUnitType;
     }
     
     //Show Unit Picker at given point
@@ -1384,9 +1382,9 @@ typedef enum : NSUInteger
     cell.showsReorderControl = YES;
     cell.shouldIndentWhileEditing = NO;
 
-    UIImage *thisReceiptImage = [self.receiptImages objectAtIndex: indexPath.row];
+    UIImage *thisReceiptImage = (self.receiptImages)[indexPath.row];
 
-    [cell.receiptImageView setImage: thisReceiptImage];
+    (cell.receiptImageView).image = thisReceiptImage;
     
     return cell;
 }
@@ -1404,7 +1402,7 @@ typedef enum : NSUInteger
     if (fromIndex != toIndex)
     {
         // fetch the object at the row being moved
-        NSString *filename = [self.receipt.fileNames objectAtIndex:fromIndexPath.row];
+        NSString *filename = (self.receipt.fileNames)[fromIndexPath.row];
         
         // remove the original from the data structure
         [self.receipt.fileNames removeObjectAtIndex:fromIndex];
@@ -1428,15 +1426,15 @@ typedef enum : NSUInteger
         {
             [self.receiptImages removeObjectAtIndex:indexPath.row];
             
-            NSString *fileToDelete = [self.receipt.fileNames objectAtIndex:indexPath.row];
+            NSString *fileToDelete = (self.receipt.fileNames)[indexPath.row];
             
             [Utils deleteImageWithFileName:fileToDelete forUser: self.userManager.user.userKey];
             
             [self.receipt.fileNames removeObjectAtIndex:indexPath.row];
             [self.manipulationService modifyReceipt:self.receipt save:YES];
-            [self.receiptScrollView setImages:self.receiptImages];
+            (self.receiptScrollView).images = self.receiptImages;
             
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }
         else
         {
@@ -1458,7 +1456,7 @@ typedef enum : NSUInteger
 
 #pragma mark - Tutorial
 
-typedef enum : NSUInteger
+typedef NS_ENUM(NSUInteger, TutorialSteps)
 {
     TutorialStep11,
     TutorialStep12,
@@ -1467,11 +1465,11 @@ typedef enum : NSUInteger
     TutorialStep15,
     TutorialStep16,
     TutorialStep17
-} TutorialSteps;
+};
 
 -(void)setupTutorials
 {
-    [self.tutorialManager setDelegate:self];
+    (self.tutorialManager).delegate = self;
     
     self.tutorials = [NSMutableArray new];
     
@@ -1568,7 +1566,7 @@ typedef enum : NSUInteger
 {
     if (self.tutorials.count && step < self.tutorials.count)
     {
-        TutorialStep *tutorialStep = [self.tutorials objectAtIndex:step];
+        TutorialStep *tutorialStep = (self.tutorials)[step];
         
         [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
     }
@@ -1656,7 +1654,7 @@ typedef enum : NSUInteger
     {
         case 11:
             // press on the first Category, add a sample Record, and go to Step 12
-            self.currentlySelectedCatagory = [self.catagories objectAtIndex: 0];
+            self.currentlySelectedCatagory = (self.catagories)[0];
             
             self.currentlySelectedRecord = nil;
             
@@ -1669,23 +1667,23 @@ typedef enum : NSUInteger
                 //add one sample item to the Quantity and Price fields
                 ReceiptItemCell *itemCell = (ReceiptItemCell *)[self.receiptItemCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
                 
-                [itemCell.qtyField setText:@"2"];
-                [itemCell.priceField setText:@"2.5"];
+                (itemCell.qtyField).text = @"2";
+                (itemCell.priceField).text = @"2.5";
                 
-                self.tempQuantity = [itemCell.qtyField.text integerValue];
+                self.tempQuantity = (itemCell.qtyField.text).integerValue;
                 
-                self.tempPricePerItemOrTotalCost = [itemCell.priceField.text floatValue];
+                self.tempPricePerItemOrTotalCost = (itemCell.priceField.text).floatValue;
                 
                 if (!self.currentlySelectedRecord)
                 {
                     //saved the temp values to tempSavedDataForUnsavedRecordForEachCatagory
                     NSMutableDictionary *savedValues = [NSMutableDictionary new];
                     
-                    [savedValues setObject:[NSNumber numberWithInteger:self.tempQuantity] forKey:kTempQuantityTypeKey];
-                    [savedValues setObject:[NSNumber numberWithFloat:self.tempPricePerItemOrTotalCost] forKey:kTempPricePerItemOrTotalCostTypeKey];
-                    [savedValues setObject:[NSNumber numberWithInteger:self.tempUnitType] forKey:kTempUnitTypeKey];
+                    savedValues[kTempQuantityTypeKey] = @(self.tempQuantity);
+                    savedValues[kTempPricePerItemOrTotalCostTypeKey] = @(self.tempPricePerItemOrTotalCost);
+                    savedValues[kTempUnitTypeKey] = @(self.tempUnitType);
                     
-                    [self.savedDataForUnsavedNewRecordInEachCatagory setObject:savedValues forKey:self.currentlySelectedCatagory.localID];
+                    (self.savedDataForUnsavedNewRecordInEachCatagory)[self.currentlySelectedCatagory.localID] = savedValues;
                 }
             }
             
@@ -1706,7 +1704,7 @@ typedef enum : NSUInteger
                 record.unitType = self.tempUnitType;
                 
                 // add that to self.records
-                NSMutableArray *recordsOfThisCatagory = [self.records objectForKey: self.currentlySelectedCatagory.localID];
+                NSMutableArray *recordsOfThisCatagory = (self.records)[self.currentlySelectedCatagory.localID];
                 
                 if (!recordsOfThisCatagory)
                 {
@@ -1715,7 +1713,7 @@ typedef enum : NSUInteger
                 
                 [recordsOfThisCatagory addObject: record];
                 
-                [self.records setObject: recordsOfThisCatagory forKey: record.catagoryID];
+                (self.records)[record.catagoryID] = recordsOfThisCatagory;
                 
                 // delete the saved value for this catagory from tempSavedDataForUnsavedRecordForEachCatagory
                 [self.savedDataForUnsavedNewRecordInEachCatagory removeObjectForKey:self.currentlySelectedCatagory.localID];
@@ -1804,7 +1802,7 @@ typedef enum : NSUInteger
                 }
                 else
                 {
-                    [self.navigationController setViewControllers:[NSArray arrayWithObject:[self.viewControllerFactory createMainViewController]] animated:YES];
+                    [self.navigationController setViewControllers:@[[self.viewControllerFactory createMainViewController]] animated:YES];
                 }
             }];
         }

@@ -13,7 +13,7 @@
 - (void) awakeFromNib
 {
     // Initialization code
-    [self setSelectionStyle: UITableViewCellSelectionStyleNone];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void) setSelected: (BOOL) selected animated: (BOOL) animated

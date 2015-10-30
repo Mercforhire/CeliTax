@@ -53,28 +53,28 @@
 
 -(NSNumber *)getCurrentTaxYear
 {
-    NSNumber *taxYear = [self.settings objectForKey:kKeyTaxYear];
+    NSNumber *taxYear = (self.settings)[kKeyTaxYear];
     
     return taxYear;
 }
 
 -(void)setCurrentTaxYear:(NSInteger)taxYear
 {
-    [self.settings setObject:[NSNumber numberWithInteger:taxYear] forKey:kKeyTaxYear];
+    (self.settings)[kKeyTaxYear] = @(taxYear);
     
     [self saveSettings];
 }
 
 -(NSNumber *)getUnitSystem
 {
-    NSNumber *unitSystemSelection = [self.settings objectForKey:kKeyUnitSystem];
+    NSNumber *unitSystemSelection = (self.settings)[kKeyUnitSystem];
     
     return unitSystemSelection;
 }
 
 -(void)setUnitSystem:(NSInteger)unitSystem
 {
-    [self.settings setObject:[NSNumber numberWithInteger:unitSystem] forKey:kKeyUnitSystem];
+    (self.settings)[kKeyUnitSystem] = @(unitSystem);
     
     [self saveSettings];
 }

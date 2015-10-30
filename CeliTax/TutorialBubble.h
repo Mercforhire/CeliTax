@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "LookAndFeel.h"
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, ArrowDirection) {
     ArrowDirectionNone,
     ArrowDirectionUp,
     ArrowDirectionDown,
-} ArrowDirection;
+};
 
 @interface TutorialBubble : UIView
 

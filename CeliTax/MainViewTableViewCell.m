@@ -14,7 +14,7 @@
 {
     // Initialization code
 
-    [self setSelectionStyle: UITableViewCellSelectionStyleNone];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void) setSelected: (BOOL) selected animated: (BOOL) animated
@@ -25,11 +25,11 @@
 
     if (selected)
     {
-        [self.colorBoxView setBackgroundColor: self.selectedColorBoxColor];
+        (self.colorBoxView).backgroundColor = self.selectedColorBoxColor;
     }
     else
     {
-        [self.colorBoxView setBackgroundColor: [UIColor clearColor]];
+        (self.colorBoxView).backgroundColor = [UIColor clearColor];
     }
 }
 

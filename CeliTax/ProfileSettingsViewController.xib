@@ -133,8 +133,14 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FIRST NAME:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PsI-PJ-Luq">
+                            <rect key="frame" x="23" y="158" width="79.5" height="16"/>
+                            <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="13"/>
+                            <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qh1-uV-NR8" customClass="HollowGreenButton">
-                            <rect key="frame" x="126.5" y="444" width="67" height="32"/>
+                            <rect key="frame" x="126" y="314" width="67" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="UHF-Ph-xwf"/>
                                 <constraint firstAttribute="height" constant="42" id="dOW-q2-Dcb"/>
@@ -156,17 +162,11 @@
                                 <action selector="savePressed:" destination="-1" eventType="touchUpInside" id="jhL-p4-2CK"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FIRST NAME:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PsI-PJ-Luq">
-                            <rect key="frame" x="23" y="158" width="79.5" height="16"/>
-                            <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="13"/>
-                            <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                     </subviews>
                     <constraints>
                         <constraint firstItem="PsI-PJ-Luq" firstAttribute="top" secondItem="kzS-kr-Ivr" secondAttribute="bottom" constant="23" id="1Bm-EY-O9F"/>
                         <constraint firstAttribute="bottom" secondItem="qh1-uV-NR8" secondAttribute="bottom" constant="30" id="1Jf-kM-nb9"/>
-                        <constraint firstItem="qh1-uV-NR8" firstAttribute="top" secondItem="T39-T8-N4m" secondAttribute="bottom" constant="180" id="3aK-gI-Z7L"/>
+                        <constraint firstItem="qh1-uV-NR8" firstAttribute="top" secondItem="T39-T8-N4m" secondAttribute="bottom" constant="50" id="3aK-gI-Z7L"/>
                         <constraint firstItem="x5i-Y3-Ind" firstAttribute="leading" secondItem="PsI-PJ-Luq" secondAttribute="trailing" constant="21.5" id="3od-io-eal"/>
                         <constraint firstItem="Jtm-rt-Igc" firstAttribute="leading" secondItem="m4g-dK-zC6" secondAttribute="trailing" constant="23" id="4Ds-qy-x5y"/>
                         <constraint firstItem="awF-lG-Pg0" firstAttribute="top" secondItem="Jtm-rt-Igc" secondAttribute="bottom" constant="20" id="6qM-J3-82e"/>

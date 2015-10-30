@@ -13,7 +13,7 @@
 - (void)awakeFromNib
 {
     // Initialization code
-    [self setSelectionStyle: UITableViewCellSelectionStyleNone];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     
     [self.label setText:NSLocalizedString(@"No receipt", nil)];
 }

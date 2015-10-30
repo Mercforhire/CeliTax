@@ -32,7 +32,7 @@
 
     [self.namesTableView registerNib: selectionsPickerTableViewCell forCellReuseIdentifier: kSelectionsPickerTableViewCellIdentifier];
 
-    [self.namesTableView setSeparatorStyle: UITableViewCellSeparatorStyleNone];
+    (self.namesTableView).separatorStyle = UITableViewCellSeparatorStyleNone;
 
     self.namesTableView.dataSource = self;
     self.namesTableView.delegate = self;
@@ -44,7 +44,7 @@
 
     // Calculate how tall the view should be by multiplying
     // the individual row height by the total number of rows.
-    NSInteger rowsCount = [self.selections count];
+    NSInteger rowsCount = (self.selections).count;
     NSInteger totalRowsHeight = rowsCount * POP_DEFAULT_ROW_HEIGHT + 10;
 
     if (totalRowsHeight > POP_DEFAULT_MAX_HEIGHT)
@@ -110,19 +110,19 @@
         cell = [[SelectionsPickerTableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: cellId];
     }
 
-    [cell.selectionLabel setText: self.selections [indexPath.row]];
+    (cell.selectionLabel).text = self.selections [indexPath.row];
 
     if (self.highlightedSelectionIndex == indexPath.row)
     {
         [self.lookAndFeel applyGreenBorderTo: cell.selectionLabel];
-        [cell.selectionLabel setTextColor: [UIColor whiteColor]];
-        [cell.selectionLabel setBackgroundColor: self.lookAndFeel.appGreenColor];
+        (cell.selectionLabel).textColor = [UIColor whiteColor];
+        (cell.selectionLabel).backgroundColor = self.lookAndFeel.appGreenColor;
     }
     else
     {
         [self.lookAndFeel applyGrayBorderTo: cell.selectionLabel];
-        [cell.selectionLabel setTextColor: [UIColor blackColor]];
-        [cell.selectionLabel setBackgroundColor: [UIColor whiteColor]];
+        (cell.selectionLabel).textColor = [UIColor blackColor];
+        (cell.selectionLabel).backgroundColor = [UIColor whiteColor];
     }
 
     return cell;

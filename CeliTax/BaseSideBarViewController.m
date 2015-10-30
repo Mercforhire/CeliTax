@@ -25,7 +25,7 @@
 
 @implementation BaseSideBarViewController
 
-- (id) initWithNibName: (NSString *) nibNameOrNil bundle: (NSBundle *) nibBundleOrNil
+- (instancetype) initWithNibName: (NSString *) nibNameOrNil bundle: (NSBundle *) nibBundleOrNil
 {
     if (self = [super initWithNibName: nibNameOrNil bundle: nibBundleOrNil])
     {
@@ -54,7 +54,7 @@
     self.sideMenuView.lookAndFeel = self.lookAndFeel;
 
     self.rightSideBar = [[CDRTranslucentSideBar alloc] initWithDirectionFromRight: YES];
-    [self.rightSideBar setTranslucentAlpha: 0.98];
+    (self.rightSideBar).translucentAlpha = 0.98;
     self.rightSideBar.delegate = self;
     
     UITapGestureRecognizer *profileImageViewTap =
@@ -71,23 +71,23 @@
 
     if ([self isKindOfClass: [MainViewController class]])
     {
-        [self.sideMenuView setCurrentlySelectedIndex: RootViewControllerHome];
+        (self.sideMenuView).currentlySelectedIndex = RootViewControllerHome;
     }
     else if ([self isKindOfClass: [MyAccountViewController class]])
     {
-        [self.sideMenuView setCurrentlySelectedIndex: RootViewControllerAccount];
+        (self.sideMenuView).currentlySelectedIndex = RootViewControllerAccount;
     }
     else if ([self isKindOfClass: [VaultViewController class]])
     {
-        [self.sideMenuView setCurrentlySelectedIndex: RootViewControllerVault];
+        (self.sideMenuView).currentlySelectedIndex = RootViewControllerVault;
     }
     else if ([self isKindOfClass: [HelpScreenViewController class]])
     {
-        [self.sideMenuView setCurrentlySelectedIndex: RootViewControllerHelp];
+        (self.sideMenuView).currentlySelectedIndex = RootViewControllerHelp;
     }
     else if ([self isKindOfClass: [SettingsViewController class]])
     {
-        [self.sideMenuView setCurrentlySelectedIndex: RootViewControllerSettings];
+        (self.sideMenuView).currentlySelectedIndex = RootViewControllerSettings;
     }
 
     // Set ContentView in SideBar
@@ -97,7 +97,7 @@
 // slide out the slider bar
 - (void) revealSidebar
 {
-    [self.sideMenuView setProfileImage:self.userManager.user.avatarImage];
+    (self.sideMenuView).profileImage = self.userManager.user.avatarImage;
     
     [self.rightSideBar show];
 }
@@ -127,7 +127,7 @@
 
 - (void) popToLoginView
 {
-    [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: 0] animated: YES];
+    [self.navigationController popToViewController: (self.navigationController.viewControllers)[0] animated: YES];
 }
 
 - (void)profileSettingsPressed

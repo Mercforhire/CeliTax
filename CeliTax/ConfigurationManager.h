@@ -10,10 +10,10 @@
 
 @interface ConfigurationManager : NSObject
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, UnitSystems) {
     UnitSystemMetric,
     UnitSystemImperial
-} UnitSystems;
+};
 
 -(void)loadSettingsFromPersistence;
 

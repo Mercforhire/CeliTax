@@ -42,7 +42,7 @@
     {
         NSArray *controllers = self.navigationController.viewControllers;
         NSMutableArray *newViewControllers = [NSMutableArray arrayWithArray: controllers];
-        [newViewControllers removeObject: [controllers objectAtIndex: self.navigationController.viewControllers.count - 2]];
+        [newViewControllers removeObject: controllers[self.navigationController.viewControllers.count - 2]];
         self.navigationController.viewControllers = newViewControllers;
     }
 }

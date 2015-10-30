@@ -29,17 +29,18 @@
     [coder encodeInteger:self.dataAction forKey:kKeyDataAction];
 }
 
-- (id) initWithCoder: (NSCoder *) coder
+- (instancetype) initWithCoder: (NSCoder *) coder
 {
-    self = [self init];
-
-    self.localID = [coder decodeObjectForKey: kKeyIdentifer];
-    self.catagoryID = [coder decodeObjectForKey: kKeyCatagoryID];
-    self.receiptID = [coder decodeObjectForKey: kKeyReceiptID];
-    self.amount = [coder decodeFloatForKey: kKeyAmount];
-    self.quantity = [coder decodeIntegerForKey: kKeyQuantity];
-    self.unitType = [coder decodeIntegerForKey: kKeyUnitType];
-    self.dataAction = [coder decodeIntegerForKey:kKeyDataAction];
+    if (self = [self init])
+    {
+        self.localID = [coder decodeObjectForKey: kKeyIdentifer];
+        self.catagoryID = [coder decodeObjectForKey: kKeyCatagoryID];
+        self.receiptID = [coder decodeObjectForKey: kKeyReceiptID];
+        self.amount = [coder decodeFloatForKey: kKeyAmount];
+        self.quantity = [coder decodeIntegerForKey: kKeyQuantity];
+        self.unitType = [coder decodeIntegerForKey: kKeyUnitType];
+        self.dataAction = [coder decodeIntegerForKey:kKeyDataAction];
+    }
 
     return self;
 }
@@ -78,19 +79,19 @@
 {
     NSMutableDictionary *json = [NSMutableDictionary dictionary];
     
-    [json setObject:self.localID forKey:kKeyIdentifer];
+    json[kKeyIdentifer] = self.localID;
     
-    [json setObject:self.catagoryID forKey:kKeyCatagoryID];
+    json[kKeyCatagoryID] = self.catagoryID;
     
-    [json setObject:self.receiptID forKey:kKeyReceiptID];
+    json[kKeyReceiptID] = self.receiptID;
     
-    [json setObject:[NSNumber numberWithFloat:self.amount] forKey:kKeyAmount];
+    json[kKeyAmount] = @(self.amount);
     
-    [json setObject:[NSNumber numberWithInteger:self.quantity] forKey:kKeyQuantity];
+    json[kKeyQuantity] = @(self.quantity);
     
-    [json setObject:[NSNumber numberWithInteger:self.unitType] forKey:kKeyUnitType];
+    json[kKeyUnitType] = @(self.unitType);
     
-    [json setObject:[NSNumber numberWithInteger:self.dataAction] forKey:kKeyDataAction];
+    json[kKeyDataAction] = @(self.dataAction);
     
     return json;
 }

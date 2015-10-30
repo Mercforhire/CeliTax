@@ -38,15 +38,15 @@
         
         NSDictionary *response = [completedOperation responseJSON];
         
-        if ( [[response objectForKey:@"error"] boolValue] == NO )
+        if ( [response[@"error"] boolValue] == NO )
         {
             returnedResult.success = YES;
             returnedResult.message = @"Login Success";
-            returnedResult.userName = [response objectForKey:@"email"];
-            returnedResult.userAPIKey = [response objectForKey:@"api_key"];
-            returnedResult.firstname = [response objectForKey:@"first_name"];
-            returnedResult.lastname = [response objectForKey:@"last_name"];
-            returnedResult.country = [response objectForKey:@"country"];
+            returnedResult.userName = response[@"email"];
+            returnedResult.userAPIKey = response[@"api_key"];
+            returnedResult.firstname = response[@"first_name"];
+            returnedResult.lastname = response[@"last_name"];
+            returnedResult.country = response[@"country"];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (success)
@@ -58,7 +58,7 @@
         else
         {
             returnedResult.success = NO;
-            returnedResult.message = [response objectForKey:@"message"];
+            returnedResult.message = response[@"message"];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (failure)
@@ -112,7 +112,7 @@
         
         NSDictionary *response = [completedOperation responseJSON];
         
-        if ( [[response objectForKey:@"error"] boolValue] == NO )
+        if ( [response[@"error"] boolValue] == NO )
         {
             registerResult.success = YES;
             registerResult.message = @"You are successfully registered.";
@@ -124,7 +124,7 @@
         else
         {
             registerResult.success = NO;
-            registerResult.message = [response objectForKey:@"message"];
+            registerResult.message = response[@"message"];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 failure ( registerResult );
@@ -404,9 +404,9 @@
         
         NSDictionary *response = [completedOperation responseJSON];
         
-        if ( [[response objectForKey:@"error"] boolValue] == NO )
+        if ( [response[@"error"] boolValue] == NO )
         {
-            NSString *imageURL = [response objectForKey:@"url"];
+            NSString *imageURL = response[@"url"];
             
             //go download the image
             [self downloadProfileImageFrom:imageURL success:success failure:failure];
@@ -416,7 +416,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (failure)
                 {
-                    failure ( [response objectForKey:@"message"] );
+                    failure ( response[@"message"] );
                 }
             });
         }
@@ -462,7 +462,7 @@
         
         NSDictionary *response = [completedOperation responseJSON];
         
-        if ( [[response objectForKey:@"error"] boolValue] == NO )
+        if ( [response[@"error"] boolValue] == NO )
         {
             dispatch_async(dispatch_get_main_queue(), ^{
                 success (  );
@@ -471,7 +471,7 @@
         else
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                failure ( [response objectForKey:@"message"] );
+                failure ( response[@"message"] );
             });
         }
         
@@ -515,7 +515,7 @@
         
         NSDictionary *response = [completedOperation responseJSON];
         
-        if ( [[response objectForKey:@"error"] boolValue] == NO )
+        if ( [response[@"error"] boolValue] == NO )
         {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (success)
@@ -573,7 +573,7 @@
         
         NSDictionary *response = [completedOperation responseJSON];
         
-        if ( [[response objectForKey:@"error"] boolValue] == NO )
+        if ( [response[@"error"] boolValue] == NO )
         {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (success)
@@ -588,7 +588,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (failure)
                 {
-                    failure ( [response objectForKey:@"message"] );
+                    failure ( response[@"message"] );
                 }
             });
         }
@@ -626,9 +626,9 @@
         
         NSDictionary *response = [completedOperation responseJSON];
         
-        if ( [response objectForKey:@"error"] && [[response objectForKey:@"error"] boolValue] == NO)
+        if ( response[@"error"] && [response[@"error"] boolValue] == NO)
         {
-            NSString *expirationDateString = [response objectForKey:@"expiration_date"];
+            NSString *expirationDateString = response[@"expiration_date"];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
@@ -677,7 +677,7 @@
     }
     
     NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       [NSNumber numberWithInteger:numberOfMonth],@"number_of_month"
+                                       @(numberOfMonth),@"number_of_month"
                                        ,nil];
     
     MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path: [WEB_API_FILE stringByAppendingPathComponent:@"add_new_expiration_date"] ] ;
@@ -688,7 +688,7 @@
         
         NSDictionary *response = [completedOperation responseJSON];
         
-        NSString *expirationDateString = [response objectForKey:@"expiration_date"];
+        NSString *expirationDateString = response[@"expiration_date"];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             success ( expirationDateString );

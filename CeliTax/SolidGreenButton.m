@@ -16,7 +16,7 @@
 
 - (void) applyDefaults
 {
-    [self setEnabled:self.enabled];
+    self.enabled = self.enabled;
 }
 
 - (void) setLookAndFeel: (LookAndFeel *) lookAndFeel;
@@ -28,7 +28,7 @@
 
 - (void)setHighlighted:(BOOL)highlighted
 {
-    [super setHighlighted:highlighted];
+    super.highlighted = highlighted;
     
     if (highlighted)
     {
@@ -43,7 +43,7 @@
 
 - (void) setEnabled: (BOOL) enabled
 {
-    [super setEnabled: enabled];
+    super.enabled = enabled;
     
     if (enabled)
     {

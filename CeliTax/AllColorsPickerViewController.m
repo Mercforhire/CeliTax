@@ -19,7 +19,7 @@
 
 @implementation AllColorsPickerViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
     {
@@ -45,9 +45,9 @@
         }
     };
     
-    [self.colorPicker setColor:[UIColor whiteColor]];
+    (self.colorPicker).color = [UIColor whiteColor];
     
-    [self.colorPicker setDidChangeColorBlock:colorDidChangeBlock];
+    (self.colorPicker).didChangeColorBlock = colorDidChangeBlock;
 }
 - (IBAction)donePressed:(UIButton *)sender
 {

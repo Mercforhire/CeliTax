@@ -22,11 +22,11 @@
 #import "Notifications.h"
 #import "SubscriptionViewController.h"
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, Languages) {
     LanguageEnglish,
     LanguageFrench,
     LanguageSpanish
-} Languages;
+};
 
 @interface SettingsViewController ()
 
@@ -57,7 +57,7 @@ typedef enum : NSUInteger {
 
 - (void) setupUI
 {
-    [self.profileBarView setBackgroundColor:[UIColor clearColor]];
+    (self.profileBarView).backgroundColor = [UIColor clearColor];
     
     self.profileBarView.profileImageView.layer.cornerRadius = self.profileBarView.profileImageView.frame.size.width / 2;
     self.profileBarView.profileImageView.layer.borderColor = [UIColor colorWithWhite: 187.0f/255.0f alpha: 1].CGColor;
@@ -76,29 +76,29 @@ typedef enum : NSUInteger {
                                             action: @selector(profileSettingsPressed:)];
     [self.profileBarView.nameLabel addGestureRecognizer: profileImageViewTap2];
     
-    [self.englishLanguageCheckBox.titleLabel setFont: [UIFont latoFontOfSize: 14]];
-    [self.englishLanguageCheckBox.titleLabel setTextColor: [UIColor darkGrayColor]];
-    [self.englishLanguageCheckBox setStrokeColor: [UIColor grayColor]];
-    [self.englishLanguageCheckBox setCheckColor: [UIColor clearColor]];
-    [self.englishLanguageCheckBox setUncheckedColor:[UIColor clearColor]];
-    [self.englishLanguageCheckBox setTintColor:self.lookAndFeel.appGreenColor];
-    [self.englishLanguageCheckBox setCheckAlignment: M13CheckboxAlignmentLeft];
+    (self.englishLanguageCheckBox.titleLabel).font = [UIFont latoFontOfSize: 14];
+    (self.englishLanguageCheckBox.titleLabel).textColor = [UIColor darkGrayColor];
+    (self.englishLanguageCheckBox).strokeColor = [UIColor grayColor];
+    (self.englishLanguageCheckBox).checkColor = [UIColor clearColor];
+    (self.englishLanguageCheckBox).uncheckedColor = [UIColor clearColor];
+    (self.englishLanguageCheckBox).tintColor = self.lookAndFeel.appGreenColor;
+    (self.englishLanguageCheckBox).checkAlignment = M13CheckboxAlignmentLeft;
     
-    [self.frenchLanguageCheckBox.titleLabel setFont: [UIFont latoFontOfSize: 14]];
-    [self.frenchLanguageCheckBox.titleLabel setTextColor: [UIColor darkGrayColor] ];
-    [self.frenchLanguageCheckBox setStrokeColor: [UIColor grayColor]];
-    [self.frenchLanguageCheckBox setCheckColor: [UIColor clearColor]];
-    [self.frenchLanguageCheckBox setUncheckedColor:[UIColor clearColor]];
-    [self.frenchLanguageCheckBox setTintColor:self.lookAndFeel.appGreenColor];
-    [self.frenchLanguageCheckBox setCheckAlignment: M13CheckboxAlignmentLeft];
+    (self.frenchLanguageCheckBox.titleLabel).font = [UIFont latoFontOfSize: 14];
+    (self.frenchLanguageCheckBox.titleLabel).textColor = [UIColor darkGrayColor] ;
+    (self.frenchLanguageCheckBox).strokeColor = [UIColor grayColor];
+    (self.frenchLanguageCheckBox).checkColor = [UIColor clearColor];
+    (self.frenchLanguageCheckBox).uncheckedColor = [UIColor clearColor];
+    (self.frenchLanguageCheckBox).tintColor = self.lookAndFeel.appGreenColor;
+    (self.frenchLanguageCheckBox).checkAlignment = M13CheckboxAlignmentLeft;
     
-    [self.spanishLanguageCheckBox.titleLabel setFont: [UIFont latoFontOfSize: 14]];
-    [self.spanishLanguageCheckBox.titleLabel setTextColor: [UIColor darkGrayColor] ];
-    [self.spanishLanguageCheckBox setStrokeColor: [UIColor grayColor]];
-    [self.spanishLanguageCheckBox setCheckColor: [UIColor clearColor]];
-    [self.spanishLanguageCheckBox setUncheckedColor:[UIColor clearColor]];
-    [self.spanishLanguageCheckBox setTintColor:self.lookAndFeel.appGreenColor];
-    [self.spanishLanguageCheckBox setCheckAlignment: M13CheckboxAlignmentLeft];
+    (self.spanishLanguageCheckBox.titleLabel).font = [UIFont latoFontOfSize: 14];
+    (self.spanishLanguageCheckBox.titleLabel).textColor = [UIColor darkGrayColor] ;
+    (self.spanishLanguageCheckBox).strokeColor = [UIColor grayColor];
+    (self.spanishLanguageCheckBox).checkColor = [UIColor clearColor];
+    (self.spanishLanguageCheckBox).uncheckedColor = [UIColor clearColor];
+    (self.spanishLanguageCheckBox).tintColor = self.lookAndFeel.appGreenColor;
+    (self.spanishLanguageCheckBox).checkAlignment = M13CheckboxAlignmentLeft;
     
     [self.purchaseButton setLookAndFeel:self.lookAndFeel];
     [self.backupNowButton setLookAndFeel:self.lookAndFeel];
@@ -198,9 +198,9 @@ typedef enum : NSUInteger {
     [super viewWillAppear: animated];
     
     // load user info
-    [self.profileBarView.nameLabel setText: [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]];
+    (self.profileBarView.nameLabel).text = [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname];
     
-    [self.profileBarView.profileImageView setImage: self.userManager.user.avatarImage];
+    (self.profileBarView.profileImageView).image = self.userManager.user.avatarImage;
     
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(refreshLanguage)
@@ -209,11 +209,11 @@ typedef enum : NSUInteger {
     
     if (self.userManager.subscriptionActive)
     {
-        [self.subscriptionStatusLabel setText:[NSString stringWithFormat:NSLocalizedString(@"Expiry Date: %@", nil), self.userManager.user.subscriptionExpirationDate]];
+        (self.subscriptionStatusLabel).text = [NSString stringWithFormat:NSLocalizedString(@"Expiry Date: %@", nil), self.userManager.user.subscriptionExpirationDate];
     }
     else
     {
-        [self.subscriptionStatusLabel setText:[NSString stringWithFormat:NSLocalizedString(@"Expired on: %@", nil), self.userManager.user.subscriptionExpirationDate]];
+        (self.subscriptionStatusLabel).text = [NSString stringWithFormat:NSLocalizedString(@"Expired on: %@", nil), self.userManager.user.subscriptionExpirationDate];
     }
 }
 
@@ -269,25 +269,25 @@ typedef enum : NSUInteger {
     switch (language)
     {
         case LanguageEnglish:
-            [self.englishLanguageCheckBox setCheckState: M13CheckboxStateChecked];
-            [self.frenchLanguageCheckBox setCheckState: M13CheckboxStateUnchecked];
-            [self.spanishLanguageCheckBox setCheckState: M13CheckboxStateUnchecked];
+            (self.englishLanguageCheckBox).checkState = M13CheckboxStateChecked;
+            (self.frenchLanguageCheckBox).checkState = M13CheckboxStateUnchecked;
+            (self.spanishLanguageCheckBox).checkState = M13CheckboxStateUnchecked;
             
             [[LocalizationManager sharedInstance] changeLanguage:@"en"];
             break;
             
         case LanguageFrench:
-            [self.englishLanguageCheckBox setCheckState: M13CheckboxStateUnchecked];
-            [self.frenchLanguageCheckBox setCheckState: M13CheckboxStateChecked];
-            [self.spanishLanguageCheckBox setCheckState: M13CheckboxStateUnchecked];
+            (self.englishLanguageCheckBox).checkState = M13CheckboxStateUnchecked;
+            (self.frenchLanguageCheckBox).checkState = M13CheckboxStateChecked;
+            (self.spanishLanguageCheckBox).checkState = M13CheckboxStateUnchecked;
             
             [[LocalizationManager sharedInstance] changeLanguage:@"fr"];
             break;
             
         case LanguageSpanish:
-            [self.englishLanguageCheckBox setCheckState: M13CheckboxStateUnchecked];
-            [self.frenchLanguageCheckBox setCheckState: M13CheckboxStateUnchecked];
-            [self.spanishLanguageCheckBox setCheckState: M13CheckboxStateChecked];
+            (self.englishLanguageCheckBox).checkState = M13CheckboxStateUnchecked;
+            (self.frenchLanguageCheckBox).checkState = M13CheckboxStateUnchecked;
+            (self.spanishLanguageCheckBox).checkState = M13CheckboxStateChecked;
             
             [[LocalizationManager sharedInstance] changeLanguage:@"es"];
             break;
@@ -317,7 +317,7 @@ typedef enum : NSUInteger {
 {
     if (!date)
     {
-        [self.lastBackUpLabel setText:[NSString stringWithFormat:@"Never"]];
+        (self.lastBackUpLabel).text = [NSString stringWithFormat:@"Never"];
         
         return;
     }
@@ -327,7 +327,7 @@ typedef enum : NSUInteger {
     gmtDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSString *dateStringFromUploadDate = [gmtDateFormatter stringFromDate:date];
     
-    [self.lastBackUpLabel setText:[NSString stringWithFormat:@"%@", dateStringFromUploadDate]];
+    (self.lastBackUpLabel).text = [NSString stringWithFormat:@"%@", dateStringFromUploadDate];
 }
 
 - (IBAction)profileSettingsPressed:(id)sender

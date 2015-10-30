@@ -22,14 +22,15 @@
 
 @implementation UserData
 
-- (id) init
+- (instancetype) init
 {
-    self = [super init];
-    
-    self.catagories = [[NSMutableArray alloc] init];
-    self.records = [[NSMutableArray alloc] init];
-    self.receipts = [[NSMutableArray alloc] init];
-    self.taxYears = [[NSMutableArray alloc] init];
+    if (self = [super init])
+    {
+        self.catagories = [[NSMutableArray alloc] init];
+        self.records = [[NSMutableArray alloc] init];
+        self.receipts = [[NSMutableArray alloc] init];
+        self.taxYears = [[NSMutableArray alloc] init];
+    }
     
     return self;
 }
@@ -44,25 +45,26 @@
     [coder encodeObject:self.lastUploadHash         forKey:kKeyLastUploadHash];
 }
 
-- (id)initWithCoder:(NSCoder *)coder
+- (instancetype)initWithCoder:(NSCoder *)coder
 {
-    self = [self init];
-    
-    NSArray *catagories = [coder decodeObjectForKey:kKeyCatagories];
-    self.catagories = [[NSMutableArray alloc] initWithArray:catagories copyItems:NO];
-    
-    NSArray *records = [coder decodeObjectForKey:kKeyRecords];
-    self.records = [[NSMutableArray alloc] initWithArray:records copyItems:NO];
-    
-    NSArray *receipts = [coder decodeObjectForKey:kKeyReceipts];
-    self.receipts = [[NSMutableArray alloc] initWithArray:receipts copyItems:NO];
-    
-    NSArray *taxYears = [coder decodeObjectForKey:kKeyTaxYears];
-    self.taxYears = [[NSMutableArray alloc] initWithArray:taxYears copyItems:NO];
-    
-    self.lastUploadedDate = [coder decodeObjectForKey:kKeyLastUploadedDate];
-    
-    self.lastUploadHash = [coder decodeObjectForKey:kKeyLastUploadHash];
+    if (self = [self init])
+    {
+        NSArray *catagories = [coder decodeObjectForKey:kKeyCatagories];
+        self.catagories = [[NSMutableArray alloc] initWithArray:catagories copyItems:NO];
+        
+        NSArray *records = [coder decodeObjectForKey:kKeyRecords];
+        self.records = [[NSMutableArray alloc] initWithArray:records copyItems:NO];
+        
+        NSArray *receipts = [coder decodeObjectForKey:kKeyReceipts];
+        self.receipts = [[NSMutableArray alloc] initWithArray:receipts copyItems:NO];
+        
+        NSArray *taxYears = [coder decodeObjectForKey:kKeyTaxYears];
+        self.taxYears = [[NSMutableArray alloc] initWithArray:taxYears copyItems:NO];
+        
+        self.lastUploadedDate = [coder decodeObjectForKey:kKeyLastUploadedDate];
+        
+        self.lastUploadHash = [coder decodeObjectForKey:kKeyLastUploadHash];
+    }
     
     return self;
 }
@@ -82,7 +84,7 @@
         }
     }
     
-    [json setObject:catagoriesJSONs forKey:kKeyCatagories];
+    json[kKeyCatagories] = catagoriesJSONs;
     
     
     NSMutableArray *recordsJSONs = [NSMutableArray new];
@@ -96,7 +98,7 @@
         }
     }
     
-    [json setObject:recordsJSONs forKey:kKeyRecords];
+    json[kKeyRecords] = recordsJSONs;
     
     
     NSMutableArray *receiptsJSONs = [NSMutableArray new];
@@ -110,7 +112,7 @@
         }
     }
     
-    [json setObject:receiptsJSONs forKey:kKeyReceipts];
+    json[kKeyReceipts] = receiptsJSONs;
     
     
     NSMutableArray *taxYearsJSONs = [NSMutableArray new];
@@ -124,7 +126,7 @@
         }
     }
     
-    [json setObject:taxYearsJSONs forKey:kKeyTaxYears];
+    json[kKeyTaxYears] = taxYearsJSONs;
     
     return json;
 }

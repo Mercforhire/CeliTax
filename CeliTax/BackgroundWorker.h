@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSUInteger, QueueTaskTypes) {
     QueueTaskUploadData,
     QueueTaskUploadPhotos,
     QueueTaskUpdateProfileImage,
     QueueTaskUploadProfileData
-} QueueTaskTypes;
+};
 
 @class SyncManager,UserManager;
 

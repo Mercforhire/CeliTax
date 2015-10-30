@@ -134,7 +134,7 @@
 {
     if (self.indexOfFileToUpload < self.filenamesToUpload.count)
     {
-        NSString *filenameToUpload = [self.filenamesToUpload objectAtIndex:self.indexOfFileToUpload];
+        NSString *filenameToUpload = (self.filenamesToUpload)[self.indexOfFileToUpload];
         
         NSData *fileData = [Utils readImageDataWithFileName: filenameToUpload forUser: self.userManager.user.userKey];
         
@@ -336,7 +336,7 @@
     
     if (self.indexOfFileToDownload < self.filenamesToDownload.count)
     {
-        NSString *filenameToDownload = [self.filenamesToDownload objectAtIndex:self.indexOfFileToDownload];
+        NSString *filenameToDownload = (self.filenamesToDownload)[self.indexOfFileToDownload];
         
         [self.syncService downloadFile:filenameToDownload success:^{
             

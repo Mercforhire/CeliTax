@@ -79,11 +79,11 @@
     [self.doneButton setLookAndFeel:self.lookAndFeel];
     [self.doneButton setTitle:NSLocalizedString(@"Create Account", nil) forState:UIControlStateNormal];
     
-    [self.agreeCheckBox.titleLabel setFont: [UIFont latoFontOfSize: 13]];
-    [self.agreeCheckBox.titleLabel setTextColor: [UIColor blackColor]];
-    [self.agreeCheckBox setStrokeColor: [UIColor grayColor]];
-    [self.agreeCheckBox setCheckColor: self.lookAndFeel.appGreenColor];
-    [self.agreeCheckBox setCheckAlignment: M13CheckboxAlignmentLeft];
+    (self.agreeCheckBox.titleLabel).font = [UIFont latoFontOfSize: 13];
+    (self.agreeCheckBox.titleLabel).textColor = [UIColor blackColor];
+    (self.agreeCheckBox).strokeColor = [UIColor grayColor];
+    (self.agreeCheckBox).checkColor = self.lookAndFeel.appGreenColor;
+    (self.agreeCheckBox).checkAlignment = M13CheckboxAlignmentLeft;
     [self.agreeCheckBox.titleLabel setText: NSLocalizedString(@"I agree to the terms and conditions", nil)];
 }
 
@@ -303,13 +303,13 @@
 
     if ([_country isEqualToString: @"Canada"])
     {
-        [self.canadaButton setAlpha: 1];
-        [self.usaButton setAlpha: 0.2];
+        (self.canadaButton).alpha = 1;
+        (self.usaButton).alpha = 0.2;
     }
     else
     {
-        [self.canadaButton setAlpha: 0.2];
-        [self.usaButton setAlpha: 1];
+        (self.canadaButton).alpha = 0.2;
+        (self.usaButton).alpha = 1;
     }
 }
 
@@ -324,12 +324,12 @@
 {
     if (textField == self.emailField || textField == self.emailRepeatField)
     {
-        textField.text = [textField.text lowercaseString];
+        textField.text = (textField.text).lowercaseString;
     }
     
     if (textField == self.firstnameField || textField == self.lastnameField)
     {
-        textField.text = [textField.text capitalizedString];
+        textField.text = (textField.text).capitalizedString;
     }
     
     [self.scrollView scrollToY:0];

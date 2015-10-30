@@ -26,12 +26,12 @@
 
 -(void)setupUI
 {
-    [self.view setBackgroundColor:self.lookAndFeel.appGreenColor];
+    (self.view).backgroundColor = self.lookAndFeel.appGreenColor;
     
     [self.viewDetailsButton setLookAndFeel:self.lookAndFeel];
     [self.viewDetailsButton setTitle:NSLocalizedString(@"View Details", nil) forState:UIControlStateNormal];
     
-    [self.yearSavingsTitle setText:[NSString stringWithFormat:NSLocalizedString(@"Your %ld savings:", nil), (long)self.configurationManager.getCurrentTaxYear.integerValue]];
+    (self.yearSavingsTitle).text = [NSString stringWithFormat:NSLocalizedString(@"Your %ld savings:", nil), (long)self.configurationManager.getCurrentTaxYear.integerValue];
 }
 
 - (void)viewDidLoad
@@ -63,7 +63,7 @@
         {
             NSString *key = [Record unitTypeIntToUnitTypeString:record.unitType];
             
-            NSMutableArray *recordsOfSameType = [recordsOfEachType objectForKey:key];
+            NSMutableArray *recordsOfSameType = recordsOfEachType[key];
             
             if (!recordsOfSameType)
             {
@@ -72,15 +72,15 @@
             
             [recordsOfSameType addObject:record];
             
-            [recordsOfEachType setObject:recordsOfSameType forKey:key];
+            recordsOfEachType[key] = recordsOfSameType;
         }
         
         //Process the Unit Types in order: Item, ML, L, G, KG
-        NSArray *orderOfUnitTypesToProcess = [NSArray arrayWithObjects:kUnitItemKey, kUnitMLKey, kUnitLKey, kUnitGKey, kUnit100GKey, kUnitKGKey,kUnitFlozKey,kUnitPtKey,kUnitQtKey,kUnitGalKey,kUnitOzKey,kUnitLbKey, nil];
+        NSArray *orderOfUnitTypesToProcess = @[kUnitItemKey, kUnitMLKey, kUnitLKey, kUnitGKey, kUnit100GKey, kUnitKGKey,kUnitFlozKey,kUnitPtKey,kUnitQtKey,kUnitGalKey,kUnitOzKey,kUnitLbKey];
         
         for (NSString *key in orderOfUnitTypesToProcess)
         {
-            NSMutableArray *recordsOfSameType = [recordsOfEachType objectForKey:key];
+            NSMutableArray *recordsOfSameType = recordsOfEachType[key];
             
             if (!recordsOfSameType.count)
             {
@@ -96,13 +96,13 @@
                 totalAmountSpentOnThisCatagoryAndUnitType += [record calculateTotal];
             }
             
-            NSNumber *nationalAverageCost = [catagory.nationalAverageCosts objectForKey:key];
+            NSNumber *nationalAverageCost = (catagory.nationalAverageCosts)[key];
             
             float totalAvgCost = 0;
             
             if (!nationalAverageCost)
             {
-                nationalAverageCost = [NSNumber numberWithFloat: -1];
+                nationalAverageCost = @-1.0f;
                 
                 totalAvgCost = -1;
             }
@@ -129,7 +129,7 @@
         }
     }
     
-    [self.amountTitle setText: [NSString stringWithFormat: @"$%.2f", totalSavingsAmount]];
+    (self.amountTitle).text = [NSString stringWithFormat: @"$%.2f", totalSavingsAmount];
 }
 
 - (IBAction)viewDetailsPressed:(HollowWhiteButton *)sender

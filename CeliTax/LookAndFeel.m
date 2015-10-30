@@ -23,10 +23,10 @@
 - (void) addLeftInsetToTextField: (UITextField *) textField
 {
     UIView *paddingView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 12, 12)];
-    [paddingView setBackgroundColor: [UIColor clearColor]];
+    paddingView.backgroundColor = [UIColor clearColor];
 
     textField.leftViewMode = UITextFieldViewModeAlways;
-    [textField setLeftView: paddingView];
+    textField.leftView = paddingView;
 }
 
 - (void) removeBorderFor: (UIView *) view
@@ -86,14 +86,14 @@
 
 - (void) applyNormalButtonStyleTo: (UIButton *) button
 {
-    [button setBackgroundColor: [UIColor whiteColor]];
+    button.backgroundColor = [UIColor whiteColor];
     [button setTitleColor: [UIColor blackColor] forState: UIControlStateNormal];
     [self applyGreenBorderTo:button];
 }
 
 - (void) applyHollowGreenButtonStyleTo: (UIButton *) button
 {
-    [button setBackgroundColor: [UIColor whiteColor]];
+    button.backgroundColor = [UIColor whiteColor];
     button.layer.cornerRadius = 3.0f;
     button.layer.borderColor = [self appGreenColor].CGColor;
     button.layer.borderWidth = 1.0f;
@@ -109,7 +109,7 @@
 
 - (void) applyHollowWhiteButtonStyleTo: (UIButton *) button
 {
-    [button setBackgroundColor: [self appGreenColor]];
+    button.backgroundColor = [self appGreenColor];
     button.layer.cornerRadius = 3.0f;
     button.layer.borderColor = [UIColor whiteColor].CGColor;
     button.layer.borderWidth = 1.0f;
@@ -125,7 +125,7 @@
 
 - (void) applySolidGreenButtonStyleTo: (UIButton *) button
 {
-    [button setBackgroundColor: [self appGreenColor]];
+    button.backgroundColor = [self appGreenColor];
     button.layer.cornerRadius = 3.0f;
     [button setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
     [button setClipsToBounds: YES];
@@ -134,7 +134,7 @@
 
 - (void) applyTransperantWhiteTextButtonStyleTo: (UIButton *) button
 {
-    [button setBackgroundColor: [UIColor clearColor]];
+    button.backgroundColor = [UIColor clearColor];
     [button setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
     [button setClipsToBounds: YES];
 }
@@ -142,7 +142,7 @@
 
 - (void) applyDisabledButtonStyleTo: (UIButton *) button
 {
-    [button setBackgroundColor: [UIColor lightGrayColor]];
+    button.backgroundColor = [UIColor lightGrayColor];
     button.layer.cornerRadius = 3.0f;
     [button setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
     [button setClipsToBounds: YES];

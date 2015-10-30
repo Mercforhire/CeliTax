@@ -13,7 +13,7 @@
 - (void) awakeFromNib
 {
     // Initialization code
-    [self setSelectionStyle: UITableViewCellSelectionStyleNone];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     
     [self.editButton setTitle:NSLocalizedString(@"Edit", nil) forState:UIControlStateNormal];
     [self.transferButton setTitle:NSLocalizedString(@"Transfer", nil) forState:UIControlStateNormal];

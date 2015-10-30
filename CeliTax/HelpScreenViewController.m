@@ -54,11 +54,10 @@
     self.keyboardToolbar.barStyle = UIBarStyleDefault;
     
     UIBarButtonItem *doneToolbarButton = [[UIBarButtonItem alloc]initWithTitle: NSLocalizedString(@"Done", nil) style: UIBarButtonItemStylePlain target: self action: @selector(doneClicked)];
-    [doneToolbarButton setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys: [UIFont latoBoldFontOfSize: 15], NSFontAttributeName, self.lookAndFeel.appGreenColor, NSForegroundColorAttributeName, nil] forState: UIControlStateNormal];
+    [doneToolbarButton setTitleTextAttributes: @{NSFontAttributeName: [UIFont latoBoldFontOfSize: 15], NSForegroundColorAttributeName: self.lookAndFeel.appGreenColor} forState: UIControlStateNormal];
     
-    self.keyboardToolbar.items = [NSArray arrayWithObjects:
-                                  [[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil],
-                                  doneToolbarButton, nil];
+    self.keyboardToolbar.items = @[[[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil],
+                                  doneToolbarButton];
     [self.keyboardToolbar sizeToFit];
     
     self.commentField.inputAccessoryView = self.keyboardToolbar;
@@ -72,7 +71,7 @@
     // Do any additional setup after loading the view from its nib.
     [self setupUI];
     
-    [self.commentField setDelegate:self];
+    (self.commentField).delegate = self;
     
     justStartedEditing = YES;
 }
@@ -176,8 +175,8 @@
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void) keyboardWillShow: (NSNotification *) aNotification
 {
-    NSDictionary *info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey: UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    NSDictionary *info = aNotification.userInfo;
+    CGSize kbSize = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
     [self.view scrollToY: 0 - kbSize.height];
 }

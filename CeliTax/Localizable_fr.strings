@@ -35,6 +35,7 @@
 "Back" = "Back";
 "Bread" = "Bread";
 "Begin Tutorial" = "Begin Tutorial";
+"Buy" = "Buy";
 
 //C
 "Cake" = "Cake";
@@ -161,6 +162,7 @@
 "Purchase" = "Purchase";
 "Purchase Subscriptions" = "Purchase Subscriptions";
 "Please enter your account's email's address and password to log in" = "Please enter your account's email's address and password to log in";
+"Purchase failed" = "Purchase failed";
 
 //Q
 "Quick Links" = "Quick Links";

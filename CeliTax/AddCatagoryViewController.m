@@ -108,8 +108,8 @@
     // initialize the Save menu button button
     self.saveButton = [[SolidGreenButton alloc] initWithFrame: CGRectMake(0, 0, 50, 25)];
     [self.saveButton setTitle: NSLocalizedString(@"Save", nil) forState: UIControlStateNormal];
-    [self.saveButton.titleLabel setFont: [UIFont latoBoldFontOfSize: 14]];
-    [self.saveButton setTitleEdgeInsets: UIEdgeInsetsMake(5, 10, 5, 10)];
+    (self.saveButton.titleLabel).font = [UIFont latoBoldFontOfSize: 14];
+    (self.saveButton).titleEdgeInsets = UIEdgeInsetsMake(5, 10, 5, 10);
     [self.saveButton addTarget: self action: @selector(saveCatagoryPressed:) forControlEvents: UIControlEventTouchUpInside];
     [self.saveButton setLookAndFeel:self.lookAndFeel];
 
@@ -126,7 +126,7 @@
     [self.catagoriesTable registerNib: catagoryTableViewCell forCellReuseIdentifier: kCatagoryTableViewCellIdentifier];
     [self.catagoriesTable registerNib: modifyCatagoryTableViewCell forCellReuseIdentifier: kModifyCatagoryTableViewCellIdentifier];
 
-    [self.colorView setBackgroundColor: [UIColor whiteColor]];
+    (self.colorView).backgroundColor = [UIColor whiteColor];
     [self.lookAndFeel applySlightlyDarkerBorderTo: self.colorView];
 
     // initialize the Cancel menu button button
@@ -145,9 +145,9 @@
 
     [self setupUI];
 
-    [self.colorPickerViewController setDelegate: self];
-    [self.namesPickerViewController setDelegate: self];
-    [self.allColorsPickerViewController setDelegate: self];
+    (self.colorPickerViewController).delegate = self;
+    (self.namesPickerViewController).delegate = self;
+    (self.allColorsPickerViewController).delegate = self;
 
     UITapGestureRecognizer *colorBoxPressedTap =
         [[UITapGestureRecognizer alloc] initWithTarget: self
@@ -289,7 +289,7 @@
     //set up the catagoryPickerViewController
     self.catagoryPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: self.catagoryNames];
     self.catagoryPickerViewController.highlightedSelectionIndex = -1;
-    [self.catagoryPickerViewController setDelegate: self];
+    (self.catagoryPickerViewController).delegate = self;
 }
 
 - (void) setCurrentlySelectedCatagory: (Catagory *) currentlySelectedCatagory
@@ -392,7 +392,7 @@
 {
     NSString *trimmedString = [self.catagoryNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
-    NSString *capitalizedString = [trimmedString capitalizedString];
+    NSString *capitalizedString = trimmedString.capitalizedString;
     
     if ([self.catagoryNames containsObject:capitalizedString])
     {
@@ -419,7 +419,7 @@
 
 -(void)setupWYPopoverControllerTheme:(WYPopoverController *)wyPopoverController
 {
-    [wyPopoverController setTheme: [WYPopoverTheme theme]];
+    wyPopoverController.theme = [WYPopoverTheme theme];
     
     WYPopoverTheme *popUpTheme = wyPopoverController.theme;
     popUpTheme.fillTopColor = [UIColor whiteColor];
@@ -427,13 +427,13 @@
     popUpTheme.outerShadowColor = [UIColor grayColor];
     popUpTheme.outerShadowBlurRadius = 1;
     popUpTheme.outerShadowOffset = CGSizeMake(0, 2);
-    [wyPopoverController setTheme: popUpTheme];
+    wyPopoverController.theme = popUpTheme;
 }
 
 - (void) showColorPickerViewController
 {
     self.colorPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.colorPickerViewController];
-    [self.colorPickerPopover setPopoverContentSize: self.colorPickerViewController.viewSize];
+    (self.colorPickerPopover).popoverContentSize = self.colorPickerViewController.viewSize;
     
     [self setupWYPopoverControllerTheme:self.colorPickerPopover];
     
@@ -460,7 +460,7 @@
 - (void) showAllColorsPickerViewController
 {
     self.allColorsPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.allColorsPickerViewController];
-    [self.allColorsPickerPopover setPopoverContentSize: self.allColorsPickerViewController.viewSize];
+    (self.allColorsPickerPopover).popoverContentSize = self.allColorsPickerViewController.viewSize;
 
     [self setupWYPopoverControllerTheme:self.allColorsPickerPopover];
     
@@ -478,12 +478,12 @@
     self.modifyCatagoryViewController.delegate = self;
     
     self.modifyCatagoryPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.modifyCatagoryViewController];
-    [self.modifyCatagoryPickerPopover setPopoverContentSize: self.modifyCatagoryViewController.viewSize];
+    (self.modifyCatagoryPickerPopover).popoverContentSize = self.modifyCatagoryViewController.viewSize;
     
     [self setupWYPopoverControllerTheme:self.modifyCatagoryPickerPopover];
     
     CGRect rectOfCellInTableView = [self.catagoriesTable rectForRowAtIndexPath: [NSIndexPath indexPathForRow: button.tag * 2 + 1 inSection: 0]];
-    CGRect rectOfCellInSuperview = [self.catagoriesTable convertRect: rectOfCellInTableView toView: [self.catagoriesTable superview]];
+    CGRect rectOfCellInSuperview = [self.catagoriesTable convertRect: rectOfCellInTableView toView: (self.catagoriesTable).superview];
     
     CGRect tinyRect = CGRectMake(rectOfCellInSuperview.origin.x + button.frame.origin.x + button.frame.size.width / 2,
                                  rectOfCellInSuperview.origin.y +  button.frame.origin.y + button.frame.size.height / 2,
@@ -496,7 +496,7 @@
 -(void)transferPressed:(UIButton *)button
 {
     CGRect rectOfCellInTableView = [self.catagoriesTable rectForRowAtIndexPath: [NSIndexPath indexPathForRow: button.tag * 2 + 1 inSection: 0]];
-    CGRect rectOfCellInSuperview = [self.catagoriesTable convertRect: rectOfCellInTableView toView: [self.catagoriesTable superview]];
+    CGRect rectOfCellInSuperview = [self.catagoriesTable convertRect: rectOfCellInTableView toView: (self.catagoriesTable).superview];
     
     CGRect tinyRect = CGRectMake(rectOfCellInSuperview.origin.x + button.frame.origin.x + button.frame.size.width / 2,
                                  rectOfCellInSuperview.origin.y +  button.frame.origin.y + button.frame.size.height / 2,
@@ -567,6 +567,17 @@
 {
     [textField resignFirstResponder];
     
+    NSString *trimmedString = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    if (trimmedString.length)
+    {
+        self.nameOfCategoryBeingAddedOrEdited = trimmedString;
+    }
+    else
+    {
+        self.nameOfCategoryBeingAddedOrEdited = nil;
+    }
+    
     [self enableOrDisableSaveButton];
 
     return NO;
@@ -608,7 +619,7 @@
             
             [self.catagoryNameField resignFirstResponder];
             
-            [self textFieldDidChange: self.catagoryNameField];
+            [self textFieldShouldReturn:self.catagoryNameField];
         }
     }
     
@@ -724,12 +735,12 @@
 
         cell.clipsToBounds = YES;
 
-        Catagory *thisCatagory = [self.catagories objectAtIndex: indexPath.row / 2];
+        Catagory *thisCatagory = (self.catagories)[indexPath.row / 2];
 
         cell.catagoryColor = thisCatagory.color;
-        [cell.colorBox setBackgroundColor: thisCatagory.color];
+        (cell.colorBox).backgroundColor = thisCatagory.color;
 
-        [cell.catagoryName setText: thisCatagory.name];
+        (cell.catagoryName).text = thisCatagory.name;
         
         if (self.addingCatagoryMode)
         {
@@ -815,7 +826,7 @@
     }
     else
     {
-        Catagory *thisCatagory = [self.catagories objectAtIndex: (indexPath.row - 1) / 2];
+        Catagory *thisCatagory = (self.catagories)[(indexPath.row - 1) / 2];
 
         // only show the row if currentlySelectedCatagory == thisCatagory
 
@@ -832,7 +843,7 @@
 {
     if (indexPath.row % 2 == 0)
     {
-        Catagory *thisCatagory = [self.catagories objectAtIndex: indexPath.row / 2];
+        Catagory *thisCatagory = (self.catagories)[indexPath.row / 2];
 
         DLog(@"Category %@ clicked", thisCatagory.name);
 
@@ -860,14 +871,14 @@
 
 #pragma mark - Tutorial
 
-typedef enum : NSUInteger
+typedef NS_ENUM(NSUInteger, TutorialSteps)
 {
     TutorialStep7
-} TutorialSteps;
+};
 
 -(void)setupTutorials
 {
-    [self.tutorialManager setDelegate:self];
+    (self.tutorialManager).delegate = self;
     
     self.tutorials = [NSMutableArray new];
     
@@ -884,7 +895,7 @@ typedef enum : NSUInteger
 {
     if (self.tutorials.count && step < self.tutorials.count)
     {
-        TutorialStep *tutorialStep = [self.tutorials objectAtIndex:step];
+        TutorialStep *tutorialStep = (self.tutorials)[step];
         
         [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
     }

@@ -18,15 +18,19 @@ NSString *const SubscriptionManagerProductPurchasedNotification = @"IAPHelperPro
 
 @end
 
-@implementation SubscriptionManager {
+@implementation SubscriptionManager
+{
     SKProductsRequest * _productsRequest;
     RequestProductsCompletionHandler _completionHandler;
     
     NSSet * _productIdentifiers;
     NSMutableSet * _purchasedProductIdentifiers;
+    
+    PurchaseSubscriptionSuccessHandler _purchaseCompletionHandler;
+    PurchaseSubscriptionFailureHandler _purchaseFailureHandler;
 }
 
-- (id)initWithProductIdentifiers:(NSSet *)productIdentifiers
+- (instancetype)initWithProductIdentifiers:(NSSet *)productIdentifiers
 {
     if ((self = [super init]))
     {
@@ -75,27 +79,59 @@ NSString *const SubscriptionManagerProductPurchasedNotification = @"IAPHelperPro
 }
 
 - (void)buyProduct:(SKProduct *)product
+           success:(PurchaseSubscriptionSuccessHandler)completionHandler
+           failure:(PurchaseSubscriptionFailureHandler)failureHandler
 {
+    // makes copy of the completion handler block inside the instance variable so it can notify the caller when the purchase asynchronously completes
+    _purchaseCompletionHandler = [completionHandler copy];
+    _purchaseFailureHandler = [failureHandler copy];
+    
     DLog(@"Buying %@...", product.productIdentifier);
     
     SKPayment * payment = [SKPayment paymentWithProduct:product];
-    [[SKPaymentQueue defaultQueue] addPayment:payment];
     
+    [[SKPaymentQueue defaultQueue] addPayment:payment];
 }
 
 - (void)validateReceiptForTransaction:(SKPaymentTransaction *)transaction
 {
-//    VerificationController * verifier = [VerificationController sharedInstance];
-//    
-//    [verifier verifyPurchase:transaction completionHandler:^(BOOL success) {
-//        if (success) {
-//            NSLog(@"Successfully verified receipt!");
-//            [self provideContentForProductIdentifier:transaction.payment.productIdentifier];
-//        } else {
-//            NSLog(@"Failed to validate receipt.");
-//            [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
-//        }
-//    }];
+    if (!transaction.error)
+    {
+        DLog(@"Successfully verified receipt!");
+        [self provideContentForProductIdentifier:transaction.payment.productIdentifier];
+    }
+    else
+    {
+        switch (transaction.error.code)
+        {
+            case SKErrorUnknown:
+                //Unknown error
+                break;
+            case SKErrorClientInvalid:
+                // client is not allowed to issue the request, etc.
+                break;
+            case SKErrorPaymentCancelled:
+                // user cancelled the request, etc.
+                break;
+            case SKErrorPaymentInvalid:
+                // purchase identifier was invalid, etc.
+                break;
+            case SKErrorPaymentNotAllowed:
+                // this device is not allowed to make the payment
+                break;
+            default:
+                break;
+        }
+        
+        DLog(@"Failed to validate receipt.");
+        [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+        
+        if (_purchaseFailureHandler)
+        {
+            _purchaseFailureHandler(transaction.error.code);
+            _purchaseFailureHandler = nil;
+        }
+    }
 }
 
 - (NSInteger)daysRemainingOnSubscription
@@ -131,8 +167,21 @@ NSString *const SubscriptionManagerProductPurchasedNotification = @"IAPHelperPro
         //2. Get the new date as the response from server and save it locally
         [self.userManager setExpiryDate:expiryDateString];
         
+        if (_purchaseCompletionHandler)
+        {
+            _purchaseCompletionHandler();
+            _purchaseCompletionHandler = nil;
+        }
+        
     } failure:^(NSString *reason) {
         DLog(@"purchasedSubscriptionWithMonths failed! This should never happen");
+        
+        if (_purchaseFailureHandler)
+        {
+            _purchaseFailureHandler(-1);
+            _purchaseFailureHandler = nil;
+        }
+        
     }];
 }
 
@@ -187,11 +236,11 @@ NSString *const SubscriptionManagerProductPurchasedNotification = @"IAPHelperPro
             case SKPaymentTransactionStatePurchased:
                 [self completeTransaction:transaction];
                 break;
+                
             case SKPaymentTransactionStateFailed:
                 [self failedTransaction:transaction];
                 break;
-            case SKPaymentTransactionStateRestored:
-                [self restoreTransaction:transaction];
+                
             default:
                 break;
         }
@@ -210,7 +259,6 @@ NSString *const SubscriptionManagerProductPurchasedNotification = @"IAPHelperPro
 {
     DLog(@"restoreTransaction...");
     
-    [self validateReceiptForTransaction:transaction];
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 }
 
@@ -224,6 +272,12 @@ NSString *const SubscriptionManagerProductPurchasedNotification = @"IAPHelperPro
     }
     
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+    
+    if (_purchaseFailureHandler)
+    {
+        _purchaseFailureHandler(transaction.error.code);
+        _purchaseFailureHandler = nil;
+    }
 }
 
 - (void)provideContentForProductIdentifier:(NSString *)productIdentifier
@@ -241,13 +295,6 @@ NSString *const SubscriptionManagerProductPurchasedNotification = @"IAPHelperPro
         DLog(@"Invalid product.");
         return;
     }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:SubscriptionManagerProductPurchasedNotification object:productIdentifier userInfo:nil];
-}
-
-- (void)restoreCompletedTransactions
-{
-    [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
 }
 
 @end

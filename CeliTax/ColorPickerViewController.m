@@ -16,7 +16,7 @@
 
 @implementation ColorPickerViewController
 
-- (id) initWithNibName: (NSString *) nibNameOrNil bundle: (NSBundle *) nibBundleOrNil
+- (instancetype) initWithNibName: (NSString *) nibNameOrNil bundle: (NSBundle *) nibBundleOrNil
 {
     if (self = [super initWithNibName: nibNameOrNil bundle: nibBundleOrNil])
     {
@@ -34,7 +34,7 @@
     [self.pickButton setTitle:NSLocalizedString(@"Pick", nil) forState:UIControlStateNormal];
     
     // apply gray border to all subviews
-    for (UIView *subview in [self.view subviews])
+    for (UIView *subview in (self.view).subviews)
     {
         [self.lookAndFeel applySlightlyDarkerBorderTo: subview];
     }

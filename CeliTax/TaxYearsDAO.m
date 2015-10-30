@@ -20,7 +20,7 @@
     
     for (TaxYear *taxYear in taxYearsObjects)
     {
-        [taxYearNumbers addObject:[NSNumber numberWithInteger:taxYear.taxYear]];
+        [taxYearNumbers addObject:@(taxYear.taxYear)];
     }
     
     return taxYearNumbers;
@@ -65,7 +65,7 @@
         }
         else
         {
-            TaxYear *existing = [existingYear firstObject];
+            TaxYear *existing = existingYear.firstObject;
             
             [localTaxyears removeObject:existing];
         }

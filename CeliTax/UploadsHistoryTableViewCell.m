@@ -60,7 +60,7 @@
 - (void) awakeFromNib
 {
     // Initialization code
-    [self setSelectionStyle: UITableViewCellSelectionStyleNone];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 
     UINib *noItemTableCell = [UINib nibWithNibName: @"NoItemsTableViewCell" bundle: nil];
     
@@ -99,7 +99,7 @@
     [self.viewAllTable registerNib: noItemTableCell forCellReuseIdentifier: kNoItemsTableViewCellIdentifier];
     
     self.dateFormatter = [[NSDateFormatter alloc] init];
-    [self.dateFormatter setDateFormat: @"dd/MM/yyyy"];
+    (self.dateFormatter).dateFormat = @"dd/MM/yyyy";
 }
 
 - (void) setSelected: (BOOL) selected animated: (BOOL) animated
@@ -137,7 +137,7 @@
         [self.recentUploadsTriangle setGreenArrowDown];
         [self.recentUploadsTotalLabel setHidden: YES];
         [self.recentUploadsTable setHidden: YES];
-        [self.recentUploadsHeightBar setConstant: 0];
+        (self.recentUploadsHeightBar).constant = 0;
     }
 
     [self layoutIfNeeded];
@@ -171,7 +171,7 @@
         [self.previousWeekTriangle setGreenArrowDown];
         [self.previousWeekTotalLabel setHidden: YES];
         [self.previousWeekTable setHidden: YES];
-        [self.previousWeekHeightBar setConstant: 0];
+        (self.previousWeekHeightBar).constant = 0;
     }
 
     [self layoutIfNeeded];
@@ -205,7 +205,7 @@
         [self.previousMonthTriangle setGreenArrowDown];
         [self.previousMonthTotalLabel setHidden: YES];
         [self.previousMonthTable setHidden: YES];
-        [self.previousMonthHeightBar setConstant: 0];
+        (self.previousMonthHeightBar).constant = 0;
     }
 
     [self layoutIfNeeded];
@@ -239,7 +239,7 @@
         [self.viewAllTriangle setGreenArrowDown];
         [self.viewAllTotalLabel setHidden: YES];
         [self.viewAllTable setHidden: YES];
-        [self.viewAllHeightBar setConstant: 0];
+        (self.viewAllHeightBar).constant = 0;
     }
 
     [self layoutIfNeeded];
@@ -346,19 +346,19 @@
 
     if (tableView == self.recentUploadsTable && self.recentUploadReceipts.count)
     {
-        thisCatagoryInfo = [self.recentUploadReceipts objectAtIndex: indexPath.row];
+        thisCatagoryInfo = (self.recentUploadReceipts)[indexPath.row];
     }
     else if (tableView == self.previousWeekTable && self.previousWeekReceipts.count)
     {
-        thisCatagoryInfo = [self.previousWeekReceipts objectAtIndex: indexPath.row];
+        thisCatagoryInfo = (self.previousWeekReceipts)[indexPath.row];
     }
     else if (tableView == self.previousMonthTable && self.previousMonthReceipts.count)
     {
-        thisCatagoryInfo = [self.previousMonthReceipts objectAtIndex: indexPath.row];
+        thisCatagoryInfo = (self.previousMonthReceipts)[indexPath.row];
     }
     else if (tableView == self.viewAllTable && self.viewAllReceipts.count)
     {
-        thisCatagoryInfo = [self.viewAllReceipts objectAtIndex: indexPath.row];
+        thisCatagoryInfo = (self.viewAllReceipts)[indexPath.row];
     }
     
     if (!thisCatagoryInfo)
@@ -375,19 +375,19 @@
     }
 
     // Keys: kReceiptTimeKey, kTotalQtyKey, kTotalAmountKey
-    NSDate *receiptDate = [thisCatagoryInfo objectForKey: kReceiptTimeKey];
-    NSInteger totalQty = [[thisCatagoryInfo objectForKey: kTotalQtyKey] integerValue];
-    float totalAmount = [[thisCatagoryInfo objectForKey: kTotalAmountKey] floatValue];
+    NSDate *receiptDate = thisCatagoryInfo[kReceiptTimeKey];
+    NSInteger totalQty = [thisCatagoryInfo[kTotalQtyKey] integerValue];
+    float totalAmount = [thisCatagoryInfo[kTotalAmountKey] floatValue];
 
-    [cell.colorBox setBackgroundColor: self.catagoryColor];
+    (cell.colorBox).backgroundColor = self.catagoryColor;
 
     [self.lookAndFeel applySlightlyDarkerBorderTo: cell.colorBox];
 
-    [cell.dateLabel setText: [self.dateFormatter stringFromDate: receiptDate]];
+    (cell.dateLabel).text = [self.dateFormatter stringFromDate: receiptDate];
 
-    [cell.qtyLabel setText: [NSString stringWithFormat: @"%ld", (long)totalQty]];
+    (cell.qtyLabel).text = [NSString stringWithFormat: @"%ld", (long)totalQty];
 
-    [cell.totalLabel setText: [NSString stringWithFormat: @"$%.2f", totalAmount]];
+    (cell.totalLabel).text = [NSString stringWithFormat: @"$%.2f", totalAmount];
 
     return cell;
 }
@@ -435,22 +435,22 @@
     if (tableView == self.recentUploadsTable)
     {
         if (self.recentUploadReceipts.count)
-            thisCatagoryInfo = [self.recentUploadReceipts objectAtIndex: indexPath.row];
+            thisCatagoryInfo = (self.recentUploadReceipts)[indexPath.row];
     }
     else if (tableView == self.previousWeekTable)
     {
         if (self.previousWeekReceipts.count)
-            thisCatagoryInfo = [self.previousWeekReceipts objectAtIndex: indexPath.row];
+            thisCatagoryInfo = (self.previousWeekReceipts)[indexPath.row];
     }
     else if (tableView == self.previousMonthTable)
     {
         if (self.previousMonthReceipts.count)
-            thisCatagoryInfo = [self.previousMonthReceipts objectAtIndex: indexPath.row];
+            thisCatagoryInfo = (self.previousMonthReceipts)[indexPath.row];
     }
     else if (tableView == self.viewAllTable)
     {
         if (self.viewAllReceipts.count)
-            thisCatagoryInfo = [self.viewAllReceipts objectAtIndex: indexPath.row];
+            thisCatagoryInfo = (self.viewAllReceipts)[indexPath.row];
     }
     
     if (thisCatagoryInfo)

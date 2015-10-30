@@ -43,7 +43,7 @@
     NSPredicate *findRecord = [NSPredicate predicateWithFormat: @"localID == %@", recordID];
     NSArray *record = [[self loadRecords] filteredArrayUsingPredicate: findRecord];
     
-    return [record firstObject];
+    return record.firstObject;
 }
 
 -(NSString *)addRecordForCatagory: (Catagory *) catagory
@@ -218,7 +218,7 @@
         
         if (existingRecord.count)
         {
-            Record *existing = [existingRecord firstObject];
+            Record *existing = existingRecord.firstObject;
             
             [existing copyDataFromRecord:record];
             

@@ -40,11 +40,11 @@
 {
     NSString *result = nil;
     
-    if ([self isEqualToString: @"0"] || [[self uppercaseString] isEqualToString: @"NO"])
+    if ([self isEqualToString: @"0"] || [self.uppercaseString isEqualToString: @"NO"])
     {
         result = @"NO";
     }
-    else if ([self isEqualToString: @"1"] || [[self uppercaseString] isEqualToString: @"YES"])
+    else if ([self isEqualToString: @"1"] || [self.uppercaseString isEqualToString: @"YES"])
     {
         result = @"YES";
     }
@@ -54,14 +54,14 @@
 
 - (NSString *) stripNonAlphaCharacters
 {
-    NSCharacterSet *charactersToRemove = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
+    NSCharacterSet *charactersToRemove = [NSCharacterSet alphanumericCharacterSet].invertedSet;
 
     return [[self componentsSeparatedByCharactersInSet: charactersToRemove] componentsJoinedByString: @""];
 }
 
 - (NSString *) stripNonNumericCharacters
 {
-    NSCharacterSet *charactersToRemove = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+    NSCharacterSet *charactersToRemove = [NSCharacterSet decimalDigitCharacterSet].invertedSet;
     
     return [[self componentsSeparatedByCharactersInSet: charactersToRemove] componentsJoinedByString: @""];
 }
@@ -75,7 +75,7 @@
 {
     NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
     NSNumber *num = [nf numberFromString: self];
-    [nf setNumberStyle: NSNumberFormatterCurrencyStyle];    
+    nf.numberStyle = NSNumberFormatterCurrencyStyle;    
 
     return [nf stringFromNumber: num];
 }
@@ -84,7 +84,7 @@
 {
     NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
     NSNumber *num = [nf numberFromString: self];
-    [nf setNumberStyle: NSNumberFormatterDecimalStyle];
+    nf.numberStyle = NSNumberFormatterDecimalStyle;
     
     return [nf stringFromNumber: num];
 }

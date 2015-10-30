@@ -147,6 +147,6 @@
         </view>
     </objects>
     <resources>
-        <image name="celitaxlogo.png" width="843" height="279"/>
+        <image name="celitaxlogo.png" width="498" height="182"/>
     </resources>
 </document>

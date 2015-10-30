@@ -24,7 +24,7 @@
 
 @implementation ModifyCatagoryViewController
 
-- (id) initWithNibName: (NSString *) nibNameOrNil bundle: (NSBundle *) nibBundleOrNil
+- (instancetype) initWithNibName: (NSString *) nibNameOrNil bundle: (NSBundle *) nibBundleOrNil
 {
     if (self = [super initWithNibName: nibNameOrNil bundle: nibBundleOrNil])
     {
@@ -44,18 +44,18 @@
     
     [self.confirmButton setTitle:NSLocalizedString(@"Confirm", nil) forState:UIControlStateNormal];
     
-    [self.colorPickerView setColor: self.catagoryToModify.color];
-    [self.colorBoxView setBackgroundColor: self.catagoryToModify.color];
+    (self.colorPickerView).color = self.catagoryToModify.color;
+    (self.colorBoxView).backgroundColor = self.catagoryToModify.color;
     
     self.catagoryNameField.text = self.catagoryToModify.name;
-    [self.colorPickerView setColor: self.catagoryToModify.color];
+    (self.colorPickerView).color = self.catagoryToModify.color;
 
     NKOColorPickerDidChangeColorBlock colorDidChangeBlock = ^(UIColor *color) {
         // Your code handling a color change in the picker view.
         [self colorSelected: color];
     };
 
-    [self.colorPickerView setDidChangeColorBlock: colorDidChangeBlock];
+    (self.colorPickerView).didChangeColorBlock = colorDidChangeBlock;
     
 
     self.catagoryNameField.delegate = self;
@@ -102,7 +102,7 @@
 
 - (void) colorSelected: (UIColor *) newColor
 {
-    [self.colorBoxView setBackgroundColor: newColor];
+    (self.colorBoxView).backgroundColor = newColor;
     [self.lookAndFeel applySlightlyDarkerBorderTo:self.colorBoxView];
 
     self.catagoryToModify.color = newColor;

@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Lato-Bold.ttf">
             <string>Lato-Bold</string>
         </mutableArray>
+        <mutableArray key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </mutableArray>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SubscriptionViewController">
             <connections>
+                <outlet property="expiryDateLabel" destination="D7s-xK-pX8" id="d5Z-bY-tIP"/>
                 <outlet property="subscriptionsTableView" destination="25P-XH-XYu" id="mMj-Yd-cRP"/>
                 <outlet property="titleLabel" destination="8aJ-LV-Fkq" id="DJT-nD-xwa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -23,23 +28,41 @@
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Purchase Subscriptions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8aJ-LV-Fkq">
                     <rect key="frame" x="61.5" y="79" width="198" height="23"/>
+                    <animations/>
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="19"/>
                     <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="25P-XH-XYu">
-                    <rect key="frame" x="0.0" y="122" width="320" height="446"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="25P-XH-XYu">
+                    <rect key="frame" x="0.0" y="175" width="320" height="393"/>
+                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expiry Date: %@" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7s-xK-pX8">
+                    <rect key="frame" x="0.0" y="112" width="320" height="50"/>
+                    <animations/>
+                    <color key="backgroundColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="WTw-tu-eJx"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="D7s-xK-pX8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9NY-Si-wSm"/>
                 <constraint firstAttribute="centerX" secondItem="8aJ-LV-Fkq" secondAttribute="centerX" id="H7L-dg-DF9"/>
                 <constraint firstItem="8aJ-LV-Fkq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="79" id="IZ8-bs-6YA"/>
+                <constraint firstAttribute="trailing" secondItem="D7s-xK-pX8" secondAttribute="trailing" id="L21-v3-GsT"/>
                 <constraint firstItem="25P-XH-XYu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="LrD-bN-lQO"/>
                 <constraint firstItem="25P-XH-XYu" firstAttribute="top" secondItem="8aJ-LV-Fkq" secondAttribute="bottom" constant="20" id="cH0-LZ-rf4"/>
                 <constraint firstAttribute="bottom" secondItem="25P-XH-XYu" secondAttribute="bottom" id="fV6-VU-Zyo"/>
+                <constraint firstItem="D7s-xK-pX8" firstAttribute="top" secondItem="8aJ-LV-Fkq" secondAttribute="bottom" constant="10" id="ivf-Ni-RUr"/>
                 <constraint firstAttribute="trailing" secondItem="25P-XH-XYu" secondAttribute="trailing" id="kcF-eQ-SpP"/>
+                <constraint firstItem="25P-XH-XYu" firstAttribute="top" secondItem="D7s-xK-pX8" secondAttribute="bottom" id="mGj-s4-EUi"/>
                 <constraint firstItem="25P-XH-XYu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="pd3-yD-ZFd"/>
             </constraints>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
@@ -47,6 +70,7 @@
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="LrD-bN-lQO"/>
+                    <exclude reference="cH0-LZ-rf4"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="420" y="371"/>

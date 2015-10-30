@@ -26,7 +26,7 @@
 
 @implementation ImperialUnitPickerViewController
 
-- (id) initWithNibName: (NSString *) nibNameOrNil bundle: (NSBundle *) nibBundleOrNil
+- (instancetype) initWithNibName: (NSString *) nibNameOrNil bundle: (NSBundle *) nibBundleOrNil
 {
     if (self = [super initWithNibName: nibNameOrNil bundle: nibBundleOrNil])
     {
@@ -147,8 +147,8 @@
 
 -(void)setupUI
 {
-    [self.topContainer setBackgroundColor:[UIColor whiteColor]];
-    [self.bottomContainer setBackgroundColor:[UIColor whiteColor]];
+    (self.topContainer).backgroundColor = [UIColor whiteColor];
+    (self.bottomContainer).backgroundColor = [UIColor whiteColor];
     
     [self.unitItemButton setTitle:NSLocalizedString(@"Item", nil) forState:UIControlStateNormal];
     [self.unitsLabel setText:NSLocalizedString(@"Units", nil)];

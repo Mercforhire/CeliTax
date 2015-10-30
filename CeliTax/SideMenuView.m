@@ -20,24 +20,23 @@
 
 -(void)refreshMenuSelections
 {
-    menuSelections = [NSArray arrayWithObjects:
-                      NSLocalizedString(@"Home", nil),
+    menuSelections = @[NSLocalizedString(@"Home", nil),
                       NSLocalizedString(@"Account", nil),
                       NSLocalizedString(@"Vault", nil),
                       NSLocalizedString(@"Help", nil),
                       NSLocalizedString(@"Settings", nil),
-                      NSLocalizedString(@"Logout", nil), nil];
+                      NSLocalizedString(@"Logout", nil)];
     
     [menuSelectionsTable reloadData];
 }
 
 - (void) baseInit
 {
-    [self setBackgroundColor: [UIColor clearColor]];
+    self.backgroundColor = [UIColor clearColor];
     self.opaque = NO;
 
     self.profileImageView = [[UIImageView alloc] initWithFrame: CGRectMake(20, 20, 50, 50)];
-    [self.profileImageView setBackgroundColor: [UIColor greenColor]];
+    (self.profileImageView).backgroundColor = [UIColor greenColor];
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
     self.profileImageView.layer.borderColor = [UIColor colorWithWhite: 187.0f/255.0f alpha: 1].CGColor;
     self.profileImageView.layer.borderWidth = 1.0f;
@@ -50,7 +49,7 @@
                                                                self.profileImageView.frame.origin.y,
                                                                self.frame.size.width - self.profileImageView.frame.origin.x - self.profileImageView.frame.size.width - 15 - 15,
                                                                50)];
-    [self.usernameLabel setFont: [UIFont latoFontOfSize: 14]];
+    (self.usernameLabel).font = [UIFont latoFontOfSize: 14];
     [self.usernameLabel setUserInteractionEnabled:YES];
     [self addSubview: self.usernameLabel];
 
@@ -63,7 +62,7 @@
     menuSelectionsTable.dataSource = self;
     [menuSelectionsTable setAllowsSelection: YES];
     menuSelectionsTable.backgroundColor = [UIColor clearColor];
-    [menuSelectionsTable setSeparatorStyle: UITableViewCellSeparatorStyleNone];
+    menuSelectionsTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [menuSelectionsTable setBounces:NO];
 
     UINib *tablecell = [UINib nibWithNibName: @"MenuSelectionTableViewCell" bundle: nil];
@@ -79,20 +78,20 @@
 {
     [super layoutSubviews];
 
-    [self.profileImageView setFrame: CGRectMake(20, 20, 50, 50)];
+    (self.profileImageView).frame = CGRectMake(20, 20, 50, 50);
 
-    [self.usernameLabel setFrame: CGRectMake(self.profileImageView.frame.origin.x + self.profileImageView.frame.size.width + 10,
+    (self.usernameLabel).frame = CGRectMake(self.profileImageView.frame.origin.x + self.profileImageView.frame.size.width + 10,
                                         self.profileImageView.frame.origin.y,
                                         self.frame.size.width - self.profileImageView.frame.origin.x - self.profileImageView.frame.size.width - 10 - 20,
-                                        50)];
+                                        50);
 
-    [menuSelectionsTable setFrame: CGRectMake(0,
+    menuSelectionsTable.frame = CGRectMake(0,
                                               self.profileImageView.frame.origin.y + self.profileImageView.frame.size.height,
                                               self.frame.size.width,
-                                              self.frame.size.height - self.profileImageView.frame.origin.y - self.profileImageView.frame.size.height)];
+                                              self.frame.size.height - self.profileImageView.frame.origin.y - self.profileImageView.frame.size.height);
 }
 
-- (id) initWithFrame: (CGRect) frame
+- (instancetype) initWithFrame: (CGRect) frame
 {
     self = [super initWithFrame: frame];
 
@@ -104,7 +103,7 @@
     return self;
 }
 
-- (id) initWithCoder: (NSCoder *) aDecoder
+- (instancetype) initWithCoder: (NSCoder *) aDecoder
 {
     self = [super initWithCoder: aDecoder];
 
@@ -116,7 +115,7 @@
     return self;
 }
 
-- (id) init
+- (instancetype) init
 {
     self = [super init];
 
@@ -142,14 +141,14 @@
 {
     _profileImage = profileImage;
 
-    [self.profileImageView setImage: _profileImage];
+    (self.profileImageView).image = _profileImage;
 }
 
 - (void) setUserName: (NSString *) userName
 {
     _userName = userName;
 
-    [self.usernameLabel setText: _userName];
+    (self.usernameLabel).text = _userName;
 }
 
 - (void) setCurrentlySelectedIndex: (NSInteger) currentlySelectedIndex
@@ -191,7 +190,7 @@
         [menuCell.selectionIndicator setHidden: YES];
     }
 
-    [menuCell.selectionName setText: [menuSelections objectAtIndex: indexPath.row]];
+    (menuCell.selectionName).text = menuSelections[indexPath.row];
 
     menuCell.backgroundColor = [UIColor clearColor];
 
@@ -213,12 +212,12 @@
 {
     if ([cell respondsToSelector: @selector(setSeparatorInset:)])
     {
-        [cell setSeparatorInset: UIEdgeInsetsZero];
+        cell.separatorInset = UIEdgeInsetsZero;
     }
 
     if ([cell respondsToSelector: @selector(setLayoutMargins:)])
     {
-        [cell setLayoutMargins: UIEdgeInsetsZero];
+        cell.layoutMargins = UIEdgeInsetsZero;
     }
 }
 
@@ -226,12 +225,12 @@
 {
     if ([menuSelectionsTable respondsToSelector: @selector(setSeparatorInset:)])
     {
-        [menuSelectionsTable setSeparatorInset: UIEdgeInsetsZero];
+        menuSelectionsTable.separatorInset = UIEdgeInsetsZero;
     }
 
     if ([menuSelectionsTable respondsToSelector: @selector(setLayoutMargins:)])
     {
-        [menuSelectionsTable setLayoutMargins: UIEdgeInsetsZero];
+        menuSelectionsTable.layoutMargins = UIEdgeInsetsZero;
     }
 }
 

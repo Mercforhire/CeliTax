@@ -23,7 +23,7 @@
 
 - (void) baseInit
 {
-    [self setBackgroundColor: [UIColor clearColor]];
+    self.backgroundColor = [UIColor clearColor];
 
     self.redColor = [UIColor colorWithRed: 255/255.0f green: 45/255.0f blue: 85/255.0f alpha: 1.0f];
 
@@ -54,11 +54,11 @@
                                                                    labelSize.width, labelSize.height)];
    
     self.counterLabel.textAlignment = NSTextAlignmentCenter;
-    [self.counterLabel setFont: [UIFont latoFontOfSize: 12]];
-    [self.counterLabel setBackgroundColor: self.redColor];
-    [self.counterLabel setText: [NSString stringWithFormat: @"%ld", (long)self.counter]];
-    [self.counterLabel setTextColor: [UIColor whiteColor]];
-    [self.counterLabel.layer setCornerRadius: labelSize.height / 2];
+    (self.counterLabel).font = [UIFont latoFontOfSize: 12];
+    (self.counterLabel).backgroundColor = self.redColor;
+    (self.counterLabel).text = [NSString stringWithFormat: @"%ld", (long)self.counter];
+    (self.counterLabel).textColor = [UIColor whiteColor];
+    (self.counterLabel.layer).cornerRadius = labelSize.height / 2;
     self.counterLabel.clipsToBounds = YES;
     self.counterLabel.userInteractionEnabled = NO;
 
@@ -73,7 +73,7 @@
     }
 }
 
-- (id) initWithFrame: (CGRect) frame;
+- (instancetype) initWithFrame: (CGRect) frame;
 {
     self = [super initWithFrame: frame];
 
@@ -85,7 +85,7 @@
     return self;
 }
 
-- (id) initWithCoder: (NSCoder *) aDecoder;
+- (instancetype) initWithCoder: (NSCoder *) aDecoder;
 {
     self = [super initWithCoder: aDecoder];
 

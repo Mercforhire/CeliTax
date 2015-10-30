@@ -16,7 +16,7 @@
     LookAndFeel *myLookAndFeel;
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     
@@ -24,7 +24,7 @@
     {
         // 1. Load the .xib file .xib file must match classname
         NSString *className = NSStringFromClass([self class]);
-        customView = [[[NSBundle mainBundle] loadNibNamed:className owner:self options:nil] firstObject];
+        customView = [[NSBundle mainBundle] loadNibNamed:className owner:self options:nil].firstObject;
         
         // 2. Add as a subview
         [self addSubview:customView];
@@ -33,7 +33,7 @@
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     
@@ -42,7 +42,7 @@
         
         // 1. Load .xib file
         NSString *className = NSStringFromClass([self class]);
-        customView = [[[NSBundle mainBundle] loadNibNamed:className owner:self options:nil] firstObject];
+        customView = [[NSBundle mainBundle] loadNibNamed:className owner:self options:nil].firstObject;
         
         // 2. Add as a subview
         [self addSubview:customView];
@@ -61,8 +61,8 @@
 
 - (void) setEditButtonsVisible:(BOOL)visible
 {
-    [self.editButton1 setHidden:!visible];
-    [self.editButton2 setHidden:!visible];
+    (self.editButton1).hidden = !visible;
+    (self.editButton2).hidden = !visible;
 }
 
 @end

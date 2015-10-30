@@ -19,7 +19,7 @@
     
     TaxYear *taxYear = [[TaxYear alloc] init];
     
-    taxYear.taxYear = [taxYearNumber integerValue];
+    taxYear.taxYear = taxYearNumber.integerValue;
     
     return taxYear;
 }

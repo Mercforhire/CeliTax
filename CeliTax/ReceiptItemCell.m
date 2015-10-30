@@ -67,57 +67,57 @@
             break;
             
         case UnitML:
-            [self.priceField setText:@"(mL)"];
+            (self.priceField).text = @"(mL)";
             
             break;
             
         case UnitL:
-            [self.priceField setText:@"(L)"];
+            (self.priceField).text = @"(L)";
             
             break;
             
         case UnitG:
-            [self.priceField setText:@"(g)"];
+            (self.priceField).text = @"(g)";
             
             break;
             
         case Unit100G:
-            [self.priceField setText:@"(100g)"];
+            (self.priceField).text = @"(100g)";
             
             break;
             
         case UnitKG:
-            [self.priceField setText:@"(kg)"];
+            (self.priceField).text = @"(kg)";
             
             break;
             
         case UnitFloz:
-            [self.priceField setText:@"(fl oz)"];
+            (self.priceField).text = @"(fl oz)";
             
             break;
             
         case UnitPt:
-            [self.priceField setText:@"(pt)"];
+            (self.priceField).text = @"(pt)";
             
             break;
         
         case UnitQt:
-            [self.priceField setText:@"(qt)"];
+            (self.priceField).text = @"(qt)";
             
             break;
             
         case UnitGal:
-            [self.priceField setText:@"(gal)"];
+            (self.priceField).text = @"(gal)";
             
             break;
             
         case UnitOz:
-            [self.priceField setText:@"(oz)"];
+            (self.priceField).text = @"(oz)";
             
             break;
             
         case UnitLb:
-            [self.priceField setText:@"(lb)"];
+            (self.priceField).text = @"(lb)";
             
             break;
             

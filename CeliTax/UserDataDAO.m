@@ -72,7 +72,7 @@
         return nil;
     }
 
-    NSString *storagePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *storagePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).lastObject;
 
     NSString *filePath = [storagePath stringByAppendingPathComponent: [NSString stringWithFormat: @"/USER_DATA-%@.dat", self.userKey]];
 

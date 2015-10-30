@@ -17,7 +17,7 @@
     [self setGreenArrowDown];
 }
 
-- (id) initWithFrame: (CGRect) frame
+- (instancetype) initWithFrame: (CGRect) frame
 {
     self = [super initWithFrame: frame];
 
@@ -29,7 +29,7 @@
     return self;
 }
 
-- (id) initWithCoder: (NSCoder *) aDecoder
+- (instancetype) initWithCoder: (NSCoder *) aDecoder
 {
     self = [super initWithCoder: aDecoder];
 
@@ -43,12 +43,12 @@
 
 - (void) setGreenArrowUp
 {
-    [self setImage: [UIImage imageNamed: @"greenTrianglePointUp"]];
+    self.image = [UIImage imageNamed: @"greenTrianglePointUp"];
 }
 
 - (void) setGreenArrowDown
 {
-    [self setImage: [UIImage imageNamed: @"greenTrianglePointDown"]];
+    self.image = [UIImage imageNamed: @"greenTrianglePointDown"];
 }
 
 @end

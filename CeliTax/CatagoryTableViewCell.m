@@ -13,7 +13,7 @@
 - (void) awakeFromNib
 {
     // Initialization code
-    [self setSelectionStyle: UITableViewCellSelectionStyleNone];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void) setSelected: (BOOL) selected animated: (BOOL) animated
@@ -25,14 +25,14 @@
 
 -(void)makeCellAppearInactive
 {
-    [self.colorBox setBackgroundColor:[UIColor lightGrayColor]];
-    [self.catagoryName setTextColor:[UIColor lightGrayColor]];
+    (self.colorBox).backgroundColor = [UIColor lightGrayColor];
+    (self.catagoryName).textColor = [UIColor lightGrayColor];
 }
 
 -(void)makeCellAppearActive
 {
-    [self.colorBox setBackgroundColor:self.catagoryColor];
-    [self.catagoryName setTextColor:[UIColor blackColor]];
+    (self.colorBox).backgroundColor = self.catagoryColor;
+    (self.catagoryName).textColor = [UIColor blackColor];
 }
 
 @end
