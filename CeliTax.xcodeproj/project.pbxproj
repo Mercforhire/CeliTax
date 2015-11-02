@@ -155,6 +155,8 @@
 		858711851BE6D2EE00774A2F /* RecordBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858711841BE6D2EE00774A2F /* RecordBuilder.swift */; };
 		858711871BE6D70700774A2F /* CategoryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858711861BE6D70700774A2F /* CategoryBuilder.swift */; };
 		858711891BE6DF1100774A2F /* BuilderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858711881BE6DF1100774A2F /* BuilderFactory.swift */; };
+		8587118B1BE6E65200774A2F /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8587118A1BE6E65200774A2F /* AuthenticationService.swift */; };
+		8587118D1BE7039900774A2F /* NetworkCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8587118C1BE7039900774A2F /* NetworkCommunicator.swift */; };
 		858FD7181B40DEE60008B325 /* TransferConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 858FD7161B40DEE60008B325 /* TransferConfirmationViewController.m */; };
 		858FD7191B40DEE60008B325 /* TransferConfirmationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 858FD7171B40DEE60008B325 /* TransferConfirmationViewController.xib */; };
 		859AEF701B46504D0085AC6D /* TutorialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 859AEF6F1B46504D0085AC6D /* TutorialManager.m */; };
@@ -446,6 +448,8 @@
 		858711841BE6D2EE00774A2F /* RecordBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordBuilder.swift; sourceTree = "<group>"; };
 		858711861BE6D70700774A2F /* CategoryBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryBuilder.swift; sourceTree = "<group>"; };
 		858711881BE6DF1100774A2F /* BuilderFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuilderFactory.swift; sourceTree = "<group>"; };
+		8587118A1BE6E65200774A2F /* AuthenticationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
+		8587118C1BE7039900774A2F /* NetworkCommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkCommunicator.swift; sourceTree = "<group>"; };
 		858FD7151B40DEE60008B325 /* TransferConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferConfirmationViewController.h; sourceTree = "<group>"; };
 		858FD7161B40DEE60008B325 /* TransferConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferConfirmationViewController.m; sourceTree = "<group>"; };
 		858FD7171B40DEE60008B325 /* TransferConfirmationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransferConfirmationViewController.xib; sourceTree = "<group>"; };
@@ -1110,6 +1114,7 @@
 			isa = PBXGroup;
 			children = (
 				8582A47F1AF1B2470048DCD6 /* AuthenticationService.h */,
+				8587118A1BE6E65200774A2F /* AuthenticationService.swift */,
 				8582A4801AF1C96C0048DCD6 /* AuthenticationServiceImpl.h */,
 				8582A4811AF1C96C0048DCD6 /* AuthenticationServiceImpl.m */,
 			);
@@ -1352,11 +1357,11 @@
 		85A8CAEE1AF078E70023504D /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				8556E30C1AF3F554003CCDD2 /* Factory */,
 				85FD2BE61B599071006E907C /* Network Communicator */,
 				85491E581B51B94800C618D9 /* Syncing Service */,
 				85D8D8581AF9210000197D85 /* Data Manipulation Service */,
 				8556E3671AF56C96003CCDD2 /* Data Fetching Service */,
-				8556E30C1AF3F554003CCDD2 /* Factory */,
 				8582A46A1AF174280048DCD6 /* Authentication Service */,
 			);
 			name = Services;
@@ -1532,6 +1537,7 @@
 			children = (
 				85FD2BE71B599089006E907C /* NetworkCommunicator.h */,
 				85FD2BE81B599089006E907C /* NetworkCommunicator.m */,
+				8587118C1BE7039900774A2F /* NetworkCommunicator.swift */,
 			);
 			name = "Network Communicator";
 			sourceTree = "<group>";
@@ -1811,6 +1817,7 @@
 				85A8CAC71AF069EA0023504D /* AppDelegate.m in Sources */,
 				8562739A1B1B782600EECA26 /* PasswordRecoverySentViewController.m in Sources */,
 				85AF7E771BB11724000D73F9 /* YIInnerShadowLayer.m in Sources */,
+				8587118B1BE6E65200774A2F /* AuthenticationService.swift in Sources */,
 				85547BF71AF2FB0500D9E1CE /* ViewControllerFactory.m in Sources */,
 				8581E2921B2E6AD3006CB6F6 /* SelectionsPickerTableViewCell.m in Sources */,
 				85C54B851B65A82500120961 /* ProfileBarView.m in Sources */,
@@ -1873,6 +1880,7 @@
 				85547BFA1AF31CFA00D9E1CE /* UserManager.m in Sources */,
 				85D4F4711B544FF600F0803C /* SyncServiceImpl.m in Sources */,
 				85D8D8561AF914B500197D85 /* AlertDialogsProvider.m in Sources */,
+				8587118D1BE7039900774A2F /* NetworkCommunicator.swift in Sources */,
 				85560FE21B019857004D2963 /* ColorPickerViewController.m in Sources */,
 				859EA0E51BE5B0E000D7B2EE /* UserData.swift in Sources */,
 				855303DE1B0FE961006B3D5F /* ReceiptsDAO.m in Sources */,

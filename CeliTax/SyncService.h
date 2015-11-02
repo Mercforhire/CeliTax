@@ -35,7 +35,7 @@ typedef void (^FileUploadFailureBlock) (NSString *reason);
 typedef void (^FileDownloadSuccessBlock) ();
 typedef void (^FileDownloadFailureBlock) (NSString *reason);
 
-@protocol SyncService <NSObject>
+@protocol SyncService
 
 @property (nonatomic, weak) UserDataDAO *userDataDAO;
 
