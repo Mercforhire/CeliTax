@@ -17,12 +17,13 @@
 #import "LookAndFeel.h"
 #import "TutorialManager.h"
 #import "NetworkCommunicator.h"
-#import "BuilderFactory.h"
 #import "SyncManager.h"
 #import "BackgroundWorker.h"
 #import "LocalizationManager.h"
 #import "SubscriptionManager.h"
 #import <Crashlytics/Crashlytics.h>
+
+#import "CeliTax-Swift.h"
 
 @class SplashViewController, ConfigurationManager, ViewControllerFactory, UserManager;
 

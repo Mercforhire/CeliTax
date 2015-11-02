@@ -36,11 +36,11 @@
     return self;
 }
 
--(void)highlightUnitButton:(NSInteger)unitButton
+-(void)highlightUnitButton:(UnitTypes)unitType
 {
-    switch (unitButton)
+    switch (unitType)
     {
-        case UnitItem:
+        case UnitTypesUnitItem:
             //highlight unitItemButton and un-highlight the rest
             [self.lookAndFeel applySolidGreenButtonStyleTo:self.unitItemButton];
             
@@ -51,7 +51,7 @@
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitKGButton];
             break;
             
-        case UnitML:
+        case UnitTypesUnitML:
             //highlight unitMLButton and un-highlight the rest
             [self.lookAndFeel applySolidGreenButtonStyleTo:self.unitMLButton];
             
@@ -63,7 +63,7 @@
             
             break;
             
-        case UnitL:
+        case UnitTypesUnitL:
             //highlight unitLButton and un-highlight the rest
             [self.lookAndFeel applySolidGreenButtonStyleTo:self.unitLButton];
             
@@ -75,7 +75,7 @@
             
             break;
             
-        case UnitG:
+        case UnitTypesUnitG:
             //highlight unitGButton and un-highlight the rest
             [self.lookAndFeel applySolidGreenButtonStyleTo:self.unitGButton];
             
@@ -87,7 +87,7 @@
             
             break;
             
-        case Unit100G:
+        case UnitTypesUnit100G:
             //highlight unitGButton and un-highlight the rest
             [self.lookAndFeel applySolidGreenButtonStyleTo:self.unit100GButton];
             
@@ -99,7 +99,7 @@
             
             break;
             
-        case UnitKG:
+        case UnitTypesUnitKG:
             //highlight unitKGButton and un-highlight the rest
             [self.lookAndFeel applySolidGreenButtonStyleTo:self.unitKGButton];
             
@@ -141,7 +141,7 @@
     [self.lookAndFeel applyGreenBorderTo:self.unitKGButton];
 }
 
--(void)setDefaultSelectedUnit:(NSInteger)defaultSelectedUnit
+-(void)setDefaultSelectedUnit:(UnitTypes)defaultSelectedUnit
 {
     _defaultSelectedUnit = defaultSelectedUnit;
     
@@ -158,61 +158,61 @@
 
 - (IBAction)itemButtonPressed:(UIButton *)sender
 {
-    [self highlightUnitButton:UnitItem];
+    [self highlightUnitButton:UnitTypesUnitItem];
     
     if (self.delegate)
     {
-        [self.delegate selectedUnit:UnitItem];
+        [self.delegate selectedUnit:UnitTypesUnitItem];
     }
 }
 
 - (IBAction)mlButtonPressed:(UIButton *)sender
 {
-    [self highlightUnitButton:UnitML];
+    [self highlightUnitButton:UnitTypesUnitML];
     
     if (self.delegate)
     {
-        [self.delegate selectedUnit:UnitML];
+        [self.delegate selectedUnit:UnitTypesUnitML];
     }
 }
 
 - (IBAction)lButtonPressed:(UIButton *)sender
 {
-    [self highlightUnitButton:UnitL];
+    [self highlightUnitButton:UnitTypesUnitL];
     
     if (self.delegate)
     {
-        [self.delegate selectedUnit:UnitL];
+        [self.delegate selectedUnit:UnitTypesUnitL];
     }
 }
 
 - (IBAction)gButtonPressed:(UIButton *)sender
 {
-    [self highlightUnitButton:UnitG];
+    [self highlightUnitButton:UnitTypesUnitG];
     
     if (self.delegate)
     {
-        [self.delegate selectedUnit:UnitG];
+        [self.delegate selectedUnit:UnitTypesUnitG];
     }
 }
 
 - (IBAction)g100ButtonPressed:(UIButton *)sender
 {
-    [self highlightUnitButton:Unit100G];
+    [self highlightUnitButton:UnitTypesUnit100G];
     
     if (self.delegate)
     {
-        [self.delegate selectedUnit:Unit100G];
+        [self.delegate selectedUnit:UnitTypesUnit100G];
     }
 }
 
 - (IBAction)kgButtonPressed:(UIButton *)sender
 {
-    [self highlightUnitButton:UnitKG];
+    [self highlightUnitButton:UnitTypesUnitKG];
     
     if (self.delegate)
     {
-        [self.delegate selectedUnit:UnitKG];
+        [self.delegate selectedUnit:UnitTypesUnitKG];
     }
 }
 

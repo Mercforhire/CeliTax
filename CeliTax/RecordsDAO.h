@@ -10,6 +10,8 @@
 #import "UserDataDAO.h"
 #import "CatagoriesDAO.h"
 
+#import "CeliTax-Swift.h"
+
 @class Record, Receipt;
 
 @interface RecordsDAO : NSObject
@@ -25,14 +27,14 @@
 /**
  @param catagoryID NSString ID of catagory's records to load
  
- @return NSArray of Records, nil if user not found or catagory not found
+ @return NSArray of Records, nil if user not found or category not found
  */
 -(NSArray *)loadRecordsforCatagory:(NSString *)catagoryID;
 
 /**
  @param receiptID NSString ID of receipt's records to load
  
- @return NSArray of Records, nil if user not found or catagory not found
+ @return NSArray of Records, nil if user not found or category not found
  */
 -(NSArray *)loadRecordsforReceipt:(NSString *)receiptID;
 
@@ -46,7 +48,7 @@
 /**
  @return NSString ID of the new record added, nil if error occurred
  */
--(NSString *)addRecordForCatagory: (Catagory *) catagory
+-(NSString *)addRecordForCatagory: (ItemCategory *) category
                        andReceipt: (Receipt *) receipt
                       forQuantity: (NSInteger) quantity
                            orUnit: (NSInteger) unitType
@@ -75,10 +77,17 @@
 -(BOOL)modifyRecord:(Record *)record save: (BOOL)save;
 
 /**
- @return YES if success, NO if user not found or catagory not found
+ @return YES if success, NO if user not found or category not found
  */
 -(BOOL)deleteRecordsForRecordIDs:(NSArray *)recordIDs save: (BOOL)save;
 
+
 -(BOOL)mergeWith:(NSArray *)records save:(BOOL)save;
+
+- (NSArray *) fetchRecordsOfCatagory: (NSString *) catagoryID inReceipt: (NSString *) receiptID;
+
+- (NSArray *) fetchRecordsOfCatagory: (NSString *) catagoryID
+                          ofUnitType: (UnitTypes) unitType
+                           inReceipt: (NSString *) receiptID;
 
 @end

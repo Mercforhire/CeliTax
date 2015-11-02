@@ -16,7 +16,8 @@
 #import "ManipulationServiceImpl.h"
 #import "SyncService.h"
 #import "SyncServiceImpl.h"
-#import "BuilderFactory.h"
+
+#import "CeliTax-Swift.h"
 
 @interface ServiceFactory ()
 

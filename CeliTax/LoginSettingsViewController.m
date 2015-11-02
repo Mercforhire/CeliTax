@@ -12,10 +12,11 @@
 #import "NSString+Helper.h"
 #import "AuthenticationService.h"
 #import "UserManager.h"
-#import "User.h"
 #import "SolidGreenButton.h"
 #import "LoginViewController.h"
 #import "ViewControllerFactory.h"
+
+#import "CeliTax-Swift.h"
 
 @interface LoginSettingsViewController () <UITextFieldDelegate, UIAlertViewDelegate>
 

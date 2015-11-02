@@ -9,10 +9,10 @@
 #import "YearSavingViewController.h"
 #import "HollowWhiteButton.h"
 #import "ConfigurationManager.h"
-#import "Catagory.h"
-#import "Record.h"
 #import "YearSummaryViewController.h"
 #import "ViewControllerFactory.h"
+
+#import "CeliTax-Swift.h"
 
 @interface YearSavingViewController ()
 
@@ -46,14 +46,14 @@
 {
     [super viewWillAppear:animated];
     
-    // load all Catagory
+    // load all ItemCategory
     NSArray *catagories = [self.dataService fetchCatagories];
     
     float totalSavingsAmount = 0;
     
-    for (Catagory *catagory in catagories)
+    for (ItemCategory *category in catagories)
     {
-        NSArray *recordsForThisCatagory = [self.dataService fetchRecordsForCatagoryID: catagory.localID
+        NSArray *recordsForThisCatagory = [self.dataService fetchRecordsForCatagoryID: category.localID
                                                                             inTaxYear: self.configurationManager.getCurrentTaxYear.integerValue];
         
         // Separate recordsForThisCatagory into groups of the same Unit Type
@@ -76,7 +76,7 @@
         }
         
         //Process the Unit Types in order: Item, ML, L, G, KG
-        NSArray *orderOfUnitTypesToProcess = @[kUnitItemKey, kUnitMLKey, kUnitLKey, kUnitGKey, kUnit100GKey, kUnitKGKey,kUnitFlozKey,kUnitPtKey,kUnitQtKey,kUnitGalKey,kUnitOzKey,kUnitLbKey];
+        NSArray *orderOfUnitTypesToProcess = @[Record.kUnitItemKey, Record.kUnitMLKey, Record.kUnitLKey, Record.kUnitGKey, Record.kUnit100GKey, Record.kUnitKGKey, Record.kUnitFlozKey, Record.kUnitPtKey, Record.kUnitQtKey, Record.kUnitGalKey, Record.kUnitOzKey, Record.kUnitLbKey];
         
         for (NSString *key in orderOfUnitTypesToProcess)
         {
@@ -96,7 +96,7 @@
                 totalAmountSpentOnThisCatagoryAndUnitType += [record calculateTotal];
             }
             
-            NSNumber *nationalAverageCost = (catagory.nationalAverageCosts)[key];
+            NSNumber *nationalAverageCost = category.nationalAverageCosts[key];
             
             float totalAvgCost = 0;
             

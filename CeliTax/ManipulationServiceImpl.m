@@ -10,10 +10,9 @@
 #import "CatagoriesDAO.h"
 #import "ReceiptsDAO.h"
 #import "RecordsDAO.h"
-#import "Catagory.h"
-#import "Record.h"
-#import "Notifications.h"
 #import "TaxYearsDAO.h"
+
+#import "CeliTax-Swift.h"
 
 @implementation ManipulationServiceImpl
 
@@ -62,7 +61,7 @@
         return YES;
     }
 
-    Catagory *toItemCatagory = [self.catagoriesDAO loadCatagory: toCatagoryID];
+    ItemCategory *toItemCatagory = [self.catagoriesDAO loadCatagory: toCatagoryID];
 
     if (!toItemCatagory)
     {
@@ -86,7 +85,7 @@
 
 -(BOOL)addOrUpdateNationalAverageCostForCatagoryID: (NSString *) catagoryID andUnitType:(NSInteger)unitType amount:(float)amount save: (BOOL)save
 {
-    Catagory *catagoryToModify = [self.catagoriesDAO loadCatagory: catagoryID];
+    ItemCategory *catagoryToModify = [self.catagoriesDAO loadCatagory: catagoryID];
     
     if (!catagoryToModify)
     {
@@ -103,7 +102,7 @@
 
 -(BOOL)deleteNationalAverageCostForCatagoryID: (NSString *) catagoryID andUnitType:(NSInteger)unitType save: (BOOL)save
 {
-    Catagory *catagoryToModify = [self.catagoriesDAO loadCatagory: catagoryID];
+    ItemCategory *catagoryToModify = [self.catagoriesDAO loadCatagory: catagoryID];
     
     if (!catagoryToModify)
     {
@@ -125,7 +124,7 @@
                           forAmount: (float) amount
                                save: (BOOL)save
 {
-    Catagory *toItemCatagory = [self.catagoriesDAO loadCatagory: catagoryID];
+    ItemCategory *toItemCatagory = [self.catagoriesDAO loadCatagory: catagoryID];
 
     if (!toItemCatagory)
     {
@@ -181,7 +180,7 @@
     if ( newReceiptID )
     {
         // send a kReceiptDatabaseChangedNotification notification when a Receipt is added or deleted
-        [[NSNotificationCenter defaultCenter] postNotification: [NSNotification notificationWithName:kReceiptDatabaseChangedNotification object:nil]];
+        [[NSNotificationCenter defaultCenter] postNotification: [NSNotification notificationWithName: Notifications.kReceiptDatabaseChangedNotification object:nil]];
         
         return ( newReceiptID );
     }
@@ -220,7 +219,7 @@
         if ([self.receiptsDAO deleteReceipt: receiptID save:save])
         {
             // send a kReceiptDatabaseChangedNotification notification when a Receipt is added or deleted
-            [[NSNotificationCenter defaultCenter] postNotification: [NSNotification notificationWithName:kReceiptDatabaseChangedNotification object:nil]];
+            [[NSNotificationCenter defaultCenter] postNotification: [NSNotification notificationWithName:Notifications.kReceiptDatabaseChangedNotification object:nil]];
             
             return YES;
         }

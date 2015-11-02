@@ -7,12 +7,13 @@
 //
 
 #import "UserManager.h"
-#import "User.h"
 #import "Utils.h"
 #import "UserDataDAO.h"
 #import "ConfigurationManager.h"
 #import "BackgroundWorker.h"
 #import "SubscriptionManager.h"
+
+#import "CeliTax-Swift.h"
 
 #define kDoNotShowDisclaimerAgainKey               @"DoNotShowDisclaimerAgain"
 

@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Receipt.h"
 #import "UserDataDAO.h"
+
+#import "CeliTax-Swift.h"
 
 @interface ReceiptsDAO : NSObject
 

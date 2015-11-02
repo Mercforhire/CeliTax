@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -28,11 +29,12 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="59.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="99.99" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="u0N-or-Pcl">
                         <rect key="frame" x="268" y="27" width="42" height="25.5"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="42" id="Old-Qr-pxx"/>
                             <constraint firstAttribute="height" constant="25" id="iTs-ij-0rS"/>
@@ -49,17 +51,20 @@
                     </textField>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SRB-az-f6D">
                         <rect key="frame" x="261" y="34" width="6" height="12"/>
+                        <animations/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                         <color key="textColor" red="0.55334633690000001" green="0.82171581770000002" blue="0.4125430142" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H0d-Dp-8Qj">
                         <rect key="frame" x="183" y="33" width="6" height="12"/>
+                        <animations/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9yd-HS-25j">
                         <rect key="frame" x="168" y="46" width="92.5" height="5"/>
+                        <animations/>
                         <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="N1i-L0-lJF"/>
@@ -73,6 +78,7 @@
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TOTAL SPENT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xia-fJ-aFS">
                         <rect key="frame" x="103" y="10" width="65" height="12"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="65" id="daQ-PI-9le"/>
                         </constraints>
@@ -82,12 +88,14 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GF SAVINGS" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fcc-xD-lCU">
                         <rect key="frame" x="260" y="10" width="56.5" height="12"/>
+                        <animations/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ToT-uD-XJR">
                         <rect key="frame" x="8" y="19" width="20" height="20"/>
+                        <animations/>
                         <color key="backgroundColor" red="1" green="0.35536646100000002" blue="0.30897244080000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="2Kj-38-XzO"/>
@@ -96,6 +104,7 @@
                     </view>
                     <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="9999.99" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sBo-b2-uoC">
                         <rect key="frame" x="190" y="27" width="50" height="25"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="L46-mI-K2X"/>
                             <constraint firstAttribute="width" constant="50" id="Nol-xg-hZO"/>
@@ -111,6 +120,7 @@
                     </textField>
                     <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="999.99" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r6g-gI-o6M">
                         <rect key="frame" x="110" y="27" width="50" height="25"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="9pn-P6-NKu"/>
                             <constraint firstAttribute="width" constant="60" id="bfH-Et-en3"/>
@@ -126,11 +136,13 @@
                     </textField>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oPr-Il-HTn">
                         <rect key="frame" x="103" y="33" width="6" height="12"/>
+                        <animations/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Catagory Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbP-q4-nir">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbP-q4-nir">
                         <rect key="frame" x="33" y="11" width="60" height="36.5"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="36" id="60a-S9-un4"/>
                             <constraint firstAttribute="width" constant="60" id="ASf-7G-Tuc"/>
@@ -141,6 +153,7 @@
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sAD-YP-Prg">
                         <rect key="frame" x="279" y="30" width="20" height="20"/>
+                        <animations/>
                         <color key="backgroundColor" red="1" green="0.32593600160657221" blue="0.28174684083195067" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="Ek4-Rz-m7S"/>
@@ -154,6 +167,7 @@
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TOTAL AVG.  NGF COST" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCu-Hn-zDc">
                         <rect key="frame" x="173" y="3" width="82.5" height="24"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="82.5" id="YCj-hW-lPt"/>
                         </constraints>
@@ -162,6 +176,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <animations/>
                 <constraints>
                     <constraint firstItem="sBo-b2-uoC" firstAttribute="top" secondItem="GCu-Hn-zDc" secondAttribute="bottom" id="2cx-e5-cJY"/>
                     <constraint firstItem="r6g-gI-o6M" firstAttribute="leading" secondItem="oPr-Il-HTn" secondAttribute="trailing" constant="1" id="6PK-Gb-1d7"/>
@@ -200,6 +215,7 @@
                     </mask>
                 </variation>
             </tableViewCellContentView>
+            <animations/>
             <connections>
                 <outlet property="catagoryNameLabel" destination="lbP-q4-nir" id="rdo-5y-ptC"/>
                 <outlet property="colorView" destination="ToT-uD-XJR" id="bV0-rE-3pX"/>

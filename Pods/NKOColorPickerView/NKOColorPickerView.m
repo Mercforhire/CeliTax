@@ -63,6 +63,8 @@ CGFloat const NKOPickerViewCrossHairshWidthAndHeight    = 30.f;
 {
     [super willMoveToSuperview:newSuperview];
     
+    currentBrightness = 1;
+    
     if (_color == nil){
         _color = [self _defaultTintColor];
     }
@@ -144,7 +146,7 @@ CGFloat const NKOPickerViewCrossHairshWidthAndHeight    = 30.f;
 
 - (void)_updateBrightnessPosition
 {
-    [_color getHue:nil saturation:nil brightness:&currentBrightness alpha:nil];
+    [_color getHue:nil saturation:nil brightness:nil alpha:nil];
     
     CGPoint brightnessPosition;
     brightnessPosition.x = (1.0-currentBrightness)*self.gradientView.frame.size.width + self.gradientView.frame.origin.x;
@@ -200,9 +202,7 @@ CGFloat const NKOPickerViewCrossHairshWidthAndHeight    = 30.f;
 
 - (void)_updateBrightnessWithMovement:(CGPoint)position
 {
-	currentBrightness = 1.0 - ((position.x - self.gradientView.frame.origin.x)/self.gradientView.frame.size.width) ;
-	
-	UIColor *_tcolor = [UIColor colorWithHue:currentHue
+    UIColor *_tcolor = [UIColor colorWithHue:currentHue
                                   saturation:currentSaturation
                                   brightness:currentBrightness
                                        alpha:1.0];

@@ -66,7 +66,7 @@
 "Delete selected receipts" = "Delete selected receipts";
 
 //E
-"Enter Catagory Name" = "Enter Catagory Name";
+"Enter Category Name" = "Enter Category Name";
 "Error" = "Error";
 "Email Address" = "Email Address";
 "Email address is not valid" = "Email address is not valid";
@@ -199,6 +199,7 @@
 "Transfer selected?" = "Transfer selected?";
 "The email address is already used by another account. Please use a different email address" = "The email address is already used by another account. Please use a different email address";
 "Total Avg.\nNGF Cost" = "Total Avg.\nNGF Cost";
+"The subscription for this account has expired. Would you like to purchases a new subscription?" = "The subscription for this account has expired. Would you like to purchases a new subscription?";
 
 //U
 "Updating account info..." = "Updating account info...";

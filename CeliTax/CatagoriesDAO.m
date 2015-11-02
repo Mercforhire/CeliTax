@@ -7,9 +7,8 @@
 //
 
 #import "CatagoriesDAO.h"
-#import "Catagory.h"
-#import "Record.h"
 #import "Utils.h"
+#import "CeliTax-Swift.h"
 
 @interface CatagoriesDAO ()
 
@@ -19,18 +18,18 @@
 
 -(NSArray *)loadCatagories
 {
-    NSPredicate *loadCatagories = [NSPredicate predicateWithFormat: @"dataAction != %ld", DataActionDelete];
+    NSPredicate *loadCatagories = [NSPredicate predicateWithFormat: @"dataAction != %ld", DataActionStatusDataActionDelete];
     NSArray *catagories = [[self.userDataDAO getCatagories] filteredArrayUsingPredicate: loadCatagories];
     
     return catagories;
 }
 
--(Catagory *)loadCatagory:(NSString *)catagoryID
+-(ItemCategory *)loadCatagory:(NSString *)catagoryID
 {
-    NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"localID == %@ AND dataAction != %ld", catagoryID, DataActionDelete];
-    NSArray *catagory = [[self.userDataDAO getCatagories] filteredArrayUsingPredicate: findCatagories];
+    NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"localID == %@ AND dataAction != %ld", catagoryID, DataActionStatusDataActionDelete];
+    NSArray *category = [[self.userDataDAO getCatagories] filteredArrayUsingPredicate: findCatagories];
     
-    return catagory.firstObject;
+    return category.firstObject;
 }
 
 -(BOOL)addCatagoryForName:(NSString *)name andColor:(UIColor *)color save:(BOOL)save
@@ -40,12 +39,12 @@
         return NO;
     }
     
-    Catagory *catagoryToAdd = [Catagory new];
+    ItemCategory *catagoryToAdd = [ItemCategory new];
     
     catagoryToAdd.localID = [Utils generateUniqueID];
     catagoryToAdd.name = name;
     catagoryToAdd.color = color;
-    catagoryToAdd.dataAction = DataActionInsert;
+    catagoryToAdd.dataAction = DataActionStatusDataActionInsert;
     
     [[self.userDataDAO getCatagories] addObject:catagoryToAdd];
     
@@ -62,18 +61,18 @@
 -(BOOL)modifyCatagory:(NSString *)catagoryID forName:(NSString *)name andColor:(UIColor *)color save:(BOOL)save
 {
     NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"localID == %@", catagoryID];
-    NSArray *catagory = [[self.userDataDAO getCatagories] filteredArrayUsingPredicate: findCatagories];
+    NSArray *category = [[self.userDataDAO getCatagories] filteredArrayUsingPredicate: findCatagories];
     
-    if (catagory && catagory.count)
+    if (category && category.count)
     {
-        Catagory *catagoryToModify = catagory.firstObject;
+        ItemCategory *catagoryToModify = category.firstObject;
         
         catagoryToModify.name = name;
         catagoryToModify.color = color;
         
-        if (catagoryToModify.dataAction != DataActionInsert)
+        if (catagoryToModify.dataAction != DataActionStatusDataActionInsert)
         {
-            catagoryToModify.dataAction = DataActionUpdate;
+            catagoryToModify.dataAction = DataActionStatusDataActionUpdate;
         }
         
         if (save)
@@ -93,22 +92,22 @@
 
 -(BOOL)deleteCatagory:(NSString *)catagoryID save:(BOOL)save
 {
-    //delete the existing catagory with same ID as catagory's ID
+    //delete the existing ItemCategory with same ID as catagory's ID
     NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"localID == %@", catagoryID];
     NSArray *catagoriesToDelete = [[self loadCatagories] filteredArrayUsingPredicate: findCatagories];
     
-    for (Catagory *catagoryToDelete in catagoriesToDelete)
+    for (ItemCategory *catagoryToDelete in catagoriesToDelete)
     {
-        catagoryToDelete.dataAction = DataActionDelete;
+        catagoryToDelete.dataAction = DataActionStatusDataActionDelete;
     }
     
-    //delete any catagory records belonging to the catagoryID
+    //delete any ItemCategory records belonging to the catagoryID
     NSPredicate *findRecords = [NSPredicate predicateWithFormat: @"catagoryID == %@", catagoryID];
     NSArray *RecordsToDelete = [[self.userDataDAO getRecords] filteredArrayUsingPredicate: findRecords];
     
     for (Record *recordToDelete in RecordsToDelete)
     {
-        recordToDelete.dataAction = DataActionDelete;
+        recordToDelete.dataAction = DataActionStatusDataActionDelete;
     }
     
     if (save)
@@ -121,42 +120,42 @@
     }
 }
 
--(void)addCatagory:(Catagory *)catagory
+-(void)addCatagory:(ItemCategory *)category
 {
-    [[self.userDataDAO getCatagories] addObject:catagory];
+    [[self.userDataDAO getCatagories] addObject:category];
 }
 
 -(BOOL)mergeWith:(NSArray *)catagories save:(BOOL)save
 {
     NSMutableArray *localCatagories = [NSMutableArray arrayWithArray:[self loadCatagories]];
     
-    for (Catagory *catagory in catagories)
+    for (ItemCategory *category in catagories)
     {
-        //find any existing Catagory with same id as this new one
-        NSPredicate *findCatagory = [NSPredicate predicateWithFormat: @"localID == %@", catagory.localID];
+        //find any existing ItemCategory with same id as this new one
+        NSPredicate *findCatagory = [NSPredicate predicateWithFormat: @"localID == %@", category.localID];
         NSArray *existingCatagory = [localCatagories filteredArrayUsingPredicate: findCatagory];
         
         if (existingCatagory.count)
         {
-            Catagory *existing = existingCatagory.firstObject;
+            ItemCategory *existing = existingCatagory.firstObject;
             
-            [existing copyDataFromCatagory:catagory];
+            [existing copyDataFromCategory:category];
             
             [localCatagories removeObject:existing];
         }
         else
         {
-            [self addCatagory:catagory];
+            [self addCatagory:category];
         }
     }
     
-    //For any local Catagory that the server doesn't have and isn't marked DataActionInsert,
+    //For any local ItemCategory that the server doesn't have and isn't marked DataActionInsert,
     //we need to set these to DataActionInsert again so that can be uploaded to the server next time
-    for (Catagory *catagory in localCatagories)
+    for (ItemCategory *category in localCatagories)
     {
-        if (catagory.dataAction != DataActionInsert)
+        if (category.dataAction != DataActionStatusDataActionInsert)
         {
-            catagory.dataAction = DataActionInsert;
+            category.dataAction = DataActionStatusDataActionInsert;
         }
     }
     
@@ -173,18 +172,18 @@
 -(BOOL)addOrUpdateNationalAverageCostForCatagoryID: (NSString *) catagoryID andUnitType:(NSInteger)unitType amount:(float)amount save: (BOOL)save
 {
     NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"localID == %@", catagoryID];
-    NSArray *catagory = [[self.userDataDAO getCatagories] filteredArrayUsingPredicate: findCatagories];
+    NSArray *category = [[self.userDataDAO getCatagories] filteredArrayUsingPredicate: findCatagories];
     
-    if (catagory && catagory.count)
+    if (category && category.count)
     {
-        Catagory *catagoryToModify = catagory.firstObject;
+        ItemCategory *catagoryToModify = category.firstObject;
         
         // Do modifying here
         [catagoryToModify addOrUpdateNationalAverageCostForUnitType:unitType amount:amount];
         
-        if (catagoryToModify.dataAction != DataActionInsert)
+        if (catagoryToModify.dataAction != DataActionStatusDataActionInsert)
         {
-            catagoryToModify.dataAction = DataActionUpdate;
+            catagoryToModify.dataAction = DataActionStatusDataActionUpdate;
         }
         
         if (save)
@@ -205,18 +204,18 @@
 -(BOOL)deleteNationalAverageCostForCatagoryID: (NSString *) catagoryID andUnitType:(NSInteger)unitType save: (BOOL)save
 {
     NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"localID == %@", catagoryID];
-    NSArray *catagory = [[self.userDataDAO getCatagories] filteredArrayUsingPredicate: findCatagories];
+    NSArray *category = [[self.userDataDAO getCatagories] filteredArrayUsingPredicate: findCatagories];
     
-    if (catagory && catagory.count)
+    if (category && category.count)
     {
-        Catagory *catagoryToModify = catagory.firstObject;
+        ItemCategory *catagoryToModify = category.firstObject;
         
         // Do modifying here
         [catagoryToModify deleteNationalAverageCostForUnitType:unitType];
         
-        if (catagoryToModify.dataAction != DataActionInsert)
+        if (catagoryToModify.dataAction != DataActionStatusDataActionInsert)
         {
-            catagoryToModify.dataAction = DataActionUpdate;
+            catagoryToModify.dataAction = DataActionStatusDataActionUpdate;
         }
         
         if (save)

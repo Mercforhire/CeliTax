@@ -28,6 +28,8 @@ typedef void (^TutorialDismissedBlock) ();
 
 @property (nonatomic) NSInteger currentStep;
 
+- (instancetype) init NS_UNAVAILABLE;
+
 - (instancetype) initWithViewControllerFactory: (ViewControllerFactory *)factory
                                 andLookAndFeel: (LookAndFeel *)lookAndFeel NS_DESIGNATED_INITIALIZER;
 

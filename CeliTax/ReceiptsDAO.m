@@ -7,8 +7,8 @@
 //
 
 #import "ReceiptsDAO.h"
-#import "Receipt.h"
 #import "Utils.h"
+#import "CeliTax-Swift.h"
 
 @implementation ReceiptsDAO
 
@@ -24,7 +24,7 @@
     newReceipt.fileNames = [filenames mutableCopy];
     newReceipt.dateCreated = [NSDate date];
     newReceipt.taxYear = taxYear;
-    newReceipt.dataAction = DataActionInsert;
+    newReceipt.dataAction = DataActionStatusDataActionInsert;
 
     [[self.userDataDAO getReceipts] addObject: newReceipt];
     
@@ -67,7 +67,7 @@
  */
 - (NSArray *) loadAllReceipts
 {
-    NSPredicate *loadReceipts = [NSPredicate predicateWithFormat: @"dataAction != %ld", DataActionDelete];
+    NSPredicate *loadReceipts = [NSPredicate predicateWithFormat: @"dataAction != %ld", DataActionStatusDataActionDelete];
     NSArray *receipts = [[self.userDataDAO getReceipts] filteredArrayUsingPredicate: loadReceipts];
     
     return receipts;
@@ -141,9 +141,9 @@
         receiptToModify.fileNames = [[NSMutableArray alloc] initWithArray:receipt.fileNames copyItems:YES];
         receiptToModify.taxYear = receipt.taxYear;
         
-        if (receiptToModify.dataAction != DataActionInsert)
+        if (receiptToModify.dataAction != DataActionStatusDataActionInsert)
         {
-            receiptToModify.dataAction = DataActionUpdate;
+            receiptToModify.dataAction = DataActionStatusDataActionUpdate;
         }
         
         if (save)
@@ -167,7 +167,7 @@
     
     if (receiptToDelete)
     {
-        receiptToDelete.dataAction = DataActionDelete;
+        receiptToDelete.dataAction = DataActionStatusDataActionDelete;
         
         if (save)
         {
@@ -212,9 +212,9 @@
     //we need to set these to DataActionInsert again so that can be uploaded to the server next time
     for (Receipt *receipt in localReceipts)
     {
-        if (receipt.dataAction != DataActionInsert)
+        if (receipt.dataAction != DataActionStatusDataActionInsert)
         {
-            receipt.dataAction = DataActionInsert;
+            receipt.dataAction = DataActionStatusDataActionInsert;
         }
     }
     

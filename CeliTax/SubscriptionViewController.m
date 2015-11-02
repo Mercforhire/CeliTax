@@ -11,7 +11,8 @@
 #import "SolidGreenButton.h"
 #import "MBProgressHUD.h"
 #import "UserManager.h"
-#import "User.h"
+
+#import "CeliTax-Swift.h"
 
 #define kSubscriptionTableViewCellHeight                    45
 #define kSubscriptionTableViewCellIdentifier                @"SubscriptionTableViewCell"

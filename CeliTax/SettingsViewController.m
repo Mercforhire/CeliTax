@@ -9,7 +9,6 @@
 #import "SettingsViewController.h"
 #import "ProfileBarView.h"
 #import "UserManager.h"
-#import "User.h"
 #import "AlertDialogsProvider.h"
 #import "SolidGreenButton.h"
 #import "SyncManager.h"
@@ -19,8 +18,9 @@
 #import "M13Checkbox.h"
 #import "ConfigurationManager.h"
 #import "LoginSettingsViewController.h"
-#import "Notifications.h"
 #import "SubscriptionViewController.h"
+
+#import "CeliTax-Swift.h"
 
 typedef NS_ENUM(NSUInteger, Languages) {
     LanguageEnglish,
@@ -204,7 +204,7 @@ typedef NS_ENUM(NSUInteger, Languages) {
     
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(refreshLanguage)
-                                                 name: kAppLanguageChangedNotification
+                                                 name: Notifications.kAppLanguageChangedNotification
                                                object: nil];
     
     if (self.userManager.subscriptionActive)
@@ -222,7 +222,7 @@ typedef NS_ENUM(NSUInteger, Languages) {
     [super viewWillDisappear: animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver: self
-                                                    name: kAppLanguageChangedNotification
+                                                    name: Notifications.kAppLanguageChangedNotification
                                                   object: nil];
 }
 
@@ -373,7 +373,6 @@ typedef NS_ENUM(NSUInteger, Languages) {
     [self.syncService loadDemoData:^{
         
         [self.insertDemoButton setTitle:@"Demo Data Generated" forState:UIControlStateNormal];
-        
         [self.insertDemoButton setEnabled:YES];
         
     }];

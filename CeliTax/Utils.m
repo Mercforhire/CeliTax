@@ -8,7 +8,8 @@
 
 #import "Utils.h"
 #import "SideMenuView.h"
-#import "User.h"
+
+#import "CeliTax-Swift.h"
 
 @implementation Utils
 
@@ -19,7 +20,7 @@
     @try {
         archive = [NSKeyedUnarchiver unarchiveObjectWithFile: path];
 
-//        DLog(@"File read from path %@", path);
+        DLog(@"File read from path %@", path);
     }
     @catch (NSException *exception)
     {
@@ -46,7 +47,7 @@
 
         [NSKeyedArchiver archiveRootObject: objectToArchive toFile: path];
 
-//        DLog(@"File saved to %@", path);
+        DLog(@"File saved to %@", path);
 
         return YES;
     }

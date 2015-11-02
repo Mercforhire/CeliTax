@@ -9,8 +9,9 @@
 #import "UploadsHistoryTableViewCell.h"
 #import "ReceiptTableViewCell.h"
 #import "DataService.h"
-#import "Notifications.h"
 #import "NoItemsTableViewCell.h"
+
+#import "CeliTax-Swift.h"
 
 #define kReceiptTableTableCellHeight                    35
 #define kReceiptTableViewCellIdentifier                 @"ReceiptTableViewCell"
@@ -455,7 +456,7 @@
     
     if (thisCatagoryInfo)
     {
-        [[NSNotificationCenter defaultCenter] postNotification: [NSNotification notificationWithName: kReceiptItemsTableReceiptPressedNotification object: nil userInfo: thisCatagoryInfo]];
+        [[NSNotificationCenter defaultCenter] postNotification: [NSNotification notificationWithName: Notifications.kReceiptItemsTableReceiptPressedNotification object: nil userInfo: thisCatagoryInfo]];
     }
 }
 

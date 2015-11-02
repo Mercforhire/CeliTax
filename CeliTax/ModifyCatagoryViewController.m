@@ -9,9 +9,10 @@
 #import "ModifyCatagoryViewController.h"
 #import "NKOColorPickerView.h"
 #import "UserManager.h"
-#import "User.h"
 #import "UIView+Helper.h"
 #import "SolidGreenButton.h"
+
+#import "CeliTax-Swift.h"
 
 @interface ModifyCatagoryViewController () <UITextFieldDelegate>
 
@@ -40,7 +41,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
-    [self.catagoryNameField setPlaceholder:NSLocalizedString(@"Enter Catagory Name", nil)];
+    [self.catagoryNameField setPlaceholder:NSLocalizedString(@"Enter Category Name", nil)];
     
     [self.confirmButton setTitle:NSLocalizedString(@"Confirm", nil) forState:UIControlStateNormal];
     

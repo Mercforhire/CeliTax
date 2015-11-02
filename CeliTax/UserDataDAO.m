@@ -8,7 +8,7 @@
 
 #import "UserDataDAO.h"
 #import "Utils.h"
-#import "UserData.h"
+#import "CeliTax-Swift.h"
 
 @interface UserDataDAO ()
 

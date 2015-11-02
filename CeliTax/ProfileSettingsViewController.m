@@ -10,11 +10,12 @@
 #import "HollowGreenButton.h"
 #import "UIView+Helper.h"
 #import "UserManager.h"
-#import "User.h"
 #import "UIView+Helper.h"
 #import "TOCropViewController.h"
 #import "Utils.h"
 #import "UIImage+ResizeMagick.h"
+
+#import "CeliTax-Swift.h"
 
 #define kActionSheetTitle           @"Profile Photo"
 #define kDestructiveTitle           @"Delete"

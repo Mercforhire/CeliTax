@@ -8,7 +8,6 @@
 
 #import "BaseSideBarViewController.h"
 #import "UserManager.h"
-#import "User.h"
 #import "Utils.h"
 #import "ViewControllerFactory.h"
 #import "SettingsViewController.h"
@@ -18,6 +17,8 @@
 #import "MainViewController.h"
 #import "LoginViewController.h"
 #import "ProfileSettingsViewController.h"
+
+#import "CeliTax-Swift.h"
 
 @interface BaseSideBarViewController () <CDRTranslucentSideBarDelegate, SideMenuViewProtocol>
 

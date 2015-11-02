@@ -8,9 +8,10 @@
 
 #import "SubscriptionManager.h"
 #import "UserManager.h"
-#import "User.h"
 #import "AuthenticationService.h"
 #import "Utils.h"
+
+#import "CeliTax-Swift.h"
 
 NSString *const SubscriptionManagerProductPurchasedNotification = @"IAPHelperProductPurchasedNotification";
 
@@ -39,21 +40,6 @@ NSString *const SubscriptionManagerProductPurchasedNotification = @"IAPHelperPro
         
         // Check for previously purchased products
         _purchasedProductIdentifiers = [NSMutableSet set];
-        
-        for (NSString * productIdentifier in _productIdentifiers)
-        {
-            BOOL productPurchased = [[NSUserDefaults standardUserDefaults] boolForKey: productIdentifier];
-            
-            if (productPurchased)
-            {
-                [_purchasedProductIdentifiers addObject:productIdentifier];
-                DLog(@"Previously purchased: %@", productIdentifier);
-            }
-            else
-            {
-                DLog(@"Not purchased: %@", productIdentifier);
-            }
-        }
         
         // Add self as transaction observer
         [[SKPaymentQueue defaultQueue] addTransactionObserver:self];

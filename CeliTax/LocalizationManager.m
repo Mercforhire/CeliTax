@@ -7,7 +7,7 @@
 //
 
 #import "LocalizationManager.h"
-#import "Notifications.h"
+#import "CeliTax-Swift.h"
 
 #define kKeyLanguage                        @"Language"
 
@@ -187,7 +187,7 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     // Let the world know that they need to deal with this change...
-    [[NSNotificationCenter defaultCenter] postNotificationName: kAppLanguageChangedNotification object: self];
+    [[NSNotificationCenter defaultCenter] postNotificationName: Notifications.kAppLanguageChangedNotification object: self];
 }
 
 - (void) findStrings: (NSString *) language

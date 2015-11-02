@@ -37,11 +37,11 @@
     return self;
 }
 
--(void)highlightUnitButton:(NSInteger)unitButton
+-(void)highlightUnitButton:(UnitTypes)unitButton
 {
     switch (unitButton)
     {
-        case UnitItem:
+        case UnitTypesUnitItem:
             //highlight unitItemButton and un-highlight the rest
             [self.lookAndFeel applySolidGreenButtonStyleTo:self.unitItemButton];
             
@@ -53,7 +53,7 @@
             [self.lookAndFeel applyNormalButtonStyleTo:self.unitlbButton];
             break;
             
-        case UnitFloz:
+        case UnitTypesUnitFloz:
             //highlight unitMLButton and un-highlight the rest
             [self.lookAndFeel applySolidGreenButtonStyleTo:self.unitflOZButton];
             
@@ -66,7 +66,7 @@
             
             break;
             
-        case UnitPt:
+        case UnitTypesUnitPt:
             //highlight unitLButton and un-highlight the rest
             [self.lookAndFeel applySolidGreenButtonStyleTo:self.unitptButton];
             
@@ -79,7 +79,7 @@
             
             break;
             
-        case UnitQt:
+        case UnitTypesUnitQt:
             //highlight unitGButton and un-highlight the rest
             [self.lookAndFeel applySolidGreenButtonStyleTo:self.unitqtButton];
             
@@ -92,7 +92,7 @@
             
             break;
             
-        case UnitGal:
+        case UnitTypesUnitGal:
             //highlight unitGButton and un-highlight the rest
             [self.lookAndFeel applySolidGreenButtonStyleTo:self.unitgalButton];
             
@@ -105,7 +105,7 @@
             
             break;
             
-        case UnitOz:
+        case UnitTypesUnitOz:
             //highlight unitKGButton and un-highlight the rest
             [self.lookAndFeel applySolidGreenButtonStyleTo:self.unitozButton];
             
@@ -118,7 +118,7 @@
             
             break;
             
-        case UnitLb:
+        case UnitTypesUnitLb:
             //highlight unitKGButton and un-highlight the rest
             [self.lookAndFeel applySolidGreenButtonStyleTo:self.unitlbButton];
             
@@ -163,7 +163,7 @@
     [self.lookAndFeel applyGreenBorderTo:self.unitozButton];
 }
 
--(void)setDefaultSelectedUnit:(NSInteger)defaultSelectedUnit
+-(void)setDefaultSelectedUnit:(UnitTypes)defaultSelectedUnit
 {
     _defaultSelectedUnit = defaultSelectedUnit;
     
@@ -180,71 +180,71 @@
 
 - (IBAction)itemButtonPressed:(UIButton *)sender
 {
-    [self highlightUnitButton:UnitItem];
+    [self highlightUnitButton:UnitTypesUnitItem];
     
     if (self.delegate)
     {
-        [self.delegate selectedUnit:UnitItem];
+        [self.delegate selectedUnit:UnitTypesUnitItem];
     }
 }
 
 - (IBAction)flozButtonPressed:(UIButton *)sender
 {
-    [self highlightUnitButton:UnitFloz];
+    [self highlightUnitButton:UnitTypesUnitFloz];
     
     if (self.delegate)
     {
-        [self.delegate selectedUnit:UnitFloz];
+        [self.delegate selectedUnit:UnitTypesUnitFloz];
     }
 }
 
 - (IBAction)ptButtonPressed:(UIButton *)sender
 {
-    [self highlightUnitButton:UnitPt];
+    [self highlightUnitButton:UnitTypesUnitPt];
     
     if (self.delegate)
     {
-        [self.delegate selectedUnit:UnitPt];
+        [self.delegate selectedUnit:UnitTypesUnitPt];
     }
 }
 
 - (IBAction)qtButtonPressed:(UIButton *)sender
 {
-    [self highlightUnitButton:UnitQt];
+    [self highlightUnitButton:UnitTypesUnitQt];
     
     if (self.delegate)
     {
-        [self.delegate selectedUnit:UnitQt];
+        [self.delegate selectedUnit:UnitTypesUnitQt];
     }
 }
 
 - (IBAction)galButtonPressed:(UIButton *)sender
 {
-    [self highlightUnitButton:UnitGal];
+    [self highlightUnitButton:UnitTypesUnitGal];
     
     if (self.delegate)
     {
-        [self.delegate selectedUnit:UnitGal];
+        [self.delegate selectedUnit:UnitTypesUnitGal];
     }
 }
 
 - (IBAction)ozButtonPressed:(UIButton *)sender
 {
-    [self highlightUnitButton:UnitOz];
+    [self highlightUnitButton:UnitTypesUnitOz];
     
     if (self.delegate)
     {
-        [self.delegate selectedUnit:UnitOz];
+        [self.delegate selectedUnit:UnitTypesUnitOz];
     }
 }
 
 - (IBAction)lbButtonPressed:(UIButton *)sender
 {
-    [self highlightUnitButton:UnitLb];
+    [self highlightUnitButton:UnitTypesUnitLb];
     
     if (self.delegate)
     {
-        [self.delegate selectedUnit:UnitLb];
+        [self.delegate selectedUnit:UnitTypesUnitLb];
     }
 }
 

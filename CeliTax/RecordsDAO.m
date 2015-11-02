@@ -7,16 +7,15 @@
 //
 
 #import "RecordsDAO.h"
-#import "Catagory.h"
-#import "Record.h"
-#import "Receipt.h"
 #import "Utils.h"
+
+#import "CeliTax-Swift.h"
 
 @implementation RecordsDAO
 
 -(NSArray *)loadRecords
 {
-    NSPredicate *loadRecords = [NSPredicate predicateWithFormat: @"dataAction != %ld", DataActionDelete];
+    NSPredicate *loadRecords = [NSPredicate predicateWithFormat: @"dataAction != %ld", DataActionStatusDataActionDelete];
     NSArray *records = [[self.userDataDAO getRecords] filteredArrayUsingPredicate: loadRecords];
     
     return records;
@@ -46,24 +45,24 @@
     return record.firstObject;
 }
 
--(NSString *)addRecordForCatagory: (Catagory *) catagory
+-(NSString *)addRecordForCatagory: (ItemCategory *) category
                        andReceipt: (Receipt *) receipt
                       forQuantity: (NSInteger) quantity
                            orUnit: (NSInteger) unitType
                         forAmount: (float) amount
                              save: (BOOL)save
 {
-    if (catagory)
+    if (category)
     {
         Record *newRecord = [Record new];
         
         newRecord.localID = [Utils generateUniqueID];
-        newRecord.catagoryID = [catagory.localID copy];
+        newRecord.catagoryID = [category.localID copy];
         newRecord.receiptID = [receipt.localID copy];
         newRecord.quantity = quantity;
         newRecord.unitType = unitType;
         newRecord.amount = amount;
-        newRecord.dataAction = DataActionInsert;
+        newRecord.dataAction = DataActionStatusDataActionInsert;
         
         //set it back to userData and save it
         [[self.userDataDAO getRecords] addObject:newRecord];
@@ -94,9 +93,9 @@
                           forAmount: (float) amount
                                save: (BOOL)save
 {
-    Catagory *catagory = [self.catagoriesDAO loadCatagory:catagoryID];
+    ItemCategory *category = [self.catagoriesDAO loadCatagory:catagoryID];
     
-    if (catagory)
+    if (category)
     {
         Record *newRecord = [Record new];
         
@@ -106,7 +105,7 @@
         newRecord.quantity = quantity;
         newRecord.unitType = unitType;
         newRecord.amount = amount;
-        newRecord.dataAction = DataActionInsert;
+        newRecord.dataAction = DataActionStatusDataActionInsert;
         
         //set it back to userData and save it
         [[self.userDataDAO getRecords] addObject:newRecord];
@@ -156,9 +155,9 @@
         recordToModify.catagoryID = [record.catagoryID copy];
         recordToModify.receiptID = [record.receiptID copy];
         
-        if (recordToModify.dataAction != DataActionInsert)
+        if (recordToModify.dataAction != DataActionStatusDataActionInsert)
         {
-            recordToModify.dataAction = DataActionUpdate;
+            recordToModify.dataAction = DataActionStatusDataActionUpdate;
         }
         
         if (save)
@@ -193,7 +192,7 @@
     
     for (Record *recordToDelete in recordsToDelete)
     {
-        recordToDelete.dataAction = DataActionDelete;
+        recordToDelete.dataAction = DataActionStatusDataActionDelete;
     }
     
     if (save)
@@ -234,9 +233,9 @@
     //we need to set these to DataActionInsert again so that can be uploaded to the server next time
     for (Record *record in localRecords)
     {
-        if (record.dataAction != DataActionInsert)
+        if (record.dataAction != DataActionStatusDataActionInsert)
         {
-            record.dataAction = DataActionInsert;
+            record.dataAction = DataActionStatusDataActionInsert;
         }
     }
     
@@ -249,6 +248,28 @@
     {
         return YES;
     }
+}
+
+- (NSArray *) fetchRecordsOfCatagory: (NSString *) catagoryID inReceipt: (NSString *) receiptID
+{
+    NSArray *allRecordsForReceipt = [self loadRecordsforReceipt: receiptID];
+    
+    NSPredicate *findRecordsWithGivenCatagoryID = [NSPredicate predicateWithFormat: @"catagoryID == %@", catagoryID];
+    
+    NSArray *recordsWithGivenCatagoryID = [allRecordsForReceipt filteredArrayUsingPredicate: findRecordsWithGivenCatagoryID];
+    
+    return recordsWithGivenCatagoryID;
+}
+
+- (NSArray *) fetchRecordsOfCatagory: (NSString *) catagoryID ofUnitType:(UnitTypes) unitType inReceipt: (NSString *) receiptID
+{
+    NSArray *allRecordsForReceipt = [self loadRecordsforReceipt: receiptID];
+    
+    NSPredicate *findRecordsWithGivenCatagoryIDAndUnitType = [NSPredicate predicateWithFormat: @"catagoryID == %@ AND unitType == %ld", catagoryID, unitType];
+    
+    NSArray *recordsWithGivenCatagoryIDAndUnitType = [allRecordsForReceipt filteredArrayUsingPredicate: findRecordsWithGivenCatagoryIDAndUnitType];
+    
+    return recordsWithGivenCatagoryIDAndUnitType;
 }
 
 @end

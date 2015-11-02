@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class CatagoriesDAO, Receipt, RecordsDAO, ReceiptsDAO, TaxYearsDAO, Record, Catagory;
+@class CatagoriesDAO, Receipt, RecordsDAO, ReceiptsDAO, TaxYearsDAO, Record, ItemCategory;
 
 @protocol DataService <NSObject>
 
@@ -19,7 +19,7 @@
 
 - (NSArray *) fetchCatagories;
 
-- (Catagory *) fetchCatagory: (NSString *) catagoryID;
+- (ItemCategory *) fetchCatagory: (NSString *) catagoryID;
 
 - (NSArray *) fetchAllRecords;
 

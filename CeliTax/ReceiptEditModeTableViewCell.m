@@ -31,8 +31,8 @@
     {
         // When the cell returns to normal (not editing)
         // Do something...
-        self.leftBar.constant = -15;
-        self.rightBar.constant = -15;
+        self.leftBar.constant = -10;
+        self.rightBar.constant = -10;
     }
     else if ((state & UITableViewCellStateShowingEditControlMask) && (state & UITableViewCellStateShowingDeleteConfirmationMask))
     {

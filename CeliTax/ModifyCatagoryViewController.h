@@ -8,8 +8,8 @@
 
 #import "BaseViewController.h"
 #import "ManipulationService.h"
-#import "Catagory.h"
 #import "PopUpViewControllerProtocol.h"
+#import "CeliTax-Swift.h"
 
 @interface ModifyCatagoryViewController : BaseViewController
 
@@ -17,7 +17,7 @@
 
 @property (nonatomic, weak) id <ManipulationService> manipulationService;
 
-@property (nonatomic, copy) Catagory *catagoryToModify;
+@property (nonatomic, copy) ItemCategory *catagoryToModify;
 
 @property (nonatomic, weak) id <PopUpViewControllerProtocol> delegate;
 

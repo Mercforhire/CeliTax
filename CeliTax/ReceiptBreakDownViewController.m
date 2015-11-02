@@ -8,18 +8,17 @@
 
 #import "ReceiptBreakDownViewController.h"
 #import "XYPieChart.h"
-#import "Record.h"
-#import "Catagory.h"
 #import "ReceiptBreakDownItemTableViewCell.h"
 #import "ReceiptBreakDownToolBarTableViewCell.h"
 #import "UIView+Helper.h"
-#import "Receipt.h"
 #import "ViewControllerFactory.h"
 #import "ReceiptCheckingViewController.h"
 #import "WYPopoverController.h"
 #import "SelectionsPickerViewController.h"
 #import "ConfigurationManager.h"
 #import "HollowGreenButton.h"
+
+#import "CeliTax-Swift.h"
 
 @interface ReceiptBreakDownViewController () <XYPieChartDelegate, XYPieChartDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, SelectionsPickerPopUpDelegate>
 
@@ -32,7 +31,7 @@
 @property (nonatomic, strong) WYPopoverController *selectionPopover;
 @property (nonatomic, strong) SelectionsPickerViewController *catagoryPickerViewController;
 
-// group records into it's catagory as KEY
+// group records into it's category as KEY
 @property (nonatomic, strong) NSMutableDictionary *recordsDictionary;
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
 @property (nonatomic, strong) NSArray *allCatagories;
@@ -168,9 +167,9 @@
     
     NSMutableArray *catagorySelections = [NSMutableArray new];
     
-    for (Catagory *catagory in self.allCatagories)
+    for (ItemCategory *category in self.allCatagories)
     {
-        [catagorySelections addObject: catagory.name];
+        [catagorySelections addObject: category.name];
     }
     
     self.catagoryPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: catagorySelections];
@@ -184,7 +183,7 @@
     self.catagoriesUsedByThisReceipt = [NSMutableArray new];
 
     // get all the items in this receipt
-    // load catagory records for this receipt
+    // load category records for this receipt
     NSArray *records = [self.dataService fetchRecordsForReceiptID: self.receiptID];
     
     if (!records || records.count == 0)
@@ -201,15 +200,15 @@
     // get all the catagories used in this receipt
     for (Record *record in records)
     {
-        // get the catagory of this Record
-        Catagory *catagory = [self.dataService fetchCatagory: record.catagoryID];
+        // get the category of this Record
+        ItemCategory *category = [self.dataService fetchCatagory: record.catagoryID];
         
-        if (![self.catagoriesUsedByThisReceipt containsObject: catagory])
+        if (![self.catagoriesUsedByThisReceipt containsObject: category])
         {
-            [self.catagoriesUsedByThisReceipt addObject: catagory];
+            [self.catagoriesUsedByThisReceipt addObject: category];
         }
         
-        NSMutableArray *recordsOfThisCatagory = (self.recordsDictionary)[catagory.localID];
+        NSMutableArray *recordsOfThisCatagory = (self.recordsDictionary)[category.localID];
         
         if (!recordsOfThisCatagory)
         {
@@ -218,7 +217,7 @@
         
         [recordsOfThisCatagory addObject: record];
         
-        (self.recordsDictionary)[catagory.localID] = recordsOfThisCatagory;
+        self.recordsDictionary[category.localID] = recordsOfThisCatagory;
     }
     
     // Sort each recordsOfThisCatagory by Unit Type order: Item, ML, L, G, KG
@@ -257,14 +256,14 @@
         }
     }
 
-    // calculate the percentage of total of each catagory of items and
+    // calculate the percentage of total of each category of items and
     // populate the self.slices, self.sliceColors, and self.sliceNames arrays
-    for (Catagory *catagory in self.catagoriesUsedByThisReceipt)
+    for (ItemCategory *category in self.catagoriesUsedByThisReceipt)
     {
-        [self.sliceColors addObject: catagory.color];
-        [self.sliceNames addObject: catagory.name];
+        [self.sliceColors addObject: category.color];
+        [self.sliceNames addObject: category.name];
 
-        NSMutableArray *recordsOfThisCatagory = (self.recordsDictionary)[catagory.localID];
+        NSMutableArray *recordsOfThisCatagory = (self.recordsDictionary)[category.localID];
 
         float totalForThisCatagory = 0;
 
@@ -355,7 +354,7 @@
     return nil;
 }
 
-- (Catagory *) getCatagoryOfNthRecordFromRecordsDictionary: (NSInteger) nTh
+- (ItemCategory *) getCatagoryOfNthRecordFromRecordsDictionary: (NSInteger) nTh
 {
     for (NSString *catagoryID in self.recordsDictionary.allKeys)
     {
@@ -374,12 +373,12 @@
     return nil;
 }
 
-- (Catagory *) getCatagoryFromCatagoryID: (NSString *) catagoryID
+- (ItemCategory *) getCatagoryFromCatagoryID: (NSString *) catagoryID
 {
     NSPredicate *findCatagories = [NSPredicate predicateWithFormat: @"localID == %@", catagoryID];
-    NSArray *catagory = [self.catagoriesUsedByThisReceipt filteredArrayUsingPredicate: findCatagories];
+    NSArray *category = [self.catagoriesUsedByThisReceipt filteredArrayUsingPredicate: findCatagories];
 
-    return catagory.firstObject;
+    return category.firstObject;
 }
 
 - (void) setCurrentlySelectedRecord: (Record *) currentlySelectedRecord
@@ -461,8 +460,8 @@
 {
     [self.selectionPopover dismissPopoverAnimated: YES];
 
-    // change the current selected record to this new catagory
-    Catagory *chosenCatagory = (self.allCatagories)[index];
+    // change the current selected record to this new category
+    ItemCategory *chosenCatagory = (self.allCatagories)[index];
 
     if ([self.currentlySelectedRecord.catagoryID isEqualToString: chosenCatagory.localID])
     {
@@ -623,9 +622,9 @@
 
 - (void) pieChart: (XYPieChart *) pieChart didSelectSliceAtIndex: (NSUInteger) index
 {
-    Catagory *thisCatagory = (self.catagoriesUsedByThisReceipt)[index];
+    ItemCategory *thisCatagory = (self.catagoriesUsedByThisReceipt)[index];
 
-    DLog(@"Catagory %@ clicked", thisCatagory.name);
+    DLog(@"ItemCategory %@ clicked", thisCatagory.name);
 
     NSMutableArray *recordsOfThisCatagory = (self.recordsDictionary)[thisCatagory.localID];
 
@@ -673,7 +672,7 @@
         }
         
         Record *thisRecord = [self getNthRecordFromRecordsDictionary: indexPath.row / 2];
-        Catagory *thisCatagory = [self getCatagoryOfNthRecordFromRecordsDictionary: indexPath.row / 2];
+        ItemCategory *thisCatagory = [self getCatagoryOfNthRecordFromRecordsDictionary: indexPath.row / 2];
 
         cell.catagoryColor = thisCatagory.color;
         
@@ -733,7 +732,7 @@
         
         [self.lookAndFeel applySlightlyDarkerBorderTo: cell.colorBoxView];
         
-        if (thisRecord.unitType == UnitItem)
+        if (thisRecord.unitType == UnitTypesUnitItem)
         {
             [cell setToDisplayItem];
         }

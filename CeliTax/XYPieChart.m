@@ -248,7 +248,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
 
     for (SliceLayer *layer in _pieView.layer.sublayers)
     {
-        CATextLayer *textLayer = [[layer sublayers] objectAtIndex: 0];
+        CATextLayer *textLayer = (CATextLayer *)[[layer sublayers] objectAtIndex: 0];
         [textLayer setAlignmentMode: kCAAlignmentCenter];
         [textLayer setHidden: !_showLabel];
 
@@ -445,7 +445,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
             [layer setFillColor: [self backgroundColor].CGColor];
             [layer setDelegate: nil];
             [layer setZPosition: 0];
-            CATextLayer *textLayer = [[layer sublayers] objectAtIndex: 0];
+            CATextLayer *textLayer = (CATextLayer *)[[layer sublayers] objectAtIndex: 0];
             [textLayer setHidden: YES];
         }
 
@@ -620,7 +620,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
     }
     else if (newSelection != -1)
     {
-        SliceLayer *layer = [_pieView.layer.sublayers objectAtIndex: newSelection];
+        SliceLayer *layer = (SliceLayer *)[_pieView.layer.sublayers objectAtIndex: newSelection];
 
         if (_selectedSliceOffsetRadius > 0 && layer)
         {
@@ -658,7 +658,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
     if (_selectedSliceOffsetRadius <= 0)
         return;
 
-    SliceLayer *layer = [_pieView.layer.sublayers objectAtIndex: index];
+    SliceLayer *layer = (SliceLayer *)[_pieView.layer.sublayers objectAtIndex: index];
 
     if (layer && !layer.isSelected)
     {
@@ -675,7 +675,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
     if (_selectedSliceOffsetRadius <= 0)
         return;
 
-    SliceLayer *layer = [_pieView.layer.sublayers objectAtIndex: index];
+    SliceLayer *layer = (SliceLayer *)[_pieView.layer.sublayers objectAtIndex: index];
 
     if (layer && layer.isSelected)
     {
@@ -749,7 +749,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
 
 - (void) updateLabelForLayer: (SliceLayer *) pieLayer value: (CGFloat) value
 {
-    CATextLayer *textLayer = [[pieLayer sublayers] objectAtIndex: 0];
+    CATextLayer *textLayer = (CATextLayer *)[[pieLayer sublayers] objectAtIndex: 0];
     [textLayer setHidden: !_showLabel];
     [textLayer setAlignmentMode: kCAAlignmentCenter];
 

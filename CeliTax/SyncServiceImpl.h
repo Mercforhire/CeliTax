@@ -23,7 +23,7 @@
 
 @property (nonatomic, weak) NetworkCommunicator *networkCommunicator;
 
-@property (nonatomic, weak) CatagoryBuilder *catagoryBuilder;
+@property (nonatomic, weak) CategoryBuilder *catagoryBuilder;
 
 @property (nonatomic, weak) RecordBuilder *recordBuilder;
 

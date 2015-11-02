@@ -7,7 +7,6 @@
 //
 
 #import "ReceiptItemCell.h"
-#import "Record.h"
 
 @interface ReceiptItemCell ()
 
@@ -30,11 +29,11 @@
     [self.totalLabel setText:NSLocalizedString(@"Total", nil)];
 }
 
--(void)setUnitTypeTo:(NSInteger)unitType
+-(void)setUnitTypeTo:(UnitTypes)unitType
 {
     switch (unitType)
     {
-        case UnitItem:
+        case UnitTypesUnitItem:
             [self.qtyLabel setText:NSLocalizedString(@"Qty", nil)];
             [self.priceUnitLabel setText:NSLocalizedString(@"Price/Item", nil)];
             [self.totalLabel setText:NSLocalizedString(@"Total", nil)];
@@ -62,61 +61,61 @@
     
     switch (unitType)
     {
-        case UnitItem:
+        case UnitTypesUnitItem:
             
             break;
             
-        case UnitML:
+        case UnitTypesUnitML:
             (self.priceField).text = @"(mL)";
             
             break;
             
-        case UnitL:
+        case UnitTypesUnitL:
             (self.priceField).text = @"(L)";
             
             break;
             
-        case UnitG:
+        case UnitTypesUnitG:
             (self.priceField).text = @"(g)";
             
             break;
             
-        case Unit100G:
+        case UnitTypesUnit100G:
             (self.priceField).text = @"(100g)";
             
             break;
             
-        case UnitKG:
+        case UnitTypesUnitKG:
             (self.priceField).text = @"(kg)";
             
             break;
             
-        case UnitFloz:
+        case UnitTypesUnitFloz:
             (self.priceField).text = @"(fl oz)";
             
             break;
             
-        case UnitPt:
+        case UnitTypesUnitPt:
             (self.priceField).text = @"(pt)";
             
             break;
         
-        case UnitQt:
+        case UnitTypesUnitQt:
             (self.priceField).text = @"(qt)";
             
             break;
             
-        case UnitGal:
+        case UnitTypesUnitGal:
             (self.priceField).text = @"(gal)";
             
             break;
             
-        case UnitOz:
+        case UnitTypesUnitOz:
             (self.priceField).text = @"(oz)";
             
             break;
             
-        case UnitLb:
+        case UnitTypesUnitLb:
             (self.priceField).text = @"(lb)";
             
             break;

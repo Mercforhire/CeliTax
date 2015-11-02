@@ -1,5 +1,5 @@
 //
-//  AddCatagoryViewController.h
+//  AddCategoryViewController.h
 //  CeliTax
 //
 //  Created by Leon Chen on 2015-05-01.
@@ -10,7 +10,7 @@
 #import "ManipulationService.h"
 #import "DataService.h"
 
-@interface AddCatagoryViewController : BaseViewController
+@interface AddCategoryViewController : BaseViewController
 
 @property (nonatomic, weak) id <ManipulationService> manipulationService;
 @property (nonatomic, weak) id <DataService> dataService;

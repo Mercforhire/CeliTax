@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MKNetworkEngine.h"
 
-@class UserDataDAO, TaxYearsDAO, CatagoriesDAO, ReceiptsDAO, RecordsDAO, NetworkCommunicator, CatagoryBuilder, RecordBuilder, ReceiptBuilder, TaxYearBuilder;
+@class UserDataDAO, TaxYearsDAO, CatagoriesDAO, ReceiptsDAO, RecordsDAO, NetworkCommunicator, CategoryBuilder, RecordBuilder, ReceiptBuilder, TaxYearBuilder;
 
 #define USER_NO_DATA                                @"USER_NO_DATA"
 #define RECEIPT_IMAGE_FILE_NO_LONGER_EXIST          @"RECEIPT_IMAGE_FILE_NO_LONGER_EXIST"
@@ -49,7 +49,7 @@ typedef void (^FileDownloadFailureBlock) (NSString *reason);
 
 @property (nonatomic, weak) NetworkCommunicator *networkCommunicator;
 
-@property (nonatomic, weak) CatagoryBuilder *catagoryBuilder;
+@property (nonatomic, weak) CategoryBuilder *catagoryBuilder;
 
 @property (nonatomic, weak) RecordBuilder *recordBuilder;
 

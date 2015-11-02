@@ -7,7 +7,6 @@
 //
 
 #import "ReceiptBreakDownItemTableViewCell.h"
-#import "Record.h"
 
 @interface ReceiptBreakDownItemTableViewCell ()
 
@@ -73,53 +72,53 @@
     [self.pricePerItemLabel setText:NSLocalizedString(@"Price/Item", nil)];
 }
 
--(void)setToDisplayUnit:(NSInteger)unitType
+-(void)setToDisplayUnit:(UnitTypes)unitType
 {
     NSString *unitSuffix = @"";
     
     switch (unitType)
     {
-        case UnitML:
+        case UnitTypesUnitML:
             unitSuffix = @"(mL)";
             break;
             
-        case UnitL:
+        case UnitTypesUnitL:
             unitSuffix = @"(L)";
             break;
             
-        case UnitG:
+        case UnitTypesUnitG:
             unitSuffix = @"(g)";
             break;
             
-        case Unit100G:
+        case UnitTypesUnit100G:
             unitSuffix = @"(100g)";
             break;
             
-        case UnitKG:
+        case UnitTypesUnitKG:
             unitSuffix = @"(kg)";
             break;
             
-        case UnitFloz:
+        case UnitTypesUnitFloz:
             unitSuffix = @"(lf oz)";
             break;
             
-        case UnitQt:
+        case UnitTypesUnitQt:
             unitSuffix = @"(qt)";
             break;
             
-        case UnitPt:
+        case UnitTypesUnitPt:
             unitSuffix = @"(pt)";
             break;
             
-        case UnitGal:
+        case UnitTypesUnitGal:
             unitSuffix = @"(gal)";
             break;
             
-        case UnitOz:
+        case UnitTypesUnitOz:
             unitSuffix = @"(oz)";
             break;
             
-        case UnitLb:
+        case UnitTypesUnitLb:
             unitSuffix = @"(lb)";
             break;
             
@@ -129,20 +128,20 @@
     
     switch (unitType)
     {
-        case UnitML:
-        case UnitL:
-        case UnitFloz:
-        case UnitPt:
-        case UnitQt:
-        case UnitGal:
+        case UnitTypesUnitML:
+        case UnitTypesUnitL:
+        case UnitTypesUnitFloz:
+        case UnitTypesUnitPt:
+        case UnitTypesUnitQt:
+        case UnitTypesUnitGal:
             (self.quantityLabel).text = [NSString stringWithFormat:NSLocalizedString(@"Volume-%@", nil), unitSuffix];
             break;
             
-        case UnitG:
-        case Unit100G:
-        case UnitKG:
-        case UnitOz:
-        case UnitLb:
+        case UnitTypesUnitG:
+        case UnitTypesUnit100G:
+        case UnitTypesUnitKG:
+        case UnitTypesUnitOz:
+        case UnitTypesUnitLb:
             (self.quantityLabel).text = [NSString stringWithFormat:NSLocalizedString(@"Weight-%@", nil), unitSuffix];
             break;
             

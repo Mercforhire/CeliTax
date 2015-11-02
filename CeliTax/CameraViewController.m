@@ -9,7 +9,6 @@
 #import "CameraViewController.h"
 #import "WhiteBorderView.h"
 #import "Utils.h"
-#import "User.h"
 #import "UserManager.h"
 #import "MBProgressHUD.h"
 #import "ConfigurationManager.h"
@@ -18,11 +17,10 @@
 #import "ViewControllerFactory.h"
 #import "ReceiptCheckingViewController.h"
 #import "FlashButtonView.h"
-#import "Receipt.h"
 #import "SolidGreenButton.h"
 #import "TutorialManager.h"
-#import "TutorialStep.h"
 
+#import "CeliTax-Swift.h"
 
 @interface CameraViewController () <TutorialManagerDelegate>
 {

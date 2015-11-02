@@ -7,14 +7,14 @@
 //
 
 #import "BaseViewController.h"
-#import "Record.h"
 #import "UnitPickerViewControllerDelegate.h"
+#import "CeliTax-Swift.h"
 
 @interface ImperialUnitPickerViewController : BaseViewController
 
 @property (nonatomic, weak) id <UnitPickerViewControllerDelegate> delegate;
 
-@property (nonatomic, assign) NSInteger defaultSelectedUnit;
+@property (nonatomic, assign) UnitTypes defaultSelectedUnit;
 
 @property CGSize viewSize;
 

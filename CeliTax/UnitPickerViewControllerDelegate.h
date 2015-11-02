@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CeliTax-Swift.h"
 
 @protocol UnitPickerViewControllerDelegate <NSObject>
 
-- (void) selectedUnit:(NSInteger)unitType;
+- (void) selectedUnit:(UnitTypes)unitType;
 
 @end

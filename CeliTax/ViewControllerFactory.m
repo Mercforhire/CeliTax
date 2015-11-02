@@ -14,12 +14,11 @@
 #import "MainViewController.h"
 #import "SettingsViewController.h"
 #import "MyAccountViewController.h"
-#import "AddCatagoryViewController.h"
+#import "AddCategoryViewController.h"
 #import "VaultViewController.h"
 #import "HelpScreenViewController.h"
 #import "ModifyCatagoryViewController.h"
 #import "ReceiptCheckingViewController.h"
-#import "Catagory.h"
 #import "SelectionsPickerViewController.h"
 #import "ColorPickerViewController.h"
 #import "AllColorsPickerViewController.h"
@@ -155,7 +154,7 @@
     return myAccountViewController;
 }
 
-- (ModifyCatagoryViewController *) createModifyCatagoryViewControllerWith: (Catagory *) catagoryToModify
+- (ModifyCatagoryViewController *) createModifyCatagoryViewControllerWith: (ItemCategory *) catagoryToModify
 {
     ModifyCatagoryViewController *modifyCatagoryViewController = [[ModifyCatagoryViewController alloc] initWithNibName: @"ModifyCatagoryViewController"  bundle: nil];
 
@@ -167,16 +166,16 @@
     return modifyCatagoryViewController;
 }
 
-- (AddCatagoryViewController *) createAddCatagoryViewController
+- (AddCategoryViewController *) createAddCategoryViewController
 {
-    AddCatagoryViewController *addCatagoryViewController = [[AddCatagoryViewController alloc] initWithNibName: @"AddCatagoryViewController" bundle: nil];
+    AddCategoryViewController *addCategoryViewController = [[AddCategoryViewController alloc] initWithNibName: @"AddCategoryViewController" bundle: nil];
 
-    [self initializeViewController: addCatagoryViewController];
+    [self initializeViewController: addCategoryViewController];
 
-    addCatagoryViewController.manipulationService = self.manipulationService;
-    addCatagoryViewController.dataService = self.dataService;
+    addCategoryViewController.manipulationService = self.manipulationService;
+    addCategoryViewController.dataService = self.dataService;
 
-    return addCatagoryViewController;
+    return addCategoryViewController;
 }
 
 - (ReceiptCheckingViewController *) createReceiptCheckingViewControllerForReceiptID: (NSString *) receiptID cameFromReceiptBreakDownViewController: (BOOL) cameFromReceiptBreakDownViewController

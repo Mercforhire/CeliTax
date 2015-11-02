@@ -10,13 +10,6 @@
 
 @interface UserDataDAO : NSObject
 
-typedef enum : NSUInteger {
-    DataActionNone,
-    DataActionInsert,
-    DataActionUpdate,
-    DataActionDelete
-} DataActionStatus;
-
 @property (nonatomic, strong) NSString *userKey;
 
 -(BOOL)loadUserData;

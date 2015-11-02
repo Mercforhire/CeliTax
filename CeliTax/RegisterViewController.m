@@ -10,10 +10,11 @@
 #import "MBProgressHUD.h"
 #import "NSString+Helper.h"
 #import "AuthenticationService.h"
-#import "RegisterResult.h"
 #import "M13Checkbox.h"
 #import "HollowGreenButton.h"
 #import "UIView+Helper.h"
+
+#import "celitax-Swift.h"
 
 @interface RegisterViewController () <UITextFieldDelegate>
 

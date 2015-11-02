@@ -7,15 +7,13 @@
 //
 
 #import "DataServiceImpl.h"
-#import "Catagory.h"
-#import "Record.h"
 #import "CatagoriesDAO.h"
 #import "ReceiptsDAO.h"
 #import "RecordsDAO.h"
 #import "TaxYearsDAO.h"
-#import "Receipt.h"
 #import "Utils.h"
 
+#import "CeliTax-Swift.h"
 
 @interface DataServiceImpl ()
 
@@ -30,13 +28,13 @@
     return (catagories);
 }
 
-- (Catagory *) fetchCatagory: (NSString *) catagoryID;
+- (ItemCategory *) fetchCatagory: (NSString *) catagoryID;
 {
-    Catagory *catagory = [self.catagoriesDAO loadCatagory: catagoryID];
+    ItemCategory *category = [self.catagoriesDAO loadCatagory: catagoryID];
 
-    if (catagory)
+    if (category)
     {
-        return (catagory);
+        return (category);
     }
 
     return nil;
@@ -212,10 +210,10 @@
 
     NSArray *allReceiptsFromTheDateRange = [self.receiptsDAO loadReceiptsFrom: fromDate toDate: toDate inTaxYear:taxYear];
 
-    // filter out the receipts that contains Records of catagory: catagoryID
+    // filter out the receipts that contains Records of category: catagoryID
     for (Receipt *receipt in allReceiptsFromTheDateRange)
     {
-        NSArray *recordsWithGivenCatagoryID = [receipt fetchRecordsOfCatagory: catagoryID usingRecordsDAO: self.recordsDAO];
+        NSArray *recordsWithGivenCatagoryID = [self.recordsDAO fetchRecordsOfCatagory: catagoryID inReceipt:receipt.localID];
 
         if (recordsWithGivenCatagoryID && recordsWithGivenCatagoryID.count)
         {
@@ -265,7 +263,7 @@
 
     int counter = 0;
 
-    // filter out the receipts that contains Records of catagory: catagoryID
+    // filter out the receipts that contains Records of category: catagoryID
     for (Receipt *receipt in sortedAllReceipts)
     {
         if (counter >= nTh && nTh != -1)
@@ -273,7 +271,7 @@
             break;
         }
 
-        NSArray *recordsWithGivenCatagoryID = [receipt fetchRecordsOfCatagory: catagoryID ofUnitType:unitType usingRecordsDAO:self.recordsDAO];
+        NSArray *recordsWithGivenCatagoryID = [self.recordsDAO fetchRecordsOfCatagory: catagoryID ofUnitType:unitType inReceipt:receipt.localID];
 
         if (recordsWithGivenCatagoryID && recordsWithGivenCatagoryID.count)
         {

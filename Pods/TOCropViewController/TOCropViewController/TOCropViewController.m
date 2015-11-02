@@ -123,7 +123,7 @@ typedef NS_ENUM(NSInteger, TOCropViewControllerAspectRatio) {
         [self.cropView setGridOverlayHidden:NO animated:YES];
         
         //set to Square by default
-        [self actionSheet:nil didDismissWithButtonIndex:TOCropViewControllerAspectRatioSquare];
+        [self actionSheetDidDismissWithButtonIndex:TOCropViewControllerAspectRatioSquare];
     }
 }
 
@@ -276,11 +276,12 @@ typedef NS_ENUM(NSInteger, TOCropViewControllerAspectRatio) {
         [actionSheet showInView:self.view];
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)actionSheetDidDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     CGSize aspectRatio = CGSizeZero;
     
-    switch (buttonIndex) {
+    switch (buttonIndex)
+    {
         case TOCropViewControllerAspectRatioOriginal:
             aspectRatio = CGSizeZero;
             break;

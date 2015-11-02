@@ -12,13 +12,13 @@
 #import "MBProgressHUD.h"
 #import "NSString+Helper.h"
 #import "AuthenticationService.h"
-#import "AuthorizeResult.h"
 #import "UserManager.h"
 #import "UIView+Helper.h"
-#import "User.h"
 #import "MainViewController.h"
 #import "PasswordRecoveryViewController.h"
 #import "HollowGreenButton.h"
+
+#import "CeliTax-Swift.h"
 
 @interface LoginViewController () <UITextFieldDelegate>
 

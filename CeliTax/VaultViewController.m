@@ -9,7 +9,6 @@
 #import "VaultViewController.h"
 #import "TimePeriodSelectionTableViewCell.h"
 #import "ReceiptTimeTableViewCell.h"
-#import "Receipt.h"
 #import "WYPopoverController.h"
 #import "SelectionsPickerViewController.h"
 #import "ViewControllerFactory.h"
@@ -24,10 +23,10 @@
 #import "ImageCounterIconView.h"
 #import "TransferSelectionsViewController.h"
 #import "TutorialManager.h"
-#import "TutorialStep.h"
 #import "SolidGreenButton.h"
 #import "HollowGreenButton.h"
-#import "Notifications.h"
+
+#import "CeliTax-Swift.h"
 
 typedef NS_ENUM(NSUInteger, TimePeriodSelections)
 {
@@ -222,7 +221,7 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
     
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(refreshData)
-                                                 name: kReceiptDatabaseChangedNotification
+                                                 name: Notifications.kReceiptDatabaseChangedNotification
                                                object: nil];
 }
 
@@ -270,7 +269,7 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
     self.navigationController.navigationBarHidden = NO;
     
     [[NSNotificationCenter defaultCenter] removeObserver: self
-                                                    name: kReceiptDatabaseChangedNotification
+                                                    name: Notifications.kReceiptDatabaseChangedNotification
                                                   object: nil];
 }
 

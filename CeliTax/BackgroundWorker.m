@@ -10,7 +10,8 @@
 #import "SyncManager.h"
 #import "AuthenticationService.h"
 #import "UserManager.h"
-#import "User.h"
+
+#import "CeliTax-Swift.h"
 
 #define kLastTimeDateKey                @"LastTimeDateKey"
 #define kQueuedTasksKey                 @"QueuedTasksKey"

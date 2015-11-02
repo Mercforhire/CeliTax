@@ -7,11 +7,9 @@
 //
 
 #import "MainViewController.h"
-#import "Catagory.h"
 #import "MainViewTableViewCell.h"
 #import "UserManager.h"
-#import "User.h"
-#import "AddCatagoryViewController.h"
+#import "AddCategoryViewController.h"
 #import "ReceiptCheckingViewController.h"
 #import "CameraViewController.h"
 #import "ViewControllerFactory.h"
@@ -26,13 +24,14 @@
 #import "UIView+Helper.h"
 #import "NoItemsTableViewCell.h"
 #import "TutorialManager.h"
-#import "TutorialStep.h"
 #import "DataService.h"
 #import "ManipulationService.h"
 #import "MBProgressHUD.h"
 #import "SyncManager.h"
 #import "Utils.h"
 #import "SubscriptionManager.h"
+
+#import "CeliTax-Swift.h"
 
 #define kRecentUploadTableRowHeight                     40
 #define kNoItemsTableViewCellIdentifier                 @"NoItemsTableViewCell"
@@ -354,7 +353,7 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
 - (IBAction) addCatagoryPressed: (UIButton *) sender
 {
     // open up the AddCatagoryViewController
-    [self.navigationController pushViewController: [self.viewControllerFactory createAddCatagoryViewController] animated: YES];
+    [self.navigationController pushViewController: [self.viewControllerFactory createAddCategoryViewController] animated: YES];
 }
 
 - (IBAction) cameraButtonPressed: (UIButton *) sender

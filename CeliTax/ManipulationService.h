@@ -22,7 +22,7 @@
                    forColor: (UIColor *) catagoryColor
                        save: (BOOL)save;
 
-// change an existing catagory by catagoryID, to new name and/or new color.
+// change an existing category by catagoryID, to new name and/or new color.
 // if nil is provided for catagoryName or catagoryColor, no change will be made
 - (BOOL) modifyCatagoryForCatagoryID: (NSString *) catagoryID
                              newName: (NSString *) catagoryName

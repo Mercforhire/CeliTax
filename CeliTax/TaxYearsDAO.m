@@ -7,13 +7,13 @@
 //
 
 #import "TaxYearsDAO.h"
-#import "TaxYear.h"
+#import "CeliTax-Swift.h"
 
 @implementation TaxYearsDAO
 
 -(NSArray *)loadAllTaxYears
 {
-    NSPredicate *loadTaxYears = [NSPredicate predicateWithFormat: @"dataAction != %ld", DataActionDelete];
+    NSPredicate *loadTaxYears = [NSPredicate predicateWithFormat: @"dataAction != %ld", DataActionStatusDataActionDelete];
     NSArray *taxYearsObjects = [[self.userDataDAO getTaxYears] filteredArrayUsingPredicate: loadTaxYears];
     
     NSMutableArray *taxYearNumbers = [NSMutableArray new];
@@ -32,7 +32,7 @@
     {
         TaxYear *taxTear = [TaxYear new];
         taxTear.taxYear = taxYear;
-        taxTear.dataAction = DataActionInsert;
+        taxTear.dataAction = DataActionStatusDataActionInsert;
         
         [[self.userDataDAO getTaxYears] addObject:taxTear];
         
@@ -75,9 +75,9 @@
     //we need to set these to DataActionInsert again so that can be uploaded to the server next time
     for (TaxYear *taxYear in localTaxyears)
     {
-        if (taxYear.dataAction != DataActionInsert)
+        if (taxYear.dataAction != DataActionStatusDataActionInsert)
         {
-            taxYear.dataAction = DataActionInsert;
+            taxYear.dataAction = DataActionStatusDataActionInsert;
         }
     }
     

@@ -8,21 +8,21 @@
 
 #import <Foundation/Foundation.h>
 #import "UserDataDAO.h"
-#import "Catagory.h"
+#import "CeliTax-Swift.h"
 
 @interface CatagoriesDAO : NSObject
 
 @property (weak, nonatomic) UserDataDAO *userDataDAO;
 
 /**
- @return NSArray of Catagory, nil if user not found
+ @return NSArray of ItemCategory, nil if user not found
  */
 -(NSArray *)loadCatagories;
 
 /**
- @return Catagory, nil if user not found or catagory not found
+ @return ItemCategory, nil if user not found or ItemCategory not found
  */
--(Catagory *)loadCatagory:(NSString *)catagoryID;
+-(ItemCategory *)loadCatagory:(NSString *)catagoryID;
 
 /**
  @param name NSString name
@@ -34,7 +34,7 @@
 -(BOOL)addCatagoryForName:(NSString *)name andColor:(UIColor *)color save:(BOOL)save;
 
 /**
- @param catagoryID NSString catagory to modify ID
+ @param catagoryID NSString ItemCategory to modify ID
  @param name NSString name
  @param color UIColor color
  @param save BOOL save to disk at end of operation
@@ -44,7 +44,7 @@
 -(BOOL)modifyCatagory:(NSString *)catagoryID forName:(NSString *)name andColor:(UIColor *)color save:(BOOL)save;
 
 /**
- @param catagoryID NSString ID of catagory to delete
+ @param catagoryID NSString ID of ItemCategory to delete
  @param save BOOL save to disk at end of operation
  
  @return YES if success
@@ -53,9 +53,9 @@
 
 
 /**
- @param catagories NSArray of Catagory objects to merge with
-        any Catagory with existing Catagory in local Database of same id will be updated with new data
-        any Catagory that doesn't exist locally will be added as new ones
+ @param catagories NSArray of ItemCategory objects to merge with
+        any ItemCategory with existing ItemCategory in local Database of same id will be updated with new data
+        any ItemCategory that doesn't exist locally will be added as new ones
  @param save BOOL save to disk at end of operation
  
  @return YES if success

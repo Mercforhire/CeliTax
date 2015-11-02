@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CeliTax-Swift.h"
 
 @interface ReceiptBreakDownItemTableViewCell : UITableViewCell
 
@@ -31,6 +32,6 @@
 
 -(void)setToDisplayItem;
 
--(void)setToDisplayUnit:(NSInteger)unitType;
+-(void)setToDisplayUnit:(UnitTypes)unitType;
 
 @end

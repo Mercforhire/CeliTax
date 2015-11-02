@@ -7,12 +7,13 @@
 //
 
 #import "TutorialManager.h"
-#import "TutorialStep.h"
 #import "LookAndFeel.h"
 #import "ViewControllerFactory.h"
 #import "TutorialBubble.h"
 #import "MainViewController.h"
 #import "CDRTranslucentSideBar.h"
+
+#import "CeliTax-Swift.h"
 
 #define kTutorialsShownKey              @"TutorialsShown"
 

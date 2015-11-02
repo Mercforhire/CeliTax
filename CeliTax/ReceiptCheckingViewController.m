@@ -8,16 +8,12 @@
 
 #import "ReceiptCheckingViewController.h"
 #import "HorizonalScrollBarView.h"
-#import "AddCatagoryViewController.h"
-#import "Catagory.h"
-#import "User.h"
+#import "AddCategoryViewController.h"
 #import "UserManager.h"
-#import "Record.h"
 #import "ImageCounterIconView.h"
-#import "AddCatagoryViewController.h"
+#import "AddCategoryViewController.h"
 #import "ViewControllerFactory.h"
 #import "Utils.h"
-#import "Receipt.h"
 #import "UIView+Helper.h"
 #import "ReceiptBreakDownViewController.h"
 #import "ReceiptItemCell.h"
@@ -25,7 +21,6 @@
 #import "ReceiptEditModeTableViewCell.h"
 #import "CameraViewController.h"
 #import "TutorialManager.h"
-#import "TutorialStep.h"
 #import "ConfigurationManager.h"
 #import "SolidGreenButton.h"
 #import "MBProgressHUD.h"
@@ -34,8 +29,9 @@
 #import "ImperialUnitPickerViewController.h"
 #import "WYPopoverController.h"
 #import "TutorialManager.h"
-#import "TutorialStep.h"
 #import "MainViewController.h"
+
+#import "CeliTax-Swift.h"
 
 NSString *ReceiptItemCellIdentifier = @"ReceiptItemCellIdentifier";
 NSString *ReceiptEditModeTableViewCellIdentifier = @"ReceiptEditModeTableViewCellIdentifier";
@@ -77,7 +73,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
 @property (strong, nonatomic) NSArray *catagories;
 @property (nonatomic, copy) Receipt *receipt;
 @property (strong, nonatomic) NSMutableDictionary *records; // all Records for this receipt
-@property (nonatomic, strong) Catagory *currentlySelectedCatagory;
+@property (nonatomic, strong) ItemCategory *currentlySelectedCatagory;
 @property (strong, nonatomic) NSMutableArray *recordsOfCurrentlySelectedCatagory; // Records belonging to currentlySelectedCatagory
 @property (nonatomic, strong) Record *currentlySelectedRecord;
 @property (nonatomic) NSInteger currentlySelectedRecordIndex;  // index of the currentlySelectedRecord's position in recordsOfCurrentlySelectedCatagory
@@ -256,7 +252,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
         
         [self refreshButtonBar];
         
-        // load catagory records for this receipt
+        // load category records for this receipt
         NSArray *records = [self.dataService fetchRecordsForReceiptID: self.receiptID];
         
         [self populateRecordsDictionaryUsing: records];
@@ -321,27 +317,27 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
     else
     {
         // add fake categories
-        Catagory *sampleCategory1 = [Catagory new];
+        ItemCategory *sampleCategory1 = [ItemCategory new];
         sampleCategory1.name = @"Rice";
         sampleCategory1.color = [UIColor yellowColor];
         sampleCategory1.localID = @"1";
         
-        Catagory *sampleCategory2 = [Catagory new];
+        ItemCategory *sampleCategory2 = [ItemCategory new];
         sampleCategory2.name = @"Bread";
         sampleCategory2.color = [UIColor orangeColor];
         sampleCategory2.localID = @"2";
         
-        Catagory *sampleCategory3 = [Catagory new];
+        ItemCategory *sampleCategory3 = [ItemCategory new];
         sampleCategory3.name = @"Meat";
         sampleCategory3.color = [UIColor redColor];
         sampleCategory3.localID = @"3";
         
-        Catagory *sampleCategory4 = [Catagory new];
+        ItemCategory *sampleCategory4 = [ItemCategory new];
         sampleCategory4.name = @"Flour";
         sampleCategory4.color = [UIColor lightGrayColor];
         sampleCategory4.localID = @"4";
         
-        Catagory *sampleCategory5 = [Catagory new];
+        ItemCategory *sampleCategory5 = [ItemCategory new];
         sampleCategory5.name = @"Cake";
         sampleCategory5.color = [UIColor purpleColor];
         sampleCategory5.localID = @"5";
@@ -374,7 +370,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
     
     if (!savedUnitSystem || savedUnitSystem.integerValue == UnitSystemMetric)
     {
-        self.metricUnitPickerViewController = [self.viewControllerFactory createUnitPickerViewControllerWithDefaultUnit:UnitItem];
+        self.metricUnitPickerViewController = [self.viewControllerFactory createUnitPickerViewControllerWithDefaultUnit:UnitTypesUnitItem];
         self.unitPickerPopoverController = [[WYPopoverController alloc] initWithContentViewController: self.metricUnitPickerViewController];
         (self.unitPickerPopoverController).popoverContentSize = self.metricUnitPickerViewController.viewSize;
         (self.unitPickerPopoverController).delegate = self;
@@ -382,7 +378,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
     }
     else
     {
-        self.imperialUnitPickerViewController = [self.viewControllerFactory createImperialUnitPickerViewControllerWithDefaultUnit:UnitItem];
+        self.imperialUnitPickerViewController = [self.viewControllerFactory createImperialUnitPickerViewControllerWithDefaultUnit:UnitTypesUnitItem];
         self.unitPickerPopoverController = [[WYPopoverController alloc] initWithContentViewController: self.imperialUnitPickerViewController];
         (self.unitPickerPopoverController).popoverContentSize = self.imperialUnitPickerViewController.viewSize;
         (self.unitPickerPopoverController).delegate = self;
@@ -484,10 +480,10 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
     NSMutableArray *catagoryNames = [NSMutableArray new];
     NSMutableArray *catagoryColors = [NSMutableArray new];
 
-    for (Catagory *catagory in self.catagories)
+    for (ItemCategory *category in self.catagories)
     {
-        [catagoryNames addObject: catagory.name];
-        [catagoryColors addObject: catagory.color];
+        [catagoryNames addObject: category.name];
+        [catagoryColors addObject: category.color];
     }
 
     [self.categoriesBar setButtonNames: catagoryNames andColors: catagoryColors];
@@ -754,7 +750,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
     }
 }
 
-- (void) setCurrentlySelectedCatagory: (Catagory *) currentlySelectedCatagory
+- (void) setCurrentlySelectedCatagory: (ItemCategory *) currentlySelectedCatagory
 {
     if (!_currentlySelectedCatagory && !currentlySelectedCatagory)
     {
@@ -902,7 +898,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
                 self.currentlySelectedRecord.amount = self.tempPricePerItemOrTotalCost;
                 self.currentlySelectedRecord.unitType = self.tempUnitType;
                 
-                // delete the saved value for this catagory from savedDataForUnsavedExistingRecords
+                // delete the saved value for this category from savedDataForUnsavedExistingRecords
                 [self.savedDataForUnsavedExistingRecords removeObjectForKey:self.currentlySelectedRecord.localID];
                 
                 [self saveCurrentlySelectedRecord];
@@ -937,7 +933,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
             
             (self.records)[record.catagoryID] = recordsOfThisCatagory;
             
-            // delete the saved value for this catagory from tempSavedDataForUnsavedRecordForEachCatagory
+            // delete the saved value for this category from tempSavedDataForUnsavedRecordForEachCatagory
             [self.savedDataForUnsavedNewRecordInEachCatagory removeObjectForKey:self.currentlySelectedCatagory.localID];
             
             // calls the setter to refresh UI
@@ -966,7 +962,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
 - (IBAction) addCatagoryPressed: (UIButton *) sender
 {
     // open up the AddCatagoryViewController
-    [self.navigationController pushViewController: [self.viewControllerFactory createAddCatagoryViewController] animated: YES];
+    [self.navigationController pushViewController: [self.viewControllerFactory createAddCategoryViewController] animated: YES];
 }
 
 - (IBAction) previousRecordPressed: (UIButton *) sender
@@ -1047,7 +1043,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
 
 - (BOOL) highlightTheFirstIncompleteTextFieldInCell:(ReceiptItemCell *)receiptItemCell
 {
-    if (self.tempUnitType == UnitItem)
+    if (self.tempUnitType == UnitTypesUnitItem)
     {
         if (receiptItemCell.qtyField.text.integerValue == 0)
         {
@@ -1125,7 +1121,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
               forControlEvents: UIControlEventEditingChanged];
     cell.totalField.inputAccessoryView = self.numberToolbar;
     
-    if (self.tempUnitType == UnitItem)
+    if (self.tempUnitType == UnitTypesUnitItem)
     {
         [self.lookAndFeel applyGreenBorderTo:cell.totalField];
         
@@ -1271,7 +1267,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
 
 #pragma mark - UnitPickerViewControllerDelegate
 
--(void)selectedUnit:(NSInteger)unitType
+-(void)selectedUnit:(UnitTypes)unitType
 {
     self.userSelectedUnitType = unitType;
     
@@ -1715,7 +1711,7 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
                 
                 (self.records)[record.catagoryID] = recordsOfThisCatagory;
                 
-                // delete the saved value for this catagory from tempSavedDataForUnsavedRecordForEachCatagory
+                // delete the saved value for this category from tempSavedDataForUnsavedRecordForEachCatagory
                 [self.savedDataForUnsavedNewRecordInEachCatagory removeObjectForKey:self.currentlySelectedCatagory.localID];
                 
                 // calls the setter to refresh UI

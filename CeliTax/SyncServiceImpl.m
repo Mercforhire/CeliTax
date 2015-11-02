@@ -8,18 +8,14 @@
 
 #import "SyncServiceImpl.h"
 #import "UserDataDAO.h"
-#import "Receipt.h"
 #import "Utils.h"
 #import "NetworkCommunicator.h"
 #import "RecordsDAO.h"
 #import "TaxYearsDAO.h"
 #import "ReceiptsDAO.h"
 #import "CatagoriesDAO.h"
-#import "TaxYearBuilder.h"
-#import "ReceiptBuilder.h"
-#import "RecordBuilder.h"
-#import "CatagoryBuilder.h"
-#import "Catagory.h"
+
+#import "CeliTax-Swift.h"
 
 @implementation SyncServiceImpl
 
@@ -68,18 +64,18 @@
                 }
             }
             
-            for (Catagory *catagory in allCategories)
+            for (ItemCategory *category in allCategories)
             {
-                NSNumber *indexOfCatagory = [NSNumber numberWithInteger:[allCategories indexOfObject:catagory]];
+                NSNumber *indexOfCatagory = [NSNumber numberWithInteger:[allCategories indexOfObject:category]];
                 
                 if ([indexesOf3ChoosenCategories containsObject:indexOfCatagory])
                 {
-                    for (int j = UnitItem; j < UnitCount; j++)
+                    for (int j = UnitTypesUnitItem; j < UnitTypesUnitCount; j++)
                     {
                         //50% Chance of adding a National Average Cost for the current Unit Type
                         if ([Utils randomNumberBetween: 1 maxNumber: 10] <= 5)
                         {
-                            [catagory addOrUpdateNationalAverageCostForUnitType:j amount:[Utils randomNumberBetween: 10 maxNumber: 100] / 10.0f];
+                            [category addOrUpdateNationalAverageCostForUnitType:j amount:[Utils randomNumberBetween: 10 maxNumber: 100] / 10.0f];
                         }
                     }
                 }
@@ -124,7 +120,7 @@
             newReceipt.fileNames = [NSMutableArray arrayWithObjects: fileName1, fileName2, nil];
             newReceipt.dateCreated = date;
             newReceipt.taxYear = [Utils randomNumberBetween: 2013 maxNumber: 2015];
-            newReceipt.dataAction = DataActionInsert;
+            newReceipt.dataAction = DataActionStatusDataActionInsert;
             
             [self.receiptsDAO addReceipt: newReceipt save:NO];
             
@@ -133,11 +129,11 @@
             
             for (int itemNumber = 0; itemNumber < numberOfItems; itemNumber++)
             {
-                Catagory *recordCatagory = [self.catagoriesDAO loadCatagories][[Utils randomNumberBetween: 0 maxNumber: (int)numberOfCatagories - 1]];
+                ItemCategory *recordCatagory = [self.catagoriesDAO loadCatagories][[Utils randomNumberBetween: 0 maxNumber: (int)numberOfCatagories - 1]];
                 
                 NSInteger recordQuantity = [Utils randomNumberBetween: 1 maxNumber: 20];
                 
-                NSInteger recordUnitType = [Utils randomNumberBetween: UnitItem maxNumber: UnitLb];
+                NSInteger recordUnitType = [Utils randomNumberBetween: UnitTypesUnitItem maxNumber: UnitTypesUnitLb];
                 
                 float recordAmount = [Utils randomNumberBetween: 10 maxNumber: 100] / 10.0f;
                 
@@ -290,7 +286,7 @@
             
             for (NSNumber *taxYearNumber in taxYearNumbers)
             {
-                TaxYear *taxYear = [self.taxYearBuilder buildTaxYearFrom:taxYearNumber];
+                TaxYear *taxYear = [self.taxYearBuilder buildTaxYearFrom:taxYearNumber.integerValue];
                 
                 if (taxYear)
                 {
@@ -308,11 +304,11 @@
             
             for (NSDictionary *catagoryDictionary in catagoryDictionaries)
             {
-                Catagory *catagory = [self.catagoryBuilder buildCatagoryFrom:catagoryDictionary];
+                ItemCategory *category = [self.catagoryBuilder buildCategoryFrom:catagoryDictionary];
                 
-                if (catagory)
+                if (category)
                 {
-                    [catagories addObject:catagory];
+                    [catagories addObject:category];
                 }
             }
             
@@ -351,14 +347,14 @@
                 if (![self.catagoriesDAO loadCatagory:record.catagoryID])
                 {
                     DLog(@"ERROR: Record has an invalid catagoryID");
-                    record.dataAction = DataActionDelete;
+                    record.dataAction = DataActionStatusDataActionDelete;
                 }
                 
                 //check if receiptID is valid
                 if (![self.receiptsDAO loadReceipt:record.receiptID])
                 {
                     DLog(@"ERROR: Record has an invalid receiptID");
-                    record.dataAction = DataActionDelete;
+                    record.dataAction = DataActionStatusDataActionDelete;
                 }
                 
                 if (record)

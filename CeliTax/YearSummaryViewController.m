@@ -11,11 +11,11 @@
 #import "HollowGreenButton.h"
 #import "ConfigurationManager.h"
 #import "AlertDialogsProvider.h"
-#import "Catagory.h"
-#import "Record.h"
 #import "WYPopoverController.h"
 #import "SendReceiptsToViewController.h"
 #import "ViewControllerFactory.h"
+
+#import "CeliTax-Swift.h"
 
 #define kYearSummaryTableViewCellIdentifier             @"YearSummaryTableViewCell"
 #define kYearSummaryTableViewCellHeight                 60
@@ -30,7 +30,7 @@
 @property (nonatomic, strong) WYPopoverController *sendReceiptsPopover;
 @property (nonatomic, strong) SendReceiptsToViewController *sendReceiptsToViewController;
 
-@property (nonatomic, strong) NSArray *catagories; // of Catagory
+@property (nonatomic, strong) NSArray *catagories; // of ItemCategory
 // NSMutableArray of NSArray of a fixed size 4:
 // (CatagoryID, UnitTypeString, Total Spent, Total average cost, Total GF savings)
 @property (strong, nonatomic) NSMutableArray *catagoryRows;
@@ -69,7 +69,7 @@
     
     [self setupUI];
     
-    // load all Catagory
+    // load all ItemCategory
     NSArray *catagories = [self.dataService fetchCatagories];
     
     self.catagories = catagories;
@@ -91,9 +91,9 @@
     
     // Start filling in self.catagoryRows: (CatagoryID, UnitTypeString, Total Spent, Total average cost, Total GF savings)
     
-    for (Catagory *catagory in self.catagories)
+    for (ItemCategory *category in self.catagories)
     {
-        NSArray *recordsForThisCatagory = [self.dataService fetchRecordsForCatagoryID: catagory.localID
+        NSArray *recordsForThisCatagory = [self.dataService fetchRecordsForCatagoryID: category.localID
                                                                             inTaxYear: self.configurationManager.getCurrentTaxYear.integerValue];
         
         // Separate recordsForThisCatagory into groups of the same Unit Type
@@ -116,7 +116,7 @@
         }
         
         //Process the Unit Types in order: Item, ML, L, G, KG
-        NSArray *orderOfUnitTypesToProcess = @[kUnitItemKey, kUnitMLKey, kUnitLKey, kUnitGKey, kUnit100GKey, kUnitKGKey,kUnitFlozKey,kUnitPtKey,kUnitQtKey,kUnitGalKey,kUnitOzKey,kUnitLbKey];
+        NSArray *orderOfUnitTypesToProcess = @[Record.kUnitItemKey, Record.kUnitMLKey, Record.kUnitLKey, Record.kUnitGKey, Record.kUnit100GKey, Record.kUnitKGKey, Record.kUnitFlozKey, Record.kUnitPtKey, Record.kUnitQtKey, Record.kUnitGalKey, Record.kUnitOzKey, Record.kUnitLbKey];
         
         for (NSString *key in orderOfUnitTypesToProcess)
         {
@@ -136,7 +136,7 @@
                 totalAmountSpentOnThisCatagoryAndUnitType += [record calculateTotal];
             }
             
-            NSNumber *nationalAverageCost = (catagory.nationalAverageCosts)[key];
+            NSNumber *nationalAverageCost = category.nationalAverageCosts[key];
             
             float totalAvgCost = 0;
             
@@ -168,7 +168,7 @@
             }
             
             // (CatagoryID, UnitTypeString, Total Spent, Total average cost, Total GF savings)
-            NSMutableArray *rowArray = [NSMutableArray arrayWithObjects:catagory.localID, key, @(totalAmountSpentOnThisCatagoryAndUnitType), @(totalAvgCost), @(gfSavings), nil];
+            NSMutableArray *rowArray = [NSMutableArray arrayWithObjects:category.localID, key, @(totalAmountSpentOnThisCatagoryAndUnitType), @(totalAvgCost), @(gfSavings), nil];
             
             [self.catagoryRows addObject:rowArray];
         }
@@ -233,7 +233,7 @@
     
     NSString *catagoryID = dataForThisRow.firstObject;
     
-    Catagory *thisCatagory = [self.dataService fetchCatagory:catagoryID];
+    ItemCategory *thisCatagory = [self.dataService fetchCatagory:catagoryID];
     
     NSString *unitTypeString = dataForThisRow[1];
     
@@ -245,51 +245,51 @@
     
     cell.colorView.backgroundColor = thisCatagory.color;
     
-    if ([unitTypeString isEqualToString:kUnitItemKey])
+    if ([unitTypeString isEqualToString:Record.kUnitItemKey])
     {
         (cell.catagoryNameLabel).text = thisCatagory.name;
     }
-    else if ([unitTypeString isEqualToString:kUnitGKey])
+    else if ([unitTypeString isEqualToString:Record.kUnitGKey])
     {
         (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (g)", nil), thisCatagory.name];
     }
-    else if ([unitTypeString isEqualToString:kUnit100GKey])
+    else if ([unitTypeString isEqualToString:Record.kUnit100GKey])
     {
         (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (100g)", nil), thisCatagory.name];
     }
-    else if ([unitTypeString isEqualToString:kUnitKGKey])
+    else if ([unitTypeString isEqualToString:Record.kUnitKGKey])
     {
         (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (kg)", nil), thisCatagory.name];
     }
-    else if ([unitTypeString isEqualToString:kUnitLKey])
+    else if ([unitTypeString isEqualToString:Record.kUnitLKey])
     {
         (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (L)", nil), thisCatagory.name];
     }
-    else if ([unitTypeString isEqualToString:kUnitMLKey])
+    else if ([unitTypeString isEqualToString:Record.kUnitMLKey])
     {
         (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (mL)", nil), thisCatagory.name];
     }
-    else if ([unitTypeString isEqualToString:kUnitFlozKey])
+    else if ([unitTypeString isEqualToString:Record.kUnitFlozKey])
     {
         (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (fl oz)", nil), thisCatagory.name];
     }
-    else if ([unitTypeString isEqualToString:kUnitPtKey])
+    else if ([unitTypeString isEqualToString:Record.kUnitPtKey])
     {
         (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (pt)", nil), thisCatagory.name];
     }
-    else if ([unitTypeString isEqualToString:kUnitQtKey])
+    else if ([unitTypeString isEqualToString:Record.kUnitQtKey])
     {
         (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (qt)", nil), thisCatagory.name];
     }
-    else if ([unitTypeString isEqualToString:kUnitGalKey])
+    else if ([unitTypeString isEqualToString:Record.kUnitGalKey])
     {
         (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (gal)", nil), thisCatagory.name];
     }
-    else if ([unitTypeString isEqualToString:kUnitOzKey])
+    else if ([unitTypeString isEqualToString:Record.kUnitOzKey])
     {
         (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (oz)", nil), thisCatagory.name];
     }
-    else if ([unitTypeString isEqualToString:kUnitLbKey])
+    else if ([unitTypeString isEqualToString:Record.kUnitLbKey])
     {
         (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (lb)", nil), thisCatagory.name];
     }

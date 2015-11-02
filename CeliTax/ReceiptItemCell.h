@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CeliTax-Swift.h"
 
 @interface ReceiptItemCell : UICollectionViewCell
 
@@ -14,6 +15,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *priceField;
 @property (weak, nonatomic) IBOutlet UITextField *totalField;
 
--(void)setUnitTypeTo:(NSInteger)unitType;
+-(void)setUnitTypeTo:(UnitTypes)unitType;
 
 @end

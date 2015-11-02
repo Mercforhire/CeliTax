@@ -8,30 +8,26 @@
 
 #import "MyAccountViewController.h"
 #import "AccountTableViewCell.h"
-#import "Catagory.h"
-#import "Record.h"
 #import "UserManager.h"
-#import "User.h"
 #import "AlertDialogsProvider.h"
 #import "ViewControllerFactory.h"
 #import "XYPieChart.h"
 #import "UploadsHistoryTableViewCell.h"
-#import "Notifications.h"
 #import "ReceiptBreakDownViewController.h"
 #import "Utils.h"
 #import "ConfigurationManager.h"
 #import "ProfileBarView.h"
 #import "TutorialManager.h"
-#import "TutorialStep.h"
 #import "HollowGreenButton.h"
 #import "ProfileSettingsViewController.h"
 #import "UIView+Helper.h"
 #import "YearSavingViewController.h"
 #import "TutorialManager.h"
-#import "TutorialStep.h"
 #import "SolidGreenButton.h"
 #import "HorizonalScrollBarView.h"
-#import "AddCatagoryViewController.h"
+#import "AddCategoryViewController.h"
+
+#import "CeliTax-Swift.h"
 
 @implementation CategoryRow
 
@@ -57,8 +53,8 @@
 @property (nonatomic, strong) UIToolbar *numberToolbar;
 @property (weak, nonatomic) IBOutlet HorizonalScrollBarView *categoriesBar;
 
-@property (nonatomic, strong) NSArray *catagories; // of Catagory
-@property (nonatomic, strong) Catagory *currentlySelectedCategory;
+@property (nonatomic, strong) NSArray *catagories; // of ItemCategory
+@property (nonatomic, strong) ItemCategory *currentlySelectedCategory;
 
 @property (strong, nonatomic) NSMutableDictionary *categoryRowsForEachCategory;
 
@@ -208,7 +204,7 @@
 
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(openReceiptBreakDownView:)
-                                                 name: kReceiptItemsTableReceiptPressedNotification
+                                                 name: Notifications.kReceiptItemsTableReceiptPressedNotification
                                                object: nil];
     
     // register for keyboard notifications
@@ -237,27 +233,27 @@
     {
         //Create fake data
         // add fake categories
-        Catagory *sampleCategory1 = [Catagory new];
+        ItemCategory *sampleCategory1 = [ItemCategory new];
         sampleCategory1.name = @"Rice";
         sampleCategory1.color = [UIColor yellowColor];
         sampleCategory1.localID = @"1";
         
-        Catagory *sampleCategory2 = [Catagory new];
+        ItemCategory *sampleCategory2 = [ItemCategory new];
         sampleCategory2.name = @"Bread";
         sampleCategory2.color = [UIColor orangeColor];
         sampleCategory2.localID = @"2";
         
-        Catagory *sampleCategory3 = [Catagory new];
+        ItemCategory *sampleCategory3 = [ItemCategory new];
         sampleCategory3.name = @"Meat";
         sampleCategory3.color = [UIColor redColor];
         sampleCategory3.localID = @"3";
         
-        Catagory *sampleCategory4 = [Catagory new];
+        ItemCategory *sampleCategory4 = [ItemCategory new];
         sampleCategory4.name = @"Flour";
         sampleCategory4.color = [UIColor lightGrayColor];
         sampleCategory4.localID = @"4";
         
-        Catagory *sampleCategory5 = [Catagory new];
+        ItemCategory *sampleCategory5 = [ItemCategory new];
         sampleCategory5.name = @"Cake";
         sampleCategory5.color = [UIColor purpleColor];
         sampleCategory5.localID = @"5";
@@ -266,7 +262,7 @@
     }
     else
     {
-        // load all Catagory
+        // load all ItemCategory
         NSArray *catagories = [self.dataService fetchCatagories];
         
         self.catagories = catagories;
@@ -284,14 +280,14 @@
     
     // Start filling in self.catagoryRows: (CatagoryID, UnitTypeString, Total Qty/Total Weight, Total $ amount, national average cost)
     
-    // Also record the total amount for each Catagory
+    // Also record the total amount for each ItemCategory
     NSMutableDictionary *categoryTotalAmount = [NSMutableDictionary new];
     
-    for (Catagory *catagory in self.catagories)
+    for (ItemCategory *category in self.catagories)
     {
         float totalAmountForCatagory = 0;
         
-        NSArray *recordsForThisCatagory = [self.dataService fetchRecordsForCatagoryID: catagory.localID
+        NSArray *recordsForThisCatagory = [self.dataService fetchRecordsForCatagoryID: category.localID
                                                                             inTaxYear: self.configurationManager.getCurrentTaxYear.integerValue];
         
         // Separate recordsForThisCatagory into groups of the same Unit Type
@@ -314,43 +310,43 @@
         }
         
         //Always have a row for kUnitItemKey
-        if (!recordsOfEachType[kUnitItemKey])
+        if (!recordsOfEachType[Record.kUnitItemKey])
         {
             float nationalAverageCost = 0;
             
-            if (!(catagory.nationalAverageCosts)[kUnitItemKey])
+            if (!category.nationalAverageCosts[Record.kUnitItemKey])
             {
                 nationalAverageCost = -1;
             }
             else
             {
-                nationalAverageCost = [(catagory.nationalAverageCosts)[kUnitItemKey] floatValue];
+                nationalAverageCost = [category.nationalAverageCosts[Record.kUnitItemKey] floatValue];
             }
             
             CategoryRow *categoryRow = [CategoryRow new];
             
-            categoryRow.categoryID = catagory.localID;
-            categoryRow.unitTypeString = kUnitItemKey;
+            categoryRow.categoryID = category.localID;
+            categoryRow.unitTypeString = Record.kUnitItemKey;
             categoryRow.totalQtyOrWeight = 0;
             categoryRow.totalAmount = 0;
             categoryRow.nationalAverageCost = nationalAverageCost;
             
-            if ((self.categoryRowsForEachCategory)[catagory.localID])
+            if ((self.categoryRowsForEachCategory)[category.localID])
             {
-                [(self.categoryRowsForEachCategory)[catagory.localID] addObject: categoryRow];
+                [(self.categoryRowsForEachCategory)[category.localID] addObject: categoryRow];
             }
             else
             {
                 NSMutableArray *categoryRows = [NSMutableArray new];
                 [categoryRows addObject:categoryRow];
                 
-                (self.categoryRowsForEachCategory)[catagory.localID] = categoryRows;
+                (self.categoryRowsForEachCategory)[category.localID] = categoryRows;
             }
             
             //if we are coming back to this View and self.currentlySelectedRow already exist, we need to update self.currentlySelectedRow to point to the new object in self.catagoryRows
             if (self.currentlySelectedRow &&
-                [self.currentlySelectedRow.categoryID isEqualToString:catagory.localID] &&
-                [self.currentlySelectedRow.unitTypeString isEqualToString:kUnitItemKey] )
+                [self.currentlySelectedRow.categoryID isEqualToString:category.localID] &&
+                [self.currentlySelectedRow.unitTypeString isEqualToString:Record.kUnitItemKey] )
             {
                 self.currentlySelectedRow = categoryRow;
                 
@@ -359,7 +355,7 @@
         }
         
         //Process the Unit Types in order: Item, ML, L, G, KG
-        NSArray *orderOfUnitTypesToProcess = @[kUnitItemKey, kUnitMLKey, kUnitLKey, kUnitGKey, kUnit100GKey, kUnitKGKey,kUnitFlozKey,kUnitPtKey,kUnitQtKey,kUnitGalKey,kUnitOzKey,kUnitLbKey];
+        NSArray *orderOfUnitTypesToProcess = @[Record.kUnitItemKey, Record.kUnitMLKey, Record.kUnitLKey, Record.kUnitGKey, Record.kUnit100GKey, Record.kUnitKGKey, Record.kUnitFlozKey, Record.kUnitPtKey, Record.kUnitQtKey, Record.kUnitGalKey, Record.kUnitOzKey, Record.kUnitLbKey];
         
         for (NSString *key in orderOfUnitTypesToProcess)
         {
@@ -385,50 +381,50 @@
             
             float nationalAverageCost = 0;
             
-            if (!(catagory.nationalAverageCosts)[key])
+            if (!category.nationalAverageCosts[key])
             {
                 nationalAverageCost = -1;
             }
             else
             {
-                nationalAverageCost = [(catagory.nationalAverageCosts)[key] floatValue];
+                nationalAverageCost = [category.nationalAverageCosts[key] floatValue];
             }
             
             CategoryRow *categoryRow = [CategoryRow new];
             
-            categoryRow.categoryID = catagory.localID;
+            categoryRow.categoryID = category.localID;
             categoryRow.unitTypeString = key;
             categoryRow.totalQtyOrWeight = totalQuantityForThisCatagoryAndUnitType;
             categoryRow.totalAmount = totalAmountSpentOnThisCatagoryAndUnitType;
             categoryRow.nationalAverageCost = nationalAverageCost;
             
-            if ((self.categoryRowsForEachCategory)[catagory.localID])
+            if ((self.categoryRowsForEachCategory)[category.localID])
             {
-                [(self.categoryRowsForEachCategory)[catagory.localID] addObject: categoryRow];
+                [(self.categoryRowsForEachCategory)[category.localID] addObject: categoryRow];
             }
             else
             {
                 NSMutableArray *categoryRows = [NSMutableArray new];
                 [categoryRows addObject:categoryRow];
                 
-                (self.categoryRowsForEachCategory)[catagory.localID] = categoryRows;
+                self.categoryRowsForEachCategory[category.localID] = categoryRows;
             }
             
             //if we are coming back to this View and self.currentlySelectedRow already exist, we need to update self.currentlySelectedRow to point to the new object in self.catagoryRows
             if (self.currentlySelectedRow &&
-                [self.currentlySelectedRow.categoryID isEqualToString:catagory.localID] &&
-                [self.currentlySelectedRow.unitTypeString isEqualToString:kUnitItemKey] )
+                [self.currentlySelectedRow.categoryID isEqualToString:category.localID] &&
+                [self.currentlySelectedRow.unitTypeString isEqualToString:Record.kUnitItemKey] )
             {
                 self.currentlySelectedRow = categoryRow;
                 
                 [self.accountTableView scrollToRowAtIndexPath:
-                 [NSIndexPath indexPathForRow: [(self.categoryRowsForEachCategory)[catagory.localID] indexOfObject:self.currentlySelectedRow] * 2 inSection: 0]
+                 [NSIndexPath indexPathForRow: [(self.categoryRowsForEachCategory)[category.localID] indexOfObject:self.currentlySelectedRow] * 2 inSection: 0]
                                              atScrollPosition: UITableViewScrollPositionTop
                                                      animated: YES];
             }
         }
         
-        categoryTotalAmount[catagory.localID] = @(totalAmountForCatagory);
+        categoryTotalAmount[category.localID] = @(totalAmountForCatagory);
     }
     
     if ((self.categoryRowsForEachCategory)[self.currentlySelectedCategory.localID])
@@ -466,12 +462,12 @@
     [self.accountTableView reloadData];
     
     // refresh pie chart
-    for (Catagory *catagory in self.catagories)
+    for (ItemCategory *category in self.catagories)
     {
-        [self.sliceColors addObject: catagory.color];
-        [self.sliceNames addObject: catagory.name];
+        [self.sliceColors addObject: category.color];
+        [self.sliceNames addObject: category.name];
         
-        NSNumber *totalForCategory = categoryTotalAmount[catagory.localID];
+        NSNumber *totalForCategory = categoryTotalAmount[category.localID];
         
         float sumAmount = 0;
         
@@ -521,7 +517,7 @@
 
     // unregister for keyboard notifications while not visible.
     [[NSNotificationCenter defaultCenter] removeObserver: self
-                                                    name: kReceiptItemsTableReceiptPressedNotification
+                                                    name: Notifications.kReceiptItemsTableReceiptPressedNotification
                                                   object: nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver: self
@@ -621,7 +617,7 @@
         NSString *catagoryID = self.currentlySelectedRow.categoryID;
         NSString *unitTypeString = self.currentlySelectedRow.unitTypeString;
         
-        // all receipts from this catagory
+        // all receipts from this category
         NSArray *catagoryInfos = [self.dataService fetchLatestNthCatagoryInfosforCatagory:catagoryID
                                                                               andUnitType:[Record unitTypeStringToUnitTypeInt:unitTypeString]
                                                                                    forNth:-1
@@ -635,19 +631,19 @@
 
 - (void) refreshButtonBar
 {
-    NSMutableArray *catagoryNames = [NSMutableArray new];
-    NSMutableArray *catagoryColors = [NSMutableArray new];
+    NSMutableArray *categoryNames = [NSMutableArray new];
+    NSMutableArray *categoryColors = [NSMutableArray new];
     
-    for (Catagory *catagory in self.catagories)
+    for (ItemCategory *category in self.catagories)
     {
-        [catagoryNames addObject: catagory.name];
-        [catagoryColors addObject: catagory.color];
+        [categoryNames addObject: category.name];
+        [categoryColors addObject: category.color];
     }
     
-    [self.categoriesBar setButtonNames: catagoryNames andColors: catagoryColors];
+    [self.categoriesBar setButtonNames: categoryNames andColors: categoryColors];
 }
 
--(void)setCurrentlySelectedCategory:(Catagory *)currentlySelectedCategory
+-(void)setCurrentlySelectedCategory:(ItemCategory *)currentlySelectedCategory
 {
     _currentlySelectedCategory = currentlySelectedCategory;
     
@@ -768,7 +764,7 @@
 - (IBAction) addCatagoryPressed: (UIButton *) sender
 {
     // open up the AddCatagoryViewController
-    [self.navigationController pushViewController: [self.viewControllerFactory createAddCatagoryViewController] animated: YES];
+    [self.navigationController pushViewController: [self.viewControllerFactory createAddCategoryViewController] animated: YES];
 }
 
 #pragma mark - HorizonalScrollBarViewProtocol
@@ -1045,7 +1041,7 @@
         
         float amount = dataForThisRow.totalAmount;
 
-        if ( [unitTypeString isEqualToString:kUnitItemKey] )
+        if ( [unitTypeString isEqualToString:Record.kUnitItemKey] )
         {
             cell.colorBoxColor = self.currentlySelectedCategory.color;
             
@@ -1058,51 +1054,51 @@
             cell.colorBox.backgroundColor = [UIColor lightGrayColor];
         }
 
-        if ([unitTypeString isEqualToString:kUnitItemKey])
+        if ([unitTypeString isEqualToString:Record.kUnitItemKey])
         {
             (cell.categoryNameLabel).text = self.currentlySelectedCategory.name;
         }
-        else if ([unitTypeString isEqualToString:kUnitGKey])
+        else if ([unitTypeString isEqualToString:Record.kUnitGKey])
         {
             (cell.categoryNameLabel).text = @"(g)";
         }
-        else if ([unitTypeString isEqualToString:kUnit100GKey])
+        else if ([unitTypeString isEqualToString:Record.kUnit100GKey])
         {
             (cell.categoryNameLabel).text = @"(100g)";
         }
-        else if ([unitTypeString isEqualToString:kUnitKGKey])
+        else if ([unitTypeString isEqualToString:Record.kUnitKGKey])
         {
             (cell.categoryNameLabel).text = @"(kg)";
         }
-        else if ([unitTypeString isEqualToString:kUnitLKey])
+        else if ([unitTypeString isEqualToString:Record.kUnitLKey])
         {
             (cell.categoryNameLabel).text = @"(L)";
         }
-        else if ([unitTypeString isEqualToString:kUnitMLKey])
+        else if ([unitTypeString isEqualToString:Record.kUnitMLKey])
         {
             (cell.categoryNameLabel).text = @"(mL)";
         }
-        else if ([unitTypeString isEqualToString:kUnitFlozKey])
+        else if ([unitTypeString isEqualToString:Record.kUnitFlozKey])
         {
             (cell.categoryNameLabel).text = @"(fl oz)";
         }
-        else if ([unitTypeString isEqualToString:kUnitPtKey])
+        else if ([unitTypeString isEqualToString:Record.kUnitPtKey])
         {
             (cell.categoryNameLabel).text = @"(pt)";
         }
-        else if ([unitTypeString isEqualToString:kUnitQtKey])
+        else if ([unitTypeString isEqualToString:Record.kUnitQtKey])
         {
             (cell.categoryNameLabel).text = @"(qt)";
         }
-        else if ([unitTypeString isEqualToString:kUnitGalKey])
+        else if ([unitTypeString isEqualToString:Record.kUnitGalKey])
         {
             (cell.categoryNameLabel).text = @"(gal)";
         }
-        else if ([unitTypeString isEqualToString:kUnitOzKey])
+        else if ([unitTypeString isEqualToString:Record.kUnitOzKey])
         {
             (cell.categoryNameLabel).text = @"(oz)";
         }
-        else if ([unitTypeString isEqualToString:kUnitLbKey])
+        else if ([unitTypeString isEqualToString:Record.kUnitLbKey])
         {
             (cell.categoryNameLabel).text = @"(lb)";
         }
@@ -1154,9 +1150,9 @@
                 // hide cell labels if the previous cell is same type
                 NSString *unitTypeStringPreviousRow = dataForPreviousRow.unitTypeString;
                 
-                BOOL isCurrentRowAItem = [unitTypeString isEqualToString:kUnitItemKey];
+                BOOL isCurrentRowAItem = [unitTypeString isEqualToString:Record.kUnitItemKey];
                 
-                BOOL isPreviousRowAItem = [unitTypeStringPreviousRow isEqualToString:kUnitItemKey];
+                BOOL isPreviousRowAItem = [unitTypeStringPreviousRow isEqualToString:Record.kUnitItemKey];
                 
                 if (isCurrentRowAItem == isPreviousRowAItem)
                 {
@@ -1178,7 +1174,7 @@
         
         [self.lookAndFeel applySlightlyDarkerBorderTo: cell.colorBox];
         
-        if ([unitTypeString isEqualToString:kUnitItemKey])
+        if ([unitTypeString isEqualToString:Record.kUnitItemKey])
         {
             [cell.totalQtyLabel setText:NSLocalizedString(@"Total Qty.", nil)];
         }
@@ -1262,7 +1258,7 @@
         
         cell.catagoryColor = self.currentlySelectedCategory.color;
 
-        if ([unitTypeString isEqualToString:kUnitItemKey])
+        if ([unitTypeString isEqualToString:Record.kUnitItemKey])
         {
             [cell setToDisplayItems];
         }

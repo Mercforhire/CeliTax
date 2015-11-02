@@ -7,12 +7,11 @@
 //
 
 #import "AuthenticationServiceImpl.h"
-#import "AuthorizeResult.h"
-#import "RegisterResult.h"
 #import "UserDataDAO.h"
 #import "ConfigurationManager.h"
 #import "NetworkCommunicator.h"
 #import "Utils.h"
+#import "CeliTax-Swift.h"
 
 @interface AuthenticationServiceImpl ()
 

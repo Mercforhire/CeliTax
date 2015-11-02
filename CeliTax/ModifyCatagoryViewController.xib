@@ -36,7 +36,7 @@
                         <constraint firstAttribute="width" constant="30" id="pqt-C9-0tZ"/>
                     </constraints>
                 </view>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="ENTER CATAGORY NAME" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="slL-0E-YnG">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="ENTER CATEGORY NAME" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="slL-0E-YnG">
                     <rect key="frame" x="70" y="20" width="182" height="30"/>
                     <animations/>
                     <constraints>

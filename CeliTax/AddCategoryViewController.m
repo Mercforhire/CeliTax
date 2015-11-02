@@ -1,15 +1,13 @@
 //
-// AddCatagoryViewController.m
+// AddCategoryViewController.m
 // CeliTax
 //
 // Created by Leon Chen on 2015-05-01.
 // Copyright (c) 2015 CraveNSave. All rights reserved.
 //
 
-#import "AddCatagoryViewController.h"
-#import "Catagory.h"
+#import "AddCategoryViewController.h"
 #import "UserManager.h"
-#import "User.h"
 #import "DataService.h"
 #import "SelectionsPickerViewController.h"
 #import "ColorPickerViewController.h"
@@ -21,11 +19,12 @@
 #import "ModifyCatagoryViewController.h"
 #import "UIView+Helper.h"
 #import "TutorialManager.h"
-#import "TutorialStep.h"
 #import "ConfigurationManager.h"
 #import "SolidGreenButton.h"
 
-@interface AddCatagoryViewController () <SelectionsPickerPopUpDelegate, ColorPickerViewPopUpDelegate, UIPopoverControllerDelegate, AllColorsPickerViewPopUpDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, PopUpViewControllerProtocol, TutorialManagerDelegate>
+#import "CeliTax-Swift.h"
+
+@interface AddCategoryViewController () <SelectionsPickerPopUpDelegate, ColorPickerViewPopUpDelegate, UIPopoverControllerDelegate, AllColorsPickerViewPopUpDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, PopUpViewControllerProtocol, TutorialManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIView *colorView;
@@ -38,9 +37,9 @@
 @property (nonatomic, strong) UIButton *cancelButton;
 @property (nonatomic, strong) UIBarButtonItem *leftMenuItem;
 
-@property (nonatomic, strong) NSMutableArray *sampleCatagoryNames;
+@property (nonatomic, strong) NSMutableArray *sampleCategoryNames;
 @property (nonatomic, strong) NSMutableArray *catagories;
-@property (nonatomic, strong) NSMutableArray *catagoryNames;
+@property (nonatomic, strong) NSMutableArray *categoryNames;
 
 @property (nonatomic, strong) WYPopoverController *namesPickerPopover;
 @property (nonatomic, strong) SelectionsPickerViewController *namesPickerViewController;
@@ -51,18 +50,18 @@
 @property (nonatomic, strong) WYPopoverController *allColorsPickerPopover;
 @property (nonatomic, strong) AllColorsPickerViewController *allColorsPickerViewController;
 
-@property (nonatomic, strong) WYPopoverController *catagoryPickerPopover;
-@property (nonatomic, strong) SelectionsPickerViewController *catagoryPickerViewController;
+@property (nonatomic, strong) WYPopoverController *categoryPickerPopover;
+@property (nonatomic, strong) SelectionsPickerViewController *categoryPickerViewController;
 
-@property (nonatomic, strong) WYPopoverController *modifyCatagoryPickerPopover;
-@property (nonatomic, strong) ModifyCatagoryViewController *modifyCatagoryViewController;
+@property (nonatomic, strong) WYPopoverController *modifyCategoryPickerPopover;
+@property (nonatomic, strong) ModifyCatagoryViewController *modifyCategoryViewController;
 
-// set to true when user is actively adding a new catagory
-@property (nonatomic) BOOL addingCatagoryMode;
+// set to true when user is actively adding a new ItemCategory
+@property (nonatomic) BOOL addingCategoryMode;
 
-@property (nonatomic, strong) Catagory *currentlySelectedCatagory;
+@property (nonatomic, strong) ItemCategory *currentlySelectedCategory;
 
-@property (nonatomic, strong) Catagory *catagoryToTransferTo;
+@property (nonatomic, strong) ItemCategory *categoryToTransferTo;
 
 @property (nonatomic, strong) UIColor *colorBeingAddedOrEdited;
 
@@ -73,33 +72,33 @@
 
 @end
 
-#define kCatagoryTableViewCellHeight                    45
-#define kCatagoryTableViewCellIdentifier                @"CatagoryTableViewCell"
+#define kCategoryTableViewCellHeight                    45
+#define kCategoryTableViewCellIdentifier                @"CategoryTableViewCell"
 
-#define kModifyCatagoryTableViewCellHeight              62
-#define kModifyCatagoryTableViewCellIdentifier          @"ModifyCatagoryTableViewCell"
+#define kModifyCategoryTableViewCellHeight              62
+#define kModifyCategoryTableViewCellIdentifier          @"ModifyCategoryTableViewCell"
 
-@implementation AddCatagoryViewController
+@implementation AddCategoryViewController
 
 - (void) setupUI
 {
     [self.titleLabel setText:NSLocalizedString(@"Manage Categories", nil)];
-    [self.catagoryNameField setPlaceholder:NSLocalizedString(@"Enter Catagory Name",nil)];
+    [self.catagoryNameField setPlaceholder:NSLocalizedString(@"Enter Category Name",nil)];
     
-    self.sampleCatagoryNames = [NSMutableArray new];
+    self.sampleCategoryNames = [NSMutableArray new];
 
     // sample names
-    [self.sampleCatagoryNames addObject: NSLocalizedString(@"Bread", nil)];
-    [self.sampleCatagoryNames addObject: NSLocalizedString(@"Rice", nil)];
-    [self.sampleCatagoryNames addObject: NSLocalizedString(@"Cake", nil)];
-    [self.sampleCatagoryNames addObject: NSLocalizedString(@"Meat", nil)];
-    [self.sampleCatagoryNames addObject: NSLocalizedString(@"Pizza", nil)];
-    [self.sampleCatagoryNames addObject: NSLocalizedString(@"Custom", nil)];
+    [self.sampleCategoryNames addObject: NSLocalizedString(@"Bread", nil)];
+    [self.sampleCategoryNames addObject: NSLocalizedString(@"Rice", nil)];
+    [self.sampleCategoryNames addObject: NSLocalizedString(@"Cake", nil)];
+    [self.sampleCategoryNames addObject: NSLocalizedString(@"Meat", nil)];
+    [self.sampleCategoryNames addObject: NSLocalizedString(@"Pizza", nil)];
+    [self.sampleCategoryNames addObject: NSLocalizedString(@"Custom", nil)];
 
     self.colorPickerViewController = [self.viewControllerFactory createColorPickerViewController];
 
-    self.namesPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: self.sampleCatagoryNames];
-    self.namesPickerViewController.highlightedSelectionIndex = self.sampleCatagoryNames.count - 1;
+    self.namesPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: self.sampleCategoryNames];
+    self.namesPickerViewController.highlightedSelectionIndex = self.sampleCategoryNames.count - 1;
     self.allColorsPickerViewController = [self.viewControllerFactory createAllColorsPickerViewController];
 
     self.nameFieldOverlayButton = [[UIButton alloc] initWithFrame: self.catagoryNameField.frame];
@@ -110,7 +109,7 @@
     [self.saveButton setTitle: NSLocalizedString(@"Save", nil) forState: UIControlStateNormal];
     (self.saveButton.titleLabel).font = [UIFont latoBoldFontOfSize: 14];
     (self.saveButton).titleEdgeInsets = UIEdgeInsetsMake(5, 10, 5, 10);
-    [self.saveButton addTarget: self action: @selector(saveCatagoryPressed:) forControlEvents: UIControlEventTouchUpInside];
+    [self.saveButton addTarget: self action: @selector(saveCategoryPressed:) forControlEvents: UIControlEventTouchUpInside];
     [self.saveButton setLookAndFeel:self.lookAndFeel];
 
     self.rightMenuItem = [[UIBarButtonItem alloc] initWithCustomView: self.saveButton];
@@ -120,11 +119,11 @@
     [self.lookAndFeel applyGrayBorderTo: self.catagoryNameField];
     [self.lookAndFeel addLeftInsetToTextField: self.catagoryNameField];
 
-    UINib *catagoryTableViewCell = [UINib nibWithNibName: @"CatagoryTableViewCell" bundle: nil];
-    UINib *modifyCatagoryTableViewCell = [UINib nibWithNibName: @"ModifyCatagoryTableViewCell" bundle: nil];
+    UINib *categoryTableViewCell = [UINib nibWithNibName: @"CatagoryTableViewCell" bundle: nil];
+    UINib *modifyCategoryTableViewCell = [UINib nibWithNibName: @"ModifyCatagoryTableViewCell" bundle: nil];
 
-    [self.catagoriesTable registerNib: catagoryTableViewCell forCellReuseIdentifier: kCatagoryTableViewCellIdentifier];
-    [self.catagoriesTable registerNib: modifyCatagoryTableViewCell forCellReuseIdentifier: kModifyCatagoryTableViewCellIdentifier];
+    [self.catagoriesTable registerNib: categoryTableViewCell forCellReuseIdentifier: kCategoryTableViewCellIdentifier];
+    [self.catagoriesTable registerNib: modifyCategoryTableViewCell forCellReuseIdentifier: kModifyCategoryTableViewCellIdentifier];
 
     (self.colorView).backgroundColor = [UIColor whiteColor];
     [self.lookAndFeel applySlightlyDarkerBorderTo: self.colorView];
@@ -162,7 +161,7 @@
     [self.nameFieldOverlayButton addTarget: self action: @selector(textBoxPressed) forControlEvents: UIControlEventTouchUpInside];
 
     // run its setter
-    self.addingCatagoryMode = NO;
+    self.addingCategoryMode = NO;
 
     self.catagoriesTable.dataSource = self;
     self.catagoriesTable.delegate = self;
@@ -171,39 +170,39 @@
     {
         self.catagories = [NSMutableArray new];
         
-        Catagory *sampleCategory1 = [Catagory new];
+        ItemCategory *sampleCategory1 = [ItemCategory new];
         sampleCategory1.name = @"Rice";
         sampleCategory1.color = [UIColor yellowColor];
         
         [self.catagories addObject:sampleCategory1];
         
-        Catagory *sampleCategory2 = [Catagory new];
+        ItemCategory *sampleCategory2 = [ItemCategory new];
         sampleCategory2.name = @"Bread";
         sampleCategory2.color = [UIColor orangeColor];
         
         [self.catagories addObject:sampleCategory2];
         
-        Catagory *sampleCategory3 = [Catagory new];
+        ItemCategory *sampleCategory3 = [ItemCategory new];
         sampleCategory3.name = @"Meat";
         sampleCategory3.color = [UIColor redColor];
         
         [self.catagories addObject:sampleCategory3];
         
-        Catagory *sampleCategory4 = [Catagory new];
+        ItemCategory *sampleCategory4 = [ItemCategory new];
         sampleCategory4.name = @"Flour";
         sampleCategory4.color = [UIColor lightGrayColor];
         
         [self.catagories addObject:sampleCategory4];
         
-        Catagory *sampleCategory5 = [Catagory new];
+        ItemCategory *sampleCategory5 = [ItemCategory new];
         sampleCategory5.name = @"Cake";
         sampleCategory5.color = [UIColor purpleColor];
         
         [self.catagories addObject:sampleCategory5];
         
-        for (Catagory *catagory in self.catagories)
+        for (ItemCategory *category in self.catagories)
         {
-            [self.catagoryNames addObject:catagory.name];
+            [self.categoryNames addObject:category.name];
         }
         
         [self.catagoriesTable reloadData];
@@ -271,7 +270,7 @@
 
 - (void) refreshCatagories
 {
-    self.currentlySelectedCatagory = nil;
+    self.currentlySelectedCategory = nil;
 
     NSArray *catagories = [self.dataService fetchCatagories];
     
@@ -279,28 +278,28 @@
     
     [self.catagoriesTable reloadData];
     
-    self.catagoryNames = [[NSMutableArray alloc] init];
+    self.categoryNames = [[NSMutableArray alloc] init];
     
-    for (Catagory *catagory in self.catagories)
+    for (ItemCategory *category in self.catagories)
     {
-        [self.catagoryNames addObject:catagory.name];
+        [self.categoryNames addObject:category.name];
     }
     
-    //set up the catagoryPickerViewController
-    self.catagoryPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: self.catagoryNames];
-    self.catagoryPickerViewController.highlightedSelectionIndex = -1;
-    (self.catagoryPickerViewController).delegate = self;
+    //set up the categoryPickerViewController
+    self.categoryPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: self.categoryNames];
+    self.categoryPickerViewController.highlightedSelectionIndex = -1;
+    (self.categoryPickerViewController).delegate = self;
 }
 
-- (void) setCurrentlySelectedCatagory: (Catagory *) currentlySelectedCatagory
+- (void) setCurrentlySelectedCategory: (ItemCategory *) currentlySelectedCategory
 {
-    if (_currentlySelectedCatagory != currentlySelectedCatagory)
+    if (_currentlySelectedCategory != currentlySelectedCategory)
     {
-        _currentlySelectedCatagory = currentlySelectedCatagory;
+        _currentlySelectedCategory = currentlySelectedCategory;
 
         [self.catagoriesTable reloadData];
         
-        if (!_currentlySelectedCatagory)
+        if (!_currentlySelectedCategory)
         {
             self.colorBeingAddedOrEdited = nil;
             
@@ -323,17 +322,17 @@
     }
 }
 
-- (void) setAddingCatagoryMode: (BOOL) addingCatagoryMode
+- (void) setAddingCategoryMode: (BOOL) addingCategoryMode
 {
-    _addingCatagoryMode = addingCatagoryMode;
+    _addingCategoryMode = addingCategoryMode;
 
-    if (_addingCatagoryMode)
+    if (_addingCategoryMode)
     {
         [self.addCatagoryButton setHidden: YES];
         [self.colorView setHidden: NO];
         [self.saveButton setHidden: NO];
 
-        self.currentlySelectedCatagory = nil;
+        self.currentlySelectedCategory = nil;
 
         [self.catagoriesTable setUserInteractionEnabled: NO];
         [self.catagoriesTable reloadData];
@@ -359,16 +358,16 @@
 
 - (void) cancelEditing
 {
-    self.addingCatagoryMode = NO;
+    self.addingCategoryMode = NO;
     
     self.catagoryNameField.text = @"";
     self.nameOfCategoryBeingAddedOrEdited = nil;
     [self.catagoryNameField resignFirstResponder];
 }
 
-- (IBAction) addCatagoryPressed: (UIButton *) sender
+- (IBAction) addCategoryPressed: (UIButton *) sender
 {
-    self.addingCatagoryMode = YES;
+    self.addingCategoryMode = YES;
     
     [self colorBoxPressed];
 }
@@ -380,21 +379,21 @@
 
 - (void) textBoxPressed
 {
-    if (!self.addingCatagoryMode)
+    if (!self.addingCategoryMode)
     {
-        self.addingCatagoryMode = YES;
+        self.addingCategoryMode = YES;
     }
 
     [self showNamesPickerViewController];
 }
 
-- (void) saveCatagoryPressed: (UIButton *) sender
+- (void) saveCategoryPressed: (UIButton *) sender
 {
     NSString *trimmedString = [self.catagoryNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     NSString *capitalizedString = trimmedString.capitalizedString;
     
-    if ([self.catagoryNames containsObject:capitalizedString])
+    if ([self.categoryNames containsObject:capitalizedString])
     {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)
                                                           message:NSLocalizedString(@"A existing category already has the same name. Please use a different category name", nil)
@@ -407,10 +406,9 @@
         return;
     }
     
-    if ([self.manipulationService addCatagoryForName: capitalizedString
-                                            forColor: self.colorView.backgroundColor save:YES])
+    if ([self.manipulationService addCatagoryForName: capitalizedString forColor: self.colorView.backgroundColor save:YES])
     {
-        self.addingCatagoryMode = NO;
+        self.addingCategoryMode = NO;
         self.catagoryNameField.text = @"";
         self.nameOfCategoryBeingAddedOrEdited = nil;
         [self refreshCatagories];
@@ -473,14 +471,14 @@
 
 -(void)editPressed:(UIButton *)button
 {
-    //set up the modifyCatagoryViewController
-    self.modifyCatagoryViewController = [self.viewControllerFactory createModifyCatagoryViewControllerWith:self.currentlySelectedCatagory];
-    self.modifyCatagoryViewController.delegate = self;
+    //set up the modifyCategoryViewController
+    self.modifyCategoryViewController = [self.viewControllerFactory createModifyCatagoryViewControllerWith:self.currentlySelectedCategory];
+    self.modifyCategoryViewController.delegate = self;
     
-    self.modifyCatagoryPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.modifyCatagoryViewController];
-    (self.modifyCatagoryPickerPopover).popoverContentSize = self.modifyCatagoryViewController.viewSize;
+    self.modifyCategoryPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.modifyCategoryViewController];
+    (self.modifyCategoryPickerPopover).popoverContentSize = self.modifyCategoryViewController.viewSize;
     
-    [self setupWYPopoverControllerTheme:self.modifyCatagoryPickerPopover];
+    [self setupWYPopoverControllerTheme:self.modifyCategoryPickerPopover];
     
     CGRect rectOfCellInTableView = [self.catagoriesTable rectForRowAtIndexPath: [NSIndexPath indexPathForRow: button.tag * 2 + 1 inSection: 0]];
     CGRect rectOfCellInSuperview = [self.catagoriesTable convertRect: rectOfCellInTableView toView: (self.catagoriesTable).superview];
@@ -490,7 +488,7 @@
                                  1,
                                  1);
     
-    [self.modifyCatagoryPickerPopover presentPopoverFromRect: tinyRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
+    [self.modifyCategoryPickerPopover presentPopoverFromRect: tinyRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
 }
 
 -(void)transferPressed:(UIButton *)button
@@ -503,18 +501,18 @@
                                  1,
                                  1);
     
-    self.catagoryPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.catagoryPickerViewController];
+    self.categoryPickerPopover = [[WYPopoverController alloc] initWithContentViewController: self.categoryPickerViewController];
     
-    [self setupWYPopoverControllerTheme:self.catagoryPickerPopover];
+    [self setupWYPopoverControllerTheme:self.categoryPickerPopover];
     
-    [self.catagoryPickerPopover presentPopoverFromRect: tinyRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
+    [self.categoryPickerPopover presentPopoverFromRect: tinyRect inView: self.view permittedArrowDirections: (WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown) animated: YES];
 }
 
 -(void)deletePressed:(UIButton *)button
 {
     //show a UIAlertView Confirmation
     UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Delete", nil)
-                                                      message: [NSString stringWithFormat:NSLocalizedString(@"Are you sure you want to delete the category %@?", nil), self.currentlySelectedCatagory.name]
+                                                      message: [NSString stringWithFormat:NSLocalizedString(@"Are you sure you want to delete the category %@?", nil), self.currentlySelectedCategory.name]
                                                      delegate: self
                                             cancelButtonTitle: NSLocalizedString(@"No", nil)
                                             otherButtonTitles: NSLocalizedString(@"Delete", nil), nil];
@@ -555,8 +553,8 @@
     [self.namesPickerPopover dismissPopoverAnimated:YES];
     [self.colorPickerPopover dismissPopoverAnimated:YES];
     [self.allColorsPickerPopover dismissPopoverAnimated:YES];
-    [self.catagoryPickerPopover dismissPopoverAnimated:YES];
-    [self.modifyCatagoryPickerPopover dismissPopoverAnimated:YES];
+    [self.categoryPickerPopover dismissPopoverAnimated:YES];
+    [self.modifyCategoryPickerPopover dismissPopoverAnimated:YES];
     
     [self refreshCatagories];
 }
@@ -604,18 +602,18 @@
     [self.namesPickerPopover dismissPopoverAnimated:YES];
     [self.colorPickerPopover dismissPopoverAnimated:YES];
     [self.allColorsPickerPopover dismissPopoverAnimated:YES];
-    [self.catagoryPickerPopover dismissPopoverAnimated:YES];
-    [self.modifyCatagoryPickerPopover dismissPopoverAnimated:YES];
+    [self.categoryPickerPopover dismissPopoverAnimated:YES];
+    [self.modifyCategoryPickerPopover dismissPopoverAnimated:YES];
     
     if (popUpController == self.namesPickerViewController)
     {
-        if (index == self.sampleCatagoryNames.count - 1)
+        if (index == self.sampleCategoryNames.count - 1)
         {
             [self.catagoryNameField becomeFirstResponder];
         }
         else
         {
-            self.catagoryNameField.text = self.sampleCatagoryNames [index];
+            self.catagoryNameField.text = self.sampleCategoryNames [index];
             
             [self.catagoryNameField resignFirstResponder];
             
@@ -623,11 +621,11 @@
         }
     }
     
-    else if (popUpController == self.catagoryPickerViewController)
+    else if (popUpController == self.categoryPickerViewController)
     {
-        self.catagoryToTransferTo = self.catagories[index];
+        self.categoryToTransferTo = self.catagories[index];
         
-        if (self.currentlySelectedCatagory == self.catagoryToTransferTo)
+        if (self.currentlySelectedCategory == self.categoryToTransferTo)
         {
             //nothing to be done
         }
@@ -635,7 +633,7 @@
         {
             //show a UIAlertView Confirmation
             UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Transfer", nil)
-                                                              message: [NSString stringWithFormat:NSLocalizedString(@"Are you sure you want to transfer all items in %@ to %@?", nil), self.currentlySelectedCatagory.name, self.catagoryToTransferTo.name]
+                                                              message: [NSString stringWithFormat:NSLocalizedString(@"Are you sure you want to transfer all items in %@ to %@?", nil), self.currentlySelectedCategory.name, self.categoryToTransferTo.name]
                                                              delegate: self
                                                     cancelButtonTitle: NSLocalizedString(@"No", nil)
                                                     otherButtonTitles: NSLocalizedString(@"Yes", nil), nil];
@@ -653,9 +651,9 @@
     
     if ([title isEqualToString: NSLocalizedString(@"Yes", nil)])
     {
-        if ([self.manipulationService transferCatagoryFromCatagoryID:self.currentlySelectedCatagory.localID toCatagoryID:self.catagoryToTransferTo.localID save:YES])
+        if ([self.manipulationService transferCatagoryFromCatagoryID:self.currentlySelectedCategory.localID toCatagoryID:self.categoryToTransferTo.localID save:YES])
         {
-            self.catagoryToTransferTo = nil;
+            self.categoryToTransferTo = nil;
             
             [self refreshCatagories];
         }
@@ -663,7 +661,7 @@
     
     else if ([title isEqualToString: NSLocalizedString(@"Delete", nil)])
     {
-        if ([self.manipulationService deleteCatagoryForCatagoryID:self.currentlySelectedCatagory.localID save:YES])
+        if ([self.manipulationService deleteCatagoryForCatagoryID:self.currentlySelectedCategory.localID save:YES])
         {
             [self refreshCatagories];
         }
@@ -722,10 +720,10 @@
 
 - (UITableViewCell *) tableView: (UITableView *) tableView cellForRowAtIndexPath: (NSIndexPath *) indexPath
 {
-    // display a CatagoryTableViewCell
+    // display a CategoryTableViewCell
     if (indexPath.row % 2 == 0)
     {
-        static NSString *cellId = kCatagoryTableViewCellIdentifier;
+        static NSString *cellId = kCategoryTableViewCellIdentifier;
         CatagoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: cellId];
 
         if (cell == nil)
@@ -735,22 +733,22 @@
 
         cell.clipsToBounds = YES;
 
-        Catagory *thisCatagory = (self.catagories)[indexPath.row / 2];
+        ItemCategory *thisCategory = self.catagories[indexPath.row / 2];
 
-        cell.catagoryColor = thisCatagory.color;
-        (cell.colorBox).backgroundColor = thisCatagory.color;
+        cell.catagoryColor = thisCategory.color;
+        (cell.colorBox).backgroundColor = thisCategory.color;
 
-        (cell.catagoryName).text = thisCatagory.name;
+        (cell.catagoryName).text = thisCategory.name;
         
-        if (self.addingCatagoryMode)
+        if (self.addingCategoryMode)
         {
             [cell makeCellAppearInactive];
         }
         else
         {
-            if (self.currentlySelectedCatagory)
+            if (self.currentlySelectedCategory)
             {
-                if (thisCatagory == self.currentlySelectedCatagory)
+                if (thisCategory == self.currentlySelectedCategory)
                 {
                     [cell makeCellAppearActive];
                 }
@@ -769,10 +767,10 @@
 
         return cell;
     }
-    // display a ModifyCatagoryTableViewCell
+    // display a ModifyCategoryTableViewCell
     else
     {
-        static NSString *cellId2 = kModifyCatagoryTableViewCellIdentifier;
+        static NSString *cellId2 = kModifyCategoryTableViewCellIdentifier;
         ModifyCatagoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: cellId2];
 
         if (cell == nil)
@@ -822,17 +820,17 @@
 {
     if (indexPath.row % 2 == 0)
     {
-        return kCatagoryTableViewCellHeight;
+        return kCategoryTableViewCellHeight;
     }
     else
     {
-        Catagory *thisCatagory = (self.catagories)[(indexPath.row - 1) / 2];
+        ItemCategory *thisCategory = (self.catagories)[(indexPath.row - 1) / 2];
 
-        // only show the row if currentlySelectedCatagory == thisCatagory
+        // only show the row if currentlySelectedCategory == thisCategory
 
-        if (thisCatagory == self.currentlySelectedCatagory)
+        if (thisCategory == self.currentlySelectedCategory)
         {
-            return kModifyCatagoryTableViewCellHeight;
+            return kModifyCategoryTableViewCellHeight;
         }
     }
 
@@ -843,27 +841,27 @@
 {
     if (indexPath.row % 2 == 0)
     {
-        Catagory *thisCatagory = (self.catagories)[indexPath.row / 2];
+        ItemCategory *thisCategory = (self.catagories)[indexPath.row / 2];
 
-        DLog(@"Category %@ clicked", thisCatagory.name);
+        DLog(@"Category %@ clicked", thisCategory.name);
 
-        if (self.currentlySelectedCatagory == thisCatagory)
+        if (self.currentlySelectedCategory == thisCategory)
         {
             // deselect
-            self.currentlySelectedCatagory = nil;
+            self.currentlySelectedCategory = nil;
         }
         else
         {
-            if (!self.currentlySelectedCatagory)
+            if (!self.currentlySelectedCategory)
             {
-                self.currentlySelectedCatagory = thisCatagory;
+                self.currentlySelectedCategory = thisCategory;
                 
                 [tableView scrollToRowAtIndexPath: indexPath atScrollPosition: UITableViewScrollPositionTop animated: YES];
             }
             else
             {
                 // deselect
-                self.currentlySelectedCatagory = nil;
+                self.currentlySelectedCategory = nil;
             }
         }
     }
