@@ -7,10 +7,6 @@
 //
 
 #import "ServiceFactory.h"
-#import "AuthenticationService.h"
-#import "AuthenticationServiceImpl.h"
-#import "DataService.h"
-#import "DataServiceImpl.h"
 #import "DAOFactory.h"
 #import "ManipulationService.h"
 #import "ManipulationServiceImpl.h"
@@ -21,8 +17,8 @@
 
 @interface ServiceFactory ()
 
-@property (nonatomic, strong) id<AuthenticationService> authenticationService;
-@property (nonatomic, strong) id<DataService> dataService;
+@property (nonatomic, strong) AuthenticationService *authenticationService;
+@property (nonatomic, strong) DataService *dataService;
 @property (nonatomic, strong) id<ManipulationService> manipulationService;
 @property (nonatomic, strong) id<SyncService> syncService;
 
@@ -30,27 +26,21 @@
 
 @implementation ServiceFactory
 
-- (id<AuthenticationService>) createAuthenticationService
+- (AuthenticationService *) createAuthenticationService
 {
     if (!self.authenticationService)
     {
-        self.authenticationService = [[AuthenticationServiceImpl alloc] init];
-        self.authenticationService.userDataDAO = [self.daoFactory createUserDataDAO];
-        self.authenticationService.networkCommunicator = self.networkCommunicator;
+        self.authenticationService = [[AuthenticationService alloc] initWithUserDataDAO:[self.daoFactory createUserDataDAO] networkCommunicator:self.networkCommunicator];
     }
     
     return self.authenticationService;
 }
 
-- (id<DataService>) createDataService
+- (DataService *) createDataService
 {
     if (!self.dataService)
     {
-        self.dataService = [[DataServiceImpl alloc] init];
-        self.dataService.catagoriesDAO = [self.daoFactory createCatagoriesDAO];
-        self.dataService.recordsDAO = [self.daoFactory createRecordsDAO];
-        self.dataService.receiptsDAO = [self.daoFactory createReceiptsDAO];
-        self.dataService.taxYearsDAO = [self.daoFactory createTaxYearsDAO];
+        self.dataService = [[DataService alloc] initWithCatagoriesDAO:[self.daoFactory createCatagoriesDAO] recordsDAO:[self.daoFactory createRecordsDAO] receiptsDAO:[self.daoFactory createReceiptsDAO] taxYearsDAO:[self.daoFactory createTaxYearsDAO]];
     }
     
     return self.dataService;

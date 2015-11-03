@@ -8,10 +8,7 @@
 
 #import "BackgroundWorker.h"
 #import "SyncManager.h"
-#import "AuthenticationService.h"
 #import "UserManager.h"
-
-#import "CeliTax-Swift.h"
 
 #define kLastTimeDateKey                @"LastTimeDateKey"
 #define kQueuedTasksKey                 @"QueuedTasksKey"
@@ -179,8 +176,8 @@
                 if (self.userManager.user)
                 {
                     [self.authenticationService updateAccountInfo: self.userManager.user.firstname
-                                                     withLastname: self.userManager.user.lastname
-                                                      withCountry:self.userManager.user.country
+                                                         lastname: self.userManager.user.lastname
+                                                          country:self.userManager.user.country
                                                           success:^{
                                                               
                                                               //Go on to next task

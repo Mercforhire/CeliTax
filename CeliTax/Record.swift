@@ -8,7 +8,8 @@
 
 import Foundation
 
-@objc enum UnitTypes : Int
+@objc
+enum UnitTypes : Int
 {
     case UnitItem = 0
     case UnitML = 1

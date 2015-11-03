@@ -7,8 +7,9 @@
 //
 
 #import "BaseSideBarViewController.h"
-#import "DataService.h"
 #import "ManipulationService.h"
+
+@class DataService;
 
 @interface CategoryRow : NSObject
 
@@ -23,7 +24,7 @@
 
 @interface MyAccountViewController : BaseSideBarViewController
 
-@property (nonatomic, weak) id <DataService> dataService;
+@property (nonatomic, weak) DataService *dataService;
 @property (nonatomic, weak) id <ManipulationService> manipulationService;
 
 @end

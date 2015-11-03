@@ -7,10 +7,10 @@
 //
 
 #import "BaseViewController.h"
-#import "AuthenticationService.h"
+#import "CeliTax-Swift.h"
 
 @interface LoginViewController : BaseViewController
 
-@property (nonatomic, weak) id <AuthenticationService> authenticationService;
+@property (nonatomic, weak) AuthenticationService *authenticationService;
 
 @end

@@ -7,9 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AuthenticationService.h"
-
-@protocol AuthenticationService;
+#import "CeliTax-Swift.h"
 
 @class User, UserDataDAO, ConfigurationManager, BackgroundWorker,SubscriptionManager;
 
@@ -23,7 +21,7 @@
 //This variable determines whether to show the disclaimer message upon login
 @property (nonatomic) BOOL doNotShowDisclaimer;
 
-@property (nonatomic, weak) id <AuthenticationService>  authenticationService;
+@property (nonatomic, weak) AuthenticationService       *authenticationService;
 @property (nonatomic, weak) ConfigurationManager        *configManager;
 @property (nonatomic, weak) UserDataDAO                 *userDataDAO;
 @property (nonatomic, weak) BackgroundWorker            *backgroundWorker;

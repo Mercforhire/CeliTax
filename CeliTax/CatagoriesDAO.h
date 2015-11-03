@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "UserDataDAO.h"
-#import "CeliTax-Swift.h"
+
+@class ItemCategory;
 
 @interface CatagoriesDAO : NSObject
 

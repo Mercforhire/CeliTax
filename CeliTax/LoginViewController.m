@@ -11,14 +11,11 @@
 #import "ViewControllerFactory.h"
 #import "MBProgressHUD.h"
 #import "NSString+Helper.h"
-#import "AuthenticationService.h"
 #import "UserManager.h"
 #import "UIView+Helper.h"
 #import "MainViewController.h"
 #import "PasswordRecoveryViewController.h"
 #import "HollowGreenButton.h"
-
-#import "CeliTax-Swift.h"
 
 @interface LoginViewController () <UITextFieldDelegate>
 
@@ -152,11 +149,9 @@
     }
 
     [self.authenticationService authenticateUser: self.emailField.text
-                                    withPassword: self.passwordField.text
+                                        password: self.passwordField.text
                                          success: ^(AuthorizeResult *authorizeResult)
      {
-         
-         [self.waitView hide: YES];
          
          [self.userManager loginUserFor: authorizeResult.userName
                                  andKey: authorizeResult.userAPIKey
@@ -166,11 +161,15 @@
          
          [self.userManager updateUserSubscriptionExpiryDate:^{
              
+             [self.waitView hide: YES];
+             
              [self.navigationController pushViewController: [self.viewControllerFactory createMainViewController] animated: YES];
              
              [self.loginButton setEnabled: YES];
              
          } failure:^(NSString *reason) {
+             
+             [self.waitView hide: YES];
              
              [self.navigationController pushViewController: [self.viewControllerFactory createMainViewController] animated: YES];
              
@@ -184,11 +183,11 @@
          
          NSString *errorMessage;
          
-         if ([authorizeResult.message isEqualToString:USER_PASSWORD_WRONG])
+         if ([authorizeResult.message isEqualToString: AuthenticationService.USER_PASSWORD_WRONG])
          {
              errorMessage = NSLocalizedString(@"The password entered for this user is incorrect", nil);
          }
-         else if ([authorizeResult.message isEqualToString:USER_DOESNT_EXIST])
+         else if ([authorizeResult.message isEqualToString: AuthenticationService.USER_DOESNT_EXIST])
          {
              errorMessage = NSLocalizedString(@"This user does not exist", nil);
          }

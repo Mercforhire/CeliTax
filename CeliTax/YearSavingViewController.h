@@ -7,10 +7,11 @@
 //
 
 #import "BaseViewController.h"
-#import "DataService.h"
+
+@class DataService;
 
 @interface YearSavingViewController : BaseViewController
 
-@property (nonatomic, weak) id <DataService> dataService;
+@property (nonatomic, weak) DataService *dataService;
 
 @end

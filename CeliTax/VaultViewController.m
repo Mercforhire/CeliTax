@@ -240,18 +240,18 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
             
             NSMutableDictionary *fakeReceiptInfo1 = [NSMutableDictionary new];
             
-            fakeReceiptInfo1[kNumberOfRecordsKey] = @4;
-            fakeReceiptInfo1[kUploadTimeKey] = [NSDate date];
+            fakeReceiptInfo1[DataService.kNumberOfRecordsKey] = @4;
+            fakeReceiptInfo1[DataService.kUploadTimeKey] = [NSDate date];
             
             NSMutableDictionary *fakeReceiptInfo2 = [NSMutableDictionary new];
             
-            fakeReceiptInfo2[kNumberOfRecordsKey] = @2;
-            fakeReceiptInfo2[kUploadTimeKey] = [NSDate date];
+            fakeReceiptInfo2[DataService.kNumberOfRecordsKey] = @2;
+            fakeReceiptInfo2[DataService.kUploadTimeKey] = [NSDate date];
             
             NSMutableDictionary *fakeReceiptInfo3 = [NSMutableDictionary new];
             
-            fakeReceiptInfo3[kNumberOfRecordsKey] = @8;
-            fakeReceiptInfo3[kUploadTimeKey] = [NSDate date];
+            fakeReceiptInfo3[DataService.kNumberOfRecordsKey] = @8;
+            fakeReceiptInfo3[DataService.kUploadTimeKey] = [NSDate date];
             
             self.recentUploadReceipts = @[fakeReceiptInfo1, fakeReceiptInfo2, fakeReceiptInfo3];
             
@@ -439,7 +439,7 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
 {
     NSDictionary *thisReceiptInfo = [self getReceiptInfoFromTag:checkBox.tag];
 
-    NSString *receiptID = thisReceiptInfo[kReceiptIDKey];
+    NSString *receiptID = thisReceiptInfo[DataService.kReceiptIDKey];
 
     if (checkBox.checkState == M13CheckboxStateChecked)
     {
@@ -510,8 +510,7 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
 
 -(void)fetchRecentUploadReceipts
 {
-    NSArray *receiptInfos = [self.dataService fetchNewestReceiptInfo : 5
-                                                               inYear: self.currentlySelectedYear.integerValue];
+    NSArray *receiptInfos = [self.dataService fetchNewestReceiptInfo : 5 year: self.currentlySelectedYear.integerValue];
     
     self.recentUploadReceipts = receiptInfos;
 }
@@ -524,7 +523,7 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
     
     NSArray *receiptInfos = [self.dataService fetchReceiptInfoFromDate: mondayOfPreviousWeek
                                                                 toDate: mondayOfThisWeek
-                                                             inTaxYear: self.currentlySelectedYear.integerValue];
+                                                               taxYear: self.currentlySelectedYear.integerValue];
     self.previousWeekReceipts = receiptInfos;
 }
 
@@ -536,7 +535,7 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
     
     NSArray *receiptInfos = [self.dataService fetchReceiptInfoFromDate: firstDayOfPreviousMonth
                                                                 toDate: firstDayOfThisMonth
-                                                             inTaxYear: self.currentlySelectedYear.integerValue];
+                                                               taxYear: self.currentlySelectedYear.integerValue];
     
     self.previousMonthReceipts = receiptInfos;
 }
@@ -544,7 +543,7 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
 -(void)fetchViewAllReceipts
 {
     NSArray *receiptInfos = [self.dataService fetchNewestReceiptInfo: 999
-                                                              inYear: self.currentlySelectedYear.integerValue];
+                                                                year: self.currentlySelectedYear.integerValue];
     
     self.viewAllReceipts = receiptInfos;
 }
@@ -560,7 +559,7 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
 {
     NSDictionary *thisReceiptInfo = [self getReceiptInfoFromTag:sender.tag];
     
-    NSString *receiptID = thisReceiptInfo[kReceiptIDKey];
+    NSString *receiptID = thisReceiptInfo[DataService.kReceiptIDKey];
     
     //push to Receipt Checking view directly if this receipt has no items
     NSArray *records = [self.dataService fetchRecordsForReceiptID: receiptID];
@@ -656,28 +655,28 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
         {
             for (NSDictionary *receiptInfo in self.recentUploadReceipts)
             {
-                NSString *receiptID = receiptInfo[kReceiptIDKey];
+                NSString *receiptID = receiptInfo[DataService.kReceiptIDKey];
                 
                 [receiptIDsToDelete addObject:receiptID];
             }
             
             for (NSDictionary *receiptInfo in self.previousWeekReceipts)
             {
-                NSString *receiptID = receiptInfo[kReceiptIDKey];
+                NSString *receiptID = receiptInfo[DataService.kReceiptIDKey];
                 
                 [receiptIDsToDelete addObject:receiptID];
             }
             
             for (NSDictionary *receiptInfo in self.previousMonthReceipts)
             {
-                NSString *receiptID = receiptInfo[kReceiptIDKey];
+                NSString *receiptID = receiptInfo[DataService.kReceiptIDKey];
                 
                 [receiptIDsToDelete addObject:receiptID];
             }
             
             for (NSDictionary *receiptInfo in self.viewAllReceipts)
             {
-                NSString *receiptID = receiptInfo[kReceiptIDKey];
+                NSString *receiptID = receiptInfo[DataService.kReceiptIDKey];
                 
                 [receiptIDsToDelete addObject:receiptID];
             }
@@ -732,28 +731,28 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
         
         for (NSDictionary *receiptInfo in self.recentUploadReceipts)
         {
-            NSString *receiptID = receiptInfo[kReceiptIDKey];
+            NSString *receiptID = receiptInfo[DataService.kReceiptIDKey];
             
             [receiptIDsToTransfer addObject:receiptID];
         }
         
         for (NSDictionary *receiptInfo in self.previousWeekReceipts)
         {
-            NSString *receiptID = receiptInfo[kReceiptIDKey];
+            NSString *receiptID = receiptInfo[DataService.kReceiptIDKey];
             
             [receiptIDsToTransfer addObject:receiptID];
         }
         
         for (NSDictionary *receiptInfo in self.previousMonthReceipts)
         {
-            NSString *receiptID = receiptInfo[kReceiptIDKey];
+            NSString *receiptID = receiptInfo[DataService.kReceiptIDKey];
             
             [receiptIDsToTransfer addObject:receiptID];
         }
         
         for (NSDictionary *receiptInfo in self.viewAllReceipts)
         {
-            NSString *receiptID = receiptInfo[kReceiptIDKey];
+            NSString *receiptID = receiptInfo[DataService.kReceiptIDKey];
             
             [receiptIDsToTransfer addObject:receiptID];
         }
@@ -1065,7 +1064,7 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
             (cell.checkBoxView).tag = (checkBoxTagOffset + indexPath.row - 1);
             [cell.checkBoxView addTarget: self action: @selector(singleReceiptCheckChangedValue:) forControlEvents: UIControlEventValueChanged];
             
-            NSString *receiptID = thisReceiptInfo[kReceiptIDKey];
+            NSString *receiptID = thisReceiptInfo[DataService.kReceiptIDKey];
             
             if (self.selectAllReceipts || (self.selectedReceipts)[receiptID])
             {
@@ -1076,7 +1075,7 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
                 (cell.checkBoxView).checkState = M13CheckboxStateUnchecked;
             }
             
-            NSDate *receiptDate = thisReceiptInfo[kUploadTimeKey];
+            NSDate *receiptDate = thisReceiptInfo[DataService.kUploadTimeKey];
             
             (self.dateFormatter).dateFormat = @"dd/MM/yyyy";
             
@@ -1087,7 +1086,7 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
             cell.receiptCounterView.imageButton.tag = (checkBoxTagOffset + indexPath.row - 1);
             [cell.receiptCounterView.imageButton addTarget:self action:@selector(receiptDetailsPressed:) forControlEvents:UIControlEventTouchUpInside];
             
-            NSInteger numberOfRecords = [thisReceiptInfo[kNumberOfRecordsKey] integerValue];
+            NSInteger numberOfRecords = [thisReceiptInfo[DataService.kNumberOfRecordsKey] integerValue];
             
             (cell.receiptCounterView).counter = numberOfRecords;
             

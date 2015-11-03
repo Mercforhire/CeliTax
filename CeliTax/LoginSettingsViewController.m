@@ -10,7 +10,6 @@
 #import "HollowGreenButton.h"
 #import "MBProgressHUD.h"
 #import "NSString+Helper.h"
-#import "AuthenticationService.h"
 #import "UserManager.h"
 #import "SolidGreenButton.h"
 #import "LoginViewController.h"
@@ -387,7 +386,7 @@
             
             NSString *errorMessage;
             
-            if ([reason isEqualToString:USER_CHANGE_EMAIL_ALREADY_EXIST])
+            if ([reason isEqualToString: AuthenticationService.USER_CHANGE_EMAIL_ALREADY_EXIST])
             {
                 errorMessage = NSLocalizedString(@"The email address is already used by another account. Please use a different email address", nil);
             }
@@ -438,7 +437,7 @@
              
              NSString *errorMessage;
              
-             if ([reason isEqualToString:USER_PASSWORD_WRONG])
+             if ([reason isEqualToString: AuthenticationService.USER_PASSWORD_WRONG])
              {
                  errorMessage = NSLocalizedString(@"The password provided is incorrect", nil);
              }
@@ -507,7 +506,7 @@
             
             NSString *errorMessage;
             
-            if ([reason isEqualToString:USER_PASSWORD_WRONG])
+            if ([reason isEqualToString: AuthenticationService.USER_PASSWORD_WRONG])
             {
                 errorMessage = NSLocalizedString(@"The password provided is incorrect", nil);
             }

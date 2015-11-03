@@ -9,12 +9,9 @@
 #import "RegisterViewController.h"
 #import "MBProgressHUD.h"
 #import "NSString+Helper.h"
-#import "AuthenticationService.h"
 #import "M13Checkbox.h"
 #import "HollowGreenButton.h"
 #import "UIView+Helper.h"
-
-#import "celitax-Swift.h"
 
 @interface RegisterViewController () <UITextFieldDelegate>
 
@@ -227,10 +224,10 @@
     }
 
     [self.authenticationService registerNewUser: self.emailField.text
-                                   withPassword: self.passwordField.text
-                                  withFirstname: self.firstnameField.text
-                                   withLastname: self.lastnameField.text
-                                    withCountry: self.country
+                                       password: self.passwordField.text
+                                      firstname: self.firstnameField.text
+                                       lastname: self.lastnameField.text
+                                        country: self.country
                                         success:^(RegisterResult *registerResult)
     {
         
@@ -253,7 +250,7 @@
         
         NSString *errorMessage;
         
-        if ([registerResult.message isEqualToString:USER_ALREADY_EXIST])
+        if ([registerResult.message isEqualToString: AuthenticationService.USER_ALREADY_EXIST])
         {
             errorMessage = NSLocalizedString(@"The email address is already used by another account. Please use a different email address", nil);
         }

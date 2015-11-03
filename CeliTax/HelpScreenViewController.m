@@ -7,12 +7,13 @@
 //
 
 #import "HelpScreenViewController.h"
-#import "AuthenticationService.h"
 #import "MBProgressHUD.h"
 #import "UIView+Helper.h"
 #import "HollowGreenButton.h"
 #import "TutorialManager.h"
 #import "SolidGreenButton.h"
+
+#import "CeliTax-Swift.h"
 
 #define KTelephoneNumber        @"905-583-5353"
 

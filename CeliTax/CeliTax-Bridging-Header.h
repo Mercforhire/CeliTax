@@ -3,7 +3,10 @@
 //
 
 #import "UserDataDAO.h"
-#import "NetworkCommunicator.h"
 #import "Utils.h"
 #import "ConfigurationManager.h"
 #import "MKNetworkEngine.h"
+#import "CatagoriesDAO.h"
+#import "ReceiptsDAO.h"
+#import "RecordsDAO.h"
+#import "TaxYearsDAO.h"

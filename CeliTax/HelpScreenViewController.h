@@ -7,11 +7,10 @@
 //
 
 #import "BaseSideBarViewController.h"
-
-@protocol AuthenticationService;
+#import "CeliTax-Swift.h"
 
 @interface HelpScreenViewController : BaseSideBarViewController
 
-@property (nonatomic, weak) id <AuthenticationService> authenticationService;
+@property (nonatomic, weak) AuthenticationService *authenticationService;
 
 @end

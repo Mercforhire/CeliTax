@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CeliTax-Swift.h"
 
-@class ConfigurationManager, DAOFactory, NetworkCommunicator, BuilderFactory;
-@protocol AuthenticationService, DataService, ManipulationService, SyncService;
+@class ConfigurationManager, DAOFactory, NetworkCommunicator, BuilderFactory, DataService;
+@protocol ManipulationService, SyncService;
 
 @interface ServiceFactory : NSObject
 
@@ -21,9 +22,9 @@
 
 @property (nonatomic, weak) BuilderFactory *builderFactory;
 
-- (id<AuthenticationService>) createAuthenticationService;
+- (AuthenticationService *) createAuthenticationService;
 
-- (id<DataService>) createDataService;
+- (DataService *) createDataService;
 
 - (id<ManipulationService>) createManipulationService;
 

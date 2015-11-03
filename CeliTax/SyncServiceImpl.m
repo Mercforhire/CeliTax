@@ -9,7 +9,6 @@
 #import "SyncServiceImpl.h"
 #import "UserDataDAO.h"
 #import "Utils.h"
-#import "NetworkCommunicator.h"
 #import "RecordsDAO.h"
 #import "TaxYearsDAO.h"
 #import "ReceiptsDAO.h"
@@ -210,7 +209,7 @@
                                        jsonString,@"data"
                                        ,nil];
     
-    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path: [WEB_API_FILE stringByAppendingPathComponent:@"upload"] ] ;
+    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path: [NetworkCommunicator.WEB_API_FILE stringByAppendingPathComponent:@"upload"] ] ;
     
     [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
     
@@ -249,7 +248,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (failure)
             {
-                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
+                failure ( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY );
             }
         });
         
@@ -264,7 +263,7 @@
 -(void) downloadUserData: (DownloadDataSuccessBlock) success
                  failure: (DownloadDataFailureBlock) failure
 {
-    MKNetworkOperation *networkOperation = [self.networkCommunicator getRequestToServer:[WEB_API_FILE stringByAppendingPathComponent:@"download"]];
+    MKNetworkOperation *networkOperation = [self.networkCommunicator getRequestToServer:[NetworkCommunicator.WEB_API_FILE stringByAppendingPathComponent:@"download"]];
     
     [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
     
@@ -399,7 +398,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (failure)
             {
-                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
+                failure ( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY );
             }
         });
         
@@ -414,7 +413,7 @@
 - (void) getLastestServerDataBatchID: (GetLastestServerDataInfoSuccessBlock) success
                              failure: (GetLastestServerDataInfoFailureBlock) failure
 {
-    MKNetworkOperation *networkOperation = [self.networkCommunicator getRequestToServer:[WEB_API_FILE stringByAppendingPathComponent:@"data_batchid"]];
+    MKNetworkOperation *networkOperation = [self.networkCommunicator getRequestToServer:[NetworkCommunicator.WEB_API_FILE stringByAppendingPathComponent:@"data_batchid"]];
     
     [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
     
@@ -458,7 +457,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (failure)
             {
-                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
+                failure ( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY );
             }
         });
         
@@ -473,7 +472,7 @@
 - (void) getFilesNeedToUpload: (GetListOfFilesNeedUploadSuccessBlock) success
                       failure: (GetListOfFilesNeedUploadFailureBlock) failure
 {
-    MKNetworkOperation *networkOperation = [self.networkCommunicator getRequestToServer:[WEB_API_FILE stringByAppendingPathComponent:@"get_files_need_upload"]];
+    MKNetworkOperation *networkOperation = [self.networkCommunicator getRequestToServer:[NetworkCommunicator.WEB_API_FILE stringByAppendingPathComponent:@"get_files_need_upload"]];
     
     [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
     
@@ -502,7 +501,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (failure)
             {
-                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
+                failure ( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY );
             }
         });
         
@@ -521,7 +520,7 @@
                                        filename,@"filename"
                                        ,nil];
     
-    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path: [WEB_API_FILE stringByAppendingPathComponent:@"upload_photo"] ] ;
+    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path: [NetworkCommunicator.WEB_API_FILE stringByAppendingPathComponent:@"upload_photo"] ] ;
     
     [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
     
@@ -553,7 +552,7 @@
             
             if (failure)
             {
-                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
+                failure ( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY );
             }
             
         });
@@ -571,7 +570,7 @@
                      success: (FileDownloadSuccessBlock) success
                      failure: (FileDownloadFailureBlock) failure
 {
-    MKNetworkOperation *networkOperation = [self.networkCommunicator downloadFileFrom:url toFile:filePath];
+    MKNetworkOperation *networkOperation = [self.networkCommunicator downloadFileFrom:url filePath:filePath];
     
     MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
         
@@ -592,7 +591,7 @@
             if (failure)
             {
                 DLog(@"Failed to download image from %@", url);
-                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
+                failure ( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY );
             }
         });
     };
@@ -605,14 +604,13 @@
               failure: (FileDownloadFailureBlock) failure
 {
     // 1.get the URL of the image first
-    
     NSString *filePath = [Utils getFilePathForImage:filename forUser: self.userDataDAO.userKey];
     
     NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                        filename,@"filename"
                                        ,nil];
     
-    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path:[WEB_API_FILE stringByAppendingPathComponent:@"request_file_url"]];
+    MKNetworkOperation *networkOperation = [self.networkCommunicator postDataToServer:postParams path:[NetworkCommunicator.WEB_API_FILE stringByAppendingPathComponent:@"request_file_url"]];
     
     [networkOperation addHeader:@"Authorization" withValue:self.userDataDAO.userKey];
     
@@ -648,7 +646,7 @@
             
             if (failure)
             {
-                failure ( NETWORK_ERROR_NO_CONNECTIVITY );
+                failure ( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY );
             }
             
         });

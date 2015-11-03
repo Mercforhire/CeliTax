@@ -93,8 +93,7 @@
     
     for (ItemCategory *category in self.catagories)
     {
-        NSArray *recordsForThisCatagory = [self.dataService fetchRecordsForCatagoryID: category.localID
-                                                                            inTaxYear: self.configurationManager.getCurrentTaxYear.integerValue];
+        NSArray *recordsForThisCatagory = [self.dataService fetchRecordsForCatagoryID:category.localID taxYear:self.configurationManager.getCurrentTaxYear.integerValue];
         
         // Separate recordsForThisCatagory into groups of the same Unit Type
         NSMutableDictionary *recordsOfEachType = [NSMutableDictionary new];

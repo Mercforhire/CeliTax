@@ -9,18 +9,18 @@
 #import <Foundation/Foundation.h>
 #import "CeliTax-Swift.h"
 
-@class ConfigurationManager, UserManager, LookAndFeel, SubscriptionManager;
+@class ConfigurationManager, UserManager, LookAndFeel, SubscriptionManager, DataService;
 @class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCategoryViewController, SidebarViewController, ItemCategory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager, SyncManager, ProfileSettingsViewController, ImperialUnitPickerViewController, MetricUnitPickerViewController, YearSummaryViewController, YearSavingViewController, BackgroundWorker, LoginSettingsViewController, SubscriptionViewController;
 
-@protocol AuthenticationService, DataService, ManipulationService, SyncService;
+@protocol ManipulationService, SyncService;
 
 @interface ViewControllerFactory : NSObject
 
 @property (nonatomic, weak) UserManager *userManager;
 @property (nonatomic, weak) ConfigurationManager *configurationManager;      /** Used to get global configuration values */
 
-@property (nonatomic, weak) id <AuthenticationService> authenticationService;
-@property (nonatomic, weak) id <DataService> dataService;
+@property (nonatomic, weak) AuthenticationService *authenticationService;
+@property (nonatomic, weak) DataService *dataService;
 @property (nonatomic, weak) id <ManipulationService> manipulationService;
 @property (nonatomic, weak) id <SyncService> syncService;
 @property (nonatomic, weak) LookAndFeel *lookAndFeel;

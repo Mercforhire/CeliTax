@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CeliTax-Swift.h"
 
 typedef NS_ENUM(NSUInteger, QueueTaskTypes) {
     QueueTaskUploadData,
@@ -17,7 +18,6 @@ typedef NS_ENUM(NSUInteger, QueueTaskTypes) {
 
 @class SyncManager,UserManager;
 
-@protocol AuthenticationService;
 
 /**
  Purpose of this BackgroundWorker is to store and execute requests that deals 
@@ -27,7 +27,7 @@ typedef NS_ENUM(NSUInteger, QueueTaskTypes) {
 @interface BackgroundWorker : NSObject
 
 @property (nonatomic, weak) SyncManager *syncManager;
-@property (nonatomic, weak) id <AuthenticationService> authenticationService;
+@property (nonatomic, weak) AuthenticationService *authenticationService;
 @property (nonatomic, weak) UserManager *userManager;
 
 /*

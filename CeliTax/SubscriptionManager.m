@@ -8,10 +8,7 @@
 
 #import "SubscriptionManager.h"
 #import "UserManager.h"
-#import "AuthenticationService.h"
 #import "Utils.h"
-
-#import "CeliTax-Swift.h"
 
 NSString *const SubscriptionManagerProductPurchasedNotification = @"IAPHelperProductPurchasedNotification";
 

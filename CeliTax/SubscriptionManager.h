@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <StoreKit/StoreKit.h>
+#import "CeliTax-Swift.h"
 
 @class UserManager;
-@protocol AuthenticationService;
 
 #define k3MonthServiceProductID     @"com.cravensave.celitax.3monthservice"
 #define k6MonthServiceProductID     @"com.cravensave.celitax.6monthservice"
@@ -22,7 +22,7 @@ typedef void (^RequestProductsCompletionHandler)(BOOL success, NSArray * product
 typedef void (^PurchaseSubscriptionSuccessHandler)();
 typedef void (^PurchaseSubscriptionFailureHandler)(NSInteger errorCode);
 
-@property (nonatomic, weak) id <AuthenticationService> authenticationService;
+@property (nonatomic, weak) AuthenticationService *authenticationService;
 @property (nonatomic, weak) UserManager *userManager;
 
 - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers;

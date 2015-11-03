@@ -9,15 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 #import "ManipulationService.h"
-#import "DataService.h"
 
-@class Receipt;
+@class Receipt, DataService;
 
 @interface CameraViewController : BaseViewController
 
 @property (nonatomic, strong) NSString *existingReceiptID; //nil if adding a new receipt
 
-@property (nonatomic, weak) id <DataService> dataService;
+@property (nonatomic, weak) DataService *dataService;
 
 @property (nonatomic, weak) id <ManipulationService> manipulationService;
 

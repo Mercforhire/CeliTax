@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Lato-Bold.ttf">
@@ -44,12 +45,14 @@
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PROFILE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="diK-hS-IUa">
                             <rect key="frame" x="121.5" y="15" width="76.5" height="23"/>
+                            <animations/>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="19"/>
                             <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hvg-wU-SNV" userLabel="Invisible View">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                            <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="7Z8-eV-ZWZ"/>
@@ -58,6 +61,7 @@
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kzS-kr-Ivr">
                             <rect key="frame" x="33" y="108" width="30" height="27"/>
+                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="30" id="KNg-MY-r4c"/>
                             </constraints>
@@ -72,6 +76,7 @@
                         </button>
                         <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bxX-x8-Hub">
                             <rect key="frame" x="23" y="58" width="50" height="50"/>
+                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="50" id="1vw-Ua-Izp"/>
                                 <constraint firstAttribute="height" constant="50" id="w5A-GD-MK9"/>
@@ -79,12 +84,14 @@
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LAST NAME:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m4g-dK-zC6">
                             <rect key="frame" x="23" y="202" width="75.5" height="16"/>
+                            <animations/>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="13"/>
                             <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="x5i-Y3-Ind">
                             <rect key="frame" x="124" y="150" width="173" height="32"/>
+                            <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="RgJ-ZQ-cT4"/>
@@ -94,6 +101,7 @@
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jtm-rt-Igc">
                             <rect key="frame" x="121.5" y="194" width="175.5" height="32"/>
+                            <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="3xN-ej-FeK"/>
@@ -103,6 +111,7 @@
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eg5-6R-BUp">
                             <rect key="frame" x="79" y="246" width="41" height="20"/>
+                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="Yvv-td-4DX"/>
                                 <constraint firstAttribute="width" constant="41" id="vuo-DO-PCh"/>
@@ -116,6 +125,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="awF-lG-Pg0">
                             <rect key="frame" x="23" y="246" width="41" height="20"/>
+                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="Yvc-h2-YU4"/>
                                 <constraint firstAttribute="width" constant="41" id="toW-Mf-L0Y"/>
@@ -129,18 +139,21 @@
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TAX COUNTRY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T39-T8-N4m">
                             <rect key="frame" x="140" y="247" width="96.5" height="17"/>
+                            <animations/>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FIRST NAME:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PsI-PJ-Luq">
                             <rect key="frame" x="23" y="158" width="79.5" height="16"/>
+                            <animations/>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="13"/>
                             <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qh1-uV-NR8" customClass="HollowGreenButton">
                             <rect key="frame" x="126" y="314" width="67" height="32"/>
+                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="UHF-Ph-xwf"/>
                                 <constraint firstAttribute="height" constant="42" id="dOW-q2-Dcb"/>
@@ -163,6 +176,7 @@
                             </connections>
                         </button>
                     </subviews>
+                    <animations/>
                     <constraints>
                         <constraint firstItem="PsI-PJ-Luq" firstAttribute="top" secondItem="kzS-kr-Ivr" secondAttribute="bottom" constant="23" id="1Bm-EY-O9F"/>
                         <constraint firstAttribute="bottom" secondItem="qh1-uV-NR8" secondAttribute="bottom" constant="30" id="1Jf-kM-nb9"/>
@@ -211,6 +225,7 @@
                     </variation>
                 </scrollView>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="ti1-xI-Y4g" secondAttribute="bottom" id="3dx-Ka-Krj"/>

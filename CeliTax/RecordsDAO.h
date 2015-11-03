@@ -10,8 +10,6 @@
 #import "UserDataDAO.h"
 #import "CatagoriesDAO.h"
 
-#import "CeliTax-Swift.h"
-
 @class Record, Receipt;
 
 @interface RecordsDAO : NSObject
@@ -87,7 +85,7 @@
 - (NSArray *) fetchRecordsOfCatagory: (NSString *) catagoryID inReceipt: (NSString *) receiptID;
 
 - (NSArray *) fetchRecordsOfCatagory: (NSString *) catagoryID
-                          ofUnitType: (UnitTypes) unitType
+                          ofUnitType: (NSInteger) unitType
                            inReceipt: (NSString *) receiptID;
 
 @end

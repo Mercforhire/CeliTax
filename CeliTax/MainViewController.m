@@ -24,7 +24,6 @@
 #import "UIView+Helper.h"
 #import "NoItemsTableViewCell.h"
 #import "TutorialManager.h"
-#import "DataService.h"
 #import "ManipulationService.h"
 #import "MBProgressHUD.h"
 #import "SyncManager.h"
@@ -326,9 +325,10 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
 
 - (void) reloadReceiptInfo
 {
-    NSArray *receiptInfos = [self.dataService fetchNewestReceiptInfo: 5
-                                                              inYear: self.currentlySelectedYear.integerValue];
+    NSArray *receiptInfos = [self.dataService fetchNewestReceiptInfo:5 year:self.currentlySelectedYear.integerValue];
+    
     self.receiptInfos = receiptInfos;
+    
     [self.recentUploadsTable reloadData];
 }
 
@@ -562,7 +562,7 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
 
     [self.lookAndFeel applyGrayBorderTo: cell.colorBoxView];
 
-    NSDate *uploadDate = uploadInfoDictionary[kUploadTimeKey];
+    NSDate *uploadDate = uploadInfoDictionary[DataService.kUploadTimeKey];
 
     (self.dateFormatter).dateFormat = @"dd/MM/yyyy";
 
@@ -591,7 +591,7 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
     
     NSDictionary *uploadInfoDictionary = self.receiptInfos [indexPath.row];
 
-    NSString *clickedReceiptID = uploadInfoDictionary[kReceiptIDKey];
+    NSString *clickedReceiptID = uploadInfoDictionary[DataService.kReceiptIDKey];
     
     //push to Receipt Checking view directly if this receipt has no items
     NSArray *records = [self.dataService fetchRecordsForReceiptID: clickedReceiptID];

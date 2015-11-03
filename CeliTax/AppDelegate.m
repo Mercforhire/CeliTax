@@ -16,7 +16,6 @@
 #import "DAOFactory.h"
 #import "LookAndFeel.h"
 #import "TutorialManager.h"
-#import "NetworkCommunicator.h"
 #import "SyncManager.h"
 #import "BackgroundWorker.h"
 #import "LocalizationManager.h"
@@ -99,7 +98,7 @@
 
 - (void) initializeNetworkCommunicator
 {
-    self.networkCommunicator = [[NetworkCommunicator alloc] initWithHostName:WEBSERVICE_URL];
+    self.networkCommunicator = [[NetworkCommunicator alloc] initWithHostName: NetworkCommunicator.WEBSERVICE_URL];
 }
 
 - (void) initializeBuilderFactory

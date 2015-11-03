@@ -7,12 +7,13 @@
 //
 
 #import "BaseViewController.h"
-#import "DataService.h"
 #import "ManipulationService.h"
+
+@class DataService;
 
 @interface ReceiptBreakDownViewController : BaseViewController
 
-@property (nonatomic, weak) id <DataService> dataService;
+@property (nonatomic, weak) DataService *dataService;
 @property (nonatomic, weak) id <ManipulationService> manipulationService;
 
 @property NSString *receiptID;

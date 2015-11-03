@@ -12,12 +12,12 @@ import UIKit
 @objc
 class AuthenticationService : NSObject
 {
-    let USER_ALREADY_EXIST : String = "USER_ALREADY_EXIST"
-    let USER_DOESNT_EXIST : String = "USER_DOESNT_EXIST"
-    let USER_PASSWORD_WRONG : String = "USER_PASSWORD_WRONG"
-    let PROFILE_IMAGE_FILE_DOESNT_EXIST : String = "PROFILE_IMAGE_FILE_DOESNT_EXIST"
-    let USER_CHANGE_EMAIL_ALREADY_EXIST : String = "USER_CHANGE_EMAIL_ALREADY_EXIST"
-    let NO_EXPIRATION_DATE_EXIST : String = "NO_EXPIRATION_DATE_EXIST"
+    static let USER_ALREADY_EXIST : String = "USER_ALREADY_EXIST"
+    static let USER_DOESNT_EXIST : String = "USER_DOESNT_EXIST"
+    static let USER_PASSWORD_WRONG : String = "USER_PASSWORD_WRONG"
+    static let PROFILE_IMAGE_FILE_DOESNT_EXIST : String = "PROFILE_IMAGE_FILE_DOESNT_EXIST"
+    static let USER_CHANGE_EMAIL_ALREADY_EXIST : String = "USER_CHANGE_EMAIL_ALREADY_EXIST"
+    static let NO_EXPIRATION_DATE_EXIST : String = "NO_EXPIRATION_DATE_EXIST"
     
     typealias AuthenticateUserSuccessBlock  = (AuthorizeResult) -> Void
     typealias AuthenticateUserFailureBlock = (AuthorizeResult) -> Void
@@ -40,10 +40,15 @@ class AuthenticationService : NSObject
     typealias GetSubscriptionExpiryDateSuccessBlock = (NSString) -> Void
     typealias GetSubscriptionExpiryDateFailureBlock = (NSString) -> Void
     
-    weak var userDataDAO : UserDataDAO!
-    weak var networkCommunicator : NetworkCommunicator!
+    private weak var userDataDAO : UserDataDAO!
+    private weak var networkCommunicator : NetworkCommunicator!
     
-    init(userDataDAO : UserDataDAO, networkCommunicator : NetworkCommunicator)
+    override init()
+    {
+        super.init()
+    }
+    
+    init(userDataDAO : UserDataDAO!, networkCommunicator : NetworkCommunicator!)
     {
         self.userDataDAO = userDataDAO
         self.networkCommunicator = networkCommunicator
@@ -51,119 +56,714 @@ class AuthenticationService : NSObject
     
     func authenticateUser(userName : String, password : String, success : AuthenticateUserSuccessBlock?, failure : AuthenticateUserFailureBlock?)
     {
-        var postParams : NSDictionary = NSDictionary.init(objects: [userName, password], forKeys: ["email","password"]) 
+        let postParams: [String:String] = [
+            "email" : userName,
+            "password" : password
+        ]
         
-//        let networkOperation : MKNetworkOperation = self.networkCommunicator.postDataToServer(postParams, path: WEB_)
-//        self.networkCommunicator postDataToServer:postParams path: [WEB_API_FILE stringByAppendingPathComponent:@"login"] ] ;
+        let urlPath : String = NetworkCommunicator.WEB_API_FILE.stringByAppendingString("/login")
         
-//        MKNKResponseBlock successBlock = ^(MKNetworkOperation *completedOperation) {
-//            
-//            AuthorizeResult *returnedResult = [AuthorizeResult new];
-//            
-//            NSDictionary *response = [completedOperation responseJSON];
-//            
-//            if ( [response[@"error"] boolValue] == NO )
-//            {
-//                returnedResult.success = YES;
-//                returnedResult.message = @"Login Success";
-//                returnedResult.userName = response[@"email"];
-//                returnedResult.userAPIKey = response[@"api_key"];
-//                returnedResult.firstname = response[@"first_name"];
-//                returnedResult.lastname = response[@"last_name"];
-//                returnedResult.country = response[@"country"];
-//                
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    if (success)
-//                    {
-//                        success ( returnedResult );
-//                    }
-//                    });
-//            }
-//            else
-//            {
-//                returnedResult.success = NO;
-//                returnedResult.message = response[@"message"];
-//                
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    if (failure)
-//                    {
-//                        failure ( returnedResult );
-//                    }
-//                    });
-//            }
-//        };
-//        
-//        MKNKResponseErrorBlock failureBlock = ^(MKNetworkOperation *completedOperation, NSError *error) {
-//            AuthorizeResult *returnedResult = [AuthorizeResult new];
-//            
-//            returnedResult.success = NO;
-//            returnedResult.message = NETWORK_ERROR_NO_CONNECTIVITY;
-//            
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                if (failure)
-//                {
-//                    failure ( returnedResult );
-//                }
-//                });
-//        };
-//        
-//        [networkOperation addCompletionHandler: successBlock errorHandler: failureBlock];
-//        
-//        [self.networkCommunicator enqueueOperation:networkOperation];
+        let networkOperation : MKNetworkOperation = self.networkCommunicator.postDataToServer(postParams as [NSObject : AnyObject], path: urlPath)
+        
+        let successBlock : MKNKResponseBlock = { (completedOperation) in
+            
+            let returnedResult : AuthorizeResult = AuthorizeResult()
+            
+            let response : NSDictionary = completedOperation.responseJSON() as! NSDictionary
+            
+            if ( response["error"]!.boolValue == false )
+            {
+                returnedResult.success = true
+                returnedResult.message = "Login Success"
+                returnedResult.userName = response["email"] as! String
+                returnedResult.userAPIKey = response["api_key"] as! String
+                returnedResult.firstname = response["first_name"] as! String
+                returnedResult.lastname = response["last_name"] as! String
+                returnedResult.country = response["country"] as! String
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    if (success != nil)
+                    {
+                        success! ( returnedResult )
+                    }
+                })
+            }
+            else
+            {
+                returnedResult.success = false
+                returnedResult.message = response["message"] as! String
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    if (failure != nil)
+                    {
+                        failure! ( returnedResult )
+                    }
+                })
+            }
+        }
+        
+        let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
+            
+            let returnedResult : AuthorizeResult = AuthorizeResult()
+            
+            returnedResult.success = false
+            returnedResult.message = NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (failure != nil)
+                {
+                    failure! ( returnedResult )
+                }
+            })
+        }
+        
+        networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
+        
+        self.networkCommunicator.enqueueOperation(networkOperation)
     }
     
-    func registerNewUser(userName : String, password : String, firstname : String, country : String, success : RegisterNewUserSuccessBlock?, failure : RegisterNewUserFailureBlock?)
+    func registerNewUser(userName : String, password : String, firstname : String, lastname : String, country : String, success : RegisterNewUserSuccessBlock?, failure : RegisterNewUserFailureBlock?)
     {
+        let postParams: [String:String] = [
+            "email" : userName,
+            "password" : password,
+            "first_name" : firstname,
+            "last_name" : lastname,
+            "country" : country
+        ]
         
+        let networkOperation : MKNetworkOperation = self.networkCommunicator.postDataToServer(postParams,path: NetworkCommunicator.WEB_API_FILE.stringByAppendingString("/register"))
+        
+        let successBlock : MKNKResponseBlock = { (completedOperation) in
+            
+            let registerResult : RegisterResult = RegisterResult()
+            
+            let response : NSDictionary = completedOperation.responseJSON() as! NSDictionary
+            
+            if ( response["error"]!.boolValue == false )
+            {
+                registerResult.success = true
+                registerResult.message = "You are successfully registered."
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    if (success != nil)
+                    {
+                        success! ( registerResult )
+                    }
+                    
+                })
+            }
+            else
+            {
+                registerResult.success = false
+                registerResult.message = response["message"] as! String
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    if (failure != nil)
+                    {
+                        failure! ( registerResult )
+                    }
+                    
+                })
+            }
+        }
+        
+        let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
+            
+            let registerResult : RegisterResult = RegisterResult()
+            
+            registerResult.success = false
+            registerResult.message = NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (failure != nil)
+                {
+                    failure! ( registerResult );
+                }
+            })
+        }
+        
+        networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
+        
+        self.networkCommunicator.enqueueOperation(networkOperation)
     }
     
-    func sendComment(comment : NSString, success : SendCommentSuccessBlock?, failure : SendCommentFailureBlock?)
+    func sendComment(comment : String, success : SendCommentSuccessBlock?, failure : SendCommentFailureBlock?)
     {
+        if (self.userDataDAO.userKey == nil)
+        {
+            assert(false, "self.userDataDAO.userKey not set")
+        }
         
+        let postParams: [String:String] = [
+            "feedback_text" : comment
+        ]
+        
+        let networkOperation : MKNetworkOperation = self.networkCommunicator.postDataToServer(postParams, path: NetworkCommunicator.WEB_API_FILE.stringByAppendingString("/submit_feedback"))
+        
+        networkOperation.addHeader("Authorization", withValue: self.userDataDAO.userKey)
+        
+        let successBlock : MKNKResponseBlock = { (completedOperation) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (success != nil)
+                {
+                    success! ()
+                }
+                
+            })
+        }
+        
+        let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (failure != nil)
+                {
+                    failure! ( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                }
+            })
+        }
+        
+        networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
+        
+        self.networkCommunicator.enqueueOperation(networkOperation)
     }
     
-    func updateAccountInfo(firstname : NSString, lastname : String, country : String, success : UpdateAccountInfoSuccessBlock?, failure : UpdateAccountInfoFailureBlock?)
+    func updateAccountInfo(firstname : String, lastname : String, country : String, success : UpdateAccountInfoSuccessBlock?, failure : UpdateAccountInfoFailureBlock?)
     {
+        if (self.userDataDAO.userKey == nil)
+        {
+            assert(false, "self.userDataDAO.userKey not set");
+        }
         
+        let postParams: [String:String] = [
+            "firstname" : firstname,
+            "lastname" : lastname,
+            "country" : country
+        ]
+        
+        let networkOperation : MKNetworkOperation = self.networkCommunicator.postDataToServer(postParams, path: NetworkCommunicator.WEB_API_FILE.stringByAppendingString("/update_account"))
+        
+        networkOperation.addHeader("Authorization", withValue: self.userDataDAO.userKey)
+        
+        let successBlock : MKNKResponseBlock  = { (completedOperation) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (success != nil)
+                {
+                    success! ( )
+                }
+            })
+            
+        }
+        
+        let failureBlock : MKNKResponseErrorBlock  = { (completedOperation, error) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (failure != nil)
+                {
+                    failure! ( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                }
+            })
+        }
+        
+        networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
+        
+        self.networkCommunicator.enqueueOperation(networkOperation)
     }
     
-    func updateProfileImage(profileImage : UIImage, success : UpdateAccountInfoSuccessBlock?, failure : UpdateAccountInfoFailureBlock?)
+    func updateProfileImage(profileImage : UIImage!, success : UpdateAccountInfoSuccessBlock?, failure : UpdateAccountInfoFailureBlock?)
     {
+        if (self.userDataDAO.userKey == nil)
+        {
+            assert(false, "self.userDataDAO.userKey not set")
+        }
         
+        let networkOperation : MKNetworkOperation = self.networkCommunicator.postDataToServer(nil, path: NetworkCommunicator.WEB_API_FILE .stringByAppendingString("/update_profile_photo"))
+        
+        networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
+        
+        let imageData : NSData = UIImageJPEGRepresentation(profileImage, 0.9)!
+        
+        //used for server temp storage file name. Not important
+        let fileNameWithExtension : String = String(format: "%@.jpg", "ProfileImage")
+        
+        networkOperation.addData(imageData, forKey: "photos", mimeType: "image/jpeg", fileName: fileNameWithExtension)
+        
+        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler { () -> Void in
+            
+        }
+        
+        let successBlock : MKNKResponseBlock  = { (completedOperation) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (success != nil)
+                {
+                    success! ( )
+                }
+                
+                })
+            
+            UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+        }
+        
+        let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (failure != nil)
+                {
+                    failure! ( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                }
+                
+                })
+            
+            UIApplication.sharedApplication().endBackgroundTask(bgTask)
+        }
+        
+        networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
+        
+        self.networkCommunicator.enqueueOperation(networkOperation)
     }
     
     func deleteProfileImage (success : UpdateAccountInfoSuccessBlock?, failure : UpdateAccountInfoFailureBlock?)
     {
+        if (self.userDataDAO.userKey == nil)
+        {
+            assert(false, "self.userDataDAO.userKey not set")
+        }
         
+        let networkOperation : MKNetworkOperation = self.networkCommunicator.postDataToServer(nil, path: NetworkCommunicator.WEB_API_FILE.stringByAppendingString("/delete_profile_photo"))
+        
+        networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
+        
+        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler { () -> Void in
+                
+        }
+        
+        let successBlock : MKNKResponseBlock = { (completedOperation) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (success != nil)
+                {
+                    success! ( )
+                }
+                
+            })
+            
+            UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+        }
+        
+        let failureBlock : MKNKResponseErrorBlock = { (completedOperation) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (failure != nil)
+                {
+                    failure! ( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                }
+                
+            })
+            
+            UIApplication.sharedApplication().endBackgroundTask(bgTask)
+        }
+        
+        networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
+        
+        self.networkCommunicator.enqueueOperation(networkOperation)
+    }
+    
+    private func downloadProfileImageFrom(url : String, success : RetrieveProfileImageSuccessBlock?, failure : RetrieveProfileImageFailureBlock?)
+    {
+        if (self.userDataDAO.userKey == nil)
+        {
+            assert(false, "self.userDataDAO.userKey not set")
+        }
+        
+        let profileImagePath : String = Utils.getProfileImagePathForUser(self.userDataDAO.userKey)
+        
+        let networkOperation: MKNetworkOperation = self.networkCommunicator.downloadFileFrom(url, filePath: profileImagePath)
+        
+        let successBlock : MKNKResponseBlock = { (completedOperation) in
+            
+            let profileImage : UIImage = Utils.readProfileImageForUser(self.userDataDAO.userKey)
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (success != nil)
+                {
+                    success!( profileImage )
+                }
+                
+            })
+        }
+        
+        let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (failure != nil)
+                {
+                    failure!( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                }
+            })
+        }
+        
+        networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
     }
     
     func retrieveProfileImage(success : RetrieveProfileImageSuccessBlock?, failure : RetrieveProfileImageFailureBlock?)
     {
+        if (self.userDataDAO.userKey == nil)
+        {
+            assert(false, "self.userDataDAO.userKey not set")
+        }
         
+        let networkOperation : MKNetworkOperation = self.networkCommunicator.getRequestToServer(NetworkCommunicator.WEB_API_FILE.stringByAppendingString("/get_profile_image"))
+        
+        networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
+        
+        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ () -> Void in
+            
+        })
+        
+        let successBlock : MKNKResponseBlock = { (completedOperation) in
+            
+            let response : NSDictionary = completedOperation.responseJSON() as! NSDictionary
+            
+            if ( response["error"]!.boolValue == false )
+            {
+                let imageURL : String = response["url"] as! String
+                
+                //go download the image
+                self.downloadProfileImageFrom(imageURL, success:success, failure:failure)
+            }
+            else
+            {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    if (failure != nil)
+                    {
+                        failure!( response["message"] as! String )
+                    }
+                })
+            }
+            
+            UIApplication.sharedApplication().endBackgroundTask(bgTask)
+        }
+        
+        let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (failure != nil)
+                {
+                    failure!( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                }
+            })
+            
+            UIApplication.sharedApplication().endBackgroundTask(bgTask)
+        }
+        
+        networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
+        
+        self.networkCommunicator.enqueueOperation(networkOperation)
     }
     
-    func updateEmailTo(emailToChangeTo : NSString, success : UpdateAccountInfoSuccessBlock?, failure : UpdateAccountInfoFailureBlock?)
+    func updateEmailTo(emailToChangeTo : String, success : UpdateAccountInfoSuccessBlock?, failure : UpdateAccountInfoFailureBlock?)
     {
+        if (self.userDataDAO.userKey == nil)
+        {
+            assert(false, "self.userDataDAO.userKey not set")
+        }
         
+        let postParams: [String:String] = [
+            "new_email" : emailToChangeTo
+        ]
+        
+        let networkOperation : MKNetworkOperation = self.networkCommunicator.postDataToServer(postParams, path: NetworkCommunicator.WEB_API_FILE.stringByAppendingString("/change_email"))
+        
+        networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
+        
+        let successBlock : MKNKResponseBlock = { (completedOperation) in
+            
+            let response : NSDictionary = completedOperation.responseJSON() as! NSDictionary
+            
+            if ( response["error"]!.boolValue == false )
+            {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    if (success != nil)
+                    {
+                        success!( )
+                    }
+                    
+                })
+            }
+            else
+            {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    if (failure != nil)
+                    {
+                        failure!( response["message"] as! String )
+                    }
+                    
+                })
+            }
+        }
+        
+        let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (failure != nil)
+                {
+                    failure!( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                }
+            })
+        }
+        
+        networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
+        
+        self.networkCommunicator.enqueueOperation(networkOperation)
     }
     
-    func updatePassword(oldPassword : NSString, passwordToChangeTo : NSString, success : UpdateAccountInfoSuccessBlock, failure : UpdateAccountInfoFailureBlock)
+    func updatePassword(oldPassword : String, passwordToChangeTo : String, success : UpdateAccountInfoSuccessBlock?, failure : UpdateAccountInfoFailureBlock?)
     {
+        if (self.userDataDAO.userKey == nil)
+        {
+            assert(false, "self.userDataDAO.userKey not set")
+        }
         
+        let postParams: [String:String] = [
+            "old_password" : oldPassword,
+            "new_password" : passwordToChangeTo
+        ]
+        
+        let networkOperation : MKNetworkOperation = self.networkCommunicator.postDataToServer(postParams, path: NetworkCommunicator.WEB_API_FILE.stringByAppendingString("/change_password"))
+        
+        networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
+        
+        let successBlock : MKNKResponseBlock  = { (completedOperation) in
+            
+            let response : NSDictionary = completedOperation.responseJSON() as! NSDictionary
+            
+            if ( response["error"]!.boolValue == false )
+            {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    if (success != nil)
+                    {
+                        success!( )
+                    }
+                    
+                })
+                
+            }
+            else
+            {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    if (failure != nil)
+                    {
+                        failure!( AuthenticationService.USER_PASSWORD_WRONG )
+                    }
+                })
+            }
+            
+        }
+        
+        let failureBlock : MKNKResponseErrorBlock  = { (completedOperation, error) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (failure != nil)
+                {
+                    failure!( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                }
+            })
+        }
+        
+        networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
+        
+        self.networkCommunicator.enqueueOperation(networkOperation)
     }
     
-    func killAccount(password : NSString, success : UpdateAccountInfoSuccessBlock, failure : UpdateAccountInfoFailureBlock)
+    func killAccount(password : String, success : UpdateAccountInfoSuccessBlock?, failure : UpdateAccountInfoFailureBlock?)
     {
+        if (self.userDataDAO.userKey == nil)
+        {
+            assert(false, "self.userDataDAO.userKey not set");
+        }
         
+        let postParams: [String:String] = [
+            "password" : password
+        ]
+
+        let networkOperation : MKNetworkOperation = self.networkCommunicator.postDataToServer(postParams, path: NetworkCommunicator.WEB_API_FILE.stringByAppendingString("/kill_account"))
+        
+        networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
+        
+        let successBlock : MKNKResponseBlock = { (completedOperation) in
+            
+            let response : NSDictionary = completedOperation.responseJSON() as! NSDictionary
+            
+            if ( response["error"]!.boolValue == false )
+            {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    if (success != nil)
+                    {
+                        success!( )
+                    }
+                })
+                
+            }
+            else
+            {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    if (failure != nil)
+                    {
+                        failure!( response["message"] as! String)
+                    }
+                })
+            }
+        }
+        
+        let failureBlock : MKNKResponseErrorBlock = { (completedOperation,error) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (failure != nil)
+                {
+                    failure!( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                }
+            })
+        }
+        
+        networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
+        
+        self.networkCommunicator.enqueueOperation(networkOperation)
     }
     
-    func getSubscriptionExpiryDate(success : GetSubscriptionExpiryDateSuccessBlock, failure : GetSubscriptionExpiryDateFailureBlock)
+    func getSubscriptionExpiryDate(success : GetSubscriptionExpiryDateSuccessBlock?, failure : GetSubscriptionExpiryDateFailureBlock?)
     {
+        if (self.userDataDAO.userKey == nil)
+        {
+            assert(false, "self.userDataDAO.userKey not set")
+        }
         
+        let networkOperation : MKNetworkOperation = self.networkCommunicator.getRequestToServer(NetworkCommunicator.WEB_API_FILE.stringByAppendingString("/get_expiration_date"))
+        
+        networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
+        
+        let successBlock : MKNKResponseBlock = { (completedOperation) in
+            
+            let response : NSDictionary = completedOperation.responseJSON() as! NSDictionary
+            
+            if ( response["error"]!.boolValue == false )
+            {
+                let expirationDateString : String = response["expiration_date"] as! String
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    if ( success != nil )
+                    {
+                        success!( expirationDateString )
+                    }
+                    
+                })
+            }
+            else
+            {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    if (failure != nil)
+                    {
+                        failure!( AuthenticationService.NO_EXPIRATION_DATE_EXIST )
+                    }
+                    
+                })
+            }
+        }
+        
+        let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (failure != nil)
+                {
+                    failure!( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                }
+                
+            })
+        }
+        
+        networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
+        
+        self.networkCommunicator.enqueueOperation(networkOperation)
     }
     
-    func addNumberOfMonthToUserSubscription (numberOfMonth : Int, success : SubscriptionUpdateSuccessBlock, failure : SubscriptionUpdateFailureBlock)
+    func addNumberOfMonthToUserSubscription (numberOfMonth : Int, success : SubscriptionUpdateSuccessBlock?, failure : SubscriptionUpdateFailureBlock?)
     {
+        if (self.userDataDAO.userKey == nil)
+        {
+            assert(false, "self.userDataDAO.userKey not set")
+        }
         
+        let postParams: [String : AnyObject] = [
+            "number_of_month" : numberOfMonth
+        ]
+        
+        let networkOperation : MKNetworkOperation = self.networkCommunicator.postDataToServer(postParams, path: NetworkCommunicator.WEB_API_FILE.stringByAppendingString("/add_new_expiration_date"))
+        
+        networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
+        
+        let successBlock : MKNKResponseBlock = { (completedOperation) in
+            
+            let response : NSDictionary = completedOperation.responseJSON() as! NSDictionary
+            
+            let expirationDateString : String = response["expiration_date"] as! String
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (success != nil)
+                {
+                    success!( expirationDateString )
+                }
+                
+            })
+            
+        }
+        
+        let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (failure != nil)
+                {
+                    failure!( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                }
+            })
+        }
+        
+        networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
+        
+        self.networkCommunicator.enqueueOperation(networkOperation)
     }
 }

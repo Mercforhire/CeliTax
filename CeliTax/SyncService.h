@@ -13,7 +13,6 @@
 
 #define USER_NO_DATA                                @"USER_NO_DATA"
 #define RECEIPT_IMAGE_FILE_NO_LONGER_EXIST          @"RECEIPT_IMAGE_FILE_NO_LONGER_EXIST"
-#define PROFILE_IMAGE_FILE_DOESNT_EXIST             @"PROFILE_IMAGE_FILE_DOESNT_EXIST"
 
 typedef void (^GenerateDemoDataCompleteBlock) ();
 

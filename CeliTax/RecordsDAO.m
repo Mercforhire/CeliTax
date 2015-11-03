@@ -261,7 +261,7 @@
     return recordsWithGivenCatagoryID;
 }
 
-- (NSArray *) fetchRecordsOfCatagory: (NSString *) catagoryID ofUnitType:(UnitTypes) unitType inReceipt: (NSString *) receiptID
+- (NSArray *) fetchRecordsOfCatagory: (NSString *) catagoryID ofUnitType:(NSInteger) unitType inReceipt: (NSString *) receiptID
 {
     NSArray *allRecordsForReceipt = [self loadRecordsforReceipt: receiptID];
     

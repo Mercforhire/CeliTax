@@ -20,7 +20,7 @@ class NetworkCommunicator : MKNetworkEngine
     
     var networkOperation : MKNetworkOperation?
     
-    func postDataToServer(params : [NSObject : AnyObject], path : String) -> MKNetworkOperation
+    func postDataToServer(params : [NSObject : AnyObject]?, path : String) -> MKNetworkOperation
     {
         let op : MKNetworkOperation = self.operationWithPath(path, params: params, httpMethod: "POST", ssl: true)
         

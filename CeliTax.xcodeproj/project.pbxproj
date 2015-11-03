@@ -79,7 +79,6 @@
 		8556E3601AF53250003CCDD2 /* VaultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8556E35E1AF53250003CCDD2 /* VaultViewController.xib */; };
 		8556E3641AF53264003CCDD2 /* HelpScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8556E3621AF53264003CCDD2 /* HelpScreenViewController.m */; };
 		8556E3651AF53264003CCDD2 /* HelpScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8556E3631AF53264003CCDD2 /* HelpScreenViewController.xib */; };
-		8556E36B1AF56CEF003CCDD2 /* DataServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 8556E36A1AF56CEF003CCDD2 /* DataServiceImpl.m */; };
 		8557E1881AF84218003E2880 /* DAOFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8557E1871AF84218003E2880 /* DAOFactory.m */; };
 		8558940C1B1C1BD100D3F353 /* XYPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 8558940B1B1C1BD100D3F353 /* XYPieChart.m */; };
 		855894151B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 855894131B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.m */; };
@@ -147,7 +146,6 @@
 		8582A4791AF17DFD0048DCD6 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8582A4771AF17DFD0048DCD6 /* LoginViewController.xib */; };
 		8582A47D1AF181C20048DCD6 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8582A47B1AF181C20048DCD6 /* RegisterViewController.m */; };
 		8582A47E1AF181C20048DCD6 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8582A47C1AF181C20048DCD6 /* RegisterViewController.xib */; };
-		8582A4821AF1C96C0048DCD6 /* AuthenticationServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 8582A4811AF1C96C0048DCD6 /* AuthenticationServiceImpl.m */; };
 		8586E5E61B17A04400C1014F /* userIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8586E5E51B17A04400C1014F /* userIcon.png */; };
 		8587117F1BE6BFC000774A2F /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8587117E1BE6BFC000774A2F /* Notifications.swift */; };
 		858711811BE6C6E200774A2F /* TaxYearBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858711801BE6C6E200774A2F /* TaxYearBuilder.swift */; };
@@ -157,6 +155,7 @@
 		858711891BE6DF1100774A2F /* BuilderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858711881BE6DF1100774A2F /* BuilderFactory.swift */; };
 		8587118B1BE6E65200774A2F /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8587118A1BE6E65200774A2F /* AuthenticationService.swift */; };
 		8587118D1BE7039900774A2F /* NetworkCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8587118C1BE7039900774A2F /* NetworkCommunicator.swift */; };
+		8587118F1BE90ECE00774A2F /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8587118E1BE90ECE00774A2F /* DataService.swift */; };
 		858FD7181B40DEE60008B325 /* TransferConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 858FD7161B40DEE60008B325 /* TransferConfirmationViewController.m */; };
 		858FD7191B40DEE60008B325 /* TransferConfirmationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 858FD7171B40DEE60008B325 /* TransferConfirmationViewController.xib */; };
 		859AEF701B46504D0085AC6D /* TutorialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 859AEF6F1B46504D0085AC6D /* TutorialManager.m */; };
@@ -202,7 +201,6 @@
 		85F485881B16D220005E0EDE /* SideMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85F485871B16D220005E0EDE /* SideMenuView.m */; };
 		85F977391B0ACEC6002B3DF3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85F977381B0ACEC6002B3DF3 /* AVFoundation.framework */; };
 		85F977661B0AF696002B3DF3 /* WhiteBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85F977651B0AF696002B3DF3 /* WhiteBorderView.m */; };
-		85FD2BE91B599089006E907C /* NetworkCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 85FD2BE81B599089006E907C /* NetworkCommunicator.m */; };
 		D35569FF52BBBBF1A5EB521A /* libPods-CeliTax.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB7CA2B0039977CAFAA11122 /* libPods-CeliTax.a */; };
 /* End PBXBuildFile section */
 
@@ -331,9 +329,6 @@
 		8556E3611AF53264003CCDD2 /* HelpScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpScreenViewController.h; sourceTree = "<group>"; };
 		8556E3621AF53264003CCDD2 /* HelpScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpScreenViewController.m; sourceTree = "<group>"; };
 		8556E3631AF53264003CCDD2 /* HelpScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpScreenViewController.xib; sourceTree = "<group>"; };
-		8556E3681AF56CDE003CCDD2 /* DataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataService.h; sourceTree = "<group>"; };
-		8556E3691AF56CEF003CCDD2 /* DataServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataServiceImpl.h; sourceTree = "<group>"; };
-		8556E36A1AF56CEF003CCDD2 /* DataServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataServiceImpl.m; sourceTree = "<group>"; };
 		8557E1861AF84218003E2880 /* DAOFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAOFactory.h; sourceTree = "<group>"; };
 		8557E1871AF84218003E2880 /* DAOFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAOFactory.m; sourceTree = "<group>"; };
 		8558940A1B1C1BD100D3F353 /* XYPieChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYPieChart.h; sourceTree = "<group>"; };
@@ -438,9 +433,6 @@
 		8582A47A1AF181C20048DCD6 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		8582A47B1AF181C20048DCD6 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		8582A47C1AF181C20048DCD6 /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
-		8582A47F1AF1B2470048DCD6 /* AuthenticationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationService.h; sourceTree = "<group>"; };
-		8582A4801AF1C96C0048DCD6 /* AuthenticationServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationServiceImpl.h; sourceTree = "<group>"; };
-		8582A4811AF1C96C0048DCD6 /* AuthenticationServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationServiceImpl.m; sourceTree = "<group>"; };
 		8586E5E51B17A04400C1014F /* userIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userIcon.png; sourceTree = "<group>"; };
 		8587117E1BE6BFC000774A2F /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		858711801BE6C6E200774A2F /* TaxYearBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaxYearBuilder.swift; sourceTree = "<group>"; };
@@ -450,6 +442,7 @@
 		858711881BE6DF1100774A2F /* BuilderFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuilderFactory.swift; sourceTree = "<group>"; };
 		8587118A1BE6E65200774A2F /* AuthenticationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
 		8587118C1BE7039900774A2F /* NetworkCommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkCommunicator.swift; sourceTree = "<group>"; };
+		8587118E1BE90ECE00774A2F /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		858FD7151B40DEE60008B325 /* TransferConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferConfirmationViewController.h; sourceTree = "<group>"; };
 		858FD7161B40DEE60008B325 /* TransferConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferConfirmationViewController.m; sourceTree = "<group>"; };
 		858FD7171B40DEE60008B325 /* TransferConfirmationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransferConfirmationViewController.xib; sourceTree = "<group>"; };
@@ -516,8 +509,6 @@
 		85F977381B0ACEC6002B3DF3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		85F977641B0AF696002B3DF3 /* WhiteBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhiteBorderView.h; sourceTree = "<group>"; };
 		85F977651B0AF696002B3DF3 /* WhiteBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhiteBorderView.m; sourceTree = "<group>"; };
-		85FD2BE71B599089006E907C /* NetworkCommunicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkCommunicator.h; sourceTree = "<group>"; };
-		85FD2BE81B599089006E907C /* NetworkCommunicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkCommunicator.m; sourceTree = "<group>"; };
 		8AA2324D1D08B2B334CE7A16 /* Pods-CeliTax.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CeliTax.release.xcconfig"; path = "Pods/Target Support Files/Pods-CeliTax/Pods-CeliTax.release.xcconfig"; sourceTree = "<group>"; };
 		AB7CA2B0039977CAFAA11122 /* libPods-CeliTax.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CeliTax.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F788CFBC0F01FE54E67FAE9A /* Pods-CeliTax.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CeliTax.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CeliTax/Pods-CeliTax.debug.xcconfig"; sourceTree = "<group>"; };
@@ -920,9 +911,7 @@
 		8556E3671AF56C96003CCDD2 /* Data Fetching Service */ = {
 			isa = PBXGroup;
 			children = (
-				8556E3681AF56CDE003CCDD2 /* DataService.h */,
-				8556E3691AF56CEF003CCDD2 /* DataServiceImpl.h */,
-				8556E36A1AF56CEF003CCDD2 /* DataServiceImpl.m */,
+				8587118E1BE90ECE00774A2F /* DataService.swift */,
 			);
 			name = "Data Fetching Service";
 			sourceTree = "<group>";
@@ -1113,10 +1102,7 @@
 		8582A46A1AF174280048DCD6 /* Authentication Service */ = {
 			isa = PBXGroup;
 			children = (
-				8582A47F1AF1B2470048DCD6 /* AuthenticationService.h */,
 				8587118A1BE6E65200774A2F /* AuthenticationService.swift */,
-				8582A4801AF1C96C0048DCD6 /* AuthenticationServiceImpl.h */,
-				8582A4811AF1C96C0048DCD6 /* AuthenticationServiceImpl.m */,
 			);
 			name = "Authentication Service";
 			sourceTree = "<group>";
@@ -1535,8 +1521,6 @@
 		85FD2BE61B599071006E907C /* Network Communicator */ = {
 			isa = PBXGroup;
 			children = (
-				85FD2BE71B599089006E907C /* NetworkCommunicator.h */,
-				85FD2BE81B599089006E907C /* NetworkCommunicator.m */,
 				8587118C1BE7039900774A2F /* NetworkCommunicator.swift */,
 			);
 			name = "Network Communicator";
@@ -1801,12 +1785,10 @@
 				857EC8C71B044CF400B6A5B2 /* AllColorsPickerViewController.m in Sources */,
 				85F977661B0AF696002B3DF3 /* WhiteBorderView.m in Sources */,
 				856538471B608AC200915A2E /* SolidGreenButton.m in Sources */,
-				85FD2BE91B599089006E907C /* NetworkCommunicator.m in Sources */,
 				855BD2C61B25E151001ACBB2 /* ReceiptTimeTableViewCell.m in Sources */,
 				8556E3641AF53264003CCDD2 /* HelpScreenViewController.m in Sources */,
 				85081A191B4B7A6900C5AD10 /* TutorialBubble.m in Sources */,
 				859EA0DB1BE40A1E00D7B2EE /* User.swift in Sources */,
-				8556E36B1AF56CEF003CCDD2 /* DataServiceImpl.m in Sources */,
 				85F485881B16D220005E0EDE /* SideMenuView.m in Sources */,
 				855A9AA21B7259FE00455291 /* MetricUnitPickerViewController.m in Sources */,
 				855303E21B0FEC61006B3D5F /* UserDataDAO.m in Sources */,
@@ -1821,7 +1803,6 @@
 				85547BF71AF2FB0500D9E1CE /* ViewControllerFactory.m in Sources */,
 				8581E2921B2E6AD3006CB6F6 /* SelectionsPickerTableViewCell.m in Sources */,
 				85C54B851B65A82500120961 /* ProfileBarView.m in Sources */,
-				8582A4821AF1C96C0048DCD6 /* AuthenticationServiceImpl.m in Sources */,
 				858711871BE6D70700774A2F /* CategoryBuilder.swift in Sources */,
 				850212801B0A925D00170785 /* CameraViewController.m in Sources */,
 				857902A11B2CF8A400C86662 /* ReceiptCollectionViewCell.m in Sources */,
@@ -1843,6 +1824,7 @@
 				856273951B1B780900EECA26 /* PasswordRecoveryViewController.m in Sources */,
 				8537A9351B293639000C848F /* ModifyCatagoryTableViewCell.m in Sources */,
 				852929FA1B3675E20074DD24 /* ReceiptEditModeTableViewCell.m in Sources */,
+				8587118F1BE90ECE00774A2F /* DataService.swift in Sources */,
 				8552AF6C1B326D33001D3650 /* TaxYearsDAO.m in Sources */,
 				858711891BE6DF1100774A2F /* BuilderFactory.swift in Sources */,
 				85547C001AF32F4500D9E1CE /* Utils.m in Sources */,

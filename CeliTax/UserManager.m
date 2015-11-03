@@ -185,8 +185,8 @@
     
     
     [self.authenticationService updateAccountInfo:firstname
-                                     withLastname:lastname
-                                      withCountry:country
+                                         lastname:lastname
+                                          country:country
                                           success:^{
                                               
         //nothing left to do

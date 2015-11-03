@@ -8,7 +8,6 @@
 
 #import "UploadsHistoryTableViewCell.h"
 #import "ReceiptTableViewCell.h"
-#import "DataService.h"
 #import "NoItemsTableViewCell.h"
 
 #import "CeliTax-Swift.h"
@@ -376,9 +375,9 @@
     }
 
     // Keys: kReceiptTimeKey, kTotalQtyKey, kTotalAmountKey
-    NSDate *receiptDate = thisCatagoryInfo[kReceiptTimeKey];
-    NSInteger totalQty = [thisCatagoryInfo[kTotalQtyKey] integerValue];
-    float totalAmount = [thisCatagoryInfo[kTotalAmountKey] floatValue];
+    NSDate *receiptDate = thisCatagoryInfo[DataService.kReceiptTimeKey];
+    NSInteger totalQty = [thisCatagoryInfo[DataService.kTotalQtyKey] integerValue];
+    float totalAmount = [thisCatagoryInfo[DataService.kTotalAmountKey] floatValue];
 
     (cell.colorBox).backgroundColor = self.catagoryColor;
 
