@@ -43,7 +43,7 @@ class DataService : NSObject
         return catagories
     }
     
-    func fetchCatagory(catagoryID : String) -> ItemCategory?
+    func fetchCatagory(catagoryID : String!) -> ItemCategory?
     {
         let category : ItemCategory? = self.catagoriesDAO.loadCatagory(catagoryID)
         
@@ -62,7 +62,7 @@ class DataService : NSObject
         return records;
     }
     
-    func fetchRecordsForCatagoryID(catagoryID : String, taxYear : Int) -> [Record]
+    func fetchRecordsForCatagoryID(catagoryID : String!, taxYear : Int) -> [Record]
     {
         let recordsFromAllTime : [Record] = self.recordsDAO.loadRecordsforCatagory(catagoryID) as! [Record]
         
@@ -84,14 +84,14 @@ class DataService : NSObject
         return recordsInTaxYear
     }
     
-    func fetchRecordsForReceiptID(receiptID : String) -> [Record]
+    func fetchRecordsForReceiptID(receiptID : String!) -> [Record]
     {
         let records : [Record] = self.recordsDAO.loadRecordsforReceipt(receiptID) as! [Record]
         
         return records
     }
     
-    func fetchRecordForID(recordID : String) -> Record?
+    func fetchRecordForID(recordID : String!) -> Record?
     {
         let record : Record = self.recordsDAO.loadRecord(recordID)
         
@@ -138,7 +138,7 @@ class DataService : NSObject
         return receiptInfos
     }
     
-    func fetchReceiptInfoFromDate(fromDate : NSDate, toDate : NSDate, taxYear : Int) -> [Dictionary<String, AnyObject>]
+    func fetchReceiptInfoFromDate(fromDate : NSDate!, toDate : NSDate!, taxYear : Int) -> [Dictionary<String, AnyObject>]
     {
         var receiptInfos : [Dictionary<String, AnyObject>] = []
         
@@ -184,14 +184,14 @@ class DataService : NSObject
         return receiptInfos
     }
     
-    func fetchReceiptForReceiptID(receiptID : String) -> Receipt?
+    func fetchReceiptForReceiptID(receiptID : String!) -> Receipt?
     {
         let receipt : Receipt = self.receiptsDAO.loadReceipt(receiptID)
         
         return receipt
     }
     
-    func fetchCatagoryInfoFromDate(fromDate : NSDate, toDate : NSDate, taxYear : Int, catagoryID : String, unitType : Int) -> [Dictionary<String, AnyObject> ]
+    func fetchCatagoryInfoFromDate(fromDate : NSDate!, toDate : NSDate!, taxYear : Int, catagoryID : String!, unitType : Int) -> [Dictionary<String, AnyObject> ]
     {
         var catagoryInfos : [Dictionary<String, AnyObject>] = []
         
@@ -233,7 +233,7 @@ class DataService : NSObject
         return catagoryInfos
     }
     
-    func fetchLatestNthCatagoryInfosforCatagory(catagoryID : String, unitType : Int, nTh : Int, taxYear : Int) -> [Dictionary<String, AnyObject>]
+    func fetchLatestNthCatagoryInfosforCatagory(catagoryID : String!, unitType : Int, nTh : Int, taxYear : Int) -> [Dictionary<String, AnyObject>]
     {
         var catagoryInfos : [Dictionary<String, AnyObject>] = []
         

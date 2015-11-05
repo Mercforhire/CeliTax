@@ -9,10 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "CeliTax-Swift.h"
 
-@class ConfigurationManager, UserManager, LookAndFeel, SubscriptionManager, DataService;
+@class ConfigurationManager, UserManager, LookAndFeel, SubscriptionManager, DataService, ManipulationService, SyncService;
 @class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCategoryViewController, SidebarViewController, ItemCategory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager, SyncManager, ProfileSettingsViewController, ImperialUnitPickerViewController, MetricUnitPickerViewController, YearSummaryViewController, YearSavingViewController, BackgroundWorker, LoginSettingsViewController, SubscriptionViewController;
-
-@protocol ManipulationService, SyncService;
 
 @interface ViewControllerFactory : NSObject
 
@@ -21,8 +19,8 @@
 
 @property (nonatomic, weak) AuthenticationService *authenticationService;
 @property (nonatomic, weak) DataService *dataService;
-@property (nonatomic, weak) id <ManipulationService> manipulationService;
-@property (nonatomic, weak) id <SyncService> syncService;
+@property (nonatomic, weak) ManipulationService *manipulationService;
+@property (nonatomic, weak) SyncService *syncService;
 @property (nonatomic, weak) LookAndFeel *lookAndFeel;
 @property (nonatomic, weak) SyncManager *syncManager;
 @property (nonatomic, weak) BackgroundWorker *backgroundWorker;

@@ -20,21 +20,21 @@ class NetworkCommunicator : MKNetworkEngine
     
     var networkOperation : MKNetworkOperation?
     
-    func postDataToServer(params : [NSObject : AnyObject]?, path : String) -> MKNetworkOperation
+    func postDataToServer(params : [NSObject : AnyObject]?, path : String!) -> MKNetworkOperation
     {
         let op : MKNetworkOperation = self.operationWithPath(path, params: params, httpMethod: "POST", ssl: true)
         
         return op
     }
     
-    func getRequestToServer(path : String) -> MKNetworkOperation
+    func getRequestToServer(path : String!) -> MKNetworkOperation
     {
         let op : MKNetworkOperation = self.operationWithPath(path, params: nil, httpMethod: "GET", ssl: true)
         
         return op
     }
     
-    func downloadFileFrom(remoteURL : String, filePath : String) -> MKNetworkOperation
+    func downloadFileFrom(remoteURL : String!, filePath : String!) -> MKNetworkOperation
     {
         let op : MKNetworkOperation = self.operationWithURLString(remoteURL)
         

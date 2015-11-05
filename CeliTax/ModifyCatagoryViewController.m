@@ -123,8 +123,8 @@
     self.catagoryToModify.name = self.catagoryNameField.text;
     
     if ([self.manipulationService modifyCatagoryForCatagoryID:self.catagoryToModify.localID
-                                                      newName:self.catagoryToModify.name
-                                                     newColor:self.catagoryToModify.color
+                                                 catagoryName:self.catagoryToModify.name
+                                                catagoryColor:self.catagoryToModify.color
                                                          save:YES])
     {
         if (self.delegate)

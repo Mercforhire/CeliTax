@@ -62,7 +62,6 @@
 		85560FE81B01B82A004D2963 /* SelectionsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85560FE61B01B82A004D2963 /* SelectionsPickerViewController.m */; };
 		85560FE91B01B82A004D2963 /* SelectionsPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85560FE71B01B82A004D2963 /* SelectionsPickerViewController.xib */; };
 		8556E30B1AF3E5BE003CCDD2 /* NSString+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8556E30A1AF3E5BE003CCDD2 /* NSString+Helper.m */; };
-		8556E30F1AF3F566003CCDD2 /* ServiceFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8556E30E1AF3F566003CCDD2 /* ServiceFactory.m */; };
 		8556E3271AF41BFA003CCDD2 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8556E3251AF41BFA003CCDD2 /* MainViewController.m */; };
 		8556E3281AF41BFA003CCDD2 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8556E3261AF41BFA003CCDD2 /* MainViewController.xib */; };
 		8556E32E1AF428C4003CCDD2 /* CatagoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8556E32C1AF428C4003CCDD2 /* CatagoryTableViewCell.m */; };
@@ -156,8 +155,11 @@
 		8587118B1BE6E65200774A2F /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8587118A1BE6E65200774A2F /* AuthenticationService.swift */; };
 		8587118D1BE7039900774A2F /* NetworkCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8587118C1BE7039900774A2F /* NetworkCommunicator.swift */; };
 		8587118F1BE90ECE00774A2F /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8587118E1BE90ECE00774A2F /* DataService.swift */; };
+		858711911BE95BF100774A2F /* ManipulationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858711901BE95BF100774A2F /* ManipulationService.swift */; };
+		858A98371BEA602100B4C162 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858A98361BEA602100B4C162 /* SyncService.swift */; };
 		858FD7181B40DEE60008B325 /* TransferConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 858FD7161B40DEE60008B325 /* TransferConfirmationViewController.m */; };
 		858FD7191B40DEE60008B325 /* TransferConfirmationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 858FD7171B40DEE60008B325 /* TransferConfirmationViewController.xib */; };
+		8595B10A1BEBB2E700AA2340 /* ServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8595B1091BEBB2E700AA2340 /* ServiceFactory.swift */; };
 		859AEF701B46504D0085AC6D /* TutorialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 859AEF6F1B46504D0085AC6D /* TutorialManager.m */; };
 		859EA0D51BE3DC0B00D7B2EE /* AuthorizeResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EA0D41BE3DC0B00D7B2EE /* AuthorizeResult.swift */; };
 		859EA0D71BE3FD2600D7B2EE /* TutorialStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EA0D61BE3FD2600D7B2EE /* TutorialStep.swift */; };
@@ -189,15 +191,14 @@
 		85BE69C71B7E6F4A004C24A2 /* YearSavingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BE69C51B7E6F4A004C24A2 /* YearSavingViewController.m */; };
 		85BE69C81B7E6F4A004C24A2 /* YearSavingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85BE69C61B7E6F4A004C24A2 /* YearSavingViewController.xib */; };
 		85BE69CB1B7E754E004C24A2 /* HollowWhiteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BE69CA1B7E754E004C24A2 /* HollowWhiteButton.m */; };
+		85C3A7F41BEAE69B00E8C5E6 /* Macros.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C3A7F31BEAE69B00E8C5E6 /* Macros.swift */; };
 		85C54B6D1B62C75C00120961 /* ProfileSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85C54B6B1B62C75C00120961 /* ProfileSettingsViewController.m */; };
 		85C54B6E1B62C75C00120961 /* ProfileSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85C54B6C1B62C75C00120961 /* ProfileSettingsViewController.xib */; };
 		85C54B841B65A82500120961 /* ProfileBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85C54B811B65A82500120961 /* ProfileBarView.xib */; };
 		85C54B851B65A82500120961 /* ProfileBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85C54B821B65A82500120961 /* ProfileBarView.m */; };
-		85D4F4711B544FF600F0803C /* SyncServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D4F4701B544FF600F0803C /* SyncServiceImpl.m */; };
 		85D8D8521AF873AA00197D85 /* AccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8D8501AF873AA00197D85 /* AccountTableViewCell.m */; };
 		85D8D8531AF873AA00197D85 /* AccountTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85D8D8511AF873AA00197D85 /* AccountTableViewCell.xib */; };
 		85D8D8561AF914B500197D85 /* AlertDialogsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8D8551AF914B500197D85 /* AlertDialogsProvider.m */; };
-		85D8D85C1AF924BE00197D85 /* ManipulationServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8D85B1AF924BE00197D85 /* ManipulationServiceImpl.m */; };
 		85F485881B16D220005E0EDE /* SideMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85F485871B16D220005E0EDE /* SideMenuView.m */; };
 		85F977391B0ACEC6002B3DF3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85F977381B0ACEC6002B3DF3 /* AVFoundation.framework */; };
 		85F977661B0AF696002B3DF3 /* WhiteBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85F977651B0AF696002B3DF3 /* WhiteBorderView.m */; };
@@ -257,7 +258,6 @@
 		853AF0481B41075B00B2C4D8 /* TransferSelectionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransferSelectionsViewController.xib; sourceTree = "<group>"; };
 		854880B71B85471300E89339 /* receipt_green_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = receipt_green_icon.png; sourceTree = "<group>"; };
 		854880BB1B86550E00E89339 /* xIconWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xIconWhite.png; sourceTree = "<group>"; };
-		85491E591B522BAA00C618D9 /* SyncService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncService.h; sourceTree = "<group>"; };
 		854AC6E01B7D6B2700F0D91D /* YearSummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YearSummaryViewController.h; sourceTree = "<group>"; };
 		854AC6E11B7D6B2700F0D91D /* YearSummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YearSummaryViewController.m; sourceTree = "<group>"; };
 		854AC6E21B7D6B2700F0D91D /* YearSummaryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YearSummaryViewController.xib; sourceTree = "<group>"; };
@@ -303,8 +303,6 @@
 		85560FE71B01B82A004D2963 /* SelectionsPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectionsPickerViewController.xib; sourceTree = "<group>"; };
 		8556E3091AF3E5BE003CCDD2 /* NSString+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Helper.h"; sourceTree = "<group>"; };
 		8556E30A1AF3E5BE003CCDD2 /* NSString+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Helper.m"; sourceTree = "<group>"; };
-		8556E30D1AF3F566003CCDD2 /* ServiceFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceFactory.h; sourceTree = "<group>"; };
-		8556E30E1AF3F566003CCDD2 /* ServiceFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceFactory.m; sourceTree = "<group>"; };
 		8556E3241AF41BFA003CCDD2 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		8556E3251AF41BFA003CCDD2 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		8556E3261AF41BFA003CCDD2 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
@@ -443,9 +441,12 @@
 		8587118A1BE6E65200774A2F /* AuthenticationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
 		8587118C1BE7039900774A2F /* NetworkCommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkCommunicator.swift; sourceTree = "<group>"; };
 		8587118E1BE90ECE00774A2F /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		858711901BE95BF100774A2F /* ManipulationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManipulationService.swift; sourceTree = "<group>"; };
+		858A98361BEA602100B4C162 /* SyncService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
 		858FD7151B40DEE60008B325 /* TransferConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferConfirmationViewController.h; sourceTree = "<group>"; };
 		858FD7161B40DEE60008B325 /* TransferConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferConfirmationViewController.m; sourceTree = "<group>"; };
 		858FD7171B40DEE60008B325 /* TransferConfirmationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransferConfirmationViewController.xib; sourceTree = "<group>"; };
+		8595B1091BEBB2E700AA2340 /* ServiceFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceFactory.swift; sourceTree = "<group>"; };
 		859AEF6E1B46504D0085AC6D /* TutorialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialManager.h; sourceTree = "<group>"; };
 		859AEF6F1B46504D0085AC6D /* TutorialManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialManager.m; sourceTree = "<group>"; };
 		859EA0D31BE3DC0A00D7B2EE /* CeliTax-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CeliTax-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -488,22 +489,18 @@
 		85BE69C61B7E6F4A004C24A2 /* YearSavingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YearSavingViewController.xib; sourceTree = "<group>"; };
 		85BE69C91B7E754E004C24A2 /* HollowWhiteButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HollowWhiteButton.h; sourceTree = "<group>"; };
 		85BE69CA1B7E754E004C24A2 /* HollowWhiteButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HollowWhiteButton.m; sourceTree = "<group>"; };
+		85C3A7F31BEAE69B00E8C5E6 /* Macros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Macros.swift; sourceTree = "<group>"; };
 		85C54B6A1B62C75C00120961 /* ProfileSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileSettingsViewController.h; sourceTree = "<group>"; };
 		85C54B6B1B62C75C00120961 /* ProfileSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileSettingsViewController.m; sourceTree = "<group>"; };
 		85C54B6C1B62C75C00120961 /* ProfileSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileSettingsViewController.xib; sourceTree = "<group>"; };
 		85C54B811B65A82500120961 /* ProfileBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileBarView.xib; sourceTree = "<group>"; };
 		85C54B821B65A82500120961 /* ProfileBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileBarView.m; sourceTree = "<group>"; };
 		85C54B831B65A82500120961 /* ProfileBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileBarView.h; sourceTree = "<group>"; };
-		85D4F46F1B544FF600F0803C /* SyncServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncServiceImpl.h; sourceTree = "<group>"; };
-		85D4F4701B544FF600F0803C /* SyncServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncServiceImpl.m; sourceTree = "<group>"; };
 		85D8D84F1AF873AA00197D85 /* AccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountTableViewCell.h; sourceTree = "<group>"; };
 		85D8D8501AF873AA00197D85 /* AccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountTableViewCell.m; sourceTree = "<group>"; };
 		85D8D8511AF873AA00197D85 /* AccountTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountTableViewCell.xib; sourceTree = "<group>"; };
 		85D8D8541AF914B500197D85 /* AlertDialogsProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertDialogsProvider.h; sourceTree = "<group>"; };
 		85D8D8551AF914B500197D85 /* AlertDialogsProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertDialogsProvider.m; sourceTree = "<group>"; };
-		85D8D8591AF9212200197D85 /* ManipulationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManipulationService.h; sourceTree = "<group>"; };
-		85D8D85A1AF924BE00197D85 /* ManipulationServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManipulationServiceImpl.h; sourceTree = "<group>"; };
-		85D8D85B1AF924BE00197D85 /* ManipulationServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManipulationServiceImpl.m; sourceTree = "<group>"; };
 		85F485861B16D220005E0EDE /* SideMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuView.h; sourceTree = "<group>"; };
 		85F485871B16D220005E0EDE /* SideMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuView.m; sourceTree = "<group>"; };
 		85F977381B0ACEC6002B3DF3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -664,9 +661,7 @@
 		85491E581B51B94800C618D9 /* Syncing Service */ = {
 			isa = PBXGroup;
 			children = (
-				85491E591B522BAA00C618D9 /* SyncService.h */,
-				85D4F46F1B544FF600F0803C /* SyncServiceImpl.h */,
-				85D4F4701B544FF600F0803C /* SyncServiceImpl.m */,
+				858A98361BEA602100B4C162 /* SyncService.swift */,
 			);
 			name = "Syncing Service";
 			sourceTree = "<group>";
@@ -857,8 +852,7 @@
 		8556E30C1AF3F554003CCDD2 /* Factory */ = {
 			isa = PBXGroup;
 			children = (
-				8556E30D1AF3F566003CCDD2 /* ServiceFactory.h */,
-				8556E30E1AF3F566003CCDD2 /* ServiceFactory.m */,
+				8595B1091BEBB2E700AA2340 /* ServiceFactory.swift */,
 			);
 			name = Factory;
 			sourceTree = "<group>";
@@ -1175,6 +1169,7 @@
 			children = (
 				85A8CAE81AF071410023504D /* DAO */,
 				856048BA1BB5E5D5002F9454 /* Subscription Manager */,
+				85100D531AF70EFF005C24D2 /* Catagories */,
 				855B6FB21B279E2E00864E0B /* LookAndFeel */,
 				8537FFC41B989F3400F7802E /* Localization */,
 				8559191D1B6AE3A8001F712C /* Background Worker */,
@@ -1245,7 +1240,6 @@
 				855303DF1B0FEC44006B3D5F /* UserData */,
 				855303D71B0FE8FB006B3D5F /* Records */,
 				855303D81B0FE909006B3D5F /* Receipts */,
-				85100D531AF70EFF005C24D2 /* Catagories */,
 				8552AF691B326CFF001D3650 /* Tax Years */,
 			);
 			name = DAO;
@@ -1263,6 +1257,7 @@
 		85A8CAEA1AF071EA0023504D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				85C3A7F31BEAE69B00E8C5E6 /* Macros.swift */,
 				85D8D8541AF914B500197D85 /* AlertDialogsProvider.h */,
 				85D8D8551AF914B500197D85 /* AlertDialogsProvider.m */,
 				85547BFE1AF32F4500D9E1CE /* Utils.h */,
@@ -1499,9 +1494,7 @@
 		85D8D8581AF9210000197D85 /* Data Manipulation Service */ = {
 			isa = PBXGroup;
 			children = (
-				85D8D8591AF9212200197D85 /* ManipulationService.h */,
-				85D8D85A1AF924BE00197D85 /* ManipulationServiceImpl.h */,
-				85D8D85B1AF924BE00197D85 /* ManipulationServiceImpl.m */,
+				858711901BE95BF100774A2F /* ManipulationService.swift */,
 			);
 			name = "Data Manipulation Service";
 			sourceTree = "<group>";
@@ -1762,6 +1755,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85C3A7F41BEAE69B00E8C5E6 /* Macros.swift in Sources */,
 				855894151B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.m in Sources */,
 				85552B451B35191900AE77CE /* ReceiptItemCell.m in Sources */,
 				855D0B7F1B177B4400BD5EB4 /* MenuSelectionTableViewCell.m in Sources */,
@@ -1775,7 +1769,6 @@
 				859EA0D71BE3FD2600D7B2EE /* TutorialStep.swift in Sources */,
 				854AC6E91B7D94EE00F0D91D /* YearSummaryTableViewCell.m in Sources */,
 				854AC6E31B7D6B2700F0D91D /* YearSummaryViewController.m in Sources */,
-				85D8D85C1AF924BE00197D85 /* ManipulationServiceImpl.m in Sources */,
 				855B6FB51B279E4700864E0B /* LookAndFeel.m in Sources */,
 				859EA0DF1BE581CC00D7B2EE /* TaxYear.swift in Sources */,
 				856273851B17E30400EECA26 /* BaseSideBarViewController.m in Sources */,
@@ -1801,12 +1794,12 @@
 				85AF7E771BB11724000D73F9 /* YIInnerShadowLayer.m in Sources */,
 				8587118B1BE6E65200774A2F /* AuthenticationService.swift in Sources */,
 				85547BF71AF2FB0500D9E1CE /* ViewControllerFactory.m in Sources */,
+				858A98371BEA602100B4C162 /* SyncService.swift in Sources */,
 				8581E2921B2E6AD3006CB6F6 /* SelectionsPickerTableViewCell.m in Sources */,
 				85C54B851B65A82500120961 /* ProfileBarView.m in Sources */,
 				858711871BE6D70700774A2F /* CategoryBuilder.swift in Sources */,
 				850212801B0A925D00170785 /* CameraViewController.m in Sources */,
 				857902A11B2CF8A400C86662 /* ReceiptCollectionViewCell.m in Sources */,
-				8556E30F1AF3F566003CCDD2 /* ServiceFactory.m in Sources */,
 				85100D561AF70FBF005C24D2 /* CatagoriesDAO.m in Sources */,
 				8582A4741AF176850048DCD6 /* BaseViewController.m in Sources */,
 				856273A01B1B84D500EECA26 /* ReceiptBreakDownViewController.m in Sources */,
@@ -1817,6 +1810,7 @@
 				8539F5E91B2C89AB0077F49C /* SelectionCollectionViewCell.m in Sources */,
 				85560FE81B01B82A004D2963 /* SelectionsPickerViewController.m in Sources */,
 				8555E0CE1B080DAD00B91138 /* ImageCounterIconView.m in Sources */,
+				8595B10A1BEBB2E700AA2340 /* ServiceFactory.swift in Sources */,
 				85AF7E781BB11724000D73F9 /* YIInnerShadowView.m in Sources */,
 				8556E3271AF41BFA003CCDD2 /* MainViewController.m in Sources */,
 				855BD2CB1B267029001ACBB2 /* SendReceiptsToViewController.m in Sources */,
@@ -1848,6 +1842,7 @@
 				8582A4691AF15BC20048DCD6 /* ConfigurationManager.m in Sources */,
 				856538511B60A7F800915A2E /* SyncManager.m in Sources */,
 				8556E35A1AF53233003CCDD2 /* SettingsViewController.m in Sources */,
+				858711911BE95BF100774A2F /* ManipulationService.swift in Sources */,
 				8537A9311B28A851000C848F /* TriangleView.m in Sources */,
 				858711811BE6C6E200774A2F /* TaxYearBuilder.swift in Sources */,
 				853AF0491B41075B00B2C4D8 /* TransferSelectionsViewController.m in Sources */,
@@ -1860,7 +1855,6 @@
 				85A8CAC41AF069EA0023504D /* main.m in Sources */,
 				8559EA221B9E62D500FCC823 /* ImperialUnitPickerViewController.m in Sources */,
 				85547BFA1AF31CFA00D9E1CE /* UserManager.m in Sources */,
-				85D4F4711B544FF600F0803C /* SyncServiceImpl.m in Sources */,
 				85D8D8561AF914B500197D85 /* AlertDialogsProvider.m in Sources */,
 				8587118D1BE7039900774A2F /* NetworkCommunicator.swift in Sources */,
 				85560FE21B019857004D2963 /* ColorPickerViewController.m in Sources */,

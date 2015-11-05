@@ -799,7 +799,7 @@
     {
         textField.text = @"--";
         
-        [self.manipulationService deleteNationalAverageCostForCatagoryID:catagoryID andUnitType:unitType save:YES];
+        [self.manipulationService deleteNationalAverageCostForCatagoryID:catagoryID unitType:unitType save:YES];
         
         dataForThisRow.nationalAverageCost = -1;
         
@@ -809,7 +809,7 @@
     {
         textField.text = [NSString stringWithFormat: @"%.2f", textField.text.floatValue];
         
-        [self.manipulationService addOrUpdateNationalAverageCostForCatagoryID:catagoryID andUnitType:unitType amount:textField.text.floatValue save:YES];
+        [self.manipulationService addOrUpdateNationalAverageCostForCatagoryID:catagoryID unitType:unitType amount:textField.text.floatValue save:YES];
         
         dataForThisRow.nationalAverageCost = textField.text.floatValue;
         

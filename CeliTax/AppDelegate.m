@@ -12,7 +12,6 @@
 #import "UserManager.h"
 #import "LoginViewController.h"
 #import "MainViewController.h"
-#import "ServiceFactory.h"
 #import "DAOFactory.h"
 #import "LookAndFeel.h"
 #import "TutorialManager.h"
@@ -84,11 +83,7 @@
 
 - (void) initializeServiceFactory
 {
-    self.serviceFactory = [[ServiceFactory alloc] init];
-    self.serviceFactory.configurationManager = self.configurationManager;
-    self.serviceFactory.daoFactory = self.daoFactory;
-    self.serviceFactory.networkCommunicator = self.networkCommunicator;
-    self.serviceFactory.builderFactory = self.builderFactory;
+    self.serviceFactory = [[ServiceFactory alloc] initWithConfigurationManager:self.configurationManager daoFactory:self.daoFactory networkCommunicator:self.networkCommunicator builderFactory:self.builderFactory];
 }
 
 - (void) initializeDAOFactory

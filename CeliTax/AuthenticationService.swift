@@ -54,7 +54,7 @@ class AuthenticationService : NSObject
         self.networkCommunicator = networkCommunicator
     }
     
-    func authenticateUser(userName : String, password : String, success : AuthenticateUserSuccessBlock?, failure : AuthenticateUserFailureBlock?)
+    func authenticateUser(userName : String!, password : String!, success : AuthenticateUserSuccessBlock?, failure : AuthenticateUserFailureBlock?)
     {
         let postParams: [String:String] = [
             "email" : userName,
@@ -125,7 +125,7 @@ class AuthenticationService : NSObject
         self.networkCommunicator.enqueueOperation(networkOperation)
     }
     
-    func registerNewUser(userName : String, password : String, firstname : String, lastname : String, country : String, success : RegisterNewUserSuccessBlock?, failure : RegisterNewUserFailureBlock?)
+    func registerNewUser(userName : String!, password : String!, firstname : String!, lastname : String!, country : String!, success : RegisterNewUserSuccessBlock?, failure : RegisterNewUserFailureBlock?)
     {
         let postParams: [String:String] = [
             "email" : userName,
@@ -194,7 +194,7 @@ class AuthenticationService : NSObject
         self.networkCommunicator.enqueueOperation(networkOperation)
     }
     
-    func sendComment(comment : String, success : SendCommentSuccessBlock?, failure : SendCommentFailureBlock?)
+    func sendComment(comment : String!, success : SendCommentSuccessBlock?, failure : SendCommentFailureBlock?)
     {
         if (self.userDataDAO.userKey == nil)
         {
@@ -237,7 +237,7 @@ class AuthenticationService : NSObject
         self.networkCommunicator.enqueueOperation(networkOperation)
     }
     
-    func updateAccountInfo(firstname : String, lastname : String, country : String, success : UpdateAccountInfoSuccessBlock?, failure : UpdateAccountInfoFailureBlock?)
+    func updateAccountInfo(firstname : String!, lastname : String!, country : String!, success : UpdateAccountInfoSuccessBlock?, failure : UpdateAccountInfoFailureBlock?)
     {
         if (self.userDataDAO.userKey == nil)
         {
@@ -387,7 +387,7 @@ class AuthenticationService : NSObject
         self.networkCommunicator.enqueueOperation(networkOperation)
     }
     
-    private func downloadProfileImageFrom(url : String, success : RetrieveProfileImageSuccessBlock?, failure : RetrieveProfileImageFailureBlock?)
+    private func downloadProfileImageFrom(url : String!, success : RetrieveProfileImageSuccessBlock?, failure : RetrieveProfileImageFailureBlock?)
     {
         if (self.userDataDAO.userKey == nil)
         {
@@ -484,7 +484,7 @@ class AuthenticationService : NSObject
         self.networkCommunicator.enqueueOperation(networkOperation)
     }
     
-    func updateEmailTo(emailToChangeTo : String, success : UpdateAccountInfoSuccessBlock?, failure : UpdateAccountInfoFailureBlock?)
+    func updateEmailTo(emailToChangeTo : String!, success : UpdateAccountInfoSuccessBlock?, failure : UpdateAccountInfoFailureBlock?)
     {
         if (self.userDataDAO.userKey == nil)
         {
@@ -543,7 +543,7 @@ class AuthenticationService : NSObject
         self.networkCommunicator.enqueueOperation(networkOperation)
     }
     
-    func updatePassword(oldPassword : String, passwordToChangeTo : String, success : UpdateAccountInfoSuccessBlock?, failure : UpdateAccountInfoFailureBlock?)
+    func updatePassword(oldPassword : String!, passwordToChangeTo : String!, success : UpdateAccountInfoSuccessBlock?, failure : UpdateAccountInfoFailureBlock?)
     {
         if (self.userDataDAO.userKey == nil)
         {
@@ -603,7 +603,7 @@ class AuthenticationService : NSObject
         self.networkCommunicator.enqueueOperation(networkOperation)
     }
     
-    func killAccount(password : String, success : UpdateAccountInfoSuccessBlock?, failure : UpdateAccountInfoFailureBlock?)
+    func killAccount(password : String!, success : UpdateAccountInfoSuccessBlock?, failure : UpdateAccountInfoFailureBlock?)
     {
         if (self.userDataDAO.userKey == nil)
         {

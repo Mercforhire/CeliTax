@@ -8,9 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class SyncManager, UserManager;
-
-@protocol SyncService;
+@class SyncManager, UserManager, SyncService;
 
 typedef void (^SyncSuccessBlock) (NSDate *syncDate);
 typedef void (^SyncFailureBlock) (NSString *reason);
@@ -31,7 +29,7 @@ typedef void (^NeedsUpdateBlock) ();
  */
 @interface SyncManager : NSObject
 
-- (instancetype) initWithSyncService: (id <SyncService>)syncService andUserManager:(UserManager *)userManager;
+- (instancetype) initWithSyncService: (SyncService *)syncService andUserManager:(UserManager *)userManager;
 
 /*
  Check to see if local data has a non-0 dataAction

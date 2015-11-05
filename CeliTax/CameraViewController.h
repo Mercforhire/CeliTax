@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "ManipulationService.h"
 
-@class Receipt, DataService;
+@class DataService, ManipulationService;
 
 @interface CameraViewController : BaseViewController
 
@@ -18,6 +17,6 @@
 
 @property (nonatomic, weak) DataService *dataService;
 
-@property (nonatomic, weak) id <ManipulationService> manipulationService;
+@property (nonatomic, weak) ManipulationService *manipulationService;
 
 @end

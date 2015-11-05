@@ -37,7 +37,7 @@
                         <constraint firstAttribute="height" constant="30" id="yQD-ez-A6t"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MANAGE CATEGORIES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5jO-aO-bye">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="MANAGE CATEGORIES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5jO-aO-bye">
                     <rect key="frame" x="59" y="79" width="202.5" height="23"/>
                     <animations/>
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="19"/>

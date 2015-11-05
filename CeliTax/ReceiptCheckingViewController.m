@@ -913,10 +913,11 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
     else
     {
         NSString *newestRecordID = [self.manipulationService addRecordForCatagoryID:self.currentlySelectedCatagory.localID
-                                                                       andReceiptID:self.receipt.localID
-                                                                        forQuantity:self.tempQuantity
-                                                                             orUnit:self.tempUnitType
-                                                                          forAmount:self.tempPricePerItemOrTotalCost save:YES];
+                                                                          receiptID:self.receipt.localID
+                                                                           quantity:self.tempQuantity
+                                                                           unitType:self.tempUnitType
+                                                                             amount:self.tempPricePerItemOrTotalCost
+                                                                               save:YES];
         if (newestRecordID)
         {
             Record *record = [self.dataService fetchRecordForID: newestRecordID];

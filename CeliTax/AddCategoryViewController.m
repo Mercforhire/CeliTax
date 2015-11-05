@@ -405,7 +405,7 @@
         return;
     }
     
-    if ([self.manipulationService addCatagoryForName: capitalizedString forColor: self.colorView.backgroundColor save:YES])
+    if ([self.manipulationService addCatagoryForName:capitalizedString catagoryColor:self.colorView.backgroundColor save:YES])
     {
         self.addingCategoryMode = NO;
         self.catagoryNameField.text = @"";

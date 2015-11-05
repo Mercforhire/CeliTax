@@ -7,13 +7,12 @@
 //
 
 #import "BaseSideBarViewController.h"
-#import "ManipulationService.h"
 
-@class DataService;
+@class DataService, ManipulationService;
 
 @interface VaultViewController : BaseSideBarViewController
 
 @property (nonatomic, weak) DataService *dataService;
-@property (nonatomic, weak) id <ManipulationService> manipulationService;
+@property (nonatomic, weak) ManipulationService *manipulationService;
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "SyncManager.h"
-#import "SyncService.h"
 #import "Utils.h"
 #import "UserManager.h"
 
@@ -19,7 +18,7 @@
 }
 
 @property (nonatomic, weak) UserManager *userManager;
-@property (nonatomic, weak) id <SyncService> syncService;
+@property (nonatomic, weak) SyncService *syncService;
 
 @property (nonatomic, strong) NSArray *filenamesToUpload;    /** Filenames that we need to upload */
 @property (nonatomic, assign) NSInteger indexOfFileToUpload;
@@ -37,7 +36,7 @@
 
 @implementation SyncManager
 
-- (instancetype) initWithSyncService: (id <SyncService>)syncService andUserManager:(UserManager *)userManager
+- (instancetype) initWithSyncService: (SyncService *)syncService andUserManager:(UserManager *)userManager
 {
     if (self = [super init])
     {
@@ -142,7 +141,7 @@
         if (fileData)
         {
             DLog(@"Uploading %@...", filenameToUpload);
-            [self.syncService uploadFile:filenameToUpload andData:fileData success:^{
+            [self.syncService uploadFile:filenameToUpload data:fileData success:^{
                 
                 DLog(@"%@ Uploaded.", filenameToUpload);
                 self.indexOfFileToUpload++;

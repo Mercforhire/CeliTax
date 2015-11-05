@@ -465,9 +465,7 @@
     //saving a new receipt
     if (!self.existingReceiptID)
     {
-       NSString *newestReceiptID = [self.manipulationService addReceiptForFilenames: self.takenImageFilenames
-                                                                          andTaxYear: [self.configurationManager getCurrentTaxYear].integerValue
-                                                                                save:YES];
+       NSString *newestReceiptID = [self.manipulationService addReceiptForFilenames: self.takenImageFilenames taxYear: [self.configurationManager getCurrentTaxYear].integerValue save:YES];
         
         if (newestReceiptID)
         {

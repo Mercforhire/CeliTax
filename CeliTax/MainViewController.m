@@ -24,7 +24,6 @@
 #import "UIView+Helper.h"
 #import "NoItemsTableViewCell.h"
 #import "TutorialManager.h"
-#import "ManipulationService.h"
 #import "MBProgressHUD.h"
 #import "SyncManager.h"
 #import "Utils.h"

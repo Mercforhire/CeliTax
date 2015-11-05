@@ -10,3 +10,4 @@
 #import "ReceiptsDAO.h"
 #import "RecordsDAO.h"
 #import "TaxYearsDAO.h"
+#import "DAOFactory.h"
