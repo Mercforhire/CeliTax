@@ -47,7 +47,7 @@
     [super viewWillAppear:animated];
     
     // load all ItemCategory
-    NSArray *catagories = [self.dataService fetchCatagories];
+    NSArray *catagories = [self.dataService fetchCategories];
     
     float totalSavingsAmount = 0;
     
@@ -60,7 +60,7 @@
         
         for (Record *record in recordsForThisCatagory)
         {
-            NSString *key = [Record unitTypeIntToUnitTypeString:record.unitType];
+            NSString *key = [Record unitTypeToUnitTypeString:record.unitType];
             
             NSMutableArray *recordsOfSameType = recordsOfEachType[key];
             

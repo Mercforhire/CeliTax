@@ -122,10 +122,8 @@
 {
     self.catagoryToModify.name = self.catagoryNameField.text;
     
-    if ([self.manipulationService modifyCatagoryForCatagoryID:self.catagoryToModify.localID
-                                                 catagoryName:self.catagoryToModify.name
-                                                catagoryColor:self.catagoryToModify.color
-                                                         save:YES])
+    if ([self.manipulationService modifyCatagoryForCatagoryID:self.catagoryToModify.localID categoryName:self.catagoryToModify.name categoryColor:self.catagoryToModify.color save:YES])
+        
     {
         if (self.delegate)
         {

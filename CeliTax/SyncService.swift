@@ -39,7 +39,7 @@ class SyncService : NSObject
     private weak var taxYearsDAO : TaxYearsDAO!
     private weak var recordsDAO : RecordsDAO!
     private weak var receiptsDAO : ReceiptsDAO!
-    private weak var catagoriesDAO : CatagoriesDAO!
+    private weak var categoriesDAO : CategoriesDAO!
     private weak var networkCommunicator : NetworkCommunicator!
     private weak var catagoryBuilder : CategoryBuilder!
     private weak var recordBuilder : RecordBuilder!
@@ -51,13 +51,13 @@ class SyncService : NSObject
         super.init()
     }
     
-    init(userDataDAO : UserDataDAO!, taxYearsDAO : TaxYearsDAO!, recordsDAO : RecordsDAO!, receiptsDAO : ReceiptsDAO!, catagoriesDAO : CatagoriesDAO!, networkCommunicator : NetworkCommunicator!, catagoryBuilder : CategoryBuilder!, recordBuilder : RecordBuilder!, receiptBuilder : ReceiptBuilder!, taxYearBuilder : TaxYearBuilder!)
+    init(userDataDAO : UserDataDAO!, taxYearsDAO : TaxYearsDAO!, recordsDAO : RecordsDAO!, receiptsDAO : ReceiptsDAO!, categoriesDAO : CategoriesDAO!, networkCommunicator : NetworkCommunicator!, catagoryBuilder : CategoryBuilder!, recordBuilder : RecordBuilder!, receiptBuilder : ReceiptBuilder!, taxYearBuilder : TaxYearBuilder!)
     {
         self.userDataDAO = userDataDAO
         self.taxYearsDAO = taxYearsDAO
         self.recordsDAO = recordsDAO
         self.receiptsDAO = receiptsDAO
-        self.catagoriesDAO = catagoriesDAO
+        self.categoriesDAO = categoriesDAO
         self.networkCommunicator = networkCommunicator
         self.catagoryBuilder = catagoryBuilder
         self.recordBuilder = recordBuilder
@@ -79,20 +79,20 @@ class SyncService : NSObject
                 self.taxYearsDAO.addTaxYear(2015, save:false)
             }
             
-            if (self.catagoriesDAO.loadCatagories().count == 0)
+            if (self.categoriesDAO.fetchCategories().count == 0)
             {
-                self.catagoriesDAO.addCatagoryForName("Rice", andColor: UIColor.yellowColor(), save: false)
+                self.categoriesDAO.addCategoryForName("Rice", color: UIColor.yellowColor(), save: false)
                 
-                self.catagoriesDAO.addCatagoryForName("Bread", andColor: UIColor.orangeColor(), save: false)
+                self.categoriesDAO.addCategoryForName("Bread", color: UIColor.orangeColor(), save: false)
                 
-                self.catagoriesDAO.addCatagoryForName("Meat", andColor: UIColor.redColor(), save: false)
+                self.categoriesDAO.addCategoryForName("Meat", color: UIColor.redColor(), save: false)
                 
-                self.catagoriesDAO.addCatagoryForName("Flour", andColor: UIColor.lightGrayColor(), save: false)
+                self.categoriesDAO.addCategoryForName("Flour", color: UIColor.lightGrayColor(), save: false)
                 
-                self.catagoriesDAO.addCatagoryForName("Cake", andColor: UIColor.purpleColor(), save: false)
+                self.categoriesDAO.addCategoryForName("Cake", color: UIColor.purpleColor(), save: false)
                 
                 //Give all Categories a random Unit Item national average amount
-                let allCategories : [ItemCategory] = self.catagoriesDAO.loadCatagories() as! [ItemCategory]
+                let allCategories : [ItemCategory]! = self.categoriesDAO.fetchCategories()
                 
                 //Pick 3 random catagories and give them a random national average amount for at least one other Unit
                 var indexesOf3ChoosenCategories : [Int] = []
@@ -135,7 +135,7 @@ class SyncService : NSObject
             let calendar : NSCalendar = NSCalendar.currentCalendar()
             let components : NSDateComponents = NSDateComponents()
             
-            let numberOfCatagories : Int = self.catagoriesDAO.loadCatagories().count
+            let numberOfCatagories : Int = self.categoriesDAO.fetchCategories().count
             
             // add random receipts
             for var receiptNumber = 0; receiptNumber < 10; receiptNumber++
@@ -174,7 +174,7 @@ class SyncService : NSObject
                 
                 for (var itemNumber = 0; itemNumber < numberOfItems; itemNumber++)
                 {
-                    let categories : [ItemCategory]! = self.catagoriesDAO.loadCatagories() as! [ItemCategory]
+                    let categories : [ItemCategory]! = self.categoriesDAO.fetchCategories()
                     
                     let randomCategoryIndex : Int = Int(Utils.randomNumberBetween(0, maxNumber:Int32(numberOfCatagories) - 1))
                     
@@ -186,7 +186,7 @@ class SyncService : NSObject
                     
                     let recordAmount : Float = Float(Utils.randomNumberBetween(10, maxNumber: 100)) / 10
                     
-                    self.recordsDAO.addRecordForCatagory(recordCatagory, andReceipt: newReceipt, forQuantity: recordQuantity, orUnit: recordUnitType.rawValue, forAmount: recordAmount, save: false)
+                    self.recordsDAO.addRecordForCategory(recordCatagory, receipt: newReceipt, quantity: recordQuantity, unitType: recordUnitType, amount: recordAmount, save: false)
                 }
             }
             
@@ -370,21 +370,21 @@ class SyncService : NSObject
                 
                 //Second merge the Catagories
                 
-                let catagoryDictionaries : [NSDictionary] = dataDictionary["Catagories"] as! [NSDictionary]
+                let categoryDictionaries : [NSDictionary] = dataDictionary["Catagories"] as! [NSDictionary]
                 
-                var catagories : [ItemCategory] = []
+                var categories : [ItemCategory] = []
                 
-                for categoryDictionary in catagoryDictionaries
+                for categoryDictionary in categoryDictionaries
                 {
                     let category : ItemCategory? = self.catagoryBuilder.buildCategoryFrom(categoryDictionary)
                     
                     if (category != nil)
                     {
-                        catagories.append(category!)
+                        categories.append(category!)
                     }
                 }
                 
-                self.catagoriesDAO.mergeWith(catagories, save: false)
+                self.categoriesDAO.mergeWith(categories, save: false)
                 
                 //Third the receipts
                 
@@ -418,14 +418,14 @@ class SyncService : NSObject
                     {
                         //check if catagoryID is valid
                         
-                        if ((self.catagoriesDAO.loadCatagory(record!.catagoryID) == nil))
+                        if ((self.categoriesDAO.fetchCategory(record!.categoryID) == nil))
                         {
                             dLog("ERROR: Record has an invalid catagoryID")
                             record!.dataAction = DataActionStatus.DataActionDelete
                         }
                         
                         //check if receiptID is valid
-                        if (self.receiptsDAO.loadReceipt(record!.receiptID) == nil)
+                        if (self.receiptsDAO.fetchReceipt(record!.receiptID) == nil)
                         {
                             dLog("ERROR: Record has an invalid receiptID");
                             record!.dataAction = DataActionStatus.DataActionDelete
@@ -754,7 +754,7 @@ class SyncService : NSObject
     {
         var allFilenames : [String] = []
         
-        let allReceipts : [Receipt] = self.receiptsDAO.loadAllReceipts() as! [Receipt]
+        let allReceipts : [Receipt] = self.receiptsDAO.fetchAllReceipts()
         
         for receipt in allReceipts
         {
@@ -785,7 +785,7 @@ class SyncService : NSObject
             //1. Get all names of files we should keep
             var allFilenames : [String] = []
             
-            let allReceipts : [Receipt] = self.receiptsDAO.loadAllReceipts() as! [Receipt]
+            let allReceipts : [Receipt] = self.receiptsDAO.fetchAllReceipts()
             
             for receipt in allReceipts
             {

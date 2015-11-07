@@ -19,14 +19,14 @@ import Foundation
 @objc
 class UserData : NSObject, NSCoding //TODO: Remove Subclass to NSObject when the entire app has been converted to Swift
 {
-    let kKeyCatagories : String  = "Catagories"
+    let kKeyCategories : String  = "Catagories"
     let kKeyRecords : String = "Records"
     let kKeyReceipts : String = "Receipts"
     let kKeyTaxYears : String = "TaxYears"
     let kKeyLastUploadedDate : String = "LastUploadedDate"
     let kKeyLastUploadHash : String = "LastUploadHash"
     
-    var catagories : NSMutableArray = NSMutableArray()
+    var categories : NSMutableArray = NSMutableArray()
     
     var records : NSMutableArray = NSMutableArray()
     
@@ -45,8 +45,8 @@ class UserData : NSObject, NSCoding //TODO: Remove Subclass to NSObject when the
     
     required init(coder decoder: NSCoder)
     {
-        let catagories : NSArray = decoder.decodeObjectForKey(kKeyCatagories) as! NSArray
-        self.catagories = NSMutableArray(array: catagories)
+        let categories : NSArray = decoder.decodeObjectForKey(kKeyCategories) as! NSArray
+        self.categories = NSMutableArray(array: categories)
         
         let records : NSArray = decoder.decodeObjectForKey(kKeyRecords) as! NSArray
         self.records = NSMutableArray(array: records)
@@ -58,12 +58,13 @@ class UserData : NSObject, NSCoding //TODO: Remove Subclass to NSObject when the
         self.taxYears = NSMutableArray(array: taxYears)
         
         self.lastUploadedDate = decoder.decodeObjectForKey(kKeyLastUploadedDate) as? NSDate
+        
         self.lastUploadHash = decoder.decodeObjectForKey(kKeyLastUploadHash) as? String
     }
     
     func encodeWithCoder(coder: NSCoder)
     {
-        coder.encodeObject(self.catagories, forKey: kKeyCatagories)
+        coder.encodeObject(self.categories, forKey: kKeyCategories)
         coder.encodeObject(self.records, forKey: kKeyRecords)
         coder.encodeObject(self.receipts, forKey: kKeyReceipts)
         coder.encodeObject(self.taxYears, forKey: kKeyTaxYears)
@@ -75,21 +76,21 @@ class UserData : NSObject, NSCoding //TODO: Remove Subclass to NSObject when the
     {
         let json : NSMutableDictionary = NSMutableDictionary()
         
-        let catagoriesJSONs : NSMutableArray = NSMutableArray()
+        let categoriesJSONs : NSMutableArray = NSMutableArray()
     
-        for data in self.catagories
+        for data in self.categories
         {
             if let category = data as? ItemCategory
             {
                 if (category.dataAction != DataActionStatus.DataActionNone)
                 {
                     //convert category to JSON and add to catagoriesJSONs
-                    catagoriesJSONs.addObject(category.toJson())
+                    categoriesJSONs.addObject(category.toJson())
                 }
             }
         }
     
-        json[kKeyCatagories] = catagoriesJSONs
+        json[kKeyCategories] = categoriesJSONs
     
     
         let recordsJSONs : NSMutableArray = NSMutableArray()
@@ -147,15 +148,15 @@ class UserData : NSObject, NSCoding //TODO: Remove Subclass to NSObject when the
     
     func resetAllDataActionsAndClearOutDeletedOnes()
     {
-        let catagoriesToDelete : NSMutableArray = NSMutableArray()
+        let categoriesToDelete : NSMutableArray = NSMutableArray()
     
-        for data in self.catagories
+        for data in self.categories
         {
             if let category = data as? ItemCategory
             {
                 if (category.dataAction == DataActionStatus.DataActionDelete)
                 {
-                    catagoriesToDelete.addObject(category)
+                    categoriesToDelete.addObject(category)
                 }
                 else
                 {
@@ -164,7 +165,7 @@ class UserData : NSObject, NSCoding //TODO: Remove Subclass to NSObject when the
             }
         }
     
-        self.catagories.removeObjectsInArray(catagoriesToDelete as [AnyObject])
+        self.categories.removeObjectsInArray(categoriesToDelete as [AnyObject])
     
     
         let recordsToDelete : NSMutableArray = NSMutableArray()

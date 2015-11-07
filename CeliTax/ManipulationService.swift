@@ -12,7 +12,7 @@ import UIKit
 @objc
 class ManipulationService : NSObject
 {
-    private weak var catagoriesDAO : CatagoriesDAO!
+    private weak var categoriesDAO : CategoriesDAO!
     private weak var recordsDAO : RecordsDAO!
     private weak var receiptsDAO : ReceiptsDAO!
     private weak var taxYearsDAO : TaxYearsDAO!
@@ -22,32 +22,32 @@ class ManipulationService : NSObject
         super.init()
     }
     
-    init(catagoriesDAO : CatagoriesDAO!, recordsDAO : RecordsDAO!, receiptsDAO : ReceiptsDAO!, taxYearsDAO : TaxYearsDAO!)
+    init(categoriesDAO : CategoriesDAO!, recordsDAO : RecordsDAO!, receiptsDAO : ReceiptsDAO!, taxYearsDAO : TaxYearsDAO!)
     {
-        self.catagoriesDAO = catagoriesDAO
+        self.categoriesDAO = categoriesDAO
         self.recordsDAO = recordsDAO
         self.receiptsDAO = receiptsDAO
         self.taxYearsDAO = taxYearsDAO
     }
     
-    func addCatagoryForName(catagoryName : String!, catagoryColor : UIColor!, save: Bool) -> Bool
+    func addCatagoryForName(categoryName : String!, categoryColor : UIColor!, save: Bool) -> Bool
     {
-        return (self.catagoriesDAO.addCatagoryForName(catagoryName, andColor: catagoryColor, save: save))
+        return (self.categoriesDAO.addCategoryForName(categoryName, color: categoryColor, save: save))
     }
     
-    func modifyCatagoryForCatagoryID(catagoryID : String!, catagoryName : String!, catagoryColor : UIColor!, save : Bool) -> Bool
+    func modifyCatagoryForCatagoryID(categoryID : String!, categoryName : String!, categoryColor : UIColor!, save : Bool) -> Bool
     {
-        return (self.catagoriesDAO.modifyCatagory(catagoryID, forName: catagoryName, andColor: catagoryColor, save:save))
+        return (self.categoriesDAO.modifyCategory(categoryID, name: categoryName, color: categoryColor, save:save))
     }
     
-    func deleteCatagoryForCatagoryID(catagoryID : String!, save : Bool) -> Bool
+    func deleteCatagoryForCatagoryID(categoryID : String!, save : Bool) -> Bool
     {
-        return self.catagoriesDAO.deleteCatagory(catagoryID, save: save)
+        return self.categoriesDAO.deleteCategory(categoryID, save: save)
     }
     
-    func transferCatagoryFromCatagoryID(fromCatagoryID : String!, toCatagoryID : String!, save : Bool) -> Bool
+    func transferCategoryFromCategoryID(fromCategoryID : String!, toCategoryID : String!, save : Bool) -> Bool
     {
-        let fromRecords : [Record] = self.recordsDAO.loadRecordsforCatagory(fromCatagoryID) as! [Record]
+        let fromRecords : [Record] = self.recordsDAO.fetchRecordsforCategory(fromCategoryID)
         
         if (fromRecords.count == 0)
         {
@@ -55,7 +55,7 @@ class ManipulationService : NSObject
             return true
         }
         
-        let toItemCatagory : ItemCategory? = self.catagoriesDAO.loadCatagory(toCatagoryID)
+        let toItemCatagory : ItemCategory? = self.categoriesDAO.fetchCategory(toCategoryID)
         
         if (toItemCatagory == nil)
         {
@@ -66,27 +66,27 @@ class ManipulationService : NSObject
         {
             if (record == fromRecords.last)
             {
-                self.recordsDAO.addRecordForCatagoryID(toItemCatagory!.localID, andReceiptID: record.receiptID, forQuantity: record.quantity, orUnit: record.unitType, forAmount: record.amount, save: true)
+                self.recordsDAO.addRecordForCategoryID(toItemCatagory!.localID, receiptID: record.receiptID, quantity: record.quantity, unitType: record.unitType, amount: record.amount, save: true)
             }
             else
             {
-                self.recordsDAO.addRecordForCatagoryID(toItemCatagory!.localID, andReceiptID: record.receiptID, forQuantity: record.quantity, orUnit: record.unitType, forAmount: record.amount, save: false)
+                self.recordsDAO.addRecordForCategoryID(toItemCatagory!.localID, receiptID: record.receiptID, quantity: record.quantity, unitType: record.unitType, amount: record.amount, save: false)
             }
         }
         
         return true
     }
     
-    func addOrUpdateNationalAverageCostForCatagoryID(catagoryID : String!, unitType : Int, amount : Float, save : Bool) -> Bool
+    func addOrUpdateNationalAverageCostForCatagoryID(categoryID : String!, unitType : UnitTypes, amount : Float, save : Bool) -> Bool
     {
-        let catagoryToModify : ItemCategory? = self.catagoriesDAO.loadCatagory(catagoryID)
+        let categoryToModify : ItemCategory? = self.categoriesDAO.fetchCategory(categoryID)
         
-        if (catagoryToModify == nil)
+        if (categoryToModify == nil)
         {
             return false
         }
         
-        if (self.catagoriesDAO.addOrUpdateNationalAverageCostForCatagoryID(catagoryID, andUnitType:unitType, amount:amount, save: save))
+        if (self.categoriesDAO.addOrUpdateNationalAverageCostForCategoryID(categoryID, unitType:unitType, amount:amount, save: save))
         {
             return true
         }
@@ -94,28 +94,28 @@ class ManipulationService : NSObject
         return false
     }
     
-    func deleteNationalAverageCostForCatagoryID(catagoryID : String!, unitType : UnitTypes, save : Bool) -> Bool
+    func deleteNationalAverageCostForCategoryID(categoryID : String!, unitType : UnitTypes, save : Bool) -> Bool
     {
-        let catagoryToModify : ItemCategory? = self.catagoriesDAO.loadCatagory(catagoryID)
+        let catagoryToModify : ItemCategory? = self.categoriesDAO.fetchCategory(categoryID)
         
         if (catagoryToModify == nil)
         {
             return false
         }
         
-        return (self.catagoriesDAO.deleteNationalAverageCostForCatagoryID(catagoryID, andUnitType: unitType.rawValue, save: save))
+        return (self.categoriesDAO.deleteNationalAverageCostForCategoryID(categoryID, unitType: unitType, save: save))
     }
     
     func addRecordForCatagoryID(catagoryID : String!, receiptID : String!, quantity : Int, unitType : UnitTypes, amount : Float, save : Bool) -> String?
     {
-        let toItemCatagory : ItemCategory? = self.catagoriesDAO.loadCatagory(catagoryID)
+        let toItemCatagory : ItemCategory? = self.categoriesDAO.fetchCategory(catagoryID)
         
         if (toItemCatagory == nil)
         {
             return nil
         }
         
-        let newestRecordID : String? = self.recordsDAO.addRecordForCatagoryID(catagoryID, andReceiptID: receiptID, forQuantity: quantity, orUnit:unitType.rawValue, forAmount: amount, save:save)
+        let newestRecordID : String? = self.recordsDAO.addRecordForCategoryID(catagoryID, receiptID: receiptID, quantity: quantity, unitType:unitType, amount: amount, save:save)
         
         if (newestRecordID != nil)
         {
@@ -144,7 +144,7 @@ class ManipulationService : NSObject
             return nil
         }
         
-        let newReceiptID : String? = self.receiptsDAO.addReceiptWithFilenames(filenames, inTaxYear: taxYear, save: save)
+        let newReceiptID : String? = self.receiptsDAO.addReceiptWithFilenames(filenames, taxYear: taxYear, save: save)
         
         if ( newReceiptID != nil )
         {
@@ -164,7 +164,7 @@ class ManipulationService : NSObject
     
     func deleteReceiptAndAllItsRecords(receiptID : String!, save : Bool) -> Bool
     {
-        let recordsForThisReceipt : [Record] = self.recordsDAO.loadRecordsforReceipt(receiptID) as! [Record]
+        let recordsForThisReceipt : [Record] = self.recordsDAO.fetchRecordsforReceipt(receiptID)
         
         var arrayOfReceiptIDs : [String] = []
         

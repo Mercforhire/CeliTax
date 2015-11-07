@@ -12,7 +12,6 @@
 #import "UserManager.h"
 #import "LoginViewController.h"
 #import "MainViewController.h"
-#import "DAOFactory.h"
 #import "LookAndFeel.h"
 #import "TutorialManager.h"
 #import "SyncManager.h"

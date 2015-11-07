@@ -12,7 +12,7 @@ import Foundation
 class RecordBuilder : NSObject //TODO: Remove Subclass to NSObject when the entire app has been converted to Swift
 {
     let kKeyIdentifer : String = "identifier"
-    let kKeyCatagoryID : String = "catagoryid"
+    let kKeyCategoryID : String = "catagoryid"
     let kKeyReceiptID : String = "receiptid"
     let kKeyAmount : String = "amount"
     let kKeyQuantity : String = "quantity"
@@ -28,12 +28,12 @@ class RecordBuilder : NSObject //TODO: Remove Subclass to NSObject when the enti
         let record : Record = Record()
         
         record.localID = json[kKeyIdentifer] as! String
-        record.catagoryID = json[kKeyCatagoryID] as! String
+        record.categoryID = json[kKeyCategoryID] as! String
         record.receiptID = json[kKeyReceiptID] as! String
         record.amount = json[kKeyAmount] as! Float
         record.quantity = json[kKeyQuantity] as! Int
-        record.unitType = json[kKeyUnitType] as! Int
+        record.unitType = UnitTypes(rawValue: json[kKeyUnitType] as! Int)!
         
-        return record;
+        return record
     }
 }

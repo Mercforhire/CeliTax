@@ -246,7 +246,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
         self.receipt = receipt;
         
         // load all the catagories
-        NSArray *catagories = [self.dataService fetchCatagories];
+        NSArray *catagories = [self.dataService fetchCategories];
         
         self.catagories = catagories;
         
@@ -462,7 +462,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
 {
     for (Record *record in records)
     {
-        NSMutableArray *recordsOfThisCatagory = [self.records objectForKeyedSubscript:record.catagoryID];
+        NSMutableArray *recordsOfThisCatagory = [self.records objectForKeyedSubscript:record.categoryID];
         
         if (!recordsOfThisCatagory)
         {
@@ -471,7 +471,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
 
         [recordsOfThisCatagory addObject: record];
 
-        (self.records)[record.catagoryID] = recordsOfThisCatagory;
+        (self.records)[record.categoryID] = recordsOfThisCatagory;
     }
 }
 
@@ -867,11 +867,11 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
     if ([self.manipulationService deleteRecord: self.currentlySelectedRecord.localID save:YES])
     {
         // delete the record from self.records
-        NSMutableArray *recordsOfThisCatagory = (self.records)[self.currentlySelectedRecord.catagoryID];
+        NSMutableArray *recordsOfThisCatagory = (self.records)[self.currentlySelectedRecord.categoryID];
         
         [recordsOfThisCatagory removeObject: self.currentlySelectedRecord];
         
-        (self.records)[self.currentlySelectedRecord.catagoryID] = recordsOfThisCatagory;
+        (self.records)[self.currentlySelectedRecord.categoryID] = recordsOfThisCatagory;
         
         // calls the setter to refresh UI
         self.recordsOfCurrentlySelectedCatagory = recordsOfThisCatagory;
@@ -923,7 +923,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
             Record *record = [self.dataService fetchRecordForID: newestRecordID];
             
             // add that to self.records
-            NSMutableArray *recordsOfThisCatagory = (self.records)[record.catagoryID];
+            NSMutableArray *recordsOfThisCatagory = (self.records)[record.categoryID];
             
             if (!recordsOfThisCatagory)
             {
@@ -932,7 +932,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
             
             [recordsOfThisCatagory addObject: record];
             
-            (self.records)[record.catagoryID] = recordsOfThisCatagory;
+            (self.records)[record.categoryID] = recordsOfThisCatagory;
             
             // delete the saved value for this category from tempSavedDataForUnsavedRecordForEachCatagory
             [self.savedDataForUnsavedNewRecordInEachCatagory removeObjectForKey:self.currentlySelectedCatagory.localID];
@@ -1695,7 +1695,7 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
             {
                 // add a fake record
                 Record *record = [Record new];
-                record.catagoryID = self.currentlySelectedCatagory.localID;
+                record.categoryID = self.currentlySelectedCatagory.localID;
                 record.quantity = self.tempQuantity;
                 record.amount = self.tempPricePerItemOrTotalCost;
                 record.unitType = self.tempUnitType;
@@ -1710,7 +1710,7 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
                 
                 [recordsOfThisCatagory addObject: record];
                 
-                (self.records)[record.catagoryID] = recordsOfThisCatagory;
+                (self.records)[record.categoryID] = recordsOfThisCatagory;
                 
                 // delete the saved value for this category from tempSavedDataForUnsavedRecordForEachCatagory
                 [self.savedDataForUnsavedNewRecordInEachCatagory removeObjectForKey:self.currentlySelectedCatagory.localID];

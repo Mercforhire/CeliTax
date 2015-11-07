@@ -161,7 +161,7 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
     
-    NSArray *catagories = [self.dataService fetchCatagories];
+    NSArray *catagories = [self.dataService fetchCategories];
     
     self.allCatagories = catagories;
     
@@ -201,7 +201,7 @@
     for (Record *record in records)
     {
         // get the category of this Record
-        ItemCategory *category = [self.dataService fetchCatagory: record.catagoryID];
+        ItemCategory *category = [self.dataService fetchCategory: record.categoryID];
         
         if (![self.catagoriesUsedByThisReceipt containsObject: category])
         {
@@ -463,12 +463,12 @@
     // change the current selected record to this new category
     ItemCategory *chosenCatagory = (self.allCatagories)[index];
 
-    if ([self.currentlySelectedRecord.catagoryID isEqualToString: chosenCatagory.localID])
+    if ([self.currentlySelectedRecord.categoryID isEqualToString: chosenCatagory.localID])
     {
         return;
     }
 
-    self.currentlySelectedRecord.catagoryID = chosenCatagory.localID;
+    self.currentlySelectedRecord.categoryID = chosenCatagory.localID;
 
     if ([self.manipulationService modifyRecord: self.currentlySelectedRecord save:YES])
     {

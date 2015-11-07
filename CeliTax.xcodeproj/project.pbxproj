@@ -15,7 +15,11 @@
 		85081A191B4B7A6900C5AD10 /* TutorialBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = 85081A181B4B7A6900C5AD10 /* TutorialBubble.m */; };
 		85081A1D1B4B88A900C5AD10 /* Triangle.m in Sources */ = {isa = PBXBuildFile; fileRef = 85081A1C1B4B88A900C5AD10 /* Triangle.m */; };
 		85100D411AF6BFC9005C24D2 /* UIView+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 85100D401AF6BFC9005C24D2 /* UIView+Helper.m */; };
-		85100D561AF70FBF005C24D2 /* CatagoriesDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 85100D551AF70FBF005C24D2 /* CatagoriesDAO.m */; };
+		852299AC1BEC44CA00279F45 /* DAOFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852299AB1BEC44C900279F45 /* DAOFactory.swift */; };
+		852299AE1BEC44D400279F45 /* UserDataDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852299AD1BEC44D400279F45 /* UserDataDAO.swift */; };
+		852299B01BEC44E100279F45 /* RecordsDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852299AF1BEC44E100279F45 /* RecordsDAO.swift */; };
+		852299B21BEC44EB00279F45 /* ReceiptsDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852299B11BEC44EB00279F45 /* ReceiptsDAO.swift */; };
+		852299B41BEC44F400279F45 /* TaxYearsDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852299B31BEC44F400279F45 /* TaxYearsDAO.swift */; };
 		852929FA1B3675E20074DD24 /* ReceiptEditModeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 852929F81B3675E20074DD24 /* ReceiptEditModeTableViewCell.m */; };
 		852929FB1B3675E20074DD24 /* ReceiptEditModeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 852929F91B3675E20074DD24 /* ReceiptEditModeTableViewCell.xib */; };
 		852FF8971B78FBF50033A6D9 /* CelitaxNavBarLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 852FF8961B78FBF50033A6D9 /* CelitaxNavBarLogo.png */; };
@@ -41,10 +45,6 @@
 		854AC6E41B7D6B2700F0D91D /* YearSummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 854AC6E21B7D6B2700F0D91D /* YearSummaryViewController.xib */; };
 		854AC6E91B7D94EE00F0D91D /* YearSummaryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 854AC6E71B7D94EE00F0D91D /* YearSummaryTableViewCell.m */; };
 		854AC6EA1B7D94EE00F0D91D /* YearSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 854AC6E81B7D94EE00F0D91D /* YearSummaryTableViewCell.xib */; };
-		8552AF6C1B326D33001D3650 /* TaxYearsDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 8552AF6B1B326D33001D3650 /* TaxYearsDAO.m */; };
-		855303DB1B0FE953006B3D5F /* RecordsDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 855303DA1B0FE953006B3D5F /* RecordsDAO.m */; };
-		855303DE1B0FE961006B3D5F /* ReceiptsDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 855303DD1B0FE961006B3D5F /* ReceiptsDAO.m */; };
-		855303E21B0FEC61006B3D5F /* UserDataDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 855303E11B0FEC61006B3D5F /* UserDataDAO.m */; };
 		85547BF71AF2FB0500D9E1CE /* ViewControllerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 85547BF61AF2FB0500D9E1CE /* ViewControllerFactory.m */; };
 		85547BFA1AF31CFA00D9E1CE /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 85547BF91AF31CFA00D9E1CE /* UserManager.m */; };
 		85547C001AF32F4500D9E1CE /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 85547BFF1AF32F4500D9E1CE /* Utils.m */; };
@@ -78,7 +78,6 @@
 		8556E3601AF53250003CCDD2 /* VaultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8556E35E1AF53250003CCDD2 /* VaultViewController.xib */; };
 		8556E3641AF53264003CCDD2 /* HelpScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8556E3621AF53264003CCDD2 /* HelpScreenViewController.m */; };
 		8556E3651AF53264003CCDD2 /* HelpScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8556E3631AF53264003CCDD2 /* HelpScreenViewController.xib */; };
-		8557E1881AF84218003E2880 /* DAOFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8557E1871AF84218003E2880 /* DAOFactory.m */; };
 		8558940C1B1C1BD100D3F353 /* XYPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 8558940B1B1C1BD100D3F353 /* XYPieChart.m */; };
 		855894151B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 855894131B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.m */; };
 		855894161B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 855894141B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.xib */; };
@@ -130,6 +129,7 @@
 		856538511B60A7F800915A2E /* SyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 856538501B60A7F800915A2E /* SyncManager.m */; };
 		85665DD51B20EFD200848D36 /* ReceiptTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 85665DD31B20EFD200848D36 /* ReceiptTableViewCell.m */; };
 		85665DD61B20EFD200848D36 /* ReceiptTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85665DD41B20EFD200848D36 /* ReceiptTableViewCell.xib */; };
+		8576DEEB1BED993600154D45 /* CategoriesDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576DEEA1BED993600154D45 /* CategoriesDAO.swift */; };
 		857902A11B2CF8A400C86662 /* ReceiptCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8579029F1B2CF8A400C86662 /* ReceiptCollectionViewCell.m */; };
 		857902A21B2CF8A400C86662 /* ReceiptCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 857902A01B2CF8A400C86662 /* ReceiptCollectionViewCell.xib */; };
 		857902A51B2CF9A900C86662 /* ReceiptScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 857902A41B2CF9A900C86662 /* ReceiptScrollView.m */; };
@@ -229,8 +229,11 @@
 		85081A1C1B4B88A900C5AD10 /* Triangle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Triangle.m; sourceTree = "<group>"; };
 		85100D3F1AF6BFC9005C24D2 /* UIView+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Helper.h"; sourceTree = "<group>"; };
 		85100D401AF6BFC9005C24D2 /* UIView+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Helper.m"; sourceTree = "<group>"; };
-		85100D541AF70FBF005C24D2 /* CatagoriesDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatagoriesDAO.h; sourceTree = "<group>"; };
-		85100D551AF70FBF005C24D2 /* CatagoriesDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CatagoriesDAO.m; sourceTree = "<group>"; };
+		852299AB1BEC44C900279F45 /* DAOFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOFactory.swift; sourceTree = "<group>"; };
+		852299AD1BEC44D400279F45 /* UserDataDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDataDAO.swift; sourceTree = "<group>"; };
+		852299AF1BEC44E100279F45 /* RecordsDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordsDAO.swift; sourceTree = "<group>"; };
+		852299B11BEC44EB00279F45 /* ReceiptsDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptsDAO.swift; sourceTree = "<group>"; };
+		852299B31BEC44F400279F45 /* TaxYearsDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaxYearsDAO.swift; sourceTree = "<group>"; };
 		852929F71B3675E20074DD24 /* ReceiptEditModeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptEditModeTableViewCell.h; sourceTree = "<group>"; };
 		852929F81B3675E20074DD24 /* ReceiptEditModeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptEditModeTableViewCell.m; sourceTree = "<group>"; };
 		852929F91B3675E20074DD24 /* ReceiptEditModeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptEditModeTableViewCell.xib; sourceTree = "<group>"; };
@@ -264,14 +267,6 @@
 		854AC6E61B7D94EE00F0D91D /* YearSummaryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YearSummaryTableViewCell.h; sourceTree = "<group>"; };
 		854AC6E71B7D94EE00F0D91D /* YearSummaryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YearSummaryTableViewCell.m; sourceTree = "<group>"; };
 		854AC6E81B7D94EE00F0D91D /* YearSummaryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YearSummaryTableViewCell.xib; sourceTree = "<group>"; };
-		8552AF6A1B326D33001D3650 /* TaxYearsDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaxYearsDAO.h; sourceTree = "<group>"; };
-		8552AF6B1B326D33001D3650 /* TaxYearsDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaxYearsDAO.m; sourceTree = "<group>"; };
-		855303D91B0FE953006B3D5F /* RecordsDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordsDAO.h; sourceTree = "<group>"; };
-		855303DA1B0FE953006B3D5F /* RecordsDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordsDAO.m; sourceTree = "<group>"; };
-		855303DC1B0FE961006B3D5F /* ReceiptsDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptsDAO.h; sourceTree = "<group>"; };
-		855303DD1B0FE961006B3D5F /* ReceiptsDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptsDAO.m; sourceTree = "<group>"; };
-		855303E01B0FEC61006B3D5F /* UserDataDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDataDAO.h; sourceTree = "<group>"; };
-		855303E11B0FEC61006B3D5F /* UserDataDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDataDAO.m; sourceTree = "<group>"; };
 		85547BF51AF2FB0500D9E1CE /* ViewControllerFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewControllerFactory.h; sourceTree = "<group>"; };
 		85547BF61AF2FB0500D9E1CE /* ViewControllerFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerFactory.m; sourceTree = "<group>"; };
 		85547BF81AF31CFA00D9E1CE /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
@@ -327,8 +322,6 @@
 		8556E3611AF53264003CCDD2 /* HelpScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpScreenViewController.h; sourceTree = "<group>"; };
 		8556E3621AF53264003CCDD2 /* HelpScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpScreenViewController.m; sourceTree = "<group>"; };
 		8556E3631AF53264003CCDD2 /* HelpScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpScreenViewController.xib; sourceTree = "<group>"; };
-		8557E1861AF84218003E2880 /* DAOFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAOFactory.h; sourceTree = "<group>"; };
-		8557E1871AF84218003E2880 /* DAOFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAOFactory.m; sourceTree = "<group>"; };
 		8558940A1B1C1BD100D3F353 /* XYPieChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYPieChart.h; sourceTree = "<group>"; };
 		8558940B1B1C1BD100D3F353 /* XYPieChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYPieChart.m; sourceTree = "<group>"; };
 		855894121B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptBreakDownToolBarTableViewCell.h; sourceTree = "<group>"; };
@@ -407,6 +400,7 @@
 		85665DD21B20EFD200848D36 /* ReceiptTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptTableViewCell.h; sourceTree = "<group>"; };
 		85665DD31B20EFD200848D36 /* ReceiptTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptTableViewCell.m; sourceTree = "<group>"; };
 		85665DD41B20EFD200848D36 /* ReceiptTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptTableViewCell.xib; sourceTree = "<group>"; };
+		8576DEEA1BED993600154D45 /* CategoriesDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesDAO.swift; sourceTree = "<group>"; };
 		8579029E1B2CF8A400C86662 /* ReceiptCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptCollectionViewCell.h; sourceTree = "<group>"; };
 		8579029F1B2CF8A400C86662 /* ReceiptCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptCollectionViewCell.m; sourceTree = "<group>"; };
 		857902A01B2CF8A400C86662 /* ReceiptCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -608,13 +602,12 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
-		85100D531AF70EFF005C24D2 /* Catagories */ = {
+		85100D531AF70EFF005C24D2 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				85100D541AF70FBF005C24D2 /* CatagoriesDAO.h */,
-				85100D551AF70FBF005C24D2 /* CatagoriesDAO.m */,
+				8576DEEA1BED993600154D45 /* CategoriesDAO.swift */,
 			);
-			name = Catagories;
+			name = Categories;
 			sourceTree = "<group>";
 		};
 		852929F61B3673C30074DD24 /* Receipt Item Checking Cells */ = {
@@ -692,8 +685,7 @@
 		8552AF691B326CFF001D3650 /* Tax Years */ = {
 			isa = PBXGroup;
 			children = (
-				8552AF6A1B326D33001D3650 /* TaxYearsDAO.h */,
-				8552AF6B1B326D33001D3650 /* TaxYearsDAO.m */,
+				852299B31BEC44F400279F45 /* TaxYearsDAO.swift */,
 			);
 			name = "Tax Years";
 			sourceTree = "<group>";
@@ -701,8 +693,7 @@
 		855303D71B0FE8FB006B3D5F /* Records */ = {
 			isa = PBXGroup;
 			children = (
-				855303D91B0FE953006B3D5F /* RecordsDAO.h */,
-				855303DA1B0FE953006B3D5F /* RecordsDAO.m */,
+				852299AF1BEC44E100279F45 /* RecordsDAO.swift */,
 			);
 			name = Records;
 			sourceTree = "<group>";
@@ -710,8 +701,7 @@
 		855303D81B0FE909006B3D5F /* Receipts */ = {
 			isa = PBXGroup;
 			children = (
-				855303DC1B0FE961006B3D5F /* ReceiptsDAO.h */,
-				855303DD1B0FE961006B3D5F /* ReceiptsDAO.m */,
+				852299B11BEC44EB00279F45 /* ReceiptsDAO.swift */,
 			);
 			name = Receipts;
 			sourceTree = "<group>";
@@ -719,8 +709,7 @@
 		855303DF1B0FEC44006B3D5F /* UserData */ = {
 			isa = PBXGroup;
 			children = (
-				855303E01B0FEC61006B3D5F /* UserDataDAO.h */,
-				855303E11B0FEC61006B3D5F /* UserDataDAO.m */,
+				852299AD1BEC44D400279F45 /* UserDataDAO.swift */,
 			);
 			name = UserData;
 			sourceTree = "<group>";
@@ -913,8 +902,7 @@
 		8557E1851AF8420A003E2880 /* Factory */ = {
 			isa = PBXGroup;
 			children = (
-				8557E1861AF84218003E2880 /* DAOFactory.h */,
-				8557E1871AF84218003E2880 /* DAOFactory.m */,
+				852299AB1BEC44C900279F45 /* DAOFactory.swift */,
 			);
 			name = Factory;
 			sourceTree = "<group>";
@@ -1169,7 +1157,6 @@
 			children = (
 				85A8CAE81AF071410023504D /* DAO */,
 				856048BA1BB5E5D5002F9454 /* Subscription Manager */,
-				85100D531AF70EFF005C24D2 /* Catagories */,
 				855B6FB21B279E2E00864E0B /* LookAndFeel */,
 				8537FFC41B989F3400F7802E /* Localization */,
 				8559191D1B6AE3A8001F712C /* Background Worker */,
@@ -1238,6 +1225,7 @@
 			children = (
 				8557E1851AF8420A003E2880 /* Factory */,
 				855303DF1B0FEC44006B3D5F /* UserData */,
+				85100D531AF70EFF005C24D2 /* Categories */,
 				855303D71B0FE8FB006B3D5F /* Records */,
 				855303D81B0FE909006B3D5F /* Receipts */,
 				8552AF691B326CFF001D3650 /* Tax Years */,
@@ -1763,11 +1751,11 @@
 				855A75EC1BB8D24A0019956E /* SubscriptionViewController.m in Sources */,
 				85D8D8521AF873AA00197D85 /* AccountTableViewCell.m in Sources */,
 				85BE69CB1B7E754E004C24A2 /* HollowWhiteButton.m in Sources */,
-				8557E1881AF84218003E2880 /* DAOFactory.m in Sources */,
 				855973911AFD2BF800DFC176 /* MainViewTableViewCell.m in Sources */,
 				859EA0D51BE3DC0B00D7B2EE /* AuthorizeResult.swift in Sources */,
 				859EA0D71BE3FD2600D7B2EE /* TutorialStep.swift in Sources */,
 				854AC6E91B7D94EE00F0D91D /* YearSummaryTableViewCell.m in Sources */,
+				852299AC1BEC44CA00279F45 /* DAOFactory.swift in Sources */,
 				854AC6E31B7D6B2700F0D91D /* YearSummaryViewController.m in Sources */,
 				855B6FB51B279E4700864E0B /* LookAndFeel.m in Sources */,
 				859EA0DF1BE581CC00D7B2EE /* TaxYear.swift in Sources */,
@@ -1784,7 +1772,6 @@
 				859EA0DB1BE40A1E00D7B2EE /* User.swift in Sources */,
 				85F485881B16D220005E0EDE /* SideMenuView.m in Sources */,
 				855A9AA21B7259FE00455291 /* MetricUnitPickerViewController.m in Sources */,
-				855303E21B0FEC61006B3D5F /* UserDataDAO.m in Sources */,
 				857902A51B2CF9A900C86662 /* ReceiptScrollView.m in Sources */,
 				859EA0DD1BE4700500D7B2EE /* Record.swift in Sources */,
 				858711831BE6CDE800774A2F /* ReceiptBuilder.swift in Sources */,
@@ -1800,8 +1787,8 @@
 				858711871BE6D70700774A2F /* CategoryBuilder.swift in Sources */,
 				850212801B0A925D00170785 /* CameraViewController.m in Sources */,
 				857902A11B2CF8A400C86662 /* ReceiptCollectionViewCell.m in Sources */,
-				85100D561AF70FBF005C24D2 /* CatagoriesDAO.m in Sources */,
 				8582A4741AF176850048DCD6 /* BaseViewController.m in Sources */,
+				852299AE1BEC44D400279F45 /* UserDataDAO.swift in Sources */,
 				856273A01B1B84D500EECA26 /* ReceiptBreakDownViewController.m in Sources */,
 				8556E30B1AF3E5BE003CCDD2 /* NSString+Helper.m in Sources */,
 				8556E3381AF47C8C003CCDD2 /* AddCategoryViewController.m in Sources */,
@@ -1819,7 +1806,6 @@
 				8537A9351B293639000C848F /* ModifyCatagoryTableViewCell.m in Sources */,
 				852929FA1B3675E20074DD24 /* ReceiptEditModeTableViewCell.m in Sources */,
 				8587118F1BE90ECE00774A2F /* DataService.swift in Sources */,
-				8552AF6C1B326D33001D3650 /* TaxYearsDAO.m in Sources */,
 				858711891BE6DF1100774A2F /* BuilderFactory.swift in Sources */,
 				85547C001AF32F4500D9E1CE /* Utils.m in Sources */,
 				8558940C1B1C1BD100D3F353 /* XYPieChart.m in Sources */,
@@ -1835,7 +1821,6 @@
 				8537FFC71B989F6200F7802E /* LocalizationManager.m in Sources */,
 				855919201B6AE3BE001F712C /* BackgroundWorker.m in Sources */,
 				856048BD1BB5E66F002F9454 /* SubscriptionManager.m in Sources */,
-				855303DB1B0FE953006B3D5F /* RecordsDAO.m in Sources */,
 				859EA0E11BE589BD00D7B2EE /* Receipt.swift in Sources */,
 				8587117F1BE6BFC000774A2F /* Notifications.swift in Sources */,
 				858711851BE6D2EE00774A2F /* RecordBuilder.swift in Sources */,
@@ -1845,21 +1830,24 @@
 				858711911BE95BF100774A2F /* ManipulationService.swift in Sources */,
 				8537A9311B28A851000C848F /* TriangleView.m in Sources */,
 				858711811BE6C6E200774A2F /* TaxYearBuilder.swift in Sources */,
+				852299B01BEC44E100279F45 /* RecordsDAO.swift in Sources */,
 				853AF0491B41075B00B2C4D8 /* TransferSelectionsViewController.m in Sources */,
 				85552B3F1B34EF5400AE77CE /* NoItemsTableViewCell.m in Sources */,
+				852299B21BEC44EB00279F45 /* ReceiptsDAO.swift in Sources */,
 				8582A47D1AF181C20048DCD6 /* RegisterViewController.m in Sources */,
 				8556E35F1AF53250003CCDD2 /* VaultViewController.m in Sources */,
+				852299B41BEC44F400279F45 /* TaxYearsDAO.swift in Sources */,
 				856273A61B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.m in Sources */,
 				8555E0D61B091E0400B91138 /* HorizonalScrollBarView.m in Sources */,
 				8565384A1B608ACD00915A2E /* HollowGreenButton.m in Sources */,
 				85A8CAC41AF069EA0023504D /* main.m in Sources */,
+				8576DEEB1BED993600154D45 /* CategoriesDAO.swift in Sources */,
 				8559EA221B9E62D500FCC823 /* ImperialUnitPickerViewController.m in Sources */,
 				85547BFA1AF31CFA00D9E1CE /* UserManager.m in Sources */,
 				85D8D8561AF914B500197D85 /* AlertDialogsProvider.m in Sources */,
 				8587118D1BE7039900774A2F /* NetworkCommunicator.swift in Sources */,
 				85560FE21B019857004D2963 /* ColorPickerViewController.m in Sources */,
 				859EA0E51BE5B0E000D7B2EE /* UserData.swift in Sources */,
-				855303DE1B0FE961006B3D5F /* ReceiptsDAO.m in Sources */,
 				8582A46F1AF176660048DCD6 /* SplashViewController.m in Sources */,
 				85100D411AF6BFC9005C24D2 /* UIView+Helper.m in Sources */,
 				859AEF701B46504D0085AC6D /* TutorialManager.m in Sources */,

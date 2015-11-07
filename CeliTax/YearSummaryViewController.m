@@ -70,7 +70,7 @@
     [self setupUI];
     
     // load all ItemCategory
-    NSArray *catagories = [self.dataService fetchCatagories];
+    NSArray *catagories = [self.dataService fetchCategories];
     
     self.catagories = catagories;
     
@@ -100,7 +100,7 @@
         
         for (Record *record in recordsForThisCatagory)
         {
-            NSString *key = [Record unitTypeIntToUnitTypeString:record.unitType];
+            NSString *key = [Record unitTypeToUnitTypeString:record.unitType];
             
             NSMutableArray *recordsOfSameType = recordsOfEachType[key];
             
@@ -232,7 +232,7 @@
     
     NSString *catagoryID = dataForThisRow.firstObject;
     
-    ItemCategory *thisCatagory = [self.dataService fetchCatagory:catagoryID];
+    ItemCategory *thisCatagory = [self.dataService fetchCategory:catagoryID];
     
     NSString *unitTypeString = dataForThisRow[1];
     

@@ -54,7 +54,7 @@ class ServiceFactory : NSObject //TODO: Remove Subclass to NSObject when the ent
     {
         if (self.dataService == nil)
         {
-            self.dataService = DataService.init(catagoriesDAO: self.daoFactory.createCatagoriesDAO(), recordsDAO: self.daoFactory.createRecordsDAO(), receiptsDAO : self.daoFactory.createReceiptsDAO(), taxYearsDAO : self.daoFactory.createTaxYearsDAO())
+            self.dataService = DataService.init(categoriesDAO: self.daoFactory.createCategoriesDAO(), recordsDAO: self.daoFactory.createRecordsDAO(), receiptsDAO : self.daoFactory.createReceiptsDAO(), taxYearsDAO : self.daoFactory.createTaxYearsDAO())
         }
         
         return self.dataService
@@ -64,7 +64,7 @@ class ServiceFactory : NSObject //TODO: Remove Subclass to NSObject when the ent
     {
         if (self.manipulationService == nil)
         {
-            self.manipulationService = ManipulationService.init(catagoriesDAO: self.daoFactory.createCatagoriesDAO(), recordsDAO:self.daoFactory.createRecordsDAO(), receiptsDAO:self.daoFactory.createReceiptsDAO(), taxYearsDAO:self.daoFactory.createTaxYearsDAO())
+            self.manipulationService = ManipulationService.init(categoriesDAO: self.daoFactory.createCategoriesDAO(), recordsDAO:self.daoFactory.createRecordsDAO(), receiptsDAO:self.daoFactory.createReceiptsDAO(), taxYearsDAO:self.daoFactory.createTaxYearsDAO())
         }
         
         return self.manipulationService
@@ -74,7 +74,7 @@ class ServiceFactory : NSObject //TODO: Remove Subclass to NSObject when the ent
     {
         if (self.syncService == nil)
         {
-            self.syncService = SyncService.init(userDataDAO: self.daoFactory.createUserDataDAO(), taxYearsDAO:self.daoFactory.createTaxYearsDAO(),recordsDAO:self.daoFactory.createRecordsDAO(), receiptsDAO:self.daoFactory.createReceiptsDAO(), catagoriesDAO:self.daoFactory.createCatagoriesDAO(), networkCommunicator:self.networkCommunicator, catagoryBuilder:self.builderFactory.createCatagoryBuilder(), recordBuilder:self.builderFactory.createRecordBuilder(), receiptBuilder:self.builderFactory.createReceiptBuilder(), taxYearBuilder:self.builderFactory.createTaxYearBuilder())
+            self.syncService = SyncService.init(userDataDAO: self.daoFactory.createUserDataDAO(), taxYearsDAO:self.daoFactory.createTaxYearsDAO(),recordsDAO:self.daoFactory.createRecordsDAO(), receiptsDAO:self.daoFactory.createReceiptsDAO(), categoriesDAO:self.daoFactory.createCategoriesDAO(), networkCommunicator:self.networkCommunicator, catagoryBuilder:self.builderFactory.createCatagoryBuilder(), recordBuilder:self.builderFactory.createRecordBuilder(), receiptBuilder:self.builderFactory.createReceiptBuilder(), taxYearBuilder:self.builderFactory.createTaxYearBuilder())
         }
         
         return self.syncService

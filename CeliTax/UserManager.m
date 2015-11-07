@@ -8,7 +8,6 @@
 
 #import "UserManager.h"
 #import "Utils.h"
-#import "UserDataDAO.h"
 #import "ConfigurationManager.h"
 #import "BackgroundWorker.h"
 #import "SubscriptionManager.h"

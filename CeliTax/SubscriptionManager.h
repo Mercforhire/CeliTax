@@ -39,7 +39,6 @@ typedef void (^PurchaseSubscriptionFailureHandler)(NSInteger errorCode);
 
 /*
  Only call this function after the user actually successfully paid Apple for a subscription!!
- This is to 
  */
 - (void)purchasedSubscriptionWithMonths:(NSInteger)months;
 

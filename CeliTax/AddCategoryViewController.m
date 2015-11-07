@@ -271,7 +271,7 @@
 {
     self.currentlySelectedCategory = nil;
 
-    NSArray *catagories = [self.dataService fetchCatagories];
+    NSArray *catagories = [self.dataService fetchCategories];
     
     self.catagories = [[NSMutableArray alloc] initWithArray: catagories copyItems: YES];
     
@@ -405,7 +405,7 @@
         return;
     }
     
-    if ([self.manipulationService addCatagoryForName:capitalizedString catagoryColor:self.colorView.backgroundColor save:YES])
+    if ([self.manipulationService addCatagoryForName:capitalizedString categoryColor:self.colorView.backgroundColor save:YES])
     {
         self.addingCategoryMode = NO;
         self.catagoryNameField.text = @"";
@@ -650,7 +650,7 @@
     
     if ([title isEqualToString: NSLocalizedString(@"Yes", nil)])
     {
-        if ([self.manipulationService transferCatagoryFromCatagoryID:self.currentlySelectedCategory.localID toCatagoryID:self.categoryToTransferTo.localID save:YES])
+        if ([self.manipulationService transferCategoryFromCategoryID:self.currentlySelectedCategory.localID toCategoryID:self.categoryToTransferTo.localID save:YES])
         {
             self.categoryToTransferTo = nil;
             

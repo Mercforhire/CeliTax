@@ -44,7 +44,7 @@ class Record : NSObject, NSCoding, NSCopying //TODO: Remove Subclass to NSObject
     static let kUnitLbKey : String = "UnitLb"
     
     let kKeyIdentifer : String = "Identifer"
-    let kKeyCatagoryID : String = "CatagoryID"
+    let kKeyCategoryID : String = "CatagoryID"
     let kKeyReceiptID : String = "ReceiptID"
     let kKeyAmount : String = "Amount"
     let kKeyQuantity : String = "Quantity"
@@ -52,11 +52,11 @@ class Record : NSObject, NSCoding, NSCopying //TODO: Remove Subclass to NSObject
     let kKeyDataAction : String = "DataAction"
     
     var localID : String = ""
-    var catagoryID : String = "" // must match an ItemCatagory's localID
+    var categoryID : String = "" // must match an ItemCatagory's localID
     var receiptID : String = "" // must match an Receipt's localID
     var amount : Float = 0.0
     var quantity : Int = 0
-    var unitType : Int = 0 // one of the UnitTypes enum
+    var unitType : UnitTypes = UnitTypes.UnitItem
     var dataAction : DataActionStatus = DataActionStatus.DataActionNone
     
     override init()
@@ -67,22 +67,22 @@ class Record : NSObject, NSCoding, NSCopying //TODO: Remove Subclass to NSObject
     required init(coder decoder: NSCoder)
     {
         self.localID = decoder.decodeObjectForKey(kKeyIdentifer) as! String
-        self.catagoryID = decoder.decodeObjectForKey(kKeyCatagoryID) as! String
+        self.categoryID = decoder.decodeObjectForKey(kKeyCategoryID) as! String
         self.receiptID = decoder.decodeObjectForKey(kKeyReceiptID) as! String
         self.amount = decoder.decodeFloatForKey(kKeyAmount)
         self.quantity = decoder.decodeIntegerForKey(kKeyQuantity)
-        self.unitType = decoder.decodeIntegerForKey(kKeyUnitType)
+        self.unitType = UnitTypes(rawValue: decoder.decodeIntegerForKey(kKeyUnitType))!
         self.dataAction = DataActionStatus(rawValue: decoder.decodeIntegerForKey(kKeyDataAction))!
     }
     
     func encodeWithCoder(coder: NSCoder)
     {
         coder.encodeObject(self.localID, forKey: kKeyIdentifer)
-        coder.encodeObject(self.catagoryID, forKey: kKeyCatagoryID)
+        coder.encodeObject(self.categoryID, forKey: kKeyCategoryID)
         coder.encodeObject(self.receiptID, forKey: kKeyReceiptID)
         coder.encodeFloat(self.amount, forKey: kKeyAmount)
         coder.encodeInteger(self.quantity, forKey: kKeyQuantity)
-        coder.encodeInteger(self.unitType, forKey: kKeyUnitType)
+        coder.encodeInteger(self.unitType.rawValue, forKey: kKeyUnitType)
         coder.encodeInteger(self.dataAction.rawValue, forKey: kKeyDataAction)
     }
     
@@ -91,7 +91,7 @@ class Record : NSObject, NSCoding, NSCopying //TODO: Remove Subclass to NSObject
         let copy = Record()
         
         copy.localID = self.localID
-        copy.catagoryID = self.catagoryID
+        copy.categoryID = self.categoryID
         copy.receiptID = self.receiptID
         copy.amount = self.amount
         copy.quantity = self.quantity
@@ -104,7 +104,7 @@ class Record : NSObject, NSCoding, NSCopying //TODO: Remove Subclass to NSObject
     
     func calculateTotal() -> Float
     {
-        if (self.unitType == UnitTypes.UnitItem.rawValue)
+        if (self.unitType == UnitTypes.UnitItem)
         {
             return self.amount * Float(self.quantity)
         }
@@ -119,11 +119,11 @@ class Record : NSObject, NSCoding, NSCopying //TODO: Remove Subclass to NSObject
         var json = Dictionary<String, AnyObject>()
     
         json[kKeyIdentifer] = self.localID
-        json[kKeyCatagoryID] = self.catagoryID
+        json[kKeyCategoryID] = self.categoryID
         json[kKeyReceiptID] = self.receiptID
         json[kKeyAmount] = self.amount
         json[kKeyQuantity] = self.quantity
-        json[kKeyUnitType] = self.unitType
+        json[kKeyUnitType] = self.unitType.rawValue
         json[kKeyDataAction] = self.dataAction.rawValue
         
         return json
@@ -131,7 +131,7 @@ class Record : NSObject, NSCoding, NSCopying //TODO: Remove Subclass to NSObject
 
     func copyDataFromRecord(thisOne : Record)
     {
-        self.catagoryID = thisOne.catagoryID
+        self.categoryID = thisOne.categoryID
         self.receiptID = thisOne.receiptID
         self.amount = thisOne.amount
         self.quantity = thisOne.quantity
@@ -139,106 +139,98 @@ class Record : NSObject, NSCoding, NSCopying //TODO: Remove Subclass to NSObject
         self.dataAction = thisOne.dataAction
     }
 
-    static func unitTypeStringToUnitTypeInt(unitTypeString : String) -> Int
+    static func unitTypeStringToUnitType(unitTypeString : String) -> UnitTypes
     {
         if (unitTypeString == kUnitItemKey)
         {
-            return UnitTypes.UnitItem.rawValue
+            return UnitTypes.UnitItem
         }
         else if (unitTypeString == kUnitGKey)
         {
-            return UnitTypes.UnitG.rawValue
+            return UnitTypes.UnitG
         }
         else if (unitTypeString == kUnit100GKey)
         {
-            return UnitTypes.Unit100G.rawValue
+            return UnitTypes.Unit100G
         }
         else if (unitTypeString == kUnitKGKey)
         {
-            return UnitTypes.UnitKG.rawValue
+            return UnitTypes.UnitKG
         }
         else if (unitTypeString == kUnitLKey)
         {
-            return UnitTypes.UnitL.rawValue
+            return UnitTypes.UnitL
         }
         else if (unitTypeString == kUnitMLKey)
         {
-            return UnitTypes.UnitML.rawValue
+            return UnitTypes.UnitML
         }
         else if (unitTypeString == kUnitFlozKey)
         {
-            return UnitTypes.UnitFloz.rawValue
+            return UnitTypes.UnitFloz
         }
         else if (unitTypeString == kUnitPtKey)
         {
-            return UnitTypes.UnitPt.rawValue
+            return UnitTypes.UnitPt
         }
         else if (unitTypeString == kUnitQtKey)
         {
-            return UnitTypes.UnitQt.rawValue
+            return UnitTypes.UnitQt
         }
         else if (unitTypeString == kUnitGalKey)
         {
-            return UnitTypes.UnitGal.rawValue
+            return UnitTypes.UnitGal
         }
         else if (unitTypeString == kUnitOzKey)
         {
-            return UnitTypes.UnitOz.rawValue
+            return UnitTypes.UnitOz
         }
         else if (unitTypeString == kUnitLbKey)
         {
-            return UnitTypes.UnitLb.rawValue
+            return UnitTypes.UnitLb
         }
         
-        return -1
+        return UnitTypes.UnitItem
     }
 
-    static func unitTypeIntToUnitTypeString(unitTypeInt : Int) -> String?
+    static func unitTypeToUnitTypeString(unitType : UnitTypes) -> String?
     {
-        switch (unitTypeInt)
+        switch (unitType)
         {
-        case UnitTypes.UnitItem.rawValue:
+        case UnitTypes.UnitItem:
             return kUnitItemKey
             
-        case UnitTypes.UnitML.rawValue:
+        case UnitTypes.UnitML:
             return kUnitMLKey
 
-        case UnitTypes.UnitL.rawValue:
+        case UnitTypes.UnitL:
             return kUnitLKey
-
             
-        case UnitTypes.UnitG.rawValue:
+        case UnitTypes.UnitG:
             return kUnitGKey
-
             
-        case UnitTypes.Unit100G.rawValue:
+        case UnitTypes.Unit100G:
             return kUnit100GKey
-
             
-        case UnitTypes.UnitKG.rawValue:
+        case UnitTypes.UnitKG:
             return kUnitKGKey
-
             
-        case UnitTypes.UnitFloz.rawValue:
+        case UnitTypes.UnitFloz:
             return kUnitFlozKey
 
-        case UnitTypes.UnitPt.rawValue:
+        case UnitTypes.UnitPt:
             return kUnitPtKey
-
             
-        case UnitTypes.UnitQt.rawValue:
+        case UnitTypes.UnitQt:
             return kUnitQtKey
-
             
-        case UnitTypes.UnitGal.rawValue:
+        case UnitTypes.UnitGal:
             return kUnitGalKey
 
-            
-        case UnitTypes.UnitOz.rawValue:
+        case UnitTypes.UnitOz:
             return kUnitOzKey
-
             
-        case UnitTypes.UnitLb.rawValue:
+        case UnitTypes.UnitLb:
             return kUnitLbKey
             
         default:

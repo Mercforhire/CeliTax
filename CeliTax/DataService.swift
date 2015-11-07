@@ -18,7 +18,7 @@ class DataService : NSObject
     static let kTotalQtyKey : String = "TotalQty"
     static let kNumberOfRecordsKey : String = "NumberOfRecords"
     
-    weak var catagoriesDAO : CatagoriesDAO!
+    weak var categoriesDAO : CategoriesDAO!
     weak var recordsDAO : RecordsDAO!
     weak var receiptsDAO : ReceiptsDAO!
     weak var taxYearsDAO : TaxYearsDAO!
@@ -28,24 +28,24 @@ class DataService : NSObject
         super.init()
     }
     
-    init(catagoriesDAO : CatagoriesDAO!, recordsDAO : RecordsDAO!, receiptsDAO : ReceiptsDAO!, taxYearsDAO : TaxYearsDAO!)
+    init(categoriesDAO : CategoriesDAO!, recordsDAO : RecordsDAO!, receiptsDAO : ReceiptsDAO!, taxYearsDAO : TaxYearsDAO!)
     {
-        self.catagoriesDAO = catagoriesDAO
+        self.categoriesDAO = categoriesDAO
         self.recordsDAO = recordsDAO
         self.receiptsDAO = receiptsDAO
         self.taxYearsDAO = taxYearsDAO
     }
     
-    func fetchCatagories() -> [ItemCategory]!
+    func fetchCategories() -> [ItemCategory]!
     {
-        let catagories : [ItemCategory] = self.catagoriesDAO.loadCatagories() as! [ItemCategory]
+        let categories : [ItemCategory] = self.categoriesDAO.fetchCategories() 
         
-        return catagories
+        return categories
     }
     
-    func fetchCatagory(catagoryID : String!) -> ItemCategory?
+    func fetchCategory(categoryID : String!) -> ItemCategory?
     {
-        let category : ItemCategory? = self.catagoriesDAO.loadCatagory(catagoryID)
+        let category : ItemCategory? = self.categoriesDAO.fetchCategory(categoryID)
         
         if (category != nil)
         {
@@ -57,14 +57,14 @@ class DataService : NSObject
     
     func fetchAllRecords() -> [Record]
     {
-        let records : [Record] = self.recordsDAO.loadRecords() as! [Record]
+        let records : [Record] = self.recordsDAO.fetchRecords()
         
         return records;
     }
     
-    func fetchRecordsForCatagoryID(catagoryID : String!, taxYear : Int) -> [Record]
+    func fetchRecordsForCatagoryID(categoryID : String!, taxYear : Int) -> [Record]
     {
-        let recordsFromAllTime : [Record] = self.recordsDAO.loadRecordsforCatagory(catagoryID) as! [Record]
+        let recordsFromAllTime : [Record] = self.recordsDAO.fetchRecordsforCategory(categoryID)
         
         var recordsInTaxYear : [Record] = []
         
@@ -86,21 +86,21 @@ class DataService : NSObject
     
     func fetchRecordsForReceiptID(receiptID : String!) -> [Record]
     {
-        let records : [Record] = self.recordsDAO.loadRecordsforReceipt(receiptID) as! [Record]
+        let records : [Record] = self.recordsDAO.fetchRecordsforReceipt(receiptID)
         
         return records
     }
     
     func fetchRecordForID(recordID : String!) -> Record?
     {
-        let record : Record = self.recordsDAO.loadRecord(recordID)
+        let record : Record? = self.recordsDAO.fetchRecord(recordID)
         
         return record
     }
     
     func fetchReceiptsInTaxYear(taxYear : Int) -> [Receipt]
     {
-        let receipts : [Receipt] = self.receiptsDAO.loadReceiptsFromTaxYear(taxYear) as! [Receipt]
+        let receipts : [Receipt] = self.receiptsDAO.fetchReceiptsFromTaxYear(taxYear)
         
         return receipts
     }
@@ -109,7 +109,7 @@ class DataService : NSObject
     {
         var receiptInfos : [Dictionary<String, AnyObject>] = []
         
-        let receipts : [Receipt] = self.receiptsDAO.loadNewestNthReceipts(nThNewest, inTaxYear:year) as! [Receipt]
+        let receipts : [Receipt] = self.receiptsDAO.fetchNewestNthReceipts(nThNewest, taxYear:year)
         
         for receipt in receipts
         {
@@ -121,7 +121,7 @@ class DataService : NSObject
             var totalAmountForReceipt : Float  = 0.0
             
             // get all catagories for this receipt
-            let records : [Record] = self.recordsDAO.loadRecordsforReceipt(receipt.localID) as! [Record]
+            let records : [Record] = self.recordsDAO.fetchRecordsforReceipt(receipt.localID)
             
             receiptInfo[DataService.kNumberOfRecordsKey] = records.count
             
@@ -142,7 +142,7 @@ class DataService : NSObject
     {
         var receiptInfos : [Dictionary<String, AnyObject>] = []
         
-        let allReceipts : NSArray = self.receiptsDAO.loadReceiptsFromTaxYear(taxYear)
+        let allReceipts : NSArray = self.receiptsDAO.fetchReceiptsFromTaxYear(taxYear)
         
         let predicate : NSPredicate = NSPredicate.init(format: "((dateCreated >= %@) AND (dateCreated < %@)) || (dateCreated = nil)", fromDate, toDate)
         
@@ -167,7 +167,7 @@ class DataService : NSObject
             var totalAmountForReceipt : Float = 0.0
             
             // get all catagories for this receipt
-            let records : [Record] = self.recordsDAO.loadRecordsforReceipt(receipt.localID) as! [Record]
+            let records : [Record] = self.recordsDAO.fetchRecordsforReceipt(receipt.localID)
             
             receiptInfo[DataService.kNumberOfRecordsKey] = records.count
             
@@ -186,29 +186,29 @@ class DataService : NSObject
     
     func fetchReceiptForReceiptID(receiptID : String!) -> Receipt?
     {
-        let receipt : Receipt = self.receiptsDAO.loadReceipt(receiptID)
+        let receipt : Receipt? = self.receiptsDAO.fetchReceipt(receiptID)
         
         return receipt
     }
     
-    func fetchCatagoryInfoFromDate(fromDate : NSDate!, toDate : NSDate!, taxYear : Int, catagoryID : String!, unitType : Int) -> [Dictionary<String, AnyObject> ]
+    func fetchCategoryInfoFromDate(fromDate : NSDate!, toDate : NSDate!, taxYear : Int, categoryID : String!, unitType : UnitTypes) -> [Dictionary<String, AnyObject> ]
     {
-        var catagoryInfos : [Dictionary<String, AnyObject>] = []
+        var categoryInfos : [Dictionary<String, AnyObject>] = []
         
-        let allReceiptsFromTheDateRange : [Receipt] = self.receiptsDAO.loadReceiptsFrom(fromDate, toDate: toDate, inTaxYear: taxYear) as! [Receipt]
+        let allReceiptsFromTheDateRange : [Receipt] = self.receiptsDAO.fetchReceiptsFrom(fromDate, toDate: toDate, taxYear: taxYear)
         
         // filter out the receipts that contains Records of category: catagoryID
         for receipt in allReceiptsFromTheDateRange
         {
-            let recordsWithGivenCatagoryID : [Record] = self.recordsDAO.fetchRecordsOfCatagory(catagoryID, inReceipt: receipt.localID) as! [Record]
+            let recordsWithGivenCategoryID : [Record] = self.recordsDAO.fetchRecordsOfCategory(categoryID, receiptID: receipt.localID) as [Record]
             
-            if (recordsWithGivenCatagoryID.count > 0)
+            if (recordsWithGivenCategoryID.count > 0)
             {
                 var totalQty : Int = 0
                 var totalAmount : Float = 0.0
                 
                 // calculate totalQty and totalAmount
-                for record in recordsWithGivenCatagoryID
+                for record in recordsWithGivenCategoryID
                 {
                     if (record.unitType != unitType)
                     {
@@ -219,34 +219,34 @@ class DataService : NSObject
                     totalAmount = totalAmount + record.calculateTotal()
                 }
                 
-                var catagoryInfo : Dictionary<String, AnyObject> = [:]
+                var categoryInfo : Dictionary<String, AnyObject> = [:]
                 
-                catagoryInfo[DataService.kReceiptIDKey] = receipt.localID
-                catagoryInfo[DataService.kReceiptTimeKey] = receipt.dateCreated
-                catagoryInfo[DataService.kTotalQtyKey] = totalQty
-                catagoryInfo[DataService.kTotalAmountKey] = totalAmount
+                categoryInfo[DataService.kReceiptIDKey] = receipt.localID
+                categoryInfo[DataService.kReceiptTimeKey] = receipt.dateCreated
+                categoryInfo[DataService.kTotalQtyKey] = totalQty
+                categoryInfo[DataService.kTotalAmountKey] = totalAmount
                 
-                catagoryInfos.append(catagoryInfo)
+                categoryInfos.append(categoryInfo)
             }
         }
         
-        return catagoryInfos
+        return categoryInfos
     }
     
-    func fetchLatestNthCatagoryInfosforCatagory(catagoryID : String!, unitType : Int, nTh : Int, taxYear : Int) -> [Dictionary<String, AnyObject>]
+    func fetchLatestNthCategoryInfosforCategory(categoryID : String!, unitType : UnitTypes, nTh : Int, taxYear : Int) -> [Dictionary<String, AnyObject>]
     {
-        var catagoryInfos : [Dictionary<String, AnyObject>] = []
+        var categoryInfos : [Dictionary<String, AnyObject>] = []
         
-        let allReceipts : NSArray = self.receiptsDAO.loadReceiptsFromTaxYear(taxYear)
+        let allReceipts : NSArray = self.receiptsDAO.fetchReceiptsFromTaxYear(taxYear)
         
-        let sortedAllReceipts : [Receipt] = allReceipts.sortedArrayUsingComparator { (a, b) -> NSComparisonResult in
+        let sortedAllReceipts : [Receipt] = (allReceipts.sortedArrayUsingComparator { (a, b) -> NSComparisonResult in
             
             let first : NSDate! = (a as! Receipt).dateCreated
             let second : NSDate! = (b as! Receipt).dateCreated
             
             return second.compare(first)
             
-        } as! [Receipt]
+        }) as! [Receipt]
         
         var counter : Int = 0;
         
@@ -258,15 +258,15 @@ class DataService : NSObject
                 break
             }
             
-            let recordsWithGivenCatagoryID : [Record] = self.recordsDAO.fetchRecordsOfCatagory(catagoryID, ofUnitType:unitType, inReceipt:receipt.localID) as! [Record]
+            let recordsWithGivenCategoryID : [Record] = self.recordsDAO.fetchRecordsOfCategory(categoryID, unitType:unitType, receiptID:receipt.localID)
             
-            if (recordsWithGivenCatagoryID.count > 0)
+            if (recordsWithGivenCategoryID.count > 0)
             {
                 var totalQty : Int = 0
                 var totalAmount : Float = 0.0
                 
                 // calculate totalQty and totalAmount
-                for record in recordsWithGivenCatagoryID
+                for record in recordsWithGivenCategoryID
                 {
                     if (record.unitType != unitType)
                     {
@@ -277,25 +277,25 @@ class DataService : NSObject
                     totalAmount = totalAmount + record.calculateTotal()
                 }
                 
-                var catagoryInfo : Dictionary<String, AnyObject> = [:]
+                var categoryInfo : Dictionary<String, AnyObject> = [:]
                 
-                catagoryInfo[DataService.kReceiptIDKey] = receipt.localID
-                catagoryInfo[DataService.kReceiptTimeKey] = receipt.dateCreated
-                catagoryInfo[DataService.kTotalQtyKey] = totalQty
-                catagoryInfo[DataService.kTotalAmountKey] = totalAmount
+                categoryInfo[DataService.kReceiptIDKey] = receipt.localID
+                categoryInfo[DataService.kReceiptTimeKey] = receipt.dateCreated
+                categoryInfo[DataService.kTotalQtyKey] = totalQty
+                categoryInfo[DataService.kTotalAmountKey] = totalAmount
                 
-                catagoryInfos.append(catagoryInfo)
+                categoryInfos.append(categoryInfo)
                 
                 counter++
             }
         }
         
-        return catagoryInfos
+        return categoryInfos
     }
     
     func fetchTaxYears() -> [Int]
     {
-        let unsortedTaxYears : [Int] = self.taxYearsDAO.loadAllTaxYears() as! [Int]
+        let unsortedTaxYears : [Int] = self.taxYearsDAO.loadAllTaxYears()
         
         let sortedYears : [Int] = unsortedTaxYears.sort { (a, b) -> Bool in
             
@@ -303,6 +303,6 @@ class DataService : NSObject
             
         }
         
-        return sortedYears;
+        return sortedYears
     }
 }

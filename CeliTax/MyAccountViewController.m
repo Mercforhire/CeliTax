@@ -263,7 +263,7 @@
     else
     {
         // load all ItemCategory
-        NSArray *catagories = [self.dataService fetchCatagories];
+        NSArray *catagories = [self.dataService fetchCategories];
         
         self.catagories = catagories;
     }
@@ -294,7 +294,7 @@
         
         for (Record *record in recordsForThisCatagory)
         {
-            NSString *key = [Record unitTypeIntToUnitTypeString:record.unitType];
+            NSString *key = [Record unitTypeToUnitTypeString:record.unitType];
             
             NSMutableArray *recordsOfSameType = recordsOfEachType[key];
             
@@ -549,7 +549,7 @@
         NSString *unitTypeString = self.currentlySelectedRow.unitTypeString;
         
         NSArray *catagoryInfos =
-        [self.dataService fetchLatestNthCatagoryInfosforCatagory:catagoryID unitType:[Record unitTypeStringToUnitTypeInt:unitTypeString] nTh:5 taxYear:self.configurationManager.getCurrentTaxYear.integerValue];
+        [self.dataService fetchLatestNthCategoryInfosforCategory:catagoryID unitType:[Record unitTypeStringToUnitType:unitTypeString] nTh:5 taxYear:self.configurationManager.getCurrentTaxYear.integerValue];
         
         self.catagoryInfosToShow = catagoryInfos;
         
@@ -569,7 +569,7 @@
         NSString *catagoryID = self.currentlySelectedRow.categoryID;
         NSString *unitTypeString = self.currentlySelectedRow.unitTypeString;
         
-        NSArray *catagoryInfos = [self.dataService fetchCatagoryInfoFromDate:mondayOfPreviousWeek toDate:mondayOfThisWeek taxYear:self.configurationManager.getCurrentTaxYear.integerValue catagoryID:catagoryID unitType:[Record unitTypeStringToUnitTypeInt:unitTypeString]];
+        NSArray *catagoryInfos = [self.dataService fetchCategoryInfoFromDate:mondayOfPreviousWeek toDate:mondayOfThisWeek taxYear:self.configurationManager.getCurrentTaxYear.integerValue categoryID:catagoryID unitType:[Record unitTypeStringToUnitType:unitTypeString]];
         
         self.catagoryInfosToShow = catagoryInfos;
         
@@ -590,11 +590,11 @@
         NSString *catagoryID = self.currentlySelectedRow.categoryID;
         NSString *unitTypeString = self.currentlySelectedRow.unitTypeString;
         
-        NSArray *catagoryInfos = [self.dataService fetchCatagoryInfoFromDate:firstDayOfPreviousMonth
+        NSArray *catagoryInfos = [self.dataService fetchCategoryInfoFromDate:firstDayOfPreviousMonth
                                                                       toDate:firstDayOfThisMonth
                                                                      taxYear:self.configurationManager.getCurrentTaxYear.integerValue
-                                                                  catagoryID:catagoryID
-                                                                    unitType:[Record unitTypeStringToUnitTypeInt:unitTypeString]];
+                                                                  categoryID:catagoryID
+                                                                    unitType:[Record unitTypeStringToUnitType:unitTypeString]];
         
         self.catagoryInfosToShow = catagoryInfos;
         
@@ -610,7 +610,7 @@
         NSString *unitTypeString = self.currentlySelectedRow.unitTypeString;
         
         // all receipts from this category
-        NSArray *catagoryInfos = [self.dataService fetchLatestNthCatagoryInfosforCatagory:catagoryID unitType:[Record unitTypeStringToUnitTypeInt:unitTypeString] nTh:-1 taxYear:self.configurationManager.getCurrentTaxYear.integerValue];
+        NSArray *catagoryInfos = [self.dataService fetchLatestNthCategoryInfosforCategory:catagoryID unitType:[Record unitTypeStringToUnitType:unitTypeString] nTh:-1 taxYear:self.configurationManager.getCurrentTaxYear.integerValue];
         
         self.catagoryInfosToShow = catagoryInfos;
         
@@ -702,7 +702,7 @@
             {
                 allNationalAverageCostsEntered = NO;
                 
-                nameOfCategoryNotEntered = [self.dataService fetchCatagory:categoryIDKey].name;
+                nameOfCategoryNotEntered = [self.dataService fetchCategory:categoryIDKey].name;
                 
                 break;
             }
@@ -792,14 +792,14 @@
     
     NSString *unitTypeString = dataForThisRow.unitTypeString;
     
-    NSInteger unitType = [Record unitTypeStringToUnitTypeInt:unitTypeString];
+    NSInteger unitType = [Record unitTypeStringToUnitType:unitTypeString];
     
     // if user types nothing for a textField, we default it to ----
     if (textField.text.length == 0 || textField.text.floatValue == 0)
     {
         textField.text = @"--";
         
-        [self.manipulationService deleteNationalAverageCostForCatagoryID:catagoryID unitType:unitType save:YES];
+        [self.manipulationService deleteNationalAverageCostForCategoryID:catagoryID unitType:unitType save:YES];
         
         dataForThisRow.nationalAverageCost = -1;
         
