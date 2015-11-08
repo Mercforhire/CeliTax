@@ -69,7 +69,8 @@
     {
         [self scrollToY:diff];
     }
-    else {
+    else
+    {
         [self scrollToY:0];
     }
 }

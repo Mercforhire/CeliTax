@@ -14,7 +14,6 @@
 #import "XYPieChart.h"
 #import "UploadsHistoryTableViewCell.h"
 #import "ReceiptBreakDownViewController.h"
-#import "Utils.h"
 #import "ConfigurationManager.h"
 #import "ProfileBarView.h"
 #import "TutorialManager.h"
@@ -1388,7 +1387,7 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
     tutorialStep20.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     tutorialStep20.pointsUp = NO;
     
-    tutorialStep20.highlightedItemRect = [Utils returnRectBiggerThan:self.calculateButton.frame by: 3];;
+    tutorialStep20.highlightedItemRect = [Utils createBiggerRectOf:self.calculateButton.frame width: 3.0f];
     
     [self.tutorials addObject:tutorialStep20];
 }

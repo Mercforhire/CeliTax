@@ -47,7 +47,6 @@
 		854AC6EA1B7D94EE00F0D91D /* YearSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 854AC6E81B7D94EE00F0D91D /* YearSummaryTableViewCell.xib */; };
 		85547BF71AF2FB0500D9E1CE /* ViewControllerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 85547BF61AF2FB0500D9E1CE /* ViewControllerFactory.m */; };
 		85547BFA1AF31CFA00D9E1CE /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 85547BF91AF31CFA00D9E1CE /* UserManager.m */; };
-		85547C001AF32F4500D9E1CE /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 85547BFF1AF32F4500D9E1CE /* Utils.m */; };
 		8554BCE31B2537F1002333ED /* M13Checkbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8554BCE21B2537F1002333ED /* M13Checkbox.m */; };
 		8554BCE91B254F45002333ED /* TimePeriodSelectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8554BCE71B254F45002333ED /* TimePeriodSelectionTableViewCell.m */; };
 		8554BCEA1B254F45002333ED /* TimePeriodSelectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8554BCE81B254F45002333ED /* TimePeriodSelectionTableViewCell.xib */; };
@@ -130,6 +129,8 @@
 		85665DD51B20EFD200848D36 /* ReceiptTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 85665DD31B20EFD200848D36 /* ReceiptTableViewCell.m */; };
 		85665DD61B20EFD200848D36 /* ReceiptTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85665DD41B20EFD200848D36 /* ReceiptTableViewCell.xib */; };
 		8576DEEB1BED993600154D45 /* CategoriesDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576DEEA1BED993600154D45 /* CategoriesDAO.swift */; };
+		8576DEEF1BEE85B900154D45 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576DEEE1BEE85B900154D45 /* Utils.swift */; };
+		8576DEF11BEE97C000154D45 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576DEF01BEE97C000154D45 /* StringExtension.swift */; };
 		857902A11B2CF8A400C86662 /* ReceiptCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8579029F1B2CF8A400C86662 /* ReceiptCollectionViewCell.m */; };
 		857902A21B2CF8A400C86662 /* ReceiptCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 857902A01B2CF8A400C86662 /* ReceiptCollectionViewCell.xib */; };
 		857902A51B2CF9A900C86662 /* ReceiptScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 857902A41B2CF9A900C86662 /* ReceiptScrollView.m */; };
@@ -271,8 +272,6 @@
 		85547BF61AF2FB0500D9E1CE /* ViewControllerFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerFactory.m; sourceTree = "<group>"; };
 		85547BF81AF31CFA00D9E1CE /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
 		85547BF91AF31CFA00D9E1CE /* UserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserManager.m; sourceTree = "<group>"; };
-		85547BFE1AF32F4500D9E1CE /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
-		85547BFF1AF32F4500D9E1CE /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		85547C011AF3328900D9E1CE /* CeliTax-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CeliTax-Prefix.pch"; sourceTree = "<group>"; };
 		8554BCE11B2537F1002333ED /* M13Checkbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M13Checkbox.h; sourceTree = "<group>"; };
 		8554BCE21B2537F1002333ED /* M13Checkbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M13Checkbox.m; sourceTree = "<group>"; };
@@ -401,6 +400,8 @@
 		85665DD31B20EFD200848D36 /* ReceiptTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptTableViewCell.m; sourceTree = "<group>"; };
 		85665DD41B20EFD200848D36 /* ReceiptTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptTableViewCell.xib; sourceTree = "<group>"; };
 		8576DEEA1BED993600154D45 /* CategoriesDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesDAO.swift; sourceTree = "<group>"; };
+		8576DEEE1BEE85B900154D45 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		8576DEF01BEE97C000154D45 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		8579029E1B2CF8A400C86662 /* ReceiptCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptCollectionViewCell.h; sourceTree = "<group>"; };
 		8579029F1B2CF8A400C86662 /* ReceiptCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptCollectionViewCell.m; sourceTree = "<group>"; };
 		857902A01B2CF8A400C86662 /* ReceiptCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1246,10 +1247,10 @@
 			isa = PBXGroup;
 			children = (
 				85C3A7F31BEAE69B00E8C5E6 /* Macros.swift */,
+				8576DEF01BEE97C000154D45 /* StringExtension.swift */,
 				85D8D8541AF914B500197D85 /* AlertDialogsProvider.h */,
 				85D8D8551AF914B500197D85 /* AlertDialogsProvider.m */,
-				85547BFE1AF32F4500D9E1CE /* Utils.h */,
-				85547BFF1AF32F4500D9E1CE /* Utils.m */,
+				8576DEEE1BEE85B900154D45 /* Utils.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1785,6 +1786,7 @@
 				8581E2921B2E6AD3006CB6F6 /* SelectionsPickerTableViewCell.m in Sources */,
 				85C54B851B65A82500120961 /* ProfileBarView.m in Sources */,
 				858711871BE6D70700774A2F /* CategoryBuilder.swift in Sources */,
+				8576DEF11BEE97C000154D45 /* StringExtension.swift in Sources */,
 				850212801B0A925D00170785 /* CameraViewController.m in Sources */,
 				857902A11B2CF8A400C86662 /* ReceiptCollectionViewCell.m in Sources */,
 				8582A4741AF176850048DCD6 /* BaseViewController.m in Sources */,
@@ -1807,7 +1809,6 @@
 				852929FA1B3675E20074DD24 /* ReceiptEditModeTableViewCell.m in Sources */,
 				8587118F1BE90ECE00774A2F /* DataService.swift in Sources */,
 				858711891BE6DF1100774A2F /* BuilderFactory.swift in Sources */,
-				85547C001AF32F4500D9E1CE /* Utils.m in Sources */,
 				8558940C1B1C1BD100D3F353 /* XYPieChart.m in Sources */,
 				8554BCE31B2537F1002333ED /* M13Checkbox.m in Sources */,
 				8554BCE91B254F45002333ED /* TimePeriodSelectionTableViewCell.m in Sources */,
@@ -1838,6 +1839,7 @@
 				8556E35F1AF53250003CCDD2 /* VaultViewController.m in Sources */,
 				852299B41BEC44F400279F45 /* TaxYearsDAO.swift in Sources */,
 				856273A61B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.m in Sources */,
+				8576DEEF1BEE85B900154D45 /* Utils.swift in Sources */,
 				8555E0D61B091E0400B91138 /* HorizonalScrollBarView.m in Sources */,
 				8565384A1B608ACD00915A2E /* HollowGreenButton.m in Sources */,
 				85A8CAC41AF069EA0023504D /* main.m in Sources */,

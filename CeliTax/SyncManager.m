@@ -7,7 +7,6 @@
 //
 
 #import "SyncManager.h"
-#import "Utils.h"
 #import "UserManager.h"
 
 #import "CeliTax-Swift.h"
@@ -136,7 +135,7 @@
     {
         NSString *filenameToUpload = (self.filenamesToUpload)[self.indexOfFileToUpload];
         
-        NSData *fileData = [Utils readImageDataWithFileName: filenameToUpload forUser: self.userManager.user.userKey];
+        NSData *fileData = [Utils readImageDataWithFileName: filenameToUpload userKey: self.userManager.user.userKey];
         
         if (fileData)
         {

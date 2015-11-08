@@ -400,7 +400,7 @@ class AuthenticationService : NSObject
         
         let successBlock : MKNKResponseBlock = { (completedOperation) in
             
-            let profileImage : UIImage = Utils.readProfileImageForUser(self.userDataDAO.userKey)
+            let profileImage : UIImage! = Utils.readProfileImageForUser(self.userDataDAO.userKey)
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 

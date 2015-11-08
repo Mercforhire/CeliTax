@@ -12,7 +12,6 @@
 #import "WYPopoverController.h"
 #import "SelectionsPickerViewController.h"
 #import "ViewControllerFactory.h"
-#import "Utils.h"
 #import "M13Checkbox.h"
 #import "SendReceiptsToViewController.h"
 #import "AlertDialogsProvider.h"

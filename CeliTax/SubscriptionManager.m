@@ -8,7 +8,6 @@
 
 #import "SubscriptionManager.h"
 #import "UserManager.h"
-#import "Utils.h"
 
 NSString *const SubscriptionManagerProductPurchasedNotification = @"IAPHelperProductPurchasedNotification";
 

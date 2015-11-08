@@ -8,7 +8,6 @@
 
 #import "BaseSideBarViewController.h"
 #import "UserManager.h"
-#import "Utils.h"
 #import "ViewControllerFactory.h"
 #import "SettingsViewController.h"
 #import "VaultViewController.h"
@@ -49,8 +48,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.sideMenuView = [Utils getLeftSideViewUsing: self.userManager.user.avatarImage
-                                        andUsername: [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]];
+    self.sideMenuView = [Utils getLeftSideViewUsing:self.userManager.user.avatarImage userName:[NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname]];
     self.sideMenuView.delegate = self;
     self.sideMenuView.lookAndFeel = self.lookAndFeel;
 

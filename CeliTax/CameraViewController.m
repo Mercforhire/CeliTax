@@ -8,7 +8,6 @@
 
 #import "CameraViewController.h"
 #import "WhiteBorderView.h"
-#import "Utils.h"
 #import "UserManager.h"
 #import "MBProgressHUD.h"
 #import "ConfigurationManager.h"
@@ -247,7 +246,7 @@
         
         if (receipt.fileNames.count)
         {
-            UIImage *image = [Utils readImageWithFileName: receipt.fileNames.lastObject forUser: self.userManager.user.userKey];
+            UIImage *image = [Utils readImageWithFileName: receipt.fileNames.lastObject userKey: self.userManager.user.userKey];
             
             if (image)
             {
@@ -338,13 +337,13 @@
                                                   image.size.width * self.rightCropEdgeRatio - image.size.width * self.leftCropEdgeRatio,
                                                   image.size.height * self.bottomCropEdgeRatio - image.size.height * self.topCropEdgeRatio);
                 
-                UIImage *croppedImage = [Utils getCroppedImageUsingRect: cropRectangle forImage: image];
+                UIImage *croppedImage = [Utils getCroppedImageUsingRect:cropRectangle originalImage: image];
                 
                 UIImage *resizedImage = [croppedImage resizedImageByMagick: @"400"];
                 
                 NSString *fileName = [NSString stringWithFormat: @"Receipt-%@-%ld", [Utils generateUniqueID], (long)self.takenImageFilenames.count];
                 
-                NSString *savedFilePath = [Utils saveImage: resizedImage withFilename: fileName forUser: self.userManager.user.userKey];
+                NSString *savedFilePath = [Utils saveImage: resizedImage filename: fileName userKey: self.userManager.user.userKey];
                 
                 DLog(@"Image saved to %@", savedFilePath);
                 
@@ -446,7 +445,7 @@
     
     for (NSString *filename in self.takenImageFilenames)
     {
-        [Utils deleteImageWithFileName:filename forUser:self.userManager.user.userKey];
+        [Utils deleteImageWithFileName:filename userKey:self.userManager.user.userKey];
     }
     
     [self.navigationController.navigationBar setHidden: NO];

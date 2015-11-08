@@ -101,7 +101,7 @@ class SyncService : NSObject
                 
                 while (indexesOf3ChoosenCategories.count <= 3)
                 {
-                    let randomIndex : Int = Int(Utils.randomNumberBetween(0, maxNumber: Int32(allCategories.count - 1)))
+                    let randomIndex : Int = Utils.randomNumberBetween(0, max: allCategories.count - 1)
                     
                     if (!indexesOf3ChoosenCategories.contains(randomIndex))
                     {
@@ -120,9 +120,9 @@ class SyncService : NSObject
                         for var j = UnitTypes.UnitItem.rawValue; j < UnitTypes.UnitCount.rawValue; j++
                         {
                             //50% Chance of adding a National Average Cost for the current Unit Type
-                            if (Utils.randomNumberBetween(1, maxNumber: 10) <= 5)
+                            if (Utils.randomNumberBetween(1, max: 10) <= 5)
                             {
-                                category.addOrUpdateNationalAverageCostForUnitType(UnitTypes(rawValue: j)!, amount: Float(Utils.randomNumberBetween(10, maxNumber: 100)) / 10)
+                                category.addOrUpdateNationalAverageCostForUnitType(UnitTypes(rawValue: j)!, amount: Float(Utils.randomNumberBetween(10, max: 100)) / 10)
                             }
                         }
                     }
@@ -143,14 +143,14 @@ class SyncService : NSObject
                 let fileName1 : String = String(format: "Receipt-%@-%d", Utils.generateUniqueID(), 1)
                 let fileName2 : String = String(format: "Receipt-%@-%d", Utils.generateUniqueID(), 2)
                 
-                Utils.saveImage(testImage1, withFilename: fileName1, forUser: self.userDataDAO.userKey)
-                Utils.saveImage(testImage2, withFilename: fileName2, forUser: self.userDataDAO.userKey)
+                Utils.saveImage(testImage1, filename: fileName1, userKey: self.userDataDAO.userKey)
+                Utils.saveImage(testImage2, filename: fileName2, userKey: self.userDataDAO.userKey)
                 
-                components.day = Int(Utils.randomNumberBetween(1, maxNumber: 28))
-                components.month = Int(Utils.randomNumberBetween(1, maxNumber: 12))
-                components.year = Int(Utils.randomNumberBetween(2013, maxNumber: 2015))
-                components.hour = Int(Utils.randomNumberBetween(0, maxNumber: 23))
-                components.minute = Int(Utils.randomNumberBetween(0, maxNumber: 59))
+                components.day = Utils.randomNumberBetween(1, max: 28)
+                components.month = Utils.randomNumberBetween(1, max: 12)
+                components.year = Utils.randomNumberBetween(2013, max: 2015)
+                components.hour = Utils.randomNumberBetween(0, max: 23)
+                components.minute = Utils.randomNumberBetween(0, max: 59)
                 
                 let randomDate : NSDate! = calendar.dateFromComponents(components)
                 
@@ -164,27 +164,27 @@ class SyncService : NSObject
                 newReceipt.localID = Utils.generateUniqueID()
                 newReceipt.fileNames = [fileName1, fileName2]
                 newReceipt.dateCreated = randomDate
-                newReceipt.taxYear = Int(Utils.randomNumberBetween(2013, maxNumber: 2015))
+                newReceipt.taxYear = Utils.randomNumberBetween(2013, max: 2015)
                 newReceipt.dataAction = DataActionStatus.DataActionInsert;
                 
                 self.receiptsDAO.addReceipt(newReceipt, save: false)
                 
                 // add random items for each receipt
-                let numberOfItems : Int = Int(Utils.randomNumberBetween(1, maxNumber: 10))
+                let numberOfItems : Int = Utils.randomNumberBetween(1, max: 10)
                 
                 for (var itemNumber = 0; itemNumber < numberOfItems; itemNumber++)
                 {
                     let categories : [ItemCategory]! = self.categoriesDAO.fetchCategories()
                     
-                    let randomCategoryIndex : Int = Int(Utils.randomNumberBetween(0, maxNumber:Int32(numberOfCatagories) - 1))
+                    let randomCategoryIndex : Int = Utils.randomNumberBetween(0, max:numberOfCatagories - 1)
                     
                     let recordCatagory : ItemCategory = categories[randomCategoryIndex]
                     
-                    let recordQuantity : Int = Int(Utils.randomNumberBetween(1, maxNumber: 20))
+                    let recordQuantity : Int = Utils.randomNumberBetween(1, max: 20)
                     
-                    let recordUnitType : UnitTypes! = UnitTypes.init(rawValue: Int(Utils.randomNumberBetween(Int32(UnitTypes.UnitItem.rawValue), maxNumber: Int32(UnitTypes.UnitLb.rawValue))))
+                    let recordUnitType : UnitTypes! = UnitTypes.init(rawValue: Utils.randomNumberBetween(UnitTypes.UnitItem.rawValue, max: UnitTypes.UnitLb.rawValue))
                     
-                    let recordAmount : Float = Float(Utils.randomNumberBetween(10, maxNumber: 100)) / 10
+                    let recordAmount : Float = Float(Utils.randomNumberBetween(10, max: 100)) / 10
                     
                     self.recordsDAO.addRecordForCategory(recordCatagory, receipt: newReceipt, quantity: recordQuantity, unitType: recordUnitType, amount: recordAmount, save: false)
                 }
@@ -693,7 +693,7 @@ class SyncService : NSObject
     func downloadFile(filename : String, success : FileDownloadSuccessBlock?, failure : FileDownloadFailureBlock?)
     {
         // 1.get the URL of the image first
-        let filePath : String = Utils.getFilePathForImage(filename, forUser: self.userDataDAO.userKey)
+        let filePath : String = Utils.getFilePathForImage(filename, userKey: self.userDataDAO.userKey)
         
         let postParams: [String:String] = [
             "filename" : filename
@@ -766,7 +766,7 @@ class SyncService : NSObject
         //check which file in allFilenames doesn't exist
         for filename in allFilenames
         {
-            if ( !Utils.imageWithFileNameExist(filename, forUser:self.userDataDAO.userKey) )
+            if ( !Utils.imageWithFileNameExist(filename, userKey:self.userDataDAO.userKey) )
             {
                 filesNeedToDownload.append(filename)
             }
@@ -793,7 +793,7 @@ class SyncService : NSObject
             }
             
             //2. Get names of all files that exist
-            let existingFilenames : [String] = Utils.getImageFilenamesForUser(self.userDataDAO.userKey) as! [String]
+            let existingFilenames : [String] = Utils.getImageFilenamesForUser(self.userDataDAO.userKey)
             
             //3. Check if each existing file also exist in the list of files those we should keep
             for existingFilename in existingFilenames
@@ -801,7 +801,7 @@ class SyncService : NSObject
                 if (!allFilenames.contains(existingFilename))
                 {
                     //delete this file
-                    Utils.deleteImageWithFileName(existingFilename, forUser:self.userDataDAO.userKey)
+                    Utils.deleteImageWithFileName(existingFilename, userKey:self.userDataDAO.userKey)
                 }
             }
             

@@ -26,7 +26,6 @@
 #import "TutorialManager.h"
 #import "MBProgressHUD.h"
 #import "SyncManager.h"
-#import "Utils.h"
 #import "SubscriptionManager.h"
 
 #import "CeliTax-Swift.h"
@@ -206,7 +205,7 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
     }
     else
     {
-        self.taxYearToAdd = @"2015";
+        self.taxYearToAdd = @"2015"; //TODO: Change this to current year
         
         [self addTaxYear];
     }

@@ -13,7 +13,6 @@
 #import "ImageCounterIconView.h"
 #import "AddCategoryViewController.h"
 #import "ViewControllerFactory.h"
-#import "Utils.h"
 #import "UIView+Helper.h"
 #import "ReceiptBreakDownViewController.h"
 #import "ReceiptItemCell.h"
@@ -267,7 +266,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
         
         for (int i = 0; i < self.receipt.fileNames.count; i++)
         {
-            UIImage *image = [Utils readImageWithFileName: self.receipt.fileNames[i] forUser: self.userManager.user.userKey];
+            UIImage *image = [Utils readImageWithFileName: self.receipt.fileNames[i] userKey: self.userManager.user.userKey];
             
             if (image)
             {
@@ -419,7 +418,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
     
     for (int i = 0; i < self.receipt.fileNames.count; i++)
     {
-        UIImage *image = [Utils readImageWithFileName: self.receipt.fileNames[i] forUser: self.userManager.user.userKey];
+        UIImage *image = [Utils readImageWithFileName: self.receipt.fileNames[i] userKey: self.userManager.user.userKey];
         
         if (image)
         {
@@ -1425,7 +1424,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
             
             NSString *fileToDelete = (self.receipt.fileNames)[indexPath.row];
             
-            [Utils deleteImageWithFileName:fileToDelete forUser: self.userManager.user.userKey];
+            [Utils deleteImageWithFileName:fileToDelete userKey: self.userManager.user.userKey];
             
             [self.receipt.fileNames removeObjectAtIndex:indexPath.row];
             [self.manipulationService modifyReceipt:self.receipt save:YES];

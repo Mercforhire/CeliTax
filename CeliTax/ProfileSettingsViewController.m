@@ -12,7 +12,6 @@
 #import "UserManager.h"
 #import "UIView+Helper.h"
 #import "TOCropViewController.h"
-#import "Utils.h"
 #import "UIImage+ResizeMagick.h"
 
 #import "CeliTax-Swift.h"

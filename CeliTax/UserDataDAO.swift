@@ -167,7 +167,7 @@ class UserDataDAO : NSObject //TODO: Remove Subclass to NSObject when the entire
             return false
         }
         
-        if (Utils.archiveFile(self.userData, toFile: self.generateUserDataFileName()))
+        if (Utils.archiveFile(self.userData, path: self.generateUserDataFileName()))
         {
             return true
         }
