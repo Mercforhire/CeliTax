@@ -12,7 +12,6 @@
 #import "ViewControllerFactory.h"
 #import "PasswordRecoverySentViewController.h"
 #import "HollowGreenButton.h"
-#import "AlertDialogsProvider.h"
 
 @interface PasswordRecoveryViewController () <UITextFieldDelegate>
 
@@ -83,9 +82,34 @@
 
 - (IBAction) sendEmailPressed: (UIButton *) sender
 {
-    [AlertDialogsProvider showWorkInProgressDialog];
+    [self.sendEmailButton setEnabled:NO];
     
-    [self.navigationController pushViewController: [self.viewControllerFactory createPasswordRecoverySentViewController] animated: YES];
+    [self.authenticationService forgotPassword:self.emailAddressField.text success:^{
+        
+        [self.navigationController pushViewController: [self.viewControllerFactory createPasswordRecoverySentViewController] animated: YES];
+        
+    } failure:^(NSString *reason) {
+        
+        NSString *errorMessage;
+        
+        if ([reason isEqualToString: AuthenticationService.USER_DOESNT_EXIST])
+        {
+            errorMessage = NSLocalizedString(@"This user does not exist", nil);
+        }
+        else
+        {
+            errorMessage = NSLocalizedString(@"Can not connect to our server, please try again later", nil);
+        }
+        
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
+                                                          message: errorMessage
+                                                         delegate: nil cancelButtonTitle: nil
+                                                otherButtonTitles: NSLocalizedString(@"Dismiss", nil), nil];
+        
+        [message show];
+        
+        [self.sendEmailButton setEnabled:YES];
+    }];
 }
 
 #pragma mark - UIKeyboardWillShowNotification / UIKeyboardWillHideNotification events

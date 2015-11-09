@@ -39,10 +39,10 @@
  */
 - (void) applyRoundedBorder;
 
--(void)scrollToY:(float)y;
+- (void) scrollToY:(float)y;
 
--(void)scrollToView:(UIView *)view;
+- (void) scrollToView:(UIView *)view;
 
--(void)scrollElement:(UIView *)view toPoint:(float)y;
+- (void) scrollElement:(UIView *)view toPoint:(float)y;
 
 @end

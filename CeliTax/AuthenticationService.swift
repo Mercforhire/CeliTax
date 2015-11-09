@@ -25,6 +25,9 @@ class AuthenticationService : NSObject
     typealias RegisterNewUserSuccessBlock = (RegisterResult) -> Void
     typealias RegisterNewUserFailureBlock = (RegisterResult) -> Void
     
+    typealias ForgotPasswordSuccessBlock = () -> Void
+    typealias ForgotPasswordFailureBlock = (NSString) -> Void
+    
     typealias SendCommentSuccessBlock = () -> Void
     typealias SendCommentFailureBlock = (NSString) -> Void
     
@@ -185,6 +188,64 @@ class AuthenticationService : NSObject
                 if (failure != nil)
                 {
                     failure! ( registerResult );
+                }
+            })
+        }
+        
+        networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
+        
+        self.networkCommunicator.enqueueOperation(networkOperation)
+    }
+    
+    func forgotPassword(userName : String!, success : ForgotPasswordSuccessBlock?, failure : ForgotPasswordFailureBlock?)
+    {
+        let postParams: [String:String] = [
+            "email" : userName
+        ]
+        
+        let networkOperation : MKNetworkOperation = self.networkCommunicator.postDataToServer(postParams,path: NetworkCommunicator.WEB_API_FILE.stringByAppendingString("/forgetpassword"))
+        
+        let successBlock : MKNKResponseBlock = { (completedOperation) in
+            
+            let response : NSDictionary = completedOperation.responseJSON() as! NSDictionary
+            
+            if ( response["error"]!.boolValue == false )
+            {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    if (success != nil)
+                    {
+                        success! ( )
+                    }
+                    
+                })
+            }
+            else
+            {
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    if (failure != nil)
+                    {
+                        failure! ( AuthenticationService.USER_DOESNT_EXIST )
+                    }
+                    
+                })
+            }
+        }
+        
+        let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
+            
+            let registerResult : RegisterResult = RegisterResult()
+            
+            registerResult.success = false
+            registerResult.message = NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (failure != nil)
+                {
+                    failure! ( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY );
                 }
             })
         }

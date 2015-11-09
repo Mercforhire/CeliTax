@@ -175,23 +175,6 @@ NSString *const SubscriptionManagerProductPurchasedNotification = @"IAPHelperPro
     
     NSArray * skProducts = response.products;
     
-    if (response.products.count)
-    {
-        DLog(@"Loaded list of products...");
-    }
-    else
-    {
-        DLog(@"No products found.");
-    }
-    
-    for (SKProduct * skProduct in skProducts)
-    {
-        DLog(@"Found product: %@ %@ %0.2f",
-              skProduct.productIdentifier,
-              skProduct.localizedTitle,
-              skProduct.price.floatValue);
-    }
-    
     _completionHandler(YES, skProducts);
     _completionHandler = nil;
     

@@ -37,8 +37,8 @@
                         <constraint firstAttribute="height" constant="30" id="yQD-ez-A6t"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="MANAGE CATEGORIES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5jO-aO-bye">
-                    <rect key="frame" x="59" y="79" width="202.5" height="23"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MANAGE CATEGORIES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5jO-aO-bye">
+                    <rect key="frame" x="59" y="79" width="203" height="23"/>
                     <animations/>
                     <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="19"/>
                     <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -72,7 +72,7 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="addCatagoryPressed:" destination="-1" eventType="touchUpInside" id="9rN-xE-zJK"/>
+                        <action selector="addCategoryPressed:" destination="-1" eventType="touchUpInside" id="XnA-ix-zOP"/>
                     </connections>
                 </button>
             </subviews>

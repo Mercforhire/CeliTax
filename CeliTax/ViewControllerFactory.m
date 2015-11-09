@@ -273,6 +273,8 @@
     PasswordRecoveryViewController *passwordRecoveryViewController = [[PasswordRecoveryViewController alloc] initWithNibName: @"PasswordRecoveryViewController" bundle: nil];
 
     [self initializeViewController: passwordRecoveryViewController];
+    
+    passwordRecoveryViewController.authenticationService = self.authenticationService;
 
     return passwordRecoveryViewController;
 }

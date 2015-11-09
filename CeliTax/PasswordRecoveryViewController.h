@@ -7,7 +7,10 @@
 //
 
 #import "BaseViewController.h"
+#import "CeliTax-Swift.h"
 
 @interface PasswordRecoveryViewController : BaseViewController
+
+@property (nonatomic, weak) AuthenticationService *authenticationService;
 
 @end
