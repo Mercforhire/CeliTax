@@ -19,29 +19,29 @@ class AuthenticationService : NSObject
     static let USER_CHANGE_EMAIL_ALREADY_EXIST : String = "USER_CHANGE_EMAIL_ALREADY_EXIST"
     static let NO_EXPIRATION_DATE_EXIST : String = "NO_EXPIRATION_DATE_EXIST"
     
-    typealias AuthenticateUserSuccessBlock  = (AuthorizeResult) -> Void
-    typealias AuthenticateUserFailureBlock = (AuthorizeResult) -> Void
+    typealias AuthenticateUserSuccessBlock  = (result : AuthorizeResult) -> Void
+    typealias AuthenticateUserFailureBlock = (result : AuthorizeResult) -> Void
     
-    typealias RegisterNewUserSuccessBlock = (RegisterResult) -> Void
-    typealias RegisterNewUserFailureBlock = (RegisterResult) -> Void
+    typealias RegisterNewUserSuccessBlock = (result : RegisterResult) -> Void
+    typealias RegisterNewUserFailureBlock = (result : RegisterResult) -> Void
     
     typealias ForgotPasswordSuccessBlock = () -> Void
-    typealias ForgotPasswordFailureBlock = (NSString) -> Void
+    typealias ForgotPasswordFailureBlock = (reason : String) -> Void
     
     typealias SendCommentSuccessBlock = () -> Void
-    typealias SendCommentFailureBlock = (NSString) -> Void
+    typealias SendCommentFailureBlock = (reason : String) -> Void
     
     typealias UpdateAccountInfoSuccessBlock = () -> Void
-    typealias UpdateAccountInfoFailureBlock = (NSString) -> Void
+    typealias UpdateAccountInfoFailureBlock = (reason : String) -> Void
     
-    typealias RetrieveProfileImageSuccessBlock = (UIImage) -> Void
-    typealias RetrieveProfileImageFailureBlock = (NSString) -> Void
+    typealias RetrieveProfileImageSuccessBlock = (image : UIImage) -> Void
+    typealias RetrieveProfileImageFailureBlock = (reason : String) -> Void
     
-    typealias SubscriptionUpdateSuccessBlock = (NSString) -> Void
-    typealias SubscriptionUpdateFailureBlock = (NSString) -> Void
+    typealias SubscriptionUpdateSuccessBlock = (expirationDateString : String) -> Void
+    typealias SubscriptionUpdateFailureBlock = (reason : String) -> Void
     
-    typealias GetSubscriptionExpiryDateSuccessBlock = (NSString) -> Void
-    typealias GetSubscriptionExpiryDateFailureBlock = (NSString) -> Void
+    typealias GetSubscriptionExpiryDateSuccessBlock = (expirationDateString : NSString) -> Void
+    typealias GetSubscriptionExpiryDateFailureBlock = (reason : String) -> Void
     
     private weak var userDataDAO : UserDataDAO!
     private weak var networkCommunicator : NetworkCommunicator!
@@ -88,7 +88,7 @@ class AuthenticationService : NSObject
                     
                     if (success != nil)
                     {
-                        success! ( returnedResult )
+                        success! ( result: returnedResult )
                     }
                 })
             }
@@ -101,7 +101,7 @@ class AuthenticationService : NSObject
                     
                     if (failure != nil)
                     {
-                        failure! ( returnedResult )
+                        failure! ( result: returnedResult )
                     }
                 })
             }
@@ -118,7 +118,7 @@ class AuthenticationService : NSObject
                 
                 if (failure != nil)
                 {
-                    failure! ( returnedResult )
+                    failure! ( result: returnedResult )
                 }
             })
         }
@@ -155,7 +155,7 @@ class AuthenticationService : NSObject
                     
                     if (success != nil)
                     {
-                        success! ( registerResult )
+                        success! ( result: registerResult )
                     }
                     
                 })
@@ -169,7 +169,7 @@ class AuthenticationService : NSObject
                     
                     if (failure != nil)
                     {
-                        failure! ( registerResult )
+                        failure! ( result: registerResult )
                     }
                     
                 })
@@ -187,7 +187,7 @@ class AuthenticationService : NSObject
                 
                 if (failure != nil)
                 {
-                    failure! ( registerResult );
+                    failure! ( result: registerResult );
                 }
             })
         }
@@ -227,7 +227,7 @@ class AuthenticationService : NSObject
                     
                     if (failure != nil)
                     {
-                        failure! ( AuthenticationService.USER_DOESNT_EXIST )
+                        failure! ( reason: AuthenticationService.USER_DOESNT_EXIST )
                     }
                     
                 })
@@ -245,7 +245,7 @@ class AuthenticationService : NSObject
                 
                 if (failure != nil)
                 {
-                    failure! ( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY );
+                    failure! ( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY );
                 }
             })
         }
@@ -288,7 +288,7 @@ class AuthenticationService : NSObject
                 
                 if (failure != nil)
                 {
-                    failure! ( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                    failure! ( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
                 }
             })
         }
@@ -333,7 +333,7 @@ class AuthenticationService : NSObject
                 
                 if (failure != nil)
                 {
-                    failure! ( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                    failure! ( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
                 }
             })
         }
@@ -386,7 +386,7 @@ class AuthenticationService : NSObject
                 
                 if (failure != nil)
                 {
-                    failure! ( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                    failure! ( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
                 }
                 
                 })
@@ -435,7 +435,7 @@ class AuthenticationService : NSObject
                 
                 if (failure != nil)
                 {
-                    failure! ( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                    failure! ( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
                 }
                 
             })
@@ -467,7 +467,7 @@ class AuthenticationService : NSObject
                 
                 if (success != nil)
                 {
-                    success!( profileImage )
+                    success!( image: profileImage )
                 }
                 
             })
@@ -479,7 +479,7 @@ class AuthenticationService : NSObject
                 
                 if (failure != nil)
                 {
-                    failure!( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                    failure!( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
                 }
             })
         }
@@ -519,7 +519,7 @@ class AuthenticationService : NSObject
                     
                     if (failure != nil)
                     {
-                        failure!( response["message"] as! String )
+                        failure!( reason: response["message"] as! String )
                     }
                 })
             }
@@ -533,7 +533,7 @@ class AuthenticationService : NSObject
                 
                 if (failure != nil)
                 {
-                    failure!( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                    failure!( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
                 }
             })
             
@@ -581,7 +581,7 @@ class AuthenticationService : NSObject
                     
                     if (failure != nil)
                     {
-                        failure!( response["message"] as! String )
+                        failure!( reason: response["message"] as! String )
                     }
                     
                 })
@@ -594,7 +594,7 @@ class AuthenticationService : NSObject
                 
                 if (failure != nil)
                 {
-                    failure!( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                    failure!( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
                 }
             })
         }
@@ -641,7 +641,7 @@ class AuthenticationService : NSObject
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     if (failure != nil)
                     {
-                        failure!( AuthenticationService.USER_PASSWORD_WRONG )
+                        failure!( reason: AuthenticationService.USER_PASSWORD_WRONG )
                     }
                 })
             }
@@ -654,7 +654,7 @@ class AuthenticationService : NSObject
                 
                 if (failure != nil)
                 {
-                    failure!( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                    failure!( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
                 }
             })
         }
@@ -700,7 +700,7 @@ class AuthenticationService : NSObject
                     
                     if (failure != nil)
                     {
-                        failure!( response["message"] as! String)
+                        failure!( reason : (response["message"] as! String) )
                     }
                 })
             }
@@ -712,7 +712,7 @@ class AuthenticationService : NSObject
                 
                 if (failure != nil)
                 {
-                    failure!( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                    failure!(reason:  NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
                 }
             })
         }
@@ -745,7 +745,7 @@ class AuthenticationService : NSObject
                     
                     if ( success != nil )
                     {
-                        success!( expirationDateString )
+                        success!( expirationDateString: expirationDateString )
                     }
                     
                 })
@@ -756,7 +756,7 @@ class AuthenticationService : NSObject
                     
                     if (failure != nil)
                     {
-                        failure!( AuthenticationService.NO_EXPIRATION_DATE_EXIST )
+                        failure!( reason: AuthenticationService.NO_EXPIRATION_DATE_EXIST )
                     }
                     
                 })
@@ -769,7 +769,7 @@ class AuthenticationService : NSObject
                 
                 if (failure != nil)
                 {
-                    failure!( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                    failure!( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
                 }
                 
             })
@@ -805,7 +805,7 @@ class AuthenticationService : NSObject
                 
                 if (success != nil)
                 {
-                    success!( expirationDateString )
+                    success!( expirationDateString: expirationDateString )
                 }
                 
             })
@@ -818,7 +818,7 @@ class AuthenticationService : NSObject
                 
                 if (failure != nil)
                 {
-                    failure!( NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                    failure!( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
                 }
             })
         }
