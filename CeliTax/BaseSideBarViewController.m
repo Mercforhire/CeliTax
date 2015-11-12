@@ -225,6 +225,8 @@
 
         case RootViewControllerLogOff:
 
+            [self.userManager deleteAllLocalUserData];
+            
             [self.userManager logOutUser];
 
             // dismiss itself

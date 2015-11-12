@@ -127,6 +127,7 @@
 
     vaultViewController.dataService = self.dataService;
     vaultViewController.manipulationService = self.manipulationService;
+    vaultViewController.syncService = self.syncService;
 
     return vaultViewController;
 }

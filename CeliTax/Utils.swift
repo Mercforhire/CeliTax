@@ -318,21 +318,24 @@ class Utils : NSObject //TODO: Remove Subclass to NSObject when the entire app h
         
         let imageFolderPath : String! = Utils.getImageStorageFolderPathForUser(userKey)
         
-        let fileEnumerator : NSDirectoryEnumerator! = fileManager.enumeratorAtPath(imageFolderPath)
+        let fileEnumerator : NSDirectoryEnumerator? = fileManager.enumeratorAtPath(imageFolderPath)
         
-        for fileName in fileEnumerator
+        if (fileEnumerator != nil)
         {
-            let filePath : String! = imageFolderPath.stringByAppendingPathComponent(fileName as! String)
-            
-            dLog( String(format: "Deleting file: %@", filePath) )
-            
-            do
+            for fileName in fileEnumerator!
             {
-                try fileManager.removeItemAtPath(filePath)
-            }
-            catch
-            {
-                dLog( String(format: "Failed to delete file: %@", filePath) )
+                let filePath : String! = imageFolderPath.stringByAppendingPathComponent(fileName as! String)
+                
+                dLog( String(format: "Deleting file: %@", filePath) )
+                
+                do
+                {
+                    try fileManager.removeItemAtPath(filePath)
+                }
+                catch
+                {
+                    dLog( String(format: "Failed to delete file: %@", filePath) )
+                }
             }
         }
         
@@ -475,7 +478,7 @@ class Utils : NSObject //TODO: Remove Subclass to NSObject when the entire app h
     static func randomNumberBetween(min : Int, max : Int) -> Int
     {
         let lower : UInt32 = UInt32(min)
-        let upper : UInt32 = UInt32(max)
+        let upper : UInt32 = UInt32(max) + 1
         let randomNumber = arc4random_uniform(upper - lower) + lower
         
         return Int(randomNumber)

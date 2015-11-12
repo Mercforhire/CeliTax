@@ -429,4 +429,9 @@
     cancelOperations = YES;
 }
 
+-(void) resetCancelOperation
+{
+    cancelOperations = NO;
+}
+
 @end

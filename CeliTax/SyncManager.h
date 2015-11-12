@@ -87,4 +87,6 @@ typedef void (^NeedsUpdateBlock) ();
  */
 -(void) cancelAllOperations;
 
+-(void) resetCancelOperation;
+
 @end

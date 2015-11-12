@@ -35,6 +35,9 @@ class SyncService : NSObject
     typealias FileDownloadSuccessBlock = () -> Void
     typealias FileDownloadFailureBlock = (reason : String) -> Void
     
+    typealias RequestReceiptsInfoEmailSuccessBlock = () -> Void
+    typealias RequestReceiptsInfoEmailFailureBlock = (reason : String) -> Void
+    
     private weak var userDataDAO : UserDataDAO!
     private weak var taxYearsDAO : TaxYearsDAO!
     private weak var recordsDAO : RecordsDAO!
@@ -72,12 +75,9 @@ class SyncService : NSObject
     {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { () -> Void in
             
-            if ( self.taxYearsDAO.loadAllTaxYears().count == 0 )
-            {
-                self.taxYearsDAO.addTaxYear(2013, save:false)
-                self.taxYearsDAO.addTaxYear(2014, save:false)
-                self.taxYearsDAO.addTaxYear(2015, save:false)
-            }
+            self.taxYearsDAO.addTaxYear(2013, save:false)
+            self.taxYearsDAO.addTaxYear(2014, save:false)
+            self.taxYearsDAO.addTaxYear(2015, save:false)
             
             if (self.categoriesDAO.fetchCategories().count == 0)
             {
@@ -500,15 +500,15 @@ class SyncService : NSObject
             
             let response : NSDictionary = completedOperation.responseJSON() as! NSDictionary
             
-            let batchID : String = response["batchID"] as! String
+            let batchID : String? = response["batchID"] as? String
             
-            if ( response["error"] != nil && response["error"]!.boolValue == false)
+            if ( response["error"] != nil && response["error"]!.boolValue == false && batchID != nil)
             {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     
                     if (success != nil)
                     {
-                        success! ( batchID: batchID )
+                        success! ( batchID: batchID! )
                     }
                     
                 })
@@ -806,5 +806,102 @@ class SyncService : NSObject
             }
             
         })
+    }
+    
+    /*
+    Request the server to send a email containing the selected receipts info to the user
+    */
+    func sendReceiptsInfoEmail(email : String!, year : Int, allReceipts : Bool, receiptIDs : [String]?, success : RequestReceiptsInfoEmailSuccessBlock?, failure : RequestReceiptsInfoEmailFailureBlock?)
+    {
+        let postParams: [String:AnyObject];
+        
+        if (allReceipts)
+        {
+            postParams = [
+                "email" : email,
+                "year" : year,
+                "allReceipts" : Int(allReceipts)
+            ]
+        }
+        else
+        {
+            var receiptIDsString : String = ""
+            
+            for receiptID in receiptIDs!
+            {
+                if (receiptIDs?.indexOf(receiptID) == 0)
+                {
+                    receiptIDsString = receiptID
+                }
+                else
+                {
+                    receiptIDsString = receiptIDsString + "," + receiptID
+                }
+            }
+            
+            postParams = [
+                "email" : email,
+                "year" : year,
+                "allReceipts" : Int(allReceipts),
+                "receiptIDs" : receiptIDsString
+            ]
+        }
+        
+        let networkOperation : MKNetworkOperation = self.networkCommunicator.postDataToServer(postParams, path: NetworkCommunicator.WEB_API_FILE.stringByAppendingString("/request_receipts_info"))
+        
+        networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
+        
+        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ () -> Void in
+            
+        })
+        
+        let successBlock : MKNKResponseBlock = { (completedOperation) in
+            
+            let response : NSDictionary = completedOperation.responseJSON() as! NSDictionary
+            
+            if ( response["error"] != nil && response["error"]!.boolValue == false)
+            {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    if (success != nil)
+                    {
+                        success! ( )
+                    }
+                    
+                })
+                
+            }
+            else
+            {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    if (failure != nil)
+                    {
+                        failure! ( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                    }
+                    
+                })
+            }
+            
+            UIApplication.sharedApplication().endBackgroundTask(bgTask)
+        }
+        
+        let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if (failure != nil)
+                {
+                    failure! ( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                }
+                
+            })
+            
+            UIApplication.sharedApplication().endBackgroundTask(bgTask)
+        }
+        
+        networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
+        
+        self.networkCommunicator.enqueueOperation(networkOperation)
     }
 }

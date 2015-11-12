@@ -14,7 +14,6 @@
 #import "ViewControllerFactory.h"
 #import "M13Checkbox.h"
 #import "SendReceiptsToViewController.h"
-#import "AlertDialogsProvider.h"
 #import "ConfigurationManager.h"
 #import "NoItemsTableViewCell.h"
 #import "ReceiptBreakDownViewController.h"
@@ -803,7 +802,23 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
 {
     [self.sendReceiptsPopover dismissPopoverAnimated: YES];
 
-    [AlertDialogsProvider showWorkInProgressDialog];
+    [self.syncService sendReceiptsInfoEmail:emailAddress year: self.currentlySelectedYear.integerValue allReceipts:self.selectAllReceipts receiptIDs:self.selectedReceipts.allKeys success:^{
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Success", nil)
+                                                          message: NSLocalizedString(@"An email containing the link has been sent to your account.", nil)
+                                                         delegate: nil cancelButtonTitle: nil
+                                                otherButtonTitles: NSLocalizedString(@"Ok", nil), nil];
+        
+        [message show];
+    } failure:^(NSString *reason) {
+        NSString *errorMessage = NSLocalizedString(@"Can not connect to our server, please try again later", nil);
+        
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
+                                                          message: errorMessage
+                                                         delegate: nil cancelButtonTitle: nil
+                                                otherButtonTitles: NSLocalizedString(@"Dismiss", nil), nil];
+        
+        [message show];
+    }];
 }
 
 #pragma mark - SelectionsPickerPopUpDelegate

@@ -30,6 +30,7 @@
 "Account" = "Account";
 "Are you sure you want delete the selected receipts along with all their items?" = "Are you sure you want delete the selected receipts along with all their items?";
 "About" = "About";
+"An email containing the link has been sent to your account." = "An email containing the link has been sent to your account.";
 
 //B
 "Back" = "Back";
@@ -220,6 +221,7 @@
 "Spanish" = "Spanish";
 "Send Receipts To" = "Send Receipts To";
 "Subscription:" = "Subscription:";
+"Success" = "Success";
 
 //V
 "View Tutorial" = "View Tutorial";

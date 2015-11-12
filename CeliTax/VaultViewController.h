@@ -8,11 +8,12 @@
 
 #import "BaseSideBarViewController.h"
 
-@class DataService, ManipulationService;
+@class DataService, ManipulationService, SyncService;
 
 @interface VaultViewController : BaseSideBarViewController
 
 @property (nonatomic, weak) DataService *dataService;
 @property (nonatomic, weak) ManipulationService *manipulationService;
+@property (nonatomic, weak) SyncService *syncService;
 
 @end

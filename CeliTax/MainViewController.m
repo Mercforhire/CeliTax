@@ -186,6 +186,9 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
             
         }];
     }
+    
+    //enable syncManager to run again it was halted before
+    [self.syncManager resetCancelOperation];
 }
 
 - (void) viewWillAppear: (BOOL) animated
@@ -205,7 +208,7 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
     }
     else
     {
-        self.taxYearToAdd = @"2015"; //TODO: Change this to current year
+        self.taxYearToAdd = [NSString stringWithFormat:@"%ld", (long)[Utils currentYear]];
         
         [self addTaxYear];
     }

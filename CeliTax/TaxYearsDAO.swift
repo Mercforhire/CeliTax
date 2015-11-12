@@ -38,9 +38,17 @@ class TaxYearsDAO : NSObject //TODO: Remove Subclass to NSObject when the entire
         return taxYearNumbers
     }
     
+    func existTaxYear(taxYear : Int) -> Bool
+    {
+        let findTaxYear : NSPredicate = NSPredicate.init(format: "dataAction != %ld AND taxYear == %ld", DataActionStatus.DataActionDelete.rawValue, taxYear)
+        let taxYearsObjects : [TaxYear] = (self.userDataDAO.getTaxYears() as NSArray).filteredArrayUsingPredicate(findTaxYear) as! [TaxYear]
+        
+        return taxYearsObjects.count > 0
+    }
+    
     func addTaxYear(taxYear : Int, save : Bool) -> Bool
     {
-        if (taxYear > 2000)
+        if (taxYear > 2000 && !self.existTaxYear(taxYear))
         {
             let taxTearObject : TaxYear = TaxYear()
             taxTearObject.taxYear = taxYear

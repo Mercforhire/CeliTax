@@ -129,7 +129,7 @@ class UserData : NSObject, NSCoding //TODO: Remove Subclass to NSObject when the
     
         let taxYearsJSONs : NSMutableArray = NSMutableArray()
     
-        for data in self.receipts
+        for data in self.taxYears
         {
             if let taxYear = data as? TaxYear
             {
