@@ -7,7 +7,6 @@
 //
 
 #import "AddCategoryViewController.h"
-#import "UserManager.h"
 #import "SelectionsPickerViewController.h"
 #import "ColorPickerViewController.h"
 #import "AllColorsPickerViewController.h"
@@ -18,7 +17,6 @@
 #import "ModifyCatagoryViewController.h"
 #import "UIView+Helper.h"
 #import "TutorialManager.h"
-#import "ConfigurationManager.h"
 #import "SolidGreenButton.h"
 
 #import "CeliTax-Swift.h"

@@ -9,7 +9,6 @@
 #import "ProfileSettingsViewController.h"
 #import "HollowGreenButton.h"
 #import "UIView+Helper.h"
-#import "UserManager.h"
 #import "UIView+Helper.h"
 #import "TOCropViewController.h"
 #import "UIImage+ResizeMagick.h"
@@ -194,7 +193,7 @@
 {
     if (self.dirty)
     {
-        [self.userManager changeUserDetails:self.firstnameField.text andLastname:self.lastnameField.text andCountry:self.country];
+        [self.userManager changeUserDetails:self.firstnameField.text lastname:self.lastnameField.text country:self.country];
     }
     
     [self.navigationController popViewControllerAnimated:YES];

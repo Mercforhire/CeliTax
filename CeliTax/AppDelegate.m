@@ -8,21 +8,17 @@
 
 #import "AppDelegate.h"
 #import "ViewControllerFactory.h"
-#import "ConfigurationManager.h"
-#import "UserManager.h"
 #import "LoginViewController.h"
 #import "MainViewController.h"
-#import "LookAndFeel.h"
 #import "TutorialManager.h"
 #import "SyncManager.h"
-#import "BackgroundWorker.h"
 #import "LocalizationManager.h"
 #import "SubscriptionManager.h"
 #import <Crashlytics/Crashlytics.h>
 
 #import "CeliTax-Swift.h"
 
-@class SplashViewController, ConfigurationManager, ViewControllerFactory, UserManager;
+@class ViewControllerFactory, UserManager;
 
 @interface AppDelegate ()
 
@@ -107,10 +103,7 @@
 
 -(void) initializeBackgroundWorker
 {
-    self.backgroundWorker = [[BackgroundWorker alloc] init];
-    self.backgroundWorker.syncManager = self.syncManager;
-    self.backgroundWorker.authenticationService = [self.serviceFactory createAuthenticationService];
-    self.backgroundWorker.userManager = self.userManager;
+    self.backgroundWorker = [[BackgroundWorker alloc] initWithSyncManager:self.syncManager authenticationService:[self.serviceFactory createAuthenticationService] userManager:self.userManager];
 }
 
 -(void) initializeSubscriptionManager

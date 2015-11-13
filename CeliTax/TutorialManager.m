@@ -7,7 +7,6 @@
 //
 
 #import "TutorialManager.h"
-#import "LookAndFeel.h"
 #import "ViewControllerFactory.h"
 #import "TutorialBubble.h"
 #import "MainViewController.h"

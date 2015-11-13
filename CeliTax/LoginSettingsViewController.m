@@ -10,7 +10,6 @@
 #import "HollowGreenButton.h"
 #import "MBProgressHUD.h"
 #import "NSString+Helper.h"
-#import "UserManager.h"
 #import "SolidGreenButton.h"
 #import "LoginViewController.h"
 #import "ViewControllerFactory.h"

@@ -7,8 +7,8 @@
 //
 
 #import "TutorialBubble.h"
-#import "LookAndFeel.h"
 #import "Triangle.h"
+#import "CeliTax-Swift.h"
 
 @interface TutorialBubble ()
 

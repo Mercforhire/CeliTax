@@ -40,7 +40,7 @@ class AuthenticationService : NSObject
     typealias SubscriptionUpdateSuccessBlock = (expirationDateString : String) -> Void
     typealias SubscriptionUpdateFailureBlock = (reason : String) -> Void
     
-    typealias GetSubscriptionExpiryDateSuccessBlock = (expirationDateString : NSString) -> Void
+    typealias GetSubscriptionExpiryDateSuccessBlock = (expirationDateString : String) -> Void
     typealias GetSubscriptionExpiryDateFailureBlock = (reason : String) -> Void
     
     private weak var userDataDAO : UserDataDAO!
@@ -84,7 +84,7 @@ class AuthenticationService : NSObject
                 returnedResult.lastname = response["last_name"] as! String
                 returnedResult.country = response["country"] as! String
                 
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), {
                     
                     if (success != nil)
                     {
@@ -97,7 +97,7 @@ class AuthenticationService : NSObject
                 returnedResult.success = false
                 returnedResult.message = response["message"] as! String
                 
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), {
                     
                     if (failure != nil)
                     {
@@ -114,7 +114,7 @@ class AuthenticationService : NSObject
             returnedResult.success = false
             returnedResult.message = NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), {
                 
                 if (failure != nil)
                 {
@@ -151,7 +151,7 @@ class AuthenticationService : NSObject
                 registerResult.success = true
                 registerResult.message = "You are successfully registered."
                 
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), {
                     
                     if (success != nil)
                     {
@@ -165,7 +165,7 @@ class AuthenticationService : NSObject
                 registerResult.success = false
                 registerResult.message = response["message"] as! String
                 
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     
                     if (failure != nil)
                     {
@@ -183,7 +183,7 @@ class AuthenticationService : NSObject
             registerResult.success = false
             registerResult.message = NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {
@@ -211,7 +211,7 @@ class AuthenticationService : NSObject
             
             if ( response["error"]!.boolValue == false )
             {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     
                     if (success != nil)
                     {
@@ -223,7 +223,7 @@ class AuthenticationService : NSObject
             else
             {
                 
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     
                     if (failure != nil)
                     {
@@ -241,7 +241,7 @@ class AuthenticationService : NSObject
             registerResult.success = false
             registerResult.message = NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {
@@ -272,7 +272,7 @@ class AuthenticationService : NSObject
         
         let successBlock : MKNKResponseBlock = { (completedOperation) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (success != nil)
                 {
@@ -284,7 +284,7 @@ class AuthenticationService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {
@@ -317,7 +317,7 @@ class AuthenticationService : NSObject
         
         let successBlock : MKNKResponseBlock  = { (completedOperation) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (success != nil)
                 {
@@ -329,7 +329,7 @@ class AuthenticationService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock  = { (completedOperation, error) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {
@@ -361,13 +361,13 @@ class AuthenticationService : NSObject
         
         networkOperation.addData(imageData, forKey: "photos", mimeType: "image/jpeg", fileName: fileNameWithExtension)
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler { () -> Void in
+        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler { 
             
         }
         
         let successBlock : MKNKResponseBlock  = { (completedOperation) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (success != nil)
                 {
@@ -382,7 +382,7 @@ class AuthenticationService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {
@@ -410,13 +410,13 @@ class AuthenticationService : NSObject
         
         networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler { () -> Void in
+        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler { 
                 
         }
         
         let successBlock : MKNKResponseBlock = { (completedOperation) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (success != nil)
                 {
@@ -431,7 +431,7 @@ class AuthenticationService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {
@@ -463,7 +463,7 @@ class AuthenticationService : NSObject
             
             let profileImage : UIImage! = Utils.readProfileImageForUser(self.userDataDAO.userKey)
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (success != nil)
                 {
@@ -475,7 +475,7 @@ class AuthenticationService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {
@@ -498,7 +498,7 @@ class AuthenticationService : NSObject
         
         networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ () -> Void in
+        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ 
             
         })
         
@@ -515,7 +515,7 @@ class AuthenticationService : NSObject
             }
             else
             {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     
                     if (failure != nil)
                     {
@@ -529,7 +529,7 @@ class AuthenticationService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {
@@ -566,7 +566,7 @@ class AuthenticationService : NSObject
             
             if ( response["error"]!.boolValue == false )
             {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     
                     if (success != nil)
                     {
@@ -577,7 +577,7 @@ class AuthenticationService : NSObject
             }
             else
             {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     
                     if (failure != nil)
                     {
@@ -590,7 +590,7 @@ class AuthenticationService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {
@@ -626,7 +626,7 @@ class AuthenticationService : NSObject
             
             if ( response["error"]!.boolValue == false )
             {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     
                     if (success != nil)
                     {
@@ -638,7 +638,7 @@ class AuthenticationService : NSObject
             }
             else
             {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     if (failure != nil)
                     {
                         failure!( reason: AuthenticationService.USER_PASSWORD_WRONG )
@@ -650,7 +650,7 @@ class AuthenticationService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock  = { (completedOperation, error) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {
@@ -685,7 +685,7 @@ class AuthenticationService : NSObject
             
             if ( response["error"]!.boolValue == false )
             {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     
                     if (success != nil)
                     {
@@ -696,7 +696,7 @@ class AuthenticationService : NSObject
             }
             else
             {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     
                     if (failure != nil)
                     {
@@ -708,7 +708,7 @@ class AuthenticationService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation,error) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {
@@ -741,7 +741,7 @@ class AuthenticationService : NSObject
             {
                 let expirationDateString : String = response["expiration_date"] as! String
                 
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     
                     if ( success != nil )
                     {
@@ -752,7 +752,7 @@ class AuthenticationService : NSObject
             }
             else
             {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     
                     if (failure != nil)
                     {
@@ -765,7 +765,7 @@ class AuthenticationService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {
@@ -801,7 +801,7 @@ class AuthenticationService : NSObject
             
             let expirationDateString : String = response["expiration_date"] as! String
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (success != nil)
                 {
@@ -814,7 +814,7 @@ class AuthenticationService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {

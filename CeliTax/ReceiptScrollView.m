@@ -8,6 +8,7 @@
 
 #import "ReceiptScrollView.h"
 #import "ReceiptCollectionViewCell.h"
+#import "CeliTax-Swift.h"
 
 NSString *ReceiptCollectionViewCellIdentifier = @"ReceiptCollectionViewCell";
 

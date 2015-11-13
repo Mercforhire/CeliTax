@@ -8,9 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <StoreKit/StoreKit.h>
-#import "CeliTax-Swift.h"
 
-@class UserManager;
+@class UserManager, AuthenticationService;
 
 #define k3MonthServiceProductID     @"com.cravensave.celitax.3monthservice"
 #define k6MonthServiceProductID     @"com.cravensave.celitax.6monthservice"

@@ -7,7 +7,6 @@
 //
 
 #import "BaseSideBarViewController.h"
-#import "UserManager.h"
 #import "ViewControllerFactory.h"
 #import "SettingsViewController.h"
 #import "VaultViewController.h"

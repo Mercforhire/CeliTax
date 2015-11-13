@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LookAndFeel.h"
+
+@class LookAndFeel;
 
 @protocol HorizonalScrollBarViewProtocol <NSObject>
 

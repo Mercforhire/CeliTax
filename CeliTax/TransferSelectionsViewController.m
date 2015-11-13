@@ -11,6 +11,8 @@
 #import "WYPopoverController.h"
 #import "TransferConfirmationViewController.h"
 
+#import "CeliTax-Swift.h"
+
 #define POP_DEFAULT_FONT_SIZE       14
 #define POP_DEFAULT_ROW_HEIGHT      40
 #define POP_DEFAULT_MAX_HEIGHT      500

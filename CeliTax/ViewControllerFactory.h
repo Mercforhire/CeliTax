@@ -10,7 +10,7 @@
 #import "CeliTax-Swift.h"
 
 @class ConfigurationManager, UserManager, LookAndFeel, SubscriptionManager, DataService, ManipulationService, SyncService;
-@class BaseViewController, SplashViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCategoryViewController, SidebarViewController, ItemCategory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager, SyncManager, ProfileSettingsViewController, ImperialUnitPickerViewController, MetricUnitPickerViewController, YearSummaryViewController, YearSavingViewController, BackgroundWorker, LoginSettingsViewController, SubscriptionViewController;
+@class BaseViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCategoryViewController, SidebarViewController, ItemCategory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager, SyncManager, ProfileSettingsViewController, ImperialUnitPickerViewController, MetricUnitPickerViewController, YearSummaryViewController, YearSavingViewController, BackgroundWorker, LoginSettingsViewController, SubscriptionViewController;
 
 @interface ViewControllerFactory : NSObject
 
@@ -27,8 +27,6 @@
 @property (nonatomic, weak) SubscriptionManager *subscriptionManager;
 
 @property (nonatomic, weak) UIView *navigationBarTitleImageContainer;
-
-- (SplashViewController *) createSplashViewController;
 
 - (LoginViewController *) createLoginViewController;
 

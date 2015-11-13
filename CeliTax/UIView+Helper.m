@@ -35,13 +35,6 @@
     self.frame = frame;
 }
 
-- (void) applyRoundedBorder
-{
-    self.layer.borderWidth = 1;
-    self.layer.cornerRadius = 5;
-    self.layer.borderColor = [UIColor colorWithRed:164/255.0f green:164/255.0f blue:164/255.0f alpha:1].CGColor;
-}
-
 -(void)scrollToY:(float)y
 {
     [UIView beginAnimations:@"registerScroll" context:NULL];

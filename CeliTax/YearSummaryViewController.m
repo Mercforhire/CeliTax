@@ -9,7 +9,6 @@
 #import "YearSummaryViewController.h"
 #import "YearSummaryTableViewCell.h"
 #import "HollowGreenButton.h"
-#import "ConfigurationManager.h"
 #import "AlertDialogsProvider.h"
 #import "WYPopoverController.h"
 #import "SendReceiptsToViewController.h"
@@ -43,7 +42,7 @@
 {
     [self.exportButton setLookAndFeel:self.lookAndFeel];
     
-    (self.titleLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%ld Gluten-Free Tax Savings", nil), (long)self.configurationManager.getCurrentTaxYear.integerValue];
+    self.titleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%ld Gluten-Free Tax Savings", nil), (long)[self.configurationManager fetchTaxYear]];
     
     // set up tableview
     UINib *yearSummaryTableViewCell = [UINib nibWithNibName: @"YearSummaryTableViewCell" bundle: nil];
@@ -93,7 +92,7 @@
     
     for (ItemCategory *category in self.catagories)
     {
-        NSArray *recordsForThisCatagory = [self.dataService fetchRecordsForCatagoryID:category.localID taxYear:self.configurationManager.getCurrentTaxYear.integerValue];
+        NSArray *recordsForThisCatagory = [self.dataService fetchRecordsForCatagoryID:category.localID taxYear:[self.configurationManager fetchTaxYear]];
         
         // Separate recordsForThisCatagory into groups of the same Unit Type
         NSMutableDictionary *recordsOfEachType = [NSMutableDictionary new];

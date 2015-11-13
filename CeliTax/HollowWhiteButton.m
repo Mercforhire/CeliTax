@@ -7,7 +7,8 @@
 //
 
 #import "HollowWhiteButton.h"
-#import "LookAndFeel.h"
+#import "CeliTax-Swift.h"
+
 
 @implementation HollowWhiteButton
 {

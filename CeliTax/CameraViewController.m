@@ -8,9 +8,7 @@
 
 #import "CameraViewController.h"
 #import "WhiteBorderView.h"
-#import "UserManager.h"
 #import "MBProgressHUD.h"
-#import "ConfigurationManager.h"
 #import "LLSimpleCamera.h"
 #import "UIImage+ResizeMagick.h"
 #import "ViewControllerFactory.h"
@@ -464,7 +462,7 @@
     //saving a new receipt
     if (!self.existingReceiptID)
     {
-       NSString *newestReceiptID = [self.manipulationService addReceiptForFilenames: self.takenImageFilenames taxYear: [self.configurationManager getCurrentTaxYear].integerValue save:YES];
+       NSString *newestReceiptID = [self.manipulationService addReceiptForFilenames: self.takenImageFilenames taxYear: [self.configurationManager fetchTaxYear] save:YES];
         
         if (newestReceiptID)
         {

@@ -46,7 +46,6 @@
 		854AC6E91B7D94EE00F0D91D /* YearSummaryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 854AC6E71B7D94EE00F0D91D /* YearSummaryTableViewCell.m */; };
 		854AC6EA1B7D94EE00F0D91D /* YearSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 854AC6E81B7D94EE00F0D91D /* YearSummaryTableViewCell.xib */; };
 		85547BF71AF2FB0500D9E1CE /* ViewControllerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 85547BF61AF2FB0500D9E1CE /* ViewControllerFactory.m */; };
-		85547BFA1AF31CFA00D9E1CE /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 85547BF91AF31CFA00D9E1CE /* UserManager.m */; };
 		8554BCE31B2537F1002333ED /* M13Checkbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8554BCE21B2537F1002333ED /* M13Checkbox.m */; };
 		8554BCE91B254F45002333ED /* TimePeriodSelectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8554BCE71B254F45002333ED /* TimePeriodSelectionTableViewCell.m */; };
 		8554BCEA1B254F45002333ED /* TimePeriodSelectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8554BCE81B254F45002333ED /* TimePeriodSelectionTableViewCell.xib */; };
@@ -80,7 +79,6 @@
 		8558940C1B1C1BD100D3F353 /* XYPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 8558940B1B1C1BD100D3F353 /* XYPieChart.m */; };
 		855894151B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 855894131B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.m */; };
 		855894161B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 855894141B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.xib */; };
-		855919201B6AE3BE001F712C /* BackgroundWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 8559191F1B6AE3BE001F712C /* BackgroundWorker.m */; };
 		855973911AFD2BF800DFC176 /* MainViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8559738F1AFD2BF800DFC176 /* MainViewTableViewCell.m */; };
 		855973921AFD2BF800DFC176 /* MainViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 855973901AFD2BF800DFC176 /* MainViewTableViewCell.xib */; };
 		8559EA221B9E62D500FCC823 /* ImperialUnitPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8559EA201B9E62D500FCC823 /* ImperialUnitPickerViewController.m */; };
@@ -90,7 +88,6 @@
 		855A75F01BBA622B0019956E /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 855A75EF1BBA622B0019956E /* Crashlytics.framework */; };
 		855A9AA21B7259FE00455291 /* MetricUnitPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 855A9AA01B7259FE00455291 /* MetricUnitPickerViewController.m */; };
 		855A9AA31B7259FE00455291 /* MetricUnitPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 855A9AA11B7259FE00455291 /* MetricUnitPickerViewController.xib */; };
-		855B6FB51B279E4700864E0B /* LookAndFeel.m in Sources */ = {isa = PBXBuildFile; fileRef = 855B6FB41B279E4700864E0B /* LookAndFeel.m */; };
 		855B6FB71B279F3000864E0B /* celitaxlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 855B6FB61B279F3000864E0B /* celitaxlogo.png */; };
 		855BD2C61B25E151001ACBB2 /* ReceiptTimeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 855BD2C41B25E151001ACBB2 /* ReceiptTimeTableViewCell.m */; };
 		855BD2C71B25E151001ACBB2 /* ReceiptTimeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 855BD2C51B25E151001ACBB2 /* ReceiptTimeTableViewCell.xib */; };
@@ -128,6 +125,7 @@
 		856538511B60A7F800915A2E /* SyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 856538501B60A7F800915A2E /* SyncManager.m */; };
 		85665DD51B20EFD200848D36 /* ReceiptTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 85665DD31B20EFD200848D36 /* ReceiptTableViewCell.m */; };
 		85665DD61B20EFD200848D36 /* ReceiptTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85665DD41B20EFD200848D36 /* ReceiptTableViewCell.xib */; };
+		85726A321BF5BD3300F0C190 /* BackgroundWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85726A311BF5BD3300F0C190 /* BackgroundWorker.swift */; };
 		8576DEEB1BED993600154D45 /* CategoriesDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576DEEA1BED993600154D45 /* CategoriesDAO.swift */; };
 		8576DEEF1BEE85B900154D45 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576DEEE1BEE85B900154D45 /* Utils.swift */; };
 		8576DEF11BEE97C000154D45 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576DEF01BEE97C000154D45 /* StringExtension.swift */; };
@@ -138,9 +136,6 @@
 		857EC8C81B044CF400B6A5B2 /* AllColorsPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 857EC8C61B044CF400B6A5B2 /* AllColorsPickerViewController.xib */; };
 		8581E2921B2E6AD3006CB6F6 /* SelectionsPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8581E2901B2E6AD3006CB6F6 /* SelectionsPickerTableViewCell.m */; };
 		8581E2931B2E6AD3006CB6F6 /* SelectionsPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8581E2911B2E6AD3006CB6F6 /* SelectionsPickerTableViewCell.xib */; };
-		8582A4691AF15BC20048DCD6 /* ConfigurationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8582A4681AF15BC20048DCD6 /* ConfigurationManager.m */; };
-		8582A46F1AF176660048DCD6 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8582A46D1AF176660048DCD6 /* SplashViewController.m */; };
-		8582A4701AF176660048DCD6 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8582A46E1AF176660048DCD6 /* SplashViewController.xib */; };
 		8582A4741AF176850048DCD6 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8582A4731AF176850048DCD6 /* BaseViewController.m */; };
 		8582A4781AF17DFD0048DCD6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8582A4761AF17DFD0048DCD6 /* LoginViewController.m */; };
 		8582A4791AF17DFD0048DCD6 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8582A4771AF17DFD0048DCD6 /* LoginViewController.xib */; };
@@ -187,6 +182,9 @@
 		85ACE4231B27F55A0041B7C5 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4151B27F55A0041B7C5 /* Lato-LightItalic.ttf */; };
 		85ACE4241B27F55A0041B7C5 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4161B27F55A0041B7C5 /* Lato-Regular.ttf */; };
 		85ACE4291B2801AD0041B7C5 /* USA_flag_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 85ACE4271B2801AD0041B7C5 /* USA_flag_small.png */; };
+		85AD51DC1BF51AD9002EC8D2 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AD51DB1BF51AD9002EC8D2 /* UIViewExtension.swift */; };
+		85AD51DE1BF51D35002EC8D2 /* LookAndFeel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AD51DD1BF51D35002EC8D2 /* LookAndFeel.swift */; };
+		85AD51E01BF52DA7002EC8D2 /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AD51DF1BF52DA7002EC8D2 /* ConfigurationManager.swift */; };
 		85AF7E771BB11724000D73F9 /* YIInnerShadowLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AF7E741BB11724000D73F9 /* YIInnerShadowLayer.m */; };
 		85AF7E781BB11724000D73F9 /* YIInnerShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AF7E761BB11724000D73F9 /* YIInnerShadowView.m */; };
 		85BE69C71B7E6F4A004C24A2 /* YearSavingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BE69C51B7E6F4A004C24A2 /* YearSavingViewController.m */; };
@@ -197,6 +195,7 @@
 		85C54B6E1B62C75C00120961 /* ProfileSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85C54B6C1B62C75C00120961 /* ProfileSettingsViewController.xib */; };
 		85C54B841B65A82500120961 /* ProfileBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85C54B811B65A82500120961 /* ProfileBarView.xib */; };
 		85C54B851B65A82500120961 /* ProfileBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85C54B821B65A82500120961 /* ProfileBarView.m */; };
+		85C7BD761BF66A8A00C85C5C /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7BD751BF66A8A00C85C5C /* UserManager.swift */; };
 		85D8D8521AF873AA00197D85 /* AccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8D8501AF873AA00197D85 /* AccountTableViewCell.m */; };
 		85D8D8531AF873AA00197D85 /* AccountTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85D8D8511AF873AA00197D85 /* AccountTableViewCell.xib */; };
 		85D8D8561AF914B500197D85 /* AlertDialogsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8D8551AF914B500197D85 /* AlertDialogsProvider.m */; };
@@ -270,8 +269,6 @@
 		854AC6E81B7D94EE00F0D91D /* YearSummaryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YearSummaryTableViewCell.xib; sourceTree = "<group>"; };
 		85547BF51AF2FB0500D9E1CE /* ViewControllerFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewControllerFactory.h; sourceTree = "<group>"; };
 		85547BF61AF2FB0500D9E1CE /* ViewControllerFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerFactory.m; sourceTree = "<group>"; };
-		85547BF81AF31CFA00D9E1CE /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
-		85547BF91AF31CFA00D9E1CE /* UserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserManager.m; sourceTree = "<group>"; };
 		85547C011AF3328900D9E1CE /* CeliTax-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CeliTax-Prefix.pch"; sourceTree = "<group>"; };
 		8554BCE11B2537F1002333ED /* M13Checkbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M13Checkbox.h; sourceTree = "<group>"; };
 		8554BCE21B2537F1002333ED /* M13Checkbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M13Checkbox.m; sourceTree = "<group>"; };
@@ -326,8 +323,6 @@
 		855894121B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptBreakDownToolBarTableViewCell.h; sourceTree = "<group>"; };
 		855894131B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptBreakDownToolBarTableViewCell.m; sourceTree = "<group>"; };
 		855894141B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptBreakDownToolBarTableViewCell.xib; sourceTree = "<group>"; };
-		8559191E1B6AE3BE001F712C /* BackgroundWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundWorker.h; sourceTree = "<group>"; };
-		8559191F1B6AE3BE001F712C /* BackgroundWorker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundWorker.m; sourceTree = "<group>"; };
 		8559738E1AFD2BF800DFC176 /* MainViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewTableViewCell.h; sourceTree = "<group>"; };
 		8559738F1AFD2BF800DFC176 /* MainViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewTableViewCell.m; sourceTree = "<group>"; };
 		855973901AFD2BF800DFC176 /* MainViewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewTableViewCell.xib; sourceTree = "<group>"; };
@@ -344,8 +339,6 @@
 		855A9A9F1B7259FE00455291 /* MetricUnitPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetricUnitPickerViewController.h; sourceTree = "<group>"; };
 		855A9AA01B7259FE00455291 /* MetricUnitPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetricUnitPickerViewController.m; sourceTree = "<group>"; };
 		855A9AA11B7259FE00455291 /* MetricUnitPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MetricUnitPickerViewController.xib; sourceTree = "<group>"; };
-		855B6FB31B279E4700864E0B /* LookAndFeel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookAndFeel.h; sourceTree = "<group>"; };
-		855B6FB41B279E4700864E0B /* LookAndFeel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookAndFeel.m; sourceTree = "<group>"; };
 		855B6FB61B279F3000864E0B /* celitaxlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = celitaxlogo.png; sourceTree = "<group>"; };
 		855BD2C31B25E151001ACBB2 /* ReceiptTimeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptTimeTableViewCell.h; sourceTree = "<group>"; };
 		855BD2C41B25E151001ACBB2 /* ReceiptTimeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptTimeTableViewCell.m; sourceTree = "<group>"; };
@@ -399,6 +392,7 @@
 		85665DD21B20EFD200848D36 /* ReceiptTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptTableViewCell.h; sourceTree = "<group>"; };
 		85665DD31B20EFD200848D36 /* ReceiptTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptTableViewCell.m; sourceTree = "<group>"; };
 		85665DD41B20EFD200848D36 /* ReceiptTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptTableViewCell.xib; sourceTree = "<group>"; };
+		85726A311BF5BD3300F0C190 /* BackgroundWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundWorker.swift; sourceTree = "<group>"; };
 		8576DEEA1BED993600154D45 /* CategoriesDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesDAO.swift; sourceTree = "<group>"; };
 		8576DEEE1BEE85B900154D45 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		8576DEF01BEE97C000154D45 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
@@ -413,11 +407,6 @@
 		8581E28F1B2E6AD3006CB6F6 /* SelectionsPickerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectionsPickerTableViewCell.h; sourceTree = "<group>"; };
 		8581E2901B2E6AD3006CB6F6 /* SelectionsPickerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectionsPickerTableViewCell.m; sourceTree = "<group>"; };
 		8581E2911B2E6AD3006CB6F6 /* SelectionsPickerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectionsPickerTableViewCell.xib; sourceTree = "<group>"; };
-		8582A4671AF15BC20048DCD6 /* ConfigurationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationManager.h; sourceTree = "<group>"; };
-		8582A4681AF15BC20048DCD6 /* ConfigurationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigurationManager.m; sourceTree = "<group>"; };
-		8582A46C1AF176660048DCD6 /* SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashViewController.h; sourceTree = "<group>"; };
-		8582A46D1AF176660048DCD6 /* SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplashViewController.m; sourceTree = "<group>"; };
-		8582A46E1AF176660048DCD6 /* SplashViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SplashViewController.xib; sourceTree = "<group>"; };
 		8582A4721AF176850048DCD6 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		8582A4731AF176850048DCD6 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		8582A4751AF17DFD0048DCD6 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -475,6 +464,9 @@
 		85ACE4151B27F55A0041B7C5 /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
 		85ACE4161B27F55A0041B7C5 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
 		85ACE4271B2801AD0041B7C5 /* USA_flag_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = USA_flag_small.png; sourceTree = "<group>"; };
+		85AD51DB1BF51AD9002EC8D2 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		85AD51DD1BF51D35002EC8D2 /* LookAndFeel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LookAndFeel.swift; sourceTree = "<group>"; };
+		85AD51DF1BF52DA7002EC8D2 /* ConfigurationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
 		85AF7E731BB11724000D73F9 /* YIInnerShadowLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YIInnerShadowLayer.h; sourceTree = "<group>"; };
 		85AF7E741BB11724000D73F9 /* YIInnerShadowLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YIInnerShadowLayer.m; sourceTree = "<group>"; };
 		85AF7E751BB11724000D73F9 /* YIInnerShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YIInnerShadowView.h; sourceTree = "<group>"; };
@@ -491,6 +483,7 @@
 		85C54B811B65A82500120961 /* ProfileBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileBarView.xib; sourceTree = "<group>"; };
 		85C54B821B65A82500120961 /* ProfileBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileBarView.m; sourceTree = "<group>"; };
 		85C54B831B65A82500120961 /* ProfileBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileBarView.h; sourceTree = "<group>"; };
+		85C7BD751BF66A8A00C85C5C /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		85D8D84F1AF873AA00197D85 /* AccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountTableViewCell.h; sourceTree = "<group>"; };
 		85D8D8501AF873AA00197D85 /* AccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountTableViewCell.m; sourceTree = "<group>"; };
 		85D8D8511AF873AA00197D85 /* AccountTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountTableViewCell.xib; sourceTree = "<group>"; };
@@ -835,6 +828,8 @@
 				8556E30A1AF3E5BE003CCDD2 /* NSString+Helper.m */,
 				85100D3F1AF6BFC9005C24D2 /* UIView+Helper.h */,
 				85100D401AF6BFC9005C24D2 /* UIView+Helper.m */,
+				8576DEF01BEE97C000154D45 /* StringExtension.swift */,
+				85AD51DB1BF51AD9002EC8D2 /* UIViewExtension.swift */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -911,8 +906,7 @@
 		8559191D1B6AE3A8001F712C /* Background Worker */ = {
 			isa = PBXGroup;
 			children = (
-				8559191E1B6AE3BE001F712C /* BackgroundWorker.h */,
-				8559191F1B6AE3BE001F712C /* BackgroundWorker.m */,
+				85726A311BF5BD3300F0C190 /* BackgroundWorker.swift */,
 			);
 			name = "Background Worker";
 			sourceTree = "<group>";
@@ -961,8 +955,7 @@
 		855B6FB21B279E2E00864E0B /* LookAndFeel */ = {
 			isa = PBXGroup;
 			children = (
-				855B6FB31B279E4700864E0B /* LookAndFeel.h */,
-				855B6FB41B279E4700864E0B /* LookAndFeel.m */,
+				85AD51DD1BF51D35002EC8D2 /* LookAndFeel.swift */,
 			);
 			name = LookAndFeel;
 			sourceTree = "<group>";
@@ -1090,16 +1083,6 @@
 			name = "Authentication Service";
 			sourceTree = "<group>";
 		};
-		8582A46B1AF176460048DCD6 /* Splash */ = {
-			isa = PBXGroup;
-			children = (
-				8582A46C1AF176660048DCD6 /* SplashViewController.h */,
-				8582A46D1AF176660048DCD6 /* SplashViewController.m */,
-				8582A46E1AF176660048DCD6 /* SplashViewController.xib */,
-			);
-			name = Splash;
-			sourceTree = "<group>";
-		};
 		8582A4711AF176730048DCD6 /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -1215,8 +1198,7 @@
 		85A8CAE71AF071110023504D /* Session */ = {
 			isa = PBXGroup;
 			children = (
-				85547BF81AF31CFA00D9E1CE /* UserManager.h */,
-				85547BF91AF31CFA00D9E1CE /* UserManager.m */,
+				85C7BD751BF66A8A00C85C5C /* UserManager.swift */,
 			);
 			name = Session;
 			sourceTree = "<group>";
@@ -1237,8 +1219,7 @@
 		85A8CAE91AF071610023504D /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				8582A4671AF15BC20048DCD6 /* ConfigurationManager.h */,
-				8582A4681AF15BC20048DCD6 /* ConfigurationManager.m */,
+				85AD51DF1BF52DA7002EC8D2 /* ConfigurationManager.swift */,
 			);
 			name = Configuration;
 			sourceTree = "<group>";
@@ -1247,7 +1228,6 @@
 			isa = PBXGroup;
 			children = (
 				85C3A7F31BEAE69B00E8C5E6 /* Macros.swift */,
-				8576DEF01BEE97C000154D45 /* StringExtension.swift */,
 				85D8D8541AF914B500197D85 /* AlertDialogsProvider.h */,
 				85D8D8551AF914B500197D85 /* AlertDialogsProvider.m */,
 				8576DEEE1BEE85B900154D45 /* Utils.swift */,
@@ -1292,7 +1272,6 @@
 				8556E3501AF49420003CCDD2 /* Settings */,
 				8502127C1B0A923300170785 /* Camera */,
 				8556E34E1AF4940A003CCDD2 /* Help */,
-				8582A46B1AF176460048DCD6 /* Splash */,
 				85A8CAEF1AF079DB0023504D /* Login */,
 				85A8CAF01AF07A1F0023504D /* Register */,
 				85A8CAF31AF07A850023504D /* Add Category */,
@@ -1659,7 +1638,6 @@
 				855D70C91B978200007615FC /* pencil_white.png in Resources */,
 				85ACE4211B27F55A0041B7C5 /* Lato-Italic.ttf in Resources */,
 				855894161B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.xib in Resources */,
-				8582A4701AF176660048DCD6 /* SplashViewController.xib in Resources */,
 				85ACE4221B27F55A0041B7C5 /* Lato-Light.ttf in Resources */,
 				852FF8971B78FBF50033A6D9 /* CelitaxNavBarLogo.png in Resources */,
 				855B6FB71B279F3000864E0B /* celitaxlogo.png in Resources */,
@@ -1758,7 +1736,7 @@
 				854AC6E91B7D94EE00F0D91D /* YearSummaryTableViewCell.m in Sources */,
 				852299AC1BEC44CA00279F45 /* DAOFactory.swift in Sources */,
 				854AC6E31B7D6B2700F0D91D /* YearSummaryViewController.m in Sources */,
-				855B6FB51B279E4700864E0B /* LookAndFeel.m in Sources */,
+				85AD51DE1BF51D35002EC8D2 /* LookAndFeel.swift in Sources */,
 				859EA0DF1BE581CC00D7B2EE /* TaxYear.swift in Sources */,
 				856273851B17E30400EECA26 /* BaseSideBarViewController.m in Sources */,
 				85665DD51B20EFD200848D36 /* ReceiptTableViewCell.m in Sources */,
@@ -1820,13 +1798,14 @@
 				8556E32E1AF428C4003CCDD2 /* CatagoryTableViewCell.m in Sources */,
 				855CED291B38D3420043D20D /* FlashButtonView.m in Sources */,
 				8537FFC71B989F6200F7802E /* LocalizationManager.m in Sources */,
-				855919201B6AE3BE001F712C /* BackgroundWorker.m in Sources */,
 				856048BD1BB5E66F002F9454 /* SubscriptionManager.m in Sources */,
 				859EA0E11BE589BD00D7B2EE /* Receipt.swift in Sources */,
+				85726A321BF5BD3300F0C190 /* BackgroundWorker.swift in Sources */,
 				8587117F1BE6BFC000774A2F /* Notifications.swift in Sources */,
+				85AD51E01BF52DA7002EC8D2 /* ConfigurationManager.swift in Sources */,
 				858711851BE6D2EE00774A2F /* RecordBuilder.swift in Sources */,
-				8582A4691AF15BC20048DCD6 /* ConfigurationManager.m in Sources */,
 				856538511B60A7F800915A2E /* SyncManager.m in Sources */,
+				85AD51DC1BF51AD9002EC8D2 /* UIViewExtension.swift in Sources */,
 				8556E35A1AF53233003CCDD2 /* SettingsViewController.m in Sources */,
 				858711911BE95BF100774A2F /* ManipulationService.swift in Sources */,
 				8537A9311B28A851000C848F /* TriangleView.m in Sources */,
@@ -1845,13 +1824,12 @@
 				85A8CAC41AF069EA0023504D /* main.m in Sources */,
 				8576DEEB1BED993600154D45 /* CategoriesDAO.swift in Sources */,
 				8559EA221B9E62D500FCC823 /* ImperialUnitPickerViewController.m in Sources */,
-				85547BFA1AF31CFA00D9E1CE /* UserManager.m in Sources */,
 				85D8D8561AF914B500197D85 /* AlertDialogsProvider.m in Sources */,
 				8587118D1BE7039900774A2F /* NetworkCommunicator.swift in Sources */,
 				85560FE21B019857004D2963 /* ColorPickerViewController.m in Sources */,
 				859EA0E51BE5B0E000D7B2EE /* UserData.swift in Sources */,
-				8582A46F1AF176660048DCD6 /* SplashViewController.m in Sources */,
 				85100D411AF6BFC9005C24D2 /* UIView+Helper.m in Sources */,
+				85C7BD761BF66A8A00C85C5C /* UserManager.swift in Sources */,
 				859AEF701B46504D0085AC6D /* TutorialManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

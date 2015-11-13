@@ -8,6 +8,8 @@
 
 import Foundation
 
+//This object is not really useful. I decided pass the messages via block instead for other web calls
+
 @objc
 class RegisterResult : NSObject //TODO: Remove Subclass to NSObject when the entire app has been converted to Swift
 {

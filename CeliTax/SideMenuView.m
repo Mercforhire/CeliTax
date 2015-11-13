@@ -9,6 +9,8 @@
 #import "SideMenuView.h"
 #import "MenuSelectionTableViewCell.h"
 
+#import "CeliTax-Swift.h"
+
 @interface SideMenuView () <UITableViewDataSource, UITableViewDelegate> {
     NSArray *menuSelections; // of NSString
     UITableView *menuSelectionsTable;

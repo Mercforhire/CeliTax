@@ -8,6 +8,7 @@
 
 #import "SelectionsPickerViewController.h"
 #import "SelectionsPickerTableViewCell.h"
+#import "CeliTax-Swift.h"
 
 #define POP_DEFAULT_FONT_SIZE     14
 #define POP_DEFAULT_ROW_HEIGHT    40

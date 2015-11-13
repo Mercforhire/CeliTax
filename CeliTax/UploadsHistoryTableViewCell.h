@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LookAndFeel.h"
 #import "TriangleView.h"
+
+@class LookAndFeel;
 
 @interface UploadsHistoryTableViewCell : UITableViewCell
 

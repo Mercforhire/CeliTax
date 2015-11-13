@@ -8,7 +8,6 @@
 
 #import "ModifyCatagoryViewController.h"
 #import "NKOColorPickerView.h"
-#import "UserManager.h"
 #import "UIView+Helper.h"
 #import "SolidGreenButton.h"
 

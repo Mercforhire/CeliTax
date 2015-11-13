@@ -9,6 +9,7 @@
 #import "HorizonalScrollBarView.h"
 #import "SelectionCollectionViewCell.h"
 #import "YIInnerShadowView.h"
+#import "CeliTax-Swift.h"
 
 NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionViewCell";
 

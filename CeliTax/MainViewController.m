@@ -8,7 +8,6 @@
 
 #import "MainViewController.h"
 #import "MainViewTableViewCell.h"
-#import "UserManager.h"
 #import "AddCategoryViewController.h"
 #import "ReceiptCheckingViewController.h"
 #import "CameraViewController.h"
@@ -20,7 +19,6 @@
 #import "ReceiptBreakDownViewController.h"
 #import "TriangleView.h"
 #import "LoginViewController.h"
-#import "ConfigurationManager.h"
 #import "UIView+Helper.h"
 #import "NoItemsTableViewCell.h"
 #import "TutorialManager.h"
@@ -197,10 +195,10 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
     
     [self refreshTaxYears];
     
-    if ([self.configurationManager getCurrentTaxYear] &&
-        [self.existingTaxYears containsObject: [self.configurationManager getCurrentTaxYear]] )
+    if ([self.configurationManager fetchTaxYear] &&
+        [self.existingTaxYears containsObject: [NSNumber numberWithInteger:[self.configurationManager fetchTaxYear]]] )
     {
-        self.currentlySelectedYear = [self.configurationManager getCurrentTaxYear];
+        self.currentlySelectedYear = [NSNumber numberWithInteger:[self.configurationManager fetchTaxYear]];
     }
     else if (self.existingTaxYears.count)
     {

@@ -8,7 +8,6 @@
 
 #import "ViewControllerFactory.h"
 #import "BaseViewController.h"
-#import "SplashViewController.h"
 #import "LoginViewController.h"
 #import "RegisterViewController.h"
 #import "MainViewController.h"
@@ -33,7 +32,6 @@
 #import "MetricUnitPickerViewController.h"
 #import "YearSummaryViewController.h"
 #import "YearSavingViewController.h"
-#import "BackgroundWorker.h"
 #import "LoginSettingsViewController.h"
 #import "ImperialUnitPickerViewController.h"
 #import "SubscriptionManager.h"
@@ -61,15 +59,6 @@
     }
     
     viewController.tutorialManager = tutorialManager;
-}
-
-- (SplashViewController *) createSplashViewController
-{
-    SplashViewController *splashViewController = [[SplashViewController alloc] initWithNibName: @"SplashViewController" bundle: nil];
-
-    [self initializeViewController: splashViewController];
-
-    return splashViewController;
 }
 
 - (LoginViewController *) createLoginViewController

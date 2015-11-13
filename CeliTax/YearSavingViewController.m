@@ -8,7 +8,6 @@
 
 #import "YearSavingViewController.h"
 #import "HollowWhiteButton.h"
-#import "ConfigurationManager.h"
 #import "YearSummaryViewController.h"
 #import "ViewControllerFactory.h"
 
@@ -31,7 +30,7 @@
     [self.viewDetailsButton setLookAndFeel:self.lookAndFeel];
     [self.viewDetailsButton setTitle:NSLocalizedString(@"View Details", nil) forState:UIControlStateNormal];
     
-    (self.yearSavingsTitle).text = [NSString stringWithFormat:NSLocalizedString(@"Your %ld savings:", nil), (long)self.configurationManager.getCurrentTaxYear.integerValue];
+    (self.yearSavingsTitle).text = [NSString stringWithFormat:NSLocalizedString(@"Your %ld savings:", nil), (long)self.configurationManager.fetchTaxYear];
 }
 
 - (void)viewDidLoad
@@ -53,7 +52,7 @@
     
     for (ItemCategory *category in catagories)
     {
-        NSArray *recordsForThisCatagory = [self.dataService fetchRecordsForCatagoryID:category.localID taxYear:self.configurationManager.getCurrentTaxYear.integerValue];
+        NSArray *recordsForThisCatagory = [self.dataService fetchRecordsForCatagoryID:category.localID taxYear:self.configurationManager.fetchTaxYear];
         
         // Separate recordsForThisCatagory into groups of the same Unit Type
         NSMutableDictionary *recordsOfEachType = [NSMutableDictionary new];

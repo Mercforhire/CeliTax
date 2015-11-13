@@ -8,13 +8,11 @@
 
 #import "MyAccountViewController.h"
 #import "AccountTableViewCell.h"
-#import "UserManager.h"
 #import "AlertDialogsProvider.h"
 #import "ViewControllerFactory.h"
 #import "XYPieChart.h"
 #import "UploadsHistoryTableViewCell.h"
 #import "ReceiptBreakDownViewController.h"
-#import "ConfigurationManager.h"
 #import "ProfileBarView.h"
 #import "TutorialManager.h"
 #import "HollowGreenButton.h"
@@ -158,9 +156,9 @@
     [self.calculateButton setLookAndFeel:self.lookAndFeel];
     [self.calculateButton setTitle:NSLocalizedString(@"Calculate", nil) forState:UIControlStateNormal];
     
-    if (self.configurationManager.getCurrentTaxYear)
+    if (self.configurationManager.fetchTaxYear)
     {
-        (self.titleLabel).text = [NSString stringWithFormat:NSLocalizedString(@"Tax Year for %ld", nil), (long)self.configurationManager.getCurrentTaxYear.integerValue];
+        (self.titleLabel).text = [NSString stringWithFormat:NSLocalizedString(@"Tax Year for %ld", nil), (long)self.configurationManager.fetchTaxYear];
     }
     
     self.numberToolbar = [[UIToolbar alloc]initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, 50)];
@@ -286,7 +284,7 @@
     {
         float totalAmountForCatagory = 0;
         
-        NSArray *recordsForThisCatagory = [self.dataService fetchRecordsForCatagoryID:category.localID taxYear:self.configurationManager.getCurrentTaxYear.integerValue];
+        NSArray *recordsForThisCatagory = [self.dataService fetchRecordsForCatagoryID:category.localID taxYear:self.configurationManager.fetchTaxYear];
         
         // Separate recordsForThisCatagory into groups of the same Unit Type
         NSMutableDictionary *recordsOfEachType = [NSMutableDictionary new];
@@ -548,7 +546,7 @@
         NSString *unitTypeString = self.currentlySelectedRow.unitTypeString;
         
         NSArray *catagoryInfos =
-        [self.dataService fetchLatestNthCategoryInfosforCategory:catagoryID unitType:[Record unitTypeStringToUnitType:unitTypeString] nTh:5 taxYear:self.configurationManager.getCurrentTaxYear.integerValue];
+        [self.dataService fetchLatestNthCategoryInfosforCategory:catagoryID unitType:[Record unitTypeStringToUnitType:unitTypeString] nTh:5 taxYear:self.configurationManager.fetchTaxYear];
         
         self.catagoryInfosToShow = catagoryInfos;
         
@@ -568,7 +566,7 @@
         NSString *catagoryID = self.currentlySelectedRow.categoryID;
         NSString *unitTypeString = self.currentlySelectedRow.unitTypeString;
         
-        NSArray *catagoryInfos = [self.dataService fetchCategoryInfoFromDate:mondayOfPreviousWeek toDate:mondayOfThisWeek taxYear:self.configurationManager.getCurrentTaxYear.integerValue categoryID:catagoryID unitType:[Record unitTypeStringToUnitType:unitTypeString]];
+        NSArray *catagoryInfos = [self.dataService fetchCategoryInfoFromDate:mondayOfPreviousWeek toDate:mondayOfThisWeek taxYear:self.configurationManager.fetchTaxYear categoryID:catagoryID unitType:[Record unitTypeStringToUnitType:unitTypeString]];
         
         self.catagoryInfosToShow = catagoryInfos;
         
@@ -591,7 +589,7 @@
         
         NSArray *catagoryInfos = [self.dataService fetchCategoryInfoFromDate:firstDayOfPreviousMonth
                                                                       toDate:firstDayOfThisMonth
-                                                                     taxYear:self.configurationManager.getCurrentTaxYear.integerValue
+                                                                     taxYear:self.configurationManager.fetchTaxYear
                                                                   categoryID:catagoryID
                                                                     unitType:[Record unitTypeStringToUnitType:unitTypeString]];
         
@@ -609,7 +607,7 @@
         NSString *unitTypeString = self.currentlySelectedRow.unitTypeString;
         
         // all receipts from this category
-        NSArray *catagoryInfos = [self.dataService fetchLatestNthCategoryInfosforCategory:catagoryID unitType:[Record unitTypeStringToUnitType:unitTypeString] nTh:-1 taxYear:self.configurationManager.getCurrentTaxYear.integerValue];
+        NSArray *catagoryInfos = [self.dataService fetchLatestNthCategoryInfosforCategory:catagoryID unitType:[Record unitTypeStringToUnitType:unitTypeString] nTh:-1 taxYear:self.configurationManager.fetchTaxYear];
         
         self.catagoryInfosToShow = catagoryInfos;
         

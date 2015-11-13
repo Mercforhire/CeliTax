@@ -34,11 +34,6 @@
  */
 - (void) centerVerticallyInView: (UIView *) view;
 
-/**
- Adds a 1 pixel wide black rounded border to self
- */
-- (void) applyRoundedBorder;
-
 - (void) scrollToY:(float)y;
 
 - (void) scrollToView:(UIView *)view;

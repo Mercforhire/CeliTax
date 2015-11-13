@@ -7,8 +7,6 @@
 //
 
 #import "SyncManager.h"
-#import "UserManager.h"
-
 #import "CeliTax-Swift.h"
 
 @interface SyncManager ()

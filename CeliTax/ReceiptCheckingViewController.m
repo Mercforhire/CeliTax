@@ -9,7 +9,6 @@
 #import "ReceiptCheckingViewController.h"
 #import "HorizonalScrollBarView.h"
 #import "AddCategoryViewController.h"
-#import "UserManager.h"
 #import "ImageCounterIconView.h"
 #import "AddCategoryViewController.h"
 #import "ViewControllerFactory.h"
@@ -20,7 +19,6 @@
 #import "ReceiptEditModeTableViewCell.h"
 #import "CameraViewController.h"
 #import "TutorialManager.h"
-#import "ConfigurationManager.h"
 #import "SolidGreenButton.h"
 #import "MBProgressHUD.h"
 #import "SyncManager.h"
@@ -365,9 +363,9 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
 {
     [super viewDidAppear:animated];
     
-    NSNumber *savedUnitSystem = [self.configurationManager getUnitSystem];
+    UnitSystem savedUnitSystem = [self.configurationManager fetchUnitType];
     
-    if (!savedUnitSystem || savedUnitSystem.integerValue == UnitSystemMetric)
+    if (savedUnitSystem == UnitSystemMetric)
     {
         self.metricUnitPickerViewController = [self.viewControllerFactory createUnitPickerViewControllerWithDefaultUnit:UnitTypesUnitItem];
         self.unitPickerPopoverController = [[WYPopoverController alloc] initWithContentViewController: self.metricUnitPickerViewController];
@@ -1513,9 +1511,9 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
     tutorialStep14.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     tutorialStep14.pointsUp = NO;
     
-    NSNumber *savedUnitSystem = [self.configurationManager getUnitSystem];
+    UnitSystem savedUnitSystem = [self.configurationManager fetchUnitType];
     
-    if (!savedUnitSystem || savedUnitSystem.integerValue == UnitSystemMetric)
+    if (savedUnitSystem == UnitSystemMetric)
     {
         tutorialStep14.highlightedItemRect = CGRectMake(0, self.categoriesBar.frame.origin.y - self.metricUnitPickerViewController.viewSize.height - 20, 80, self.metricUnitPickerViewController.viewSize.height);
     }

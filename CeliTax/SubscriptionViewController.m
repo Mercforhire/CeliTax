@@ -10,7 +10,6 @@
 #import "SubscriptionManager.h"
 #import "SolidGreenButton.h"
 #import "MBProgressHUD.h"
-#import "UserManager.h"
 
 #import "CeliTax-Swift.h"
 

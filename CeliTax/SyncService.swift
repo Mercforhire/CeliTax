@@ -73,7 +73,7 @@ class SyncService : NSObject
     */
     func loadDemoData(complete : GenerateDemoDataCompleteBlock?)
     {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { () -> Void in
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { 
             
             self.taxYearsDAO.addTaxYear(2013, save:false)
             self.taxYearsDAO.addTaxYear(2014, save:false)
@@ -192,7 +192,7 @@ class SyncService : NSObject
             
             self.userDataDAO.saveUserData()
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (complete != nil)
                 {
@@ -285,7 +285,7 @@ class SyncService : NSObject
         
         networkOperation.postDataEncoding = MKNKPostDataEncodingTypeURL
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler( { () -> Void in
+        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler( { 
             
         })
         
@@ -301,7 +301,7 @@ class SyncService : NSObject
             
             self.userDataDAO.saveUserData()
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (success != nil)
                 {
@@ -315,7 +315,7 @@ class SyncService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {
@@ -341,7 +341,7 @@ class SyncService : NSObject
         
         networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler( { () -> Void in
+        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler( { 
             
         })
         
@@ -441,7 +441,7 @@ class SyncService : NSObject
                 
                 self.userDataDAO.saveUserData()
                 
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     
                     if (success != nil)
                     {
@@ -453,7 +453,7 @@ class SyncService : NSObject
             }
             else
             {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     
                     if (failure != nil)
                     {
@@ -468,7 +468,7 @@ class SyncService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 if (failure != nil)
                 {
                     failure!( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
@@ -492,7 +492,7 @@ class SyncService : NSObject
         
         networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ () -> Void in
+        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ 
             
         })
         
@@ -504,7 +504,7 @@ class SyncService : NSObject
             
             if ( response["error"] != nil && response["error"]!.boolValue == false && batchID != nil)
             {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     
                     if (success != nil)
                     {
@@ -516,7 +516,7 @@ class SyncService : NSObject
             }
             else
             {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     
                     if (failure != nil)
                     {
@@ -531,7 +531,7 @@ class SyncService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {
@@ -559,7 +559,7 @@ class SyncService : NSObject
         
         networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ () -> Void in
+        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ 
             
         })
         
@@ -569,7 +569,7 @@ class SyncService : NSObject
             
             let filesnamesToUpload : [String] = response["files_need_upload"] as! [String]
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (success != nil)
                 {
@@ -583,7 +583,7 @@ class SyncService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {
@@ -617,13 +617,13 @@ class SyncService : NSObject
         
         networkOperation.addData(data, forKey:"photos", mimeType:"image/jpeg", fileName:fileNameWithExtension)
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler( { () -> Void in
+        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler( { 
             
         })
         
         let successBlock : MKNKResponseBlock = { (completedOperation) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (success != nil)
                 {
@@ -638,7 +638,7 @@ class SyncService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {
@@ -661,7 +661,7 @@ class SyncService : NSObject
         
         let successBlock : MKNKResponseBlock =  { (completedOperation) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (success != nil)
                 {
@@ -674,7 +674,7 @@ class SyncService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {
@@ -718,7 +718,7 @@ class SyncService : NSObject
             }
             else
             {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     
                     if (failure != nil)
                     {
@@ -732,7 +732,7 @@ class SyncService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {
@@ -780,7 +780,7 @@ class SyncService : NSObject
     */
     func cleanUpReceiptImages()
     {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { () -> Void in
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { 
             
             //1. Get all names of files we should keep
             var allFilenames : [String] = []
@@ -851,7 +851,7 @@ class SyncService : NSObject
         
         networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ () -> Void in
+        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ 
             
         })
         
@@ -861,7 +861,7 @@ class SyncService : NSObject
             
             if ( response["error"] != nil && response["error"]!.boolValue == false)
             {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     
                     if (success != nil)
                     {
@@ -873,7 +873,7 @@ class SyncService : NSObject
             }
             else
             {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { 
                     
                     if (failure != nil)
                     {
@@ -888,7 +888,7 @@ class SyncService : NSObject
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { 
                 
                 if (failure != nil)
                 {

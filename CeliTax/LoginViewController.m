@@ -11,7 +11,6 @@
 #import "ViewControllerFactory.h"
 #import "MBProgressHUD.h"
 #import "NSString+Helper.h"
-#import "UserManager.h"
 #import "UIView+Helper.h"
 #import "MainViewController.h"
 #import "PasswordRecoveryViewController.h"
@@ -154,10 +153,10 @@
      {
          
          [self.userManager loginUserFor: authorizeResult.userName
-                                 andKey: authorizeResult.userAPIKey
-                           andFirstname: authorizeResult.firstname
-                            andLastname: authorizeResult.lastname
-                             andCountry: authorizeResult.country];
+                                    key: authorizeResult.userAPIKey
+                              firstname: authorizeResult.firstname
+                               lastname: authorizeResult.lastname
+                                country: authorizeResult.country];
          
          [self.userManager updateUserSubscriptionExpiryDate:^{
              

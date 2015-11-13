@@ -14,7 +14,6 @@
 #import "ViewControllerFactory.h"
 #import "M13Checkbox.h"
 #import "SendReceiptsToViewController.h"
-#import "ConfigurationManager.h"
 #import "NoItemsTableViewCell.h"
 #import "ReceiptBreakDownViewController.h"
 #import "ReceiptCheckingViewController.h"
@@ -206,10 +205,10 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
     
     [self refreshTaxYears];
 
-    if ([self.configurationManager getCurrentTaxYear])
+    if ([self.configurationManager fetchTaxYear])
     {
         // this triggers loading of receipts for this year
-        self.currentlySelectedYear = [self.configurationManager getCurrentTaxYear];
+        self.currentlySelectedYear = [NSNumber numberWithInteger: [self.configurationManager fetchTaxYear]];
     }
 }
 

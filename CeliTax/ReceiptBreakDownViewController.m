@@ -15,7 +15,6 @@
 #import "ReceiptCheckingViewController.h"
 #import "WYPopoverController.h"
 #import "SelectionsPickerViewController.h"
-#import "ConfigurationManager.h"
 #import "HollowGreenButton.h"
 
 #import "CeliTax-Swift.h"

@@ -8,7 +8,6 @@
 
 #import "SettingsViewController.h"
 #import "ProfileBarView.h"
-#import "UserManager.h"
 #import "AlertDialogsProvider.h"
 #import "SolidGreenButton.h"
 #import "SyncManager.h"
@@ -16,7 +15,6 @@
 #import "ProfileSettingsViewController.h"
 #import "TutorialManager.h"
 #import "M13Checkbox.h"
-#import "ConfigurationManager.h"
 #import "LoginSettingsViewController.h"
 #import "SubscriptionViewController.h"
 
@@ -228,14 +226,14 @@ typedef NS_ENUM(NSUInteger, Languages) {
 
 -(void)selectUnitSystem
 {
-    NSNumber *savedUnitSystem = [self.configurationManager getUnitSystem];
+    UnitSystem savedUnitSystem = [self.configurationManager fetchUnitType];
     
     if (!savedUnitSystem)
     {
-        [self.configurationManager setUnitSystem:UnitSystemMetric];
+        [self.configurationManager setUnitType: UnitSystemMetric];
     }
     
-    [self setUnitSystemToType: [self.configurationManager getUnitSystem].integerValue];
+    [self setUnitSystemToType: [self.configurationManager fetchUnitType]];
 }
 
 -(void)setUnitSystemToType:(NSInteger)unitSystem
@@ -246,14 +244,14 @@ typedef NS_ENUM(NSUInteger, Languages) {
             [self.lookAndFeel applySolidGreenButtonStyleTo:self.metricUnitButton];
             [self.lookAndFeel applyDisabledButtonStyleTo:self.imperialUnitButton];
             
-            [self.configurationManager setUnitSystem:UnitSystemMetric];
+            [self.configurationManager setUnitType:UnitSystemMetric];
             break;
             
         case UnitSystemImperial:
             [self.lookAndFeel applyDisabledButtonStyleTo:self.metricUnitButton];
             [self.lookAndFeel applySolidGreenButtonStyleTo:self.imperialUnitButton];
             
-            [self.configurationManager setUnitSystem:UnitSystemImperial];
+            [self.configurationManager setUnitType:UnitSystemImperial];
             break;
             
         default:

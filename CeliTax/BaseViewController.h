@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LookAndFeel.h"
 
-@class ConfigurationManager, ViewControllerFactory, UserManager, LookAndFeel, TutorialManager, BackgroundWorker, SubscriptionManager;
+@class LookAndFeel, ConfigurationManager, ViewControllerFactory, UserManager, TutorialManager, BackgroundWorker, SubscriptionManager;
 
 @interface BaseViewController : UIViewController
 
