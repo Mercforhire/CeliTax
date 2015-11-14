@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-#import "TutorialManager.h"
+#import "CeliTax-Swift.h"
 
 @interface BaseViewController ()
 

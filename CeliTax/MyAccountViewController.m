@@ -8,18 +8,14 @@
 
 #import "MyAccountViewController.h"
 #import "AccountTableViewCell.h"
-#import "AlertDialogsProvider.h"
 #import "ViewControllerFactory.h"
 #import "XYPieChart.h"
 #import "UploadsHistoryTableViewCell.h"
 #import "ReceiptBreakDownViewController.h"
 #import "ProfileBarView.h"
-#import "TutorialManager.h"
 #import "HollowGreenButton.h"
 #import "ProfileSettingsViewController.h"
-#import "UIView+Helper.h"
 #import "YearSavingViewController.h"
-#import "TutorialManager.h"
 #import "SolidGreenButton.h"
 #import "HorizonalScrollBarView.h"
 #import "AddCategoryViewController.h"
@@ -744,7 +740,13 @@
 
 -(void)avgHelpClicked
 {
-    [AlertDialogsProvider showWorkInProgressDialog];
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Help", nil)
+                                                      message:NSLocalizedString(@"You must first enter the average cost of a regular non gluten-free item in order to calculate your tax claim. Currently there are no set benchmarks assigned to food items by the government. Please check your local grocery stores, online or consult your accountant to determine an appropriate average cost.", nil)
+                                                     delegate:nil
+                                            cancelButtonTitle:nil
+                                            otherButtonTitles:NSLocalizedString(@"Ok", nil),nil];
+    
+    [message show];
 }
 
 - (IBAction) addCatagoryPressed: (UIButton *) sender
@@ -1396,7 +1398,7 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
     {
         TutorialStep *tutorialStep = (self.tutorials)[step];
         
-        [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
+        [self.tutorialManager displayTutorialInViewController:self tutorial:tutorialStep];
     }
 }
 

@@ -12,13 +12,14 @@ import Foundation
 //   dLog("Log this!")
 //
 #if DEBUG
-    func dLog(message: String, filename: NSString = __FILE__, function: String = __FUNCTION__, line: Int = __LINE__) {
-        NSLog("[\(filename.lastPathComponent):\(line)] \(function) - \(message)")
+    func dLog(message: String)
+    {
+        NSLog(message)
     }
 #else
-    func dLog(message: String, filename: NSString = __FILE__, function: String = __FUNCTION__, line: Int = __LINE__) {
+    func dLog(message: String)
+    {
+        
     }
 #endif
-func aLog(message: String, filename: NSString = __FILE__, function: String = __FUNCTION__, line: Int = __LINE__) {
-    NSLog("[\(filename.lastPathComponent):\(line)] \(function) - \(message)")
-}
+

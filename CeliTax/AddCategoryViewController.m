@@ -15,8 +15,6 @@
 #import "CatagoryTableViewCell.h"
 #import "ModifyCatagoryTableViewCell.h"
 #import "ModifyCatagoryViewController.h"
-#import "UIView+Helper.h"
-#import "TutorialManager.h"
 #import "SolidGreenButton.h"
 
 #import "CeliTax-Swift.h"
@@ -86,12 +84,12 @@
 
     // sample names
     [self.sampleCategoryNames addObject: NSLocalizedString(@"Bread", nil)];
-    [self.sampleCategoryNames addObject: NSLocalizedString(@"Rice", nil)];
-    [self.sampleCategoryNames addObject: NSLocalizedString(@"Cake", nil)];
-    [self.sampleCategoryNames addObject: NSLocalizedString(@"Meat", nil)];
-    [self.sampleCategoryNames addObject: NSLocalizedString(@"Pizza", nil)];
+    [self.sampleCategoryNames addObject: NSLocalizedString(@"Cereal", nil)];
+    [self.sampleCategoryNames addObject: NSLocalizedString(@"Crackers", nil)];
+    [self.sampleCategoryNames addObject: NSLocalizedString(@"Bagels", nil)];
+    [self.sampleCategoryNames addObject: NSLocalizedString(@"Buns", nil)];
     [self.sampleCategoryNames addObject: NSLocalizedString(@"Custom", nil)];
-
+    
     self.colorPickerViewController = [self.viewControllerFactory createColorPickerViewController];
 
     self.namesPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: self.sampleCategoryNames];
@@ -271,6 +269,21 @@
 
     NSArray *catagories = [self.dataService fetchCategories];
     
+    if (catagories.count == 0)
+    {
+        [self.manipulationService addCatagoryForName:@"Bread" categoryColor:UIColor.yellowColor save:NO];
+        
+        [self.manipulationService addCatagoryForName:@"Cereal" categoryColor:UIColor.orangeColor save:NO];
+        
+        [self.manipulationService addCatagoryForName:@"Crackers" categoryColor:UIColor.redColor save:NO];
+        
+        [self.manipulationService addCatagoryForName:@"Bagels" categoryColor:UIColor.greenColor save:NO];
+        
+        [self.manipulationService addCatagoryForName:@"Buns" categoryColor:UIColor.purpleColor save:YES];
+        
+        catagories = [self.dataService fetchCategories];
+    }
+    
     self.catagories = [[NSMutableArray alloc] initWithArray: catagories copyItems: YES];
     
     [self.catagoriesTable reloadData];
@@ -285,7 +298,7 @@
     //set up the categoryPickerViewController
     self.categoryPickerViewController = [self.viewControllerFactory createSelectionsPickerViewControllerWithSelections: self.categoryNames];
     self.categoryPickerViewController.highlightedSelectionIndex = -1;
-    (self.categoryPickerViewController).delegate = self;
+    self.categoryPickerViewController.delegate = self;
 }
 
 - (void) setCurrentlySelectedCategory: (ItemCategory *) currentlySelectedCategory
@@ -892,7 +905,7 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
     {
         TutorialStep *tutorialStep = (self.tutorials)[step];
         
-        [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
+        [self.tutorialManager displayTutorialInViewController:self tutorial:tutorialStep];
     }
 }
 

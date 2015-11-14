@@ -7,7 +7,6 @@
 //
 
 #import "SubscriptionViewController.h"
-#import "SubscriptionManager.h"
 #import "SolidGreenButton.h"
 #import "MBProgressHUD.h"
 
@@ -110,13 +109,13 @@
         
         [self.waitView2 show: YES];
         
-        [self.subscriptionManager buyProduct:product success:^{
+        [self.subscriptionManager buyProduct:product completionHandler:^{
             
             [self.waitView2 hide: YES];
             
             [self refreshExpiryDateLabel];
             
-        } failure:^(NSInteger errorCode) {
+        } failureHandler:^(NSInteger errorCode) {
             
             [self.waitView2 hide: YES];
             

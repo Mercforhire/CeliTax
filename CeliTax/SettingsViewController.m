@@ -13,7 +13,6 @@
 #import "SyncManager.h"
 #import "ViewControllerFactory.h"
 #import "ProfileSettingsViewController.h"
-#import "TutorialManager.h"
 #import "M13Checkbox.h"
 #import "LoginSettingsViewController.h"
 #import "SubscriptionViewController.h"

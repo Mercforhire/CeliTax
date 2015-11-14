@@ -7,8 +7,6 @@
 //
 
 #import "PasswordRecoveryViewController.h"
-#import "NSString+Helper.h"
-#import "UIView+Helper.h"
 #import "ViewControllerFactory.h"
 #import "PasswordRecoverySentViewController.h"
 #import "HollowGreenButton.h"

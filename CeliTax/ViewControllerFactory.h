@@ -7,9 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CeliTax-Swift.h"
 
-@class ConfigurationManager, UserManager, LookAndFeel, SubscriptionManager, DataService, ManipulationService, SyncService;
+@class AuthenticationService, ConfigurationManager, UserManager, LookAndFeel, SubscriptionManager, DataService, ManipulationService, SyncService;
 @class BaseViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCategoryViewController, SidebarViewController, ItemCategory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager, SyncManager, ProfileSettingsViewController, ImperialUnitPickerViewController, MetricUnitPickerViewController, YearSummaryViewController, YearSavingViewController, BackgroundWorker, LoginSettingsViewController, SubscriptionViewController;
 
 @interface ViewControllerFactory : NSObject

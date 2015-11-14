@@ -431,13 +431,13 @@ class Utils : NSObject //TODO: Remove Subclass to NSObject when the entire app h
         
         let fileManager : NSFileManager = NSFileManager.defaultManager()
         
+        var filenames : [String] = []
+        
         do
         {
             var filePathsArray : [String]
             
             try filePathsArray = fileManager.subpathsOfDirectoryAtPath(imageFolderPath)
-            
-            var filenames : [String] = []
             
             for filePath in filePathsArray
             {
@@ -456,7 +456,7 @@ class Utils : NSObject //TODO: Remove Subclass to NSObject when the entire app h
         }
         catch
         {
-            assert(false)
+            return filenames
         }
     }
     

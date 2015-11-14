@@ -12,11 +12,11 @@ import UIKit
 @objc
 class ItemCategory : NSObject, NSCoding, NSCopying  //TODO: Remove Subclass to NSObject when the entire app has been converted to Swift
 {
-    let kKeyIdentifer : String = "Identifer"
-    let kKeyName : String = "Name"
-    let kKeyColor : String = "Color"
-    let kKeyNationalAverageCost : String = "NationalAverageCosts"
-    let kKeyDataAction : String = "DataAction"
+    private let kKeyIdentifer : String = "Identifer"
+    private let kKeyName : String = "Name"
+    private let kKeyColor : String = "Color"
+    private let kKeyNationalAverageCost : String = "NationalAverageCosts"
+    private let kKeyDataAction : String = "DataAction"
     
     var localID : String = ""
     var name : String = ""

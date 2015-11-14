@@ -27,15 +27,14 @@
 #import "PasswordRecoveryViewController.h"
 #import "PasswordRecoverySentViewController.h"
 #import "TransferSelectionsViewController.h"
-#import "TutorialManager.h"
 #import "ProfileSettingsViewController.h"
 #import "MetricUnitPickerViewController.h"
 #import "YearSummaryViewController.h"
 #import "YearSavingViewController.h"
 #import "LoginSettingsViewController.h"
 #import "ImperialUnitPickerViewController.h"
-#import "SubscriptionManager.h"
 #import "SubscriptionViewController.h"
+#import "CeliTax-Swift.h"
 
 @implementation ViewControllerFactory
 {
@@ -55,7 +54,7 @@
     
     if (!tutorialManager)
     {
-        tutorialManager = [[TutorialManager alloc] initWithViewControllerFactory:self andLookAndFeel:self.lookAndFeel];
+        tutorialManager = [[TutorialManager alloc] initWithViewControllerFactory:self lookAndFeel:self.lookAndFeel];
     }
     
     viewController.tutorialManager = tutorialManager;

@@ -10,10 +10,8 @@
 #import "ViewControllerFactory.h"
 #import "LoginViewController.h"
 #import "MainViewController.h"
-#import "TutorialManager.h"
 #import "SyncManager.h"
 #import "LocalizationManager.h"
-#import "SubscriptionManager.h"
 #import <Crashlytics/Crashlytics.h>
 
 #import "CeliTax-Swift.h"
@@ -109,13 +107,11 @@
 -(void) initializeSubscriptionManager
 {
     NSSet *productIdentifiers = [NSSet setWithObjects:
-                                 k3MonthServiceProductID,
-                                 k6MonthServiceProductID,
+                                 SubscriptionManager.k3MonthServiceProductID,
+                                 SubscriptionManager.k6MonthServiceProductID,
                                  nil];
     
-    self.subscriptionManager = [[SubscriptionManager alloc] initWithProductIdentifiers:productIdentifiers];
-    self.subscriptionManager.userManager = self.userManager;
-    self.subscriptionManager.authenticationService = [self.serviceFactory createAuthenticationService];
+    self.subscriptionManager = [[SubscriptionManager alloc] initWithProductIdentifiers:productIdentifiers authenticationService:[self.serviceFactory createAuthenticationService] userManager:self.userManager];
 }
 
 - (void) initializeLocalizationManager

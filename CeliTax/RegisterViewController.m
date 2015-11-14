@@ -8,10 +8,8 @@
 
 #import "RegisterViewController.h"
 #import "MBProgressHUD.h"
-#import "NSString+Helper.h"
 #import "M13Checkbox.h"
 #import "HollowGreenButton.h"
-#import "UIView+Helper.h"
 
 @interface RegisterViewController () <UITextFieldDelegate>
 

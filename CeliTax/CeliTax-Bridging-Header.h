@@ -5,4 +5,7 @@
 #import "UIFont+Lato.h"
 #import "MKNetworkEngine.h"
 #import "SyncManager.h"
-#import "SubscriptionManager.h"
+#import "ViewControllerFactory.h"
+#import "TutorialBubble.h"
+#import "MainViewController.h"
+#import "CDRTranslucentSideBar.h"

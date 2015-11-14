@@ -11,9 +11,9 @@
 @class LookAndFeel;
 
 typedef NS_ENUM(NSUInteger, ArrowDirection) {
-    ArrowDirectionNone,
-    ArrowDirectionUp,
-    ArrowDirectionDown,
+    ArrowDirectionNone = 0,
+    ArrowDirectionUp = 1,
+    ArrowDirectionDown = 2,
 };
 
 @interface TutorialBubble : UIView

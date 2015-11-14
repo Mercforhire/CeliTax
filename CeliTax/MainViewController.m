@@ -19,12 +19,9 @@
 #import "ReceiptBreakDownViewController.h"
 #import "TriangleView.h"
 #import "LoginViewController.h"
-#import "UIView+Helper.h"
 #import "NoItemsTableViewCell.h"
-#import "TutorialManager.h"
 #import "MBProgressHUD.h"
 #import "SyncManager.h"
-#import "SubscriptionManager.h"
 
 #import "CeliTax-Swift.h"
 
@@ -652,9 +649,7 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
     
     TutorialStep *tutorialStep4 = [TutorialStep new];
     
-    tutorialStep4.text = NSLocalizedString(@"Easily keep track of all your GF purchases throughout the year and automatically calculate your tax claim with one click!", nil);
-    tutorialStep4.leftButtonTitle = NSLocalizedString(@"Back", nil);
-    tutorialStep4.rightButtonTitle = NSLocalizedString(@"Continue", nil);
+    //deleted
     
     [self.tutorials addObject:tutorialStep4];
     
@@ -701,7 +696,7 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
     {
         TutorialStep *tutorialStep = (self.tutorials)[step];
         
-        [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
+        [self.tutorialManager displayTutorialInViewController:self tutorial:tutorialStep];
     }
 }
 
@@ -728,15 +723,13 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
             break;
             
         case 4:
-            //Go back to Step 3
-            self.tutorialManager.currentStep = 3;
-            [self displayTutorialStep:TutorialStep3];
+            //DELETED STEP
             break;
             
         case 5:
-            //Go back to Step 4
-            self.tutorialManager.currentStep = 4;
-            [self displayTutorialStep:TutorialStep4];
+            //Go back to Step 3
+            self.tutorialManager.currentStep = 3;
+            [self displayTutorialStep:TutorialStep3];
             break;
             
         case 6:
@@ -792,14 +785,12 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
             
         case 3:
             //Go to Step 4
-            self.tutorialManager.currentStep = 4;
-            [self displayTutorialStep:TutorialStep4];
+            self.tutorialManager.currentStep = 5;
+            [self displayTutorialStep:TutorialStep5];
             break;
             
         case 4:
-            //Go to Step 5
-            self.tutorialManager.currentStep = 5;
-            [self displayTutorialStep:TutorialStep5];
+            //DELETED STEP
             break;
             
         case 5:

@@ -7,7 +7,6 @@
 //
 
 #import "SendReceiptsToViewController.h"
-#import "NSString+Helper.h"
 #import "HollowGreenButton.h"
 
 @interface SendReceiptsToViewController () <UITextFieldDelegate>

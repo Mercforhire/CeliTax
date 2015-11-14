@@ -15,7 +15,6 @@
 #import "ReceiptCheckingViewController.h"
 #import "FlashButtonView.h"
 #import "SolidGreenButton.h"
-#import "TutorialManager.h"
 
 #import "CeliTax-Swift.h"
 
@@ -611,7 +610,7 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
     {
         TutorialStep *tutorialStep = (self.tutorials)[step];
         
-        [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
+        [self.tutorialManager displayTutorialInViewController:self tutorial:tutorialStep];
     }
 }
 

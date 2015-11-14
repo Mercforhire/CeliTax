@@ -43,13 +43,13 @@ class Record : NSObject, NSCoding, NSCopying //TODO: Remove Subclass to NSObject
     static let kUnitOzKey : String = "UnitOz"
     static let kUnitLbKey : String = "UnitLb"
     
-    let kKeyIdentifer : String = "Identifer"
-    let kKeyCategoryID : String = "CatagoryID"
-    let kKeyReceiptID : String = "ReceiptID"
-    let kKeyAmount : String = "Amount"
-    let kKeyQuantity : String = "Quantity"
-    let kKeyUnitType : String = "UnitType"
-    let kKeyDataAction : String = "DataAction"
+    private let kKeyIdentifer : String = "Identifer"
+    private let kKeyCategoryID : String = "CatagoryID"
+    private let kKeyReceiptID : String = "ReceiptID"
+    private let kKeyAmount : String = "Amount"
+    private let kKeyQuantity : String = "Quantity"
+    private let kKeyUnitType : String = "UnitType"
+    private let kKeyDataAction : String = "DataAction"
     
     var localID : String = ""
     var categoryID : String = "" // must match an ItemCatagory's localID

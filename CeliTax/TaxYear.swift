@@ -11,8 +11,8 @@ import Foundation
 @objc
 class TaxYear : NSObject, NSCoding, NSCopying //TODO: Remove Subclass to NSObject when the entire app has been converted to Swift
 {
-    let kKeyTaxYear : String = "TaxYear"
-    let kKeyDataAction : String = "DataAction"
+    private let kKeyTaxYear : String = "TaxYear"
+    private let kKeyDataAction : String = "DataAction"
     
     var taxYear : Int = 0
     var dataAction : DataActionStatus = DataActionStatus.DataActionNone

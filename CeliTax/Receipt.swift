@@ -11,11 +11,11 @@ import Foundation
 @objc
 class Receipt : NSObject, NSCoding, NSCopying  //TODO: Remove Subclass to NSObject when the entire app has been converted to Swift
 {
-    let kKeyIdentifer : String = "Identifer"
-    let kKeyFileNames : String = "FileNames"
-    let kKeyDateCreated : String = "DateCreated"
-    let kKeyTaxYear : String = "TaxYear"
-    let kKeyDataAction : String = "DataAction"
+    private let kKeyIdentifer : String = "Identifer"
+    private let kKeyFileNames : String = "FileNames"
+    private let kKeyDateCreated : String = "DateCreated"
+    private let kKeyTaxYear : String = "TaxYear"
+    private let kKeyDataAction : String = "DataAction"
     
     var localID : String = ""
     var fileNames : NSMutableArray = NSMutableArray()

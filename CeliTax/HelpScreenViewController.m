@@ -8,9 +8,7 @@
 
 #import "HelpScreenViewController.h"
 #import "MBProgressHUD.h"
-#import "UIView+Helper.h"
 #import "HollowGreenButton.h"
-#import "TutorialManager.h"
 #import "SolidGreenButton.h"
 
 #import "CeliTax-Swift.h"
@@ -145,7 +143,7 @@
                                     success:^
     {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Thank you", nil)
-                                                          message:NSLocalizedString(@"Comment has been sent", nil)
+                                                          message:NSLocalizedString(@"We will respond to you as soon as possible.", nil)
                                                          delegate:nil
                                                 cancelButtonTitle:nil
                                                 otherButtonTitles:NSLocalizedString(@"Ok", nil),nil];

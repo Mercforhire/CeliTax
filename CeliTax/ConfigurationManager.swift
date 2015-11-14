@@ -51,7 +51,12 @@ class ConfigurationManager : NSObject //TODO: Remove Subclass to NSObject when t
     
     func fetchTaxYear() -> Int
     {
-        return self.settings[kKeyTaxYear] as! Int
+        if (self.settings[kKeyTaxYear] != nil)
+        {
+            return self.settings[kKeyTaxYear] as! Int
+        }
+        
+        return 0
     }
     
     func setCurrentTaxYear(taxYear : Int)

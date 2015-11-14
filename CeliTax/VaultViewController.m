@@ -19,7 +19,6 @@
 #import "ReceiptCheckingViewController.h"
 #import "ImageCounterIconView.h"
 #import "TransferSelectionsViewController.h"
-#import "TutorialManager.h"
 #import "SolidGreenButton.h"
 #import "HollowGreenButton.h"
 
@@ -1223,7 +1222,7 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
     {
         TutorialStep *tutorialStep = (self.tutorials)[step];
         
-        [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
+        [self.tutorialManager displayTutorialInViewController:self tutorial:tutorialStep];
     }
 }
 

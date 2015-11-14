@@ -81,15 +81,15 @@ class SyncService : NSObject
             
             if (self.categoriesDAO.fetchCategories().count == 0)
             {
-                self.categoriesDAO.addCategoryForName("Rice", color: UIColor.yellowColor(), save: false)
+                self.categoriesDAO.addCategoryForName("Bread", color: UIColor.yellowColor(), save: false)
                 
-                self.categoriesDAO.addCategoryForName("Bread", color: UIColor.orangeColor(), save: false)
+                self.categoriesDAO.addCategoryForName("Cereal", color: UIColor.orangeColor(), save: false)
                 
-                self.categoriesDAO.addCategoryForName("Meat", color: UIColor.redColor(), save: false)
+                self.categoriesDAO.addCategoryForName("Crackers", color: UIColor.redColor(), save: false)
                 
-                self.categoriesDAO.addCategoryForName("Flour", color: UIColor.lightGrayColor(), save: false)
+                self.categoriesDAO.addCategoryForName("Bagels", color: UIColor.greenColor(), save: false)
                 
-                self.categoriesDAO.addCategoryForName("Cake", color: UIColor.purpleColor(), save: false)
+                self.categoriesDAO.addCategoryForName("Buns", color: UIColor.purpleColor(), save: false)
                 
                 //Give all Categories a random Unit Item national average amount
                 let allCategories : [ItemCategory]! = self.categoriesDAO.fetchCategories()

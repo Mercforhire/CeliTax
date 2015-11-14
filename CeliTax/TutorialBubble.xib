@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Lato-Light.ttf">
@@ -37,6 +38,7 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ccP-8V-2ka">
                             <rect key="frame" x="15" y="79" width="125" height="35"/>
+                            <animations/>
                             <color key="backgroundColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="125" id="Ct6-Sn-d47"/>
@@ -50,6 +52,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yc5-dM-5lF">
                             <rect key="frame" x="150" y="79" width="125" height="35"/>
+                            <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="7K6-wO-kM5"/>
@@ -63,6 +66,7 @@
                         </button>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, " translatesAutoresizingMaskIntoConstraints="NO" id="O3y-3C-V0Y">
                             <rect key="frame" x="5" y="5" width="280" height="50"/>
+                            <animations/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="6fK-qu-Qro"/>
@@ -72,6 +76,7 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                     </subviews>
+                    <animations/>
                     <color key="backgroundColor" red="0.45490196078431372" green="0.74901960784313726" blue="0.31764705882352939" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="ccP-8V-2ka" firstAttribute="top" secondItem="O3y-3C-V0Y" secondAttribute="bottom" constant="24" id="Cjv-fK-RTT"/>
@@ -86,6 +91,7 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NAx-0v-wHD" customClass="Triangle">
                     <rect key="frame" x="76" y="0.0" width="25" height="13"/>
+                    <animations/>
                     <color key="backgroundColor" red="0.4549019608" green="0.74901960779999999" blue="0.31764705879999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="13" id="9HE-iG-Imy"/>
@@ -94,6 +100,7 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zS4-gy-Og1" customClass="Triangle">
                     <rect key="frame" x="76" y="143" width="25" height="13"/>
+                    <animations/>
                     <color key="backgroundColor" red="0.4549019608" green="0.74901960779999999" blue="0.31764705879999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="13" id="L8H-f8-WBg"/>
@@ -102,6 +109,7 @@
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qhk-pL-Cfy" userLabel="Close Button">
                     <rect key="frame" x="290" y="3" width="25" height="25"/>
+                    <animations/>
                     <color key="backgroundColor" red="0.4549019608" green="0.74901960779999999" blue="0.31764705879999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <accessibility key="accessibilityConfiguration" label=""/>
                     <constraints>
@@ -114,6 +122,7 @@
                     </state>
                 </button>
             </subviews>
+            <animations/>
             <constraints>
                 <constraint firstItem="NAx-0v-wHD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="1oU-Rv-J47"/>
                 <constraint firstItem="MKi-fL-jLE" firstAttribute="top" secondItem="NAx-0v-wHD" secondAttribute="bottom" id="3Xr-0M-dD8"/>

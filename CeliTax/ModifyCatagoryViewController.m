@@ -8,7 +8,6 @@
 
 #import "ModifyCatagoryViewController.h"
 #import "NKOColorPickerView.h"
-#import "UIView+Helper.h"
 #import "SolidGreenButton.h"
 
 #import "CeliTax-Swift.h"

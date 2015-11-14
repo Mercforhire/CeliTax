@@ -20,12 +20,12 @@ class User : NSObject, NSCoding //TODO: Remove Subclass to NSObject when the ent
     var avatarImage : UIImage?
     var subscriptionExpirationDate : String = ""
     
-    let kKeyLoginName : String = "loginName"
-    let kKeyUserKey : String = "userKey"
-    let kKeyFirstname : String = "firstname"
-    let kKeyLastname : String = "lastname"
-    let kKeyCountry : String = "country"
-    let kSubscriptionExpirationDate : String = "subscriptionExpirationDate"
+    private let kKeyLoginName : String = "loginName"
+    private let kKeyUserKey : String = "userKey"
+    private let kKeyFirstname : String = "firstname"
+    private let kKeyLastname : String = "lastname"
+    private let kKeyCountry : String = "country"
+    private let kSubscriptionExpirationDate : String = "subscriptionExpirationDate"
     
     required override init()
     {

@@ -10,8 +10,6 @@
 #import "RegisterViewController.h"
 #import "ViewControllerFactory.h"
 #import "MBProgressHUD.h"
-#import "NSString+Helper.h"
-#import "UIView+Helper.h"
 #import "MainViewController.h"
 #import "PasswordRecoveryViewController.h"
 #import "HollowGreenButton.h"
@@ -143,6 +141,8 @@
                                                 otherButtonTitles: NSLocalizedString(@"Dismiss", nil), nil];
 
         [message show];
+        
+        [self.loginButton setEnabled: YES];
 
         return;
     }

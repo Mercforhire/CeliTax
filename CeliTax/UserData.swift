@@ -19,12 +19,12 @@ import Foundation
 @objc
 class UserData : NSObject, NSCoding //TODO: Remove Subclass to NSObject when the entire app has been converted to Swift
 {
-    let kKeyCategories : String  = "Catagories"
-    let kKeyRecords : String = "Records"
-    let kKeyReceipts : String = "Receipts"
-    let kKeyTaxYears : String = "TaxYears"
-    let kKeyLastUploadedDate : String = "LastUploadedDate"
-    let kKeyLastUploadHash : String = "LastUploadHash"
+    private let kKeyCategories : String  = "Catagories"
+    private let kKeyRecords : String = "Records"
+    private let kKeyReceipts : String = "Receipts"
+    private let kKeyTaxYears : String = "TaxYears"
+    private let kKeyLastUploadedDate : String = "LastUploadedDate"
+    private let kKeyLastUploadHash : String = "LastUploadHash"
     
     var categories : NSMutableArray = NSMutableArray()
     

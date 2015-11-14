@@ -45,7 +45,7 @@
 "Continue" = "Continue";
 "Click “Done” when all images have been captured." = "Click “Done” when all images have been captured.";
 "Contact" = "Contact";
-"Comment has been sent" = "Comment has been sent";
+"We will respond to you as soon as possible." = "We will respond to you as soon as possible.";
 "Confirm" = "Confirm";
 "Can not connect to our server, please try again later" = "Can not connect to our server, please try again later";
 "Categories" = "Categories";
@@ -162,6 +162,8 @@
 "Please log in with your new account" = "Please log in with your new account";
 "Purchase" = "Purchase";
 "Purchase Subscriptions" = "Purchase Subscriptions";
+"Purchasing subscription..." = "Purchasing subscription...";
+"Purchase failed." = "Purchase failed.";
 "Please enter your account's email's address and password to log in" = "Please enter your account's email's address and password to log in";
 "Purchase failed" = "Purchase failed";
 
@@ -238,7 +240,7 @@
 //Y
 "Yes" = "Yes";
 "Your %ld savings:" = "Your %ld savings:";
-
+"You must first enter the average cost of a regular non gluten-free item in order to calculate your tax claim. Currently there are no set benchmarks assigned to food items by the government. Please check your local grocery stores, online or consult your accountant to determine an appropriate average cost." = "You must first enter the average cost of a regular non gluten-free item in order to calculate your tax claim. Currently there are no set benchmarks assigned to food items by the government. Please check your local grocery stores, online or consult your accountant to determine an appropriate average cost.";
 
 //Tutorial Text:
 
@@ -256,8 +258,6 @@
 "Celiacs are entitled to claim the incremental cost difference between GF and regular food products as a medical expense." = "Celiacs are entitled to claim the incremental cost difference between GF and regular food products as a medical expense.";
 
 "CeliTax will help you organize all of your GF purchases during the year and calculate your tax claim for you!" = "CeliTax will help you organize all of your GF purchases during the year and calculate your tax claim for you!";
-
-"Easily keep track of all your GF purchases throughout the year and automatically calculate your tax claim with one click!" = "Easily keep track of all your GF purchases throughout the year and automatically calculate your tax claim with one click!";
 
 "Let's get started!" = "Let's get started!";
 

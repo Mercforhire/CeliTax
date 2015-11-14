@@ -14,7 +14,6 @@
 		85081A161B4B728600C5AD10 /* TutorialBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85081A151B4B728600C5AD10 /* TutorialBubble.xib */; };
 		85081A191B4B7A6900C5AD10 /* TutorialBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = 85081A181B4B7A6900C5AD10 /* TutorialBubble.m */; };
 		85081A1D1B4B88A900C5AD10 /* Triangle.m in Sources */ = {isa = PBXBuildFile; fileRef = 85081A1C1B4B88A900C5AD10 /* Triangle.m */; };
-		85100D411AF6BFC9005C24D2 /* UIView+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 85100D401AF6BFC9005C24D2 /* UIView+Helper.m */; };
 		852299AC1BEC44CA00279F45 /* DAOFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852299AB1BEC44C900279F45 /* DAOFactory.swift */; };
 		852299AE1BEC44D400279F45 /* UserDataDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852299AD1BEC44D400279F45 /* UserDataDAO.swift */; };
 		852299B01BEC44E100279F45 /* RecordsDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852299AF1BEC44E100279F45 /* RecordsDAO.swift */; };
@@ -22,6 +21,9 @@
 		852299B41BEC44F400279F45 /* TaxYearsDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852299B31BEC44F400279F45 /* TaxYearsDAO.swift */; };
 		852929FA1B3675E20074DD24 /* ReceiptEditModeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 852929F81B3675E20074DD24 /* ReceiptEditModeTableViewCell.m */; };
 		852929FB1B3675E20074DD24 /* ReceiptEditModeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 852929F91B3675E20074DD24 /* ReceiptEditModeTableViewCell.xib */; };
+		852B773D1BF6A9AE0088D8FA /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852B773C1BF6A9AE0088D8FA /* SubscriptionManager.swift */; };
+		852B773F1BF6D2820088D8FA /* TutorialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852B773E1BF6D2820088D8FA /* TutorialManager.swift */; };
+		852B77421BF6D63F0088D8FA /* NSString+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 852B77411BF6D63F0088D8FA /* NSString+Helper.m */; };
 		852FF8971B78FBF50033A6D9 /* CelitaxNavBarLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 852FF8961B78FBF50033A6D9 /* CelitaxNavBarLogo.png */; };
 		852FF8991B7901D80033A6D9 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 852FF8981B7901D80033A6D9 /* menu.png */; };
 		852FF89B1B7907AA0033A6D9 /* xIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 852FF89A1B7907AA0033A6D9 /* xIcon.png */; };
@@ -59,7 +61,6 @@
 		85560FE31B019857004D2963 /* ColorPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85560FE11B019857004D2963 /* ColorPickerViewController.xib */; };
 		85560FE81B01B82A004D2963 /* SelectionsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85560FE61B01B82A004D2963 /* SelectionsPickerViewController.m */; };
 		85560FE91B01B82A004D2963 /* SelectionsPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85560FE71B01B82A004D2963 /* SelectionsPickerViewController.xib */; };
-		8556E30B1AF3E5BE003CCDD2 /* NSString+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8556E30A1AF3E5BE003CCDD2 /* NSString+Helper.m */; };
 		8556E3271AF41BFA003CCDD2 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8556E3251AF41BFA003CCDD2 /* MainViewController.m */; };
 		8556E3281AF41BFA003CCDD2 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8556E3261AF41BFA003CCDD2 /* MainViewController.xib */; };
 		8556E32E1AF428C4003CCDD2 /* CatagoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8556E32C1AF428C4003CCDD2 /* CatagoryTableViewCell.m */; };
@@ -106,7 +107,6 @@
 		856024CD1AFA9E6F004C1254 /* ReceiptPic-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 856024CB1AFA9E6F004C1254 /* ReceiptPic-1.jpg */; };
 		856024CE1AFA9E6F004C1254 /* ReceiptPic-2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 856024CC1AFA9E6F004C1254 /* ReceiptPic-2.jpg */; };
 		856048B91BB5D16F002F9454 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 856048B81BB5D16F002F9454 /* StoreKit.framework */; };
-		856048BD1BB5E66F002F9454 /* SubscriptionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 856048BC1BB5E66F002F9454 /* SubscriptionManager.m */; };
 		856273851B17E30400EECA26 /* BaseSideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 856273841B17E30400EECA26 /* BaseSideBarViewController.m */; };
 		856273901B1A8ECF00EECA26 /* greenTrianglePointDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 8562738E1B1A8ECF00EECA26 /* greenTrianglePointDown.png */; };
 		856273911B1A8ECF00EECA26 /* greenTrianglePointUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 8562738F1B1A8ECF00EECA26 /* greenTrianglePointUp.png */; };
@@ -156,7 +156,6 @@
 		858FD7181B40DEE60008B325 /* TransferConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 858FD7161B40DEE60008B325 /* TransferConfirmationViewController.m */; };
 		858FD7191B40DEE60008B325 /* TransferConfirmationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 858FD7171B40DEE60008B325 /* TransferConfirmationViewController.xib */; };
 		8595B10A1BEBB2E700AA2340 /* ServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8595B1091BEBB2E700AA2340 /* ServiceFactory.swift */; };
-		859AEF701B46504D0085AC6D /* TutorialManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 859AEF6F1B46504D0085AC6D /* TutorialManager.m */; };
 		859EA0D51BE3DC0B00D7B2EE /* AuthorizeResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EA0D41BE3DC0B00D7B2EE /* AuthorizeResult.swift */; };
 		859EA0D71BE3FD2600D7B2EE /* TutorialStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EA0D61BE3FD2600D7B2EE /* TutorialStep.swift */; };
 		859EA0D91BE4076E00D7B2EE /* RegisterResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EA0D81BE4076E00D7B2EE /* RegisterResult.swift */; };
@@ -227,8 +226,6 @@
 		85081A181B4B7A6900C5AD10 /* TutorialBubble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialBubble.m; sourceTree = "<group>"; };
 		85081A1B1B4B88A900C5AD10 /* Triangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Triangle.h; sourceTree = "<group>"; };
 		85081A1C1B4B88A900C5AD10 /* Triangle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Triangle.m; sourceTree = "<group>"; };
-		85100D3F1AF6BFC9005C24D2 /* UIView+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Helper.h"; sourceTree = "<group>"; };
-		85100D401AF6BFC9005C24D2 /* UIView+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Helper.m"; sourceTree = "<group>"; };
 		852299AB1BEC44C900279F45 /* DAOFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOFactory.swift; sourceTree = "<group>"; };
 		852299AD1BEC44D400279F45 /* UserDataDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDataDAO.swift; sourceTree = "<group>"; };
 		852299AF1BEC44E100279F45 /* RecordsDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordsDAO.swift; sourceTree = "<group>"; };
@@ -237,6 +234,10 @@
 		852929F71B3675E20074DD24 /* ReceiptEditModeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptEditModeTableViewCell.h; sourceTree = "<group>"; };
 		852929F81B3675E20074DD24 /* ReceiptEditModeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptEditModeTableViewCell.m; sourceTree = "<group>"; };
 		852929F91B3675E20074DD24 /* ReceiptEditModeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptEditModeTableViewCell.xib; sourceTree = "<group>"; };
+		852B773C1BF6A9AE0088D8FA /* SubscriptionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionManager.swift; sourceTree = "<group>"; };
+		852B773E1BF6D2820088D8FA /* TutorialManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialManager.swift; sourceTree = "<group>"; };
+		852B77401BF6D63F0088D8FA /* NSString+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Helper.h"; sourceTree = "<group>"; };
+		852B77411BF6D63F0088D8FA /* NSString+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Helper.m"; sourceTree = "<group>"; };
 		852FF8961B78FBF50033A6D9 /* CelitaxNavBarLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CelitaxNavBarLogo.png; sourceTree = "<group>"; };
 		852FF8981B7901D80033A6D9 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 		852FF89A1B7907AA0033A6D9 /* xIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xIcon.png; sourceTree = "<group>"; };
@@ -292,8 +293,6 @@
 		85560FE51B01B82A004D2963 /* SelectionsPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectionsPickerViewController.h; sourceTree = "<group>"; };
 		85560FE61B01B82A004D2963 /* SelectionsPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectionsPickerViewController.m; sourceTree = "<group>"; };
 		85560FE71B01B82A004D2963 /* SelectionsPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectionsPickerViewController.xib; sourceTree = "<group>"; };
-		8556E3091AF3E5BE003CCDD2 /* NSString+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Helper.h"; sourceTree = "<group>"; };
-		8556E30A1AF3E5BE003CCDD2 /* NSString+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Helper.m"; sourceTree = "<group>"; };
 		8556E3241AF41BFA003CCDD2 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		8556E3251AF41BFA003CCDD2 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		8556E3261AF41BFA003CCDD2 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
@@ -363,8 +362,6 @@
 		856024CB1AFA9E6F004C1254 /* ReceiptPic-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ReceiptPic-1.jpg"; sourceTree = "<group>"; };
 		856024CC1AFA9E6F004C1254 /* ReceiptPic-2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ReceiptPic-2.jpg"; sourceTree = "<group>"; };
 		856048B81BB5D16F002F9454 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		856048BB1BB5E66F002F9454 /* SubscriptionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscriptionManager.h; sourceTree = "<group>"; };
-		856048BC1BB5E66F002F9454 /* SubscriptionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscriptionManager.m; sourceTree = "<group>"; };
 		856273831B17E30400EECA26 /* BaseSideBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSideBarViewController.h; sourceTree = "<group>"; };
 		856273841B17E30400EECA26 /* BaseSideBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseSideBarViewController.m; sourceTree = "<group>"; };
 		8562738E1B1A8ECF00EECA26 /* greenTrianglePointDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenTrianglePointDown.png; sourceTree = "<group>"; };
@@ -431,8 +428,6 @@
 		858FD7161B40DEE60008B325 /* TransferConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferConfirmationViewController.m; sourceTree = "<group>"; };
 		858FD7171B40DEE60008B325 /* TransferConfirmationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransferConfirmationViewController.xib; sourceTree = "<group>"; };
 		8595B1091BEBB2E700AA2340 /* ServiceFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceFactory.swift; sourceTree = "<group>"; };
-		859AEF6E1B46504D0085AC6D /* TutorialManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialManager.h; sourceTree = "<group>"; };
-		859AEF6F1B46504D0085AC6D /* TutorialManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialManager.m; sourceTree = "<group>"; };
 		859EA0D31BE3DC0A00D7B2EE /* CeliTax-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CeliTax-Bridging-Header.h"; sourceTree = "<group>"; };
 		859EA0D41BE3DC0B00D7B2EE /* AuthorizeResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizeResult.swift; sourceTree = "<group>"; };
 		859EA0D61BE3FD2600D7B2EE /* TutorialStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialStep.swift; sourceTree = "<group>"; };
@@ -824,10 +819,8 @@
 		8556E3081AF3E5A1003CCDD2 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				8556E3091AF3E5BE003CCDD2 /* NSString+Helper.h */,
-				8556E30A1AF3E5BE003CCDD2 /* NSString+Helper.m */,
-				85100D3F1AF6BFC9005C24D2 /* UIView+Helper.h */,
-				85100D401AF6BFC9005C24D2 /* UIView+Helper.m */,
+				852B77401BF6D63F0088D8FA /* NSString+Helper.h */,
+				852B77411BF6D63F0088D8FA /* NSString+Helper.m */,
 				8576DEF01BEE97C000154D45 /* StringExtension.swift */,
 				85AD51DB1BF51AD9002EC8D2 /* UIViewExtension.swift */,
 			);
@@ -1014,8 +1007,7 @@
 		856048BA1BB5E5D5002F9454 /* Subscription Manager */ = {
 			isa = PBXGroup;
 			children = (
-				856048BB1BB5E66F002F9454 /* SubscriptionManager.h */,
-				856048BC1BB5E66F002F9454 /* SubscriptionManager.m */,
+				852B773C1BF6A9AE0088D8FA /* SubscriptionManager.swift */,
 			);
 			name = "Subscription Manager";
 			sourceTree = "<group>";
@@ -1110,8 +1102,7 @@
 		859AEF741B4851190085AC6D /* Tutorial Manager */ = {
 			isa = PBXGroup;
 			children = (
-				859AEF6E1B46504D0085AC6D /* TutorialManager.h */,
-				859AEF6F1B46504D0085AC6D /* TutorialManager.m */,
+				852B773E1BF6D2820088D8FA /* TutorialManager.swift */,
 			);
 			name = "Tutorial Manager";
 			sourceTree = "<group>";
@@ -1726,6 +1717,7 @@
 				855894151B1CCCF000D3F353 /* ReceiptBreakDownToolBarTableViewCell.m in Sources */,
 				85552B451B35191900AE77CE /* ReceiptItemCell.m in Sources */,
 				855D0B7F1B177B4400BD5EB4 /* MenuSelectionTableViewCell.m in Sources */,
+				852B77421BF6D63F0088D8FA /* NSString+Helper.m in Sources */,
 				856024B81AFA5E2C004C1254 /* ReceiptCheckingViewController.m in Sources */,
 				855A75EC1BB8D24A0019956E /* SubscriptionViewController.m in Sources */,
 				85D8D8521AF873AA00197D85 /* AccountTableViewCell.m in Sources */,
@@ -1745,6 +1737,7 @@
 				857EC8C71B044CF400B6A5B2 /* AllColorsPickerViewController.m in Sources */,
 				85F977661B0AF696002B3DF3 /* WhiteBorderView.m in Sources */,
 				856538471B608AC200915A2E /* SolidGreenButton.m in Sources */,
+				852B773F1BF6D2820088D8FA /* TutorialManager.swift in Sources */,
 				855BD2C61B25E151001ACBB2 /* ReceiptTimeTableViewCell.m in Sources */,
 				8556E3641AF53264003CCDD2 /* HelpScreenViewController.m in Sources */,
 				85081A191B4B7A6900C5AD10 /* TutorialBubble.m in Sources */,
@@ -1770,7 +1763,6 @@
 				8582A4741AF176850048DCD6 /* BaseViewController.m in Sources */,
 				852299AE1BEC44D400279F45 /* UserDataDAO.swift in Sources */,
 				856273A01B1B84D500EECA26 /* ReceiptBreakDownViewController.m in Sources */,
-				8556E30B1AF3E5BE003CCDD2 /* NSString+Helper.m in Sources */,
 				8556E3381AF47C8C003CCDD2 /* AddCategoryViewController.m in Sources */,
 				85C54B6D1B62C75C00120961 /* ProfileSettingsViewController.m in Sources */,
 				8556E3421AF48591003CCDD2 /* ModifyCatagoryViewController.m in Sources */,
@@ -1788,6 +1780,7 @@
 				8587118F1BE90ECE00774A2F /* DataService.swift in Sources */,
 				858711891BE6DF1100774A2F /* BuilderFactory.swift in Sources */,
 				8558940C1B1C1BD100D3F353 /* XYPieChart.m in Sources */,
+				852B773D1BF6A9AE0088D8FA /* SubscriptionManager.swift in Sources */,
 				8554BCE31B2537F1002333ED /* M13Checkbox.m in Sources */,
 				8554BCE91B254F45002333ED /* TimePeriodSelectionTableViewCell.m in Sources */,
 				85081A1D1B4B88A900C5AD10 /* Triangle.m in Sources */,
@@ -1798,7 +1791,6 @@
 				8556E32E1AF428C4003CCDD2 /* CatagoryTableViewCell.m in Sources */,
 				855CED291B38D3420043D20D /* FlashButtonView.m in Sources */,
 				8537FFC71B989F6200F7802E /* LocalizationManager.m in Sources */,
-				856048BD1BB5E66F002F9454 /* SubscriptionManager.m in Sources */,
 				859EA0E11BE589BD00D7B2EE /* Receipt.swift in Sources */,
 				85726A321BF5BD3300F0C190 /* BackgroundWorker.swift in Sources */,
 				8587117F1BE6BFC000774A2F /* Notifications.swift in Sources */,
@@ -1828,9 +1820,7 @@
 				8587118D1BE7039900774A2F /* NetworkCommunicator.swift in Sources */,
 				85560FE21B019857004D2963 /* ColorPickerViewController.m in Sources */,
 				859EA0E51BE5B0E000D7B2EE /* UserData.swift in Sources */,
-				85100D411AF6BFC9005C24D2 /* UIView+Helper.m in Sources */,
 				85C7BD761BF66A8A00C85C5C /* UserManager.swift in Sources */,
-				859AEF701B46504D0085AC6D /* TutorialManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1974,6 +1964,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/CeliTax/CeliTax-Prefix.pch";
 				INFOPLIST_FILE = CeliTax/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cravensave.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

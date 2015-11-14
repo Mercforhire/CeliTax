@@ -10,7 +10,6 @@
 #import "XYPieChart.h"
 #import "ReceiptBreakDownItemTableViewCell.h"
 #import "ReceiptBreakDownToolBarTableViewCell.h"
-#import "UIView+Helper.h"
 #import "ViewControllerFactory.h"
 #import "ReceiptCheckingViewController.h"
 #import "WYPopoverController.h"

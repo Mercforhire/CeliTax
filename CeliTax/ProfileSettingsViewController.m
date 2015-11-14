@@ -8,8 +8,6 @@
 
 #import "ProfileSettingsViewController.h"
 #import "HollowGreenButton.h"
-#import "UIView+Helper.h"
-#import "UIView+Helper.h"
 #import "TOCropViewController.h"
 #import "UIImage+ResizeMagick.h"
 

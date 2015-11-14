@@ -12,20 +12,17 @@
 #import "ImageCounterIconView.h"
 #import "AddCategoryViewController.h"
 #import "ViewControllerFactory.h"
-#import "UIView+Helper.h"
 #import "ReceiptBreakDownViewController.h"
 #import "ReceiptItemCell.h"
 #import "ReceiptScrollView.h"
 #import "ReceiptEditModeTableViewCell.h"
 #import "CameraViewController.h"
-#import "TutorialManager.h"
 #import "SolidGreenButton.h"
 #import "MBProgressHUD.h"
 #import "SyncManager.h"
 #import "MetricUnitPickerViewController.h"
 #import "ImperialUnitPickerViewController.h"
 #import "WYPopoverController.h"
-#import "TutorialManager.h"
 #import "MainViewController.h"
 
 #import "CeliTax-Swift.h"
@@ -111,6 +108,8 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
 //Tutorials
 @property (nonatomic, strong) NSMutableArray *tutorials;
 
+@property (nonatomic) UITapGestureRecognizer *viewTap;
+
 @end
 
 @implementation ReceiptCheckingViewController
@@ -143,11 +142,9 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
     (self.receiptItemCollectionView).collectionViewLayout = collectionLayout;
     (self.receiptItemCollectionView).backgroundColor = [UIColor clearColor];
     
-    UITapGestureRecognizer *receiptScrollViewTap =
+    self.viewTap =
     [[UITapGestureRecognizer alloc] initWithTarget: self
                                             action: @selector(stopEditing)];
-    
-    [self.receiptScrollView addGestureRecognizer: receiptScrollViewTap];
 
     UINib *receiptItemCell = [UINib nibWithNibName: @"ReceiptItemCell" bundle: nil];
     [self.receiptItemCollectionView registerNib: receiptItemCell forCellWithReuseIdentifier: ReceiptItemCellIdentifier];
@@ -1156,6 +1153,8 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
     {
         textField.text = @"";
     }
+    
+    [self.view addGestureRecognizer: self.viewTap];
 }
 
 - (void) textFieldDidChange: (UITextField *) textField
@@ -1230,6 +1229,8 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
     }
     
     [self.receiptItemCollectionView reloadData];
+    
+    [self.view removeGestureRecognizer: self.viewTap];
 }
 
 #pragma mark - ImageCounterIconViewProtocol
@@ -1562,7 +1563,7 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
     {
         TutorialStep *tutorialStep = (self.tutorials)[step];
         
-        [self.tutorialManager displayTutorialInViewController:self andTutorial:tutorialStep];
+        [self.tutorialManager displayTutorialInViewController:self tutorial:tutorialStep];
     }
 }
 

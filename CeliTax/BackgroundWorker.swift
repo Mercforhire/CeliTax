@@ -20,8 +20,8 @@ enum QueueTaskType : Int
 @objc
 class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the entire app has been converted to Swift
 {
-    static let kLastTimeDateKey : String = "LastTimeDateKey"
-    static let kQueuedTasksKey : String = "QueuedTasksKey"
+    private let kLastTimeDateKey : String = "LastTimeDateKey"
+    private let kQueuedTasksKey : String = "QueuedTasksKey"
     
     private weak var syncManager : SyncManager!
     private weak var authenticationService : AuthenticationService!
@@ -58,7 +58,7 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
         self.active = true
         
         //load previously queued tasks
-        let queuedTasks : [Int]? = self.defaults.objectForKey(BackgroundWorker.kQueuedTasksKey) as? [Int]
+        let queuedTasks : [Int]? = self.defaults.objectForKey(kQueuedTasksKey) as? [Int]
         
         if (queuedTasks != nil)
         {
@@ -75,8 +75,8 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
         self.active = false
         
         //delete any persistent data
-        self.defaults.removeObjectForKey(BackgroundWorker.kLastTimeDateKey)
-        self.defaults.removeObjectForKey(BackgroundWorker.kQueuedTasksKey)
+        self.defaults.removeObjectForKey(kLastTimeDateKey)
+        self.defaults.removeObjectForKey(kQueuedTasksKey)
         
         self.defaults.synchronize()
         
@@ -97,6 +97,7 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
             switch (currentTask)
             {
             case QueueTaskType.UploadData:
+                
                 if (self.syncManager.needToBackUp())
                 {
                     self.syncManager.startSync( { (syncDate) in
@@ -225,9 +226,9 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
             
             self.queuedTasks.removeAll()
             
-            self.defaults.removeObjectForKey(BackgroundWorker.kQueuedTasksKey)
+            self.defaults.removeObjectForKey(kQueuedTasksKey)
             
-            self.defaults.setObject(NSDate.init(), forKey:BackgroundWorker.kLastTimeDateKey)
+            self.defaults.setObject(NSDate.init(), forKey:kLastTimeDateKey)
             
             self.defaults.synchronize()
         }
@@ -245,7 +246,7 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
         {
             self.queuedTasks.append(taskType.rawValue)
             
-            self.defaults.setObject(self.queuedTasks, forKey:BackgroundWorker.kQueuedTasksKey)
+            self.defaults.setObject(self.queuedTasks, forKey:kQueuedTasksKey)
             
             self.defaults.synchronize()
         }
@@ -259,7 +260,7 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
         {
             dLog("Received notification that the app is active");
             
-            let lastRefresh : NSDate? = self.defaults.valueForKey(BackgroundWorker.kLastTimeDateKey) as? NSDate
+            let lastRefresh : NSDate? = self.defaults.valueForKey(kLastTimeDateKey) as? NSDate
             
             if (lastRefresh == nil)
             {
@@ -279,7 +280,7 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
                 }
                 else
                 {
-                    dLog(String.init(format:"Only %ld minutes since last sync, not needed again", minutes ) )
+                    dLog(String.init(format:"Only %ld minutes since last sync, not needed again", Int(minutes) ) )
                 }
             }
         }

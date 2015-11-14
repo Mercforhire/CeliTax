@@ -33,7 +33,6 @@ class UserManager : NSObject //TODO: Remove Subclass to NSObject when the entire
     typealias UpdateUserSubscriptionExpiryDateSuccessBlock = () -> Void
     typealias UpdateUserSubscriptionExpiryDateFailureBlock = (reason : String) -> Void
  
-    
     override init()
     {
         super.init()
