@@ -10,7 +10,6 @@
 #import "ProfileBarView.h"
 #import "AlertDialogsProvider.h"
 #import "SolidGreenButton.h"
-#import "SyncManager.h"
 #import "ViewControllerFactory.h"
 #import "ProfileSettingsViewController.h"
 #import "M13Checkbox.h"

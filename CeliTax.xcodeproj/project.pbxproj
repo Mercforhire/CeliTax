@@ -122,7 +122,6 @@
 		856538431B5FFEF000915A2E /* camera_add_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 856538421B5FFEF000915A2E /* camera_add_icon.png */; };
 		856538471B608AC200915A2E /* SolidGreenButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 856538461B608AC200915A2E /* SolidGreenButton.m */; };
 		8565384A1B608ACD00915A2E /* HollowGreenButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 856538491B608ACD00915A2E /* HollowGreenButton.m */; };
-		856538511B60A7F800915A2E /* SyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 856538501B60A7F800915A2E /* SyncManager.m */; };
 		85665DD51B20EFD200848D36 /* ReceiptTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 85665DD31B20EFD200848D36 /* ReceiptTableViewCell.m */; };
 		85665DD61B20EFD200848D36 /* ReceiptTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85665DD41B20EFD200848D36 /* ReceiptTableViewCell.xib */; };
 		85726A321BF5BD3300F0C190 /* BackgroundWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85726A311BF5BD3300F0C190 /* BackgroundWorker.swift */; };
@@ -153,6 +152,7 @@
 		8587118F1BE90ECE00774A2F /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8587118E1BE90ECE00774A2F /* DataService.swift */; };
 		858711911BE95BF100774A2F /* ManipulationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858711901BE95BF100774A2F /* ManipulationService.swift */; };
 		858A98371BEA602100B4C162 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858A98361BEA602100B4C162 /* SyncService.swift */; };
+		858BBD3D1BF7BC29007EDF7C /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858BBD3C1BF7BC29007EDF7C /* SyncManager.swift */; };
 		858FD7181B40DEE60008B325 /* TransferConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 858FD7161B40DEE60008B325 /* TransferConfirmationViewController.m */; };
 		858FD7191B40DEE60008B325 /* TransferConfirmationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 858FD7171B40DEE60008B325 /* TransferConfirmationViewController.xib */; };
 		8595B10A1BEBB2E700AA2340 /* ServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8595B1091BEBB2E700AA2340 /* ServiceFactory.swift */; };
@@ -384,8 +384,6 @@
 		856538461B608AC200915A2E /* SolidGreenButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SolidGreenButton.m; sourceTree = "<group>"; };
 		856538481B608ACD00915A2E /* HollowGreenButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HollowGreenButton.h; sourceTree = "<group>"; };
 		856538491B608ACD00915A2E /* HollowGreenButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HollowGreenButton.m; sourceTree = "<group>"; };
-		8565384F1B60A7F800915A2E /* SyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncManager.h; sourceTree = "<group>"; };
-		856538501B60A7F800915A2E /* SyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncManager.m; sourceTree = "<group>"; };
 		85665DD21B20EFD200848D36 /* ReceiptTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptTableViewCell.h; sourceTree = "<group>"; };
 		85665DD31B20EFD200848D36 /* ReceiptTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptTableViewCell.m; sourceTree = "<group>"; };
 		85665DD41B20EFD200848D36 /* ReceiptTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptTableViewCell.xib; sourceTree = "<group>"; };
@@ -424,6 +422,7 @@
 		8587118E1BE90ECE00774A2F /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		858711901BE95BF100774A2F /* ManipulationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManipulationService.swift; sourceTree = "<group>"; };
 		858A98361BEA602100B4C162 /* SyncService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
+		858BBD3C1BF7BC29007EDF7C /* SyncManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
 		858FD7151B40DEE60008B325 /* TransferConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferConfirmationViewController.h; sourceTree = "<group>"; };
 		858FD7161B40DEE60008B325 /* TransferConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferConfirmationViewController.m; sourceTree = "<group>"; };
 		858FD7171B40DEE60008B325 /* TransferConfirmationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransferConfirmationViewController.xib; sourceTree = "<group>"; };
@@ -1051,8 +1050,7 @@
 		8565384B1B60A7C500915A2E /* Sync Manager */ = {
 			isa = PBXGroup;
 			children = (
-				8565384F1B60A7F800915A2E /* SyncManager.h */,
-				856538501B60A7F800915A2E /* SyncManager.m */,
+				858BBD3C1BF7BC29007EDF7C /* SyncManager.swift */,
 			);
 			name = "Sync Manager";
 			sourceTree = "<group>";
@@ -1764,6 +1762,7 @@
 				852299AE1BEC44D400279F45 /* UserDataDAO.swift in Sources */,
 				856273A01B1B84D500EECA26 /* ReceiptBreakDownViewController.m in Sources */,
 				8556E3381AF47C8C003CCDD2 /* AddCategoryViewController.m in Sources */,
+				858BBD3D1BF7BC29007EDF7C /* SyncManager.swift in Sources */,
 				85C54B6D1B62C75C00120961 /* ProfileSettingsViewController.m in Sources */,
 				8556E3421AF48591003CCDD2 /* ModifyCatagoryViewController.m in Sources */,
 				8539F5E91B2C89AB0077F49C /* SelectionCollectionViewCell.m in Sources */,
@@ -1796,7 +1795,6 @@
 				8587117F1BE6BFC000774A2F /* Notifications.swift in Sources */,
 				85AD51E01BF52DA7002EC8D2 /* ConfigurationManager.swift in Sources */,
 				858711851BE6D2EE00774A2F /* RecordBuilder.swift in Sources */,
-				856538511B60A7F800915A2E /* SyncManager.m in Sources */,
 				85AD51DC1BF51AD9002EC8D2 /* UIViewExtension.swift in Sources */,
 				8556E35A1AF53233003CCDD2 /* SettingsViewController.m in Sources */,
 				858711911BE95BF100774A2F /* ManipulationService.swift in Sources */,
@@ -1964,7 +1962,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/CeliTax/CeliTax-Prefix.pch";
 				INFOPLIST_FILE = CeliTax/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "";
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cravensave.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1994,6 +1992,7 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/CeliTax/CeliTax-Prefix.pch";
 				INFOPLIST_FILE = CeliTax/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cravensave.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

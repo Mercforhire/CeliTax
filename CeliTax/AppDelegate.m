@@ -10,7 +10,6 @@
 #import "ViewControllerFactory.h"
 #import "LoginViewController.h"
 #import "MainViewController.h"
-#import "SyncManager.h"
 #import "LocalizationManager.h"
 #import <Crashlytics/Crashlytics.h>
 
@@ -96,7 +95,7 @@
 
 -(void) initializeSyncManager
 {
-    self.syncManager = [[SyncManager alloc] initWithSyncService:[self.serviceFactory createSyncService] andUserManager:self.userManager];
+    self.syncManager = [[SyncManager alloc] initWithUserManager:self.userManager syncService:[self.serviceFactory createSyncService]];
 }
 
 -(void) initializeBackgroundWorker

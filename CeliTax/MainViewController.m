@@ -21,7 +21,6 @@
 #import "LoginViewController.h"
 #import "NoItemsTableViewCell.h"
 #import "MBProgressHUD.h"
-#import "SyncManager.h"
 
 #import "CeliTax-Swift.h"
 

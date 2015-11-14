@@ -19,7 +19,6 @@
 #import "CameraViewController.h"
 #import "SolidGreenButton.h"
 #import "MBProgressHUD.h"
-#import "SyncManager.h"
 #import "MetricUnitPickerViewController.h"
 #import "ImperialUnitPickerViewController.h"
 #import "WYPopoverController.h"
