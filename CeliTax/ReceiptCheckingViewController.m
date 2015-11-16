@@ -342,9 +342,8 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
         // add fake receipt images
         
         UIImage *testImage1 = [UIImage imageNamed: @"ReceiptPic-1.jpg"];
-        UIImage *testImage2 = [UIImage imageNamed: @"ReceiptPic-2.jpg"];
         
-        self.receiptImages = [[NSMutableArray alloc] initWithObjects:testImage1, testImage2, nil];
+        self.receiptImages = [[NSMutableArray alloc] initWithObjects:testImage1, nil];
         
         (self.receiptScrollView).images = self.receiptImages;
         [self.editReceiptTable reloadData];

@@ -174,7 +174,22 @@
     
     [self.summaryTableView reloadData];
     
-    (self.totalSavingsLabel).text = [NSString stringWithFormat: @"$%.2f", totalSavingsAmount];
+    self.totalSavingsLabel.text = [NSString stringWithFormat: @"$%.2f", totalSavingsAmount];
+    
+    //do this on a background thread
+    
+    //build the YearSummaryData object from above data
+    YearSummaryData *yearSummaryData = [[YearSummaryData alloc] init];
+    
+    yearSummaryData.taxYear = self.configurationManager.fetchTaxYear;
+    yearSummaryData.totalSaving = totalSavingsAmount;
+    
+    for (ItemCategory *category in self.catagories)
+    {
+        SimpleCategory *simpleCategory = [[SimpleCategory alloc] initWithCategory:category];
+        
+        [yearSummaryData addSimpleCategory:simpleCategory];
+    }
 }
 
 - (IBAction)exportPressed:(HollowGreenButton *)sender

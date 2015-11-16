@@ -14,6 +14,8 @@
 		85081A161B4B728600C5AD10 /* TutorialBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85081A151B4B728600C5AD10 /* TutorialBubble.xib */; };
 		85081A191B4B7A6900C5AD10 /* TutorialBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = 85081A181B4B7A6900C5AD10 /* TutorialBubble.m */; };
 		85081A1D1B4B88A900C5AD10 /* Triangle.m in Sources */ = {isa = PBXBuildFile; fileRef = 85081A1C1B4B88A900C5AD10 /* Triangle.m */; };
+		850D22321BF96BE600A4B9ED /* YearSummaryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850D22311BF96BE600A4B9ED /* YearSummaryData.swift */; };
+		850F7B981BF803D000AF1C83 /* ReceiptPic-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 850F7B961BF803D000AF1C83 /* ReceiptPic-1.jpg */; };
 		852299AC1BEC44CA00279F45 /* DAOFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852299AB1BEC44C900279F45 /* DAOFactory.swift */; };
 		852299AE1BEC44D400279F45 /* UserDataDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852299AD1BEC44D400279F45 /* UserDataDAO.swift */; };
 		852299B01BEC44E100279F45 /* RecordsDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852299AF1BEC44E100279F45 /* RecordsDAO.swift */; };
@@ -104,8 +106,6 @@
 		855D70C91B978200007615FC /* pencil_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 855D70C81B978200007615FC /* pencil_white.png */; };
 		856024B81AFA5E2C004C1254 /* ReceiptCheckingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 856024B61AFA5E2C004C1254 /* ReceiptCheckingViewController.m */; };
 		856024B91AFA5E2C004C1254 /* ReceiptCheckingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856024B71AFA5E2C004C1254 /* ReceiptCheckingViewController.xib */; };
-		856024CD1AFA9E6F004C1254 /* ReceiptPic-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 856024CB1AFA9E6F004C1254 /* ReceiptPic-1.jpg */; };
-		856024CE1AFA9E6F004C1254 /* ReceiptPic-2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 856024CC1AFA9E6F004C1254 /* ReceiptPic-2.jpg */; };
 		856048B91BB5D16F002F9454 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 856048B81BB5D16F002F9454 /* StoreKit.framework */; };
 		856273851B17E30400EECA26 /* BaseSideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 856273841B17E30400EECA26 /* BaseSideBarViewController.m */; };
 		856273901B1A8ECF00EECA26 /* greenTrianglePointDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 8562738E1B1A8ECF00EECA26 /* greenTrianglePointDown.png */; };
@@ -226,6 +226,8 @@
 		85081A181B4B7A6900C5AD10 /* TutorialBubble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialBubble.m; sourceTree = "<group>"; };
 		85081A1B1B4B88A900C5AD10 /* Triangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Triangle.h; sourceTree = "<group>"; };
 		85081A1C1B4B88A900C5AD10 /* Triangle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Triangle.m; sourceTree = "<group>"; };
+		850D22311BF96BE600A4B9ED /* YearSummaryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearSummaryData.swift; sourceTree = "<group>"; };
+		850F7B961BF803D000AF1C83 /* ReceiptPic-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ReceiptPic-1.jpg"; sourceTree = "<group>"; };
 		852299AB1BEC44C900279F45 /* DAOFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOFactory.swift; sourceTree = "<group>"; };
 		852299AD1BEC44D400279F45 /* UserDataDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDataDAO.swift; sourceTree = "<group>"; };
 		852299AF1BEC44E100279F45 /* RecordsDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordsDAO.swift; sourceTree = "<group>"; };
@@ -359,8 +361,6 @@
 		856024B51AFA5E2C004C1254 /* ReceiptCheckingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptCheckingViewController.h; sourceTree = "<group>"; };
 		856024B61AFA5E2C004C1254 /* ReceiptCheckingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptCheckingViewController.m; sourceTree = "<group>"; };
 		856024B71AFA5E2C004C1254 /* ReceiptCheckingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptCheckingViewController.xib; sourceTree = "<group>"; };
-		856024CB1AFA9E6F004C1254 /* ReceiptPic-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ReceiptPic-1.jpg"; sourceTree = "<group>"; };
-		856024CC1AFA9E6F004C1254 /* ReceiptPic-2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ReceiptPic-2.jpg"; sourceTree = "<group>"; };
 		856048B81BB5D16F002F9454 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		856273831B17E30400EECA26 /* BaseSideBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSideBarViewController.h; sourceTree = "<group>"; };
 		856273841B17E30400EECA26 /* BaseSideBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseSideBarViewController.m; sourceTree = "<group>"; };
@@ -997,8 +997,7 @@
 		856024C31AFA6F4B004C1254 /* Sample Receipt */ = {
 			isa = PBXGroup;
 			children = (
-				856024CB1AFA9E6F004C1254 /* ReceiptPic-1.jpg */,
-				856024CC1AFA9E6F004C1254 /* ReceiptPic-2.jpg */,
+				850F7B961BF803D000AF1C83 /* ReceiptPic-1.jpg */,
 			);
 			name = "Sample Receipt";
 			sourceTree = "<group>";
@@ -1288,6 +1287,7 @@
 				859EA0E21BE5962E00D7B2EE /* ItemCategory.swift */,
 				859EA0E41BE5B0DF00D7B2EE /* UserData.swift */,
 				8587117E1BE6BFC000774A2F /* Notifications.swift */,
+				850D22311BF96BE600A4B9ED /* YearSummaryData.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1569,6 +1569,7 @@
 				85ACE41C1B27F55A0041B7C5 /* Lato-BlackItalic.ttf in Resources */,
 				8582A4791AF17DFD0048DCD6 /* LoginViewController.xib in Resources */,
 				856273911B1A8ECF00EECA26 /* greenTrianglePointUp.png in Resources */,
+				850F7B981BF803D000AF1C83 /* ReceiptPic-1.jpg in Resources */,
 				8586E5E61B17A04400C1014F /* userIcon.png in Resources */,
 				8537A92D1B289FB1000C848F /* pencil.png in Resources */,
 				8539F5EA1B2C89AB0077F49C /* SelectionCollectionViewCell.xib in Resources */,
@@ -1631,7 +1632,6 @@
 				852FF8971B78FBF50033A6D9 /* CelitaxNavBarLogo.png in Resources */,
 				855B6FB71B279F3000864E0B /* celitaxlogo.png in Resources */,
 				857902A21B2CF8A400C86662 /* ReceiptCollectionViewCell.xib in Resources */,
-				856024CE1AFA9E6F004C1254 /* ReceiptPic-2.jpg in Resources */,
 				8537FFBE1B988E5D00F7802E /* Localizable.strings in Resources */,
 				85552B401B34EF5400AE77CE /* NoItemsTableViewCell.xib in Resources */,
 				855D70C71B9600DE007615FC /* LoginSettingsViewController.xib in Resources */,
@@ -1639,7 +1639,6 @@
 				8556E3341AF47C0D003CCDD2 /* MyAccountViewController.xib in Resources */,
 				854880B81B85471300E89339 /* receipt_green_icon.png in Resources */,
 				855BD2C71B25E151001ACBB2 /* ReceiptTimeTableViewCell.xib in Resources */,
-				856024CD1AFA9E6F004C1254 /* ReceiptPic-1.jpg in Resources */,
 				85ACE4241B27F55A0041B7C5 /* Lato-Regular.ttf in Resources */,
 				8537A92B1B288B31000C848F /* camera_icon.png in Resources */,
 				85A8CACF1AF069EA0023504D /* Images.xcassets in Resources */,
@@ -1742,6 +1741,7 @@
 				859EA0DB1BE40A1E00D7B2EE /* User.swift in Sources */,
 				85F485881B16D220005E0EDE /* SideMenuView.m in Sources */,
 				855A9AA21B7259FE00455291 /* MetricUnitPickerViewController.m in Sources */,
+				850D22321BF96BE600A4B9ED /* YearSummaryData.swift in Sources */,
 				857902A51B2CF9A900C86662 /* ReceiptScrollView.m in Sources */,
 				859EA0DD1BE4700500D7B2EE /* Record.swift in Sources */,
 				858711831BE6CDE800774A2F /* ReceiptBuilder.swift in Sources */,

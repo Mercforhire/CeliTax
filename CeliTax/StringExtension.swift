@@ -75,4 +75,15 @@ extension String {
         
         return pred.evaluateWithObject(self)
     }
-} 
+    
+    static func hexStringFromColor(color : UIColor) -> String
+    {
+        let components : UnsafePointer<CGFloat> = CGColorGetComponents(color.CGColor)
+        
+        let r : CGFloat = components[0]
+        let g : CGFloat  = components[1]
+        let b : CGFloat = components[2]
+        
+        return String.init(format: "#%02lX%02lX%02lX", lroundf(Float(r) * Float(255)), lroundf(Float(g) * Float(255)), lroundf(Float(b) * Float(255)))
+    }
+}

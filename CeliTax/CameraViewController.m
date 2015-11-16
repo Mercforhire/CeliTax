@@ -654,7 +654,7 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
             if (!self.takenImageFilenames.count)
             {
                 //Add some sample image
-                UIImage *testImage2 = [UIImage imageNamed: @"ReceiptPic-2.jpg"];
+                UIImage *testImage2 = [UIImage imageNamed: @"ReceiptPic-1.jpg"];
                 
                 [self.takenImageFilenames addObject: @"demo.jpg"];
                 

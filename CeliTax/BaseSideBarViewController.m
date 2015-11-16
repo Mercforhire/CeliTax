@@ -98,6 +98,8 @@
     (self.sideMenuView).profileImage = self.userManager.user.avatarImage;
     
     [self.rightSideBar show];
+    
+    [[NSNotificationCenter defaultCenter] postNotification: [NSNotification notificationWithName: Notifications.kSideBarOpenedNotification object: nil userInfo: nil]];
 }
 
 - (void) pushAndReplaceTopViewControllerWith: (BaseViewController *) viewController

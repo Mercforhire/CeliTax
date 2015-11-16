@@ -357,7 +357,7 @@ class AuthenticationService : NSObject
         let imageData : NSData = UIImageJPEGRepresentation(profileImage, 0.9)!
         
         //used for server temp storage file name. Not important
-        let fileNameWithExtension : String = String(format: "%@.jpg", "ProfileImage")
+        let fileNameWithExtension : String = String.init(format: "%@.jpg", "ProfileImage")
         
         networkOperation.addData(imageData, forKey: "photos", mimeType: "image/jpeg", fileName: fileNameWithExtension)
         

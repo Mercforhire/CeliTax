@@ -158,7 +158,6 @@
     [self initializeSyncManager];
     [self initializeBackgroundWorker];
     [self initializeViewControllerFactory];
-
     self.userManager.backgroundWorker = self.backgroundWorker;
     
     self.window = [[UIWindow alloc] initWithFrame: [UIScreen mainScreen].bounds];

@@ -16,4 +16,6 @@ class Notifications : NSObject //TODO: Remove Subclass to NSObject when the enti
     static let kReceiptDatabaseChangedNotification : String = "ReceiptDatabaseChangedNotification"
     
     static let kAppLanguageChangedNotification : String = "AppLanguageChangedNotification"
+    
+    static let kSideBarOpenedNotification : String = "SideBarOpenedNotification"
 }

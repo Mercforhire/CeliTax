@@ -203,6 +203,7 @@
 "The email address is already used by another account. Please use a different email address" = "The email address is already used by another account. Please use a different email address";
 "Total Avg.\nNGF Cost" = "Total Avg.\nNGF Cost";
 "The subscription for this account has expired. Would you like to purchases a new subscription?" = "The subscription for this account has expired. Would you like to purchases a new subscription?";
+"The total average price should not be higher than the actual total spent, please check to see if the correct average price was entered." = "The total average price should not be higher than the actual total spent, please check to see if the correct average price was entered.";
 
 //U
 "Updating account info..." = "Updating account info...";

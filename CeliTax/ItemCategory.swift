@@ -99,21 +99,26 @@ class ItemCategory : NSObject, NSCoding, NSCopying  //TODO: Remove Subclass to N
         
         //Convert self.nationalAverageCosts dictionary to a string looking like:
         //item:2.5,ml:1.0:l:5.0,g:6.0,kg:5
-        var stringOfNationAverageCosts : NSString = ""
+        var stringOfNationAverageCosts : String = ""
+        
+        var firstItem : Bool = true
         
         for key in self.nationalAverageCosts.allKeys
         {
             let valueForKey : Float = self.nationalAverageCosts.objectForKey(key) as! Float
             
-            let unitNameAndDollarAmount : NSString = NSString(format: "%@:%.2f", key as! String, valueForKey)
+            let unitNameAndDollarAmount : String = String(format: "%@:%.2f", key as! String, valueForKey)
             
-            stringOfNationAverageCosts = stringOfNationAverageCosts.stringByAppendingFormat("%@:%.2f", unitNameAndDollarAmount)
-        }
-        
-        //Remove the last ,
-        if (self.nationalAverageCosts.count > 0)
-        {
-            stringOfNationAverageCosts = stringOfNationAverageCosts.substringToIndex(stringOfNationAverageCosts.length - 1)
+            if (firstItem)
+            {
+                stringOfNationAverageCosts = unitNameAndDollarAmount
+                
+                firstItem = false
+            }
+            else
+            {
+                stringOfNationAverageCosts = stringOfNationAverageCosts.stringByAppendingFormat(",%@", unitNameAndDollarAmount)
+            }
         }
         
         json[kKeyNationalAverageCost] = stringOfNationAverageCosts

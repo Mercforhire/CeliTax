@@ -127,7 +127,7 @@
         }
     }
     
-    (self.amountTitle).text = [NSString stringWithFormat: @"$%.2f", totalSavingsAmount];
+    self.amountTitle.text = [NSString stringWithFormat: @"$%.2f", totalSavingsAmount];
 }
 
 - (IBAction)viewDetailsPressed:(HollowWhiteButton *)sender

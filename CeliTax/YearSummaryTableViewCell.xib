@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -29,11 +29,11 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="59.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="99.99" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="u0N-or-Pcl">
-                        <rect key="frame" x="268" y="27" width="42" height="25.5"/>
+                        <rect key="frame" x="268" y="27" width="42" height="25"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="42" id="Old-Qr-pxx"/>
@@ -50,7 +50,7 @@
                         </variation>
                     </textField>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SRB-az-f6D">
-                        <rect key="frame" x="261" y="34" width="6" height="12"/>
+                        <rect key="frame" x="261" y="33" width="6" height="12"/>
                         <animations/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                         <color key="textColor" red="0.55334633690000001" green="0.82171581770000002" blue="0.4125430142" alpha="1" colorSpace="calibratedRGB"/>
@@ -63,7 +63,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9yd-HS-25j">
-                        <rect key="frame" x="168" y="46" width="92.5" height="5"/>
+                        <rect key="frame" x="168" y="46" width="92" height="5"/>
                         <animations/>
                         <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -87,14 +87,14 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GF SAVINGS" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fcc-xD-lCU">
-                        <rect key="frame" x="260" y="10" width="56.5" height="12"/>
+                        <rect key="frame" x="260" y="10" width="57" height="12"/>
                         <animations/>
                         <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="10"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ToT-uD-XJR">
-                        <rect key="frame" x="8" y="19" width="20" height="20"/>
+                        <rect key="frame" x="8" y="29" width="20" height="20"/>
                         <animations/>
                         <color key="backgroundColor" red="1" green="0.35536646100000002" blue="0.30897244080000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -141,7 +141,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbP-q4-nir">
-                        <rect key="frame" x="33" y="11" width="60" height="36.5"/>
+                        <rect key="frame" x="33" y="21" width="60" height="36"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="36" id="60a-S9-un4"/>
@@ -152,7 +152,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sAD-YP-Prg">
-                        <rect key="frame" x="279" y="30" width="20" height="20"/>
+                        <rect key="frame" x="279" y="29" width="20" height="20"/>
                         <animations/>
                         <color key="backgroundColor" red="1" green="0.32593600160657221" blue="0.28174684083195067" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -166,7 +166,7 @@
                         </state>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TOTAL AVG.  NGF COST" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCu-Hn-zDc">
-                        <rect key="frame" x="173" y="3" width="82.5" height="24"/>
+                        <rect key="frame" x="173" y="3" width="83" height="24"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="82.5" id="YCj-hW-lPt"/>
@@ -189,7 +189,7 @@
                     <constraint firstAttribute="bottomMargin" secondItem="9yd-HS-25j" secondAttribute="bottom" id="DGZ-83-qsl"/>
                     <constraint firstItem="u0N-or-Pcl" firstAttribute="leading" secondItem="SRB-az-f6D" secondAttribute="trailing" constant="1" id="EPc-Ug-Ibr"/>
                     <constraint firstItem="u0N-or-Pcl" firstAttribute="top" secondItem="Fcc-xD-lCU" secondAttribute="bottom" constant="5" id="Flo-jQ-awM"/>
-                    <constraint firstAttribute="centerY" secondItem="lbP-q4-nir" secondAttribute="centerY" id="Fry-OU-eFF"/>
+                    <constraint firstAttribute="centerY" secondItem="lbP-q4-nir" secondAttribute="centerY" constant="-9" id="Fry-OU-eFF"/>
                     <constraint firstItem="ToT-uD-XJR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Ijm-Jg-Jg1"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Fcc-xD-lCU" secondAttribute="trailing" constant="-5" id="Ko2-Ni-cjt"/>
                     <constraint firstItem="9yd-HS-25j" firstAttribute="centerX" secondItem="GCu-Hn-zDc" secondAttribute="centerX" id="KzI-nR-z8k"/>

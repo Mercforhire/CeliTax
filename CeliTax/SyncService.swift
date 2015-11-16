@@ -130,7 +130,6 @@ class SyncService : NSObject
             }
             
             let testImage1 : UIImage! = UIImage.init(named: "ReceiptPic-1.jpg")
-            let testImage2 : UIImage! = UIImage.init(named: "ReceiptPic-2.jpg")
             
             let calendar : NSCalendar = NSCalendar.currentCalendar()
             let components : NSDateComponents = NSDateComponents()
@@ -140,11 +139,10 @@ class SyncService : NSObject
             // add random receipts
             for var receiptNumber = 0; receiptNumber < 10; receiptNumber++
             {
-                let fileName1 : String = String(format: "Receipt-%@-%d", Utils.generateUniqueID(), 1)
-                let fileName2 : String = String(format: "Receipt-%@-%d", Utils.generateUniqueID(), 2)
+                let fileName1 : String = String.init(format: "Receipt-%@-%d", Utils.generateUniqueID(), 1)
+                let fileName2 : String = String.init(format: "Receipt-%@-%d", Utils.generateUniqueID(), 2)
                 
                 Utils.saveImage(testImage1, filename: fileName1, userKey: self.userDataDAO.userKey)
-                Utils.saveImage(testImage2, filename: fileName2, userKey: self.userDataDAO.userKey)
                 
                 components.day = Utils.randomNumberBetween(1, max: 28)
                 components.month = Utils.randomNumberBetween(1, max: 12)
@@ -665,7 +663,7 @@ class SyncService : NSObject
                 
                 if (success != nil)
                 {
-                    dLog( String(format: "Downloaded image from %@", url) )
+                    dLog( String.init(format: "Downloaded image from %@", url) )
                     success! ( )
                 }
                 
@@ -678,7 +676,7 @@ class SyncService : NSObject
                 
                 if (failure != nil)
                 {
-                    dLog( String(format: "Failed to download image from %@", url) )
+                    dLog( String.init(format: "Failed to download image from %@", url) )
                     failure! ( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
                 }
             })
@@ -712,7 +710,7 @@ class SyncService : NSObject
                 let url : String = response["url"] as! String
                 
                 // 2.start downloading the image from the url
-                dLog( String(format: "Received URL of image: %@", url) )
+                dLog( String.init(format: "Received URL of image: %@", url) )
                 
                 self.downloadFileFromURL(url, filePath:filePath, success:success, failure:failure)
             }
@@ -722,7 +720,7 @@ class SyncService : NSObject
                     
                     if (failure != nil)
                     {
-                        dLog( String("Failed to get URL of image: %@", filename) )
+                        dLog( String.init(format: "Failed to get URL of image: %@", filename) )
                         failure! ( reason: SyncService.RECEIPT_IMAGE_FILE_NO_LONGER_EXIST )
                     }
                     
