@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		725062951BFBCC340044EA6F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 725062941BFBCC340044EA6F /* Fabric.framework */; };
 		8500FA881B20CAA300F04E98 /* UploadsHistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8500FA861B20CAA300F04E98 /* UploadsHistoryTableViewCell.m */; };
 		8500FA891B20CAA300F04E98 /* UploadsHistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8500FA871B20CAA300F04E98 /* UploadsHistoryTableViewCell.xib */; };
 		850212801B0A925D00170785 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8502127E1B0A925D00170785 /* CameraViewController.m */; };
@@ -213,6 +214,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		725062941BFBCC340044EA6F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		8500FA851B20CAA300F04E98 /* UploadsHistoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadsHistoryTableViewCell.h; sourceTree = "<group>"; };
 		8500FA861B20CAA300F04E98 /* UploadsHistoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadsHistoryTableViewCell.m; sourceTree = "<group>"; };
 		8500FA871B20CAA300F04E98 /* UploadsHistoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UploadsHistoryTableViewCell.xib; sourceTree = "<group>"; };
@@ -494,6 +496,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				856048B91BB5D16F002F9454 /* StoreKit.framework in Frameworks */,
+				725062951BFBCC340044EA6F /* Fabric.framework in Frameworks */,
 				85F977391B0ACEC6002B3DF3 /* AVFoundation.framework in Frameworks */,
 				855A75F01BBA622B0019956E /* Crashlytics.framework in Frameworks */,
 				D35569FF52BBBBF1A5EB521A /* libPods-CeliTax.a in Frameworks */,
@@ -513,6 +516,7 @@
 		47196815B0BA054AA1348B8D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				725062941BFBCC340044EA6F /* Fabric.framework */,
 				855A75EF1BBA622B0019956E /* Crashlytics.framework */,
 				856048B81BB5D16F002F9454 /* StoreKit.framework */,
 				85F977381B0ACEC6002B3DF3 /* AVFoundation.framework */,
