@@ -38,6 +38,9 @@ class SyncService : NSObject
     typealias RequestReceiptsInfoEmailSuccessBlock = () -> Void
     typealias RequestReceiptsInfoEmailFailureBlock = (reason : String) -> Void
     
+    typealias SendYearlyReportSuccessBlock = () -> Void
+    typealias SendYearlyReportFailureBlock = (reason : String) -> Void
+    
     private weak var userDataDAO : UserDataDAO!
     private weak var taxYearsDAO : TaxYearsDAO!
     private weak var recordsDAO : RecordsDAO!
@@ -887,6 +890,87 @@ class SyncService : NSObject
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
             
             dispatch_async(dispatch_get_main_queue(), { 
+                
+                if (failure != nil)
+                {
+                    failure! ( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                }
+                
+            })
+            
+            UIApplication.sharedApplication().endBackgroundTask(bgTask)
+        }
+        
+        networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
+        
+        self.networkCommunicator.enqueueOperation(networkOperation)
+    }
+    
+    /*
+    Upload a yearly summary report for this user to the server and have the server send a email to the choicen email to view this report on the web browser at a later time
+    */
+    func sendYearlyReportTo(email : String!, dateReport : Dictionary<String , AnyObject>!, success : RequestReceiptsInfoEmailSuccessBlock?, failure : RequestReceiptsInfoEmailFailureBlock?)
+    {
+        let dictionaryData : NSData?
+        
+        do
+        {
+            try dictionaryData = NSJSONSerialization.dataWithJSONObject(dateReport, options: NSJSONWritingOptions.PrettyPrinted)
+        }
+        catch
+        {
+            return
+        }
+        
+        let jsonString : String! = NSString.init(data: dictionaryData!, encoding: NSUTF8StringEncoding) as! String
+        
+        let postParams = [
+            "email" : email,
+            "report" : jsonString
+        ]
+        
+        let networkOperation : MKNetworkOperation = self.networkCommunicator.postDataToServer(postParams, path: NetworkCommunicator.WEB_API_FILE.stringByAppendingString("/upload_report_info"))
+        
+        networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
+        
+        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({
+            
+        })
+        
+        let successBlock : MKNKResponseBlock = { (completedOperation) in
+            
+            let response : NSDictionary = completedOperation.responseJSON() as! NSDictionary
+            
+            if ( response["error"] != nil && response["error"]!.boolValue == false)
+            {
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    if (success != nil)
+                    {
+                        success! ( )
+                    }
+                    
+                })
+                
+            }
+            else
+            {
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    if (failure != nil)
+                    {
+                        failure! ( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                    }
+                    
+                })
+            }
+            
+            UIApplication.sharedApplication().endBackgroundTask(bgTask)
+        }
+        
+        let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
+            
+            dispatch_async(dispatch_get_main_queue(), {
                 
                 if (failure != nil)
                 {

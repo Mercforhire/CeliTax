@@ -8,10 +8,11 @@
 
 #import "BaseViewController.h"
 
-@class DataService;
+@class DataService, SyncService;
 
 @interface YearSummaryViewController : BaseViewController
 
 @property (nonatomic, weak) DataService *dataService;
+@property (nonatomic, weak) SyncService *syncService;
 
 @end

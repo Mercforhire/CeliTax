@@ -321,6 +321,7 @@
     
     yearSummaryViewController.lookAndFeel = self.lookAndFeel;
     yearSummaryViewController.dataService = self.dataService;
+    yearSummaryViewController.syncService = self.syncService;
     
     return yearSummaryViewController;
 }

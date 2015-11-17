@@ -9,7 +9,6 @@
 #import "YearSummaryViewController.h"
 #import "YearSummaryTableViewCell.h"
 #import "HollowGreenButton.h"
-#import "AlertDialogsProvider.h"
 #import "WYPopoverController.h"
 #import "SendReceiptsToViewController.h"
 #import "ViewControllerFactory.h"
@@ -33,6 +32,8 @@
 // NSMutableArray of NSArray of a fixed size 4:
 // (CatagoryID, UnitTypeString, Total Spent, Total average cost, Total GF savings)
 @property (strong, nonatomic) NSMutableArray *catagoryRows;
+
+@property (nonatomic, strong) YearSummaryData *yearSummaryData;
 
 @end
 
@@ -179,17 +180,90 @@
     //do this on a background thread
     
     //build the YearSummaryData object from above data
-    YearSummaryData *yearSummaryData = [[YearSummaryData alloc] init];
+    self.yearSummaryData = [[YearSummaryData alloc] init];
     
-    yearSummaryData.taxYear = self.configurationManager.fetchTaxYear;
-    yearSummaryData.totalSaving = totalSavingsAmount;
+    self.yearSummaryData.taxYear = self.configurationManager.fetchTaxYear;
+    self.yearSummaryData.totalSaving = totalSavingsAmount;
     
     for (ItemCategory *category in self.catagories)
     {
         SimpleCategory *simpleCategory = [[SimpleCategory alloc] initWithCategory:category];
         
-        [yearSummaryData addSimpleCategory:simpleCategory];
+        [self.yearSummaryData addSimpleCategory:simpleCategory];
     }
+    
+    for (NSArray *rowArray in self.catagoryRows)
+    {
+        if (rowArray.count == 5)
+        {
+            SummaryRowData *summaryRowData = [[SummaryRowData alloc] init];
+            
+            summaryRowData.categoryID = rowArray.firstObject;
+            
+            ItemCategory *thisCatagory = [self.dataService fetchCategory:summaryRowData.categoryID];
+            
+            summaryRowData.name = [self stringFromUnitTypeString:rowArray[1] category:thisCatagory];
+            summaryRowData.totalSpent = ((NSNumber *)rowArray[2]).floatValue;
+            summaryRowData.totalAvg = ((NSNumber *)rowArray[3]).floatValue;
+            summaryRowData.gfSavings = ((NSNumber *)rowArray[4]).floatValue;
+            
+            [self.yearSummaryData addSummaryRow:summaryRowData];
+        }
+    }
+}
+
+-(NSString *)stringFromUnitTypeString:(NSString *) unitTypeString category:(ItemCategory *)thisCatagory
+{
+    if ([unitTypeString isEqualToString:Record.kUnitItemKey])
+    {
+        return thisCatagory.name;
+    }
+    else if ([unitTypeString isEqualToString:Record.kUnitGKey])
+    {
+        return [NSString stringWithFormat:NSLocalizedString(@"%@ per (g)", nil), thisCatagory.name];
+    }
+    else if ([unitTypeString isEqualToString:Record.kUnit100GKey])
+    {
+        return [NSString stringWithFormat:NSLocalizedString(@"%@ per (100g)", nil), thisCatagory.name];
+    }
+    else if ([unitTypeString isEqualToString:Record.kUnitKGKey])
+    {
+        return [NSString stringWithFormat:NSLocalizedString(@"%@ per (kg)", nil), thisCatagory.name];
+    }
+    else if ([unitTypeString isEqualToString:Record.kUnitLKey])
+    {
+       return [NSString stringWithFormat:NSLocalizedString(@"%@ per (L)", nil), thisCatagory.name];
+    }
+    else if ([unitTypeString isEqualToString:Record.kUnitMLKey])
+    {
+        return [NSString stringWithFormat:NSLocalizedString(@"%@ per (mL)", nil), thisCatagory.name];
+    }
+    else if ([unitTypeString isEqualToString:Record.kUnitFlozKey])
+    {
+        return [NSString stringWithFormat:NSLocalizedString(@"%@ per (fl oz)", nil), thisCatagory.name];
+    }
+    else if ([unitTypeString isEqualToString:Record.kUnitPtKey])
+    {
+        return [NSString stringWithFormat:NSLocalizedString(@"%@ per (pt)", nil), thisCatagory.name];
+    }
+    else if ([unitTypeString isEqualToString:Record.kUnitQtKey])
+    {
+        return [NSString stringWithFormat:NSLocalizedString(@"%@ per (qt)", nil), thisCatagory.name];
+    }
+    else if ([unitTypeString isEqualToString:Record.kUnitGalKey])
+    {
+        return [NSString stringWithFormat:NSLocalizedString(@"%@ per (gal)", nil), thisCatagory.name];
+    }
+    else if ([unitTypeString isEqualToString:Record.kUnitOzKey])
+    {
+        return [NSString stringWithFormat:NSLocalizedString(@"%@ per (oz)", nil), thisCatagory.name];
+    }
+    else if ([unitTypeString isEqualToString:Record.kUnitLbKey])
+    {
+        return [NSString stringWithFormat:NSLocalizedString(@"%@ per (lb)", nil), thisCatagory.name];
+    }
+    
+    return @"";
 }
 
 - (IBAction)exportPressed:(HollowGreenButton *)sender
@@ -215,7 +289,23 @@
 {
     [self.sendReceiptsPopover dismissPopoverAnimated: YES];
     
-    [AlertDialogsProvider showWorkInProgressDialog];
+    [self.syncService sendYearlyReportTo:emailAddress dateReport:[self.yearSummaryData toJson] success:^{
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Success", nil)
+                                                          message: NSLocalizedString(@"An email containing the link has been sent to your account.", nil)
+                                                         delegate: nil cancelButtonTitle: nil
+                                                otherButtonTitles: NSLocalizedString(@"Ok", nil), nil];
+        
+        [message show];
+    } failure:^(NSString * _Nonnull reason) {
+        NSString *errorMessage = NSLocalizedString(@"Can not connect to our server, please try again later", nil);
+        
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
+                                                          message: errorMessage
+                                                         delegate: nil cancelButtonTitle: nil
+                                                otherButtonTitles: NSLocalizedString(@"Dismiss", nil), nil];
+        
+        [message show];
+    }];
 }
 
 #pragma mark - UITableview DataSource
@@ -258,54 +348,7 @@
     
     cell.colorView.backgroundColor = thisCatagory.color;
     
-    if ([unitTypeString isEqualToString:Record.kUnitItemKey])
-    {
-        (cell.catagoryNameLabel).text = thisCatagory.name;
-    }
-    else if ([unitTypeString isEqualToString:Record.kUnitGKey])
-    {
-        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (g)", nil), thisCatagory.name];
-    }
-    else if ([unitTypeString isEqualToString:Record.kUnit100GKey])
-    {
-        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (100g)", nil), thisCatagory.name];
-    }
-    else if ([unitTypeString isEqualToString:Record.kUnitKGKey])
-    {
-        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (kg)", nil), thisCatagory.name];
-    }
-    else if ([unitTypeString isEqualToString:Record.kUnitLKey])
-    {
-        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (L)", nil), thisCatagory.name];
-    }
-    else if ([unitTypeString isEqualToString:Record.kUnitMLKey])
-    {
-        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (mL)", nil), thisCatagory.name];
-    }
-    else if ([unitTypeString isEqualToString:Record.kUnitFlozKey])
-    {
-        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (fl oz)", nil), thisCatagory.name];
-    }
-    else if ([unitTypeString isEqualToString:Record.kUnitPtKey])
-    {
-        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (pt)", nil), thisCatagory.name];
-    }
-    else if ([unitTypeString isEqualToString:Record.kUnitQtKey])
-    {
-        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (qt)", nil), thisCatagory.name];
-    }
-    else if ([unitTypeString isEqualToString:Record.kUnitGalKey])
-    {
-        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (gal)", nil), thisCatagory.name];
-    }
-    else if ([unitTypeString isEqualToString:Record.kUnitOzKey])
-    {
-        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (oz)", nil), thisCatagory.name];
-    }
-    else if ([unitTypeString isEqualToString:Record.kUnitLbKey])
-    {
-        (cell.catagoryNameLabel).text = [NSString stringWithFormat:NSLocalizedString(@"%@ per (lb)", nil), thisCatagory.name];
-    }
+    cell.catagoryNameLabel.text = [self stringFromUnitTypeString:unitTypeString category:thisCatagory];
     
     (cell.totalSpentField).text = [NSString stringWithFormat: @"%.2f", totalSpent];
     (cell.totalAvgCostField).text = [NSString stringWithFormat: @"%.2f", totalAvgCost];

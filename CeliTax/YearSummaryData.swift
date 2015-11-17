@@ -42,13 +42,15 @@ class SimpleCategory : NSObject //TODO: Remove Subclass to NSObject when the ent
 class SummaryRowData : NSObject //TODO: Remove Subclass to NSObject when the entire app has been converted to Swift
 {
     private let kCategoryID : String = "CategoryID"
+    private let kName : String = "Name"
     private let kTotalSpent : String = "TotalSpent"
-    private let kTotaAvg : String = "TotaAvg"
+    private let kTotalAvg : String = "TotalAvg"
     private let kGFSavings : String = "GFSavings"
     
     var categoryID : String = ""
+    var name : String = ""
     var totalSpent : Double = 0
-    var totaAvg : Double = 0
+    var totalAvg : Double = 0
     var gfSavings : Double = 0
     
     func toJson() -> Dictionary<String, AnyObject>
@@ -56,8 +58,9 @@ class SummaryRowData : NSObject //TODO: Remove Subclass to NSObject when the ent
         var json = Dictionary<String, AnyObject>()
         
         json[kCategoryID] = self.categoryID
+        json[kName] = self.name
         json[kTotalSpent] = self.totalSpent
-        json[kTotaAvg] = self.totaAvg
+        json[kTotalAvg] = self.totalAvg
         json[kGFSavings] = self.gfSavings
         
         return json
