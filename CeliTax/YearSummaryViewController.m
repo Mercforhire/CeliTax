@@ -12,6 +12,7 @@
 #import "WYPopoverController.h"
 #import "SendReceiptsToViewController.h"
 #import "ViewControllerFactory.h"
+#import "MBProgressHUD.h"
 
 #import "CeliTax-Swift.h"
 
@@ -24,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *totalSavingsLabel;
 @property (weak, nonatomic) IBOutlet UITableView *summaryTableView;
 @property (weak, nonatomic) IBOutlet HollowGreenButton *exportButton;
+@property (strong, nonatomic) MBProgressHUD *waitView;
 
 @property (nonatomic, strong) WYPopoverController *sendReceiptsPopover;
 @property (nonatomic, strong) SendReceiptsToViewController *sendReceiptsToViewController;
@@ -283,11 +285,27 @@
     [message show];
 }
 
+- (void) createAndShowWaitView
+{
+    if (!self.waitView)
+    {
+        self.waitView = [[MBProgressHUD alloc] initWithView: self.view];
+        self.waitView.labelText = NSLocalizedString(@"Please wait", nil);
+        self.waitView.detailsLabelText = NSLocalizedString(@"Sending report...", nil);
+        self.waitView.mode = MBProgressHUDModeIndeterminate;
+        [self.view addSubview: self.waitView];
+    }
+    
+    [self.waitView show: YES];
+}
+
 #pragma mark - SendReceiptsViewPopUpDelegate
 
 - (void) sendReceiptsToEmailRequested: (NSString *) emailAddress
 {
     [self.sendReceiptsPopover dismissPopoverAnimated: YES];
+    
+    [self createAndShowWaitView];
     
     [self.syncService sendYearlyReportTo:emailAddress dateReport:[self.yearSummaryData toJson] success:^{
         UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Success", nil)
@@ -296,6 +314,9 @@
                                                 otherButtonTitles: NSLocalizedString(@"Ok", nil), nil];
         
         [message show];
+        
+        [self.waitView hide:YES];
+        
     } failure:^(NSString * _Nonnull reason) {
         NSString *errorMessage = NSLocalizedString(@"Can not connect to our server, please try again later", nil);
         
@@ -305,6 +326,8 @@
                                                 otherButtonTitles: NSLocalizedString(@"Dismiss", nil), nil];
         
         [message show];
+        
+        [self.waitView hide:YES];
     }];
 }
 

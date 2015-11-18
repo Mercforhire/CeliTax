@@ -21,6 +21,7 @@
 #import "TransferSelectionsViewController.h"
 #import "SolidGreenButton.h"
 #import "HollowGreenButton.h"
+#import "MBProgressHUD.h"
 
 #import "CeliTax-Swift.h"
 
@@ -66,6 +67,7 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *deleteButtonHeightBar;
 @property (strong, nonatomic) UIPickerView *taxYearPicker;
 @property (weak, nonatomic) IBOutlet UITextField *invisibleNewTaxYearField;
+@property (strong, nonatomic) MBProgressHUD *waitView;
 
 @property (nonatomic, strong) NSArray *existingTaxYears; // sorted from most recent to oldest
 @property (nonatomic, strong) NSMutableArray *possibleTaxYears;
@@ -544,6 +546,20 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
     self.viewAllReceipts = receiptInfos;
 }
 
+- (void) createAndShowWaitView
+{
+    if (!self.waitView)
+    {
+        self.waitView = [[MBProgressHUD alloc] initWithView: self.view];
+        self.waitView.labelText = NSLocalizedString(@"Please wait", nil);
+        self.waitView.detailsLabelText = NSLocalizedString(@"Sending receipts...", nil);
+        self.waitView.mode = MBProgressHUDModeIndeterminate;
+        [self.view addSubview: self.waitView];
+    }
+    
+    [self.waitView show: YES];
+}
+
 #pragma mark - Button press events
 
 - (void) taxYearPressed
@@ -799,15 +815,22 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
 - (void) sendReceiptsToEmailRequested: (NSString *) emailAddress
 {
     [self.sendReceiptsPopover dismissPopoverAnimated: YES];
+    
+    [self createAndShowWaitView];
 
     [self.syncService sendReceiptsInfoEmail:emailAddress year: self.currentlySelectedYear.integerValue allReceipts:self.selectAllReceipts receiptIDs:self.selectedReceipts.allKeys success:^{
+        
         UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Success", nil)
                                                           message: NSLocalizedString(@"An email containing the link has been sent to your account.", nil)
                                                          delegate: nil cancelButtonTitle: nil
                                                 otherButtonTitles: NSLocalizedString(@"Ok", nil), nil];
         
         [message show];
+        
+        [self.waitView hide:YES];
+        
     } failure:^(NSString *reason) {
+        
         NSString *errorMessage = NSLocalizedString(@"Can not connect to our server, please try again later", nil);
         
         UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
@@ -816,6 +839,9 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
                                                 otherButtonTitles: NSLocalizedString(@"Dismiss", nil), nil];
         
         [message show];
+        
+        [self.waitView hide:YES];
+        
     }];
 }
 
