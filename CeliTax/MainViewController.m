@@ -220,50 +220,6 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
     // 5. If the user account contains no categories, create them for the user now
     
     [self showDisclaimerIfNeeded];
-    
-    
-    
-    
-    if (![self.tutorialManager hasTutorialBeenShown])
-    {
-        [self setupTutorials];
-        
-        // decide which set of tutorials to show based on self.tutorialManager.currentStep
-        if (self.tutorialManager.currentStep == 1)
-        {
-            [self displayTutorialStep:TutorialStep1];
-        }
-        else if (self.tutorialManager.currentStep == 8)
-        {
-            [self displayTutorialStep:TutorialStep8];
-        }
-        else if (self.tutorialManager.currentStep == 18)
-        {
-            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
-            [self selectedMenuIndex:RootViewControllerVault];
-        }
-        else if (self.tutorialManager.currentStep == 21)
-        {
-            [self displayTutorialStep:TutorialStep21];
-        }
-    }
-    else
-    {
-        if (!self.userManager.doNotShowDisclaimer)
-        {
-            NSString *message = NSLocalizedString(@"CeliTax is to be used as a resource tool only! CeliTax is in no way responsible for the accuracy of your tax return. Consult your accountant for all tax related inquiries. Cheers!", nil);
-            
-            UIAlertView *messageBox = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Notice", nil)
-                                                                 message: message
-                                                                delegate: self
-                                                       cancelButtonTitle: NSLocalizedString(@"Dismiss", nil)
-                                                       otherButtonTitles: NSLocalizedString(@"Never show again", nil), nil];
-            
-            [messageBox show];
-        }
-        
-        [self checkUpdate];
-    }
 }
 
 // 1. Show Disclaimer if needed
@@ -349,8 +305,8 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
         //create the alert items
         UIAlertAction *noAction = [UIAlertAction actionWithTitle:alertNo style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             
-            //This is it, let user use the app now
-            
+            // Go to step 5
+            [self createPreloadedCategories];
         }];
         
         UIAlertAction *yesAction = [UIAlertAction actionWithTitle:alertYes style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -383,13 +339,28 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
         
         [self hideWaitingView];
         
-        //This is it, let user use the app now
+        // Go to step 5
+        [self createPreloadedCategories];
         
     } failure:^(NSString *reason) {
         
         [self hideWaitingView];
         
+        // Go to step 5
+        [self createPreloadedCategories];
+        
     }];
+}
+
+// 5. If the user account contains no categories, create them for the user now
+- (void)createPreloadedCategories
+{
+    NSArray *categories = [self.dataService fetchCategories];
+    
+    if (categories.count == 0)
+    {
+        [self.syncManager insertPreloadedCategories];
+    }
 }
 
 - (void) createAndShowWaitViewForDownload
@@ -502,13 +473,26 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
 {
     if (!self.userManager.subscriptionActive)
     {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)
-                                                          message:NSLocalizedString(@"The subscription for this account has expired. Would you like to purchases a new subscription?", nil)
-                                                         delegate:self
-                                                cancelButtonTitle:NSLocalizedString(@"No", nil)
-                                                otherButtonTitles:NSLocalizedString(@"Purchase", nil),nil];
+        // ask user if they want to download data from server
+        NSString *alertTitle = NSLocalizedString(@"Sorry", nil);
+        NSString *alertMessage = NSLocalizedString(@"The subscription for this account has expired. Would you like to purchases a new subscription?", nil);
+        NSString *alertNo = NSLocalizedString(@"No", nil);
+        NSString *alertPurchase = NSLocalizedString(@"Purchase", nil);
         
-        [message show];
+        //create the alert items
+        UIAlertAction *noAction = [UIAlertAction actionWithTitle:alertNo style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+        }];
+        
+        UIAlertAction *purchaseAction = [UIAlertAction actionWithTitle:alertPurchase style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+            // go to Settings Page
+            [self selectedMenuIndex:RootViewControllerSettings];
+            
+        }];
+        
+        NSArray<UIAlertAction*>* alertActions = @[noAction, purchaseAction];
+        [AlertDialogsProvider handlerAlert:alertTitle message:alertMessage action:alertActions];
         
         return;
     }
@@ -544,46 +528,6 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
 - (IBAction) vaultPressed: (UIButton *) sender
 {
     [super selectedMenuIndex: RootViewControllerVault];
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void) alertView: (UIAlertView *) alertView clickedButtonAtIndex: (NSInteger) buttonIndex
-{
-    NSString *title = [alertView buttonTitleAtIndex: buttonIndex];
-    
-    if ([title isEqualToString: NSLocalizedString(@"Yes", nil)])
-    {
-        [self createAndShowWaitViewForDownload];
-        
-        [self.syncManager downloadAndMerge:^{
-            
-            [self refreshTaxYears];
-            
-            if (self.existingTaxYears.count)
-            {
-                self.currentlySelectedYear = (self.existingTaxYears).firstObject;
-            }
-            
-            [self.recentUploadsTable reloadData];
-            
-            [self hideWaitingView];
-            
-        } failure:^(NSString *reason) {
-            
-            [self hideWaitingView];
-            
-        }];
-    }
-    else if ([title isEqualToString:NSLocalizedString(@"Never show again", nil)])
-    {
-        [self.userManager doNotShowDisclaimerAgain];
-    }
-    else if ([title isEqualToString:NSLocalizedString(@"Purchase", nil)])
-    {
-        // go to Settings Page
-        [self selectedMenuIndex:RootViewControllerSettings];
-    }
 }
 
 #pragma mark - UIPickerView delegate
@@ -828,8 +772,6 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
         case 1:
             self.tutorialManager.currentStep = 1;
             [self.tutorialManager endTutorial];
-            
-            [self checkUpdate];
             break;
             
         case 2:
@@ -950,13 +892,17 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
             //Completes tutorial
             self.tutorialManager.currentStep = 1;
             [self.tutorialManager endTutorial];
-            [self checkUpdate];
         }
             break;
             
         default:
             break;
     }
+}
+
+- (void) tutorialDismissed
+{
+    [self checkUpdate];
 }
 
 @end

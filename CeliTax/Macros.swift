@@ -16,6 +16,11 @@ import Foundation
     {
         NSLog(message)
     }
+    
+    func SWLocalizedString(key : String) -> String
+    {
+        return LocalizationManager.sharedInstance().localizedStringForKey(key, value: nil, table: nil)
+    }
 #else
     func dLog(message: String)
     {

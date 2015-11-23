@@ -153,9 +153,23 @@ class CategoriesDAO : NSObject //TODO: Remove Subclass to NSObject when the enti
         }
     }
     
-    func addCategory(category : ItemCategory!)
+    func addCategory(category : ItemCategory!, save : Bool) -> Bool
     {
-        self.userDataDAO.addCategory(category)
+        if (self.userDataDAO.addCategory(category))
+        {
+            if (save)
+            {
+                return self.userDataDAO.saveUserData()
+            }
+            else
+            {
+                return true
+            }
+        }
+        else
+        {
+            return false
+        }
     }
     
     /**
@@ -188,7 +202,7 @@ class CategoriesDAO : NSObject //TODO: Remove Subclass to NSObject when the enti
             else
             {
                 //add new category if doesn't exist
-                self.addCategory(category)
+                self.addCategory(category, save: false)
             }
         }
         

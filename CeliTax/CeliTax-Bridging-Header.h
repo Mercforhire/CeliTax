@@ -8,3 +8,4 @@
 #import "TutorialBubble.h"
 #import "MainViewController.h"
 #import "CDRTranslucentSideBar.h"
+#import "LocalizationManager.h"

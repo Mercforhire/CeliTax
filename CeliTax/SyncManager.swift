@@ -56,6 +56,14 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
     }
     
     /*
+    Insert some default categories
+    */
+    func insertPreloadedCategories()
+    {
+        self.syncService.insertPreloadedCategories();
+    }
+    
+    /*
     Check to see if local data has a non-0 dataAction
     */
     func needToBackUp() -> Bool

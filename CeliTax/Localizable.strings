@@ -37,6 +37,8 @@
 "Bread" = "Bread";
 "Begin Tutorial" = "Begin Tutorial";
 "Buy" = "Buy";
+"Bagels" = "Bagels";
+"Buns" = "Buns";
 
 //C
 "Cake" = "Cake";
@@ -53,6 +55,9 @@
 "Calculate" = "Calculate";
 "Create Account" = "Create Account";
 "CeliTax is to be used as a resource tool only! CeliTax is in no way responsible for the accuracy of your tax return. Consult your accountant for all tax related inquiries. Cheers!" = "CeliTax is to be used as a resource tool only! CeliTax is in no way responsible for the accuracy of your tax return. Consult your accountant for all tax related inquiries. Cheers!";
+"Cereal" = "Cereal";
+"Crackers" = "Crackers";
+
 //D
 "Delete" = "Delete";
 "Done" = "Done";
