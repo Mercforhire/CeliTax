@@ -10,6 +10,8 @@
 
 @interface AlertDialogsProvider : NSObject
 
++ (void)handlerAlert:(NSString *)title message:(NSString *)message action:(NSArray<UIAlertAction*>*)actions;
+
 + (void)showWorkInProgressDialog;
 
 @end

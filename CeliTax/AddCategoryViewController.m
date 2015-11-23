@@ -33,7 +33,7 @@
 @property (nonatomic, strong) UIBarButtonItem *leftMenuItem;
 
 @property (nonatomic, strong) NSMutableArray *sampleCategoryNames;
-@property (nonatomic, strong) NSMutableArray *catagories;
+@property (nonatomic, strong) NSMutableArray *categories;
 @property (nonatomic, strong) NSMutableArray *categoryNames;
 
 @property (nonatomic, strong) WYPopoverController *namesPickerPopover;
@@ -163,39 +163,41 @@
 
     if (![self.tutorialManager hasTutorialBeenShown] && [self.tutorialManager automaticallyShowTutorialNextTime])
     {
-        self.catagories = [NSMutableArray new];
+        // create some demo categories for tutorial purposes only
+        
+        self.categories = [NSMutableArray new];
         
         ItemCategory *sampleCategory1 = [ItemCategory new];
-        sampleCategory1.name = @"Rice";
-        sampleCategory1.color = [UIColor yellowColor];
+        sampleCategory1.name = @"Bread";
+        sampleCategory1.color = [UIColor colorWithRed:0 green:1 blue:0.625f alpha:1];
         
-        [self.catagories addObject:sampleCategory1];
+        [self.categories addObject:sampleCategory1];
         
         ItemCategory *sampleCategory2 = [ItemCategory new];
-        sampleCategory2.name = @"Bread";
-        sampleCategory2.color = [UIColor orangeColor];
+        sampleCategory2.name = @"Cereal";
+        sampleCategory2.color = [UIColor colorWithRed:1 green:0 blue:0.5f alpha:1];
         
-        [self.catagories addObject:sampleCategory2];
+        [self.categories addObject:sampleCategory2];
         
         ItemCategory *sampleCategory3 = [ItemCategory new];
-        sampleCategory3.name = @"Meat";
-        sampleCategory3.color = [UIColor redColor];
+        sampleCategory3.name = @"Crackers";
+        sampleCategory3.color = [UIColor colorWithRed:0.7974f green:1 blue:0 alpha:1];
         
-        [self.catagories addObject:sampleCategory3];
+        [self.categories addObject:sampleCategory3];
         
         ItemCategory *sampleCategory4 = [ItemCategory new];
-        sampleCategory4.name = @"Flour";
-        sampleCategory4.color = [UIColor lightGrayColor];
+        sampleCategory4.name = @"Bagels";
+        sampleCategory4.color = [UIColor colorWithRed:0 green:0.4439f blue:1 alpha:1];
         
-        [self.catagories addObject:sampleCategory4];
+        [self.categories addObject:sampleCategory4];
         
         ItemCategory *sampleCategory5 = [ItemCategory new];
-        sampleCategory5.name = @"Cake";
-        sampleCategory5.color = [UIColor purpleColor];
+        sampleCategory5.name = @"Buns";
+        sampleCategory5.color = [UIColor colorWithRed:1 green:0 blue:0.9568 alpha:1];
         
-        [self.catagories addObject:sampleCategory5];
+        [self.categories addObject:sampleCategory5];
         
-        for (ItemCategory *category in self.catagories)
+        for (ItemCategory *category in self.categories)
         {
             [self.categoryNames addObject:category.name];
         }

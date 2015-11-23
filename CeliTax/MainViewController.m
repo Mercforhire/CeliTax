@@ -21,6 +21,7 @@
 #import "LoginViewController.h"
 #import "NoItemsTableViewCell.h"
 #import "MBProgressHUD.h"
+#import "AlertDialogsProvider.h"
 
 #import "CeliTax-Swift.h"
 
@@ -212,6 +213,17 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
 {
     [super viewDidAppear:animated];
     
+    // 1. Show Disclaimer if needed
+    // 2. Show Tutorial if needed
+    // 3. Check for update
+    // 4. Show update
+    // 5. If the user account contains no categories, create them for the user now
+    
+    [self showDisclaimerIfNeeded];
+    
+    
+    
+    
     if (![self.tutorialManager hasTutorialBeenShown])
     {
         [self setupTutorials];
@@ -254,6 +266,132 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
     }
 }
 
+// 1. Show Disclaimer if needed
+- (void) showDisclaimerIfNeeded
+{
+    if (!self.userManager.doNotShowDisclaimer)
+    {
+        NSString *alertTitle = NSLocalizedString(@"Notice", nil);
+        NSString *alertMessage = NSLocalizedString(@"CeliTax is to be used as a resource tool only! CeliTax is in no way responsible for the accuracy of your tax return. Consult your accountant for all tax related inquiries. Cheers!", nil);
+        NSString *alertNever = NSLocalizedString(@"Never show again", nil);
+        NSString *alertLater = NSLocalizedString(@"Dismiss", nil);
+        
+        //create the alert items
+        UIAlertAction *neverAction = [UIAlertAction actionWithTitle:alertNever style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+            // have the UserManager remember to never show disclaimer again
+            [self.userManager doNotShowDisclaimerAgain];
+            
+            // Go to Step 2
+            [self showTutorialIfNeeded];
+        }];
+        
+        UIAlertAction *laterAction = [UIAlertAction actionWithTitle:alertLater style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+            // Go to Step 2
+            [self showTutorialIfNeeded];
+        }];
+        
+        NSArray<UIAlertAction*>* alertActions = @[neverAction, laterAction];
+        [AlertDialogsProvider handlerAlert:alertTitle message:alertMessage action:alertActions];
+    }
+    else
+    {
+        // Go to Step 2
+        [self showTutorialIfNeeded];
+    }
+}
+
+// 2. Show Tutorial if needed
+- (void) showTutorialIfNeeded
+{
+    if (![self.tutorialManager hasTutorialBeenShown])
+    {
+        [self setupTutorials];
+        
+        // decide which set of tutorials to show based on self.tutorialManager.currentStep
+        if (self.tutorialManager.currentStep == 1)
+        {
+            [self displayTutorialStep:TutorialStep1];
+        }
+        else if (self.tutorialManager.currentStep == 8)
+        {
+            [self displayTutorialStep:TutorialStep8];
+        }
+        else if (self.tutorialManager.currentStep == 18)
+        {
+            [self.tutorialManager setAutomaticallyShowTutorialNextTime];
+            [self selectedMenuIndex:RootViewControllerVault];
+        }
+        else if (self.tutorialManager.currentStep == 21)
+        {
+            [self displayTutorialStep:TutorialStep21];
+        }
+    }
+    else
+    {
+        // Go to step 3
+        [self checkUpdate];
+    }
+}
+
+// 3. Check for update
+-(void)checkUpdate
+{
+    [self.syncManager checkUpdate:^{
+        
+        // ask user if they want to download data from server
+        NSString *alertTitle = NSLocalizedString(@"Download", nil);
+        NSString *alertMessage = NSLocalizedString(@"The server contains some saved receipt data. Do you want to download and merge the data to the app?", nil);
+        NSString *alertNo = NSLocalizedString(@"No", nil);
+        NSString *alertYes = NSLocalizedString(@"Yes", nil);
+        
+        //create the alert items
+        UIAlertAction *noAction = [UIAlertAction actionWithTitle:alertNo style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+            //This is it, let user use the app now
+            
+        }];
+        
+        UIAlertAction *yesAction = [UIAlertAction actionWithTitle:alertYes style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+            // Go to Step 4
+            [self startUpdate];
+        }];
+        
+        NSArray<UIAlertAction*>* alertActions = @[noAction, yesAction];
+        [AlertDialogsProvider handlerAlert:alertTitle message:alertMessage action:alertActions];
+        
+    }];
+}
+
+// 4. Start update
+- (void)startUpdate
+{
+    [self createAndShowWaitViewForDownload];
+    
+    [self.syncManager downloadAndMerge:^{
+        
+        [self refreshTaxYears];
+        
+        if (self.existingTaxYears.count)
+        {
+            self.currentlySelectedYear = self.existingTaxYears.firstObject;
+        }
+        
+        [self.recentUploadsTable reloadData];
+        
+        [self hideWaitingView];
+        
+        //This is it, let user use the app now
+        
+    } failure:^(NSString *reason) {
+        
+        [self hideWaitingView];
+        
+    }];
+}
+
 - (void) createAndShowWaitViewForDownload
 {
     if (!self.waitView)
@@ -266,6 +404,15 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
     }
     
     [self.waitView show: YES];
+}
+
+-(void)hideWaitingView
+{
+    if (self.waitView)
+    {
+        //hide the Waiting view
+        [self.waitView hide: YES];
+    }
 }
 
 -(void)cancelAddTaxYear
@@ -397,31 +544,6 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
 - (IBAction) vaultPressed: (UIButton *) sender
 {
     [super selectedMenuIndex: RootViewControllerVault];
-}
-
--(void)hideWaitingView
-{
-    if (self.waitView)
-    {
-        //hide the Waiting view
-        [self.waitView hide: YES];
-    }
-}
-
--(void)checkUpdate
-{
-    [self.syncManager checkUpdate:^{
-        
-        // ask user if they want to download data from server
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Download", nil)
-                                                          message: NSLocalizedString(@"The server contains some saved receipt data. Do you want to download and merge the data to the app?", nil)
-                                                         delegate: self
-                                                cancelButtonTitle: NSLocalizedString(@"No", nil)
-                                                otherButtonTitles: NSLocalizedString(@"Yes", nil), nil];
-        
-        [message show];
-        
-    }];
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -706,6 +828,7 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
         case 1:
             self.tutorialManager.currentStep = 1;
             [self.tutorialManager endTutorial];
+            
             [self checkUpdate];
             break;
             
@@ -826,7 +949,6 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
         {
             //Completes tutorial
             self.tutorialManager.currentStep = 1;
-            
             [self.tutorialManager endTutorial];
             [self checkUpdate];
         }

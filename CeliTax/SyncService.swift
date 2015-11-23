@@ -72,6 +72,10 @@ class SyncService : NSObject
     }
     
     /*
+    
+    */
+    
+    /*
     Insert some random receipt data locally for testing purposes
     */
     func loadDemoData(complete : GenerateDemoDataCompleteBlock?)
