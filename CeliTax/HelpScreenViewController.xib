@@ -111,32 +111,32 @@
 </string>
                                     <attributes>
                                         <color key="NSColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.32941176470588235" alpha="1" colorSpace="calibratedRGB"/>
-                                        <font key="NSFont" size="16" name="Lato-Regular"/>
+                                        <font key="NSFont" metaFont="system" size="16"/>
                                         <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="5"/>
                                     </attributes>
                                 </fragment>
                                 <fragment>
-                                    <string key="content">2425 street name,
+                                    <string key="content">5-455 Claridge Rd,
 </string>
                                     <attributes>
                                         <color key="NSColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.32941176470588235" alpha="1" colorSpace="calibratedRGB"/>
-                                        <font key="NSFont" size="16" name="Lato-Regular"/>
+                                        <font key="NSFont" metaFont="system" size="16"/>
                                         <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="charWrapping" baseWritingDirection="natural" lineSpacing="5"/>
                                     </attributes>
                                 </fragment>
                                 <fragment>
-                                    <string key="content">Toronto ON Canada
-L7J41Y </string>
+                                    <string key="content">Burlington ON Canada
+L7N 2S1 </string>
                                     <attributes>
                                         <color key="NSColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.32941176470588235" alpha="1" colorSpace="calibratedRGB"/>
-                                        <font key="NSFont" size="16" name="Lato-Regular"/>
+                                        <font key="NSFont" metaFont="system" size="16"/>
                                         <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="5"/>
                                     </attributes>
                                 </fragment>
                                 <fragment content="905-583-5353">
                                     <attributes>
                                         <color key="NSColor" red="0.45490196078431372" green="0.74901960784313726" blue="0.31764705882352939" alpha="1" colorSpace="calibratedRGB"/>
-                                        <font key="NSFont" size="16" name="Lato-Regular"/>
+                                        <font key="NSFont" metaFont="system" size="16"/>
                                         <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="5"/>
                                     </attributes>
                                 </fragment>

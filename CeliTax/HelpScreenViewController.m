@@ -163,6 +163,8 @@
         
         [self.waitView hide: YES];
         
+        self.commentField.text = @"";
+        
     } failure:^(NSString *reason) {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)
                                                           message:NSLocalizedString(@"Please try sending again", nil)
