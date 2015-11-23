@@ -23,4 +23,6 @@
 
 @property (nonatomic, weak) id <SendReceiptsViewPopUpDelegate> delegate;
 
+@property (nonatomic, strong) NSString *defaultEmailAddress;
+
 @end

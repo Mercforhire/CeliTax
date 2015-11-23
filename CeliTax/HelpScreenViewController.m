@@ -97,7 +97,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(stopEditing)
-                                                 name: Notifications.kSideBarOpenedNotification
+                                                 name: Notifications.kStopEditingFieldsNotification
                                                object: nil];
 }
 
@@ -115,7 +115,7 @@
                                                   object: nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver: self
-                                                    name: Notifications.kSideBarOpenedNotification
+                                                    name: Notifications.kStopEditingFieldsNotification
                                                   object: nil];
 }
 

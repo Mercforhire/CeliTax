@@ -123,15 +123,15 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
     [self.uploadHistoryTable registerNib: receiptTimeTableViewCellTableViewCell forCellReuseIdentifier: kReceiptTimeTableViewCellIdentifier];
     [self.uploadHistoryTable registerNib: noItemsTableViewCell forCellReuseIdentifier: kNoItemsTableViewCellIdentifier];
 
-    self.sendReceiptsToViewController = [self.viewControllerFactory createSendReceiptsToViewController];
+    self.sendReceiptsToViewController = [self.viewControllerFactory createSendReceiptsToViewController:self.userManager.user.loginName];
     self.sendReceiptsPopover = [[WYPopoverController alloc] initWithContentViewController: self.sendReceiptsToViewController];
-    (self.sendReceiptsPopover).theme = [WYPopoverTheme theme];
+    self.sendReceiptsPopover.theme = [WYPopoverTheme theme];
 
     WYPopoverTheme *popUpTheme = self.sendReceiptsPopover.theme;
     popUpTheme.fillTopColor = self.lookAndFeel.appGreenColor;
     popUpTheme.fillBottomColor = self.lookAndFeel.appGreenColor;
 
-    (self.sendReceiptsPopover).theme = popUpTheme;
+    self.sendReceiptsPopover.theme = popUpTheme;
     
     [self.transferButton setLookAndFeel:self.lookAndFeel];
     [self.transferButton setTitle:NSLocalizedString(@"Transfer", nil) forState:UIControlStateNormal];

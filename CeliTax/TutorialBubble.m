@@ -20,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomArrowLeftDistance;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewHeightBar;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bubbleViewHeightBar; //+80 than textViewHeightBar
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bubbleViewHeightBar; //+60 than textViewHeightBar
 
 @property (weak, nonatomic) IBOutlet UIView *bubbleView;
 
@@ -115,7 +115,7 @@
             break;
     }
     
-    self.textViewFont = [UIFont latoLightFontOfSize:14];
+    self.textViewFont = [UIFont latoFontOfSize:15];
     
     (self.tutorialTextView).text = self.tutorialText;
     
@@ -160,7 +160,7 @@
     
     // set the correct textViewHeightBar and bubbleViewHeightBar
     (self.textViewHeightBar).constant = newFrame.size.height;
-    (self.bubbleViewHeightBar).constant = newFrame.size.height + 80;
+    (self.bubbleViewHeightBar).constant = newFrame.size.height + 60;
     
     if (self.originOfArrow.x || self.originOfArrow.y)
     {

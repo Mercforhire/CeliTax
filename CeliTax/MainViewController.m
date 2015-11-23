@@ -881,7 +881,11 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
             self.tutorialManager.currentStep = 9;
             [self.tutorialManager setAutomaticallyShowTutorialNextTime];
             [self.tutorialManager dismissTutorial:^{
-                [self cameraButtonPressed:nil];
+                
+                CameraViewController *cameraVC = [self.viewControllerFactory createCameraOverlayViewControllerWithExistingReceiptID:nil];
+                
+                [self.navigationController pushViewController: cameraVC animated: YES];
+                
             }];
         }
             
