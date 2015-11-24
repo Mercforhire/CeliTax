@@ -248,11 +248,12 @@
     return cameraOverlayViewController;
 }
 
-- (SendReceiptsToViewController *) createSendReceiptsToViewController
+- (SendReceiptsToViewController *) createSendReceiptsToViewController:(NSString *)defaultEmailAddress
 {
     SendReceiptsToViewController *sendReceiptsToViewController = [[SendReceiptsToViewController alloc] initWithNibName: @"SendReceiptsToViewController" bundle: nil];
 
     [self initializeViewController: sendReceiptsToViewController];
+    sendReceiptsToViewController.defaultEmailAddress = defaultEmailAddress;
 
     return sendReceiptsToViewController;
 }

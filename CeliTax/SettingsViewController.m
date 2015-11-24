@@ -8,7 +8,6 @@
 
 #import "SettingsViewController.h"
 #import "ProfileBarView.h"
-#import "AlertDialogsProvider.h"
 #import "SolidGreenButton.h"
 #import "ViewControllerFactory.h"
 #import "ProfileSettingsViewController.h"
@@ -366,7 +365,7 @@ typedef NS_ENUM(NSUInteger, Languages) {
     [self.insertDemoButton setEnabled:NO];
     [self.insertDemoButton setTitle:@"Generating..." forState:UIControlStateNormal];
     
-    [self.syncService loadDemoData:^{
+    [self.syncService insertDemoData:^{
         
         [self.insertDemoButton setTitle:@"Demo Data Generated" forState:UIControlStateNormal];
         [self.insertDemoButton setEnabled:YES];

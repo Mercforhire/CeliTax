@@ -45,6 +45,24 @@
             
             break;
             
+        case UnitTypesUnitML:
+        case UnitTypesUnitL:
+        case UnitTypesUnitFloz:
+        case UnitTypesUnitPt:
+        case UnitTypesUnitQt:
+        case UnitTypesUnitGal:
+            
+            [self.qtyLabel setText:NSLocalizedString(@"Volume", nil)];
+            [self.priceUnitLabel setText:NSLocalizedString(@"Unit", nil)];
+            [self.totalLabel setText:NSLocalizedString(@"Total Cost", nil)];
+            
+            [self.priceField setUserInteractionEnabled:NO];
+            [self.totalField setUserInteractionEnabled:YES];
+            
+            [self.priceUnitFieldDollarSign setHidden:YES];
+            
+            break;
+            
         default:
             
             [self.qtyLabel setText:NSLocalizedString(@"Weight", nil)];

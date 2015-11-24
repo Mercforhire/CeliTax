@@ -106,8 +106,8 @@
 -(void) initializeSubscriptionManager
 {
     NSSet *productIdentifiers = [NSSet setWithObjects:
-                                 SubscriptionManager.k3MonthServiceProductID,
-                                 SubscriptionManager.k6MonthServiceProductID,
+                                 SubscriptionManager.k1MonthServiceProductID,
+                                 SubscriptionManager.k12MonthServiceProductID,
                                  nil];
     
     self.subscriptionManager = [[SubscriptionManager alloc] initWithProductIdentifiers:productIdentifiers authenticationService:[self.serviceFactory createAuthenticationService] userManager:self.userManager];
@@ -207,6 +207,12 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     
     [self.backgroundWorker appIsActive];
+}
+
+- (void) applicationWillEnterForeground: (UIApplication *) application
+{
+    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [[NSNotificationCenter defaultCenter] postNotification: [NSNotification notificationWithName: Notifications.kStopEditingFieldsNotification object: nil userInfo: nil]];
 }
 
 /*

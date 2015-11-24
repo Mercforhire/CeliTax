@@ -213,7 +213,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(stopEditing)
-                                                 name: Notifications.kSideBarOpenedNotification
+                                                 name: Notifications.kStopEditingFieldsNotification
                                                object: nil];
 
     // load user info
@@ -526,7 +526,7 @@
                                                   object: nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver: self
-                                                    name: Notifications.kSideBarOpenedNotification
+                                                    name: Notifications.kStopEditingFieldsNotification
                                                   object: nil];
 }
 

@@ -97,7 +97,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(stopEditing)
-                                                 name: Notifications.kSideBarOpenedNotification
+                                                 name: Notifications.kStopEditingFieldsNotification
                                                object: nil];
 }
 
@@ -115,7 +115,7 @@
                                                   object: nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver: self
-                                                    name: Notifications.kSideBarOpenedNotification
+                                                    name: Notifications.kStopEditingFieldsNotification
                                                   object: nil];
 }
 
@@ -162,6 +162,8 @@
         [self.sendButton setEnabled:YES];
         
         [self.waitView hide: YES];
+        
+        self.commentField.text = @"";
         
     } failure:^(NSString *reason) {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)

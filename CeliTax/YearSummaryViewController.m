@@ -51,7 +51,7 @@
     UINib *yearSummaryTableViewCell = [UINib nibWithNibName: @"YearSummaryTableViewCell" bundle: nil];
     [self.summaryTableView registerNib: yearSummaryTableViewCell forCellReuseIdentifier: kYearSummaryTableViewCellIdentifier];
     
-    self.sendReceiptsToViewController = [self.viewControllerFactory createSendReceiptsToViewController];
+    self.sendReceiptsToViewController = [self.viewControllerFactory createSendReceiptsToViewController:self.userManager.user.loginName];
     self.sendReceiptsPopover = [[WYPopoverController alloc] initWithContentViewController: self.sendReceiptsToViewController];
     (self.sendReceiptsPopover).theme = [WYPopoverTheme theme];
     

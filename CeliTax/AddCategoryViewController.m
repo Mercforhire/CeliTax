@@ -33,7 +33,7 @@
 @property (nonatomic, strong) UIBarButtonItem *leftMenuItem;
 
 @property (nonatomic, strong) NSMutableArray *sampleCategoryNames;
-@property (nonatomic, strong) NSMutableArray *catagories;
+@property (nonatomic, strong) NSMutableArray *categories;
 @property (nonatomic, strong) NSMutableArray *categoryNames;
 
 @property (nonatomic, strong) WYPopoverController *namesPickerPopover;
@@ -163,39 +163,41 @@
 
     if (![self.tutorialManager hasTutorialBeenShown] && [self.tutorialManager automaticallyShowTutorialNextTime])
     {
-        self.catagories = [NSMutableArray new];
+        // create some demo categories for tutorial purposes only
+        
+        self.categories = [NSMutableArray new];
         
         ItemCategory *sampleCategory1 = [ItemCategory new];
-        sampleCategory1.name = @"Rice";
-        sampleCategory1.color = [UIColor yellowColor];
+        sampleCategory1.name = NSLocalizedString(@"Bread", nil);
+        sampleCategory1.color = [UIColor colorWithRed:0 green:1 blue:0.625f alpha:1];
         
-        [self.catagories addObject:sampleCategory1];
+        [self.categories addObject:sampleCategory1];
         
         ItemCategory *sampleCategory2 = [ItemCategory new];
-        sampleCategory2.name = @"Bread";
-        sampleCategory2.color = [UIColor orangeColor];
+        sampleCategory2.name = NSLocalizedString(@"Cereal", nil);
+        sampleCategory2.color = [UIColor colorWithRed:1 green:0 blue:0.5f alpha:1];
         
-        [self.catagories addObject:sampleCategory2];
+        [self.categories addObject:sampleCategory2];
         
         ItemCategory *sampleCategory3 = [ItemCategory new];
-        sampleCategory3.name = @"Meat";
-        sampleCategory3.color = [UIColor redColor];
+        sampleCategory3.name = NSLocalizedString(@"Crackers", nil);
+        sampleCategory3.color = [UIColor colorWithRed:0.7974f green:1 blue:0 alpha:1];
         
-        [self.catagories addObject:sampleCategory3];
+        [self.categories addObject:sampleCategory3];
         
         ItemCategory *sampleCategory4 = [ItemCategory new];
-        sampleCategory4.name = @"Flour";
-        sampleCategory4.color = [UIColor lightGrayColor];
+        sampleCategory4.name = NSLocalizedString(@"Bagels", nil);
+        sampleCategory4.color = [UIColor colorWithRed:0 green:0.4439f blue:1 alpha:1];
         
-        [self.catagories addObject:sampleCategory4];
+        [self.categories addObject:sampleCategory4];
         
         ItemCategory *sampleCategory5 = [ItemCategory new];
-        sampleCategory5.name = @"Cake";
-        sampleCategory5.color = [UIColor purpleColor];
+        sampleCategory5.name = NSLocalizedString(@"Buns", nil);
+        sampleCategory5.color = [UIColor colorWithRed:1 green:0 blue:0.9568 alpha:1];
         
-        [self.catagories addObject:sampleCategory5];
+        [self.categories addObject:sampleCategory5];
         
-        for (ItemCategory *category in self.catagories)
+        for (ItemCategory *category in self.categories)
         {
             [self.categoryNames addObject:category.name];
         }
@@ -267,30 +269,15 @@
 {
     self.currentlySelectedCategory = nil;
 
-    NSArray *catagories = [self.dataService fetchCategories];
+    NSArray *categories = [self.dataService fetchCategories];
     
-    if (catagories.count == 0)
-    {
-        [self.manipulationService addCatagoryForName:@"Bread" categoryColor:UIColor.yellowColor save:NO];
-        
-        [self.manipulationService addCatagoryForName:@"Cereal" categoryColor:UIColor.orangeColor save:NO];
-        
-        [self.manipulationService addCatagoryForName:@"Crackers" categoryColor:UIColor.redColor save:NO];
-        
-        [self.manipulationService addCatagoryForName:@"Bagels" categoryColor:UIColor.greenColor save:NO];
-        
-        [self.manipulationService addCatagoryForName:@"Buns" categoryColor:UIColor.purpleColor save:YES];
-        
-        catagories = [self.dataService fetchCategories];
-    }
-    
-    self.catagories = [[NSMutableArray alloc] initWithArray: catagories copyItems: YES];
+    self.categories = [[NSMutableArray alloc] initWithArray: categories copyItems: YES];
     
     [self.catagoriesTable reloadData];
     
     self.categoryNames = [[NSMutableArray alloc] init];
     
-    for (ItemCategory *category in self.catagories)
+    for (ItemCategory *category in self.categories)
     {
         [self.categoryNames addObject:category.name];
     }
@@ -633,7 +620,7 @@
     
     else if (popUpController == self.categoryPickerViewController)
     {
-        self.categoryToTransferTo = self.catagories[index];
+        self.categoryToTransferTo = self.categories[index];
         
         if (self.currentlySelectedCategory == self.categoryToTransferTo)
         {
@@ -725,7 +712,7 @@
 
 - (NSInteger) tableView: (UITableView *) tableView numberOfRowsInSection: (NSInteger) section
 {
-    return self.catagories.count * 2;
+    return self.categories.count * 2;
 }
 
 - (UITableViewCell *) tableView: (UITableView *) tableView cellForRowAtIndexPath: (NSIndexPath *) indexPath
@@ -743,7 +730,7 @@
 
         cell.clipsToBounds = YES;
 
-        ItemCategory *thisCategory = self.catagories[indexPath.row / 2];
+        ItemCategory *thisCategory = self.categories[indexPath.row / 2];
 
         cell.catagoryColor = thisCategory.color;
         (cell.colorBox).backgroundColor = thisCategory.color;
@@ -794,7 +781,7 @@
         [cell.transferButton setLookAndFeel:self.lookAndFeel];
         [cell.deleteButton setLookAndFeel:self.lookAndFeel];
 
-        if (self.catagories.count > 1)
+        if (self.categories.count > 1)
         {
             [cell.transferButton setEnabled: YES];
         }
@@ -834,7 +821,7 @@
     }
     else
     {
-        ItemCategory *thisCategory = (self.catagories)[(indexPath.row - 1) / 2];
+        ItemCategory *thisCategory = self.categories[(indexPath.row - 1) / 2];
 
         // only show the row if currentlySelectedCategory == thisCategory
 
@@ -851,7 +838,7 @@
 {
     if (indexPath.row % 2 == 0)
     {
-        ItemCategory *thisCategory = (self.catagories)[indexPath.row / 2];
+        ItemCategory *thisCategory = self.categories[indexPath.row / 2];
 
         DLog(@"Category %@ clicked", thisCategory.name);
 

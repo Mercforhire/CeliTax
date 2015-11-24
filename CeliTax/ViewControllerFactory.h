@@ -59,7 +59,7 @@
 
 - (CameraViewController *) createCameraOverlayViewControllerWithExistingReceiptID:(NSString *) receiptID;
 
-- (SendReceiptsToViewController *) createSendReceiptsToViewController;
+- (SendReceiptsToViewController *) createSendReceiptsToViewController:(NSString *)defaultEmailAddress;
 
 - (PasswordRecoveryViewController *) createPasswordRecoveryViewController;
 

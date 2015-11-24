@@ -15,6 +15,7 @@ protocol TutorialManagerDelegate {
     
     func tutorialRightSideButtonPressed()
     
+    optional func tutorialDismissed()
 }
 
 @objc
@@ -57,8 +58,8 @@ class TutorialManager : NSObject //TODO: Remove Subclass to NSObject when the en
                 self.tutorialBubbleView!.rightButtonTitle = currentTutorial!.rightButtonTitle
                 
                 self.tutorialBubbleView!.closeButton?.addTarget(self, action: Selector("endTutorial"), forControlEvents: UIControlEvents.TouchUpInside)
-                self.tutorialBubbleView!.leftButton?.addTarget(self, action:Selector("leftSideButtonPressed"), forControlEvents:UIControlEvents.TouchUpInside)
-                self.tutorialBubbleView!.rightButton?.addTarget(self, action:Selector("rightSideButtonPressed"), forControlEvents:UIControlEvents.TouchUpInside)
+                self.tutorialBubbleView!.leftButton?.addTarget(self, action: Selector("leftSideButtonPressed"), forControlEvents:UIControlEvents.TouchUpInside)
+                self.tutorialBubbleView!.rightButton?.addTarget(self, action: Selector("rightSideButtonPressed"), forControlEvents:UIControlEvents.TouchUpInside)
                 
                 if (currentTutorial!.pointsUp)
                 {
@@ -200,6 +201,8 @@ class TutorialManager : NSObject //TODO: Remove Subclass to NSObject when the en
                 {
                     dismissBlock!()
                 }
+                
+                self.delegate?.tutorialDismissed?()
         })
     }
     

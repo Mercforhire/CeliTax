@@ -39,6 +39,13 @@
     
     [self.emailField setPlaceholder:NSLocalizedString(@"Email Address", nil)];
     
+    if (self.defaultEmailAddress)
+    {
+        self.emailField.text = self.defaultEmailAddress;
+        
+        [self textFieldDidChange:self.emailField];
+    }
+    
     [self.sendButton setLookAndFeel:self.lookAndFeel];
     [self.sendButton setTitle:NSLocalizedString(@"Send", nil) forState:UIControlStateNormal];
 }

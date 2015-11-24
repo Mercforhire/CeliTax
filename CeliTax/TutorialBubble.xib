@@ -5,10 +5,12 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Lato-Light.ttf">
-            <string>Lato-Light</string>
-            <string>Lato-Light</string>
-            <string>Lato-Light</string>
+        <mutableArray key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+            <string>Lato-Bold</string>
+        </mutableArray>
+        <mutableArray key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -34,37 +36,37 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MKi-fL-jLE">
-                    <rect key="frame" x="15" y="13" width="290" height="130"/>
+                    <rect key="frame" x="15" y="13" width="290" height="110"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ccP-8V-2ka">
-                            <rect key="frame" x="15" y="79" width="125" height="35"/>
+                            <rect key="frame" x="15" y="60" width="125" height="35"/>
                             <animations/>
                             <color key="backgroundColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="125" id="Ct6-Sn-d47"/>
                                 <constraint firstAttribute="height" constant="35" id="qpZ-7u-vtX"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="16"/>
+                            <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                             <state key="normal" title="BACK">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yc5-dM-5lF">
-                            <rect key="frame" x="150" y="79" width="125" height="35"/>
+                            <rect key="frame" x="150" y="60" width="125" height="35"/>
                             <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="7K6-wO-kM5"/>
                                 <constraint firstAttribute="width" constant="125" id="RvD-Tb-N1C"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="16"/>
+                            <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
                             <state key="normal" title="CONTINUE">
                                 <color key="titleColor" red="0.4549019608" green="0.74901960779999999" blue="0.31764705879999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, " translatesAutoresizingMaskIntoConstraints="NO" id="O3y-3C-V0Y">
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, " textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="O3y-3C-V0Y">
                             <rect key="frame" x="5" y="5" width="280" height="50"/>
                             <animations/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -72,19 +74,19 @@
                                 <constraint firstAttribute="height" constant="50" id="6fK-qu-Qro"/>
                             </constraints>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="14"/>
+                            <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="15"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                     </subviews>
                     <animations/>
                     <color key="backgroundColor" red="0.45490196078431372" green="0.74901960784313726" blue="0.31764705882352939" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="ccP-8V-2ka" firstAttribute="top" secondItem="O3y-3C-V0Y" secondAttribute="bottom" constant="24" id="Cjv-fK-RTT"/>
+                        <constraint firstItem="ccP-8V-2ka" firstAttribute="top" secondItem="O3y-3C-V0Y" secondAttribute="bottom" constant="5" id="Cjv-fK-RTT"/>
                         <constraint firstAttribute="trailing" secondItem="O3y-3C-V0Y" secondAttribute="trailing" constant="5" id="Ry5-u0-dEL"/>
                         <constraint firstItem="O3y-3C-V0Y" firstAttribute="top" secondItem="MKi-fL-jLE" secondAttribute="top" constant="5" id="ioh-Qs-tI2"/>
-                        <constraint firstItem="Yc5-dM-5lF" firstAttribute="top" secondItem="O3y-3C-V0Y" secondAttribute="bottom" constant="24" id="ipn-Pr-6Nh"/>
+                        <constraint firstItem="Yc5-dM-5lF" firstAttribute="top" secondItem="O3y-3C-V0Y" secondAttribute="bottom" constant="5" id="ipn-Pr-6Nh"/>
                         <constraint firstItem="ccP-8V-2ka" firstAttribute="leading" secondItem="MKi-fL-jLE" secondAttribute="leading" constant="15" id="ktu-WL-9IK"/>
-                        <constraint firstAttribute="height" constant="130" id="sd9-3r-8tN"/>
+                        <constraint firstAttribute="height" constant="110" id="sd9-3r-8tN"/>
                         <constraint firstAttribute="trailing" secondItem="Yc5-dM-5lF" secondAttribute="trailing" constant="15" id="tr1-Ju-1hG"/>
                         <constraint firstItem="O3y-3C-V0Y" firstAttribute="leading" secondItem="MKi-fL-jLE" secondAttribute="leading" constant="5" id="vgt-76-S0c"/>
                     </constraints>
@@ -99,7 +101,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zS4-gy-Og1" customClass="Triangle">
-                    <rect key="frame" x="76" y="143" width="25" height="13"/>
+                    <rect key="frame" x="76" y="123" width="25" height="13"/>
                     <animations/>
                     <color key="backgroundColor" red="0.4549019608" green="0.74901960779999999" blue="0.31764705879999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>

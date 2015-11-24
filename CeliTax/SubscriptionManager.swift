@@ -12,8 +12,8 @@ import StoreKit
 @objc
 class SubscriptionManager : NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserver //TODO: Remove Subclass to NSObject when the entire app has been converted to Swift
 {
-    static let k3MonthServiceProductID : String = "com.cravensave.celitax.3monthservice"
-    static let k6MonthServiceProductID : String = "com.cravensave.celitax.6monthservice"
+    static let k1MonthServiceProductID : String = "com.cravensave.celitax.1monthservice"
+    static let k12MonthServiceProductID : String = "com.cravensave.celitax.12monthservice"
     
     typealias RequestProductsCompletionHandler = (success : Bool, products : [SKProduct]?) -> Void
     typealias PurchaseSubscriptionSuccessHandler = () -> Void
@@ -178,13 +178,13 @@ class SubscriptionManager : NSObject, SKProductsRequestDelegate, SKPaymentTransa
     
     private func provideContentForProductIdentifier(productIdentifier : String)
     {
-        if (productIdentifier == SubscriptionManager.k3MonthServiceProductID)
+        if (productIdentifier == SubscriptionManager.k1MonthServiceProductID)
         {
-            self.purchasedSubscriptionWithMonths(3)
+            self.purchasedSubscriptionWithMonths(1)
         }
-        else if (productIdentifier == SubscriptionManager.k6MonthServiceProductID)
+        else if (productIdentifier == SubscriptionManager.k12MonthServiceProductID)
         {
-            self.purchasedSubscriptionWithMonths(6)
+            self.purchasedSubscriptionWithMonths(12)
         }
         else
         {

@@ -99,7 +99,7 @@
     
     [self.rightSideBar show];
     
-    [[NSNotificationCenter defaultCenter] postNotification: [NSNotification notificationWithName: Notifications.kSideBarOpenedNotification object: nil userInfo: nil]];
+    [[NSNotificationCenter defaultCenter] postNotification: [NSNotification notificationWithName: Notifications.kStopEditingFieldsNotification object: nil userInfo: nil]];
 }
 
 - (void) pushAndReplaceTopViewControllerWith: (BaseViewController *) viewController
