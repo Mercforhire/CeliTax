@@ -15,10 +15,13 @@
 #import "MainViewController.h"
 #import "LoginViewController.h"
 #import "ProfileSettingsViewController.h"
+#import "MBProgressHUD.h"
 
 #import "CeliTax-Swift.h"
 
 @interface BaseSideBarViewController () <CDRTranslucentSideBarDelegate, SideMenuViewProtocol>
+
+@property (strong, nonatomic) MBProgressHUD *waitView;
 
 @end
 
@@ -125,10 +128,41 @@
     [self.navigationController setViewControllers: viewController2 animated: YES];
 }
 
-- (void) popToLoginView
+- (void) logOffToLoginView
 {
-    [self.navigationController popToViewController: (self.navigationController.viewControllers)[0] animated: YES];
+    [self.userManager deleteAllLocalUserData];
+    
+    [self.userManager logOutUser];
+    
+    // dismiss itself
+    [self.rightSideBar dismiss];
+    
+    [self pushAndReplaceTopViewControllerWith: [self.viewControllerFactory createLoginViewController]];
 }
+
+- (void) createAndShowWaitViewForUpload
+{
+    if (!self.waitView)
+    {
+        self.waitView = [[MBProgressHUD alloc] initWithView: self.view];
+        self.waitView.labelText = NSLocalizedString(@"Please wait", nil);
+        self.waitView.detailsLabelText = NSLocalizedString(@"Uploading Data...", nil);
+        self.waitView.mode = MBProgressHUDModeIndeterminate;
+        [self.view addSubview: self.waitView];
+    }
+    
+    [self.waitView show: YES];
+}
+
+-(void)hideWaitingView
+{
+    if (self.waitView)
+    {
+        //hide the Waiting view
+        [self.waitView hide: YES];
+    }
+}
+
 
 - (void)profileSettingsPressed
 {
@@ -225,16 +259,82 @@
             break;
 
         case RootViewControllerLogOff:
-
-            [self.userManager deleteAllLocalUserData];
-            
-            [self.userManager logOutUser];
-
-            // dismiss itself
-            [self.rightSideBar dismiss];
-
-            [self pushAndReplaceTopViewControllerWith: [self.viewControllerFactory createLoginViewController]];
-
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if ([self.syncManager needToBackUp])
+                {
+                    // ask user if they want to download data from server
+                    NSString *alertTitle = NSLocalizedString(@"Unsaved Data", nil);
+                    NSString *alertMessage = NSLocalizedString(@"There are some data that's yet to be uploaded to the server for storage. Logging off will delete all local data. Do you want to upload them now?", nil);
+                    NSString *alertCancel = NSLocalizedString(@"Cancel", nil);
+                    NSString *alertNo = NSLocalizedString(@"No", nil);
+                    NSString *alertYes = NSLocalizedString(@"Yes", nil);
+                    
+                    //create the alert items
+                    UIAlertAction *noAction = [UIAlertAction actionWithTitle:alertNo style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        
+                        [self logOffToLoginView];
+                        
+                    }];
+                    
+                    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:alertCancel style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        
+                    }];
+                    
+                    UIAlertAction *yesAction = [UIAlertAction actionWithTitle:alertYes style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        
+                        [self.rightSideBar dismiss];
+                        
+                        [self createAndShowWaitViewForUpload];
+                        
+                        [self.syncManager startSync:^(NSDate *syncDate)
+                         {
+                             [self.syncManager startUploadingPhotos:^{
+                                 
+                                 [self hideWaitingView];
+                                 
+                                 [self logOffToLoginView];
+                                 
+                             } failure:^(NSString * _Nonnull reason) {
+                                 
+                                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                                     message:NSLocalizedString(@"Can not connect to our server, please try again later", nil)
+                                                                                    delegate:nil
+                                                                           cancelButtonTitle:nil
+                                                                           otherButtonTitles:@"Dismiss",nil];
+                                 
+                                 [alertView show];
+                                 
+                                 [self hideWaitingView];
+                                 
+                             }];
+                             
+                         } failure:^(NSString *reason) {
+                             
+                             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                                 message:NSLocalizedString(@"Can not connect to our server, please try again later", nil)
+                                                                                delegate:nil
+                                                                       cancelButtonTitle:nil
+                                                                       otherButtonTitles:@"Dismiss",nil];
+                             
+                             [alertView show];
+                             
+                             [self hideWaitingView];
+                         }];
+                        
+                    }];
+                    
+                    NSArray<UIAlertAction*>* alertActions = @[cancelAction, noAction, yesAction];
+                    [AlertDialogsProvider handlerAlert:alertTitle message:alertMessage action:alertActions];
+                }
+                else
+                {
+                    [self logOffToLoginView];
+                }
+                
+            });
+        }
             break;
 
         default:

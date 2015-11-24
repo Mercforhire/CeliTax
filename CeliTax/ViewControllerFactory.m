@@ -58,6 +58,11 @@
     }
     
     viewController.tutorialManager = tutorialManager;
+    
+    if ([viewController isKindOfClass:[BaseSideBarViewController class]])
+    {
+        ((BaseSideBarViewController *)viewController).syncManager = self.syncManager;
+    }
 }
 
 - (LoginViewController *) createLoginViewController
@@ -90,7 +95,6 @@
 
     mainViewController.manipulationService = self.manipulationService;
     mainViewController.dataService = self.dataService;
-    mainViewController.syncManager = self.syncManager;
 
     return mainViewController;
 }
@@ -102,7 +106,6 @@
     [self initializeViewController: settingsViewController];
     
     settingsViewController.syncService = self.syncService;
-    settingsViewController.syncManager = self.syncManager;
 
     return settingsViewController;
 }
