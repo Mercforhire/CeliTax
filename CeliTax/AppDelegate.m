@@ -106,8 +106,8 @@
 -(void) initializeSubscriptionManager
 {
     NSSet *productIdentifiers = [NSSet setWithObjects:
-                                 SubscriptionManager.k3MonthServiceProductID,
-                                 SubscriptionManager.k6MonthServiceProductID,
+                                 SubscriptionManager.k1MonthServiceProductID,
+                                 SubscriptionManager.k12MonthServiceProductID,
                                  nil];
     
     self.subscriptionManager = [[SubscriptionManager alloc] initWithProductIdentifiers:productIdentifiers authenticationService:[self.serviceFactory createAuthenticationService] userManager:self.userManager];

@@ -21,7 +21,6 @@
 #import "LoginViewController.h"
 #import "NoItemsTableViewCell.h"
 #import "MBProgressHUD.h"
-#import "AlertDialogsProvider.h"
 
 #import "CeliTax-Swift.h"
 
@@ -249,6 +248,7 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
         }];
         
         NSArray<UIAlertAction*>* alertActions = @[neverAction, laterAction];
+        
         [AlertDialogsProvider handlerAlert:alertTitle message:alertMessage action:alertActions];
     }
     else

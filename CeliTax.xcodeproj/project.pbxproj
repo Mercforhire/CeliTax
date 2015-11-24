@@ -195,9 +195,9 @@
 		85C54B841B65A82500120961 /* ProfileBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85C54B811B65A82500120961 /* ProfileBarView.xib */; };
 		85C54B851B65A82500120961 /* ProfileBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85C54B821B65A82500120961 /* ProfileBarView.m */; };
 		85C7BD761BF66A8A00C85C5C /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7BD751BF66A8A00C85C5C /* UserManager.swift */; };
+		85CADB4D1C03ECBC00F34545 /* AlertDialogsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CADB4C1C03ECBC00F34545 /* AlertDialogsProvider.swift */; };
 		85D8D8521AF873AA00197D85 /* AccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8D8501AF873AA00197D85 /* AccountTableViewCell.m */; };
 		85D8D8531AF873AA00197D85 /* AccountTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85D8D8511AF873AA00197D85 /* AccountTableViewCell.xib */; };
-		85D8D8561AF914B500197D85 /* AlertDialogsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8D8551AF914B500197D85 /* AlertDialogsProvider.m */; };
 		85F485881B16D220005E0EDE /* SideMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85F485871B16D220005E0EDE /* SideMenuView.m */; };
 		85F977391B0ACEC6002B3DF3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85F977381B0ACEC6002B3DF3 /* AVFoundation.framework */; };
 		85F977661B0AF696002B3DF3 /* WhiteBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85F977651B0AF696002B3DF3 /* WhiteBorderView.m */; };
@@ -478,11 +478,10 @@
 		85C54B821B65A82500120961 /* ProfileBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileBarView.m; sourceTree = "<group>"; };
 		85C54B831B65A82500120961 /* ProfileBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileBarView.h; sourceTree = "<group>"; };
 		85C7BD751BF66A8A00C85C5C /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		85CADB4C1C03ECBC00F34545 /* AlertDialogsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertDialogsProvider.swift; sourceTree = "<group>"; };
 		85D8D84F1AF873AA00197D85 /* AccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountTableViewCell.h; sourceTree = "<group>"; };
 		85D8D8501AF873AA00197D85 /* AccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountTableViewCell.m; sourceTree = "<group>"; };
 		85D8D8511AF873AA00197D85 /* AccountTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountTableViewCell.xib; sourceTree = "<group>"; };
-		85D8D8541AF914B500197D85 /* AlertDialogsProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertDialogsProvider.h; sourceTree = "<group>"; };
-		85D8D8551AF914B500197D85 /* AlertDialogsProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertDialogsProvider.m; sourceTree = "<group>"; };
 		85F485861B16D220005E0EDE /* SideMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuView.h; sourceTree = "<group>"; };
 		85F485871B16D220005E0EDE /* SideMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuView.m; sourceTree = "<group>"; };
 		85F977381B0ACEC6002B3DF3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1216,8 +1215,7 @@
 			isa = PBXGroup;
 			children = (
 				85C3A7F31BEAE69B00E8C5E6 /* Macros.swift */,
-				85D8D8541AF914B500197D85 /* AlertDialogsProvider.h */,
-				85D8D8551AF914B500197D85 /* AlertDialogsProvider.m */,
+				85CADB4C1C03ECBC00F34545 /* AlertDialogsProvider.swift */,
 				8576DEEE1BEE85B900154D45 /* Utils.swift */,
 			);
 			name = Utils;
@@ -1773,6 +1771,7 @@
 				8556E3271AF41BFA003CCDD2 /* MainViewController.m in Sources */,
 				855BD2CB1B267029001ACBB2 /* SendReceiptsToViewController.m in Sources */,
 				85BE69C71B7E6F4A004C24A2 /* YearSavingViewController.m in Sources */,
+				85CADB4D1C03ECBC00F34545 /* AlertDialogsProvider.swift in Sources */,
 				856273951B1B780900EECA26 /* PasswordRecoveryViewController.m in Sources */,
 				8537A9351B293639000C848F /* ModifyCatagoryTableViewCell.m in Sources */,
 				852929FA1B3675E20074DD24 /* ReceiptEditModeTableViewCell.m in Sources */,
@@ -1814,7 +1813,6 @@
 				85A8CAC41AF069EA0023504D /* main.m in Sources */,
 				8576DEEB1BED993600154D45 /* CategoriesDAO.swift in Sources */,
 				8559EA221B9E62D500FCC823 /* ImperialUnitPickerViewController.m in Sources */,
-				85D8D8561AF914B500197D85 /* AlertDialogsProvider.m in Sources */,
 				8587118D1BE7039900774A2F /* NetworkCommunicator.swift in Sources */,
 				85560FE21B019857004D2963 /* ColorPickerViewController.m in Sources */,
 				859EA0E51BE5B0E000D7B2EE /* UserData.swift in Sources */,

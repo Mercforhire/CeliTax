@@ -239,6 +239,7 @@
 "Volume-%@" = "Volume-%@";
 "View Details" = "View Details";
 "View All" = "View All";
+"Volume" = "Volume";
 
 //W
 "We need permission for the camera.\nPlease enable it in your settings." = "We need permission for the camera.\nPlease enable it in your settings.";

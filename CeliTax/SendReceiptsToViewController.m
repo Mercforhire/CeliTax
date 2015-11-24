@@ -42,6 +42,8 @@
     if (self.defaultEmailAddress)
     {
         self.emailField.text = self.defaultEmailAddress;
+        
+        [self textFieldDidChange:self.emailField];
     }
     
     [self.sendButton setLookAndFeel:self.lookAndFeel];

@@ -8,7 +8,6 @@
 
 #import "SettingsViewController.h"
 #import "ProfileBarView.h"
-#import "AlertDialogsProvider.h"
 #import "SolidGreenButton.h"
 #import "ViewControllerFactory.h"
 #import "ProfileSettingsViewController.h"
