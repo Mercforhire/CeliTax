@@ -43,6 +43,7 @@ typedef NS_ENUM(NSUInteger, Languages) {
 @property (weak, nonatomic) IBOutlet SolidGreenButton *purchaseButton;
 
 @property (weak, nonatomic) IBOutlet SolidGreenButton *backupNowButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *backupNowButtonWidth;
 @property (weak, nonatomic) IBOutlet UILabel *lastBackUpLabel;
 @property (weak, nonatomic) IBOutlet SolidGreenButton *insertDemoButton;
 
@@ -150,22 +151,6 @@ typedef NS_ENUM(NSUInteger, Languages) {
                                      action: @selector(languageCheckBoxChanged:)
                            forControlEvents: UIControlEventTouchUpInside];
     
-    NSDate *lastUploadDate = [self.syncManager getLastBackUpDate];
-    
-    [self setLastBackUpLabelDate:lastUploadDate];
-    
-    //move to did appear
-    if ([self.syncManager needToBackUp])
-    {
-        [self.backupNowButton setEnabled:YES];
-        [self.backupNowButton setTitle:@"Sync" forState:UIControlStateNormal];
-    }
-    else
-    {
-        [self.backupNowButton setEnabled:NO];
-        [self.backupNowButton setTitle:@"Up to Date" forState:UIControlStateNormal];
-    }
-    
     [self selectUnitSystem];
     
     Language *currentLanguage = [LocalizationManager sharedInstance].currentLanguage;
@@ -209,6 +194,22 @@ typedef NS_ENUM(NSUInteger, Languages) {
     else
     {
         (self.subscriptionStatusLabel).text = [NSString stringWithFormat:NSLocalizedString(@"Expired on: %@", nil), self.userManager.user.subscriptionExpirationDate];
+    }
+    
+    //set up the last synced date label
+    NSDate *lastUploadDate = [self.syncManager getLastBackUpDate];
+    
+    [self setLastBackUpLabelDate:lastUploadDate];
+    
+    if ([self.syncManager needToBackUp])
+    {
+        [self.backupNowButton setEnabled:YES];
+        [self.backupNowButton setTitle:@"Sync" forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.backupNowButton setEnabled:NO];
+        [self.backupNowButton setTitle:@"Up to Date" forState:UIControlStateNormal];
     }
 }
 
@@ -312,7 +313,7 @@ typedef NS_ENUM(NSUInteger, Languages) {
 {
     if (!date)
     {
-        (self.lastBackUpLabel).text = [NSString stringWithFormat:@"Never"];
+        self.lastBackUpLabel.text = NSLocalizedString(@"Last synced: Never", nil);
         
         return;
     }
@@ -322,7 +323,7 @@ typedef NS_ENUM(NSUInteger, Languages) {
     gmtDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSString *dateStringFromUploadDate = [gmtDateFormatter stringFromDate:date];
     
-    (self.lastBackUpLabel).text = [NSString stringWithFormat:@"%@", dateStringFromUploadDate];
+    (self.lastBackUpLabel).text = [NSString stringWithFormat:NSLocalizedString(@"Last synced: %@", nil), dateStringFromUploadDate];
 }
 
 - (IBAction)profileSettingsPressed:(id)sender
@@ -382,11 +383,28 @@ typedef NS_ENUM(NSUInteger, Languages) {
     
     [self.syncManager startSync:^(NSDate *syncDate)
     {
-        //disable the Backup Now Button
-        [self.backupNowButton setEnabled:NO];
-        [self.backupNowButton setTitle:@"Synced" forState:UIControlStateNormal];
-        
-        [self setLastBackUpLabelDate:syncDate];
+         [self.syncManager startUploadingPhotos:^{
+             
+             //disable the Backup Now Button
+             [self.backupNowButton setEnabled:NO];
+             [self.backupNowButton setTitle:@"Synced" forState:UIControlStateNormal];
+             
+             [self setLastBackUpLabelDate:syncDate];
+             
+         } failure:^(NSString * _Nonnull reason) {
+             
+             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                 message:reason
+                                                                delegate:nil
+                                                       cancelButtonTitle:nil
+                                                       otherButtonTitles:@"Dismiss",nil];
+             
+             [alertView show];
+             
+             [self.backupNowButton setEnabled:YES];
+             [self.backupNowButton setTitle:@"Sync" forState:UIControlStateNormal];
+             
+         }];
         
     } failure:^(NSString *reason) {
         

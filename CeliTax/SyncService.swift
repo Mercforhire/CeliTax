@@ -297,21 +297,6 @@ class SyncService : NSObject
         
         let jsonString : String! = NSString.init(data: dictionaryData!, encoding: NSUTF8StringEncoding) as! String
         
-        //DUMP:
-        //    NSFileManager *fileManager = [NSFileManager defaultManager];
-        //
-        //    NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent: @"Upload.json"];
-        //
-        //    if ([fileManager fileExistsAtPath: filePath])
-        //    {
-        //        [fileManager removeItemAtPath: filePath error: nil];
-        //    }
-        //
-        //    [dictionaryData writeToFile: filePath options: 0 error: nil];
-        //
-        //    DLog(@"Dumped upload JSON to : \n %@", filePath);
-        //END DUMP:
-        
         let postParams: [String:String] = [
             "data" : jsonString
         ]

@@ -8,12 +8,10 @@
 
 #import "BaseSideBarViewController.h"
 
-@class SyncManager, SyncService;
+@class SyncService;
 
 @interface SettingsViewController : BaseSideBarViewController
 
 @property (nonatomic, weak) SyncService *syncService;
-
-@property (nonatomic, weak) SyncManager *syncManager;
 
 @end

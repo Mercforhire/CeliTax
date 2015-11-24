@@ -156,9 +156,7 @@
 		858FD7181B40DEE60008B325 /* TransferConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 858FD7161B40DEE60008B325 /* TransferConfirmationViewController.m */; };
 		858FD7191B40DEE60008B325 /* TransferConfirmationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 858FD7171B40DEE60008B325 /* TransferConfirmationViewController.xib */; };
 		8595B10A1BEBB2E700AA2340 /* ServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8595B1091BEBB2E700AA2340 /* ServiceFactory.swift */; };
-		859EA0D51BE3DC0B00D7B2EE /* AuthorizeResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EA0D41BE3DC0B00D7B2EE /* AuthorizeResult.swift */; };
 		859EA0D71BE3FD2600D7B2EE /* TutorialStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EA0D61BE3FD2600D7B2EE /* TutorialStep.swift */; };
-		859EA0D91BE4076E00D7B2EE /* RegisterResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EA0D81BE4076E00D7B2EE /* RegisterResult.swift */; };
 		859EA0DB1BE40A1E00D7B2EE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EA0DA1BE40A1E00D7B2EE /* User.swift */; };
 		859EA0DD1BE4700500D7B2EE /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EA0DC1BE4700500D7B2EE /* Record.swift */; };
 		859EA0DF1BE581CC00D7B2EE /* TaxYear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859EA0DE1BE581CC00D7B2EE /* TaxYear.swift */; };
@@ -428,9 +426,7 @@
 		858FD7171B40DEE60008B325 /* TransferConfirmationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransferConfirmationViewController.xib; sourceTree = "<group>"; };
 		8595B1091BEBB2E700AA2340 /* ServiceFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceFactory.swift; sourceTree = "<group>"; };
 		859EA0D31BE3DC0A00D7B2EE /* CeliTax-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CeliTax-Bridging-Header.h"; sourceTree = "<group>"; };
-		859EA0D41BE3DC0B00D7B2EE /* AuthorizeResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizeResult.swift; sourceTree = "<group>"; };
 		859EA0D61BE3FD2600D7B2EE /* TutorialStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialStep.swift; sourceTree = "<group>"; };
-		859EA0D81BE4076E00D7B2EE /* RegisterResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterResult.swift; sourceTree = "<group>"; };
 		859EA0DA1BE40A1E00D7B2EE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		859EA0DC1BE4700500D7B2EE /* Record.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		859EA0DE1BE581CC00D7B2EE /* TaxYear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaxYear.swift; sourceTree = "<group>"; };
@@ -1137,8 +1133,8 @@
 				85A8CAE71AF071110023504D /* Session */,
 				85A8CAE91AF071610023504D /* Configuration */,
 				85A8CAEA1AF071EA0023504D /* Utils */,
-				85A8CAEB1AF071FC0023504D /* Views */,
-				85A8CAEC1AF072060023504D /* ViewControllers */,
+				85A8CAEB1AF071FC0023504D /* Views(Objc-C) */,
+				85A8CAEC1AF072060023504D /* ViewControllers(Objc-C) */,
 				85A8CAED1AF078D80023504D /* Models */,
 				85A8CAEE1AF078E70023504D /* Services */,
 				85A8CAC51AF069EA0023504D /* AppDelegate.h */,
@@ -1221,7 +1217,7 @@
 			name = Utils;
 			sourceTree = "<group>";
 		};
-		85A8CAEB1AF071FC0023504D /* Views */ = {
+		85A8CAEB1AF071FC0023504D /* Views(Objc-C) */ = {
 			isa = PBXGroup;
 			children = (
 				85AF7E721BB11717000D73F9 /* YIInnerShadowView */,
@@ -1245,10 +1241,10 @@
 				85D8D8491AF8737600197D85 /* Account Table Cells */,
 				8556E32A1AF428A7003CCDD2 /* Add Delete Catagory Table Cells */,
 			);
-			name = Views;
+			name = "Views(Objc-C)";
 			sourceTree = "<group>";
 		};
-		85A8CAEC1AF072060023504D /* ViewControllers */ = {
+		85A8CAEC1AF072060023504D /* ViewControllers(Objc-C) */ = {
 			isa = PBXGroup;
 			children = (
 				855A75E81BB8CCED0019956E /* Subscriptions */,
@@ -1268,7 +1264,7 @@
 				854AC6DF1B7D6A8C00F0D91D /* Year Summary */,
 				85A8CAF11AF07A640023504D /* Main Screen */,
 			);
-			name = ViewControllers;
+			name = "ViewControllers(Objc-C)";
 			sourceTree = "<group>";
 		};
 		85A8CAED1AF078D80023504D /* Models */ = {
@@ -1276,8 +1272,6 @@
 			children = (
 				85B114FC1B5CADF500C01DC3 /* Builders */,
 				859EA0D61BE3FD2600D7B2EE /* TutorialStep.swift */,
-				859EA0D41BE3DC0B00D7B2EE /* AuthorizeResult.swift */,
-				859EA0D81BE4076E00D7B2EE /* RegisterResult.swift */,
 				859EA0DA1BE40A1E00D7B2EE /* User.swift */,
 				859EA0DC1BE4700500D7B2EE /* Record.swift */,
 				859EA0DE1BE581CC00D7B2EE /* TaxYear.swift */,
@@ -1526,7 +1520,7 @@
 				TargetAttributes = {
 					85A8CABD1AF069EA0023504D = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 7NR72SBAS5;
+						DevelopmentTeam = 55ZR8NHFYD;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 1;
@@ -1718,7 +1712,6 @@
 				85D8D8521AF873AA00197D85 /* AccountTableViewCell.m in Sources */,
 				85BE69CB1B7E754E004C24A2 /* HollowWhiteButton.m in Sources */,
 				855973911AFD2BF800DFC176 /* MainViewTableViewCell.m in Sources */,
-				859EA0D51BE3DC0B00D7B2EE /* AuthorizeResult.swift in Sources */,
 				859EA0D71BE3FD2600D7B2EE /* TutorialStep.swift in Sources */,
 				854AC6E91B7D94EE00F0D91D /* YearSummaryTableViewCell.m in Sources */,
 				852299AC1BEC44CA00279F45 /* DAOFactory.swift in Sources */,
@@ -1782,7 +1775,6 @@
 				8554BCE31B2537F1002333ED /* M13Checkbox.m in Sources */,
 				8554BCE91B254F45002333ED /* TimePeriodSelectionTableViewCell.m in Sources */,
 				85081A1D1B4B88A900C5AD10 /* Triangle.m in Sources */,
-				859EA0D91BE4076E00D7B2EE /* RegisterResult.swift in Sources */,
 				8556E3331AF47C0D003CCDD2 /* MyAccountViewController.m in Sources */,
 				858FD7181B40DEE60008B325 /* TransferConfirmationViewController.m in Sources */,
 				8582A4781AF17DFD0048DCD6 /* LoginViewController.m in Sources */,

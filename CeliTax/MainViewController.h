@@ -8,12 +8,11 @@
 
 #import "BaseSideBarViewController.h"
 
-@class SyncManager, DataService, ManipulationService;
+@class DataService, ManipulationService;
 
 @interface MainViewController : BaseSideBarViewController
 
 @property (nonatomic, weak) DataService *dataService;
 @property (nonatomic, weak) ManipulationService *manipulationService;
-@property (nonatomic, weak) SyncManager *syncManager;
 
 @end

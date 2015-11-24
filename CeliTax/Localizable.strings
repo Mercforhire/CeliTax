@@ -116,6 +116,8 @@
 "Logout" = "Logout";
 "Language:" = "Language:";
 "Loading subscriptions..." = "Loading subscriptions...";
+"Last synced: Never" = "Last synced: Never";
+"Last synced: %@" = "Last synced: %@";
 
 //M
 "Manage Categories" = "Manage Categories";

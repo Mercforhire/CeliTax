@@ -20,11 +20,15 @@ enum RootViewControllers
     RootViewControllerLogOff
 };
 
+@class SyncManager;
+
 @interface BaseSideBarViewController : BaseViewController
 
 @property (nonatomic, strong) SideMenuView *sideMenuView;
 
 @property (nonatomic, strong) CDRTranslucentSideBar *rightSideBar;
+
+@property (nonatomic, weak) SyncManager *syncManager;
 
 - (void) selectedMenuIndex: (NSInteger) index;
 

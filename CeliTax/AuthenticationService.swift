@@ -10,6 +10,25 @@ import Foundation
 import UIKit
 
 @objc
+class AuthorizeResult : NSObject //TODO: Remove Subclass to NSObject when the entire app has been converted to Swift
+{
+    var success : Bool = false
+    var message : String = ""
+    var userName : String = ""
+    var userAPIKey : String = ""
+    var firstname : String = ""
+    var lastname : String = ""
+    var country : String = ""
+}
+
+@objc
+class RegisterResult : NSObject //TODO: Remove Subclass to NSObject when the entire app has been converted to Swift
+{
+    var success : Bool = false
+    var message : String = ""
+}
+
+@objc
 class AuthenticationService : NSObject
 {
     static let USER_ALREADY_EXIST : String = "USER_ALREADY_EXIST"

@@ -194,7 +194,6 @@
         {
             [self.navigationController pushViewController: [self.viewControllerFactory createLoginViewController] animated: YES];
         }
-        
     }
     
     [self.window makeKeyAndVisible];
