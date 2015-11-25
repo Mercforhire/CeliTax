@@ -89,6 +89,8 @@ class TaxYearsDAO : NSObject //TODO: Remove Subclass to NSObject when the entire
             {
                 let existing : TaxYear! = existingYear.firstObject as! TaxYear
                 
+                existing.dataAction = DataActionStatus.DataActionNone
+                
                 localTaxyears.removeObject(existing)
             }
         }

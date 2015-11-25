@@ -348,12 +348,12 @@ typedef NS_ENUM(NSUInteger, Languages) {
 
 - (IBAction)aboutPressed:(UIButton *)sender
 {
-    [AlertDialogsProvider showWorkInProgressDialog];
+    [Utils OpenLink:@"http://celitax.ca/about.html"];
 }
 
 - (IBAction)faqPressed:(UIButton *)sender
 {
-    [AlertDialogsProvider showWorkInProgressDialog];
+    
 }
 
 - (IBAction)purchasePressed:(SolidGreenButton *)sender
@@ -373,8 +373,6 @@ typedef NS_ENUM(NSUInteger, Languages) {
         
     }];
 }
-
-#define kKeyLastUpdatedDateTime        @"LastUpdatedDateTime"
 
 - (IBAction)backupPressed:(UIButton *)sender
 {

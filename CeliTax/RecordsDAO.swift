@@ -204,6 +204,8 @@ class RecordsDAO : NSObject //TODO: Remove Subclass to NSObject when the entire 
                 
                 existing.copyDataFromRecord(record)
                 
+                existing.dataAction = DataActionStatus.DataActionNone
+                
                 localRecords.removeObject(existing)
             }
             else

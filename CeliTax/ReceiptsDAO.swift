@@ -240,6 +240,8 @@ class ReceiptsDAO : NSObject //TODO: Remove Subclass to NSObject when the entire
                 
                 existing.copyDataFromReceipt(receipt)
                 
+                existing.dataAction = DataActionStatus.DataActionNone
+                
                 localReceipts.removeObject(existing)
             }
             else

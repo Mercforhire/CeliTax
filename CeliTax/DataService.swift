@@ -36,6 +36,17 @@ class DataService : NSObject
         self.taxYearsDAO = taxYearsDAO
     }
     
+    // return true, if this userData have absolutely no data
+    func isFresh() -> Bool
+    {
+        if (fetchCategories().count == 0 && fetchAllRecords().count == 0 && self.receiptsDAO.fetchAllReceipts().count == 0)
+        {
+            return true
+        }
+        
+        return false
+    }
+    
     func fetchCategories() -> [ItemCategory]!
     {
         let categories : [ItemCategory] = self.categoriesDAO.fetchCategories() 

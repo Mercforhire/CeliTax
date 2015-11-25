@@ -608,4 +608,9 @@ class Utils : NSObject //TODO: Remove Subclass to NSObject when the entire app h
         df.dateFormat = "yyyy-MM-dd";
         return df.dateFromString(dateString)
     }
+    
+    static func OpenLink(link : String)
+    {
+        UIApplication.sharedApplication().openURL(NSURL.init(string: link)!)
+    }
 }

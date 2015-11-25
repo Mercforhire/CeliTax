@@ -296,28 +296,35 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
 {
     [self.syncManager checkUpdate:^{
         
-        // ask user if they want to download data from server
-        NSString *alertTitle = NSLocalizedString(@"Download", nil);
-        NSString *alertMessage = NSLocalizedString(@"The server contains some saved receipt data. Do you want to download and merge the data to the app?", nil);
-        NSString *alertNo = NSLocalizedString(@"No", nil);
-        NSString *alertYes = NSLocalizedString(@"Yes", nil);
-        
-        //create the alert items
-        UIAlertAction *noAction = [UIAlertAction actionWithTitle:alertNo style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            
-            // Go to step 5
-            [self createPreloadedCategories];
-        }];
-        
-        UIAlertAction *yesAction = [UIAlertAction actionWithTitle:alertYes style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            
+        // only ask user if they want to download data from server if the account already has data
+        if ([self.dataService isFresh])
+        {
             // Go to Step 4
             [self startUpdate];
-        }];
-        
-        NSArray<UIAlertAction*>* alertActions = @[noAction, yesAction];
-        [AlertDialogsProvider handlerAlert:alertTitle message:alertMessage action:alertActions];
-        
+        }
+        else
+        {
+            NSString *alertTitle = NSLocalizedString(@"Download", nil);
+            NSString *alertMessage = NSLocalizedString(@"The server contains some saved receipt data. Do you want to download and merge the data to the app?", nil);
+            NSString *alertNo = NSLocalizedString(@"No", nil);
+            NSString *alertYes = NSLocalizedString(@"Yes", nil);
+            
+            //create the alert items
+            UIAlertAction *noAction = [UIAlertAction actionWithTitle:alertNo style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                
+                // Go to step 5
+                [self createPreloadedCategories];
+            }];
+            
+            UIAlertAction *yesAction = [UIAlertAction actionWithTitle:alertYes style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                
+                // Go to Step 4
+                [self startUpdate];
+            }];
+            
+            NSArray<UIAlertAction*>* alertActions = @[noAction, yesAction];
+            [AlertDialogsProvider handlerAlert:alertTitle message:alertMessage action:alertActions];
+        }
     }];
 }
 

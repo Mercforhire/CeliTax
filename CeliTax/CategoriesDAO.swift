@@ -197,6 +197,8 @@ class CategoriesDAO : NSObject //TODO: Remove Subclass to NSObject when the enti
                 
                 existing.copyDataFromCategory(category)
                 
+                existing.dataAction = DataActionStatus.DataActionNone
+                
                 localCategories.removeObject(existing)
             }
             else
