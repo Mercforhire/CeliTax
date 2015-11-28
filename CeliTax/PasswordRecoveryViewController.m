@@ -26,7 +26,7 @@
 {
     [self.titleLabel setText:NSLocalizedString(@"Password Recovery", nil)];
     
-    [self.instructionsLabel setText:NSLocalizedString(@"To recover your password please type in your email address", nil)];
+    [self.instructionsLabel setText:NSLocalizedString(@"To recover your password, please type in your email address", nil)];
     
     [self.emailAddressField setPlaceholder:NSLocalizedString(@"Email Address", nil)];
     [self.lookAndFeel applyGrayBorderTo: self.emailAddressField];

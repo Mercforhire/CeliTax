@@ -178,7 +178,7 @@
                 error.code == LLSimpleCameraErrorCodeMicrophonePermission)
             {
                 UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
-                                                                  message:NSLocalizedString(@"We need permission for the camera.\nPlease enable it in your settings.", nil)
+                                                                  message:NSLocalizedString(@"CeliTax requires your permission to access the camera.\nPlease enable it in your settings.", nil)
                                                                  delegate:nil
                                                         cancelButtonTitle:nil
                                                         otherButtonTitles:NSLocalizedString(@"Ok", nil),nil];
@@ -365,7 +365,7 @@
         else
         {
             UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
-                                                              message:NSLocalizedString(@"An error has occured with the camere device, please try taking a picture again", nil)
+                                                              message:NSLocalizedString(@"An error has occurred with the camera, please take photo again", nil)
                                                              delegate:nil
                                                     cancelButtonTitle:nil
                                                     otherButtonTitles:NSLocalizedString(@"Ok", nil),nil];

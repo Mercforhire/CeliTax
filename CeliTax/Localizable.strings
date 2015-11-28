@@ -14,11 +14,11 @@
 "%@ per (lb)" = "%@ per (lb)";
 
 //A
-"Avg $ / non-GF" = "Avg $ / non-GF";
-"A existing category already has the same name. Please use a different category name" = "A existing category already has the same name. Please use a different category name";
+"Avg $ / Non-GF" = "Avg $ / Non-GF";
+"An existing category already has the same name. Please use a different category name" = "An existing category already has the same name. Please use a different category name";
 "Are you sure you want to delete the category %@?" = "Are you sure you want to delete the category %@?";
 "Are you sure you want to transfer all items in %@ to %@?"= "Are you sure you want to transfer all items in %@ to %@?";
-"An error has occured with the camere device, please try taking a picture again" = "An error has occured with the camere device, please try taking a picture again";
+"An error has occurred with the camera, please take photo again" = "An error has occurred with the camera, please take photo again";
 "Are you sure?" = "Are you sure?";
 "Account email successfully changed" = "Account email successfully changed";
 "Account password successfully changed" = "Account password successfully changed";
@@ -26,7 +26,7 @@
 "Add Tax Year" = "Add Tax Year";
 "A tax year must be created before a receipt can be saved" = "A tax year must be created before a receipt can be saved";
 "Add" = "Add";
-"Are you sure you want delete this receipt along with all its items?" = "Are you sure you want delete this receipt along with all its items?";
+"Are you sure you want to delete this receipt along with all of its allocated items?" = "Are you sure you want to delete this receipt along with all of its allocated items?";
 "Account" = "Account";
 "Are you sure you want delete the selected receipts along with all their items?" = "Are you sure you want delete the selected receipts along with all their items?";
 "About" = "About";
@@ -47,29 +47,28 @@
 "Continue" = "Continue";
 "Click “Done” when all images have been captured." = "Click “Done” when all images have been captured.";
 "Contact" = "Contact";
-"We will respond to you as soon as possible." = "We will respond to you as soon as possible.";
 "Confirm" = "Confirm";
 "Can not connect to our server, please try again later" = "Can not connect to our server, please try again later";
 "Categories" = "Categories";
-"Can not add a duplicate tax year" = "Can not add a duplicate tax year";
 "Calculate" = "Calculate";
 "Create Account" = "Create Account";
-"CeliTax is to be used as a resource tool only! CeliTax is in no way responsible for the accuracy of your tax return. Consult your accountant for all tax related inquiries. Cheers!" = "CeliTax is to be used as a resource tool only! CeliTax is in no way responsible for the accuracy of your tax return. Consult your accountant for all tax related inquiries. Cheers!";
+"CeliTax is to be used as a resource tool only! CeliTax is not responsible for the accuracy of your tax return. Please consult your accountant for all tax related inquiries. Cheers!" = "CeliTax is to be used as a resource tool only! CeliTax is not responsible for the accuracy of your tax return. Please consult your accountant for all tax related inquiries. Cheers!";
 "Cereal" = "Cereal";
 "Crackers" = "Crackers";
+"CeliTax requires your permission to access the camera.\nPlease enable it in your settings." = "CeliTax requires your permission to access the camera.\nPlease enable it in your settings.";
 
 //D
 "Delete" = "Delete";
 "Done" = "Done";
 "De-activate Account" = "De-activate Account";
-"Do you really want to delete your account and all data?" = "Do you really want to delete your account and all data?";
+"Do you really want to permanently delete your account and all data?" = "Do you really want to permanently delete your account and all data?";
 "Dismiss" = "Dismiss";
 "Downloading Data..." = "Downloading Data...";
 "Download" = "Download";
 "Delete this receipt" = "Delete this receipt";
-"Downloading Images..." = "Downloading Images...";
+"Downloading images..." = "Downloading images...";
 "Delete last receipt image" = "Delete last receipt image";
-"Delete selected receipts" = "Delete selected receipts";
+"Delete selected receipts?" = "Delete selected receipts?";
 
 //E
 "Enter Category Name" = "Enter Category Name";
@@ -84,6 +83,8 @@
 "Email: %@" = "Email: %@";
 "Expiry Date: %@" = "Expiry Date: %@";
 "Expired on: %@" = "Expired on: %@";
+"Email address in both fields do not match" = "Email address in both fields do not match";
+"Email address is not valid" = "Email address is not valid";
 
 //F
 "Failed to change email, please try again later" = "Failed to change email, please try again later";
@@ -104,13 +105,13 @@
 //I
 "Item" = "Item";
 "Imperial" = "Imperial";
-"I agree to the terms and conditions" = "I agree to the terms and conditions";
+"I have read and agree with the terms and conditions" = "I have read and agree with the terms and conditions";
 
 //L
 "Login Settings" = "Login Settings";
 "Login" = "Login";
 "Logging in..." = "Logging in...";
-"Lets get started!" = "Lets get started!";
+"Let's get started!" = "Let's get started!";
 "Last Name:" = "Last Name:";
 "Last Name" = "Last Name";
 "Logout" = "Logout";
@@ -149,10 +150,8 @@
 "Please re-enter new password" = "Please re-enter new password";
 "Please enter old password" = "Please enter old password";
 "Password in both fields do not match" = "Password in both fields do not match";
-"Password should be at least 6 characters" = "Password should be at least 6 characters";
+"Password should be at least 6 characters long" = "Password should be at least 6 characters long";
 "Password has to be least 6 characters long" = "Password has to be least 6 characters long";
-"Email address in both fields do not match" = "Email address in both fields do not match";
-"Email address is not valid" = "Email address is not valid";
 "Password" = "Password";
 "Password Change" = "Password Change";
 "Password Recovery" = "Password Recovery";
@@ -166,18 +165,17 @@
 "Please re-enter your email address" = "Please re-enter your email address";
 "Please enter your password" = "Please enter your password";
 "Please re-enter your password" = "Please re-enter your password";
-"Please log in with your new account" = "Please log in with your new account";
+"Please login with your new account" = "Please login with your new account";
 "Purchase" = "Purchase";
 "Purchasing subscription..." = "Purchasing subscription...";
 "Purchase failed." = "Purchase failed.";
 "Purchase Subscriptions" = "Purchase Subscriptions";
-"Please enter your account's email's address and password to log in" = "Please enter your account's email's address and password to log in";
+"Please enter your account's email address and password to login" = "Please enter your account's email address and password to login";
 "Purchase failed" = "Purchase failed";
 
 //Q
 "Quick Links" = "Quick Links";
 "Qty." = "Qty.";
-"Quickly Transfer, Edit, or Delete items as needed." = "Quickly Transfer, Edit, or Delete items as needed.";
 "Qty" = "Qty";
 
 //R
@@ -187,6 +185,8 @@
 "Registering..." = "Registering...";
 
 //T
+"There appears to be no internet connection. If you logout while offline you will not be able to login until there is a connection" = "There appears to be no internet connection. If you logout while offline you will not be able to login until there is a connection";
+"Terms and Conditions" = "Terms and Conditions";
 "Total Qty." = "Total Qty.";
 "Total Cost" = "Total Cost";
 "Total" = "Total";
@@ -194,29 +194,30 @@
 "Tax Country" = "Tax Country";
 "Type message" = "Type message";
 "Thank you" = "Thank you";
-"Thank you, an email has been sent with recovery options" = "Thank you, an email has been sent with recovery options";
-"The new email is same as the original email" = "The new email is same as the original email";
+"Thank you, an email has been sent to you with a recovery link" = "Thank you, an email has been sent to you with a recovery link";
+"This new email is the same as the original email" = "This new email is the same as the original email";
 "The password provided is incorrect" = "The password provided is incorrect";
 "The password entered for this user is incorrect" = "The password entered for this user is incorrect";
 "This user does not exist" = "This user does not exist";
-"The server contains some saved receipt data. Do you want to download and merge the data to the app?" = "The server contains some saved receipt data. Do you want to download and merge the data to the app?";
+"The server contains saved receipt data that is not on your device. Do you want to download and merge the data to your device?" = "The server contains saved receipt data that is not on your device. Do you want to download and merge the data to your device?";
 "Tax Year for %ld" = "Tax Year for %ld";
 "This tax year has no recorded items" = "This tax year has no recorded items";
-"To recover your password please type in your email address" = "To recover your password please type in your email address";
+"To recover your password, please type in your email address" = "To recover your password, please type in your email address";
 "Total Price" = "Total Price";
 "Total Spent" = "Total Spent";
 "Total Avg. Cost" = "Total Avg. Cost";
 "Transfer selected?" = "Transfer selected?";
-"The email address is already used by another account. Please use a different email address" = "The email address is already used by another account. Please use a different email address";
-"Total Avg.\nNGF Cost" = "Total Avg.\nNGF Cost";
-"The subscription for this account has expired. Would you like to purchases a new subscription?" = "The subscription for this account has expired. Would you like to purchases a new subscription?";
-"The total average price should not be higher than the actual total spent, please check to see if the correct average price was entered." = "The total average price should not be higher than the actual total spent, please check to see if the correct average price was entered.";
+"This email address is already used by another account. Please use a different email address" = "This email address is already used by another account. Please use a different email address";
+"Total Avg.\nNon-GF Cost" = "Total Avg.\nNon-GF Cost";
+"The subscription for this account has expired. Would you like to purchase a new subscription?" = "The subscription for this account has expired. Would you like to purchase a new subscription?";
+"The total average price should not be higher than the actual price spent, please check to see if the correct average price has been entered." = "The total average price should not be higher than the actual price spent, please check to see if the correct average price has been entered.";
 
 //U
 "Updating account info..." = "Updating account info...";
 "Units" = "Units";
 "Units:" = "Units:";
 "Uploading Data..." = "Uploading Data...";
+"Unable to add a duplicate tax year" = "Unable to add a duplicate tax year";
 
 //S
 "Save" = "Save";
@@ -245,15 +246,15 @@
 "Volume" = "Volume";
 
 //W
-"We need permission for the camera.\nPlease enable it in your settings." = "We need permission for the camera.\nPlease enable it in your settings.";
 "Weight" = "Weight";
 "Weight-%@"= "Weight-%@";
 "Welcome" = "Welcome";
+"We will respond to you as soon as possible." = "We will respond to you as soon as possible.";
 
 //Y
 "Yes" = "Yes";
 "Your %ld savings:" = "Your %ld savings:";
-"You must first enter the average cost of a regular non gluten-free item in order to calculate your tax claim. Currently there are no set benchmarks assigned to food items by the government. Please check your local grocery stores, online or consult your accountant to determine an appropriate average cost." = "You must first enter the average cost of a regular non gluten-free item in order to calculate your tax claim. Currently there are no set benchmarks assigned to food items by the government. Please check your local grocery stores, online or consult your accountant to determine an appropriate average cost.";
+"You must enter the average cost of a regular non-GF item first in order to calculate your tax claim. Currently there are no set benchmarks assigned to food items by the government. Please check your local grocery stores, online or consult your accountant to determine an appropriate average cost." = "You must enter the average cost of a regular non-GF item first in order to calculate your tax claim. Currently there are no set benchmarks assigned to food items by the government. Please check your local grocery stores, online or consult your accountant to determine an appropriate average cost.";
 
 //Tutorial Text:
 
@@ -281,7 +282,7 @@
 "That's all! Now you are ready to use CeliTax to stay organized all year long. The GF tax claim has never been so easy!" = "That's all! Now you are ready to use CeliTax to stay organized all year long. The GF tax claim has never been so easy!";
 
 //My Account View
-"Calculating your GF tax claim is easy, just be sure to enter an average non-GF cost equivelant first for each category." = "Calculating your GF tax claim is easy, just be sure to enter an average non-GF cost equivelant first for each category.";
+"Calculating your GF tax claim is easy, just be sure to enter an average non-GF cost equivalent first for each category." = "Calculating your GF tax claim is easy, just be sure to enter an average non-GF cost equivalent first for each category.";
 
 "Click calculate and we'll do the work for you!" = "Click calculate and we'll do the work for you!";
 

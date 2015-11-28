@@ -393,7 +393,7 @@
     if ([self.categoryNames containsObject:capitalizedString])
     {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)
-                                                          message:NSLocalizedString(@"A existing category already has the same name. Please use a different category name", nil)
+                                                          message:NSLocalizedString(@"An existing category already has the same name. Please use a different category name", nil)
                                                          delegate:nil
                                                 cancelButtonTitle:nil
                                                 otherButtonTitles:NSLocalizedString(@"Ok", nil),nil];

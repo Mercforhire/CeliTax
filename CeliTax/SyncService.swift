@@ -76,35 +76,15 @@ class SyncService : NSObject
     */
     func insertPreloadedCategories()
     {
-        let sampleCategory1 : ItemCategory! = ItemCategory()
-        sampleCategory1.name = SWLocalizedString("Bread")
-        sampleCategory1.color = UIColor.init(red: 0, green: 1, blue: 0.625, alpha: 1)
+        self.categoriesDAO.addCategoryForName(SWLocalizedString("Bread"), color: UIColor.init(red: 0, green: 1, blue: 0.625, alpha: 1), save: false)
         
-        self.categoriesDAO.addCategory(sampleCategory1, save: false)
+        self.categoriesDAO.addCategoryForName(SWLocalizedString("Cereal"), color: UIColor.init(red: 1, green: 0, blue: 0.5, alpha: 1), save: false)
         
-        let sampleCategory2 : ItemCategory! = ItemCategory()
-        sampleCategory2.name = SWLocalizedString("Cereal")
-        sampleCategory2.color = UIColor.init(red: 1, green: 0, blue: 0.5, alpha: 1)
+        self.categoriesDAO.addCategoryForName(SWLocalizedString("Crackers"), color: UIColor.init(red: 0.7974, green: 1, blue: 0, alpha: 1), save: false)
         
-        self.categoriesDAO.addCategory(sampleCategory2, save: false)
+        self.categoriesDAO.addCategoryForName(SWLocalizedString("Bagels"), color: UIColor.init(red: 0, green: 0.4439, blue: 1, alpha: 1), save: false)
         
-        let sampleCategory3 : ItemCategory! = ItemCategory()
-        sampleCategory3.name = SWLocalizedString("Crackers")
-        sampleCategory3.color = UIColor.init(red: 0.7974, green: 1, blue: 0, alpha: 1)
-        
-        self.categoriesDAO.addCategory(sampleCategory3, save: false)
-        
-        let sampleCategory4 : ItemCategory! = ItemCategory()
-        sampleCategory4.name = SWLocalizedString("Bagels")
-        sampleCategory4.color = UIColor.init(red: 0, green: 0.4439, blue: 1, alpha: 1)
-        
-        self.categoriesDAO.addCategory(sampleCategory4, save: false)
-        
-        let sampleCategory5 : ItemCategory! = ItemCategory()
-        sampleCategory5.name = SWLocalizedString("Buns")
-        sampleCategory5.color = UIColor.init(red: 1, green: 0, blue: 0.9568, alpha: 1)
-        
-        self.categoriesDAO.addCategory(sampleCategory5, save: true)
+        self.categoriesDAO.addCategoryForName(SWLocalizedString("Buns"), color: UIColor.init(red: 1, green: 0, blue: 0.9568, alpha: 1), save: true)
     }
     
     /*

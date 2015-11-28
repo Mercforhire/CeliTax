@@ -39,6 +39,8 @@
     {
         [self.lookAndFeel applySlightlyDarkerBorderTo: subview];
     }
+    
+    [self.lookAndFeel applyGrayBorderTo: self.pickButton];
 }
 
 - (IBAction) colorBoxPressed: (UIButton *) sender

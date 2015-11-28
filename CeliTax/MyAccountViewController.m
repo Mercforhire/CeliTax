@@ -755,7 +755,7 @@
 -(void)avgHelpClicked
 {
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Help", nil)
-                                                      message:NSLocalizedString(@"You must first enter the average cost of a regular non gluten-free item in order to calculate your tax claim. Currently there are no set benchmarks assigned to food items by the government. Please check your local grocery stores, online or consult your accountant to determine an appropriate average cost.", nil)
+                                                      message:NSLocalizedString(@"You must enter the average cost of a regular non-GF item first in order to calculate your tax claim. Currently there are no set benchmarks assigned to food items by the government. Please check your local grocery stores, online or consult your accountant to determine an appropriate average cost.", nil)
                                                      delegate:nil
                                             cancelButtonTitle:nil
                                             otherButtonTitles:NSLocalizedString(@"Ok", nil),nil];
@@ -1385,7 +1385,7 @@ typedef NS_ENUM(NSUInteger, TutorialSteps)
     
     TutorialStep *tutorialStep19 = [TutorialStep new];
     
-    tutorialStep19.text = NSLocalizedString(@"Calculating your GF tax claim is easy, just be sure to enter an average non-GF cost equivelant first for each category.", nil);
+    tutorialStep19.text = NSLocalizedString(@"Calculating your GF tax claim is easy, just be sure to enter an average non-GF cost equivalent first for each category.", nil);
     tutorialStep19.leftButtonTitle = NSLocalizedString(@"Back", nil);
     tutorialStep19.rightButtonTitle = NSLocalizedString(@"Continue", nil);
     

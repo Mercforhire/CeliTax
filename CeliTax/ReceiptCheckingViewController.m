@@ -836,7 +836,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
     if ([self calculateNumberOfRecords] > 0)
     {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Delete this receipt", nil)
-                                                          message: NSLocalizedString(@"Are you sure you want delete this receipt along with all its items?", nil)
+                                                          message: NSLocalizedString(@"Are you sure you want to delete this receipt along with all of its allocated items?", nil)
                                                          delegate: self
                                                 cancelButtonTitle: NSLocalizedString(@"No", nil)
                                                 otherButtonTitles: NSLocalizedString(@"Yes", nil), nil];
@@ -991,7 +991,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
     {
         self.waitView = [[MBProgressHUD alloc] initWithView: self.view];
         self.waitView.labelText = NSLocalizedString(@"Please wait", nil);
-        self.waitView.detailsLabelText = NSLocalizedString(@"Downloading Images...", nil);
+        self.waitView.detailsLabelText = NSLocalizedString(@"Downloading images...", nil);
         self.waitView.mode = MBProgressHUDModeIndeterminate;
         [self.view addSubview: self.waitView];
     }
@@ -1432,7 +1432,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
         else
         {
             UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Delete last receipt image", nil)
-                                                              message: NSLocalizedString(@"Are you sure you want delete this receipt along with all its items?", nil)
+                                                              message: NSLocalizedString(@"Are you sure you want to delete this receipt along with all of its allocated items?", nil)
                                                              delegate: self
                                                     cancelButtonTitle: NSLocalizedString(@"No", nil)
                                                     otherButtonTitles: NSLocalizedString(@"Yes", nil), nil];

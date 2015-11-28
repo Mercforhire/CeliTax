@@ -11,7 +11,7 @@ import Foundation
 @objc
 class AlertDialogsProvider : NSObject //TODO: Remove Subclass to NSObject when the entire app has been converted to Swift
 {
-    static func handlerAlert(title : String, message : String, action actions : [UIAlertAction]?)
+    static func handlerAlert(title : String?, message : String, action actions : [UIAlertAction]?)
     {
         let alertController : UIAlertController = UIAlertController.init(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         
@@ -39,11 +39,11 @@ class AlertDialogsProvider : NSObject //TODO: Remove Subclass to NSObject when t
         topController.presentViewController(alertController, animated: true, completion: nil)
     }
     
-    static func showWorkInProgressDialog()
-    {
-        let message : UIAlertView = UIAlertView.init(title: "Sorry", message: "Feature work in progress", delegate: nil, cancelButtonTitle: nil, otherButtonTitles: "Ok")
-        
-        message.show()
-    }
+//    static func showWorkInProgressDialog()
+//    {
+//        let message : UIAlertView = UIAlertView.init(title: "Sorry", message: "Feature work in progress", delegate: nil, cancelButtonTitle: nil, otherButtonTitles: "Ok")
+//        
+//        message.show()
+//    }
     
 }

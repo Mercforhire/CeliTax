@@ -23,7 +23,7 @@
 {
     [self.titleLabel setText:NSLocalizedString(@"Password Recovery", nil)];
     
-    [self.instructionsLabel setText:NSLocalizedString(@"Thank you, an email has been sent with recovery options", nil)];
+    [self.instructionsLabel setText:NSLocalizedString(@"Thank you, an email has been sent to you with a recovery link", nil)];
     
     [self.returnToLoginButton setLookAndFeel:self.lookAndFeel];
     [self.returnToLoginButton setTitle:NSLocalizedString(@"Return to Login", nil) forState:UIControlStateNormal];

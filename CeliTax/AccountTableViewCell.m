@@ -17,7 +17,7 @@
     
     [self.totalQtyLabel setText:NSLocalizedString(@"Total Qty.", nil)];
     [self.totalAmountLabel setText:NSLocalizedString(@"Total", nil)];
-    [self.avgPriceLabel setText:NSLocalizedString(@"Avg $ / non-GF", nil)];
+    [self.avgPriceLabel setText:NSLocalizedString(@"Avg $ / Non-GF", nil)];
 }
 
 - (void) setSelected: (BOOL) selected animated: (BOOL) animated

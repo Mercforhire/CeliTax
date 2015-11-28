@@ -16,8 +16,21 @@
 #import "LoginViewController.h"
 #import "ProfileSettingsViewController.h"
 #import "MBProgressHUD.h"
+#import "Reachability.h"
 
 #import "CeliTax-Swift.h"
+
+static Reachability *_reachability = nil;
+BOOL _reachabilityOn;
+
+static inline Reachability* defaultReachability () {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _reachability = [Reachability reachabilityForInternetConnection];
+    });
+    
+    return _reachability;
+}
 
 @interface BaseSideBarViewController () <CDRTranslucentSideBarDelegate, SideMenuViewProtocol>
 
@@ -178,6 +191,40 @@
     [self.navigationController pushViewController: [self.viewControllerFactory createProfileSettingsViewController] animated: YES];
 }
 
+- (void)checkForInternetConnectivityAndLogOff
+{
+    // called after network status changes
+    NetworkStatus internetStatus = [defaultReachability() currentReachabilityStatus];
+    
+    if (internetStatus == NotReachable)
+    {
+        // ask user if they are sure they want to log off
+        NSString *alertMessage = NSLocalizedString(@"There appears to be no internet connection. If you logout while offline you will not be able to login until there is a connection", nil);
+        NSString *alertCancel = NSLocalizedString(@"Cancel", nil);
+        NSString *alertYes = NSLocalizedString(@"Log Off", nil);
+        
+        //create the alert items
+        
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:alertCancel style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+        }];
+        
+        UIAlertAction *logOffAction = [UIAlertAction actionWithTitle:alertYes style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+            [self logOffToLoginView];
+            
+        }];
+        
+        NSArray<UIAlertAction*>* alertActions = @[cancelAction, logOffAction];
+        
+        [AlertDialogsProvider handlerAlert:nil message:alertMessage action:alertActions];
+    }
+    else
+    {
+        [self logOffToLoginView];
+    }
+}
+
 #pragma mark - LeftSideMenuViewProtocol
 - (void) selectedMenuIndex: (NSInteger) index
 {
@@ -330,7 +377,7 @@
                 }
                 else
                 {
-                    [self logOffToLoginView];
+                    [self checkForInternetConnectivityAndLogOff];
                 }
                 
             });

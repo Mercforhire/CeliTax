@@ -277,7 +277,7 @@
 -(void)showSavingWarningDialog
 {
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Notice", nil)
-                                                      message:NSLocalizedString(@"The total average price should not be higher than the actual total spent, please check to see if the correct average price was entered.", nil)
+                                                      message:NSLocalizedString(@"The total average price should not be higher than the actual price spent, please check to see if the correct average price has been entered.", nil)
                                                      delegate:nil
                                             cancelButtonTitle:nil
                                             otherButtonTitles:NSLocalizedString(@"Ok", nil),nil];

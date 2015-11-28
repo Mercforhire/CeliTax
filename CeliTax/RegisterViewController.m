@@ -36,6 +36,8 @@
 
 @property (strong, nonatomic) NSString *country;
 
+@property (weak, nonatomic) IBOutlet UIButton *termsButton;
+
 @property (weak, nonatomic) IBOutlet M13Checkbox *agreeCheckBox;
 
 @end
@@ -75,12 +77,15 @@
     [self.doneButton setLookAndFeel:self.lookAndFeel];
     [self.doneButton setTitle:NSLocalizedString(@"Create Account", nil) forState:UIControlStateNormal];
     
+    [self.termsButton setTitle:NSLocalizedString(@"Terms and Conditions", nil) forState:UIControlStateNormal];
+    
     (self.agreeCheckBox.titleLabel).font = [UIFont latoFontOfSize: 13];
     (self.agreeCheckBox.titleLabel).textColor = [UIColor blackColor];
     (self.agreeCheckBox).strokeColor = [UIColor grayColor];
     (self.agreeCheckBox).checkColor = self.lookAndFeel.appGreenColor;
     (self.agreeCheckBox).checkAlignment = M13CheckboxAlignmentLeft;
-    [self.agreeCheckBox.titleLabel setText: NSLocalizedString(@"I agree to the terms and conditions", nil)];
+    [self.agreeCheckBox.titleLabel setNumberOfLines:2];
+    [self.agreeCheckBox.titleLabel setText: NSLocalizedString(@"I have read and agree with the terms and conditions", nil)];
 }
 
 - (void) viewDidLoad
@@ -233,7 +238,7 @@
 
         UIAlertView *message = [[UIAlertView alloc]
                                     initWithTitle: NSLocalizedString(@"Welcome", nil)
-                                          message: NSLocalizedString(@"Please log in with your new account", nil)
+                                          message: NSLocalizedString(@"Please login with your new account", nil)
                                          delegate: nil
                                 cancelButtonTitle: nil
                                 otherButtonTitles: NSLocalizedString(@"Ok", nil), nil];
@@ -250,7 +255,7 @@
         
         if ([registerResult.message isEqualToString: AuthenticationService.USER_ALREADY_EXIST])
         {
-            errorMessage = NSLocalizedString(@"The email address is already used by another account. Please use a different email address", nil);
+            errorMessage = NSLocalizedString(@"This email address is already used by another account. Please use a different email address", nil);
         }
         else
         {
@@ -307,6 +312,11 @@
         (self.canadaButton).alpha = 0.2;
         (self.usaButton).alpha = 1;
     }
+}
+
+- (IBAction)termsAndConditionsPressed:(UIButton *)sender
+{
+    [Utils OpenLink:@"http://celitax.ca/terms_of_service.html"];
 }
 
 #pragma mark - UITextFieldDelegate

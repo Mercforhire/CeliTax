@@ -285,7 +285,7 @@
         [self.waitView hide: YES];
         
         UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
-                                                          message: NSLocalizedString(@"Password should be at least 6 characters", nil)
+                                                          message: NSLocalizedString(@"Password should be at least 6 characters long", nil)
                                                          delegate: nil
                                                 cancelButtonTitle: nil
                                                 otherButtonTitles: NSLocalizedString(@"Ok", nil), nil];
@@ -341,7 +341,7 @@
         [self.waitView hide: YES];
         
         UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
-                                                          message: NSLocalizedString(@"The new email is same as the original email", nil)
+                                                          message: NSLocalizedString(@"This new email is the same as the original email", nil)
                                                          delegate: nil
                                                 cancelButtonTitle: nil
                                                 otherButtonTitles: NSLocalizedString(@"Ok", nil), nil];
@@ -386,7 +386,7 @@
             
             if ([reason isEqualToString: AuthenticationService.USER_CHANGE_EMAIL_ALREADY_EXIST])
             {
-                errorMessage = NSLocalizedString(@"The email address is already used by another account. Please use a different email address", nil);
+                errorMessage = NSLocalizedString(@"This email address is already used by another account. Please use a different email address", nil);
             }
             else
             {
@@ -462,7 +462,7 @@
 - (IBAction)deactivateConfirmationPressed:(UIButton *)sender
 {
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Are you sure?", nil)
-                                                      message:NSLocalizedString(@"Do you really want to delete your account and all data?", nil)
+                                                      message:NSLocalizedString(@"Do you really want to permanently delete your account and all data?", nil)
                                                      delegate:self
                                             cancelButtonTitle:NSLocalizedString(@"No", nil)
                                             otherButtonTitles:NSLocalizedString(@"Confirm", nil),nil];

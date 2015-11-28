@@ -29,23 +29,13 @@ typedef NS_ENUM(NSUInteger, Languages) {
 @property (weak, nonatomic) IBOutlet ProfileBarView *profileBarView;
 @property (weak, nonatomic) IBOutlet UIButton *profileSettingsButton;
 @property (weak, nonatomic) IBOutlet UIButton *loginSettingsButton;
-@property (weak, nonatomic) IBOutlet UILabel *languageLabel;
-@property (weak, nonatomic) IBOutlet M13Checkbox *englishLanguageCheckBox;
-@property (weak, nonatomic) IBOutlet M13Checkbox *frenchLanguageCheckBox;
-@property (weak, nonatomic) IBOutlet M13Checkbox *spanishLanguageCheckBox;
 @property (weak, nonatomic) IBOutlet UILabel *unitsLabel;
 @property (weak, nonatomic) IBOutlet SolidGreenButton *metricUnitButton;
 @property (weak, nonatomic) IBOutlet SolidGreenButton *imperialUnitButton;
 @property (weak, nonatomic) IBOutlet UIButton *aboutButton;
-@property (weak, nonatomic) IBOutlet UIButton *faqButton;
 @property (weak, nonatomic) IBOutlet UILabel *subscriptionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subscriptionStatusLabel;
 @property (weak, nonatomic) IBOutlet SolidGreenButton *purchaseButton;
-
-@property (weak, nonatomic) IBOutlet SolidGreenButton *backupNowButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *backupNowButtonWidth;
-@property (weak, nonatomic) IBOutlet UILabel *lastBackUpLabel;
-@property (weak, nonatomic) IBOutlet SolidGreenButton *insertDemoButton;
 
 @end
 
@@ -72,33 +62,7 @@ typedef NS_ENUM(NSUInteger, Languages) {
                                             action: @selector(profileSettingsPressed:)];
     [self.profileBarView.nameLabel addGestureRecognizer: profileImageViewTap2];
     
-    (self.englishLanguageCheckBox.titleLabel).font = [UIFont latoFontOfSize: 14];
-    (self.englishLanguageCheckBox.titleLabel).textColor = [UIColor darkGrayColor];
-    (self.englishLanguageCheckBox).strokeColor = [UIColor grayColor];
-    (self.englishLanguageCheckBox).checkColor = [UIColor clearColor];
-    (self.englishLanguageCheckBox).uncheckedColor = [UIColor clearColor];
-    (self.englishLanguageCheckBox).tintColor = self.lookAndFeel.appGreenColor;
-    (self.englishLanguageCheckBox).checkAlignment = M13CheckboxAlignmentLeft;
-    
-    (self.frenchLanguageCheckBox.titleLabel).font = [UIFont latoFontOfSize: 14];
-    (self.frenchLanguageCheckBox.titleLabel).textColor = [UIColor darkGrayColor] ;
-    (self.frenchLanguageCheckBox).strokeColor = [UIColor grayColor];
-    (self.frenchLanguageCheckBox).checkColor = [UIColor clearColor];
-    (self.frenchLanguageCheckBox).uncheckedColor = [UIColor clearColor];
-    (self.frenchLanguageCheckBox).tintColor = self.lookAndFeel.appGreenColor;
-    (self.frenchLanguageCheckBox).checkAlignment = M13CheckboxAlignmentLeft;
-    
-    (self.spanishLanguageCheckBox.titleLabel).font = [UIFont latoFontOfSize: 14];
-    (self.spanishLanguageCheckBox.titleLabel).textColor = [UIColor darkGrayColor] ;
-    (self.spanishLanguageCheckBox).strokeColor = [UIColor grayColor];
-    (self.spanishLanguageCheckBox).checkColor = [UIColor clearColor];
-    (self.spanishLanguageCheckBox).uncheckedColor = [UIColor clearColor];
-    (self.spanishLanguageCheckBox).tintColor = self.lookAndFeel.appGreenColor;
-    (self.spanishLanguageCheckBox).checkAlignment = M13CheckboxAlignmentLeft;
-    
     [self.purchaseButton setLookAndFeel:self.lookAndFeel];
-    [self.backupNowButton setLookAndFeel:self.lookAndFeel];
-    [self.insertDemoButton setLookAndFeel:self.lookAndFeel];
     
     [self.metricUnitButton setLookAndFeel:self.lookAndFeel];
     [self.imperialUnitButton setLookAndFeel:self.lookAndFeel];
@@ -110,13 +74,8 @@ typedef NS_ENUM(NSUInteger, Languages) {
 {
     [self.titleLabel setText:NSLocalizedString(@"Settings", nil)];
     
-    [self.englishLanguageCheckBox.titleLabel setText: NSLocalizedString(@"English", nil)];
-    [self.frenchLanguageCheckBox.titleLabel setText: NSLocalizedString(@"French", nil)];
-    [self.spanishLanguageCheckBox.titleLabel setText: NSLocalizedString(@"Spanish", nil)];
-    
     [self.profileSettingsButton setTitle:NSLocalizedString(@"Profile Settings", nil) forState:UIControlStateNormal];
     [self.loginSettingsButton setTitle:NSLocalizedString(@"Login Settings", nil) forState:UIControlStateNormal];
-    [self.languageLabel setText:NSLocalizedString(@"Language:", nil)];
     
     [self.unitsLabel setText:NSLocalizedString(@"Units:", nil)];
     [self.metricUnitButton setTitle:NSLocalizedString(@"Metric", nil)
@@ -126,7 +85,6 @@ typedef NS_ENUM(NSUInteger, Languages) {
                              forState:UIControlStateNormal];
     
     [self.aboutButton setTitle:NSLocalizedString(@"About", nil) forState:UIControlStateNormal];
-    [self.faqButton setTitle:NSLocalizedString(@"FAQ", nil) forState:UIControlStateNormal];
     
     [self.subscriptionLabel setText:NSLocalizedString(@"Subscription:", nil)];
     [self.purchaseButton setTitle:NSLocalizedString(@"Purchase", nil) forState:UIControlStateNormal];
@@ -138,18 +96,6 @@ typedef NS_ENUM(NSUInteger, Languages) {
     // Do any additional setup after loading the view from its nib.
     
     [self setupUI];
-    
-    [self.englishLanguageCheckBox addTarget: self
-                                     action: @selector(languageCheckBoxChanged:)
-                           forControlEvents: UIControlEventTouchUpInside];
-    
-    [self.frenchLanguageCheckBox addTarget: self
-                                     action: @selector(languageCheckBoxChanged:)
-                           forControlEvents: UIControlEventTouchUpInside];
-    
-    [self.spanishLanguageCheckBox addTarget: self
-                                     action: @selector(languageCheckBoxChanged:)
-                           forControlEvents: UIControlEventTouchUpInside];
     
     [self selectUnitSystem];
     
@@ -194,22 +140,6 @@ typedef NS_ENUM(NSUInteger, Languages) {
     else
     {
         (self.subscriptionStatusLabel).text = [NSString stringWithFormat:NSLocalizedString(@"Expired on: %@", nil), self.userManager.user.subscriptionExpirationDate];
-    }
-    
-    //set up the last synced date label
-    NSDate *lastUploadDate = [self.syncManager getLastBackUpDate];
-    
-    [self setLastBackUpLabelDate:lastUploadDate];
-    
-    if ([self.syncManager needToBackUp])
-    {
-        [self.backupNowButton setEnabled:YES];
-        [self.backupNowButton setTitle:@"Sync" forState:UIControlStateNormal];
-    }
-    else
-    {
-        [self.backupNowButton setEnabled:NO];
-        [self.backupNowButton setTitle:@"Up to Date" forState:UIControlStateNormal];
     }
 }
 
@@ -265,65 +195,20 @@ typedef NS_ENUM(NSUInteger, Languages) {
     switch (language)
     {
         case LanguageEnglish:
-            (self.englishLanguageCheckBox).checkState = M13CheckboxStateChecked;
-            (self.frenchLanguageCheckBox).checkState = M13CheckboxStateUnchecked;
-            (self.spanishLanguageCheckBox).checkState = M13CheckboxStateUnchecked;
-            
             [[LocalizationManager sharedInstance] changeLanguage:@"en"];
             break;
             
         case LanguageFrench:
-            (self.englishLanguageCheckBox).checkState = M13CheckboxStateUnchecked;
-            (self.frenchLanguageCheckBox).checkState = M13CheckboxStateChecked;
-            (self.spanishLanguageCheckBox).checkState = M13CheckboxStateUnchecked;
-            
             [[LocalizationManager sharedInstance] changeLanguage:@"fr"];
             break;
             
         case LanguageSpanish:
-            (self.englishLanguageCheckBox).checkState = M13CheckboxStateUnchecked;
-            (self.frenchLanguageCheckBox).checkState = M13CheckboxStateUnchecked;
-            (self.spanishLanguageCheckBox).checkState = M13CheckboxStateChecked;
-            
             [[LocalizationManager sharedInstance] changeLanguage:@"es"];
             break;
             
         default:
             break;
     }
-}
-
--(void)languageCheckBoxChanged:(M13Checkbox *)checkbox
-{
-    if (checkbox == self.englishLanguageCheckBox)
-    {
-        [self setLanguageTo:LanguageEnglish];
-    }
-    else if (checkbox == self.frenchLanguageCheckBox)
-    {
-        [self setLanguageTo:LanguageFrench];
-    }
-    else if (checkbox == self.spanishLanguageCheckBox)
-    {
-        [self setLanguageTo:LanguageSpanish];
-    }
-}
-
--(void)setLastBackUpLabelDate:(NSDate *)date
-{
-    if (!date)
-    {
-        self.lastBackUpLabel.text = NSLocalizedString(@"Last synced: Never", nil);
-        
-        return;
-    }
-    
-    NSDateFormatter *gmtDateFormatter = [[NSDateFormatter alloc] init];
-    gmtDateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-    gmtDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-    NSString *dateStringFromUploadDate = [gmtDateFormatter stringFromDate:date];
-    
-    (self.lastBackUpLabel).text = [NSString stringWithFormat:NSLocalizedString(@"Last synced: %@", nil), dateStringFromUploadDate];
 }
 
 - (IBAction)profileSettingsPressed:(id)sender
@@ -351,73 +236,9 @@ typedef NS_ENUM(NSUInteger, Languages) {
     [Utils OpenLink:@"http://celitax.ca/about.html"];
 }
 
-- (IBAction)faqPressed:(UIButton *)sender
-{
-    
-}
-
 - (IBAction)purchasePressed:(SolidGreenButton *)sender
 {
     [self.navigationController pushViewController: [self.viewControllerFactory createSubscriptionViewController] animated: YES];
-}
-
-- (IBAction)insertDemoDataPressed:(UIButton *)sender
-{
-    [self.insertDemoButton setEnabled:NO];
-    [self.insertDemoButton setTitle:@"Generating..." forState:UIControlStateNormal];
-    
-    [self.syncService insertDemoData:^{
-        
-        [self.insertDemoButton setTitle:@"Demo Data Generated" forState:UIControlStateNormal];
-        [self.insertDemoButton setEnabled:YES];
-        
-    }];
-}
-
-- (IBAction)backupPressed:(UIButton *)sender
-{
-    [self.backupNowButton setEnabled:NO];
-    [self.backupNowButton setTitle:@"Syncing..." forState:UIControlStateNormal];
-    
-    [self.syncManager startSync:^(NSDate *syncDate)
-    {
-         [self.syncManager startUploadingPhotos:^{
-             
-             //disable the Backup Now Button
-             [self.backupNowButton setEnabled:NO];
-             [self.backupNowButton setTitle:@"Synced" forState:UIControlStateNormal];
-             
-             [self setLastBackUpLabelDate:syncDate];
-             
-         } failure:^(NSString * _Nonnull reason) {
-             
-             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                 message:reason
-                                                                delegate:nil
-                                                       cancelButtonTitle:nil
-                                                       otherButtonTitles:@"Dismiss",nil];
-             
-             [alertView show];
-             
-             [self.backupNowButton setEnabled:YES];
-             [self.backupNowButton setTitle:@"Sync" forState:UIControlStateNormal];
-             
-         }];
-        
-    } failure:^(NSString *reason) {
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                            message:reason
-                                                           delegate:nil
-                                                  cancelButtonTitle:nil
-                                                  otherButtonTitles:@"Dismiss",nil];
-        
-        [alertView show];
-        
-        [self.backupNowButton setEnabled:YES];
-        [self.backupNowButton setTitle:@"Sync" forState:UIControlStateNormal];
-        
-    }];
 }
 
 @end

@@ -220,7 +220,7 @@
     }
     else
     {
-        NSString *errorMessage = NSLocalizedString(@"Please enter your account's email's address and password to log in", nil);
+        NSString *errorMessage = NSLocalizedString(@"Please enter your account's email address and password to login", nil);
         
         UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
                                                           message: errorMessage

@@ -289,7 +289,7 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
     if ([self.existingTaxYears containsObject:self.taxYearToAdd])
     {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)
-                                                          message:NSLocalizedString(@"Can not add a duplicate tax year", nil)
+                                                          message:NSLocalizedString(@"Unable to add a duplicate tax year", nil)
                                                          delegate:nil
                                                 cancelButtonTitle:nil
                                                 otherButtonTitles:NSLocalizedString(@"Dismiss", nil),nil];
@@ -612,7 +612,7 @@ typedef NS_ENUM(NSUInteger, TimePeriodSelections)
 
 - (IBAction)deleteButtonPressed:(UIButton *)sender
 {
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Delete selected receipts", nil)
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Delete selected receipts?", nil)
                                                       message: NSLocalizedString(@"Are you sure you want delete the selected receipts along with all their items?", nil)
                                                      delegate: self
                                             cancelButtonTitle: NSLocalizedString(@"No", nil)

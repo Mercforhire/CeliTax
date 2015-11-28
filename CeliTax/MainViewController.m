@@ -227,7 +227,7 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
     if (!self.userManager.doNotShowDisclaimer)
     {
         NSString *alertTitle = NSLocalizedString(@"Notice", nil);
-        NSString *alertMessage = NSLocalizedString(@"CeliTax is to be used as a resource tool only! CeliTax is in no way responsible for the accuracy of your tax return. Consult your accountant for all tax related inquiries. Cheers!", nil);
+        NSString *alertMessage = NSLocalizedString(@"CeliTax is to be used as a resource tool only! CeliTax is not responsible for the accuracy of your tax return. Please consult your accountant for all tax related inquiries. Cheers!", nil);
         NSString *alertNever = NSLocalizedString(@"Never show again", nil);
         NSString *alertLater = NSLocalizedString(@"Dismiss", nil);
         
@@ -305,7 +305,7 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
         else
         {
             NSString *alertTitle = NSLocalizedString(@"Download", nil);
-            NSString *alertMessage = NSLocalizedString(@"The server contains some saved receipt data. Do you want to download and merge the data to the app?", nil);
+            NSString *alertMessage = NSLocalizedString(@"The server contains saved receipt data that is not on your device. Do you want to download and merge the data to your device?", nil);
             NSString *alertNo = NSLocalizedString(@"No", nil);
             NSString *alertYes = NSLocalizedString(@"Yes", nil);
             
@@ -325,6 +325,12 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
             NSArray<UIAlertAction*>* alertActions = @[noAction, yesAction];
             [AlertDialogsProvider handlerAlert:alertTitle message:alertMessage action:alertActions];
         }
+        
+    } noNeedUpdate:^{
+        
+        // Go to step 5
+        [self createPreloadedCategories];
+        
     }];
 }
 
@@ -403,7 +409,7 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
     if ([self.existingTaxYears containsObject:self.taxYearToAdd])
     {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", nil)
-                                                          message:NSLocalizedString(@"Can not add a duplicate tax year", nil)
+                                                          message:NSLocalizedString(@"Unable to add a duplicate tax year", nil)
                                                          delegate:nil
                                                 cancelButtonTitle:nil
                                                 otherButtonTitles:NSLocalizedString(@"Dismiss", nil),nil];
@@ -482,7 +488,7 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
     {
         // ask user if they want to download data from server
         NSString *alertTitle = NSLocalizedString(@"Sorry", nil);
-        NSString *alertMessage = NSLocalizedString(@"The subscription for this account has expired. Would you like to purchases a new subscription?", nil);
+        NSString *alertMessage = NSLocalizedString(@"The subscription for this account has expired. Would you like to purchase a new subscription?", nil);
         NSString *alertNo = NSLocalizedString(@"No", nil);
         NSString *alertPurchase = NSLocalizedString(@"Purchase", nil);
         

@@ -13,8 +13,6 @@
 
 #import "CeliTax-Swift.h"
 
-#define KTelephoneNumber        @"905-583-5353"
-
 @interface HelpScreenViewController () <UITextViewDelegate>
 {
     BOOL justStartedEditing;

@@ -27,6 +27,7 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
     typealias DownloadFileFailureBlock = (filesnamesFailedToDownload : [String]) -> Void
     
     typealias NeedsUpdateBlock = () -> Void
+    typealias DoesntNeedsUpdateBlock = () -> Void
     
     private weak var userManager : UserManager!
     private weak var syncService : SyncService!
@@ -82,7 +83,7 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
     /*
     Check if the local saved data hash ID matches the server's data's hash ID
     */
-    func checkUpdate(needsUpdate : NeedsUpdateBlock?)
+    func checkUpdate(needsUpdate : NeedsUpdateBlock?, noNeedUpdate : DoesntNeedsUpdateBlock?)
     {
         let localDataBatchID : String? = self.syncService.getLocalDataBatchID()
         
@@ -107,6 +108,11 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
                 
                 }, failure: { (reason : String) in
                     dLog("Server has no data to download or failed to check update.")
+                    
+                    if (noNeedUpdate != nil)
+                    {
+                        noNeedUpdate!()
+                    }
             })
         }
         else
@@ -129,11 +135,22 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
                         needsUpdate!()
                     }
                 }
+                else
+                {
+                    if (noNeedUpdate != nil)
+                    {
+                        noNeedUpdate!()
+                    }
+                }
                 
                 self.downloadMissingImages()
                 
                 }, failure:{ (reason) in
                     //serer has no data
+                    if (noNeedUpdate != nil)
+                    {
+                        noNeedUpdate!()
+                    }
             })
         }
     }
