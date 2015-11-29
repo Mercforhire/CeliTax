@@ -822,11 +822,6 @@ typedef NS_ENUM(NSUInteger, TextFieldTypes)
     [self stopEditing];
 }
 
-- (void) stopEditing
-{
-    [self.view endEditing: YES];
-}
-
 - (void) cancelPressed
 {
     // if the user has added at least one item, show a confirmation dialog,

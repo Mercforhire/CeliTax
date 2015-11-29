@@ -28,4 +28,6 @@
 
 @property (nonatomic, weak) SubscriptionManager *subscriptionManager;
 
+- (void) stopEditing;
+
 @end

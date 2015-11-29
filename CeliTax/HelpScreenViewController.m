@@ -92,11 +92,6 @@
                                              selector: @selector(keyboardWillHide:)
                                                  name: UIKeyboardWillHideNotification
                                                object: nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(stopEditing)
-                                                 name: Notifications.kStopEditingFieldsNotification
-                                               object: nil];
 }
 
 - (void) viewWillDisappear: (BOOL) animated
@@ -110,10 +105,6 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver: self
                                                     name: UIKeyboardWillHideNotification
-                                                  object: nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver: self
-                                                    name: Notifications.kStopEditingFieldsNotification
                                                   object: nil];
 }
 
@@ -176,11 +167,6 @@
         
         [self.waitView hide: YES];
     }];
-}
-
--(void)stopEditing
-{
-    [self.view endEditing: YES];
 }
 
 #pragma mark - UIKeyboardWillShowNotification / UIKeyboardWillHideNotification events

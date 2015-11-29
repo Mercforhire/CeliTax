@@ -211,10 +211,6 @@
                                                  name: UIKeyboardWillHideNotification
                                                object: nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(stopEditing)
-                                                 name: Notifications.kStopEditingFieldsNotification
-                                               object: nil];
 
     // load user info
     (self.profileBarView.nameLabel).text = [NSString stringWithFormat: @"%@ %@", self.userManager.user.firstname, self.userManager.user.lastname];
@@ -524,10 +520,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver: self
                                                     name: UIKeyboardWillHideNotification
                                                   object: nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver: self
-                                                    name: Notifications.kStopEditingFieldsNotification
-                                                  object: nil];
 }
 
 #pragma mark - View Controller functions
@@ -639,11 +631,6 @@
     _currentlySelectedCategory = currentlySelectedCategory;
     
     [self.accountTableView reloadData];
-}
-
--(void)stopEditing
-{
-    [self.view endEditing: YES];
 }
 
 #pragma mark - UIKeyboardWillShowNotification / UIKeyboardWillHideNotification events

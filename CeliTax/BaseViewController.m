@@ -30,4 +30,29 @@
     }
 }
 
+- (void) viewWillAppear: (BOOL) animated
+{
+    [super viewWillAppear: animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(stopEditing)
+                                                 name: Notifications.kStopEditingFieldsNotification
+                                               object: nil];
+}
+
+- (void) viewWillDisappear: (BOOL) animated
+{
+    [super viewWillDisappear: animated];
+    
+    // unregister for keyboard notifications while not visible.
+    [[NSNotificationCenter defaultCenter] removeObserver: self
+                                                    name: Notifications.kStopEditingFieldsNotification
+                                                  object: nil];
+}
+
+- (void) stopEditing
+{
+    [self.view endEditing: YES];
+}
+
 @end
