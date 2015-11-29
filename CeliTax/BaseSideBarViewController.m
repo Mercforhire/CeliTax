@@ -34,7 +34,7 @@ static inline Reachability* defaultReachability () {
 
 @interface BaseSideBarViewController () <CDRTranslucentSideBarDelegate, SideMenuViewProtocol>
 
-@property (strong, nonatomic) MBProgressHUD *waitView;
+@property (strong, nonatomic) MBProgressHUD *waitViewUpload;
 
 @end
 
@@ -155,24 +155,24 @@ static inline Reachability* defaultReachability () {
 
 - (void) createAndShowWaitViewForUpload
 {
-    if (!self.waitView)
+    if (!self.waitViewUpload)
     {
-        self.waitView = [[MBProgressHUD alloc] initWithView: self.view];
-        self.waitView.labelText = NSLocalizedString(@"Please wait", nil);
-        self.waitView.detailsLabelText = NSLocalizedString(@"Uploading Data...", nil);
-        self.waitView.mode = MBProgressHUDModeIndeterminate;
-        [self.view addSubview: self.waitView];
+        self.waitViewUpload = [[MBProgressHUD alloc] initWithView: self.view];
+        self.waitViewUpload.labelText = NSLocalizedString(@"Please wait", nil);
+        self.waitViewUpload.detailsLabelText = NSLocalizedString(@"Uploading Data...", nil);
+        self.waitViewUpload.mode = MBProgressHUDModeIndeterminate;
+        [self.view addSubview: self.waitViewUpload];
     }
     
-    [self.waitView show: YES];
+    [self.waitViewUpload show: YES];
 }
 
 -(void)hideWaitingView
 {
-    if (self.waitView)
+    if (self.waitViewUpload)
     {
         //hide the Waiting view
-        [self.waitView hide: YES];
+        [self.waitViewUpload hide: YES];
     }
 }
 

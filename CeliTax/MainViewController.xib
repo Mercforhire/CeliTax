@@ -44,7 +44,7 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="greenTrianglePointDown.png" translatesAutoresizingMaskIntoConstraints="NO" id="PUX-L9-4Oq" customClass="TriangleView">
+                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="greenTrianglePointDown.png" translatesAutoresizingMaskIntoConstraints="NO" id="PUX-L9-4Oq" customClass="TriangleView" customModule="CeliTax" customModuleProvider="target">
                     <rect key="frame" x="183" y="84" width="17" height="11"/>
                     <animations/>
                     <constraints>

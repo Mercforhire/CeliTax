@@ -17,7 +17,6 @@
 #import "SelectionsPickerViewController.h"
 #import "WYPopoverController.h"
 #import "ReceiptBreakDownViewController.h"
-#import "TriangleView.h"
 #import "LoginViewController.h"
 #import "NoItemsTableViewCell.h"
 #import "MBProgressHUD.h"

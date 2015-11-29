@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TriangleView.h"
+#import "CeliTax-Swift.h"
 
 @class LookAndFeel;
 

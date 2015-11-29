@@ -33,7 +33,6 @@
 		852FF89D1B79083A0033A6D9 /* canada_flag_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 852FF89C1B79083A0033A6D9 /* canada_flag_small.png */; };
 		8537A92B1B288B31000C848F /* camera_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8537A92A1B288B31000C848F /* camera_icon.png */; };
 		8537A92D1B289FB1000C848F /* pencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 8537A92C1B289FB1000C848F /* pencil.png */; };
-		8537A9311B28A851000C848F /* TriangleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8537A9301B28A851000C848F /* TriangleView.m */; };
 		8537A9351B293639000C848F /* ModifyCatagoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8537A9331B293639000C848F /* ModifyCatagoryTableViewCell.m */; };
 		8537A9361B293639000C848F /* ModifyCatagoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8537A9341B293639000C848F /* ModifyCatagoryTableViewCell.xib */; };
 		8537FFBE1B988E5D00F7802E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8537FFBD1B988E5D00F7802E /* Localizable.strings */; };
@@ -195,6 +194,7 @@
 		85C54B851B65A82500120961 /* ProfileBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85C54B821B65A82500120961 /* ProfileBarView.m */; };
 		85C7BD761BF66A8A00C85C5C /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7BD751BF66A8A00C85C5C /* UserManager.swift */; };
 		85CADB4D1C03ECBC00F34545 /* AlertDialogsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CADB4C1C03ECBC00F34545 /* AlertDialogsProvider.swift */; };
+		85D3E6B61C0B759F00B7B4DA /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D3E6B51C0B759F00B7B4DA /* TriangleView.swift */; };
 		85D8D8521AF873AA00197D85 /* AccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 85D8D8501AF873AA00197D85 /* AccountTableViewCell.m */; };
 		85D8D8531AF873AA00197D85 /* AccountTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85D8D8511AF873AA00197D85 /* AccountTableViewCell.xib */; };
 		85F485881B16D220005E0EDE /* SideMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85F485871B16D220005E0EDE /* SideMenuView.m */; };
@@ -246,8 +246,6 @@
 		852FF89C1B79083A0033A6D9 /* canada_flag_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canada_flag_small.png; sourceTree = "<group>"; };
 		8537A92A1B288B31000C848F /* camera_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera_icon.png; sourceTree = "<group>"; };
 		8537A92C1B289FB1000C848F /* pencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pencil.png; sourceTree = "<group>"; };
-		8537A92F1B28A851000C848F /* TriangleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriangleView.h; sourceTree = "<group>"; };
-		8537A9301B28A851000C848F /* TriangleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TriangleView.m; sourceTree = "<group>"; };
 		8537A9321B293639000C848F /* ModifyCatagoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyCatagoryTableViewCell.h; sourceTree = "<group>"; };
 		8537A9331B293639000C848F /* ModifyCatagoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyCatagoryTableViewCell.m; sourceTree = "<group>"; };
 		8537A9341B293639000C848F /* ModifyCatagoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModifyCatagoryTableViewCell.xib; sourceTree = "<group>"; };
@@ -477,6 +475,7 @@
 		85C54B831B65A82500120961 /* ProfileBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileBarView.h; sourceTree = "<group>"; };
 		85C7BD751BF66A8A00C85C5C /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		85CADB4C1C03ECBC00F34545 /* AlertDialogsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertDialogsProvider.swift; sourceTree = "<group>"; };
+		85D3E6B51C0B759F00B7B4DA /* TriangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
 		85D8D84F1AF873AA00197D85 /* AccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountTableViewCell.h; sourceTree = "<group>"; };
 		85D8D8501AF873AA00197D85 /* AccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountTableViewCell.m; sourceTree = "<group>"; };
 		85D8D8511AF873AA00197D85 /* AccountTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountTableViewCell.xib; sourceTree = "<group>"; };
@@ -613,8 +612,7 @@
 		8537A92E1B28A839000C848F /* Triangle */ = {
 			isa = PBXGroup;
 			children = (
-				8537A92F1B28A851000C848F /* TriangleView.h */,
-				8537A9301B28A851000C848F /* TriangleView.m */,
+				85D3E6B51C0B759F00B7B4DA /* TriangleView.swift */,
 			);
 			name = Triangle;
 			sourceTree = "<group>";
@@ -1740,6 +1738,7 @@
 				857902A51B2CF9A900C86662 /* ReceiptScrollView.m in Sources */,
 				859EA0DD1BE4700500D7B2EE /* Record.swift in Sources */,
 				858711831BE6CDE800774A2F /* ReceiptBuilder.swift in Sources */,
+				85D3E6B61C0B759F00B7B4DA /* TriangleView.swift in Sources */,
 				855D70C61B9600DE007615FC /* LoginSettingsViewController.m in Sources */,
 				85A8CAC71AF069EA0023504D /* AppDelegate.m in Sources */,
 				8562739A1B1B782600EECA26 /* PasswordRecoverySentViewController.m in Sources */,
@@ -1793,7 +1792,6 @@
 				85AD51DC1BF51AD9002EC8D2 /* UIViewExtension.swift in Sources */,
 				8556E35A1AF53233003CCDD2 /* SettingsViewController.m in Sources */,
 				858711911BE95BF100774A2F /* ManipulationService.swift in Sources */,
-				8537A9311B28A851000C848F /* TriangleView.m in Sources */,
 				858711811BE6C6E200774A2F /* TaxYearBuilder.swift in Sources */,
 				852299B01BEC44E100279F45 /* RecordsDAO.swift in Sources */,
 				853AF0491B41075B00B2C4D8 /* TransferSelectionsViewController.m in Sources */,
@@ -1949,10 +1947,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/CeliTax/CeliTax-Prefix.pch";
 				INFOPLIST_FILE = CeliTax/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1976,10 +1970,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);

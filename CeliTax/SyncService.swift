@@ -227,6 +227,8 @@ class SyncService : NSObject
     {
         let data : NSDictionary = self.userDataDAO.generateJSONToUploadToServer()
         
+        dLog(data.description)
+        
         for data in data.allValues
         {
             if let array = data as? NSArray
