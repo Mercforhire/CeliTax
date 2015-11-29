@@ -276,6 +276,8 @@
     [self.camera stop];
     
     [self.navigationBarTitleImageContainer setHidden:NO];
+    
+    self.navigationItem.hidesBackButton = YES;
 }
 
 #pragma mark - View Controller Functions

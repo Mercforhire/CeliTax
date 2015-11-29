@@ -224,6 +224,8 @@ class TutorialManager : NSObject //TODO: Remove Subclass to NSObject when the en
             return
         }
         
+        self.navigationController!.navigationBar.hidden = false
+        
         //Replace self.navigationController.viewControllers stack with a new MainViewController
         self.navigationController!.setViewControllers([self.factory.createMainViewController()], animated: true)
     }
