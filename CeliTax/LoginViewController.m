@@ -75,10 +75,6 @@
 
     self.emailField.delegate = self;
     self.passwordField.delegate = self;
-
-    //TODO: Remove DEMO CODE
-    self.emailField.text = @"leonchn84@gmail.com";
-    self.passwordField.text = @"123456";
 }
 
 - (void) viewWillAppear: (BOOL) animated

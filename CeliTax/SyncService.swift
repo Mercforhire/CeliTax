@@ -289,7 +289,7 @@ class SyncService : NSObject
         
         networkOperation.postDataEncoding = MKNKPostDataEncodingTypeURL
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler( { 
+        var bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler( { 
             
         })
         
@@ -315,6 +315,8 @@ class SyncService : NSObject
             })
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+            bgTask = UIBackgroundTaskInvalid
         }
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
@@ -329,6 +331,8 @@ class SyncService : NSObject
             })
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+            bgTask = UIBackgroundTaskInvalid
         }
         
         networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
@@ -345,9 +349,7 @@ class SyncService : NSObject
         
         networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler( { 
-            
-        })
+        var bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler ({ })
         
         let successBlock : MKNKResponseBlock =  { (completedOperation) in
             
@@ -468,6 +470,8 @@ class SyncService : NSObject
             }
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+            bgTask = UIBackgroundTaskInvalid
         }
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
@@ -480,6 +484,8 @@ class SyncService : NSObject
             })
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+            bgTask = UIBackgroundTaskInvalid
         }
         
         networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
@@ -496,7 +502,7 @@ class SyncService : NSObject
         
         networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ 
+        var bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ 
             
         })
         
@@ -531,6 +537,8 @@ class SyncService : NSObject
             }
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+            bgTask = UIBackgroundTaskInvalid
         }
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
@@ -545,6 +553,8 @@ class SyncService : NSObject
                 })
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+            bgTask = UIBackgroundTaskInvalid
         }
         
         networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
@@ -563,9 +573,7 @@ class SyncService : NSObject
         
         networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ 
-            
-        })
+        var bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ })
         
         let successBlock : MKNKResponseBlock = { (completedOperation) in
             
@@ -583,6 +591,8 @@ class SyncService : NSObject
             })
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+            bgTask = UIBackgroundTaskInvalid
         }
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
@@ -596,6 +606,8 @@ class SyncService : NSObject
             })
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+            bgTask = UIBackgroundTaskInvalid
         }
         
         networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
@@ -621,7 +633,7 @@ class SyncService : NSObject
         
         networkOperation.addData(data, forKey:"photos", mimeType:"image/jpeg", fileName:fileNameWithExtension)
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler( { 
+        var bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler( { 
             
         })
         
@@ -638,6 +650,8 @@ class SyncService : NSObject
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
             
+            bgTask = UIBackgroundTaskInvalid
+            
         }
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
@@ -652,6 +666,8 @@ class SyncService : NSObject
             })
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+            bgTask = UIBackgroundTaskInvalid
         }
         
         networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
@@ -855,9 +871,7 @@ class SyncService : NSObject
         
         networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ 
-            
-        })
+        var bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler ({ })
         
         let successBlock : MKNKResponseBlock = { (completedOperation) in
             
@@ -888,6 +902,8 @@ class SyncService : NSObject
             }
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+            bgTask = UIBackgroundTaskInvalid
         }
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
@@ -902,6 +918,8 @@ class SyncService : NSObject
             })
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+            bgTask = UIBackgroundTaskInvalid
         }
         
         networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
@@ -936,7 +954,7 @@ class SyncService : NSObject
         
         networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({
+        var bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({
             
         })
         
@@ -969,6 +987,8 @@ class SyncService : NSObject
             }
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+            bgTask = UIBackgroundTaskInvalid
         }
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
@@ -983,6 +1003,8 @@ class SyncService : NSObject
             })
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+            bgTask = UIBackgroundTaskInvalid
         }
         
         networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)

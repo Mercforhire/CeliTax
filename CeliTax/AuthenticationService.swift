@@ -380,9 +380,7 @@ class AuthenticationService : NSObject
         
         networkOperation.addData(imageData, forKey: "photos", mimeType: "image/jpeg", fileName: fileNameWithExtension)
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler { 
-            
-        }
+        var bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler { }
         
         let successBlock : MKNKResponseBlock  = { (completedOperation) in
             
@@ -396,6 +394,8 @@ class AuthenticationService : NSObject
                 })
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+            bgTask = UIBackgroundTaskInvalid
             
         }
         
@@ -411,6 +411,8 @@ class AuthenticationService : NSObject
                 })
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+            bgTask = UIBackgroundTaskInvalid
         }
         
         networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
@@ -429,9 +431,7 @@ class AuthenticationService : NSObject
         
         networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler { 
-                
-        }
+        var bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler {}
         
         let successBlock : MKNKResponseBlock = { (completedOperation) in
             
@@ -446,6 +446,7 @@ class AuthenticationService : NSObject
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
             
+            bgTask = UIBackgroundTaskInvalid
         }
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation) in
@@ -460,6 +461,8 @@ class AuthenticationService : NSObject
             })
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+            bgTask = UIBackgroundTaskInvalid
         }
         
         networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
@@ -517,9 +520,7 @@ class AuthenticationService : NSObject
         
         networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
         
-        let bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ 
-            
-        })
+        var bgTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ })
         
         let successBlock : MKNKResponseBlock = { (completedOperation) in
             
@@ -544,6 +545,8 @@ class AuthenticationService : NSObject
             }
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+            bgTask = UIBackgroundTaskInvalid
         }
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
@@ -557,6 +560,8 @@ class AuthenticationService : NSObject
             })
             
             UIApplication.sharedApplication().endBackgroundTask(bgTask)
+            
+            bgTask = UIBackgroundTaskInvalid
         }
         
         networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)

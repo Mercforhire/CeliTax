@@ -8,6 +8,7 @@
 
 #import "PasswordRecoverySentViewController.h"
 #import "HollowGreenButton.h"
+#import "PasswordRecoveryViewController.h"
 
 @interface PasswordRecoverySentViewController ()
 
@@ -37,12 +38,20 @@
     [self setupUI];
 
     // delete PasswordRecoveryViewController from navigation controllers stack
-    // TODO: make this less risky by targetting the PasswordRecoveryViewController to delete
     if (self.navigationController.viewControllers.count > 2)
     {
         NSArray *controllers = self.navigationController.viewControllers;
         NSMutableArray *newViewControllers = [NSMutableArray arrayWithArray: controllers];
-        [newViewControllers removeObject: controllers[self.navigationController.viewControllers.count - 2]];
+        
+        //find PasswordRecoveryViewController in the stack
+        for (UIViewController *viewController in controllers)
+        {
+            if ([viewController isKindOfClass:[PasswordRecoveryViewController class]])
+            {
+                [newViewControllers removeObject:viewController];
+            }
+        }
+        
         self.navigationController.viewControllers = newViewControllers;
     }
 }

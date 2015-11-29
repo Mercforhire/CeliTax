@@ -282,6 +282,8 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
                         
                         UIApplication.sharedApplication().endBackgroundTask(self.uploadImagesTask!)
                         
+                        self.uploadImagesTask = UIBackgroundTaskInvalid
+                        
                         if (failure != nil)
                         {
                             failure! (reason: reason)
@@ -302,6 +304,8 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
         else
         {
             UIApplication.sharedApplication().endBackgroundTask(self.uploadImagesTask!)
+            
+            self.uploadImagesTask = UIBackgroundTaskInvalid
             
             if (success != nil)
             {
@@ -360,6 +364,8 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
             
             UIApplication.sharedApplication().endBackgroundTask(self.downloadTask!)
             
+            self.downloadTask = UIBackgroundTaskInvalid
+            
             cancelOperations = false
             
             return
@@ -403,6 +409,8 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
             }
             
             UIApplication.sharedApplication().endBackgroundTask(self.downloadTask!)
+            
+            self.downloadTask = UIBackgroundTaskInvalid
         }
     }
     
