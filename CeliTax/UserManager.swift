@@ -13,6 +13,7 @@ import Foundation
 class UserManager : NSObject //TODO: Remove Subclass to NSObject when the entire app has been converted to Swift
 {
     private let kDoNotShowDisclaimerAgainKey : String = "DoNotShowDisclaimerAgain"
+    private let kLastLoggedInUserEmail : String = "LastLoggedInUserEmail"
     
     var user : User?
     
@@ -32,6 +33,8 @@ class UserManager : NSObject //TODO: Remove Subclass to NSObject when the entire
     
     typealias UpdateUserSubscriptionExpiryDateSuccessBlock = () -> Void
     typealias UpdateUserSubscriptionExpiryDateFailureBlock = (reason : String) -> Void
+    
+    private let defaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
  
     override init()
     {
@@ -86,6 +89,8 @@ class UserManager : NSObject //TODO: Remove Subclass to NSObject when the entire
             //IMPORTANT: set the userKey to userDataDAO
             self.userDataDAO!.userKey = self.user!.userKey
             
+            self.rememberLastLoggedInUser(self.user!.loginName)
+            
             self.backgroundWorker!.activeWorker()
             
             self.configManager!.loadSettingsFromPersistence()
@@ -100,6 +105,17 @@ class UserManager : NSObject //TODO: Remove Subclass to NSObject when the entire
         }
     
         return false
+    }
+    
+    func rememberLastLoggedInUser(loginName : String)
+    {
+        self.defaults.setObject(loginName, forKey: kLastLoggedInUserEmail)
+        self.defaults.synchronize()
+    }
+    
+    func getLastLoggedInUser() -> NSString?
+    {
+        return self.defaults.objectForKey(kLastLoggedInUserEmail) as? NSString
     }
     
     func loginUserFor(loginName : String!, key : String!, firstname : String!, lastname : String!, country : String!)
@@ -124,6 +140,8 @@ class UserManager : NSObject //TODO: Remove Subclass to NSObject when the entire
         {
             dLog("ERROR: Did not save User")
         }
+        
+        self.rememberLastLoggedInUser(loginName)
         
         self.backgroundWorker!.activeWorker()
         self.configManager!.loadSettingsFromPersistence()

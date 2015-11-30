@@ -75,6 +75,11 @@
 
     self.emailField.delegate = self;
     self.passwordField.delegate = self;
+    
+    if ([self.userManager getLastLoggedInUser])
+    {
+        self.emailField.text = [self.userManager getLastLoggedInUser];
+    }
 }
 
 - (void) viewWillAppear: (BOOL) animated
