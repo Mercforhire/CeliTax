@@ -596,6 +596,16 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		8512FCB21C24FAD800E7BF13 /* 3rd Party */ = {
+			isa = PBXGroup;
+			children = (
+				8554BCE01B2537E2002333ED /* M13 CheckBox */,
+				85560FDA1B0186B3004D2963 /* XYPieChart */,
+				85AF7E721BB11717000D73F9 /* YIInnerShadowView */,
+			);
+			name = "3rd Party";
+			sourceTree = "<group>";
+		};
 		852929F61B3673C30074DD24 /* Receipt Item Checking Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -1030,7 +1040,7 @@
 			name = "Receipt Break Down Cells";
 			sourceTree = "<group>";
 		};
-		856538441B608AAB00915A2E /* Button */ = {
+		856538441B608AAB00915A2E /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
 				856538451B608AC200915A2E /* SolidGreenButton.h */,
@@ -1040,7 +1050,7 @@
 				85BE69C91B7E754E004C24A2 /* HollowWhiteButton.h */,
 				85BE69CA1B7E754E004C24A2 /* HollowWhiteButton.m */,
 			);
-			name = Button;
+			name = Buttons;
 			sourceTree = "<group>";
 		};
 		8565384B1B60A7C500915A2E /* Sync Manager */ = {
@@ -1222,21 +1232,19 @@
 		85A8CAEB1AF071FC0023504D /* Views(Objc-C) */ = {
 			isa = PBXGroup;
 			children = (
-				85AF7E721BB11717000D73F9 /* YIInnerShadowView */,
+				8512FCB21C24FAD800E7BF13 /* 3rd Party */,
 				854AC6E51B7D94B700F0D91D /* Year Summary Table Cell */,
 				85C54B861B6736D300120961 /* ProfileBar View */,
-				856538441B608AAB00915A2E /* Button */,
+				856538441B608AAB00915A2E /* Buttons */,
 				85081A141B4B723300C5AD10 /* Tutorial Bubble */,
 				855CED221B38D0030043D20D /* Camera Flash Button */,
 				852929F61B3673C30074DD24 /* Receipt Item Checking Cells */,
 				8537A92E1B28A839000C848F /* Triangle */,
 				8554BCE51B254AFF002333ED /* Vault Table Cells */,
-				8554BCE01B2537E2002333ED /* M13 CheckBox */,
 				85F485851B16D1A4005E0EDE /* LeftSide Menu */,
 				850212821B0A9AE600170785 /* WhiteBorderView */,
 				8555E0D31B091DC800B91138 /* Horizonal Scroll Bar */,
 				8555E0CB1B080D4000B91138 /* Image Counter Icon */,
-				85560FDA1B0186B3004D2963 /* XYPieChart */,
 				856273A21B1BF60500EECA26 /* Receipt Break Down Cells */,
 				8559738D1AFD2BDD00DFC176 /* Main View Table Cells */,
 				856024BA1AFA6118004C1254 /* Receipt Scroll View */,

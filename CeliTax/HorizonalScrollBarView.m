@@ -122,7 +122,7 @@ NSString *SelectionCollectionViewCellReuseIdentifier = @"SelectionCollectionView
             
             point.y = 0;
             
-            if (self.delegate && [self.delegate respondsToSelector:@selector(buttonClickedWithIndex:andName:)])
+            if (self.delegate && [self.delegate respondsToSelector:@selector(buttonLongPressedWithIndex:andName:atPoint:)])
             {
                 [self.delegate buttonLongPressedWithIndex: indexPath.row andName: clickedName atPoint:point];
             }
