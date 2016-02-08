@@ -29,8 +29,8 @@
 
 -(void)makeCellAppearInactive
 {
-    (self.colorBox).backgroundColor = [UIColor lightGrayColor];
-    (self.categoryNameLabel).textColor = [UIColor lightGrayColor];
+    self.colorBox.backgroundColor = [UIColor lightGrayColor];
+    self.categoryNameLabel.textColor = [UIColor lightGrayColor];
     
     [self hideLabels];
     
@@ -41,8 +41,8 @@
 
 -(void)makeCellAppearActive
 {
-    (self.colorBox).backgroundColor = self.colorBoxColor;
-    (self.categoryNameLabel).textColor = [UIColor blackColor];
+    self.colorBox.backgroundColor = self.colorBoxColor;
+    self.categoryNameLabel.textColor = [UIColor blackColor];
     
     [self showLabels];
     

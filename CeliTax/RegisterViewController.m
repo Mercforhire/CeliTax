@@ -79,11 +79,11 @@
     
     [self.termsButton setTitle:NSLocalizedString(@"Terms and Conditions", nil) forState:UIControlStateNormal];
     
-    (self.agreeCheckBox.titleLabel).font = [UIFont latoFontOfSize: 13];
-    (self.agreeCheckBox.titleLabel).textColor = [UIColor blackColor];
-    (self.agreeCheckBox).strokeColor = [UIColor grayColor];
-    (self.agreeCheckBox).checkColor = self.lookAndFeel.appGreenColor;
-    (self.agreeCheckBox).checkAlignment = M13CheckboxAlignmentLeft;
+    self.agreeCheckBox.titleLabel.font = [UIFont latoFontOfSize: 13];
+    self.agreeCheckBox.titleLabel.textColor = [UIColor blackColor];
+    self.agreeCheckBox.strokeColor = [UIColor grayColor];
+    self.agreeCheckBox.checkColor = self.lookAndFeel.appGreenColor;
+    self.agreeCheckBox.checkAlignment = M13CheckboxAlignmentLeft;
     [self.agreeCheckBox.titleLabel setNumberOfLines:2];
     [self.agreeCheckBox.titleLabel setText: NSLocalizedString(@"I have read and agree with the terms and conditions", nil)];
 }

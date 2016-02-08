@@ -588,12 +588,12 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
-		85100D531AF70EFF005C24D2 /* Categories */ = {
+		85100D531AF70EFF005C24D2 /* ItemCategory */ = {
 			isa = PBXGroup;
 			children = (
 				8576DEEA1BED993600154D45 /* CategoriesDAO.swift */,
 			);
-			name = Categories;
+			name = ItemCategory;
 			sourceTree = "<group>";
 		};
 		8512FCB21C24FAD800E7BF13 /* 3rd Party */ = {
@@ -677,28 +677,28 @@
 			name = "Year Summary Table Cell";
 			sourceTree = "<group>";
 		};
-		8552AF691B326CFF001D3650 /* Tax Years */ = {
+		8552AF691B326CFF001D3650 /* Tax Year */ = {
 			isa = PBXGroup;
 			children = (
 				852299B31BEC44F400279F45 /* TaxYearsDAO.swift */,
 			);
-			name = "Tax Years";
+			name = "Tax Year";
 			sourceTree = "<group>";
 		};
-		855303D71B0FE8FB006B3D5F /* Records */ = {
+		855303D71B0FE8FB006B3D5F /* Record */ = {
 			isa = PBXGroup;
 			children = (
 				852299AF1BEC44E100279F45 /* RecordsDAO.swift */,
 			);
-			name = Records;
+			name = Record;
 			sourceTree = "<group>";
 		};
-		855303D81B0FE909006B3D5F /* Receipts */ = {
+		855303D81B0FE909006B3D5F /* Receipt */ = {
 			isa = PBXGroup;
 			children = (
 				852299B11BEC44EB00279F45 /* ReceiptsDAO.swift */,
 			);
-			name = Receipts;
+			name = Receipt;
 			sourceTree = "<group>";
 		};
 		855303DF1B0FEC44006B3D5F /* UserData */ = {
@@ -1203,10 +1203,10 @@
 			children = (
 				8557E1851AF8420A003E2880 /* Factory */,
 				855303DF1B0FEC44006B3D5F /* UserData */,
-				85100D531AF70EFF005C24D2 /* Categories */,
-				855303D71B0FE8FB006B3D5F /* Records */,
-				855303D81B0FE909006B3D5F /* Receipts */,
-				8552AF691B326CFF001D3650 /* Tax Years */,
+				85100D531AF70EFF005C24D2 /* ItemCategory */,
+				855303D71B0FE8FB006B3D5F /* Record */,
+				855303D81B0FE909006B3D5F /* Receipt */,
+				8552AF691B326CFF001D3650 /* Tax Year */,
 			);
 			name = DAO;
 			sourceTree = "<group>";
