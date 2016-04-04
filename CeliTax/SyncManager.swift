@@ -160,10 +160,104 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
     */
     func startSync(success : SyncSuccessBlock?, failure : SyncFailureBlock?)
     {
-        //TODO: Use Dispatch Groups to do the sequencing
+        var syncDate : NSDate?
+        
+        dLog("Start Sync:")
+        
+        // Create the dispatch groups
+        let serviceGroup1 : dispatch_group_t = dispatch_group_create()
+        let serviceGroup2 : dispatch_group_t = dispatch_group_create()
+        let serviceGroup3 : dispatch_group_t = dispatch_group_create()
+    
+        //Enter all groups first
+        dispatch_group_enter(serviceGroup1)
+        dispatch_group_enter(serviceGroup2)
+        dispatch_group_enter(serviceGroup3)
         
         //1.Upload local data to server
-        self.syncService.startSyncingUserData( { (updateDate) in
+        
+        if (self.cancelOperations)
+        {
+            dispatch_group_leave(serviceGroup1)
+        }
+        else
+        {
+            dLog("1.Upload local data to server")
+            
+            self.syncService.startSyncingUserData({ (updateDate) in
+                
+                dLog("Upload local data to server complete")
+                
+                syncDate = updateDate
+                
+                dispatch_group_leave(serviceGroup1)
+                
+            }) { (reason) in
+                
+                dispatch_group_leave(serviceGroup1)
+                
+                if (failure != nil)
+                {
+                    failure!(reason: reason)
+                    
+                    self.cancelOperations = true
+                }
+            }
+        }
+        
+        //2.Download and merge data from server
+        dispatch_group_notify(serviceGroup1, dispatch_get_main_queue()) {
+            
+            if (self.cancelOperations)
+            {
+                dispatch_group_leave(serviceGroup2)
+            }
+            else
+            {
+                dLog("2.Download and merge data from server")
+                
+                self.syncService.downloadUserData( {
+                    
+                    dLog("Download and merge data from server complete")
+                    
+                    dispatch_group_leave(serviceGroup2)
+                    
+                    }, failure: { (reason) in
+                        
+                        dispatch_group_leave(serviceGroup2)
+                        
+                        if (failure != nil)
+                        {
+                            failure!(reason: reason)
+                            
+                            self.cancelOperations = true
+                        }
+                })
+            }
+            
+        }
+        
+        //3.Delete Photos no longer attached to any receipts
+        dispatch_group_notify(serviceGroup2, dispatch_get_main_queue()) {
+            
+            if (self.cancelOperations)
+            {
+                dispatch_group_leave(serviceGroup3)
+            }
+            else
+            {
+                dLog("3.Delete Photos no longer attached to any receipts")
+                
+                self.cleanUpReceiptImages()
+                
+                dLog("Delete Photos no longer attached to any receipts complete")
+                
+                dispatch_group_leave(serviceGroup3)
+            }
+        }
+        
+        //Finally, trigger the success block
+        dispatch_group_notify(serviceGroup3, dispatch_get_main_queue()) {
             
             if (self.cancelOperations)
             {
@@ -172,53 +266,13 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
                 return
             }
             
-            //2. Download and merge data from server first
-            self.syncService.downloadUserData( {
+            if (success != nil)
+            {
+                dLog("Finally, trigger the success block")
                 
-                if (self.cancelOperations)
-                {
-                    self.cancelOperations = false
-                    
-                    return
-                }
-                
-                //3. Delete Photos no longer attached to any receipts
-                self.cleanUpReceiptImages()
-                
-                if (success != nil)
-                {
-                    success!( syncDate: updateDate )
-                }
-                
-                }, failure: { (reason) in
-                    
-                    if (self.cancelOperations)
-                    {
-                        self.cancelOperations = false
-                        
-                        return;
-                    }
-                    
-                    if (failure != nil)
-                    {
-                        failure!(reason: reason)
-                    }
-            })
-            
-            }, failure: { (reason) in
-                
-                if (self.cancelOperations)
-                {
-                    self.cancelOperations = false
-                    
-                    return;
-                }
-                
-                if (failure != nil)
-                {
-                    failure!(reason: reason)
-                }
-        })
+                success!( syncDate: syncDate! )
+            }
+        }
     }
     
     /*
