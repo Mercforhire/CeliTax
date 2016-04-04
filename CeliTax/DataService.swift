@@ -297,7 +297,7 @@ class DataService : NSObject
                 
                 categoryInfos.append(categoryInfo)
                 
-                counter++
+                counter += 1
             }
         }
         

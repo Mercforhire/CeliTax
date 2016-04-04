@@ -99,7 +99,9 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
     (self.navigationController).viewControllers = viewControllers;
     
     self.possibleTaxYears = [NSMutableArray new];
-    for (int year = 2010; year < 2016; year++)
+    
+    //Add the all years -5 and +5 of current year
+    for (NSInteger year = [Utils currentYear] - 5; year < [Utils currentYear] + 5; year++)
     {
         [self.possibleTaxYears addObject:@(year)];
     }
@@ -464,14 +466,14 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
     [self setYearLabelToBe: self.currentlySelectedYear.integerValue];
     
     [self.configurationManager setCurrentTaxYear:_currentlySelectedYear.integerValue];
-    
-    self.taxYearPickerViewController.highlightedSelectionIndex = [self.existingTaxYears indexOfObject:self.currentlySelectedYear];
 
     [self reloadReceiptInfo];
 }
 
 - (void) taxYearPressed
 {
+    self.taxYearPickerViewController.highlightedSelectionIndex = [self.existingTaxYears indexOfObject:self.currentlySelectedYear];
+    
     [self.selectionPopover presentPopoverFromRect: self.taxYearLabel.frame inView: self.view permittedArrowDirections: WYPopoverArrowDirectionUp animated: YES];
 }
 

@@ -57,9 +57,9 @@ class TutorialManager : NSObject //TODO: Remove Subclass to NSObject when the en
                 self.tutorialBubbleView!.leftButtonTitle = currentTutorial!.leftButtonTitle
                 self.tutorialBubbleView!.rightButtonTitle = currentTutorial!.rightButtonTitle
                 
-                self.tutorialBubbleView!.closeButton?.addTarget(self, action: Selector("endTutorial"), forControlEvents: UIControlEvents.TouchUpInside)
-                self.tutorialBubbleView!.leftButton?.addTarget(self, action: Selector("leftSideButtonPressed"), forControlEvents:UIControlEvents.TouchUpInside)
-                self.tutorialBubbleView!.rightButton?.addTarget(self, action: Selector("rightSideButtonPressed"), forControlEvents:UIControlEvents.TouchUpInside)
+                self.tutorialBubbleView!.closeButton?.addTarget(self, action: #selector(TutorialManager.endTutorial), forControlEvents: UIControlEvents.TouchUpInside)
+                self.tutorialBubbleView!.leftButton?.addTarget(self, action: #selector(TutorialManager.leftSideButtonPressed), forControlEvents:UIControlEvents.TouchUpInside)
+                self.tutorialBubbleView!.rightButton?.addTarget(self, action: #selector(TutorialManager.rightSideButtonPressed), forControlEvents:UIControlEvents.TouchUpInside)
                 
                 if (currentTutorial!.pointsUp)
                 {
