@@ -108,7 +108,7 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
                         self.addTaskToQueue(QueueTaskType.UploadPhotos)
                         
                         //Go on to next task
-                        self.currentTaskIndex++
+                        self.currentTaskIndex += 1
                         
                         self.executeTasks()
                         
@@ -127,7 +127,7 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
                     self.addTaskToQueue(QueueTaskType.UploadPhotos)
                     
                     //Go on to next task
-                    self.currentTaskIndex++
+                    self.currentTaskIndex += 1
                     
                     self.executeTasks()
                 }
@@ -139,7 +139,7 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
                 self.syncManager.startUploadingPhotos( {
                     
                     //Go on to next task
-                    self.currentTaskIndex++;
+                    self.currentTaskIndex += 1
                     
                     self.executeTasks()
                     
@@ -159,7 +159,7 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
                     self.authenticationService.updateProfileImage(self.userManager.user!.avatarImage, success: {
                         
                         //Go on to next task
-                        self.currentTaskIndex++
+                        self.currentTaskIndex += 1
                         
                         self.executeTasks()
                         
@@ -176,7 +176,7 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
                     self.authenticationService.deleteProfileImage( {
                         
                         //Go on to next task
-                        self.currentTaskIndex++
+                        self.currentTaskIndex += 1
                         
                         self.executeTasks()
                         
@@ -198,7 +198,7 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
                     self.authenticationService.updateAccountInfo(self.userManager.user!.firstname, lastname: self.userManager.user!.lastname, country: self.userManager.user!.country, success: { () -> Void in
                         
                         //Go on to next task
-                        self.currentTaskIndex++
+                        self.currentTaskIndex += 1
                         
                         self.executeTasks()
                         
@@ -251,8 +251,6 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
             self.defaults.synchronize()
         }
     }
-    
-    
     
     func appIsActive()
     {

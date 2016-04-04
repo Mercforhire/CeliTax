@@ -160,6 +160,8 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
     */
     func startSync(success : SyncSuccessBlock?, failure : SyncFailureBlock?)
     {
+        //TODO: Use Dispatch Groups to do the sequencing
+        
         //1.Upload local data to server
         self.syncService.startSyncingUserData( { (updateDate) in
             
@@ -272,7 +274,7 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
                 self.syncService.uploadFile(filenameToUpload, data: fileData!, success: {
                     
                     dLog( String.init(format: "%@ Uploaded.", filenameToUpload) )
-                    self.indexOfFileToUpload++
+                    self.indexOfFileToUpload += 1
                     
                     self.uploadPhotos(success, failure:failure)
                     
@@ -296,7 +298,7 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
                 //if this file doesn't exist, we have a problem with receipt data integrity
                 
                 //skip this file for now
-                self.indexOfFileToUpload++
+                self.indexOfFileToUpload += 1
                 
                 self.uploadPhotos(success, failure:failure)
             }
@@ -377,14 +379,14 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
             
             self.syncService.downloadFile(filenameToDownload, success: {
                 
-                self.indexOfFileToDownload++
+                self.indexOfFileToDownload += 1
                 self.downloadPhotos(success, failure: failure)
                 
                 }, failure: { (reason) in
                     
                     self.filenamesFailedToDownload.append(filenameToDownload)
                     
-                    self.indexOfFileToDownload++
+                    self.indexOfFileToDownload += 1
                     self.downloadPhotos(success, failure: failure)
                     
             })

@@ -126,7 +126,7 @@ class SyncService : NSObject
                     {
                         indexesOf3ChoosenCategories.append(randomIndex)
                         
-                        i++
+                        i += 1
                     }
                 }
                 
@@ -136,7 +136,7 @@ class SyncService : NSObject
                     
                     if (indexOfCatagory != nil && indexesOf3ChoosenCategories.contains(indexOfCatagory!))
                     {
-                        for var j = UnitTypes.UnitItem.rawValue; j < UnitTypes.UnitCount.rawValue; j++
+                        for j in UnitTypes.UnitItem.rawValue ..< UnitTypes.UnitCount.rawValue
                         {
                             //50% Chance of adding a National Average Cost for the current Unit Type
                             if (Utils.randomNumberBetween(1, max: 10) <= 5)
@@ -156,7 +156,7 @@ class SyncService : NSObject
             let numberOfCatagories : Int = self.categoriesDAO.fetchCategories().count
             
             // add random receipts
-            for var receiptNumber = 0; receiptNumber < 10; receiptNumber++
+            for _ in 0 ..< 10
             {
                 let fileName1 : String = String.init(format: "Receipt-%@-%d", Utils.generateUniqueID(), 1)
                 let fileName2 : String = String.init(format: "Receipt-%@-%d", Utils.generateUniqueID(), 2)
@@ -189,7 +189,7 @@ class SyncService : NSObject
                 // add random items for each receipt
                 let numberOfItems : Int = Utils.randomNumberBetween(1, max: 10)
                 
-                for (var itemNumber = 0; itemNumber < numberOfItems; itemNumber++)
+                for _ in 0 ..< numberOfItems
                 {
                     let categories : [ItemCategory]! = self.categoriesDAO.fetchCategories()
                     

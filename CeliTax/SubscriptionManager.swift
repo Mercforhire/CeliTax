@@ -93,23 +93,23 @@ class SubscriptionManager : NSObject, SKProductsRequestDelegate, SKPaymentTransa
         {
             switch (transaction.error!.code)
             {
-            case SKErrorUnknown:
-                //Unknown error
-                break;
-            case SKErrorClientInvalid:
-                // client is not allowed to issue the request, etc.
-                break;
-            case SKErrorPaymentCancelled:
-                // user cancelled the request, etc.
-                break;
-            case SKErrorPaymentInvalid:
-                // purchase identifier was invalid, etc.
-                break;
-            case SKErrorPaymentNotAllowed:
-                // this device is not allowed to make the payment
-                break;
-            default:
-                break;
+                case SKErrorCode.Unknown.rawValue:
+                    //Unknown error
+                    break;
+                case SKErrorCode.ClientInvalid.rawValue:
+                    // client is not allowed to issue the request, etc.
+                    break;
+                case SKErrorCode.PaymentCancelled.rawValue:
+                    // user cancelled the request, etc.
+                    break;
+                case SKErrorCode.PaymentInvalid.rawValue:
+                    // purchase identifier was invalid, etc.
+                    break;
+                case SKErrorCode.PaymentNotAllowed.rawValue:
+                    // this device is not allowed to make the payment
+                    break;
+                default:
+                    break;
             }
             
             SKPaymentQueue.defaultQueue().finishTransaction(transaction)
@@ -256,7 +256,7 @@ class SubscriptionManager : NSObject, SKProductsRequestDelegate, SKPaymentTransa
     {
         dLog("Failed Transaction...")
         
-        if (transaction.error!.code != SKErrorPaymentCancelled)
+        if (transaction.error!.code != SKErrorCode.PaymentCancelled.rawValue)
         {
             dLog( String.init(format: "Transaction error: %@", transaction.error!.localizedDescription) )
         }
