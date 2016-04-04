@@ -248,11 +248,13 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
             {
                 dLog("3.Delete Photos no longer attached to any receipts")
                 
-                self.cleanUpReceiptImages()
-                
-                dLog("Delete Photos no longer attached to any receipts complete")
-                
-                dispatch_group_leave(serviceGroup3)
+                self.cleanUpReceiptImages({ 
+                    
+                    dLog("Delete Photos no longer attached to any receipts complete")
+                    
+                    dispatch_group_leave(serviceGroup3)
+                    
+                })
             }
         }
         
@@ -525,9 +527,9 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
     /*
     Find any Photo files that are not in an exsting Receipt's filenames and delete these files
     */
-    func cleanUpReceiptImages()
+    func cleanUpReceiptImages(completion : SyncService.CleanReceiptsCompletionBlock?)
     {
-        self.syncService.cleanUpReceiptImages()
+        self.syncService.cleanUpReceiptImages(completion)
     }
     
     func cancelAllOperations()

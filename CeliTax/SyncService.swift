@@ -41,6 +41,8 @@ class SyncService : NSObject
     typealias SendYearlyReportSuccessBlock = () -> Void
     typealias SendYearlyReportFailureBlock = (reason : String) -> Void
     
+    typealias CleanReceiptsCompletionBlock = () -> Void
+    
     private weak var userDataDAO : UserDataDAO!
     private weak var taxYearsDAO : TaxYearsDAO!
     private weak var recordsDAO : RecordsDAO!
@@ -798,7 +800,7 @@ class SyncService : NSObject
     /*
     Find any Photo files that are not in an exsting Receipt's filenames and delete these files
     */
-    func cleanUpReceiptImages()
+    func cleanUpReceiptImages(completion : CleanReceiptsCompletionBlock?)
     {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { 
             
@@ -824,6 +826,8 @@ class SyncService : NSObject
                     Utils.deleteImageWithFileName(existingFilename, userKey:self.userDataDAO.userKey)
                 }
             }
+            
+            completion?()
             
         })
     }
