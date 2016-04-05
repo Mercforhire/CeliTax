@@ -312,7 +312,7 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
         // 0.Filenames that we need to upload
         var filenames : [String] = []
         
-        // Create the dispatch groups
+        // Create a dispatch group
         let serviceGroup1 : dispatch_group_t = dispatch_group_create()
         
         // 1.Get the list of images the server needs
@@ -356,6 +356,8 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
             
             if (filenames.count == 0)
             {
+                success?()
+                
                 return
             }
             
@@ -394,6 +396,8 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
                         uploadImagesTask = UIBackgroundTaskInvalid
                         
                         dLog("Upload Task complete.")
+                        
+                        success?()
                     }
                 }
                 

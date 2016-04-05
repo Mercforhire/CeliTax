@@ -681,6 +681,15 @@
 			name = "Year Summary Table Cell";
 			sourceTree = "<group>";
 		};
+		854F14211CB366AC007F51B5 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				85AEB8FE1CB348BA00C3A932 /* ImageUploaderOperation.swift */,
+				852C32CC1CB35D0C0065AB0B /* ImageDownloaderOperation.swift */,
+			);
+			name = Operations;
+			sourceTree = "<group>";
+		};
 		8552AF691B326CFF001D3650 /* Tax Year */ = {
 			isa = PBXGroup;
 			children = (
@@ -1060,8 +1069,7 @@
 		8565384B1B60A7C500915A2E /* Sync Manager */ = {
 			isa = PBXGroup;
 			children = (
-				85AEB8FE1CB348BA00C3A932 /* ImageUploaderOperation.swift */,
-				852C32CC1CB35D0C0065AB0B /* ImageDownloaderOperation.swift */,
+				854F14211CB366AC007F51B5 /* Operations */,
 				858BBD3C1BF7BC29007EDF7C /* SyncManager.swift */,
 			);
 			name = "Sync Manager";
