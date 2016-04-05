@@ -206,7 +206,7 @@ class ReceiptsDAO : NSObject //TODO: Remove Subclass to NSObject when the entire
         
         if (receiptToDelete != nil)
         {
-            receiptToDelete!.dataAction = DataActionStatus.DataActionDelete;
+            receiptToDelete!.dataAction = DataActionStatus.DataActionDelete
             
             if (save)
             {

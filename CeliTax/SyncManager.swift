@@ -50,7 +50,7 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
     */
     func insertPreloadedCategories()
     {
-        self.syncService.insertPreloadedCategories();
+        self.syncService.insertPreloadedCategories()
     }
     
     /*

@@ -95,21 +95,21 @@ class SubscriptionManager : NSObject, SKProductsRequestDelegate, SKPaymentTransa
             {
                 case SKErrorCode.Unknown.rawValue:
                     //Unknown error
-                    break;
+                    break
                 case SKErrorCode.ClientInvalid.rawValue:
                     // client is not allowed to issue the request, etc.
-                    break;
+                    break
                 case SKErrorCode.PaymentCancelled.rawValue:
                     // user cancelled the request, etc.
-                    break;
+                    break
                 case SKErrorCode.PaymentInvalid.rawValue:
                     // purchase identifier was invalid, etc.
-                    break;
+                    break
                 case SKErrorCode.PaymentNotAllowed.rawValue:
                     // this device is not allowed to make the payment
-                    break;
+                    break
                 default:
-                    break;
+                    break
             }
             
             SKPaymentQueue.defaultQueue().finishTransaction(transaction)
@@ -225,16 +225,16 @@ class SubscriptionManager : NSObject, SKProductsRequestDelegate, SKPaymentTransa
             {
             case SKPaymentTransactionState.Purchased:
                 self.completeTransaction(transaction)
-                break;
+                break
                 
             case SKPaymentTransactionState.Failed:
                 self.failedTransaction(transaction)
-                break;
+                break
                 
             default:
-                break;
+                break
             }
-        };
+        }
     }
     
     func completeTransaction(transaction : SKPaymentTransaction)

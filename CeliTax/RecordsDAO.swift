@@ -94,7 +94,7 @@ class RecordsDAO : NSObject //TODO: Remove Subclass to NSObject when the entire 
             }
         }
         
-        return nil;
+        return nil
     }
     
     /**
@@ -126,9 +126,9 @@ class RecordsDAO : NSObject //TODO: Remove Subclass to NSObject when the entire 
         
         if (recordToModify != nil)
         {
-            recordToModify!.quantity = record.quantity;
-            recordToModify!.amount = record.amount;
-            recordToModify!.unitType = record.unitType;
+            recordToModify!.quantity = record.quantity
+            recordToModify!.amount = record.amount
+            recordToModify!.unitType = record.unitType
             recordToModify!.categoryID = record.categoryID
             recordToModify!.receiptID = record.receiptID
             

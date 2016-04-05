@@ -46,9 +46,9 @@ class ReceiptBuilder : NSObject //TODO: Remove Subclass to NSObject when the ent
             
             let dateCreated : NSDate! = gmtDateFormatter.dateFromString(dateString as String)
             
-            receipt.dateCreated = dateCreated;
+            receipt.dateCreated = dateCreated
         }
         
-        return receipt;
+        return receipt
     }
 }

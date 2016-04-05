@@ -87,7 +87,7 @@ class LookAndFeel : NSObject //TODO: Remove Subclass to NSObject when the entire
         if (viewColor != nil)
         {
             view?.layer.cornerRadius = 2.0
-            view?.layer.borderColor = self.darkerColorFrom(viewColor!).CGColor;
+            view?.layer.borderColor = self.darkerColorFrom(viewColor!).CGColor
             view?.layer.borderWidth = 1.0
             view?.clipsToBounds = true
         }

@@ -66,9 +66,9 @@ class CategoryBuilder : NSObject //TODO: Remove Subclass to NSObject when the en
             
             let color : UIColor! = UIColor.init(red: redValue, green: greenValue, blue: blueValue , alpha: 1)
             
-            category.color = color;
+            category.color = color
         }
         
-        return category;
+        return category
     }
 }

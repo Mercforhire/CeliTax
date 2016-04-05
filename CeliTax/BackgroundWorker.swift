@@ -102,7 +102,7 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
                 {
                     self.syncManager.startSync( { (syncDate) in
                         
-                        dLog("Automatic syncing success!");
+                        dLog("Automatic syncing success!")
                         
                         //Add a upload photos task
                         self.addTaskToQueue(QueueTaskType.UploadPhotos)
@@ -114,14 +114,14 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
                         
                         }, failure: { (reason) in
                             
-                            dLog("Error: Syncing Task failed.");
+                            dLog("Error: Syncing Task failed.")
                             
                             //Halting running tasks
                     })
                 }
                 else
                 {
-                    dLog("No need to sync, data unchanged.");
+                    dLog("No need to sync, data unchanged.")
                     
                     //Add a upload photos task
                     self.addTaskToQueue(QueueTaskType.UploadPhotos)
@@ -145,7 +145,7 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
                     
                     }, failure:{ (reason) in
                         
-                        dLog("Error: Uploading Receipt Task failel");
+                        dLog("Error: Uploading Receipt Task failel")
                         
                         //Halting running tasks
                 })
@@ -204,7 +204,7 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
                         
                         }, failure: { (reason) -> Void in
                             
-                            dLog("Error: Uploading Receipt Task failed");
+                            dLog("Error: Uploading Receipt Task failed")
                             
                             //Halting running tasks
                             
@@ -212,7 +212,7 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
                 }
                 else
                 {
-                    dLog("Error: Uploading Receipt Task failed. Reason: No current user");
+                    dLog("Error: Uploading Receipt Task failed. Reason: No current user")
                     
                     //Halting running tasks
                 }
@@ -256,7 +256,7 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
     {
         if (self.active)
         {
-            dLog("Received notification that the app is active");
+            dLog("Received notification that the app is active")
             
             let lastRefresh : NSDate? = self.defaults.valueForKey(kLastTimeDateKey) as? NSDate
             

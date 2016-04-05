@@ -114,7 +114,7 @@ class TutorialManager : NSObject //TODO: Remove Subclass to NSObject when the en
         
         if (self.viewController != viewController)
         {
-            self.maskView = nil;
+            self.maskView = nil
         }
         
         if (self.tutorialBubbleView != nil)
@@ -124,7 +124,7 @@ class TutorialManager : NSObject //TODO: Remove Subclass to NSObject when the en
             self.tutorialBubbleView = nil
         }
         
-        self.viewController = viewController;
+        self.viewController = viewController
         
         if (self.maskView == nil)
         {
@@ -195,8 +195,8 @@ class TutorialManager : NSObject //TODO: Remove Subclass to NSObject when the en
                 self.tutorialBubbleView = nil
                 
                 self.maskView!.removeFromSuperview()
-                self.maskView = nil;
-                
+                self.maskView = nil
+            
                 if (dismissBlock != nil)
                 {
                     dismissBlock!()

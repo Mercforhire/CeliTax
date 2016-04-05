@@ -175,7 +175,7 @@ class SyncService : NSObject
                 
                 if (randomDate.laterDate(NSDate()) == randomDate)
                 {
-                    continue;
+                    continue
                 }
                 
                 let newReceipt : Receipt = Receipt()
@@ -184,7 +184,7 @@ class SyncService : NSObject
                 newReceipt.fileNames = [fileName1, fileName2]
                 newReceipt.dateCreated = randomDate
                 newReceipt.taxYear = Utils.randomNumberBetween(2013, max: 2015)
-                newReceipt.dataAction = DataActionStatus.DataActionInsert;
+                newReceipt.dataAction = DataActionStatus.DataActionInsert
                 
                 self.receiptsDAO.addReceipt(newReceipt, save: false)
                 
@@ -435,7 +435,7 @@ class SyncService : NSObject
                         //check if receiptID is valid
                         if (self.receiptsDAO.fetchReceipt(record!.receiptID) == nil)
                         {
-                            dLog("ERROR: Record has an invalid receiptID");
+                            dLog("ERROR: Record has an invalid receiptID")
                             record!.dataAction = DataActionStatus.DataActionDelete
                         }
                         
@@ -662,7 +662,7 @@ class SyncService : NSObject
                 
                 if (failure != nil)
                 {
-                    failure! ( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY );
+                    failure! ( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
                 }
                 
             })
@@ -750,7 +750,7 @@ class SyncService : NSObject
                     
                 })
             }
-        };
+        }
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
             
@@ -837,7 +837,7 @@ class SyncService : NSObject
     */
     func sendReceiptsInfoEmail(email : String!, year : Int, allReceipts : Bool, receiptIDs : [String]?, success : RequestReceiptsInfoEmailSuccessBlock?, failure : RequestReceiptsInfoEmailFailureBlock?)
     {
-        let postParams: [String:AnyObject];
+        let postParams: [String:AnyObject]
         
         if (allReceipts)
         {

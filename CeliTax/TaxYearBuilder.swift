@@ -15,8 +15,8 @@ class TaxYearBuilder : NSObject //TODO: Remove Subclass to NSObject when the ent
     {
         let taxYear : TaxYear = TaxYear()
         
-        taxYear.taxYear = taxYearNumber;
+        taxYear.taxYear = taxYearNumber
         
-        return taxYear;
+        return taxYear
     }
 }

@@ -605,7 +605,7 @@ class Utils : NSObject //TODO: Remove Subclass to NSObject when the entire app h
     static func dateFromDateString(dateString : String!) -> NSDate?
     {
         let df : NSDateFormatter = NSDateFormatter()
-        df.dateFormat = "yyyy-MM-dd";
+        df.dateFormat = "yyyy-MM-dd"
         return df.dateFromString(dateString)
     }
     

@@ -206,7 +206,7 @@ class AuthenticationService : NSObject
                 
                 if (failure != nil)
                 {
-                    failure! ( result: registerResult );
+                    failure! ( result: registerResult )
                 }
             })
         }
@@ -264,7 +264,7 @@ class AuthenticationService : NSObject
                 
                 if (failure != nil)
                 {
-                    failure! ( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY );
+                    failure! ( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
                 }
             })
         }
@@ -321,7 +321,7 @@ class AuthenticationService : NSObject
     {
         if (self.userDataDAO.userKey == nil)
         {
-            assert(false, "self.userDataDAO.userKey not set");
+            assert(false, "self.userDataDAO.userKey not set")
         }
         
         let postParams: [String:String] = [
@@ -692,7 +692,7 @@ class AuthenticationService : NSObject
     {
         if (self.userDataDAO.userKey == nil)
         {
-            assert(false, "self.userDataDAO.userKey not set");
+            assert(false, "self.userDataDAO.userKey not set")
         }
         
         let postParams: [String:String] = [

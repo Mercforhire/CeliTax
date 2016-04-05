@@ -254,7 +254,7 @@ class DataService : NSObject
             
         }) as! [Receipt]
         
-        var counter : Int = 0;
+        var counter : Int = 0
         
         // filter out the receipts that contains Records of category: catagoryID
         for receipt in sortedAllReceipts
