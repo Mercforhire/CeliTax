@@ -58,19 +58,14 @@ class DataService : NSObject
     {
         let category : ItemCategory? = self.categoriesDAO.fetchCategory(categoryID)
         
-        if (category != nil)
-        {
-            return category
-        }
-        
-        return nil
+        return category
     }
     
     func fetchAllRecords() -> [Record]
     {
         let records : [Record] = self.recordsDAO.fetchRecords()
         
-        return records;
+        return records
     }
     
     func fetchRecordsForCatagoryID(categoryID : String!, taxYear : Int) -> [Record]

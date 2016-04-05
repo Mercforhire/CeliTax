@@ -27,6 +27,7 @@
 		852B773D1BF6A9AE0088D8FA /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852B773C1BF6A9AE0088D8FA /* SubscriptionManager.swift */; };
 		852B773F1BF6D2820088D8FA /* TutorialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852B773E1BF6D2820088D8FA /* TutorialManager.swift */; };
 		852B77421BF6D63F0088D8FA /* NSString+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 852B77411BF6D63F0088D8FA /* NSString+Helper.m */; };
+		852C32CD1CB35D0C0065AB0B /* ImageDownloaderOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852C32CC1CB35D0C0065AB0B /* ImageDownloaderOperation.swift */; };
 		852FF8971B78FBF50033A6D9 /* CelitaxNavBarLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 852FF8961B78FBF50033A6D9 /* CelitaxNavBarLogo.png */; };
 		852FF8991B7901D80033A6D9 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 852FF8981B7901D80033A6D9 /* menu.png */; };
 		852FF89B1B7907AA0033A6D9 /* xIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 852FF89A1B7907AA0033A6D9 /* xIcon.png */; };
@@ -182,6 +183,7 @@
 		85AD51DC1BF51AD9002EC8D2 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AD51DB1BF51AD9002EC8D2 /* UIViewExtension.swift */; };
 		85AD51DE1BF51D35002EC8D2 /* LookAndFeel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AD51DD1BF51D35002EC8D2 /* LookAndFeel.swift */; };
 		85AD51E01BF52DA7002EC8D2 /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AD51DF1BF52DA7002EC8D2 /* ConfigurationManager.swift */; };
+		85AEB8FF1CB348BA00C3A932 /* ImageUploaderOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AEB8FE1CB348BA00C3A932 /* ImageUploaderOperation.swift */; };
 		85AF7E771BB11724000D73F9 /* YIInnerShadowLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AF7E741BB11724000D73F9 /* YIInnerShadowLayer.m */; };
 		85AF7E781BB11724000D73F9 /* YIInnerShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AF7E761BB11724000D73F9 /* YIInnerShadowView.m */; };
 		85BE69C71B7E6F4A004C24A2 /* YearSavingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BE69C51B7E6F4A004C24A2 /* YearSavingViewController.m */; };
@@ -240,6 +242,7 @@
 		852B773E1BF6D2820088D8FA /* TutorialManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialManager.swift; sourceTree = "<group>"; };
 		852B77401BF6D63F0088D8FA /* NSString+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Helper.h"; sourceTree = "<group>"; };
 		852B77411BF6D63F0088D8FA /* NSString+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Helper.m"; sourceTree = "<group>"; };
+		852C32CC1CB35D0C0065AB0B /* ImageDownloaderOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloaderOperation.swift; sourceTree = "<group>"; };
 		852FF8961B78FBF50033A6D9 /* CelitaxNavBarLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CelitaxNavBarLogo.png; sourceTree = "<group>"; };
 		852FF8981B7901D80033A6D9 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 		852FF89A1B7907AA0033A6D9 /* xIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xIcon.png; sourceTree = "<group>"; };
@@ -457,6 +460,7 @@
 		85AD51DB1BF51AD9002EC8D2 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		85AD51DD1BF51D35002EC8D2 /* LookAndFeel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LookAndFeel.swift; sourceTree = "<group>"; };
 		85AD51DF1BF52DA7002EC8D2 /* ConfigurationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
+		85AEB8FE1CB348BA00C3A932 /* ImageUploaderOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUploaderOperation.swift; sourceTree = "<group>"; };
 		85AF7E731BB11724000D73F9 /* YIInnerShadowLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YIInnerShadowLayer.h; sourceTree = "<group>"; };
 		85AF7E741BB11724000D73F9 /* YIInnerShadowLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YIInnerShadowLayer.m; sourceTree = "<group>"; };
 		85AF7E751BB11724000D73F9 /* YIInnerShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YIInnerShadowView.h; sourceTree = "<group>"; };
@@ -1056,6 +1060,8 @@
 		8565384B1B60A7C500915A2E /* Sync Manager */ = {
 			isa = PBXGroup;
 			children = (
+				85AEB8FE1CB348BA00C3A932 /* ImageUploaderOperation.swift */,
+				852C32CC1CB35D0C0065AB0B /* ImageDownloaderOperation.swift */,
 				858BBD3C1BF7BC29007EDF7C /* SyncManager.swift */,
 			);
 			name = "Sync Manager";
@@ -1789,6 +1795,7 @@
 				8556E3331AF47C0D003CCDD2 /* MyAccountViewController.m in Sources */,
 				858FD7181B40DEE60008B325 /* TransferConfirmationViewController.m in Sources */,
 				8582A4781AF17DFD0048DCD6 /* LoginViewController.m in Sources */,
+				85AEB8FF1CB348BA00C3A932 /* ImageUploaderOperation.swift in Sources */,
 				8556E32E1AF428C4003CCDD2 /* CatagoryTableViewCell.m in Sources */,
 				855CED291B38D3420043D20D /* FlashButtonView.m in Sources */,
 				8537FFC71B989F6200F7802E /* LocalizationManager.m in Sources */,
@@ -1796,6 +1803,7 @@
 				85726A321BF5BD3300F0C190 /* BackgroundWorker.swift in Sources */,
 				8587117F1BE6BFC000774A2F /* Notifications.swift in Sources */,
 				85AD51E01BF52DA7002EC8D2 /* ConfigurationManager.swift in Sources */,
+				852C32CD1CB35D0C0065AB0B /* ImageDownloaderOperation.swift in Sources */,
 				858711851BE6D2EE00774A2F /* RecordBuilder.swift in Sources */,
 				85AD51DC1BF51AD9002EC8D2 /* UIViewExtension.swift in Sources */,
 				8556E35A1AF53233003CCDD2 /* SettingsViewController.m in Sources */,
@@ -1959,7 +1967,7 @@
 				INFOPLIST_FILE = CeliTax/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cravensave.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cravensave.CeliTax.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "CeliTax/CeliTax-Bridging-Header.h";
@@ -1985,7 +1993,7 @@
 				INFOPLIST_FILE = CeliTax/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cravensave.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cravensave.CeliTax.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "CeliTax/CeliTax-Bridging-Header.h";

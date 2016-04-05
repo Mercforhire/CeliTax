@@ -75,7 +75,7 @@
 
 - (void) initializeServiceFactory
 {
-    self.serviceFactory = [[ServiceFactory alloc] initWithConfigurationManager:self.configurationManager daoFactory:self.daoFactory networkCommunicator:self.networkCommunicator builderFactory:self.builderFactory];
+    self.serviceFactory = [[ServiceFactory alloc] initWithConfigurationManager: self.configurationManager daoFactory: self.daoFactory networkCommunicator: self.networkCommunicator builderFactory: self.builderFactory];
 }
 
 - (void) initializeDAOFactory
@@ -93,24 +93,24 @@
     self.builderFactory = [[BuilderFactory alloc] init];
 }
 
--(void) initializeSyncManager
+- (void) initializeSyncManager
 {
-    self.syncManager = [[SyncManager alloc] initWithUserManager:self.userManager syncService:[self.serviceFactory createSyncService]];
+    self.syncManager = [[SyncManager alloc] initWithUserManager: self.userManager syncService: [self.serviceFactory createSyncService]];
 }
 
--(void) initializeBackgroundWorker
+- (void) initializeBackgroundWorker
 {
-    self.backgroundWorker = [[BackgroundWorker alloc] initWithSyncManager:self.syncManager authenticationService:[self.serviceFactory createAuthenticationService] userManager:self.userManager];
+    self.backgroundWorker = [[BackgroundWorker alloc] initWithSyncManager: self.syncManager authenticationService: [self.serviceFactory createAuthenticationService] userManager: self.userManager];
 }
 
--(void) initializeSubscriptionManager
+- (void) initializeSubscriptionManager
 {
     NSSet *productIdentifiers = [NSSet setWithObjects:
                                  SubscriptionManager.k1MonthServiceProductID,
                                  SubscriptionManager.k12MonthServiceProductID,
                                  nil];
-    
-    self.subscriptionManager = [[SubscriptionManager alloc] initWithProductIdentifiers:productIdentifiers authenticationService:[self.serviceFactory createAuthenticationService] userManager:self.userManager];
+
+    self.subscriptionManager = [[SubscriptionManager alloc] initWithProductIdentifiers: productIdentifiers authenticationService: [self.serviceFactory createAuthenticationService] userManager: self.userManager];
 }
 
 - (void) initializeLocalizationManager
@@ -123,18 +123,18 @@
 {
     // Sets the status and nav bar color
     [UINavigationBar appearance].barTintColor = self.lookAndFeel.navBarColor;
-    
+
     // White elements in the status bar works with our branding
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-    
+
     // We want white buttons in the nav bar
     [UINavigationBar appearance].tintColor = [UIColor whiteColor];
-    
+
     // We want a white title in the nav bar
     [UINavigationBar appearance].titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
-    
+
     [[UIBarButtonItem appearance] setTitleTextAttributes: @{NSForegroundColorAttributeName: [UIColor whiteColor]} forState: UIControlStateNormal];
-    
+
     self.window.backgroundColor = [UIColor whiteColor];
 }
 
@@ -143,8 +143,8 @@
 // do loading here
 - (BOOL) application: (UIApplication *) application didFinishLaunchingWithOptions: (NSDictionary *) launchOptions
 {
-    [Crashlytics startWithAPIKey:@"eb922476ab6e34282030b166efc4805103d4a498"];
-    
+    [Crashlytics startWithAPIKey: @"eb922476ab6e34282030b166efc4805103d4a498"];
+
     [self initializeLocalizationManager];
     [self initializeNetworkCommunicator];
     [self initializeBuilderFactory];
@@ -159,11 +159,9 @@
     [self initializeBackgroundWorker];
     [self initializeViewControllerFactory];
     self.userManager.backgroundWorker = self.backgroundWorker;
-    
+
     self.window = [[UIWindow alloc] initWithFrame: [UIScreen mainScreen].bounds];
 
-    [self.window makeKeyAndVisible];
-    
     [self customizeGlobalLookAndFeel];
 
     if (!self.navigationController)
@@ -172,7 +170,7 @@
         self.window.rootViewController = self.navigationController;
         [self.navigationController.navigationBar setTranslucent: YES];
 
-        self.navigationBarTitleImageContainer = [[UIView alloc] initWithFrame: self.navigationController.navigationBar.frame];
+        self.navigationBarTitleImageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 20, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height)];
         [self.navigationBarTitleImageContainer setUserInteractionEnabled: NO];
 
         UIImageView *titleImage = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"CelitaxNavBarLogo.png"]];
@@ -195,7 +193,7 @@
             [self.navigationController pushViewController: [self.viewControllerFactory createLoginViewController] animated: YES];
         }
     }
-    
+
     [self.window makeKeyAndVisible];
 
     return YES;
@@ -204,7 +202,7 @@
 - (void) applicationDidBecomeActive: (UIApplication *) application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    
+
     [self.backgroundWorker appIsActive];
 }
 

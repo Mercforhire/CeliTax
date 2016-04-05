@@ -109,5 +109,69 @@
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CeliTax/SyncService.swift"
+            timestampString = "481516398.115588"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "602"
+            endingLineNumber = "602"
+            landmarkName = "getFilesNeedToUpload(_:failure:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CeliTax.SyncService.(getFilesNeedToUpload (Swift.Optional&lt;(filesnamesToUpload : Swift.Array&lt;Swift.String&gt;) -&gt; ()&gt;, failure : Swift.Optional&lt;(reason : Swift.String) -&gt; ()&gt;) -&gt; ()).(closure #3)"
+                  moduleName = "CeliTax"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lchen/Documents/CeliTax/CeliTax/SyncService.swift"
+                  timestampString = "481517956.100715"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "602"
+                  endingLineNumber = "602"
+                  offsetFromSymbolStart = "104">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CeliTax.SyncService.(getFilesNeedToUpload (Swift.Optional&lt;(filesnamesToUpload : Swift.Array&lt;Swift.String&gt;) -&gt; ()&gt;, failure : Swift.Optional&lt;(reason : Swift.String) -&gt; ()&gt;) -&gt; ()).(closure #3).(closure #1)"
+                  moduleName = "CeliTax"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lchen/Documents/CeliTax/CeliTax/SyncService.swift"
+                  timestampString = "481517956.100881"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "604"
+                  endingLineNumber = "604"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CeliTax/SyncManager.swift"
+            timestampString = "481517907.322939"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "403"
+            endingLineNumber = "403"
+            landmarkName = "startDownloadPhotos(_:success:failure:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

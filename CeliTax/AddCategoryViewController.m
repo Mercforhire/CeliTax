@@ -102,8 +102,8 @@
     // initialize the Save menu button button
     self.saveButton = [[SolidGreenButton alloc] initWithFrame: CGRectMake(0, 0, 50, 25)];
     [self.saveButton setTitle: NSLocalizedString(@"Save", nil) forState: UIControlStateNormal];
-    (self.saveButton.titleLabel).font = [UIFont latoBoldFontOfSize: 14];
-    (self.saveButton).titleEdgeInsets = UIEdgeInsetsMake(5, 10, 5, 10);
+    self.saveButton.titleLabel.font = [UIFont latoBoldFontOfSize: 14];
+    self.saveButton.titleEdgeInsets = UIEdgeInsetsMake(5, 10, 5, 10);
     [self.saveButton addTarget: self action: @selector(saveCategoryPressed:) forControlEvents: UIControlEventTouchUpInside];
     [self.saveButton setLookAndFeel:self.lookAndFeel];
 

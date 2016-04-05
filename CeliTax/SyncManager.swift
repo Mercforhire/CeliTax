@@ -32,17 +32,6 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
     private weak var userManager : UserManager!
     private weak var syncService : SyncService!
     
-    private var filenamesToUpload : [String] = []    /** Filenames that we need to upload */
-    private var indexOfFileToUpload : Int = -1
-    
-    private var uploadImagesTask : UIBackgroundTaskIdentifier?
-    
-    private var filenamesToDownload : [String] = []    /** Filenames that we need to download */
-    private var filenamesFailedToDownload : [String] = []
-    private var indexOfFileToDownload : Int = -1
-    private var downloading : Bool = false
-    
-    private var downloadTask : UIBackgroundTaskIdentifier?
     private var cancelOperations : Bool = false
         
     override init()
@@ -169,12 +158,12 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
         let serviceGroup2 : dispatch_group_t = dispatch_group_create()
         let serviceGroup3 : dispatch_group_t = dispatch_group_create()
     
-        //Enter all groups first
+        // Enter all groups first
         dispatch_group_enter(serviceGroup1)
         dispatch_group_enter(serviceGroup2)
         dispatch_group_enter(serviceGroup3)
         
-        //1.Upload local data to server
+        // 1.Upload local data to server
         
         if (self.cancelOperations)
         {
@@ -205,7 +194,7 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
             }
         }
         
-        //2.Download and merge data from server
+        // 2.Download and merge data from server
         dispatch_group_notify(serviceGroup1, dispatch_get_main_queue()) {
             
             if (self.cancelOperations)
@@ -237,7 +226,7 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
             
         }
         
-        //3.Delete Photos no longer attached to any receipts
+        // 3.Delete Photos no longer attached to any receipts
         dispatch_group_notify(serviceGroup2, dispatch_get_main_queue()) {
             
             if (self.cancelOperations)
@@ -258,7 +247,7 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
             }
         }
         
-        //Finally, trigger the success block
+        // Finally, trigger the success block
         dispatch_group_notify(serviceGroup3, dispatch_get_main_queue()) {
             
             if (self.cancelOperations)
@@ -315,160 +304,77 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
         })
     }
     
-    private func uploadPhotos(success : UploadingPhotosSuccessBlock?, failure : UploadingPhotosFailureBlock?)
-    {
-        if (self.indexOfFileToUpload < self.filenamesToUpload.count)
-        {
-            let filenameToUpload : String = self.filenamesToUpload[self.indexOfFileToUpload]
-            
-            let fileData : NSData? = Utils.readImageDataWithFileName(filenameToUpload, userKey: self.userManager.user!.userKey)
-            
-            if (fileData != nil)
-            {
-                dLog( String.init(format: "Uploading %@...", filenameToUpload) )
-                
-                self.syncService.uploadFile(filenameToUpload, data: fileData!, success: {
-                    
-                    dLog( String.init(format: "%@ Uploaded.", filenameToUpload) )
-                    self.indexOfFileToUpload += 1
-                    
-                    self.uploadPhotos(success, failure:failure)
-                    
-                    }, failure: { (reason) in
-                        
-                        dLog( String.init(format: "%@ failed to uploaded, stopping all uploads!", filenameToUpload) )
-                        
-                        UIApplication.sharedApplication().endBackgroundTask(self.uploadImagesTask!)
-                        
-                        self.uploadImagesTask = UIBackgroundTaskInvalid
-                        
-                        if (failure != nil)
-                        {
-                            failure! (reason: reason)
-                        }
-                        
-                })
-            }
-            else
-            {
-                //if this file doesn't exist, we have a problem with receipt data integrity
-                
-                //skip this file for now
-                self.indexOfFileToUpload += 1
-                
-                self.uploadPhotos(success, failure:failure)
-            }
-        }
-        else
-        {
-            UIApplication.sharedApplication().endBackgroundTask(self.uploadImagesTask!)
-            
-            self.uploadImagesTask = UIBackgroundTaskInvalid
-            
-            if (success != nil)
-            {
-                success!()
-            }
-        }
-    }
-    
     /*
     Secretly upload photos to server
     */
     func startUploadingPhotos(success : UploadingPhotosSuccessBlock?, failure : UploadingPhotosFailureBlock?)
     {
-        //Get the list of images the server needs
+        // 0.Filenames that we need to upload
+        var filenames : [String] = []
+        
+        // Create the dispatch groups
+        let serviceGroup1 : dispatch_group_t = dispatch_group_create()
+        
+        // 1.Get the list of images the server needs
+        dispatch_group_enter(serviceGroup1)
+        
         self.syncService.getFilesNeedToUpload( { (filesnamesToUpload) in
             
-            if (filesnamesToUpload.count > 0)
+            if (self.cancelOperations)
             {
-                //Start uploading the images one by one
+                self.cancelOperations = false
+            }
+            else
+            {
                 dLog("Need to upload:")
                 dLog(filesnamesToUpload.description)
                 
-                self.filenamesToUpload = filesnamesToUpload
-                
-                self.indexOfFileToUpload = 0
-                
-                self.uploadImagesTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ () -> Void in
-                    
-                })
-                
-                self.uploadPhotos(success, failure:failure)
+                filenames = filesnamesToUpload
+            }
+            
+            dispatch_group_leave(serviceGroup1)
+            
+        }, failure: { (reason) in
+            
+            if (self.cancelOperations)
+            {
+                self.cancelOperations = false
             }
             else
             {
-                //Nothing to upload
-                if (success != nil)
-                {
-                    success!()
-                }
+                failure?(reason: reason)
             }
             
-            }, failure: { (reason) in
-                
-                if (failure != nil)
-                {
-                    failure!(reason: reason)
-                }
+            dispatch_group_leave(serviceGroup1)
         })
-    }
-    
-    private func downloadPhotos(success : DownloadFilesSuccessBlock?, failure : DownloadFileFailureBlock?)
-    {
-        if (cancelOperations)
-        {
-            self.downloading = false
-            
-            UIApplication.sharedApplication().endBackgroundTask(self.downloadTask!)
-            
-            self.downloadTask = UIBackgroundTaskInvalid
-            
-            cancelOperations = false
-            
-            return
-        }
         
-        if (self.indexOfFileToDownload < self.filenamesToDownload.count)
-        {
-            let filenameToDownload : String = self.filenamesToDownload[self.indexOfFileToDownload]
+        // 2.Upload each image
+        dispatch_group_notify(serviceGroup1, dispatch_get_main_queue()) {
             
-            self.syncService.downloadFile(filenameToDownload, success: {
-                
-                self.indexOfFileToDownload += 1
-                self.downloadPhotos(success, failure: failure)
-                
-                }, failure: { (reason) in
-                    
-                    self.filenamesFailedToDownload.append(filenameToDownload)
-                    
-                    self.indexOfFileToDownload += 1
-                    self.downloadPhotos(success, failure: failure)
-                    
-            })
-        }
-        else
-        {
-            self.downloading = false
+            var uploadImagesTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler(nil)
             
-            if (self.filenamesFailedToDownload.count > 0)
+            let uploadQueue : NSOperationQueue = NSOperationQueue()
+            uploadQueue.name = "Upload queue"
+            uploadQueue.maxConcurrentOperationCount = 1
+            
+            for fileToUpload in filenames
             {
-                if (failure != nil)
-                {
-                    failure! (filesnamesFailedToDownload: self.filenamesFailedToDownload)
+                guard let fileData : NSData = Utils.readImageDataWithFileName(fileToUpload, userKey: self.userManager.user!.userKey) else {
+                    continue
                 }
-            }
-            else
-            {
-                if (success != nil)
+                
+                let uploadOperation : ImageUploaderOperation = ImageUploaderOperation(syncService: self.syncService, filenameToUpload: fileToUpload, fileData: fileData)
+                
+                if fileToUpload == filenames.last
                 {
-                    success!()
+                    uploadOperation.completionBlock = {
+                        UIApplication.sharedApplication().endBackgroundTask(uploadImagesTask)
+                        uploadImagesTask = UIBackgroundTaskInvalid
+                    }
                 }
+                
+                uploadQueue.addOperation(uploadOperation)
             }
-            
-            UIApplication.sharedApplication().endBackgroundTask(self.downloadTask!)
-            
-            self.downloadTask = UIBackgroundTaskInvalid
         }
     }
     
@@ -489,19 +395,32 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
             return
         }
         
-        self.downloading = true
+        // Filenames that we need to download
+        var downloadTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler(nil)
         
-        self.filenamesToDownload = filenames
+        dLog("Download Task started...")
         
-        self.filenamesFailedToDownload = []
+        let downloadQueue : NSOperationQueue = NSOperationQueue()
+        downloadQueue.name = "DownloadQueue queue"
+        downloadQueue.maxConcurrentOperationCount = 1
         
-        self.indexOfFileToDownload = 0
-        
-        self.downloadTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ () -> Void in
+        for fileToDownload in filenames
+        {
+            let downloadOperation : ImageDownloaderOperation = ImageDownloaderOperation(syncService: self.syncService, filenameToDownload: fileToDownload)
             
-        })
-        
-        self.downloadPhotos(success, failure: failure)
+            if fileToDownload == filenames.last
+            {
+                downloadOperation.completionBlock = {
+                    UIApplication.sharedApplication().endBackgroundTask(downloadTask)
+                    downloadTask = UIBackgroundTaskInvalid
+                    
+                    dLog("Download Task complete.")
+                }
+            }
+            
+            downloadQueue.addOperation(downloadOperation)
+        }
+       
     }
     
     private func getListOfFilesToDownload() -> [String]

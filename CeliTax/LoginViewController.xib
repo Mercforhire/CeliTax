@@ -145,6 +145,7 @@
                     <exclude reference="SCC-oi-L2r"/>
                 </mask>
             </variation>
+            <point key="canvasLocation" x="401" y="386"/>
         </view>
     </objects>
     <resources>
