@@ -397,7 +397,9 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
                         
                         dLog("Upload Task complete.")
                         
-                        success?()
+                        dispatch_async(dispatch_get_main_queue(), {
+                            success?()
+                        })
                     }
                 }
                 
@@ -420,6 +422,8 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
         
         if (filenames.count == 0)
         {
+            success?()
+            
             return
         }
         
@@ -443,6 +447,10 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
                 
                 dLog("Download Task complete.")
                 
+                dispatch_async(dispatch_get_main_queue(), {
+                    success?()
+                })
+                
                 break
             }
             
@@ -455,6 +463,10 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
                     downloadTask = UIBackgroundTaskInvalid
                     
                     dLog("Download Task complete.")
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        success?()
+                    })
                 }
             }
             
