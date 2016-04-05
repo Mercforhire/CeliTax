@@ -148,7 +148,7 @@ class UserManager : NSObject //TODO: Remove Subclass to NSObject when the entire
     
         self.authenticationService!.retrieveProfileImage({ (profileImage) in
 
-            self.user!.avatarImage = profileImage;
+            self.user!.avatarImage = profileImage
             
             }, failure: { (reason) in
                 //ignore failure
@@ -250,7 +250,7 @@ class UserManager : NSObject //TODO: Remove Subclass to NSObject when the entire
     {
         self.user = nil
         
-        self.userDataDAO!.userKey = nil;
+        self.userDataDAO!.userKey = nil
         
         self.subscriptionActive = false
         

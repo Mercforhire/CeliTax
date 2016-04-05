@@ -160,7 +160,7 @@ class UserData : NSObject, NSCoding //TODO: Remove Subclass to NSObject when the
                 }
                 else
                 {
-                    category.dataAction = DataActionStatus.DataActionNone;
+                    category.dataAction = DataActionStatus.DataActionNone
                 }
             }
         }
@@ -180,7 +180,7 @@ class UserData : NSObject, NSCoding //TODO: Remove Subclass to NSObject when the
                 }
                 else
                 {
-                    record.dataAction = DataActionStatus.DataActionNone;
+                    record.dataAction = DataActionStatus.DataActionNone
                 }
             }
         }
@@ -200,7 +200,7 @@ class UserData : NSObject, NSCoding //TODO: Remove Subclass to NSObject when the
                 }
                 else
                 {
-                    receipt.dataAction = DataActionStatus.DataActionNone;
+                    receipt.dataAction = DataActionStatus.DataActionNone
                 }
             }
         }
@@ -220,7 +220,7 @@ class UserData : NSObject, NSCoding //TODO: Remove Subclass to NSObject when the
                 }
                 else
                 {
-                    taxYear.dataAction = DataActionStatus.DataActionNone;
+                    taxYear.dataAction = DataActionStatus.DataActionNone
                 }
             }
         }
