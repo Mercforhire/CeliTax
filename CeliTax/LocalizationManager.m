@@ -57,9 +57,6 @@
     
     if (langPref)
     {
-        // Found one, use it...
-        DLog(@"Using user selected language: %@", langPref);
-        
         [self changeLanguage: langPref];
     }
     else
@@ -70,15 +67,11 @@
         if ([self isLanguageSupported: systemLang])
         {
             // That language is supported, use it...
-            DLog(@"Using user system language: %@", systemLang);
-            
             [self changeLanguage: systemLang];
         }
         else
         {
             // Not supported, fallback to the first language
-            DLog(@"Using user default language: %@", @"en");
-            
             [self changeLanguage: ((Language *) (self.supportedLanguages).firstObject).code];
         }
     }
@@ -179,8 +172,6 @@
     [self reloadSupportedLanguages];
     
     self.currentLanguage = [self findLanguage: language];
-    
-    DLog(@"Setting language to %@", language);
     
     // Save this as the last set language
     [[NSUserDefaults standardUserDefaults] setObject: language forKey: kKeyLanguage];

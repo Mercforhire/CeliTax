@@ -326,10 +326,13 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
             }
             else
             {
-                dLog("Need to upload:")
-                dLog(filesnamesToUpload.description)
-                
-                filenames = filesnamesToUpload
+                if (filesnamesToUpload.count > 0)
+                {
+                    dLog("Need to upload:")
+                    dLog(filesnamesToUpload.description)
+                    
+                    filenames = filesnamesToUpload
+                }
             }
             
             dispatch_group_leave(serviceGroup1)
@@ -351,7 +354,14 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
         // 2.Upload each image
         dispatch_group_notify(serviceGroup1, dispatch_get_main_queue()) {
             
+            if (filenames.count == 0)
+            {
+                return
+            }
+            
             var uploadImagesTask : UIBackgroundTaskIdentifier = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler(nil)
+            
+            dLog("Upload Task started...")
             
             let uploadQueue : NSOperationQueue = NSOperationQueue()
             uploadQueue.name = "Upload queue"
@@ -359,6 +369,18 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
             
             for fileToUpload in filenames
             {
+                if (self.cancelOperations)
+                {
+                    self.cancelOperations = false
+                    
+                    UIApplication.sharedApplication().endBackgroundTask(uploadImagesTask)
+                    uploadImagesTask = UIBackgroundTaskInvalid
+                    
+                    dLog("Upload Task complete.")
+                    
+                    break
+                }
+                
                 guard let fileData : NSData = Utils.readImageDataWithFileName(fileToUpload, userKey: self.userManager.user!.userKey) else {
                     continue
                 }
@@ -370,6 +392,8 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
                     uploadOperation.completionBlock = {
                         UIApplication.sharedApplication().endBackgroundTask(uploadImagesTask)
                         uploadImagesTask = UIBackgroundTaskInvalid
+                        
+                        dLog("Upload Task complete.")
                     }
                 }
                 
@@ -387,7 +411,7 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
         {
             self.cancelOperations = false
             
-            return;
+            return
         }
         
         if (filenames.count == 0)
@@ -401,11 +425,23 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
         dLog("Download Task started...")
         
         let downloadQueue : NSOperationQueue = NSOperationQueue()
-        downloadQueue.name = "DownloadQueue queue"
+        downloadQueue.name = "Download queue"
         downloadQueue.maxConcurrentOperationCount = 1
         
         for fileToDownload in filenames
         {
+            if (self.cancelOperations)
+            {
+                self.cancelOperations = false
+                
+                UIApplication.sharedApplication().endBackgroundTask(downloadTask)
+                downloadTask = UIBackgroundTaskInvalid
+                
+                dLog("Download Task complete.")
+                
+                break
+            }
+            
             let downloadOperation : ImageDownloaderOperation = ImageDownloaderOperation(syncService: self.syncService, filenameToDownload: fileToDownload)
             
             if fileToDownload == filenames.last
