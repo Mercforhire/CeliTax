@@ -714,7 +714,14 @@ class SyncService : NSObject
     */
     func downloadFile(filename : String, success : FileDownloadSuccessBlock?, failure : FileDownloadFailureBlock?)
     {
-        // 1.get the URL of the image first
+        // Create a dispatch group
+        let serviceGroup1 : dispatch_group_t = dispatch_group_create()
+        
+        // Enter all groups first
+        dispatch_group_enter(serviceGroup1)
+        
+        // 1.Get the URL of the image first
+        var imageURL : String?
         let filePath : String = Utils.getFilePathForImage(filename, userKey: self.userDataDAO.userKey)
         
         let postParams: [String:String] = [
@@ -731,12 +738,9 @@ class SyncService : NSObject
             
             if ( response["error"] != nil && response["error"]!.boolValue == false)
             {
-                let url : String = response["url"] as! String
+                imageURL = response["url"] as? String
                 
-                // 2.start downloading the image from the url
-                dLog( String.init(format: "Received URL of image: %@", url) )
-                
-                self.downloadFileFromURL(url, filePath:filePath, success:success, failure:failure)
+                dLog( String.init(format: "Received URL of image: %@", imageURL!) )
             }
             else
             {
@@ -750,6 +754,8 @@ class SyncService : NSObject
                     
                 })
             }
+            
+            dispatch_group_leave(serviceGroup1)
         }
         
         let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
@@ -762,11 +768,20 @@ class SyncService : NSObject
                 }
                 
             })
+            
+            dispatch_group_leave(serviceGroup1)
         }
         
         networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
         
         self.networkCommunicator.enqueueOperation(networkOperation)
+        
+        // 2.Start downloading the image from the url
+        dispatch_group_notify(serviceGroup1, dispatch_get_main_queue()) {
+            guard let imageURL = imageURL else { return }
+            
+            self.downloadFileFromURL(imageURL, filePath:filePath, success:success, failure:failure)
+        }
     }
     
     /*
@@ -984,7 +999,7 @@ class SyncService : NSObject
                     
                     if (failure != nil)
                     {
-                        failure! ( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
+                        failure! ( reason: NetworkCommunicator.NETWORK_UNKNOWN_ERROR )
                     }
                     
                 })
