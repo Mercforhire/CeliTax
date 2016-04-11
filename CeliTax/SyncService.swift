@@ -118,8 +118,6 @@ class SyncService : NSObject
                 //Pick 3 random catagories and give them a random national average amount for at least one other Unit
                 var indexesOf3ChoosenCategories : [Int] = []
                 
-                var i : Int = 0
-                
                 while (indexesOf3ChoosenCategories.count <= 3)
                 {
                     let randomIndex : Int = Utils.randomNumberBetween(0, max: allCategories.count - 1)
@@ -127,8 +125,6 @@ class SyncService : NSObject
                     if (!indexesOf3ChoosenCategories.contains(randomIndex))
                     {
                         indexesOf3ChoosenCategories.append(randomIndex)
-                        
-                        i += 1
                     }
                 }
                 
@@ -780,7 +776,7 @@ class SyncService : NSObject
         dispatch_group_notify(serviceGroup1, dispatch_get_main_queue()) {
             guard let imageURL = imageURL else { return }
             
-            self.downloadFileFromURL(imageURL, filePath:filePath, success:success, failure:failure)
+            self.downloadFileFromURL(imageURL, filePath: filePath, success: success, failure: failure)
         }
     }
     

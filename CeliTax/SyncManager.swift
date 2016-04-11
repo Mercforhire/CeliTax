@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- Emcapsulates some of the more complex Syncing related functions
+ Encapsulates some of the more complex Syncing related functions
  */
 @objc
 class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire app has been converted to Swift
@@ -29,7 +29,7 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
     typealias NeedsUpdateBlock = () -> Void
     typealias DoesntNeedsUpdateBlock = () -> Void
     
-    private weak var userManager : UserManager!
+    private weak var userDataDAO : UserDataDAO!
     private weak var syncService : SyncService!
     
     private var cancelOperations : Bool = false
@@ -39,9 +39,9 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
         super.init()
     }
     
-    init(userManager : UserManager!, syncService : SyncService!)
+    init(userDataDAO : UserDataDAO!, syncService : SyncService!)
     {
-        self.userManager = userManager
+        self.userDataDAO = userDataDAO
         self.syncService = syncService
     }
     
@@ -80,7 +80,7 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
         {
             //no local data batch exist. Meaning the app has never been sync with server
             
-            //check the server to see if the server has different data by comparing BatchID
+            //check the server to see if the server has any data at all
             self.syncService.getLastestServerDataBatchID( { (batchID) in
                 
                 if (self.cancelOperations)
@@ -305,7 +305,7 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
     }
     
     /*
-    Secretly upload photos to server
+    Start upload photos to server
     */
     func startUploadingPhotos(success : UploadingPhotosSuccessBlock?, failure : UploadingPhotosFailureBlock?)
     {
@@ -383,7 +383,7 @@ class SyncManager : NSObject //TODO: Remove Subclass to NSObject when the entire
                     break
                 }
                 
-                guard let fileData : NSData = Utils.readImageDataWithFileName(fileToUpload, userKey: self.userManager.user!.userKey) else {
+                guard let fileData : NSData = Utils.readImageDataWithFileName(fileToUpload, userKey: self.userDataDAO.userKey!) else {
                     continue
                 }
                 

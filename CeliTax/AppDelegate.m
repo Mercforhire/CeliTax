@@ -95,7 +95,7 @@
 
 - (void) initializeSyncManager
 {
-    self.syncManager = [[SyncManager alloc] initWithUserManager: self.userManager syncService: [self.serviceFactory createSyncService]];
+    self.syncManager = [[SyncManager alloc] initWithUserDataDAO:[self.daoFactory createUserDataDAO] syncService:[self.serviceFactory createSyncService]];
 }
 
 - (void) initializeBackgroundWorker

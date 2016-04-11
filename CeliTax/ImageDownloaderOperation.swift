@@ -74,5 +74,4 @@ class ImageDownloaderOperation : NSOperation
         super.cancel()
         finish()
     }
-    
 }
