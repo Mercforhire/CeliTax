@@ -37,7 +37,6 @@ extension String {
   
     func stringByAppendingPathComponent(path: String) -> String
     {
-         
         let nsSt = self as NSString  
          
         return nsSt.stringByAppendingPathComponent(path)  
@@ -45,7 +44,6 @@ extension String {
   
     func stringByAppendingPathExtension(ext: String) -> String?
     {
-         
         let nsSt = self as NSString  
          
         return nsSt.stringByAppendingPathExtension(ext)  

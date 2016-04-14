@@ -34,7 +34,6 @@ class BackgroundWorker : NSObject //TODO: Remove Subclass to NSObject when the e
     private var currentTaskIndex : Int = 0
     
     //Data that are persistent in User Defaults:
-    private var lastTimeDate : NSDate?
     private var queuedTasks : [Int] = []
     
     override init()

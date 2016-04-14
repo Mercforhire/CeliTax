@@ -11,8 +11,6 @@ import Foundation
 @objc
 class ServiceFactory : NSObject //TODO: Remove Subclass to NSObject when the entire app has been converted to Swift
 {
-    private weak var configurationManager : ConfigurationManager!
-    
     private weak var daoFactory : DAOFactory!
     
     private weak var networkCommunicator : NetworkCommunicator!
@@ -32,9 +30,8 @@ class ServiceFactory : NSObject //TODO: Remove Subclass to NSObject when the ent
         super.init()
     }
     
-    init(configurationManager : ConfigurationManager!, daoFactory : DAOFactory!, networkCommunicator : NetworkCommunicator!, builderFactory : BuilderFactory!)
+    init(daoFactory : DAOFactory!, networkCommunicator : NetworkCommunicator!, builderFactory : BuilderFactory!)
     {
-        self.configurationManager = configurationManager
         self.daoFactory = daoFactory
         self.networkCommunicator = networkCommunicator
         self.builderFactory = builderFactory

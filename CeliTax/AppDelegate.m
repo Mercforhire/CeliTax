@@ -75,7 +75,7 @@
 
 - (void) initializeServiceFactory
 {
-    self.serviceFactory = [[ServiceFactory alloc] initWithConfigurationManager: self.configurationManager daoFactory: self.daoFactory networkCommunicator: self.networkCommunicator builderFactory: self.builderFactory];
+    self.serviceFactory = [[ServiceFactory alloc] initWithDaoFactory: self.daoFactory networkCommunicator: self.networkCommunicator builderFactory: self.builderFactory];
 }
 
 - (void) initializeDAOFactory
