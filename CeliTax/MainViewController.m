@@ -664,9 +664,9 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
         return;
     }
     
-    NSDictionary *uploadInfoDictionary = self.receiptInfos [indexPath.row];
+    NSDictionary *receiptInfoDictionary = self.receiptInfos [indexPath.row];
 
-    NSString *clickedReceiptID = uploadInfoDictionary[DataService.kReceiptIDKey];
+    NSString *clickedReceiptID = receiptInfoDictionary[DataService.kReceiptIDKey];
     
     //push to Receipt Checking view directly if this receipt has no items
     NSArray *records = [self.dataService fetchRecordsForReceiptID: clickedReceiptID];

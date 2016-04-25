@@ -190,14 +190,11 @@ class UserManager : NSObject //TODO: Remove Subclass to NSObject when the entire
         {
             dLog("ERROR: Did not save User")
         }
-        
-        
+    
         self.authenticationService!.updateAccountInfo(firstname, lastname:lastname, country:country, success: {
             //nothing left to do
             }, failure: { (reason) in
-                
                 self.backgroundWorker!.addTaskToQueue(QueueTaskType.UploadProfileData)
-                
         })
     }
     
