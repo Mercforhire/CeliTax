@@ -16,51 +16,51 @@ class BuilderFactory : NSObject //TODO: Remove Subclass to NSObject when the ent
     var receiptBuilder : ReceiptBuilder?
     var taxYearBuilder : TaxYearBuilder?
     
-    func createCatagoryBuilder() -> CategoryBuilder!
+    func createCatagoryBuilder() -> CategoryBuilder
     {
-        if (self.categoryBuilder != nil)
+        if let categoryBuilder = self.categoryBuilder
         {
-            return self.categoryBuilder
+            return categoryBuilder
         }
         
         self.categoryBuilder = CategoryBuilder()
         
-        return self.categoryBuilder
+        return self.categoryBuilder!
     }
     
-    func createRecordBuilder() -> RecordBuilder!
+    func createRecordBuilder() -> RecordBuilder
     {
         if (self.recordBuilder != nil)
         {
-            return self.recordBuilder
+            return self.recordBuilder!
         }
         
         self.recordBuilder = RecordBuilder()
         
-        return self.recordBuilder
+        return self.recordBuilder!
     }
     
-    func createReceiptBuilder() -> ReceiptBuilder!
+    func createReceiptBuilder() -> ReceiptBuilder
     {
         if (self.receiptBuilder != nil)
         {
-            return self.receiptBuilder
+            return self.receiptBuilder!
         }
         
         self.receiptBuilder = ReceiptBuilder()
         
-        return self.receiptBuilder
+        return self.receiptBuilder!
     }
     
-    func createTaxYearBuilder() -> TaxYearBuilder!
+    func createTaxYearBuilder() -> TaxYearBuilder
     {
         if (self.taxYearBuilder != nil)
         {
-            return self.taxYearBuilder
+            return self.taxYearBuilder!
         }
         
         self.taxYearBuilder = TaxYearBuilder()
         
-        return self.taxYearBuilder
+        return self.taxYearBuilder!
     }
 }

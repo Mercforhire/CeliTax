@@ -53,7 +53,7 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
 @property (nonatomic, strong) WYPopoverController *selectionPopover;
 @property (nonatomic, strong) SelectionsPickerViewController *taxYearPickerViewController;
 
-// Dictionaries of keys: kReceiptIDKey,kColorKey,kCatagoryNameKey,kCatagoryTotalAmountKey
+// Dictionaries of keys: kReceiptIDKey, kUploadTimeKey
 @property (nonatomic, strong) NSArray *receiptInfos;
 
 // sorted from most recent to oldest
@@ -100,7 +100,7 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
     
     self.possibleTaxYears = [NSMutableArray new];
     
-    //Add the all years -5 and +5 of current year
+    // Add the all years -5 and +5 of current year
     for (NSInteger year = [Utils currentYear] - 5; year < [Utils currentYear] + 5; year++)
     {
         [self.possibleTaxYears addObject:@(year)];
@@ -134,7 +134,6 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
                                 [[UIBarButtonItem alloc]initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil],
                                 addToolbarButton];
     [self.pickerToolbar sizeToFit];
-
     
     self.invisibleNewTaxYearField.inputAccessoryView = self.pickerToolbar;
     
@@ -173,6 +172,8 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
         
         [self.userManager updateUserSubscriptionExpiryDate:^{
             
+            // Enabling the button doesn't mean the user can start taking photos
+            
             [self.cameraButton setEnabled: YES];
             
         } failure:^(NSString *reason) {
@@ -182,7 +183,7 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
         }];
     }
     
-    //enable syncManager to run again it was halted before
+    // Enable syncManager to run again if it was halted before
     [self.syncManager resetCancelOperation];
 }
 
@@ -349,8 +350,6 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
             self.currentlySelectedYear = self.existingTaxYears.firstObject;
         }
         
-        [self.recentUploadsTable reloadData];
-        
         [self hideWaitingView];
         
         // Go to step 5
@@ -487,7 +486,7 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
 {
     if (!self.userManager.subscriptionActive)
     {
-        // ask user if they want to download data from server
+        // Ask user if they want to buy an subscription
         NSString *alertTitle = NSLocalizedString(@"Sorry", nil);
         NSString *alertMessage = NSLocalizedString(@"The subscription for this account has expired. Would you like to purchase a new subscription?", nil);
         NSString *alertNo = NSLocalizedString(@"No", nil);

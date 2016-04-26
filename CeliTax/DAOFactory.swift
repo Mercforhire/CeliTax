@@ -17,53 +17,53 @@ class DAOFactory : NSObject //TODO: Remove Subclass to NSObject when the entire 
     private var recordsDAO : RecordsDAO?
     private var taxYearsDAO : TaxYearsDAO?
     
-    func createCategoriesDAO() -> CategoriesDAO!
+    func createCategoriesDAO() -> CategoriesDAO
     {
         if (self.categoriesDAO == nil)
         {
             self.categoriesDAO = CategoriesDAO.init(userDataDAO: self.createUserDataDAO())
         }
         
-        return self.categoriesDAO
+        return self.categoriesDAO!
     }
     
-    func createUserDataDAO() -> UserDataDAO!
+    func createUserDataDAO() -> UserDataDAO
     {
         if (self.userDataDAO == nil)
         {
             self.userDataDAO = UserDataDAO()
         }
         
-        return self.userDataDAO
+        return self.userDataDAO!
     }
     
-    func createReceiptsDAO() -> ReceiptsDAO!
+    func createReceiptsDAO() -> ReceiptsDAO
     {
         if (self.receiptsDAO == nil)
         {
             self.receiptsDAO = ReceiptsDAO.init(userDataDAO: self.createUserDataDAO())
         }
         
-        return self.receiptsDAO
+        return self.receiptsDAO!
     }
     
-    func createRecordsDAO() -> RecordsDAO!
+    func createRecordsDAO() -> RecordsDAO
     {
         if (self.recordsDAO == nil)
         {
             self.recordsDAO = RecordsDAO.init(userDataDAO: self.createUserDataDAO(), categoriesDAO: self.createCategoriesDAO())
         }
         
-        return self.recordsDAO
+        return self.recordsDAO!
     }
     
-    func createTaxYearsDAO() -> TaxYearsDAO!
+    func createTaxYearsDAO() -> TaxYearsDAO
     {
         if (self.taxYearsDAO == nil)
         {
             self.taxYearsDAO = TaxYearsDAO.init(userDataDAO: self.createUserDataDAO())
         }
         
-        return self.taxYearsDAO
+        return self.taxYearsDAO!
     }
 }

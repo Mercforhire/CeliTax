@@ -83,12 +83,12 @@ class YearSummaryData : NSObject //TODO: Remove Subclass to NSObject when the en
     
     var summaryRows : [SummaryRowData] = []
     
-    func addSimpleCategory(simpleCategory : SimpleCategory!)
+    func addSimpleCategory(simpleCategory : SimpleCategory)
     {
         self.categories.append(simpleCategory)
     }
     
-    func addSummaryRow(summaryRowData : SummaryRowData!)
+    func addSummaryRow(summaryRowData : SummaryRowData)
     {
         self.summaryRows.append(summaryRowData)
     }
