@@ -64,15 +64,10 @@ class ManipulationService : NSObject
         
         for record in fromRecords
         {
-            if (record == fromRecords.last)
-            {
-                self.recordsDAO.addRecordForCategoryID(toItemCatagory!.localID, receiptID: record.receiptID, quantity: record.quantity, unitType: record.unitType, amount: record.amount, save: true)
-            }
-            else
-            {
-                self.recordsDAO.addRecordForCategoryID(toItemCatagory!.localID, receiptID: record.receiptID, quantity: record.quantity, unitType: record.unitType, amount: record.amount, save: false)
-            }
+            self.recordsDAO.addRecordForCategoryID(toItemCatagory!.localID, receiptID: record.receiptID, quantity: record.quantity, unitType: record.unitType, amount: record.amount, save: false)
         }
+        
+        deleteCatagoryForCatagoryID(fromCategoryID, save: true)
         
         return true
     }
