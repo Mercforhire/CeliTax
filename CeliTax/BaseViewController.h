@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class LookAndFeel, ConfigurationManager, ViewControllerFactory, UserManager, TutorialManager, BackgroundWorker, SubscriptionManager;
+@class LookAndFeel, ConfigurationManager, ViewControllerFactory, UserManager, TutorialManager, BackgroundWorker;
 
 @interface BaseViewController : UIViewController
 
@@ -26,7 +26,6 @@
 
 @property (nonatomic, weak) BackgroundWorker *backgroundWorker;
 
-@property (nonatomic, weak) SubscriptionManager *subscriptionManager;
 
 - (void) stopEditing;
 

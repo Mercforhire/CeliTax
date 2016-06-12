@@ -116,7 +116,6 @@
 "Last Name" = "Last Name";
 "Logout" = "Logout";
 "Language:" = "Language:";
-"Loading subscriptions..." = "Loading subscriptions...";
 "Last synced: Never" = "Last synced: Never";
 "Last synced: %@" = "Last synced: %@";
 
@@ -133,7 +132,6 @@
 "No Uploads" = "No Uploads";
 "No receipt" = "No receipt";
 "Notice" = "Notice";
-"No subscriptions loaded" = "No subscriptions loaded";
 "Never show again" = "Never show again";
 
 //O
@@ -166,10 +164,6 @@
 "Please enter your password" = "Please enter your password";
 "Please re-enter your password" = "Please re-enter your password";
 "Please login with your new account" = "Please login with your new account";
-"Purchase" = "Purchase";
-"Purchasing subscription..." = "Purchasing subscription...";
-"Purchase failed." = "Purchase failed.";
-"Purchase Subscriptions" = "Purchase Subscriptions";
 "Please enter your account's email address and password to login" = "Please enter your account's email address and password to login";
 "Purchase failed" = "Purchase failed";
 
@@ -209,7 +203,6 @@
 "Transfer selected?" = "Transfer selected?";
 "This email address is already used by another account. Please use a different email address" = "This email address is already used by another account. Please use a different email address";
 "Total Avg.\nNon-GF Cost" = "Total Avg.\nNon-GF Cost";
-"The subscription for this account has expired. Would you like to purchase a new subscription?" = "The subscription for this account has expired. Would you like to purchase a new subscription?";
 "The total average price should not be higher than the actual price spent, please check to see if the correct average price has been entered." = "The total average price should not be higher than the actual price spent, please check to see if the correct average price has been entered.";
 "There are some data that's yet to be uploaded to the server for storage. Logging off will delete all local data. Do you want to upload them now?" = "There are some data that's yet to be uploaded to the server for storage. Logging off will delete all local data. Do you want to upload them now?";
 
@@ -235,7 +228,6 @@
 "Select All" = "Select All";
 "Spanish" = "Spanish";
 "Send Receipts To" = "Send Receipts To";
-"Subscription:" = "Subscription:";
 "Success" = "Success";
 "Sending report..." = "Sending report...";
 "Sending receipts..." = "Sending receipts...";

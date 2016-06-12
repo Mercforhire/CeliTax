@@ -159,23 +159,11 @@
                                lastname: authorizeResult.lastname
                                 country: authorizeResult.country];
          
-         [self.userManager updateUserSubscriptionExpiryDate:^{
-             
-             [self.waitView hide: YES];
-             
-             [self.navigationController pushViewController: [self.viewControllerFactory createMainViewController] animated: YES];
-             
-             [self.loginButton setEnabled: YES];
-             
-         } failure:^(NSString *reason) {
-             
-             [self.waitView hide: YES];
-             
-             [self.navigationController pushViewController: [self.viewControllerFactory createMainViewController] animated: YES];
-             
-             [self.loginButton setEnabled: YES];
-             
-         }];
+         [self.waitView hide: YES];
+         
+         [self.navigationController pushViewController: [self.viewControllerFactory createMainViewController] animated: YES];
+         
+         [self.loginButton setEnabled: YES];
          
      } failure: ^(AuthorizeResult *authorizeResult) {
          

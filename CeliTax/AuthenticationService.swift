@@ -56,12 +56,6 @@ class AuthenticationService : NSObject
     typealias RetrieveProfileImageSuccessBlock = (image : UIImage) -> Void
     typealias RetrieveProfileImageFailureBlock = (reason : String) -> Void
     
-    typealias SubscriptionUpdateSuccessBlock = (expirationDateString : String) -> Void
-    typealias SubscriptionUpdateFailureBlock = (reason : String) -> Void
-    
-    typealias GetSubscriptionExpiryDateSuccessBlock = (expirationDateString : String) -> Void
-    typealias GetSubscriptionExpiryDateFailureBlock = (reason : String) -> Void
-    
     private weak var userDataDAO : UserDataDAO!
     private weak var networkCommunicator : NetworkCommunicator!
     
@@ -737,112 +731,6 @@ class AuthenticationService : NSObject
                 if (failure != nil)
                 {
                     failure!(reason:  NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
-                }
-            })
-        }
-        
-        networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
-        
-        self.networkCommunicator.enqueueOperation(networkOperation)
-    }
-    
-    func getSubscriptionExpiryDate(success : GetSubscriptionExpiryDateSuccessBlock?, failure : GetSubscriptionExpiryDateFailureBlock?)
-    {
-        if (self.userDataDAO.userKey == nil)
-        {
-            assert(false, "self.userDataDAO.userKey not set")
-        }
-        
-        let networkOperation : MKNetworkOperation = self.networkCommunicator.getRequestToServer(NetworkCommunicator.WEB_API_FILE.stringByAppendingString("/get_expiration_date"))
-        
-        networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
-        
-        let successBlock : MKNKResponseBlock = { (completedOperation) in
-            
-            let response : NSDictionary = completedOperation.responseJSON() as! NSDictionary
-            
-            if ( response["error"]!.boolValue == false )
-            {
-                let expirationDateString : String = response["expiration_date"] as! String
-                
-                dispatch_async(dispatch_get_main_queue(), { 
-                    
-                    if ( success != nil )
-                    {
-                        success!( expirationDateString: expirationDateString )
-                    }
-                    
-                })
-            }
-            else
-            {
-                dispatch_async(dispatch_get_main_queue(), { 
-                    
-                    if (failure != nil)
-                    {
-                        failure!( reason: AuthenticationService.NO_EXPIRATION_DATE_EXIST )
-                    }
-                    
-                })
-            }
-        }
-        
-        let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
-            
-            dispatch_async(dispatch_get_main_queue(), { 
-                
-                if (failure != nil)
-                {
-                    failure!( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
-                }
-                
-            })
-        }
-        
-        networkOperation.addCompletionHandler(successBlock, errorHandler: failureBlock)
-        
-        self.networkCommunicator.enqueueOperation(networkOperation)
-    }
-    
-    func addNumberOfMonthToUserSubscription (numberOfMonth : Int, success : SubscriptionUpdateSuccessBlock?, failure : SubscriptionUpdateFailureBlock?)
-    {
-        if (self.userDataDAO.userKey == nil)
-        {
-            assert(false, "self.userDataDAO.userKey not set")
-        }
-        
-        let postParams: [String : AnyObject] = [
-            "number_of_month" : numberOfMonth
-        ]
-        
-        let networkOperation : MKNetworkOperation = self.networkCommunicator.postDataToServer(postParams, path: NetworkCommunicator.WEB_API_FILE.stringByAppendingString("/add_new_expiration_date"))
-        
-        networkOperation.addHeader("Authorization", withValue:self.userDataDAO.userKey)
-        
-        let successBlock : MKNKResponseBlock = { (completedOperation) in
-            
-            let response : NSDictionary = completedOperation.responseJSON() as! NSDictionary
-            
-            let expirationDateString : String = response["expiration_date"] as! String
-            
-            dispatch_async(dispatch_get_main_queue(), { 
-                
-                if (success != nil)
-                {
-                    success!( expirationDateString: expirationDateString )
-                }
-                
-            })
-            
-        }
-        
-        let failureBlock : MKNKResponseErrorBlock = { (completedOperation, error) in
-            
-            dispatch_async(dispatch_get_main_queue(), { 
-                
-                if (failure != nil)
-                {
-                    failure!( reason: NetworkCommunicator.NETWORK_ERROR_NO_CONNECTIVITY )
                 }
             })
         }

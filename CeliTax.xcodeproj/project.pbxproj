@@ -24,7 +24,6 @@
 		852299B41BEC44F400279F45 /* TaxYearsDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852299B31BEC44F400279F45 /* TaxYearsDAO.swift */; };
 		852929FA1B3675E20074DD24 /* ReceiptEditModeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 852929F81B3675E20074DD24 /* ReceiptEditModeTableViewCell.m */; };
 		852929FB1B3675E20074DD24 /* ReceiptEditModeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 852929F91B3675E20074DD24 /* ReceiptEditModeTableViewCell.xib */; };
-		852B773D1BF6A9AE0088D8FA /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852B773C1BF6A9AE0088D8FA /* SubscriptionManager.swift */; };
 		852B773F1BF6D2820088D8FA /* TutorialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852B773E1BF6D2820088D8FA /* TutorialManager.swift */; };
 		852B77421BF6D63F0088D8FA /* NSString+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 852B77411BF6D63F0088D8FA /* NSString+Helper.m */; };
 		852C32CD1CB35D0C0065AB0B /* ImageDownloaderOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852C32CC1CB35D0C0065AB0B /* ImageDownloaderOperation.swift */; };
@@ -87,8 +86,6 @@
 		855973921AFD2BF800DFC176 /* MainViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 855973901AFD2BF800DFC176 /* MainViewTableViewCell.xib */; };
 		8559EA221B9E62D500FCC823 /* ImperialUnitPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8559EA201B9E62D500FCC823 /* ImperialUnitPickerViewController.m */; };
 		8559EA231B9E62D500FCC823 /* ImperialUnitPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8559EA211B9E62D500FCC823 /* ImperialUnitPickerViewController.xib */; };
-		855A75EC1BB8D24A0019956E /* SubscriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 855A75EA1BB8D24A0019956E /* SubscriptionViewController.m */; };
-		855A75ED1BB8D24A0019956E /* SubscriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 855A75EB1BB8D24A0019956E /* SubscriptionViewController.xib */; };
 		855A75F01BBA622B0019956E /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 855A75EF1BBA622B0019956E /* Crashlytics.framework */; };
 		855A9AA21B7259FE00455291 /* MetricUnitPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 855A9AA01B7259FE00455291 /* MetricUnitPickerViewController.m */; };
 		855A9AA31B7259FE00455291 /* MetricUnitPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 855A9AA11B7259FE00455291 /* MetricUnitPickerViewController.xib */; };
@@ -238,7 +235,6 @@
 		852929F71B3675E20074DD24 /* ReceiptEditModeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptEditModeTableViewCell.h; sourceTree = "<group>"; };
 		852929F81B3675E20074DD24 /* ReceiptEditModeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptEditModeTableViewCell.m; sourceTree = "<group>"; };
 		852929F91B3675E20074DD24 /* ReceiptEditModeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptEditModeTableViewCell.xib; sourceTree = "<group>"; };
-		852B773C1BF6A9AE0088D8FA /* SubscriptionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionManager.swift; sourceTree = "<group>"; };
 		852B773E1BF6D2820088D8FA /* TutorialManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialManager.swift; sourceTree = "<group>"; };
 		852B77401BF6D63F0088D8FA /* NSString+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Helper.h"; sourceTree = "<group>"; };
 		852B77411BF6D63F0088D8FA /* NSString+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Helper.m"; sourceTree = "<group>"; };
@@ -334,9 +330,6 @@
 		8559EA241B9F361E00FCC823 /* UnitPickerViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitPickerViewControllerDelegate.h; sourceTree = "<group>"; };
 		8559EA2E1B9F45D100FCC823 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		8559EA2F1B9F45E300FCC823 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		855A75E91BB8D24A0019956E /* SubscriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscriptionViewController.h; sourceTree = "<group>"; };
-		855A75EA1BB8D24A0019956E /* SubscriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscriptionViewController.m; sourceTree = "<group>"; };
-		855A75EB1BB8D24A0019956E /* SubscriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubscriptionViewController.xib; sourceTree = "<group>"; };
 		855A75EF1BBA622B0019956E /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		855A9A9F1B7259FE00455291 /* MetricUnitPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetricUnitPickerViewController.h; sourceTree = "<group>"; };
 		855A9AA01B7259FE00455291 /* MetricUnitPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetricUnitPickerViewController.m; sourceTree = "<group>"; };
@@ -944,16 +937,6 @@
 			name = "Imperial Unit Picker Pop Up";
 			sourceTree = "<group>";
 		};
-		855A75E81BB8CCED0019956E /* Subscriptions */ = {
-			isa = PBXGroup;
-			children = (
-				855A75E91BB8D24A0019956E /* SubscriptionViewController.h */,
-				855A75EA1BB8D24A0019956E /* SubscriptionViewController.m */,
-				855A75EB1BB8D24A0019956E /* SubscriptionViewController.xib */,
-			);
-			name = Subscriptions;
-			sourceTree = "<group>";
-		};
 		855A9A9E1B7258A800455291 /* Metric Unit Picker Pop Up */ = {
 			isa = PBXGroup;
 			children = (
@@ -1020,14 +1003,6 @@
 				850F7B961BF803D000AF1C83 /* ReceiptPic-1.jpg */,
 			);
 			name = "Sample Receipt";
-			sourceTree = "<group>";
-		};
-		856048BA1BB5E5D5002F9454 /* Subscription Manager */ = {
-			isa = PBXGroup;
-			children = (
-				852B773C1BF6A9AE0088D8FA /* SubscriptionManager.swift */,
-			);
-			name = "Subscription Manager";
 			sourceTree = "<group>";
 		};
 		8562739C1B1B7FCC00EECA26 /* Receipt Break Down */ = {
@@ -1149,7 +1124,6 @@
 			isa = PBXGroup;
 			children = (
 				85A8CAE81AF071410023504D /* DAO */,
-				856048BA1BB5E5D5002F9454 /* Subscription Manager */,
 				855B6FB21B279E2E00864E0B /* LookAndFeel */,
 				8537FFC41B989F3400F7802E /* Localization */,
 				8559191D1B6AE3A8001F712C /* Background Worker */,
@@ -1271,7 +1245,6 @@
 		85A8CAEC1AF072060023504D /* ViewControllers(Objc-C) */ = {
 			isa = PBXGroup;
 			children = (
-				855A75E81BB8CCED0019956E /* Subscriptions */,
 				85547BF41AF2FAE600D9E1CE /* Factory */,
 				8582A4711AF176730048DCD6 /* Base */,
 				85552E961B02F65E005D9FB1 /* Pop Up */,
@@ -1595,7 +1568,6 @@
 				856024B91AFA5E2C004C1254 /* ReceiptCheckingViewController.xib in Resources */,
 				855A9AA31B7259FE00455291 /* MetricUnitPickerViewController.xib in Resources */,
 				850212811B0A925D00170785 /* CameraViewController.xib in Resources */,
-				855A75ED1BB8D24A0019956E /* SubscriptionViewController.xib in Resources */,
 				856273A71B1BF6B700EECA26 /* ReceiptBreakDownItemTableViewCell.xib in Resources */,
 				85552B461B35191900AE77CE /* ReceiptItemCell.xib in Resources */,
 				85665DD61B20EFD200848D36 /* ReceiptTableViewCell.xib in Resources */,
@@ -1732,7 +1704,6 @@
 				855D0B7F1B177B4400BD5EB4 /* MenuSelectionTableViewCell.m in Sources */,
 				852B77421BF6D63F0088D8FA /* NSString+Helper.m in Sources */,
 				856024B81AFA5E2C004C1254 /* ReceiptCheckingViewController.m in Sources */,
-				855A75EC1BB8D24A0019956E /* SubscriptionViewController.m in Sources */,
 				85D8D8521AF873AA00197D85 /* AccountTableViewCell.m in Sources */,
 				85BE69CB1B7E754E004C24A2 /* HollowWhiteButton.m in Sources */,
 				855973911AFD2BF800DFC176 /* MainViewTableViewCell.m in Sources */,
@@ -1796,7 +1767,6 @@
 				8587118F1BE90ECE00774A2F /* DataService.swift in Sources */,
 				858711891BE6DF1100774A2F /* BuilderFactory.swift in Sources */,
 				8558940C1B1C1BD100D3F353 /* XYPieChart.m in Sources */,
-				852B773D1BF6A9AE0088D8FA /* SubscriptionManager.swift in Sources */,
 				8554BCE31B2537F1002333ED /* M13Checkbox.m in Sources */,
 				8554BCE91B254F45002333ED /* TimePeriodSelectionTableViewCell.m in Sources */,
 				85081A1D1B4B88A900C5AD10 /* Triangle.m in Sources */,

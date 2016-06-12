@@ -17,9 +17,6 @@ class UserManager : NSObject //TODO: Remove Subclass to NSObject when the entire
     
     var user : User?
     
-    //This variable determines if the app should be restricted or not.
-    var subscriptionActive : Bool = false
-    
     //This variable determines whether to show the disclaimer message upon login
     var doNotShowDisclaimer : Bool = false
     
@@ -29,10 +26,6 @@ class UserManager : NSObject //TODO: Remove Subclass to NSObject when the entire
     weak var configManager : ConfigurationManager?
     weak var userDataDAO : UserDataDAO?
     weak var backgroundWorker : BackgroundWorker?
-    weak var subscriptionManager : SubscriptionManager?
-    
-    typealias UpdateUserSubscriptionExpiryDateSuccessBlock = () -> Void
-    typealias UpdateUserSubscriptionExpiryDateFailureBlock = (reason : String) -> Void
     
     private let defaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
  
@@ -45,27 +38,6 @@ class UserManager : NSObject //TODO: Remove Subclass to NSObject when the entire
         if (defaults.objectForKey(kDoNotShowDisclaimerAgainKey) != nil)
         {
             self.doNotShowDisclaimer = true
-        }
-    }
-    
-    //check to see if self.subscriptionExpirationDate is today or after today. If yes, mark subscriptionActive to be TRUE
-    func checkAccountSubscriptionActivity()
-    {
-        let expirationDate : NSDate! = Utils.dateFromDateString(self.user!.subscriptionExpirationDate)
-        
-        let timeInt : NSTimeInterval = expirationDate.timeIntervalSinceDate(NSDate.init())
-        
-        let days : Int = Int(timeInt / 60 / 60 / 24)
-        
-        if (days >= 0)
-        {
-            self.subscriptionActive = true
-            
-            dLog("Subscription active")
-        }
-        else
-        {
-            dLog("Subscription expired")
         }
     }
     
@@ -94,12 +66,6 @@ class UserManager : NSObject //TODO: Remove Subclass to NSObject when the entire
             self.backgroundWorker!.activeWorker()
             
             self.configManager!.loadSettingsFromPersistence()
-            
-            // check for user subscription
-            if (self.user!.subscriptionExpirationDate.characters.count > 0)
-            {
-                self.checkAccountSubscriptionActivity()
-            }
             
             return true
         }
@@ -152,31 +118,6 @@ class UserManager : NSObject //TODO: Remove Subclass to NSObject when the entire
             
             }, failure: { (reason) in
                 //ignore failure
-        })
-    }
-    
-    func updateUserSubscriptionExpiryDate(success : UpdateUserSubscriptionExpiryDateSuccessBlock?, failure : UpdateUserSubscriptionExpiryDateFailureBlock?)
-    {
-        self.authenticationService!.getSubscriptionExpiryDate({ (expiryDateString) in
-            
-            self.setExpiryDate(expiryDateString)
-            
-            self.checkAccountSubscriptionActivity()
-            
-            if (success != nil)
-            {
-                success!()
-            }
-            
-            }, failure: { (reason) in
-                
-                // ignore failure, can only happen when internet is down.
-                // there should always be an expiry date for any account
-                
-                if (failure != nil)
-                {
-                    failure! ( reason: reason )
-                }
         })
     }
     
@@ -249,21 +190,12 @@ class UserManager : NSObject //TODO: Remove Subclass to NSObject when the entire
         
         self.userDataDAO!.userKey = nil
         
-        self.subscriptionActive = false
-        
         if (!Utils.deleteSavedUser())
         {
             dLog("ERROR: Did not delete saved User")
         }
         
         self.backgroundWorker!.deactiveWorker()
-    }
-    
-    func setExpiryDate(expiryDateString : String!)
-    {
-        self.user!.subscriptionExpirationDate = expiryDateString
-        
-        Utils.saveUser(self.user)
     }
     
     func doNotShowDisclaimerAgain()

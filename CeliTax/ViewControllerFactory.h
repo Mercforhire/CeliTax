@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@class AuthenticationService, ConfigurationManager, UserManager, LookAndFeel, SubscriptionManager, DataService, ManipulationService, SyncService;
-@class BaseViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCategoryViewController, SidebarViewController, ItemCategory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager, SyncManager, ProfileSettingsViewController, ImperialUnitPickerViewController, MetricUnitPickerViewController, YearSummaryViewController, YearSavingViewController, BackgroundWorker, LoginSettingsViewController, SubscriptionViewController;
+@class AuthenticationService, ConfigurationManager, UserManager, LookAndFeel, DataService, ManipulationService, SyncService;
+@class BaseViewController, LoginViewController, RegisterViewController, SettingsViewController, VaultViewController, HelpScreenViewController, MyAccountViewController, MainViewController, ModifyCatagoryViewController, AddCategoryViewController, SidebarViewController, ItemCategory, ReceiptCheckingViewController, SelectionsPickerViewController, ColorPickerViewController, AllColorsPickerViewController, CameraViewController, ReceiptBreakDownViewController, SendReceiptsToViewController, PasswordRecoverySentViewController, PasswordRecoveryViewController, TransferSelectionsViewController, TutorialManager, SyncManager, ProfileSettingsViewController, ImperialUnitPickerViewController, MetricUnitPickerViewController, YearSummaryViewController, YearSavingViewController, BackgroundWorker, LoginSettingsViewController;
 
 @interface ViewControllerFactory : NSObject
 
@@ -23,7 +23,6 @@
 @property (nonatomic, weak) LookAndFeel *lookAndFeel;
 @property (nonatomic, weak) SyncManager *syncManager;
 @property (nonatomic, weak) BackgroundWorker *backgroundWorker;
-@property (nonatomic, weak) SubscriptionManager *subscriptionManager;
 
 @property (nonatomic, weak) UIView *navigationBarTitleImageContainer;
 
@@ -76,7 +75,5 @@
 - (YearSavingViewController *) createYearSavingViewController;
 
 - (LoginSettingsViewController *) createLoginSettingsViewController;
-
-- (SubscriptionViewController *) createSubscriptionViewController;
 
 @end

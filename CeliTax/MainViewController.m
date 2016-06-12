@@ -166,22 +166,7 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
     [self.taxYearLabel addGestureRecognizer: taxYearPressedTap];
     [self.taxYearTriangle addGestureRecognizer: taxYearPressedTap2];
     
-    if (!self.userManager.subscriptionActive)
-    {
-        [self.cameraButton setEnabled: NO];
-        
-        [self.userManager updateUserSubscriptionExpiryDate:^{
-            
-            // Enabling the button doesn't mean the user can start taking photos
-            
-            [self.cameraButton setEnabled: YES];
-            
-        } failure:^(NSString *reason) {
-            
-            [self.cameraButton setEnabled: YES];
-            
-        }];
-    }
+    [self.cameraButton setEnabled: YES];
     
     // Enable syncManager to run again if it was halted before
     [self.syncManager resetCancelOperation];
@@ -484,32 +469,6 @@ typedef NS_ENUM(NSUInteger, SectionTitles)
 
 - (IBAction) cameraButtonPressed: (UIButton *) sender
 {
-    if (!self.userManager.subscriptionActive)
-    {
-        // Ask user if they want to buy an subscription
-        NSString *alertTitle = NSLocalizedString(@"Sorry", nil);
-        NSString *alertMessage = NSLocalizedString(@"The subscription for this account has expired. Would you like to purchase a new subscription?", nil);
-        NSString *alertNo = NSLocalizedString(@"No", nil);
-        NSString *alertPurchase = NSLocalizedString(@"Purchase", nil);
-        
-        //create the alert items
-        UIAlertAction *noAction = [UIAlertAction actionWithTitle:alertNo style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            
-        }];
-        
-        UIAlertAction *purchaseAction = [UIAlertAction actionWithTitle:alertPurchase style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            
-            // go to Settings Page
-            [self selectedMenuIndex:RootViewControllerSettings];
-            
-        }];
-        
-        NSArray<UIAlertAction*>* alertActions = @[noAction, purchaseAction];
-        [AlertDialogsProvider handlerAlert:alertTitle message:alertMessage action:alertActions];
-        
-        return;
-    }
-    
     if (self.currentlySelectedYear.integerValue)
     {
         CameraViewController *cameraVC = [self.viewControllerFactory createCameraOverlayViewControllerWithExistingReceiptID:nil];

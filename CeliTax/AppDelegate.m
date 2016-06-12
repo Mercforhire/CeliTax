@@ -29,7 +29,6 @@
 @property (nonatomic, strong) NetworkCommunicator *networkCommunicator;
 @property (nonatomic, strong) SyncManager *syncManager;
 @property (nonatomic, strong) BackgroundWorker *backgroundWorker;
-@property (nonatomic, strong) SubscriptionManager *subscriptionManager;
 
 @property (nonatomic, strong) UINavigationController *navigationController;
 @property (nonatomic, strong) UIView *navigationBarTitleImageContainer;
@@ -62,7 +61,6 @@
     self.viewControllerFactory.navigationBarTitleImageContainer = self.navigationBarTitleImageContainer;
     self.viewControllerFactory.syncManager = self.syncManager;
     self.viewControllerFactory.backgroundWorker = self.backgroundWorker;
-    self.viewControllerFactory.subscriptionManager = self.subscriptionManager;
 }
 
 - (void) initializeUserManager
@@ -101,16 +99,6 @@
 - (void) initializeBackgroundWorker
 {
     self.backgroundWorker = [[BackgroundWorker alloc] initWithSyncManager: self.syncManager authenticationService: [self.serviceFactory createAuthenticationService] userManager: self.userManager];
-}
-
-- (void) initializeSubscriptionManager
-{
-    NSSet *productIdentifiers = [NSSet setWithObjects:
-                                 SubscriptionManager.k1MonthServiceProductID,
-                                 SubscriptionManager.k12MonthServiceProductID,
-                                 nil];
-
-    self.subscriptionManager = [[SubscriptionManager alloc] initWithProductIdentifiers: productIdentifiers authenticationService: [self.serviceFactory createAuthenticationService] userManager: self.userManager];
 }
 
 - (void) initializeLocalizationManager
@@ -153,8 +141,6 @@
     [self initializeDAOFactory];
     [self initializeServiceFactory];
     [self initializeUserManager];
-    [self initializeSubscriptionManager];
-    self.userManager.subscriptionManager = self.subscriptionManager;
     [self initializeSyncManager];
     [self initializeBackgroundWorker];
     [self initializeViewControllerFactory];

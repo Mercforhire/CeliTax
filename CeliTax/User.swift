@@ -18,14 +18,12 @@ class User : NSObject, NSCoding //TODO: Remove Subclass to NSObject when the ent
     var lastname : String = ""
     var country : String = ""
     var avatarImage : UIImage?
-    var subscriptionExpirationDate : String = ""
     
     private let kKeyLoginName : String = "loginName"
     private let kKeyUserKey : String = "userKey"
     private let kKeyFirstname : String = "firstname"
     private let kKeyLastname : String = "lastname"
     private let kKeyCountry : String = "country"
-    private let kSubscriptionExpirationDate : String = "subscriptionExpirationDate"
     
     required override init()
     {
@@ -39,7 +37,6 @@ class User : NSObject, NSCoding //TODO: Remove Subclass to NSObject when the ent
         self.firstname = decoder.decodeObjectForKey(kKeyFirstname) as! String
         self.lastname = decoder.decodeObjectForKey(kKeyLastname) as! String
         self.country = decoder.decodeObjectForKey(kKeyCountry) as! String
-        self.subscriptionExpirationDate = decoder.decodeObjectForKey(kSubscriptionExpirationDate) as! String
     }
     
     func encodeWithCoder(coder: NSCoder)
@@ -49,6 +46,5 @@ class User : NSObject, NSCoding //TODO: Remove Subclass to NSObject when the ent
         coder.encodeObject(self.firstname, forKey: kKeyFirstname)
         coder.encodeObject(self.lastname, forKey: kKeyLastname)
         coder.encodeObject(self.country, forKey: kKeyCountry)
-        coder.encodeObject(self.subscriptionExpirationDate, forKey: kSubscriptionExpirationDate)
     }
 }

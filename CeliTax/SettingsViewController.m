@@ -13,7 +13,6 @@
 #import "ProfileSettingsViewController.h"
 #import "M13Checkbox.h"
 #import "LoginSettingsViewController.h"
-#import "SubscriptionViewController.h"
 
 #import "CeliTax-Swift.h"
 
@@ -33,9 +32,6 @@ typedef NS_ENUM(NSUInteger, Languages) {
 @property (weak, nonatomic) IBOutlet SolidGreenButton *metricUnitButton;
 @property (weak, nonatomic) IBOutlet SolidGreenButton *imperialUnitButton;
 @property (weak, nonatomic) IBOutlet UIButton *aboutButton;
-@property (weak, nonatomic) IBOutlet UILabel *subscriptionLabel;
-@property (weak, nonatomic) IBOutlet UILabel *subscriptionStatusLabel;
-@property (weak, nonatomic) IBOutlet SolidGreenButton *purchaseButton;
 
 @end
 
@@ -62,8 +58,6 @@ typedef NS_ENUM(NSUInteger, Languages) {
                                             action: @selector(profileSettingsPressed:)];
     [self.profileBarView.nameLabel addGestureRecognizer: profileImageViewTap2];
     
-    [self.purchaseButton setLookAndFeel:self.lookAndFeel];
-    
     [self.metricUnitButton setLookAndFeel:self.lookAndFeel];
     [self.imperialUnitButton setLookAndFeel:self.lookAndFeel];
     
@@ -85,9 +79,6 @@ typedef NS_ENUM(NSUInteger, Languages) {
                              forState:UIControlStateNormal];
     
     [self.aboutButton setTitle:NSLocalizedString(@"About", nil) forState:UIControlStateNormal];
-    
-    [self.subscriptionLabel setText:NSLocalizedString(@"Subscription:", nil)];
-    [self.purchaseButton setTitle:NSLocalizedString(@"Purchase", nil) forState:UIControlStateNormal];
 }
 
 - (void)viewDidLoad
@@ -132,15 +123,6 @@ typedef NS_ENUM(NSUInteger, Languages) {
                                              selector: @selector(refreshLanguage)
                                                  name: Notifications.kAppLanguageChangedNotification
                                                object: nil];
-    
-    if (self.userManager.subscriptionActive)
-    {
-        (self.subscriptionStatusLabel).text = [NSString stringWithFormat:NSLocalizedString(@"Expiry Date: %@", nil), self.userManager.user.subscriptionExpirationDate];
-    }
-    else
-    {
-        (self.subscriptionStatusLabel).text = [NSString stringWithFormat:NSLocalizedString(@"Expired on: %@", nil), self.userManager.user.subscriptionExpirationDate];
-    }
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -235,10 +217,4 @@ typedef NS_ENUM(NSUInteger, Languages) {
 {
     [Utils OpenLink:@"http://celitax.ca/about.html"];
 }
-
-- (IBAction)purchasePressed:(SolidGreenButton *)sender
-{
-    [self.navigationController pushViewController: [self.viewControllerFactory createSubscriptionViewController] animated: YES];
-}
-
 @end

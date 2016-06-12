@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Lato-Bold.ttf">
@@ -11,11 +11,8 @@
             <string>Lato-Bold</string>
             <string>Lato-Bold</string>
             <string>Lato-Bold</string>
-            <string>Lato-Bold</string>
-            <string>Lato-Bold</string>
         </mutableArray>
         <mutableArray key="Lato-Regular.ttf">
-            <string>Lato-Regular</string>
             <string>Lato-Regular</string>
             <string>Lato-Regular</string>
         </mutableArray>
@@ -29,9 +26,6 @@
                 <outlet property="metricUnitButton" destination="iPH-I5-lKR" id="N9C-03-RsK"/>
                 <outlet property="profileBarView" destination="Qr1-NN-1Ck" id="mg1-ls-mvT"/>
                 <outlet property="profileSettingsButton" destination="FAu-Zz-hPh" id="tHq-e1-hoQ"/>
-                <outlet property="purchaseButton" destination="YSe-rd-k9x" id="kcG-BZ-Zbj"/>
-                <outlet property="subscriptionLabel" destination="pin-E1-Psq" id="p98-Ug-mPz"/>
-                <outlet property="subscriptionStatusLabel" destination="fbx-GN-9Wr" id="kHp-Yl-knX"/>
                 <outlet property="titleLabel" destination="g4b-sr-dcZ" id="6Yb-1L-XE5"/>
                 <outlet property="unitsLabel" destination="o1Q-jo-vAy" id="tJ3-Eo-rPa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -42,19 +36,17 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="567"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I48-M1-jOL">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I48-M1-jOL">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="567"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SETTINGS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4b-sr-dcZ">
                             <rect key="frame" x="116" y="15" width="88" height="23"/>
-                            <animations/>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="19"/>
                             <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qr1-NN-1Ck" customClass="ProfileBarView">
                             <rect key="frame" x="0.0" y="58" width="320" height="60"/>
-                            <animations/>
                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="69C-au-QuW"/>
@@ -63,7 +55,6 @@
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FAu-Zz-hPh">
                             <rect key="frame" x="15" y="133" width="160" height="21"/>
-                            <animations/>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
                             <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
                             <state key="normal" title="PROFILE SETTINGS">
@@ -76,7 +67,6 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pUD-si-IPG">
                             <rect key="frame" x="15" y="174" width="144" height="21"/>
-                            <animations/>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="17"/>
                             <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
                             <state key="normal" title="LOGIN SETTINGS">
@@ -89,14 +79,12 @@
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UNITS:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o1Q-jo-vAy">
                             <rect key="frame" x="15" y="215" width="55" height="21"/>
-                            <animations/>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="17"/>
                             <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7js-Qr-acz" customClass="SolidGreenButton">
                             <rect key="frame" x="229" y="213" width="76" height="25"/>
-                            <animations/>
                             <color key="backgroundColor" red="0.55334633690000001" green="0.82171581770000002" blue="0.4125430142" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="12"/>
                             <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
@@ -110,7 +98,6 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPH-I5-lKR" customClass="SolidGreenButton">
                             <rect key="frame" x="159" y="213" width="65" height="25"/>
-                            <animations/>
                             <color key="backgroundColor" red="0.55334633690000001" green="0.82171581770000002" blue="0.4125430142" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="12"/>
                             <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
@@ -124,7 +111,6 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TKD-T4-mir">
                             <rect key="frame" x="15" y="256" width="70" height="21"/>
-                            <animations/>
                             <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="17"/>
                             <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
                             <state key="normal" title="ABOUT">
@@ -135,51 +121,18 @@
                                 <action selector="aboutPressed:" destination="-1" eventType="touchUpInside" id="q0a-If-SaH"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SUBSCRIPTION:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pin-E1-Psq">
-                            <rect key="frame" x="15" y="297" width="127" height="21"/>
-                            <animations/>
-                            <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="17"/>
-                            <color key="textColor" red="0.61960784310000006" green="0.84705882349999995" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YSe-rd-k9x" customClass="SolidGreenButton">
-                            <rect key="frame" x="206" y="325" width="99" height="28"/>
-                            <animations/>
-                            <color key="backgroundColor" red="0.55334633690000001" green="0.82171581770000002" blue="0.4125430142" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="15"/>
-                            <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
-                            <state key="normal" title="PURCHASE">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="purchasePressed:" destination="-1" eventType="touchUpInside" id="au5-QH-Fdd"/>
-                            </connections>
-                        </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOT SUBSCRIBED" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fbx-GN-9Wr">
-                            <rect key="frame" x="196" y="299" width="109" height="16"/>
-                            <animations/>
-                            <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="13"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                     </subviews>
-                    <animations/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="fbx-GN-9Wr" secondAttribute="trailing" constant="15" id="1N4-lM-i22"/>
-                        <constraint firstItem="pin-E1-Psq" firstAttribute="top" secondItem="TKD-T4-mir" secondAttribute="bottom" constant="20" id="3cP-Jh-ABN"/>
-                        <constraint firstItem="TKD-T4-mir" firstAttribute="leading" secondItem="pin-E1-Psq" secondAttribute="leading" id="4hf-gw-JfS"/>
                         <constraint firstItem="o1Q-jo-vAy" firstAttribute="top" secondItem="pUD-si-IPG" secondAttribute="bottom" constant="20" id="7Ui-hU-upg"/>
                         <constraint firstItem="FAu-Zz-hPh" firstAttribute="leading" secondItem="pUD-si-IPG" secondAttribute="leading" id="81b-Cb-lpV"/>
                         <constraint firstItem="o1Q-jo-vAy" firstAttribute="leading" secondItem="FAu-Zz-hPh" secondAttribute="leading" id="BbO-5G-5JH"/>
                         <constraint firstAttribute="trailing" secondItem="Qr1-NN-1Ck" secondAttribute="trailing" id="DSm-kf-ZIA"/>
-                        <constraint firstItem="YSe-rd-k9x" firstAttribute="top" secondItem="fbx-GN-9Wr" secondAttribute="bottom" constant="10" id="DxH-Hs-t2J"/>
-                        <constraint firstAttribute="trailing" secondItem="YSe-rd-k9x" secondAttribute="trailing" constant="15" id="IuM-pT-dym"/>
+                        <constraint firstAttribute="bottom" secondItem="TKD-T4-mir" secondAttribute="bottom" constant="20" id="Ebk-6x-MEx"/>
                         <constraint firstItem="iPH-I5-lKR" firstAttribute="centerY" secondItem="o1Q-jo-vAy" secondAttribute="centerY" id="KL8-Mf-jZJ"/>
                         <constraint firstItem="TKD-T4-mir" firstAttribute="leading" secondItem="FAu-Zz-hPh" secondAttribute="leading" id="c9X-iQ-x4l"/>
                         <constraint firstItem="Qr1-NN-1Ck" firstAttribute="top" secondItem="g4b-sr-dcZ" secondAttribute="bottom" constant="20" id="cUa-UJ-EQp"/>
                         <constraint firstItem="FAu-Zz-hPh" firstAttribute="leading" secondItem="I48-M1-jOL" secondAttribute="leading" constant="15" id="fp5-qI-8LA"/>
                         <constraint firstItem="Qr1-NN-1Ck" firstAttribute="leading" secondItem="I48-M1-jOL" secondAttribute="leading" id="hRJ-YH-Fby"/>
-                        <constraint firstItem="fbx-GN-9Wr" firstAttribute="centerY" secondItem="pin-E1-Psq" secondAttribute="centerY" id="o9r-jJ-jhe"/>
                         <constraint firstItem="o1Q-jo-vAy" firstAttribute="centerY" secondItem="7js-Qr-acz" secondAttribute="centerY" id="pTy-mj-uXy"/>
                         <constraint firstAttribute="trailing" secondItem="7js-Qr-acz" secondAttribute="trailing" constant="15" id="pj7-H6-Why"/>
                         <constraint firstItem="FAu-Zz-hPh" firstAttribute="top" secondItem="Qr1-NN-1Ck" secondAttribute="bottom" constant="15" id="qSa-7g-t2w"/>
@@ -191,7 +144,6 @@
                     </constraints>
                 </scrollView>
             </subviews>
-            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="I48-M1-jOL" secondAttribute="trailing" id="J5d-R5-0Oq"/>
